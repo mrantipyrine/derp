@@ -13,6 +13,8 @@
 -- Table structure for table `traits`
 --
 
+=
+
 DROP TABLE IF EXISTS `traits`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -207,11 +209,13 @@ INSERT INTO `traits` VALUES (14,'store tp',12,30,2,73,15,NULL,0);
 INSERT INTO `traits` VALUES (14,'store tp',12,50,3,73,20,NULL,0);
 INSERT INTO `traits` VALUES (14,'store tp',12,70,4,73,25,NULL,0);
 INSERT INTO `traits` VALUES (14,'store tp',12,90,5,73,30,'ABYSSEA',0);
-INSERT INTO `traits` VALUES (15,'double attack',1,25,1,288,10,NULL,0);
-INSERT INTO `traits` VALUES (15,'double attack',1,50,2,288,12,'ROV',0);
-INSERT INTO `traits` VALUES (15,'double attack',1,75,3,288,14,'ABYSSEA',0); -- level 76 prior to ROV update (05/14/2015), set Abby tag so it's removed from 75-cap servers
-INSERT INTO `traits` VALUES (15,'double attack',1,85,4,288,16,'ROV',0);
-INSERT INTO `traits` VALUES (15,'double attack',1,99,5,288,18,'ROV',0);
+
+INSERT INTO `traits` VALUES (15,'double attack',1,10,1,288,10,NULL,0);
+INSERT INTO `traits` VALUES (15,'double attack',1,25,2,288,10,NULL,0);
+INSERT INTO `traits` VALUES (15,'double attack',1,50,3,288,12,'ROV',0);
+INSERT INTO `traits` VALUES (15,'double attack',1,75,4,288,14,'ABYSSEA',0); -- level 76 prior to ROV update (05/14/2015), set Abby tag so it's removed from 75-cap servers
+INSERT INTO `traits` VALUES (15,'double attack',1,85,5,288,16,'ROV',0);
+INSERT INTO `traits` VALUES (15,'double attack',1,99,6,288,18,'ROV',0);
 INSERT INTO `traits` VALUES (16,'triple attack',6,55,1,302,5,NULL,0);
 INSERT INTO `traits` VALUES (16,'triple attack',6,95,2,302,6,'ABYSSEA',0);
 INSERT INTO `traits` VALUES (17,'counter',2,10,1,291,10,NULL,0);
@@ -228,6 +232,8 @@ INSERT INTO `traits` VALUES (18,'dual wield',19,20,1,259,10,'ABYSSEA',0);
 INSERT INTO `traits` VALUES (18,'dual wield',19,40,2,259,15,'ABYSSEA',0);
 INSERT INTO `traits` VALUES (18,'dual wield',19,60,3,259,25,'ABYSSEA',0);
 INSERT INTO `traits` VALUES (18,'dual wield',19,80,4,259,30,'ABYSSEA',0);
+
+INSERT INTO `traits` VALUES (18,'dual wield',6,5,1,259,10,NULL,0);
 INSERT INTO `traits` VALUES (19,'treasure hunter',6,15,1,303,1,NULL,0);
 INSERT INTO `traits` VALUES (20,'gilfinder',6,5,1,897,50,NULL,0);
 INSERT INTO `traits` VALUES (21,'alertness',11,5,1,0,0,NULL,0);
@@ -412,9 +418,11 @@ INSERT INTO `traits` VALUES (63,'resist amnesia',18,75,4,253,25,'ABYSSEA',0);
 INSERT INTO `traits` VALUES (63,'resist amnesia',18,95,5,253,30,'ABYSSEA',0);
 INSERT INTO `traits` VALUES (64,'treasure hunter ii',6,45,2,303,1,NULL,0);
 INSERT INTO `traits` VALUES (65,'treasure hunter iii',6,90,3,303,1,'ABYSSEA',0);
-INSERT INTO `traits` VALUES (66,'kick attacks',2,51,1,292,10,NULL,0);
-INSERT INTO `traits` VALUES (66,'kick attacks',2,71,2,292,12,NULL,0);
-INSERT INTO `traits` VALUES (66,'kick attacks',2,76,3,292,14,'ABYSSEA',0);
+
+INSERT INTO `traits` VALUES (66,'kick attacks',2,20,1,292,10,NULL,0);
+INSERT INTO `traits` VALUES (66,'kick attacks',2,51,2,292,10,NULL,0);
+INSERT INTO `traits` VALUES (66,'kick attacks',2,71,3,292,12,NULL,0);
+INSERT INTO `traits` VALUES (66,'kick attacks',2,76,4,292,14,'ABYSSEA',0);
 INSERT INTO `traits` VALUES (67,'subtle blow',2,5,1,289,5,NULL,0);
 INSERT INTO `traits` VALUES (67,'subtle blow',2,25,2,289,10,NULL,0);
 INSERT INTO `traits` VALUES (67,'subtle blow',2,40,3,289,15,NULL,0);
