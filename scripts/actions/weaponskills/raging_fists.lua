@@ -11,7 +11,6 @@
 -- 100%TP    200%TP    300%TP
 -- 1.00       1.5        2
 -----------------------------------
----@type TWeaponSkill
 local weaponskillObject = {}
 
 weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary, action, taChar)
@@ -26,7 +25,13 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
         params.str_wsc = 0.3 params.dex_wsc = 0.3
     end
 
+    --if math.random(0, 100) <= 20 then 
+    --    local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)
+    --    local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)
+    --else
     local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)
+    --end 
+
     return tpHits, extraHits, criticalHit, damage
 end
 

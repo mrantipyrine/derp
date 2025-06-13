@@ -1,7 +1,6 @@
 -----------------------------------
 -- Energy Drain
 -----------------------------------
----@type TWeaponSkill
 local weaponskillObject = {}
 
 -- https://www.bg-wiki.com/ffxi/Energy_Drain

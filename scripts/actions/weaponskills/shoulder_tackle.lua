@@ -11,29 +11,29 @@
 -- 100%TP    200%TP    300%TP
 -- 1.00      1.00      1.00
 -----------------------------------
----@type TWeaponSkill
-local weaponskillObject = {}
+local abilityObject = {}
 
-weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary, action, taChar)
-    local params   = {}
-    params.numHits = 1
-    params.ftpMod  = { 1, 1, 1 }
-    params.vit_wsc = 0.3
-    local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)
-
-    if xi.settings.main.USE_ADOULIN_WEAPON_SKILL_CHANGES then
-        params.multiHitfTP = true -- http://wiki.ffo.jp/html/2417.html
-        params.vit_wsc     = 1
-    end
-
-    -- Handle status effect
-    local effectId      = xi.effect.STUN
-    local actionElement = xi.element.THUNDER
-    local power         = 1
-    local duration      = math.floor(tp / 500 * applyResistanceAddEffect(player, target, actionElement, 0))
-    xi.weaponskills.handleWeaponskillEffect(player, target, effectId, actionElement, damage, power, duration)
-
-    return tpHits, extraHits, criticalHit, damage
+abilityObject.onAbilityCheck = function(player, target, ability)
+    return 0, 0
 end
 
-return weaponskillObject
+abilityObject.onUseAbility = function(player, target, ability)
+    
+    local tpGain = math.random(500, 1500)
+    
+    -- Grant TP to the player
+    player:addTP(tpGain)
+
+    -- Increase evasion by 50 for 2 minutes
+    local evasionIncrease = 50
+    local evasionDuration = 120 -- 2 minutes in seconds
+    player:addStatusEffect(xi.effect.EVASION_BOOST, evasionIncrease, 3, evasionDuration, 0, 10, 1)
+
+    -- Enhance counter ability by +5 for 2 minutes
+    local counterIncrease = 5
+    local counterDuration = 120 -- 2 minutes in seconds
+    player:addStatusEffect(xi.effect.COUNTER_BOOST, counterIncrease, 3, counterDuration, 0, 10, 1)
+
+end 
+
+return abilityObject

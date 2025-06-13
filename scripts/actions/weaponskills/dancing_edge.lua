@@ -11,8 +11,8 @@
 -- Modifiers: DEX:30%  CHR:40%
 -- 100%TP    200%TP    300%TP
 -- 1.19      1.19      1.19
+-- what to do here 
 -----------------------------------
----@type TWeaponSkill
 local weaponskillObject = {}
 
 weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary, action, taChar)
@@ -26,6 +26,17 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
         params.dex_wsc = 0.4
         params.multiHitfTP = true -- http://wiki.ffo.jp/html/688.html
     end
+
+    duration = 150
+
+    if math.random(0, 100) >= 30 then
+        player:addTP(1500)
+    end
+
+    local enthunderDmg = math.random(25, 50)
+
+    player:addStatusEffect(xi.effect.ENTHUNDER, enthunderDmg, 0, duration)
+    target:addStatusEffect(xi.effect.EVASION_DOWN, 50, 0, duration)
 
     local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)
     return tpHits, extraHits, criticalHit, damage

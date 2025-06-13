@@ -8,7 +8,6 @@
 -- Amount restored in HP/MP by TP
 -- Does not deal damage.
 -----------------------------------
----@type TWeaponSkill
 local weaponskillObject = {}
 
 weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary, action, taChar)

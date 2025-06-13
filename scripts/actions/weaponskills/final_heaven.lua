@@ -8,7 +8,6 @@
 -- 3.0x        3.0x    3.0x
 -- +10 Subtle Blow for a short duration after using the weapon skill. (Not implemented)
 -----------------------------------
----@type TWeaponSkill
 local weaponskillObject = {}
 
 weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary, action, taChar)
