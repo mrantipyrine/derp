@@ -12,31 +12,48 @@ abilityObject.onAbilityCheck = function(player, target, ability)
 end
 
 abilityObject.onUseAbility = function(player, target, ability)
-
-    -- Level depended att and haste increase 
-    local attIncrease = player:getMainJob()
-    local attDuration = 290
-    local regainAmount = player:getMainJob()
-    local regainDuration = 290
-
-    -- Adjust values if main job is MNK 
-    if player:getMainJob() == xi.job.MNK then
-        accIncrease = player:getMainJob() * 4
-        accDuration = 240
-        regainAmount = player:getMainJob() * 5
-        regainDuration = 240
-    end 
+    local isMainJobMonk = player:getMainJob() == xi.job.MNK
+    local mainLevel = player:getMainLvl()
     
-    --Placeholder for when the Fist of Wu Tang is fully implemented
-    --if math.random(0, 100) >= 10 then
-    --    player:addStatusEffect(xi.effect.HUNDRED_FISTS, 3, 1, 10)
-    --end 
-
-    -- Apply haste and attack increase effects
-    player:addStatusEffect(xi.effect.REGAIN, regainAmount, 3, regainDuration, 0, 10, 1)
-    player:addMod(xi.mod.ACC, accIncrease, accDuration)
-
-    -- Trigger Chakra ability and return its result
+    -- Set duration (2 minutes = 120 seconds, 4 minutes = 240 seconds for Monks)
+    local duration = isMainJobMonk and 240 or 120
+    
+    -- Calculate vitality, attack, accuracy, and regain based on level and job
+    local vitIncrease, attackIncrease, accuracyIncrease, regainAmount
+    if isMainJobMonk then
+        -- Monks gain higher boosts (level / 6, rounded down)
+        vitIncrease = math.floor(mainLevel / 6)
+        attackIncrease = math.floor(mainLevel / 6)
+        accuracyIncrease = math.floor(mainLevel / 6)
+        regainAmount = math.floor(mainLevel / 6)
+    else
+        -- Other jobs gain lower boosts (level / 8, rounded down)
+        vitIncrease = math.floor(mainLevel / 8)
+        attackIncrease = math.floor(mainLevel / 8)
+        accuracyIncrease = math.floor(mainLevel / 8)
+        regainAmount = math.floor(mainLevel / 8)
+    end
+    
+    -- Restore HP for Monks
+    if isMainJobMonk then
+        local hpRestorePercent = math.random(30, 80)
+        local lostHP = player:getMaxHP() - player:getHP()
+        local hpToRestore = math.floor(lostHP * hpRestorePercent / 100)
+        player:setHP(player:getHP() + hpToRestore)
+    end
+    
+    -- Cure status effects (Blind, Poison, Paralyze)
+    player:delStatusEffect(xi.effect.BLINDNESS)
+    player:delStatusEffect(xi.effect.POISON)
+    player:delStatusEffect(xi.effect.PARALYSIS)
+    
+    -- Apply vitality, attack, accuracy, and regain effects
+    player:addMod(xi.mod.VIT, vitIncrease, 3, duration, 0, 10, 1)
+    player:addMod(xi.mod.ATT, attackIncrease, 3, duration, 0, 10, 1)
+    player:addMod(xi.mod.ACC, accuracyIncrease, 3, duration, 0, 10, 1)
+    player:addStatusEffect(xi.effect.REGAIN, regainAmount, 3, duration, 0, 10, 1)
+    
+    -- Trigger the Chakra ability and return its result
     return xi.job_utils.monk.useChakra(player, target, ability)
 end
 
