@@ -37,11 +37,11 @@ abilityObject.onUseAbility = function(player, target, ability)
     -- Apply max HP boost for Monks if applicable
     if hpBoostPower > 0 then
         -- Increase maximum HP by hpBoostPower% for the duration
-        player:addStatusEffect(xi.effect.MAX_HP_BOOST, hpBoostPower, 1, duration)
+        player:addStatusEffect(xi.effect.MAX_HP_BOOST, hpBoostPower, 3, duration, 0, 10, 1)
     end
 
     -- Apply evasion boost
-    player:addStatusEffect(xi.effect.EVASION_BOOST, evasionIncrease, 3, duration)
+    player:addStatusEffect(xi.effect.EVASION_BOOST, evasionIncrease, 3, duration, 0, 10, 1)
 
     -- Trigger the Dodge ability
     xi.job_utils.monk.useDodge(player, target, ability)
