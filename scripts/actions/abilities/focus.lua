@@ -12,27 +12,53 @@ abilityObject.onAbilityCheck = function(player, target, ability)
 end
 
 abilityObject.onUseAbility = function(player, target, ability)
-    -- Set default TP gain
-    local tpGain = 250
+    local isMainJobMonk = player:getMainJob() == xi.job.MNK
+    local mainLevel = player:getMainLvl()
     
-    -- Determine triple attack based on main job level and if main job is MNK
-    local tripleAttack = player:getMainJob() == xi.job.MNK and player:getMainLvl() % 2 or (player:getMainLvl() >= 25 and 1 or player:getMainLvl() % 5)
+    -- Set duration (2 minutes = 120 seconds)
+    local duration = 120
     
-    -- Increase TP gain and add status effect if main job is MNK
-    if player:getMainJob() == xi.job.MNK then
-        -- this will increase with Focus of White Lotus 
-        
-        tpGain = 1000
-        local counterIncrease = player:getMainLvl() * 2
-        local counterDuration = player:getMainLvl() * 2
-        player:addStatusEffect(xi.effect.COUNTER_BOOST, counterIncrease, 3, counterDuration, 0, 10, 1)
-        player:addMod(xi.mod.TRIPLE_ATTACK, 30, 3, 300, 0, 10, 1)
-        
-    end 
+    -- Calculate accuracy boost based on level and job
+    local accuracyIncrease
+    if mainLevel <= 8 then
+        -- Low-level characters (level 8 or below) get fixed +1 accuracy
+        accuracyIncrease = 1
+    elseif isMainJobMonk then
+        -- Monks gain higher accuracy boost (level / 6, rounded down)
+        accuracyIncrease = math.floor(mainLevel / 6)
+    else
+        -- Other jobs gain lower accuracy boost (level / 8, rounded down)
+        accuracyIncrease = math.floor(mainLevel / 8)
+    end
     
-    -- Add triple attack mod and grant TP to the player
+    -- Add +30 accuracy if Temple Crown is equipped
+    if player:getEquipID(xi.slot.HEAD) == xi.item.TEMPLE_CROWN then
+        accuracyIncrease = accuracyIncrease + 30
+    end
+    
+    -- Apply accuracy boost (persists even if Temple Crown is unequipped)
+    player:addStatusEffect(xi.effect.ACCURACY_BOOST, accuracyIncrease, 3, duration)
+    
+    -- Set TP gain based on job
+    local tpGain = isMainJobMonk and 1000 or 250
     player:addTP(tpGain)
-
+    
+    -- Apply Monk-specific effects
+    if isMainJobMonk then
+        -- Apply counter boost (power scales with level)
+        local counterPower = mainLevel * 2
+        player:addStatusEffect(xi.effect.COUNTER_BOOST, counterPower, 3, duration, 0, 10, 1)
+        
+        -- Apply triple attack boost (30% for Monks)
+        player:addMod(xi.mod.TRIPLE_ATTACK, 30, 3, duration, 0, 10, 1)
+    else
+        -- Apply triple attack boost (10% for non-Monks at level 25+)
+        if mainLevel >= 25 then
+            player:addMod(xi.mod.TRIPLE_ATTACK, 10, 3, duration, 0, 10, 1)
+        end
+    end
+    
+    -- Trigger the Focus ability
     xi.job_utils.monk.useFocus(player, target, ability)
 end
 
