@@ -48,11 +48,12 @@ abilityObject.onUseAbility = function(player, target, ability)
     player:delStatusEffect(xi.effect.PARALYSIS)
     
     -- Apply vitality, attack, accuracy, and regain effects
-    player:addMod(xi.mod.VIT, vitIncrease, 3, duration, 0, 10, 1)
+    player:addStatusEffect(xi.effect.VIT_BOOST, vitIncrease, 0, duration, 0, 0, 0)
     player:addMod(xi.mod.ATT, attackIncrease, 3, duration, 0, 10, 1)
     player:addMod(xi.mod.ACC, accuracyIncrease, 3, duration, 0, 10, 1)
     player:addStatusEffect(xi.effect.REGAIN, regainAmount, 3, duration, 0, 10, 1)
     
+
     -- Trigger the Chakra ability and return its result
     return xi.job_utils.monk.useChakra(player, target, ability)
 end
