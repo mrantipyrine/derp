@@ -1,6 +1,6 @@
 -----------------------------------
 -- Spell: Stone (or custom elemental spell)
--- Applies Enstone and Stoneskin effects based on job, with a chance for double damage for BLM.
+-- Applies Enstone and Stoneskin effects based on job, with a chance for double damage for BLM and MP refund.
 -- Obtained: Varies by job
 -- Recast Time: Varies
 -- Duration: 3:00
@@ -46,6 +46,12 @@ spellObject.onSpellCast = function(caster, target, spell)
     if mainJob == xi.job.RDM or mainJob == xi.job.BLM or mainJob == xi.job.WHM or
        subJob == xi.job.RDM or subJob == xi.job.BLM or subJob == xi.job.WHM then
         caster:addStatusEffect(xi.effect.STONESKIN, stoneskinPower, 3, duration, 0, 10, 1)
+    end
+    
+    -- 30% chance to refund MP cost
+    if math.random() <= 0.30 then
+        local mpCost = spell:getMPCost()
+        caster:setMP(caster:getMP() + mpCost)
     end
     
     -- Double damage chance for main BLM (30%)
