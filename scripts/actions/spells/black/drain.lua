@@ -9,6 +9,12 @@ spellObject.onMagicCastingCheck = function(caster, target, spell)
 end
 
 spellObject.onSpellCast = function(caster, target, spell)
+
+    local intIncrease = target:getMainLvl()
+    local duration = 180
+    caster:addStatusEffect(xi.effect.INT_BOOST, intIncrease, 0, duration, 0, 0, 0)
+
+
     if target:isUndead() then
         spell:setMsg(xi.msg.basic.MAGIC_NO_EFFECT) -- No effect
         return 0
@@ -48,9 +54,10 @@ spellObject.onSpellCast = function(caster, target, spell)
     if targetHP < dmg then
         dmg = targetHP
     end
-    
+
     player:addHP(targetHP)
     return targetHP
 end
+
 
 return spellObject

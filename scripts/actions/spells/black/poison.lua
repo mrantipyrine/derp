@@ -16,9 +16,9 @@ spellObject.onSpellCast = function(caster, target, spell)
     -- Afterall a fungus hat should spread disease not just give resistance
     if equippedHead == 12485 then
         if mainJob == xi.job.BLM then
-            dotdmg = 60
+            dotdmg = 10
         elseif mainJob == xi.job.RDM then
-            dotdmg = 40
+            dotdmg = 5
         else
             return nil
         end
