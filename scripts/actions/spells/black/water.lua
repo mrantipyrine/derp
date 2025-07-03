@@ -15,10 +15,10 @@ spellObject.onSpellCast = function(caster, target, spell)
     local mainJob = caster:getMainJob()
     local subJob = caster:getSubJob()
     local mainLevel = caster:getMainLvl()
-    
     -- Set duration (3 minutes = 180 seconds)
     local duration = 180
-    
+    local day = VanadielDayOfTheWeek()
+
     -- Calculate Enstone and Stoneskin power based on level and job
     local enstonePower, stoneskinPower
     if mainJob == xi.job.RDM then
@@ -54,8 +54,13 @@ spellObject.onSpellCast = function(caster, target, spell)
         caster:setMP(caster:getMP() + mpCost)
     end
     
-    -- Double damage chance for main BLM (30%)
-    if mainJob == xi.job.BLM and math.random() <= 0.30 then
+    -- Check if today is Waterday and apply triple damage for BLM with 30% chance
+    if day == xi.day.WATERSDAY and mainJob == xi.job.BLM and math.random() <= 0.40 then
+        xi.spells.damage.useDamageSpell(caster, target, spell)
+        xi.spells.damage.useDamageSpell(caster, target, spell)
+        xi.spells.damage.useDamageSpell(caster, target, spell)
+    -- Otherwise, apply double damage for BLM with 30% chance
+    elseif mainJob == xi.job.BLM and math.random() <= 0.30 then
         xi.spells.damage.useDamageSpell(caster, target, spell)
         xi.spells.damage.useDamageSpell(caster, target, spell)
     end
