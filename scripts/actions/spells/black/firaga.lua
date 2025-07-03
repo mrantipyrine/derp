@@ -1,5 +1,5 @@
 -----------------------------------
--- Spell: Firaga
+-- Spell: Stonera
 -----------------------------------
 local spellObject = {}
 
@@ -8,6 +8,24 @@ spellObject.onMagicCastingCheck = function(caster, target, spell)
 end
 
 spellObject.onSpellCast = function(caster, target, spell)
+
+    local day = VanadielDayOfTheWeek()
+
+    if main == xi.job.BLM then
+        if caster:hasStatusEffect(xi.effect.BLAZE_SPIKESL) then
+            -- Check if today is Earthsday and apply triple damage for BLM with 30% chance
+            if day == xi.day.FIRESDAY and mainJob == xi.job.BLM and math.random() <= 0.40 then
+                xi.spells.damage.useDamageSpell(caster, target, spell)
+                xi.spells.damage.useDamageSpell(caster, target, spell)
+                xi.spells.damage.useDamageSpell(caster, target, spell)
+            -- Otherwise, apply double damage for BLM with 30% chance
+            elseif mainJob == xi.job.BLM and math.random() <= 0.30 then
+                xi.spells.damage.useDamageSpell(caster, target, spell)
+                xi.spells.damage.useDamageSpell(caster, target, spell)
+            end
+        end
+    end
+
     return xi.spells.damage.useDamageSpell(caster, target, spell)
 end
 
