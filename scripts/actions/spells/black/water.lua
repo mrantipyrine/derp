@@ -1,5 +1,9 @@
 -----------------------------------
--- Spell: Water
+-- Spell: Stone (or custom elemental spell)
+-- Applies Enstone and Stoneskin effects based on job, with a chance for double damage for BLM and MP refund.
+-- Obtained: Varies by job
+-- Recast Time: Varies
+-- Duration: 3:00
 -----------------------------------
 local spellObject = {}
 
@@ -8,27 +12,55 @@ spellObject.onMagicCastingCheck = function(caster, target, spell)
 end
 
 spellObject.onSpellCast = function(caster, target, spell)
-    local main = caster:getMainJob()
-    local sub = caster:getSubJob()
-    local level = caster:getMainLvl()
-    local duration = 360 
-    local power = (level >= 50 and level * 4 or level * 2) or math.floor(level / 2) 
-
-    -- RDM gets nice EN spell buff
-    if main == xi.job.RDM or sub == xi.job.RDM then
-        caster:addStatusEffect(xi.effect.ENWATER, power, 3, duration)
-    end 
+    local mainJob = caster:getMainJob()
+    local subJob = caster:getSubJob()
+    local mainLevel = caster:getMainLvl()
     
-    if (main == xi.job.RDM or main == xi.job.BLM or main == xi.job.WHM) or (sub == xi.job.RDM or sub == xi.job.BLM or sub == xi.job.WHM) then 
-        caster:addStatusEffect(xi.effect.AQUAVEIL, power, 3, duration)
+    -- Set duration (3 minutes = 180 seconds)
+    local duration = 180
+    
+    -- Calculate Enstone and Stoneskin power based on level and job
+    local enstonePower, stoneskinPower
+    if mainJob == xi.job.RDM then
+        -- Main RDM: higher power (level / 6, rounded down)
+        enstonePower = math.floor(mainLevel / 6)
+        stoneskinPower = math.floor(mainLevel / 6) * 10
+    elseif subJob == xi.job.RDM then
+        -- Sub RDM: lower power (level / 8, rounded down)
+        enstonePower = math.floor(mainLevel / 8)
+        stoneskinPower = math.floor(mainLevel / 8) * 10
+    elseif mainJob == xi.job.BLM or mainJob == xi.job.WHM then
+        -- Main BLM/WHM: Stoneskin only (level / 6, rounded down)
+        stoneskinPower = math.floor(mainLevel / 6) * 10
+    elseif subJob == xi.job.BLM or subJob == xi.job.WHM then
+        -- Sub BLM/WHM: Stoneskin only (level / 8, rounded down)
+        stoneskinPower = math.floor(mainLevel / 8) * 10
     end
-
-    -- Double DMG for BLM 
-    if main == xi.job.BLM and math.random() <= 0.30 then
-       xi.spells.damage.useDamageSpell(caster, target, spell)
-       xi.spells.damage.useDamageSpell(caster, target, spell)
-    end 
-
+    
+    -- Apply Enstone for RDM (main or sub)
+    if mainJob == xi.job.RDM or subJob == xi.job.RDM then
+        caster:addStatusEffect(xi.effect.ENWATER, enstonePower, 3, duration, 0, 10, 1)
+    end
+    
+    -- Apply Stoneskin for RDM, BLM, WHM (main or sub)
+    if mainJob == xi.job.RDM or mainJob == xi.job.BLM or mainJob == xi.job.WHM or
+       subJob == xi.job.RDM or subJob == xi.job.BLM or subJob == xi.job.WHM then
+        caster:addStatusEffect(xi.effect.AQUAVEIL, stoneskinPower, 3, duration, 0, 10, 1)
+    end
+    
+    -- 30% chance to refund MP cost
+    if math.random() <= 0.30 then
+        local mpCost = spell:getMPCost()
+        caster:setMP(caster:getMP() + mpCost)
+    end
+    
+    -- Double damage chance for main BLM (30%)
+    if mainJob == xi.job.BLM and math.random() <= 0.30 then
+        xi.spells.damage.useDamageSpell(caster, target, spell)
+        xi.spells.damage.useDamageSpell(caster, target, spell)
+    end
+    
+    -- Apply the damage spell and return its result
     return xi.spells.damage.useDamageSpell(caster, target, spell)
 end
 
