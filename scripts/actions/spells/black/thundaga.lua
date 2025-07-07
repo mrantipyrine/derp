@@ -14,7 +14,7 @@ spellObject.onSpellCast = function(caster, target, spell)
     if main == xi.job.BLM then
         if caster:hasStatusEffect(xi.effect.SHOCK_SPIKESL) then
             -- Check if today is Earthsday and apply triple damage for BLM with 30% chance
-            if day == xi.day.LIGHTNINGDAY and mainJob == xi.job.BLM and math.random() <= 0.30 then
+            if day == xi.day.LIGHTNINGDAY and mainJob == xi.job.BLM and math.random() <= 0.40 then
                 xi.spells.damage.useDamageSpell(caster, target, spell)
                 xi.spells.damage.useDamageSpell(caster, target, spell)
                 xi.spells.damage.useDamageSpell(caster, target, spell)
