@@ -24,18 +24,18 @@ spellObject.onSpellCast = function(caster, target, spell)
     local enstonePower, stoneskinPower
     if mainJob == xi.job.RDM then
         -- Main RDM: higher power (level / 6, rounded down)
-        enstonePower = math.floor(mainLevel / 6)
-        stoneskinPower = math.floor(mainLevel / 6) * 10
+        enstonePower = math.floor(mainLevel / 3)
+        stoneskinPower = math.floor(mainLevel) * 10
     elseif subJob == xi.job.RDM then
         -- Sub RDM: lower power (level / 8, rounded down)
-        enstonePower = math.floor(mainLevel / 8)
-        stoneskinPower = math.floor(mainLevel / 8) * 10
+        enstonePower = math.floor(mainLevel / 5)
+        stoneskinPower = math.floor(mainLevel) * 5
     elseif mainJob == xi.job.BLM or mainJob == xi.job.WHM then
         -- Main BLM/WHM: Stoneskin only (level / 6, rounded down)
-        stoneskinPower = math.floor(mainLevel / 6) * 15
+        stoneskinPower = math.floor(mainLevel) * 15
     elseif subJob == xi.job.BLM or subJob == xi.job.WHM then
         -- Sub BLM/WHM: Stoneskin only (level / 8, rounded down)
-        stoneskinPower = math.floor(mainLevel / 8) * 15
+        stoneskinPower = math.floor(mainLevel) * 10
     end
     
     -- Apply Enstone for RDM (main or sub)

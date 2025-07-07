@@ -18,14 +18,20 @@ spellObject.onSpellCast = function(caster, target, spell)
                 xi.spells.damage.useDamageSpell(caster, target, spell)
                 xi.spells.damage.useDamageSpell(caster, target, spell)
                 xi.spells.damage.useDamageSpell(caster, target, spell)
+                xi.spells.damage.useDamageSpell(caster, target, spell)
+                xi.spells.damage.useDamageSpell(caster, target, spell)
+                xi.spells.damage.useDamageSpell(caster, target, spell)
             -- Otherwise, apply double damage for BLM with 30% chance
             elseif mainJob == xi.job.BLM and math.random() <= 0.55 then
+                xi.spells.damage.useDamageSpell(caster, target, spell)
+                xi.spells.damage.useDamageSpell(caster, target, spell)
+                xi.spells.damage.useDamageSpell(caster, target, spell)
                 xi.spells.damage.useDamageSpell(caster, target, spell)
                 xi.spells.damage.useDamageSpell(caster, target, spell)
             end
         end
     end
-    
+
     -- 30% chance to refund MP cost
     if math.random() <= 0.30 then
         local mpCost = spell:getMPCost()

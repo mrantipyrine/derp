@@ -1,5 +1,9 @@
 -----------------------------------
--- Spell: Stonera
+-- Spell: Stone II 
+-- Applies Enstone and Stoneskin effects based on job, with a chance for double damage for BLM and MP refund.
+-- Obtained: Varies by job
+-- Recast Time: Varies
+-- Duration: 3:00
 -----------------------------------
 local spellObject = {}
 
@@ -18,8 +22,10 @@ spellObject.onSpellCast = function(caster, target, spell)
                 xi.spells.damage.useDamageSpell(caster, target, spell)
                 xi.spells.damage.useDamageSpell(caster, target, spell)
                 xi.spells.damage.useDamageSpell(caster, target, spell)
+                xi.spells.damage.useDamageSpell(caster, target, spell)
             -- Otherwise, apply double damage for BLM with 30% chance
             elseif mainJob == xi.job.BLM and math.random() <= 0.35 then
+                xi.spells.damage.useDamageSpell(caster, target, spell)
                 xi.spells.damage.useDamageSpell(caster, target, spell)
                 xi.spells.damage.useDamageSpell(caster, target, spell)
             end
