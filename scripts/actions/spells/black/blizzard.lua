@@ -46,7 +46,7 @@ spellObject.onSpellCast = function(caster, target, spell)
     -- Apply Stoneskin for RDM, BLM, WHM (main or sub)
     if mainJob == xi.job.RDM or mainJob == xi.job.BLM or mainJob == xi.job.WHM or
        subJob == xi.job.RDM or subJob == xi.job.BLM or subJob == xi.job.WHM then
-        caster:addStatusEffect(xi.effect.ICESPIKES, stoneskinPower, 3, duration, 0, 10, 1)
+        caster:addStatusEffect(xi.effect.ICE_SPIKES, stoneskinPower, 3, duration, 0, 10, 1)
     end
     
     -- 30% chance to refund MP cost

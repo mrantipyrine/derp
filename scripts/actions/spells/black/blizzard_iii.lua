@@ -12,7 +12,7 @@ spellObject.onSpellCast = function(caster, target, spell)
     local day = VanadielDayOfTheWeek()
 
     if main == xi.job.BLM then
-        if caster:hasStatusEffect(xi.effect.ICESPIKES) then
+        if caster:hasStatusEffect(xi.effect.ICES_SPIKES) then
             -- Check if today is Earthsday and apply triple damage for BLM with 30% chance
             if day == xi.day.ICEDAY and mainJob == xi.job.BLM and math.random() <= 0.65 then
                 xi.spells.damage.useDamageSpell(caster, target, spell)
