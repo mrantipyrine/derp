@@ -1,5 +1,9 @@
 -----------------------------------
--- Spell: Stonera
+-- Spell: Stone (or custom elemental spell)
+-- Applies Enstone and Stoneskin effects based on job, with a chance for double damage for BLM and MP refund.
+-- Obtained: Varies by job
+-- Recast Time: Varies
+-- Duration: 3:00
 -----------------------------------
 local spellObject = {}
 
@@ -26,6 +30,12 @@ spellObject.onSpellCast = function(caster, target, spell)
         end
     end
 
+    -- 30% chance to refund MP cost
+    if math.random() <= 0.30 then
+        local mpCost = spell:getMPCost()
+        caster:setMP(caster:getMP() + mpCost)
+    end
+    
     return xi.spells.damage.useDamageSpell(caster, target, spell)
 end
 

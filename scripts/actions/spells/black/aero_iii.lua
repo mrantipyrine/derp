@@ -26,6 +26,12 @@ spellObject.onSpellCast = function(caster, target, spell)
         end
     end
 
+    -- 30% chance to refund MP cost
+    if math.random() <= 0.30 then
+        local mpCost = spell:getMPCost()
+        caster:setMP(caster:getMP() + mpCost)
+    end
+    
     return xi.spells.damage.useDamageSpell(caster, target, spell)
 end
 
