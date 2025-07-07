@@ -1,5 +1,5 @@
 -----------------------------------
--- Spell: Aero II
+-- Spell: Stonera
 -----------------------------------
 local spellObject = {}
 
@@ -8,24 +8,21 @@ spellObject.onMagicCastingCheck = function(caster, target, spell)
 end
 
 spellObject.onSpellCast = function(caster, target, spell)
-    local main = caster:getMainJob()
-    local sub = caster:getSubJob()
-    local buff = caster:hasStatusEffect(xi.effect.BLINK)
-    local random = math.random()
 
-    -- 30% increased chance to triple cast if player has Shock Spikes. 
-    -- This makes rotations fun
-    -- Extend this with items 
-    if buff then
-        -- maybe if X item is equipped then X chance to quad cast 
-        -- maybe if elemental resistance is > X then quad cast chance
-        if main == xi.job.BLM then
-            if random <= 0.30 then
+    local day = VanadielDayOfTheWeek()
+
+    if main == xi.job.BLM then
+        if caster:hasStatusEffect(xi.effect.BLINK) then
+            -- Check if today is Earthsday and apply triple damage for BLM with 30% chance
+            if day == xi.day.WINDSSDAY and mainJob == xi.job.BLM and math.random() <= 0.55 then
+                xi.spells.damage.useDamageSpell(caster, target, spell)
+                xi.spells.damage.useDamageSpell(caster, target, spell)
+                xi.spells.damage.useDamageSpell(caster, target, spell)
+            -- Otherwise, apply double damage for BLM with 30% chance
+            elseif mainJob == xi.job.BLM and math.random() <= 0.35 then
+                xi.spells.damage.useDamageSpell(caster, target, spell)
                 xi.spells.damage.useDamageSpell(caster, target, spell)
             end
-        elseif random <= 0.10 then
-            xi.spells.damage.useDamageSpell(caster, target, spell)
-            xi.spells.damage.useDamageSpell(caster, target, spell)
         end
     end
 
