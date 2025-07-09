@@ -57,12 +57,12 @@ spellObject.onSpellCast = function(caster, target, spell, customMultiplier)
 
         -- Apply Ice Spikes bonus
         if caster:hasStatusEffect(xi.effect.STONESKIN) then
-            multiplier = 10
+            multiplier = 2
         end
 
         -- Apply Iceday bonus (overrides Ice Spikes if both are present)
         if day == xi.day.EARTHSDAY then
-            multiplier = 30 
+            multiplier = 5 
         end
 
         -- Apply random multiplier (mutually exclusive)

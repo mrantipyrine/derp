@@ -50,10 +50,10 @@ spellObject.onSpellCast = function(caster, target, spell, customMultiplier)
 
         -- Apply multipliers
         if caster:hasStatusEffect(xi.effect.AQUAVEIL) then
-            multiplier = 10
+            multiplier = 2
         end
-        if day == xi.day.LIGHTNINGDAY then
-            multiplier = 30
+        if day == xi.day.WATERSDAY then
+            multiplier = 5
         end
 
         -- Random multiplier (mutually exclusive)

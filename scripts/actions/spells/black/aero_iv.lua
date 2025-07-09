@@ -28,7 +28,7 @@ spellObject.onSpellCast = function(caster, target, spell, customMultiplier)
 
         -- Apply Iceday bonus (overrides Ice Spikes if both are present)
         if day == xi.day.WINDSDAY then
-            multiplier = 30 
+            multiplier = 20
         end
 
         -- Apply random multiplier (mutually exclusive)

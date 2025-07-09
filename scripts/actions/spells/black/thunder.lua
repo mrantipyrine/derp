@@ -50,10 +50,10 @@ spellObject.onSpellCast = function(caster, target, spell, customMultiplier)
 
         -- Apply multipliers
         if caster:hasStatusEffect(xi.effect.SHOCK_SPIKES) then
-            multiplier = 10
+            multiplier = 2
         end
         if day == xi.day.LIGHTNINGDAY then
-            multiplier = 30
+            multiplier = 5
         end
 
         -- Random multiplier (mutually exclusive)
