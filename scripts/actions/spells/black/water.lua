@@ -1,9 +1,5 @@
 -----------------------------------
--- Spell: Stone (or custom elemental spell)
--- Applies Enstone and Stoneskin effects based on job, with a chance for double damage for BLM and MP refund.
--- Obtained: Varies by job
--- Recast Time: Varies
--- Duration: 3:00
+-- Water
 -----------------------------------
 local spellObject = {}
 
@@ -11,62 +7,65 @@ spellObject.onMagicCastingCheck = function(caster, target, spell)
     return 0
 end
 
-spellObject.onSpellCast = function(caster, target, spell)
+spellObject.onSpellCast = function(caster, target, spell, customMultiplier)
     local mainJob = caster:getMainJob()
     local subJob = caster:getSubJob()
     local mainLevel = caster:getMainLvl()
-    -- Set duration (3 minutes = 180 seconds)
-    local duration = 180
     local day = VanadielDayOfTheWeek()
+    local multiplier = customMultiplier or 1
+    local duration = 180 -- 3 minutes
 
-    -- Calculate Enstone and Stoneskin power based on level and job
-    local enstonePower, stoneskinPower
+    -- Calculate Enwater and Aquaveil power
+    local enwaterPower, aquaveilPower = 0, 0
     if mainJob == xi.job.RDM then
-        -- Main RDM: higher power (level / 6, rounded down)
-        enstonePower = math.floor(mainLevel / 6)
-        stoneskinPower = math.floor(mainLevel / 6) * 10
+        enwaterPower = math.floor(mainLevel / 6)
+        aquaveilPower = enwaterPower * 10
     elseif subJob == xi.job.RDM then
-        -- Sub RDM: lower power (level / 8, rounded down)
-        enstonePower = math.floor(mainLevel / 8)
-        stoneskinPower = math.floor(mainLevel / 8) * 10
+        enwaterPower = math.floor(mainLevel / 8)
+        aquaveilPower = enwaterPower * 10
     elseif mainJob == xi.job.BLM or mainJob == xi.job.WHM then
-        -- Main BLM/WHM: Stoneskin only (level / 6, rounded down)
-        stoneskinPower = math.floor(mainLevel / 6) * 10
+        aquaveilPower = math.floor(mainLevel / 6) * 10
     elseif subJob == xi.job.BLM or subJob == xi.job.WHM then
-        -- Sub BLM/WHM: Stoneskin only (level / 8, rounded down)
-        stoneskinPower = math.floor(mainLevel / 8) * 10
+        aquaveilPower = math.floor(mainLevel / 8) * 10
     end
-    
-    -- Apply Enstone for RDM (main or sub)
-    if mainJob == xi.job.RDM or subJob == xi.job.RDM then
-        caster:addStatusEffect(xi.effect.ENWATER, enstonePower, 3, duration, 0, 10, 1)
+
+    -- Apply Enwater for RDM (main or sub)
+    if enwaterPower > 0 then
+        caster:addStatusEffect(xi.effect.ENWATER, enwaterPower, 3, duration, 0, 10, 1)
     end
-    
-    -- Apply Stoneskin for RDM, BLM, WHM (main or sub)
-    if mainJob == xi.job.RDM or mainJob == xi.job.BLM or mainJob == xi.job.WHM or
-       subJob == xi.job.RDM or subJob == xi.job.BLM or subJob == xi.job.WHM then
-        caster:addStatusEffect(xi.effect.AQUAVEIL, stoneskinPower, 3, duration, 0, 10, 1)
+
+    -- Apply Ice Spikes for RDM, BLM, WHM (main or sub)
+    if aquaveilPower > 0 then
+        caster:addStatusEffect(xi.effect.AQUAVEIL, aquaveilPower, 3, duration, 0, 10, 1)
     end
-    
-    -- 30% chance to refund MP cost
-    if math.random() <= 0.30 then
-        local mpCost = spell:getMPCost()
-        caster:setMP(caster:getMP() + mpCost)
+
+    -- Special logic for BLM main job
+    if mainJob == xi.job.BLM then
+        -- 30% chance to refund MP cost
+        if math.random(100) <= 30 then
+            local mpCost = spell:getMPCost()
+            local newMP = math.min(caster:getMP() + mpCost, caster:getMaxMP())
+            caster:setMP(newMP)
+        end
+
+        -- Apply multipliers
+        if caster:hasStatusEffect(xi.effect.AQUAVEIL) then
+            multiplier = 10
+        end
+        if day == xi.day.LIGHTNINGDAY then
+            multiplier = 30
+        end
+
+        -- Random multiplier (mutually exclusive)
+        local roll = math.random(100)
+        if roll <= 5 then
+            multiplier = multiplier * 2      -- 5% chance
+        elseif roll <= 25 then
+            multiplier = multiplier * 1.5    -- next 20% chance
+        end
     end
-    
-    -- Check if today is Waterday and apply triple damage for BLM with 30% chance
-    if day == xi.day.WATERSDAY and mainJob == xi.job.BLM and math.random() <= 0.40 then
-        xi.spells.damage.useDamageSpell(caster, target, spell)
-        xi.spells.damage.useDamageSpell(caster, target, spell)
-        xi.spells.damage.useDamageSpell(caster, target, spell)
-    -- Otherwise, apply double damage for BLM with 30% chance
-    elseif mainJob == xi.job.BLM and math.random() <= 0.30 then
-        xi.spells.damage.useDamageSpell(caster, target, spell)
-        xi.spells.damage.useDamageSpell(caster, target, spell)
-    end
-    
-    -- Apply the damage spell and return its result
-    return xi.spells.damage.useDamageSpell(caster, target, spell)
+
+    return xi.spells.damage.useDamageSpell(caster, target, spell, multiplier)
 end
 
 return spellObject

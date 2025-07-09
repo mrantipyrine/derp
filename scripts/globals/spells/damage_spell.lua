@@ -1013,8 +1013,10 @@ end
 -----------------------------------
 -- Spell Helper Function
 -----------------------------------
-xi.spells.damage.useDamageSpell = function(caster, target, spell)
+xi.spells.damage.useDamageSpell = function(caster, target, spell, customMultiplier)
     local finalDamage = 0 -- The variable we want to calculate
+
+    customMultiplier = customMultiplier or 1
 
     -- Get Tabled Variables.
     local spellId      = spell:getID()
@@ -1122,6 +1124,7 @@ xi.spells.damage.useDamageSpell = function(caster, target, spell)
     finalDamage = math.floor(finalDamage * nukeAbsorbOrNullify)
     finalDamage = math.floor(finalDamage * magicBurst)
     finalDamage = math.floor(finalDamage * magicBurstBonus)
+    finalDamage = math.floor(finalDamage * customMultiplier) -- Apply custom multiplier
 
     -- Handle "Nuke Wall". It must be handled after all previous calculations, but before clamp.
     if nukeAbsorbOrNullify > 0 then

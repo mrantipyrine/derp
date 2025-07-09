@@ -1,9 +1,5 @@
 -----------------------------------
--- Spell: Stone (or custom elemental spell)
--- Applies Enstone and Stoneskin effects based on job, with a chance for double damage for BLM and MP refund.
--- Obtained: Varies by job
--- Recast Time: Varies
--- Duration: 3:00
+-- Spell: Stone 
 -----------------------------------
 local spellObject = {}
 
@@ -16,6 +12,7 @@ spellObject.onSpellCast = function(caster, target, spell)
     local subJob = caster:getSubJob()
     local mainLevel = caster:getMainLvl()
     local day = VanadielDayOfTheWeek()
+    local multi = customMultiplier or 1
 
     -- Set duration (3 minutes = 180 seconds)
     local duration = 180
@@ -49,22 +46,34 @@ spellObject.onSpellCast = function(caster, target, spell)
         caster:addStatusEffect(xi.effect.STONESKIN, stoneskinPower, 3, duration, 0, 10, 1)
     end
     
-    -- 30% chance to refund MP cost
-    if math.random() <= 0.30 then
-        local mpCost = spell:getMPCost()
-        caster:setMP(caster:getMP() + mpCost)
+    -- Only apply special logic for BLM
+    if mainJob == xi.job.BLM then
+        -- 30% chance to refund MP cost
+        if math.random(100) <= 30 then
+            local mpCost = spell:getMPCost()
+            local newMP = math.min(caster:getMP() + mpCost, caster:getMaxMP())
+            caster:setMP(newMP)
+        end
+
+        -- Apply Ice Spikes bonus
+        if caster:hasStatusEffect(xi.effect.STONESKIN) then
+            multiplier = 10
+        end
+
+        -- Apply Iceday bonus (overrides Ice Spikes if both are present)
+        if day == xi.day.EARTHSDAY then
+            multiplier = 30 
+        end
+
+        -- Apply random multiplier (mutually exclusive)
+        local roll = math.random(100)
+        if roll <= 5 then
+            multiplier = multiplier * 2  -- 5% chance
+        elseif roll <= 25 then
+            multiplier = multiplier * 1.5 -- next 20% chance (total 25%)
+        end
     end
-    
-    -- Check if today is Earthsday and apply triple damage for BLM with 30% chance
-    if day == xi.day.EARTHSDAY and mainJob == xi.job.BLM and math.random() <= 0.40 then
-        xi.spells.damage.useDamageSpell(caster, target, spell)
-        xi.spells.damage.useDamageSpell(caster, target, spell)
-        xi.spells.damage.useDamageSpell(caster, target, spell)
-    -- Otherwise, apply double damage for BLM with 30% chance
-    elseif mainJob == xi.job.BLM and math.random() <= 0.30 then
-        xi.spells.damage.useDamageSpell(caster, target, spell)
-        xi.spells.damage.useDamageSpell(caster, target, spell)
-    end
+
     -- Apply the damage spell and return its result
     return xi.spells.damage.useDamageSpell(caster, target, spell)
 end
