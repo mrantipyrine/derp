@@ -27,7 +27,7 @@ spellObject.onSpellCast = function(caster, target, spell, customMultiplier)
         end
 
         -- Apply Iceday bonus (overrides Ice Spikes if both are present)
-        if day == xi.day.WINDSDAYY then
+        if day == xi.day.WINDSDAY then
             multiplier = 15
         end
 
