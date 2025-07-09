@@ -7,7 +7,7 @@ spellObject.onMagicCastingCheck = function(caster, target, spell)
     return 0
 end
 
-spellObject.onSpellCast = function(caster, target, spell)
+spellObject.onSpellCast = function(caster, target, spell, customMultiplier)
     local mainJob = caster:getMainJob()
     local subJob = caster:getSubJob()
     local mainLevel = caster:getMainLvl()
@@ -75,7 +75,7 @@ spellObject.onSpellCast = function(caster, target, spell)
     end
 
     -- Apply the damage spell and return its result
-    return xi.spells.damage.useDamageSpell(caster, target, spell)
+    return xi.spells.damage.useDamageSpell(caster, target, spell, multiplier)
 end
 
 return spellObject
