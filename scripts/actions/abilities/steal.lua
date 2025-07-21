@@ -12,23 +12,33 @@ abilityObject.onAbilityCheck = function(player, target, ability)
 end
 
 abilityObject.onUseAbility = function(player, target, ability, action)
-
     local level = player:getMainLvl()
-    local acc = (level >= 50 and level * 4 or level * 2) or math.floor(level / 2) 
-    local att = (level >= 50 and level * 4 or level * 2) or math.floor(level / 2) 
-    local duration = 320 
-    local evasion  = level * 4 
-    local tp = math.random(1000, 2000)
+    local duration = 320
+    local equippedNECK = player:getEquipID(xi.slot.NECK)
+
+    -- Stat multiplier: 10 at level 5, +1 per level above 5
+    local statMultiplier = 10 + math.max(0, level - 5)
+    local acc = level * statMultiplier
+    local att = acc
+    local evasion = level * 4
+    local regain = math.random(10, 50)
 
     if player:getMainJob() == xi.job.THF then
-        player:addMod(xi.mod.ACC, acc, 3, duration, 3, 10, 1)
-        player:addMod(xi.mod.ATT, att, 3, duration, 3, 10, 1)
+        -- Temporary stat boosts for Thief main job
         player:addStatusEffect(xi.effect.EVASION_BOOST, evasion, 3, duration, 0, 10, 1)
-        player:addTP(tp)
-    end 
-    
+        player:addStatusEffect(xi.effect.REGAIN, regain, 0, duration)
+    end
+
+    if equippedNECK == 13112 then 
+        local dexIncrease = target:getMainLvl()
+        local agiIncrease = target:getMainLvl()
+        local neckDuration = 180
+
+        player:addStatusEffect(xi.effect.DEX_BOOST, dexIncrease, 0, neckDuration, 0, 0, 0)
+        player:addStatusEffect(xi.effect.AGI_BOOST, agiIncrease, 0, neckDuration, 0, 0, 0)
+    end
+
     return xi.job_utils.thief.useSteal(player, target, ability, action)
 end
 
 return abilityObject
-                           
