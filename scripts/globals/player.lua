@@ -3,6 +3,7 @@ require('scripts/globals/gear_sets')
 require('scripts/globals/quests')
 require('scripts/globals/teleports')
 require('scripts/events/login_campaign')
+require('scripts/globals/modifications')
 -----------------------------------
 require('scripts/quests/full_speed_ahead')
 -----------------------------------
@@ -62,7 +63,7 @@ xi.player.charCreate = function(player)
             player:addItem(v)
         end
     end
-
+  
     -- add nation-specific map
     player:addKeyItem(nationInfo.map)
 
@@ -149,6 +150,7 @@ end
 
 -- called by core after a player logs into the server or zones
 xi.player.onGameIn = function(player, firstLogin, zoning)
+    
     if not zoning then
         -- things checked ONLY during logon go here
         if firstLogin then
@@ -187,6 +189,8 @@ xi.player.onGameIn = function(player, firstLogin, zoning)
 
     -- apply mods from gearsets (scripts/globals/gear_sets.lua)
     xi.gear_sets.checkForGearSet(player)
+ 
+    xi.solo_modifications.applyBuffs(player)
 
     -- god mode
     if player:getCharVar('GodMode') == 1 then
@@ -245,6 +249,7 @@ xi.player.onPlayerDeath = function(player)
 end
 
 xi.player.onPlayerLevelUp = function(player)
+    -- give items --
 end
 
 xi.player.onPlayerLevelDown = function(player)

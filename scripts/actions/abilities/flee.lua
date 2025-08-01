@@ -20,18 +20,16 @@ end
 
 abilityObject.onUseAbility = function(player, target, ability)
     
-    regenDuration = 60 
-    regenAmount = 30
+    local duration = 200
+    local power = player:getMainLvl()
 
     -- Making Flee useful for solo play 
     if player:getMainJob() == xi.job.THF then
-       regenDuration = regenDuration * 10
-       regainAmount = math.random(10, 25)
-       regainDuration = 240
+       power = power * 10
     end
 
-    player:addStatusEffect(xi.effect.REGAIN, regainAmount, 3, regainDuration, 0)
-    player:addStatusEffect(xi.effect.REGEN, regenAmount, 3, regenDuration, 0, 10, 1)
+    player.delMod(xi.mod.DOUBLE_ATTACK, power)
+    player:addMod(xi.mod.DOUBLE_ATTACK, power, 3, duration)
 
     xi.job_utils.thief.useFlee(player, target, ability)
 end

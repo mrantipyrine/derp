@@ -18,21 +18,6 @@ spellObject.onSpellCast = function(caster, target, spell)
     local power = 0
     local basecure = 0
     local final = 0
-    local mainJob = caster:getMainJob()
-    -- Set duration (3 minutes = 180 seconds)
-    local duration = 180
-    local mainLevel = caster:getMainLvl()
-    -- Calculate Enstone and Stoneskin power based on level and job
-    local enLightPower = caster:getMainLvl() * 5
-
-    if day == xi.day.LIGHTSDAY then
-        enLightPower = caster:getMainLvl() * 10
-
-    end
-
-    if mainJob == xi.job.WHM then
-        caster:addStatusEffect(xi.effect.ENLIGHT, enLightPower, 3, duration, 0, 10, 1)
-    end 
 
     local minCure = 10
     if xi.settings.main.USE_OLD_CURE_FORMULA then
