@@ -407,7 +407,7 @@ xi.dynamicWorld.getRandomSpawnPoint = function(zone)
                 local testZ = z + offsetZ
 
                 -- Validate against the zone's navmesh
-                if zone:isNavigablePoint(testX, y, testZ) then
+                if zone:isNavigablePoint({ x = testX, y = y, z = testZ }) then
                     return {
                         x = testX,
                         y = y,
