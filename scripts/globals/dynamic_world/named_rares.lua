@@ -173,8 +173,8 @@ nr.db = {
     -- ================================================================
     cottontail_tommy =
     {
-        name        = 'Cottontail Tommy',
-        packetName  = 'Cottontail Tommy',
+        name        = 'Cottontail Tom',
+        packetName  = 'Cottontail Tom',
         groupRef    = { groupId = 6, groupZoneId = 100 },   -- TODO: verify rabbit groupRef
         zones       = { 100, 115 },
         level       = { 5, 7 },
@@ -193,8 +193,8 @@ nr.db = {
 
     hopscotch_harvey =
     {
-        name        = 'Hopscotch Harvey',
-        packetName  = 'Hopscotch Harvey',
+        name        = 'Hopscotch Harv',
+        packetName  = 'Hopscotch Harv',
         groupRef    = { groupId = 6, groupZoneId = 100 },
         zones       = { 101, 116 },
         level       = { 10, 13 },
@@ -213,8 +213,8 @@ nr.db = {
 
     bunbun_benedict =
     {
-        name        = 'Bun-bun Benedict',
-        packetName  = 'Bun-bun Benedict',
+        name        = 'Bunbun Benedict',
+        packetName  = 'Bunbun Benedict',
         groupRef    = { groupId = 6, groupZoneId = 100 },
         zones       = { 103, 126, 111 },
         level       = { 22, 28 },
@@ -233,8 +233,8 @@ nr.db = {
 
     twitchy_theodore =
     {
-        name        = 'Twitchy Theodore',
-        packetName  = 'Twitchy Theodore',
+        name        = 'Twitchy Theo',
+        packetName  = 'Twitchy Theo',
         groupRef    = { groupId = 6, groupZoneId = 100 },
         zones       = { 103, 126, 123 },
         level       = { 38, 45 },
@@ -256,8 +256,8 @@ nr.db = {
     -- ================================================================
     crab_leg_cameron =
     {
-        name        = 'Crab Leg Cameron',
-        packetName  = 'Crab Leg Cameron',
+        name        = 'Crableg Cameron',
+        packetName  = 'Crableg Cameron',
         groupRef    = { groupId = 6, groupZoneId = 100 },   -- TODO: verify crab groupRef
         zones       = { 102, 107 },
         level       = { 12, 16 },
@@ -316,8 +316,8 @@ nr.db = {
 
     dungeness_duncan =
     {
-        name        = 'Dungeness Duncan',
-        packetName  = 'Dungeness Duncan',
+        name        = 'Dungeness Dunc',
+        packetName  = 'Dungeness Dunc',
         groupRef    = { groupId = 6, groupZoneId = 100 },
         zones       = { 123, 124 },
         level       = { 45, 52 },
@@ -339,8 +339,8 @@ nr.db = {
     -- ================================================================
     capn_chanterelle =
     {
-        name        = "Cap'n Chanterelle",
-        packetName  = "Cap'n Chanterelle",
+        name        = 'Cap Chanterelle',
+        packetName  = 'Cap Chanterelle',
         groupRef    = { groupId = 6, groupZoneId = 100 },   -- TODO: verify fungar groupRef
         zones       = { 111, 112, 103 },
         level       = { 18, 22 },
@@ -465,8 +465,8 @@ nr.db = {
     -- ================================================================
     whiskers_wilhelmina =
     {
-        name        = 'Whiskers Wilhelmina',
-        packetName  = 'Whiskers Wilhelmina',
+        name        = 'Whiskers Mina',
+        packetName  = 'Whiskers Mina',
         groupRef    = { groupId = 6, groupZoneId = 100 },   -- TODO: verify coeurl groupRef
         zones       = { 113, 114, 122 },
         level       = { 30, 36 },
@@ -485,8 +485,8 @@ nr.db = {
 
     purring_patricia =
     {
-        name        = 'Purring Patricia',
-        packetName  = 'Purring Patricia',
+        name        = 'Purring Patty',
+        packetName  = 'Purring Patty',
         groupRef    = { groupId = 6, groupZoneId = 100 },
         zones       = { 113, 123, 124 },
         level       = { 42, 48 },
@@ -505,8 +505,8 @@ nr.db = {
 
     nine_lives_nigel =
     {
-        name        = 'Nine Lives Nigel',
-        packetName  = 'Nine Lives Nigel',
+        name        = 'NineLives Nigel',
+        packetName  = 'NineLives Nigel',
         groupRef    = { groupId = 6, groupZoneId = 100 },
         zones       = { 51, 61, 68 },
         level       = { 58, 65 },
@@ -634,8 +634,8 @@ nr.db = {
     -- ================================================================
     click_clack_clayton =
     {
-        name        = 'Click Clack Clayton',
-        packetName  = 'Click Clack Clayton',
+        name        = 'Click Clayton',
+        packetName  = 'Click Clayton',
         groupRef    = { groupId = 6, groupZoneId = 100 },   -- TODO: verify beetle groupRef
         zones       = { 106, 107, 108 },
         level       = { 10, 15 },
@@ -674,8 +674,8 @@ nr.db = {
 
     scarab_sebastian =
     {
-        name        = 'Scarab Sebastian',
-        packetName  = 'Scarab Sebastian',
+        name        = 'Scarab Bastian',
+        packetName  = 'Scarab Bastian',
         groupRef    = { groupId = 6, groupZoneId = 100 },
         zones       = { 68, 79, 65 },
         level       = { 45, 52 },
