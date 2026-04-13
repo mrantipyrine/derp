@@ -186,17 +186,17 @@ xi.settings.dynamicworld =
         ronfaure =
         {
             zones = { 100, 101, 102, 104, 105 },
-            levelRange = { 1, 35 },
+            levelRange = { 1, 15 },
         },
         gustaberg =
         {
             zones = { 106, 107, 108, 109, 110 },
-            levelRange = { 1, 35 },
+            levelRange = { 1, 15 },
         },
         sarutabaruta =
         {
             zones = { 115, 116, 117, 118, 119, 120 },
-            levelRange = { 1, 35 },
+            levelRange = { 1, 15 },
         },
         midlands =
         {
