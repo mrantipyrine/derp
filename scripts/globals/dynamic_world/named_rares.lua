@@ -969,16 +969,25 @@ nr.awardLoot = function(key, mob, player)
     local config = nr.db[key]
     if not config or not player then return end
 
+    local gotSomething = false
     for _, entry in ipairs(config.loot) do
         if math.random(1000) <= entry.rate then
+            -- addItem triggers the standard "You obtained X." message automatically
             local added = player:addItem(entry.itemId, 1)
             if added then
-                player:printToPlayer(
-                    string.format('[Named Rare] Obtained: %s!', entry.itemId),
-                    xi.msg.channel.SYSTEM_3
-                )
+                gotSomething = true
+            else
+                -- Inventory full — drop on ground near player
+                player:printToPlayer('[Named Rare] Your inventory is full! Loot dropped nearby.', xi.msg.channel.SYSTEM_3)
             end
         end
+    end
+
+    if gotSomething then
+        player:printToPlayer(
+            string.format('[Named Rare] You defeated %s!', config.name),
+            xi.msg.channel.SYSTEM_3
+        )
     end
 end
 
