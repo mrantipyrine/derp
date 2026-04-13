@@ -30,7 +30,7 @@ local function printErr(player, msg)
 end
 
 local function showHelp(player)
-    player:printToPlayer('[DynWorld] Commands: status, spawn [tier] [count], clear, start, stop, info, synergies, chain', xi.msg.channel.SYSTEM_3)
+    player:printToPlayer('[DynWorld] Commands: status, spawn [tier] [count], clear, start, stop, info, synergies, chain, rares, rare [key]', xi.msg.channel.SYSTEM_3)
     player:printToPlayer('[DynWorld] Tiers: 1=Wanderer, 2=Nomad, 3=Elite, 4=Apex', xi.msg.channel.SYSTEM_3)
 end
 
@@ -182,6 +182,33 @@ commandObj.onTrigger = function(player, args)
         cmdSynergies(player)
     elseif subcommand == 'chain' then
         cmdChain(player)
+    elseif subcommand == 'rares' then
+        -- List all named rares and their status
+        local list = xi.dynamicWorld.namedRares.getStatus()
+        player:printToPlayer(string.format('[DynWorld] Named Rares (%d total):', #list), xi.msg.channel.SYSTEM_3)
+        for _, entry in ipairs(list) do
+            local stateStr
+            if entry.alive then
+                stateStr = 'ALIVE'
+            elseif entry.ready then
+                stateStr = 'READY TO SPAWN'
+            else
+                local mins = math.floor(entry.timeLeft / 60)
+                local hrs  = math.floor(mins / 60)
+                mins = mins % 60
+                stateStr = string.format('%dh%02dm', hrs, mins)
+            end
+            player:printToPlayer(string.format('  %-25s [%s]', entry.name, stateStr), xi.msg.channel.SYSTEM_3)
+        end
+    elseif subcommand == 'rare' then
+        -- Force-spawn a specific named rare by key
+        local key = parts[2]
+        if not key then
+            printErr(player, '[DynWorld] Usage: !dynworld rare <key>  (use !dynworld rares to see keys)')
+            return
+        end
+        local ok, msg = xi.dynamicWorld.namedRares.forceSpawn(key)
+        player:printToPlayer('[DynWorld] ' .. msg, xi.msg.channel.SYSTEM_3)
     else
         showHelp(player)
     end

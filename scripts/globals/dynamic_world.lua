@@ -77,6 +77,7 @@ require('scripts/globals/dynamic_world/roaming')
 require('scripts/globals/dynamic_world/loot')
 require('scripts/globals/dynamic_world/behaviors')
 require('scripts/globals/dynamic_world/synergies')
+require('scripts/globals/dynamic_world/named_rares')
 
 -----------------------------------
 -- Utility: Safe settings access
@@ -137,9 +138,13 @@ xi.dynamicWorld.init = function()
     state.initialized = true
     state.running = true
 
-    printf('[DynamicWorld] Initialized. %d eligible zones, %d regions.',
+    -- Init named rares (clears stale alive references from last session)
+    xi.dynamicWorld.namedRares.init()
+
+    printf('[DynamicWorld] Initialized. %d eligible zones, %d regions, %d named rares.',
         xi.dynamicWorld.countKeys(state.eligibleZones),
-        xi.dynamicWorld.countKeys(state.regionData))
+        xi.dynamicWorld.countKeys(state.regionData),
+        xi.dynamicWorld.countKeys(xi.dynamicWorld.namedRares.db))
 end
 
 -----------------------------------
@@ -180,6 +185,14 @@ xi.dynamicWorld.onZoneTick = function(zone)
 
     -- Cleanup stale chains
     xi.dynamicWorld.cleanupChains(now)
+
+    -- Named rare tick (rate-limited to once every 5 minutes globally)
+    local nrInterval = 300
+    if not state.lastNamedRareTick then state.lastNamedRareTick = 0 end
+    if now - state.lastNamedRareTick >= nrInterval then
+        state.lastNamedRareTick = now
+        xi.dynamicWorld.namedRares.tick()
+    end
 end
 
 -----------------------------------
