@@ -3,7 +3,7 @@ require('scripts/globals/gear_sets')
 require('scripts/globals/quests')
 require('scripts/globals/teleports')
 require('scripts/events/login_campaign')
-require('scripts/globals/modifications')
+require('scripts/globals/solo_modifications')
 -----------------------------------
 require('scripts/quests/full_speed_ahead')
 -----------------------------------
@@ -29,13 +29,14 @@ local startingNationInfo =
 
 local startingJobGear =
 {
-    [xi.job.WAR] = { xi.item.ONION_SWORD                               },
-    [xi.job.MNK] = { xi.item.WHITE_BELT                                },
+    [xi.job.WAR] = { xi.item.ONION_SWORD,  xi.item.RUSTY_GREATSWORD    },
+    [xi.job.MNK] = { xi.item.WHITE_BELT,   xi.item.FRUIT_PUNCHES      },
     [xi.job.WHM] = { xi.item.ONION_ROD,    xi.item.SCROLL_OF_CURE_EX  },
     [xi.job.BLM] = { xi.item.ONION_STAFF,  xi.item.SCROLL_OF_STONE_EX },
     [xi.job.RDM] = { xi.item.ONION_DAGGER, xi.item.SCROLL_OF_DIA_EX   },
-    [xi.job.THF] = { xi.item.ONION_KNIFE                               },
+    [xi.job.THF] = { xi.item.ONION_KNIFE,  xi.item.ONION_DAGGER       },
 }
+
 
 -----------------------------------
 -- public functions
