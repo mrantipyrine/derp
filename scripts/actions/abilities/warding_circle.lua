@@ -19,6 +19,14 @@ abilityObject.onUseAbility = function(player, target, ability)
         power = 15
     end
 
+    -- Solo Synergy: solo SAM gets DEF/ATT bonus and Regen instead of relying on party buff
+    if player:getPartySize() <= 2 and xi.soloSynergy then
+        duration = duration + 60
+        player:addStatusEffect(xi.effect.REGEN, xi.soloSynergy.scaledPower(player, 2, 0.1), 3, 90)
+        player:addStatusEffect(xi.effect.DEF_BONUS, 10, 0, 90)
+        xi.soloSynergy.flash(player, 'Warding Circle: self-fortified (solo bonus)!')
+    end
+
     target:addStatusEffect(xi.effect.WARDING_CIRCLE, power, 0, duration)
 end
 

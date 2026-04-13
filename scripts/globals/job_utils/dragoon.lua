@@ -874,3 +874,87 @@ xi.job_utils.dragoon.addWyvernExp = function(player, exp)
 
     return numLevelUps
 end
+
+-- ══════════════════════════════════════════════════════════════
+-- Solo Synergy — Dragoon
+-- ══════════════════════════════════════════════════════════════
+-- Design fantasy: dragon-bonded warrior. The wyvern keeps you
+-- alive solo via Healing Breath procs. Jump generates TP.
+-- High Jump also drops a DEF buff. Ancient Circle makes dragon
+-- hunts way more rewarding. Spirit Surge powers up and heals.
+-- ══════════════════════════════════════════════════════════════
+require('scripts/globals/solo_synergy')
+
+do
+    local ss   = xi.soloSynergy
+    local _DRG = xi.job_utils.dragoon
+
+    -- Jump — solo: bonus TP on landing.
+    local _jump = _DRG.useJump
+    _DRG.useJump = function(player, target, ability, action)
+        local result = _jump(player, target, ability, action)
+        if player:getPartySize() <= 2 then
+            local tp = math.random(150, 300)
+            player:addTP(tp)
+            ss.addMomentum(player, 1)
+            ss.flash(player, string.format('Solo Jump: TP+%d', tp))
+        end
+        return result
+    end
+
+    -- High Jump — solo: also applies DEF Down on target.
+    local _hjump = _DRG.useHighJump
+    _DRG.useHighJump = function(player, target, ability, action)
+        local result = _hjump(player, target, ability, action)
+        if player:getPartySize() <= 2 and target and target:isMob() then
+            target:addStatusEffect(xi.effect.DEFENSE_DOWN, 15, 0, 30)
+            ss.flash(player, 'Solo High Jump: target DEF Down.')
+        end
+        return result
+    end
+
+    -- Spirit Jump — solo: also grants an elemental ATT bonus briefly.
+    local _sjump = _DRG.useSpiritJump
+    _DRG.useSpiritJump = function(player, target, ability, action)
+        local result = _sjump(player, target, ability, action)
+        if player:getPartySize() <= 2 then
+            player:addStatusEffect(xi.effect.ATT_BOOST, 20, 0, 20)
+            ss.addMomentum(player, 1)
+        end
+        return result
+    end
+
+    -- Ancient Circle — solo: bigger bonus vs dragons + momentum on use.
+    local _ac = _DRG.useAncientCircle
+    _DRG.useAncientCircle = function(player, target, ability)
+        _ac(player, target, ability)
+        if player:getPartySize() <= 2 then
+            player:addStatusEffect(xi.effect.ATT_BOOST, 15, 0, 180)
+            ss.addMomentum(player, 1)
+            ss.flash(player, 'Solo Ancient Circle: ATT+15 vs dragons.')
+        end
+    end
+
+    -- Spirit Link — solo: the HP transfer also heals the wyvern fully.
+    local _sl = _DRG.useSpiritLink
+    _DRG.useSpiritLink = function(player, target, ability)
+        _sl(player, target, ability)
+        if player:getPartySize() <= 2 then
+            local pet = player:getPet()
+            if pet then
+                pet:setHP(pet:getMaxHP())
+                ss.flash(player, 'Solo Spirit Link: wyvern fully restored.')
+            end
+        end
+    end
+
+    -- Deep Breathing — solo: extend wyvern breath healing window.
+    local _db = _DRG.useDeepBreathing
+    _DRG.useDeepBreathing = function(player, target, ability)
+        _db(player, target, ability)
+        if player:getPartySize() <= 2 then
+            local eff = player:getStatusEffect(xi.effect.DEEP_BREATHING)
+            if eff then eff:setDuration(eff:getDuration() + 20) end
+        end
+    end
+end

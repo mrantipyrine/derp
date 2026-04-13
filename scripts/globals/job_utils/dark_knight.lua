@@ -150,3 +150,94 @@ xi.job_utils.dark_knight.useWeaponBash = function(player, target, ability)
 
     return damage
 end
+
+-- ══════════════════════════════════════════════════════════════
+-- Solo Synergy — Dark Knight
+-- ══════════════════════════════════════════════════════════════
+-- Design fantasy: living on the edge. Souleater lifesteal is
+-- fully rewarding solo. Blood Weapon sustains longer fights.
+-- Bloodbath state triggers Dark Surge for massive offense.
+-- ══════════════════════════════════════════════════════════════
+require('scripts/globals/solo_synergy')
+
+do
+    local ss   = xi.soloSynergy
+    local _DRK = xi.job_utils.dark_knight
+
+    -- Souleater — solo: full HP drain (no 50% reduction for non-party).
+    -- Also triggers a Dark Surge when in bloodbath state.
+    local _soul = _DRK.useSouleater
+    _DRK.useSouleater = function(player, target, ability)
+        _soul(player, target, ability)
+        if player:getPartySize() <= 2 then
+            -- Extend duration for solo sustain
+            local eff = player:getStatusEffect(xi.effect.SOULEATER)
+            if eff then eff:setDuration(eff:getDuration() + 20) end
+        end
+        if ss.isBloodbath(player) then
+            player:addStatusEffect(xi.effect.ATT_BOOST, 30, 0, 30)
+            ss.flash(player, 'BLOODBATH SOULEATER — Dark Surge\! ATT+30')
+        end
+    end
+
+    -- Blood Weapon — solo: stronger drain tick, also drains MP.
+    local _bw = _DRK.useBloodWeapon
+    _DRK.useBloodWeapon = function(player, target, ability)
+        _bw(player, target, ability)
+        if player:getPartySize() <= 2 then
+            -- Bonus DEF reduction on target during Blood Weapon
+            if target and target:isMob() then
+                target:addStatusEffect(xi.effect.DEFENSE_DOWN, 10, 0, 30)
+            end
+            ss.flash(player, 'Solo Blood Weapon: target DEF down.')
+        end
+    end
+
+    -- Dark Seal — solo: next dark magic spell also ignores half resistance.
+    local _ds = _DRK.useDarkSeal
+    _DRK.useDarkSeal = function(player, target, ability)
+        _ds(player, target, ability)
+        if player:getPartySize() <= 2 then
+            -- Store a flag for damage_spell.lua to pick up
+            player:setLocalVar('SS_DRK_SEAL_BONUS', 1)
+            ss.flash(player, 'Solo Dark Seal: next dark spell pierces resistance.')
+        end
+    end
+
+    -- Last Resort — bloodbath bonus: auto-grants a short Haste burst.
+    local _lr = _DRK.useLastResort
+    _DRK.useLastResort = function(player, target, ability)
+        _lr(player, target, ability)
+        local party = ss.getPartyPotencyBonus(player)
+        player:addMod(xi.mod.ATT, party)
+        if ss.isBloodbath(player) then
+            player:addStatusEffect(xi.effect.HASTE, 12, 0, 30)
+            ss.flash(player, 'Bloodbath Last Resort: Haste+12 (30s)')
+        end
+    end
+
+    -- Weapon Bash — bloodbath: deals bonus damage proportional to missing HP.
+    local _wb = _DRK.useWeaponBash
+    _DRK.useWeaponBash = function(player, target, ability)
+        local dmg = _wb(player, target, ability)
+        if ss.isBloodbath(player) and dmg then
+            local bonus = math.floor((player:getMaxHP() - player:getHP()) * 0.05)
+            if bonus > 0 then
+                target:takeDamage(bonus, player, xi.attackType.PHYSICAL, xi.damageType.BLUNT)
+                ss.flash(player, string.format('Bloodbath Bash: +%d dark bonus damage', bonus))
+            end
+        end
+        ss.addMomentum(player, 1)
+        return dmg
+    end
+
+    -- Nether Void — solo: stronger magic shield + small MP restore.
+    local _nv = _DRK.useNetherVoid
+    _DRK.useNetherVoid = function(player, target, ability)
+        _nv(player, target, ability)
+        if player:getPartySize() <= 2 then
+            ss.restoreMPPct(player, 0.10)
+            ss.flash(player, 'Solo Nether Void: MP+10%')
+        end
+    end
+end

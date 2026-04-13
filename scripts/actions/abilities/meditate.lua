@@ -19,6 +19,18 @@ abilityObject.onUseAbility = function(player, target, ability)
         amount = 20 + target:getJobPointLevel(xi.jp.MEDITATE_EFFECT) * 5
     end
 
+    -- Solo Synergy: solo/duo gets bonus TP per tick and +5s duration
+    if player:getPartySize() <= 2 and xi.soloSynergy then
+        amount   = amount + 8                -- extra TP per tick
+        duration = duration + 5             -- longer window to build TP
+        local stacks = xi.soloSynergy.getMomentum(player)
+        if stacks >= 5 then
+            -- Deep focus: Meditate also restores a chunk of MP at high momentum
+            xi.soloSynergy.restoreMP(player, xi.soloSynergy.scaledPower(player, 20, 1.0))
+        end
+        xi.soloSynergy.flash(player, 'Meditate: enhanced TP charge (solo bonus)!')
+    end
+
     player:addStatusEffectEx(xi.effect.MEDITATE, 0, amount, 3, duration)
 end
 

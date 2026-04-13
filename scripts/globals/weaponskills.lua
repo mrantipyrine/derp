@@ -1121,3 +1121,114 @@ xi.weaponskills.handleWeaponskillEffect = function(actor, target, effectId, acti
         target:addStatusEffect(effectId, power, 0, duration)
     end
 end
+
+-----------------------------------
+-- Solo Synergy: Weaponskill Hooks
+-- Wraps doPhysicalWeaponskill and doRangedWeaponskill to add:
+--   * Combo Window — WS chain within 10s gives TP bonus + momentum
+--   * Party size TP trickle on kill (momentum handled via onMobDeath)
+--   * Bloodbath bonus damage for low-HP solo attackers
+-----------------------------------
+do
+    local ss = xi.soloSynergy
+
+    -----------------------------------
+    -- Physical WS wrapper
+    -----------------------------------
+    local _origPhys = xi.weaponskills.doPhysicalWeaponskill
+    xi.weaponskills.doPhysicalWeaponskill = function(attacker, target, wsID, wsParams, tp, action, primaryMsg, taChar)
+        local finaldmg, crit, tpHits, extraHits, shadows =
+            _origPhys(attacker, target, wsID, wsParams, tp, action, primaryMsg, taChar)
+
+        if not attacker or not attacker:isPC() then
+            return finaldmg, crit, tpHits, extraHits, shadows
+        end
+
+        if not ss then return finaldmg, crit, tpHits, extraHits, shadows end
+
+        -----------------------------------
+        -- 1. Combo Window bonus
+        --    Same wsID = +25% TP reward;  different wsID = +15% TP reward
+        -----------------------------------
+        local comboBonus = ss.getComboBonus(attacker, wsID)
+        if comboBonus > 1.0 then
+            local tpReward = math.floor(200 * (comboBonus - 1.0) * 10)  -- +200-600 TP depending on tier
+            attacker:addTP(tpReward)
+            ss.addMomentum(attacker, 1)
+            ss.flash(attacker, string.format('WS Combo\! +%d TP, momentum up\!', tpReward))
+            ss.flashMomentum(attacker)
+        end
+
+        -----------------------------------
+        -- 2. Open combo window for next WS
+        -----------------------------------
+        ss.openComboWindow(attacker, wsID)
+
+        -----------------------------------
+        -- 3. Bloodbath bonus — extra physical damage when low HP (solo/duo only)
+        -----------------------------------
+        if attacker:getPartySize() <= 2 and ss.isBloodbath(attacker) and finaldmg > 0 then
+            local bbMult = ss.getBloodbathMult(attacker)
+            local bonus  = math.floor(finaldmg * (bbMult - 1.0))
+            if bonus > 0 and target and target:isAlive() then
+                local weapDmgType = attacker:getWeaponDamageType(xi.slot.MAIN)
+                target:takeDamage(bonus, attacker, xi.attackType.PHYSICAL, weapDmgType)
+                finaldmg = finaldmg + bonus
+                ss.flash(attacker, string.format('Bloodbath\! +%d WS damage\!', bonus))
+            end
+        end
+
+        -----------------------------------
+        -- 4. Surge burst on max momentum
+        -----------------------------------
+        if ss.isSurge(attacker) and finaldmg > 0 then
+            local surgeDmg = math.floor(finaldmg * 0.30)
+            if target and target:isAlive() then
+                local weapDmgType = attacker:getWeaponDamageType(xi.slot.MAIN)
+                target:takeDamage(surgeDmg, attacker, xi.attackType.PHYSICAL, weapDmgType)
+                finaldmg = finaldmg + surgeDmg
+            end
+            ss.triggerSurge(attacker, nil)
+            ss.flash(attacker, string.format('SURGE BURST\! +%d WS damage\!', surgeDmg))
+        end
+
+        return finaldmg, crit, tpHits, extraHits, shadows
+    end
+
+    -----------------------------------
+    -- Ranged WS wrapper (same logic)
+    -----------------------------------
+    local _origRng = xi.weaponskills.doRangedWeaponskill
+    xi.weaponskills.doRangedWeaponskill = function(attacker, target, wsID, wsParams, tp, action, primaryMsg)
+        local finaldmg, crit, tpHits, extraHits, shadows =
+            _origRng(attacker, target, wsID, wsParams, tp, action, primaryMsg)
+
+        if not attacker or not attacker:isPC() then
+            return finaldmg, crit, tpHits, extraHits, shadows
+        end
+
+        if not ss then return finaldmg, crit, tpHits, extraHits, shadows end
+
+        -- Combo window
+        local comboBonus = ss.getComboBonus(attacker, wsID)
+        if comboBonus > 1.0 then
+            local tpReward = math.floor(200 * (comboBonus - 1.0) * 10)
+            attacker:addTP(tpReward)
+            ss.addMomentum(attacker, 1)
+            ss.flash(attacker, string.format('WS Combo\! +%d TP, momentum up\!', tpReward))
+            ss.flashMomentum(attacker)
+        end
+        ss.openComboWindow(attacker, wsID)
+
+        -- Surge burst on ranged too
+        if ss.isSurge(attacker) and finaldmg > 0 and target and target:isAlive() then
+            local surgeDmg = math.floor(finaldmg * 0.20) -- slightly smaller for ranged
+            target:takeDamage(surgeDmg, attacker, xi.attackType.RANGED, xi.damageType.PIERCING)
+            finaldmg = finaldmg + surgeDmg
+            ss.triggerSurge(attacker, nil)
+            ss.flash(attacker, string.format('SURGE BURST\! +%d ranged WS damage\!', surgeDmg))
+        end
+
+        return finaldmg, crit, tpHits, extraHits, shadows
+    end
+end

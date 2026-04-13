@@ -23,7 +23,15 @@ abilityObject.onUseAbility = function(player, target, ability)
         -- Returns "no effect" message when Copy Image is active when Third Eye is used.
         ability:setMsg(xi.msg.basic.JA_NO_EFFECT)
     else
-        player:addStatusEffect(xi.effect.THIRD_EYE, 0, 0, 30) -- Power keeps track of procs
+        -- Solo Synergy: Third Eye grants brief Haste burst + extends duration with Seigan
+        local duration = 30
+        if player:getPartySize() <= 2 and xi.soloSynergy then
+            duration = 45
+            player:addStatusEffect(xi.effect.HASTE, 8, 0, 20)   -- brief burst of footwork
+            xi.soloSynergy.addMomentum(player, 1)               -- situational awareness = focus
+            xi.soloSynergy.flashMomentum(player)
+        end
+        player:addStatusEffect(xi.effect.THIRD_EYE, 0, 0, duration)
     end
 end
 

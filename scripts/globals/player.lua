@@ -4,6 +4,7 @@ require('scripts/globals/quests')
 require('scripts/globals/teleports')
 require('scripts/events/login_campaign')
 require('scripts/globals/solo_modifications')
+require('scripts/globals/solo_synergy')
 -----------------------------------
 require('scripts/quests/full_speed_ahead')
 -----------------------------------

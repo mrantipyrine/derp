@@ -869,3 +869,116 @@ xi.job_utils.rune_fencer.useLiement = function(player, target, ability, action)
         applyLiementEffect(target, absorbTypes, absorbPower, duration)
     end
 end
+
+-----------------------------------
+-- Solo Synergy: Rune Fencer
+-----------------------------------
+do
+    local ss  = xi.soloSynergy
+    local RNF = xi.job_utils.rune_fencer
+
+    -- Lunge / Swipe: solo = damage scales with momentum
+    local _sl = RNF.useSwipeLunge
+    if _sl then
+        RNF.useSwipeLunge = function(player, target, ability, action)
+            _sl(player, target, ability, action)
+            if player:getPartySize() <= 2 and ss.getMomentum(player) >= 3 then
+                -- Momentum burst: deal additional magical damage based on stacks
+                local bonusDmg = ss.getMomentum(player) * ss.scaledPower(player, 4, 0.5)
+                if bonusDmg > 0 then
+                    target:takeDamage(bonusDmg, player, xi.attackType.MAGICAL, xi.damageType.DARK)
+                    ss.flash(player, string.format('Lunge: momentum burst +%d dmg\!', bonusDmg))
+                end
+            end
+        end
+    end
+
+    -- Vallation / Valiance: solo = extend by 60s
+    local _vv = RNF.useVallationValiance
+    if _vv then
+        RNF.useVallationValiance = function(player, target, ability, action)
+            _vv(player, target, ability, action)
+            if player:getPartySize() <= 2 then
+                local eff = player:getStatusEffect(xi.effect.VALLATION)
+                          or player:getStatusEffect(xi.effect.VALIANCE)
+                if eff then
+                    eff:setDuration(eff:getDuration() + 60)
+                end
+                ss.flash(player, 'Vallation: extended (solo bonus)\!')
+            end
+        end
+    end
+
+    -- Swordplay: solo = also grants Haste for 45s
+    local _sp = RNF.useSwordplay
+    if _sp then
+        RNF.useSwordplay = function(player, target, ability, action)
+            _sp(player, target, ability, action)
+            if player:getPartySize() <= 2 then
+                player:addStatusEffect(xi.effect.HASTE, 10, 0, 45)
+            end
+        end
+    end
+
+    -- Vivacious Pulse: solo = bonus HP return scales with momentum
+    local _vp = RNF.useVivaciousPulse
+    if _vp then
+        RNF.useVivaciousPulse = function(player, target, ability, action)
+            _vp(player, target, ability, action)
+            if player:getPartySize() <= 2 then
+                local bonus = ss.scaledPower(player, 10, 0.8) * (1 + ss.getMomentum(player) * 0.05)
+                ss.restoreHP(player, math.floor(bonus))
+            end
+        end
+    end
+
+    -- Pflug: solo = extend by 30s
+    local _pf = RNF.usePflug
+    if _pf then
+        RNF.usePflug = function(player, target, ability, action)
+            _pf(player, target, ability, action)
+            if player:getPartySize() <= 2 then
+                local eff = player:getStatusEffect(xi.effect.PFLUG)
+                if eff then
+                    eff:setDuration(eff:getDuration() + 30)
+                end
+            end
+        end
+    end
+
+    -- Gambit: solo = momentum+2 (bold offensive rune play)
+    local _gam = RNF.useGambit
+    if _gam then
+        RNF.useGambit = function(player, target, ability, action)
+            _gam(player, target, ability, action)
+            if player:getPartySize() <= 2 then
+                ss.addMomentum(player, 2)
+                ss.flashMomentum(player)
+            end
+        end
+    end
+
+    -- Rayke: solo = tryBlind 30% bonus + trySlow 20%
+    local _ray = RNF.useRayke
+    if _ray then
+        RNF.useRayke = function(player, target, ability, action)
+            _ray(player, target, ability, action)
+            if player:getPartySize() <= 2 then
+                ss.tryBlind(target, 30, player:getMainLvl())
+                ss.trySlow(target, 20, player:getMainLvl())
+            end
+        end
+    end
+
+    -- Rune Enchantment: each rune application = momentum+1
+    local _re = RNF.useRuneEnchantment
+    if _re then
+        RNF.useRuneEnchantment = function(player, target, ability, effect, action)
+            _re(player, target, ability, effect, action)
+            if player:getPartySize() <= 2 then
+                ss.addMomentum(player, 1)
+                ss.flashMomentum(player)
+            end
+        end
+    end
+end

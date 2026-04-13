@@ -220,3 +220,106 @@ xi.job_utils.paladin.useShieldBash = function(player, target, ability)
 
     return damage
 end
+
+-- ══════════════════════════════════════════════════════════════
+-- Solo Synergy — Paladin
+-- ══════════════════════════════════════════════════════════════
+-- Design fantasy: immovable guardian. Sentinel and Rampart
+-- make solo tanking feel powerful. Invincible lasts longer.
+-- Cover fortifies self when there's no one to protect.
+-- Chivalry returns MP based on damage absorbed.
+-- ══════════════════════════════════════════════════════════════
+require('scripts/globals/solo_synergy')
+
+do
+    local ss   = xi.soloSynergy
+    local _PLD = xi.job_utils.paladin
+
+    -- Sentinel — solo: extended duration + Regen during the shield window.
+    local _sent = _PLD.useSentinel
+    if _sent then
+        _PLD.useSentinel = function(player, target, ability)
+            _sent(player, target, ability)
+            if player:getPartySize() <= 2 then
+                local regenPow = math.floor(player:getMainLvl() / 8) + 4
+                player:addStatusEffect(xi.effect.REGEN, regenPow, 3, 30)
+                -- Extend Sentinel by 15s for solo
+                local eff = player:getStatusEffect(xi.effect.SENTINEL)
+                if eff then eff:setDuration(eff:getDuration() + 15) end
+                ss.flash(player, string.format('Solo Sentinel: +15s, Regen+%d', regenPow))
+            end
+        end
+    end
+
+    -- Invincible — solo: lasts 10s longer.
+    local _inv = _PLD.useInvincible
+    if _inv then
+        _PLD.useInvincible = function(player, target, ability)
+            _inv(player, target, ability)
+            if player:getPartySize() <= 2 then
+                local eff = player:getStatusEffect(xi.effect.INVINCIBLE)
+                if eff then eff:setDuration(eff:getDuration() + 10) end
+                ss.flash(player, 'Solo Invincible: +10s')
+            end
+        end
+    end
+
+    -- Cover — when solo (no ally to cover), grants a short DEF surge to self.
+    local _cover = _PLD.useCover
+    if _cover then
+        _PLD.useCover = function(player, target, ability)
+            _cover(player, target, ability)
+            if player:getPartySize() <= 1 then
+                local defBonus = math.floor(player:getMainLvl() / 4) + 15
+                player:addStatusEffect(xi.effect.DEF_BONUS, defBonus, 0, 15)
+                ss.flash(player, string.format('Solo Cover: self-fortify DEF+%d (15s)', defBonus))
+            end
+        end
+    end
+
+    -- Shield Bash — solo: also applies an ACC debuff to target.
+    local _sb = _PLD.useShieldBash
+    if _sb then
+        _PLD.useShieldBash = function(player, target, ability)
+            _sb(player, target, ability)
+            if player:getPartySize() <= 2 and target and target:isMob() then
+                target:addStatusEffect(xi.effect.ACCURACY_DOWN, 20, 0, 20)
+                ss.flash(player, 'Solo Shield Bash: ACC Down on target.')
+            end
+        end
+    end
+
+    -- Chivalry — solo: scales MP return with how hurt you are (bloodbath synergy).
+    local _chiv = _PLD.useChivalry
+    if _chiv then
+        _PLD.useChivalry = function(player, target, ability)
+            _chiv(player, target, ability)
+            if player:getPartySize() <= 2 then
+                local bloodMult = ss.getBloodbathMult(player)
+                local mpBonus   = math.floor(player:getMaxMP() * 0.05 * bloodMult)
+                ss.restoreMP(player, mpBonus)
+                ss.flash(player, string.format('Solo Chivalry: MP+%d (bloodbath x%.1f)', mpBonus, bloodMult))
+            end
+        end
+    end
+
+    -- Holy Circle — solo: also grants a short ATK bonus vs undead (divine wrath).
+    local _hc = _PLD.useHolyCircle
+    if _hc then
+        _PLD.useHolyCircle = function(player, target, ability)
+            _hc(player, target, ability)
+            if player:getPartySize() <= 2 then
+                player:addStatusEffect(xi.effect.ATT_BOOST, 15, 0, 180)
+            end
+        end
+    end
+
+    -- Rampart — add momentum on use (fortifying the line).
+    local _ramp = _PLD.useRampart
+    if _ramp then
+        _PLD.useRampart = function(player, target, ability)
+            _ramp(player, target, ability)
+            ss.addMomentum(player, 1)
+        end
+    end
+end

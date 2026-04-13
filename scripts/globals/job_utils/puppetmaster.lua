@@ -393,3 +393,85 @@ xi.job_utils.puppetmaster.onAbilityUseDeactivate = function(player, target, abil
 
     target:despawnPet()
 end
+
+-----------------------------------
+-- Solo Synergy: Puppetmaster
+-----------------------------------
+do
+    local ss  = xi.soloSynergy
+    local PUP = xi.job_utils.puppetmaster
+
+    -- Overdrive: solo = automaton gets Regen+ATT, ability extended 30s
+    local _od = PUP.onAbilityUseOverdrive
+    if _od then
+        PUP.onAbilityUseOverdrive = function(player, target, ability, action)
+            _od(player, target, ability, action)
+            if player:getPartySize() <= 2 then
+                local pet = player:getPet()
+                if pet then
+                    local potency = ss.scaledPower(player, 5, 0.3)
+                    pet:addStatusEffect(xi.effect.REGEN, potency, 3, 60)
+                    pet:addStatusEffect(xi.effect.ATT_BOOST, 20, 0, 60)
+                    ss.flash(player, 'Overdrive: automaton surges (solo bonus)\!')
+                end
+            end
+        end
+    end
+
+    -- Repair: solo = heal scales with momentum (extra 10% per 2 stacks)
+    local _rep = PUP.onAbilityUseRepair
+    if _rep then
+        PUP.onAbilityUseRepair = function(player, target, ability, action)
+            _rep(player, target, ability, action)
+            if player:getPartySize() <= 2 then
+                local pet = player:getPet()
+                if pet then
+                    local bonus = math.floor(pet:getMaxHP() * 0.05 * math.ceil(ss.getMomentum(player) / 2))
+                    if bonus > 0 then
+                        pet:setHP(math.min(pet:getHP() + bonus, pet:getMaxHP()))
+                    end
+                end
+            end
+        end
+    end
+
+    -- Activate / Deactivate: solo = automaton gains starting TP boost
+    local _act = PUP.onAbilityUseActivate
+    if _act then
+        PUP.onAbilityUseActivate = function(player, target, ability, action)
+            _act(player, target, ability, action)
+            if player:getPartySize() <= 2 then
+                local pet = player:getPet()
+                if pet then
+                    pet:addTP(math.random(100, 200))
+                end
+            end
+        end
+    end
+
+    -- Deploy: solo = TP trickle to automaton every zone-in
+    local _dep = PUP.onAbilityUseDeploy
+    if _dep then
+        PUP.onAbilityUseDeploy = function(player, target, ability, action)
+            _dep(player, target, ability, action)
+            if player:getPartySize() <= 2 then
+                local pet = player:getPet()
+                if pet then
+                    pet:addTP(75)
+                end
+            end
+        end
+    end
+
+    -- Heady Artifice: solo = momentum+2
+    local _ha = PUP.onAbilityUseHeadyArtiface
+    if _ha then
+        PUP.onAbilityUseHeadyArtiface = function(player, target, ability, action)
+            _ha(player, target, ability, action)
+            if player:getPartySize() <= 2 then
+                local new = ss.addMomentum(player, 2)
+                ss.flashMomentum(player)
+            end
+        end
+    end
+end

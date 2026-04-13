@@ -514,3 +514,89 @@ xi.job_utils.geomancer.bolsterOnEffectLose = function(target, effect)
         end
     end
 end
+
+-----------------------------------
+-- Solo Synergy: Geomancer
+-----------------------------------
+do
+    local ss  = xi.soloSynergy
+    local GEO = xi.job_utils.geomancer
+
+    -- Bolster: solo = extend by 30s + Regen for self
+    local _bol = GEO.bolster
+    if _bol then
+        GEO.bolster = function(player, target, ability, action)
+            _bol(player, target, ability, action)
+            if player:getPartySize() <= 2 then
+                local eff = player:getStatusEffect(xi.effect.BOLSTER)
+                if eff then
+                    eff:setDuration(eff:getDuration() + 30)
+                end
+                player:addStatusEffect(xi.effect.REGEN, ss.scaledPower(player, 3, 0.1), 3, 90)
+                ss.flash(player, 'Bolster: extended + Regen (solo bonus)\!')
+            end
+        end
+    end
+
+    -- Blaze of Glory: solo = momentum+2 + TP restore
+    local _bog = GEO.blazeOfGlory
+    if _bog then
+        GEO.blazeOfGlory = function(player, target, ability, action)
+            _bog(player, target, ability, action)
+            if player:getPartySize() <= 2 then
+                player:addTP(math.random(100, 200))
+                ss.addMomentum(player, 2)
+                ss.flashMomentum(player)
+                ss.flash(player, 'Blaze of Glory: TP surge (solo bonus)\!')
+            end
+        end
+    end
+
+    -- Life Cycle: solo = smaller HP cost (heal self 10%)
+    local _lc = GEO.lifeCycle
+    if _lc then
+        GEO.lifeCycle = function(player, target, ability, action)
+            _lc(player, target, ability, action)
+            if player:getPartySize() <= 2 then
+                -- Recoup a fraction of HP spent (solo sacrifice shouldn't be as harsh)
+                ss.restoreHPPct(player, 0.10)
+            end
+        end
+    end
+
+    -- Full Circle: solo = MP return bonus
+    local _fc = GEO.fullCircle
+    if _fc then
+        GEO.fullCircle = function(player, target, ability, action)
+            _fc(player, target, ability, action)
+            if player:getPartySize() <= 2 then
+                local mpReturn = ss.scaledPower(player, 20, 1.0)
+                ss.restoreMP(player, mpReturn)
+                ss.flash(player, string.format('Full Circle: +%d MP (solo bonus)\!', mpReturn))
+            end
+        end
+    end
+
+    -- Ecliptic Attrition: solo = momentum+1
+    local _ea = GEO.eclipticAttrition
+    if _ea then
+        GEO.eclipticAttrition = function(player, target, ability, action)
+            _ea(player, target, ability, action)
+            if player:getPartySize() <= 2 then
+                ss.addMomentum(player, 1)
+                ss.flashMomentum(player)
+            end
+        end
+    end
+
+    -- Widened Compass: solo = Regen for self
+    local _wc = GEO.widenedCompass
+    if _wc then
+        GEO.widenedCompass = function(player, target, ability, action)
+            _wc(player, target, ability, action)
+            if player:getPartySize() <= 2 then
+                player:addStatusEffect(xi.effect.REGEN, 3, 3, 60)
+            end
+        end
+    end
+end

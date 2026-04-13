@@ -81,3 +81,72 @@ end
 xi.job_utils.blue_mage.useUnbridledLearning = function(player, target, ability, action)
     target:addStatusEffect(xi.effect.UNBRIDLED_LEARNING, 16, 1, 60)
 end
+
+-- ══════════════════════════════════════════════════════════════
+-- Solo Synergy — Blue Mage
+-- ══════════════════════════════════════════════════════════════
+-- Design fantasy: adaptive monster. Chain Affinity and Burst
+-- Affinity deal more damage solo. Azure Lore is a burst window
+-- with bonus proc chances. Efflux generates TP. Head Butt /
+-- Disseverment stuns more reliably solo.
+-- ══════════════════════════════════════════════════════════════
+require('scripts/globals/solo_synergy')
+
+do
+    local ss   = xi.soloSynergy
+    local _BLU = xi.job_utils.blue_mage
+
+    -- Chain Affinity — solo: extended duration + momentum.
+    local _ca = _BLU.useChainAffinity
+    _BLU.useChainAffinity = function(player, target, ability, action)
+        _ca(player, target, ability, action)
+        if player:getPartySize() <= 2 then
+            local eff = player:getStatusEffect(xi.effect.CHAIN_AFFINITY)
+            if eff then eff:setDuration(eff:getDuration() + 15) end
+            ss.addMomentum(player, 1)
+            ss.flash(player, 'Solo Chain Affinity: +15s, momentum+1')
+        end
+    end
+
+    -- Burst Affinity — solo: flag for spell hook to increase magic burst bonus.
+    local _ba = _BLU.useBurstAffinity
+    _BLU.useBurstAffinity = function(player, target, ability, action)
+        _ba(player, target, ability, action)
+        if player:getPartySize() <= 2 then
+            player:setLocalVar('SS_BLU_BURST_SOLO', 1)
+            ss.flash(player, 'Solo Burst Affinity: enhanced magic burst damage.')
+        end
+    end
+
+    -- Azure Lore — solo: also temporarily increases all BLU spell damage.
+    local _al = _BLU.useAzureLore
+    _BLU.useAzureLore = function(player, target, ability, action)
+        _al(player, target, ability, action)
+        if player:getPartySize() <= 2 then
+            player:addStatusEffect(xi.effect.INT_BOOST, math.floor(player:getMainLvl() / 5), 0, 30)
+            ss.addMomentum(player, 2)
+            ss.flash(player, 'Solo Azure Lore: INT burst + momentum+2')
+        end
+    end
+
+    -- Efflux — solo: adds TP on top of the STR/attack boost.
+    local _eff = _BLU.useEfflux
+    _BLU.useEfflux = function(player, target, ability, action)
+        _eff(player, target, ability, action)
+        if player:getPartySize() <= 2 then
+            local tp = math.random(200, 400)
+            player:addTP(tp)
+            ss.flash(player, string.format('Solo Efflux: TP+%d', tp))
+        end
+    end
+
+    -- Diffusion — solo: auto-applies the strongest BLU buff to self.
+    local _diff = _BLU.useDiffusion
+    _BLU.useDiffusion = function(player, target, ability, action)
+        _diff(player, target, ability, action)
+        if player:getPartySize() <= 2 then
+            -- Give self a Haste equivalent for solo blu "diffuse to self" feel
+            player:addStatusEffect(xi.effect.HASTE, 10, 0, 60)
+        end
+    end
+end

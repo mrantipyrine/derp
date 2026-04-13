@@ -19,7 +19,17 @@ abilityObject.onUseAbility = function(player, target, ability)
     if target:isWeaponTwoHanded() then
         target:delStatusEffect(xi.effect.HASSO)
         target:delStatusEffect(xi.effect.SEIGAN)
-        target:addStatusEffect(xi.effect.SEIGAN, 0, 0, 300)
+
+        -- Solo Synergy: Seigan extends 60s + grants Regen for the patient samurai
+        local duration = 300
+        if player:getPartySize() <= 2 and xi.soloSynergy then
+            duration = 360
+            local regenPow = xi.soloSynergy.scaledPower(player, 3, 0.1)
+            player:addStatusEffect(xi.effect.REGEN, regenPow, 3, 120)
+            xi.soloSynergy.flash(player, 'Seigan: extended + Regen (solo bonus)!')
+        end
+
+        target:addStatusEffect(xi.effect.SEIGAN, 0, 0, duration)
     end
 end
 

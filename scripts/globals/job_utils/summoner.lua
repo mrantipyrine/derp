@@ -320,3 +320,42 @@ xi.job_utils.summoner.useSoothingRuby = function(target, pet, petskill, summoner
 
     return effectsErased
 end
+
+-- ══════════════════════════════════════════════════════════════
+-- Solo Synergy — Summoner
+-- ══════════════════════════════════════════════════════════════
+-- Design fantasy: avatar-powered destroyer. BP timers feel
+-- faster solo. Astral Conduit is more rewarding. Avatar gets
+-- a HP/MP sustain aura when solo. Apogee hits harder.
+-- ══════════════════════════════════════════════════════════════
+require('scripts/globals/solo_synergy')
+
+do
+    local ss   = xi.soloSynergy
+    local _SMN = xi.job_utils.summoner
+
+    -- Mana Cede — solo: also restores a portion of MP to the player.
+    local _mc = _SMN.useManaCede
+    if _mc then
+        _SMN.useManaCede = function(player, ability, action)
+            _mc(player, ability, action)
+            if player:getPartySize() <= 2 then
+                ss.restoreMPPct(player, 0.10)
+                ss.flash(player, 'Solo Mana Cede: MP+10% returned to caster.')
+            end
+        end
+    end
+end
+
+-- Avatar solo sustain: wired into onMobEngaged via setLocalVar flag.
+-- When solo, avatars get a persistent Regen + ATT bonus.
+xi.soloSynergy = xi.soloSynergy or {}
+xi.soloSynergy.boostSMNPet = function(player, pet)
+    if not player or not pet then return end
+    if player:getPartySize() <= 2 then
+        local regenPow = math.floor(player:getMainLvl() / 8) + 5
+        local attBonus = math.floor(player:getMainLvl() / 4)
+        pet:addStatusEffect(xi.effect.REGEN,     regenPow, 3, 300)
+        pet:addStatusEffect(xi.effect.ATT_BOOST, attBonus, 0, 300)
+    end
+end

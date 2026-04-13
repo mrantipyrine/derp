@@ -649,3 +649,96 @@ xi.job_utils.beastmaster.attemptCharm = function(charmer, target)
 
     return xi.msg.basic.CHARM_FAIL
 end
+
+-----------------------------------
+-- Solo Synergy: Beastmaster
+-----------------------------------
+do
+    local ss  = xi.soloSynergy
+    local BST = xi.job_utils.beastmaster
+
+    -- Familiar: solo = pet gets Regen + ATT boost + 60s extension feel
+    local _fam = BST.onUseAbilityFamiliar
+    if _fam then
+        BST.onUseAbilityFamiliar = function(player, target, ability, action)
+            _fam(player, target, ability, action)
+            if player:getPartySize() <= 2 then
+                local pet = player:getPet()
+                if pet then
+                    local potency = ss.scaledPower(player, 3, 0.25)
+                    pet:addStatusEffect(xi.effect.REGEN, potency, 3, 120)
+                    pet:addStatusEffect(xi.effect.ATT_BOOST, 25, 0, 120)
+                    ss.flash(player, 'Familiar: pet empowered (solo bonus)\!')
+                end
+            end
+        end
+    end
+
+    -- Reward: solo = also restores a portion of HP to owner
+    local _rew = BST.onUseAbilityReward
+    if _rew then
+        BST.onUseAbilityReward = function(player, target, ability, action)
+            _rew(player, target, ability, action)
+            if player:getPartySize() <= 2 then
+                local selfHeal = ss.scaledPower(player, 20, 1.5)
+                ss.restoreHP(player, selfHeal)
+            end
+        end
+    end
+
+    -- Sic: solo = momentum+1 + tryParalyze 20% on target
+    local _sic = BST.onUseAbilitySic
+    if _sic then
+        BST.onUseAbilitySic = function(player, target, ability, action)
+            _sic(player, target, ability, action)
+            if player:getPartySize() <= 2 then
+                ss.addMomentum(player, 1)
+                ss.tryParalyze(target, 20, player:getMainLvl())
+            end
+        end
+    end
+
+    -- Unleash: solo = pet TP trickle + momentum+1
+    local _unl = BST.onUseAbilityUnleash
+    if _unl then
+        BST.onUseAbilityUnleash = function(player, target, ability, action)
+            _unl(player, target, ability, action)
+            if player:getPartySize() <= 2 then
+                local pet = player:getPet()
+                if pet then
+                    pet:addTP(math.random(100, 200))
+                end
+                ss.addMomentum(player, 1)
+                ss.flashMomentum(player)
+            end
+        end
+    end
+
+    -- Fight (command pet to attack): solo = pet gets ATT burst for 30s
+    local _fight = BST.onUseAbilityFight
+    if _fight then
+        BST.onUseAbilityFight = function(player, target, ability, action)
+            _fight(player, target, ability, action)
+            if player:getPartySize() <= 2 then
+                local pet = player:getPet()
+                if pet then
+                    pet:addStatusEffect(xi.effect.ATT_BOOST, 15, 0, 30)
+                end
+            end
+        end
+    end
+
+    -- Jug pet summon: solo = pet starts with 100 bonus TP
+    local _jug = BST.onUseAbilityJug
+    if _jug then
+        BST.onUseAbilityJug = function(player, target, ability, action)
+            _jug(player, target, ability, action)
+            if player:getPartySize() <= 2 then
+                local pet = player:getPet()
+                if pet then
+                    pet:addTP(100)
+                end
+            end
+        end
+    end
+end

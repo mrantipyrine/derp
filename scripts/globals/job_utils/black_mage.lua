@@ -53,3 +53,71 @@ end
 xi.job_utils.black_mage.useSubtleSorcery = function(player, target, ability)
     player:addStatusEffect(xi.effect.SUBTLE_SORCERY, 1, 0, 60)
 end
+
+-- ══════════════════════════════════════════════════════════════
+-- Solo Synergy — Black Mage
+-- ══════════════════════════════════════════════════════════════
+-- Design fantasy: arcane architect. Elemental Seal hits far
+-- harder solo. Manafont also restores party-adjacent MP. 
+-- Cascade makes the next SC do bonus burst damage.
+-- Mana Wall creates a longer solo safety window.
+-- ══════════════════════════════════════════════════════════════
+require('scripts/globals/solo_synergy')
+
+do
+    local ss   = xi.soloSynergy
+    local _BLM = xi.job_utils.black_mage
+
+    -- Elemental Seal — solo: flag for damage_spell.lua to double base power
+    -- and pierce one tier of resistance.
+    local _es = _BLM.useElementalSeal
+    _BLM.useElementalSeal = function(player, target, ability)
+        _es(player, target, ability)
+        if player:getPartySize() <= 2 then
+            player:setLocalVar('SS_BLM_SEAL_SOLO', 1)
+            ss.flash(player, 'Solo Elemental Seal: next nuke deals 2x, resists pierced.')
+        end
+    end
+
+    -- Manafont — solo: on activation, also restores 20% of max MP immediately.
+    local _mf = _BLM.useManafont
+    _BLM.useManafont = function(player, target, ability)
+        _mf(player, target, ability)
+        if player:getPartySize() <= 2 then
+            ss.restoreMPPct(player, 0.20)
+            ss.flash(player, 'Solo Manafont: MP+20% burst')
+        end
+    end
+
+    -- Mana Wall — solo: extended duration (mages need longer solo safety).
+    local _mw = _BLM.useManaWall
+    _BLM.useManaWall = function(player, target, ability)
+        _mw(player, target, ability)
+        if player:getPartySize() <= 2 then
+            local eff = player:getStatusEffect(xi.effect.MANA_WALL)
+            if eff then eff:setDuration(eff:getDuration() + 60) end
+            ss.flash(player, 'Solo Mana Wall: +60s')
+        end
+    end
+
+    -- Cascade — solo: next magic burst also deals bonus damage.
+    local _cas = _BLM.useCascade
+    _BLM.useCascade = function(player, target, ability)
+        _cas(player, target, ability)
+        if player:getPartySize() <= 2 then
+            player:setLocalVar('SS_BLM_CASCADE_BONUS', 1)
+            ss.flash(player, 'Solo Cascade: next magic burst deals bonus damage.')
+        end
+    end
+
+    -- Subtle Sorcery — solo: also grants a short Refresh.
+    local _ss2 = _BLM.useSubtleSorcery
+    _BLM.useSubtleSorcery = function(player, target, ability)
+        _ss2(player, target, ability)
+        if player:getPartySize() <= 2 then
+            local r = math.floor(player:getMainLvl() / 15) + 2
+            player:addStatusEffect(xi.effect.REFRESH, r, 3, 60)
+            ss.flash(player, string.format('Solo Subtle Sorcery: Refresh+%d', r))
+        end
+    end
+end

@@ -27,7 +27,17 @@ abilityObject.onUseAbility = function(player, target, ability)
     if strboost > 0 then
         target:delStatusEffect(xi.effect.HASSO)
         target:delStatusEffect(xi.effect.SEIGAN)
-        target:addStatusEffect(xi.effect.HASSO, strboost, 0, 300)
+
+        -- Solo Synergy: Hasso extends 60s and grants bonus ATT
+        local duration = 300
+        if player:getPartySize() <= 2 and xi.soloSynergy then
+            duration = 360
+            local attBonus = xi.soloSynergy.scaledPower(player, 10, 0.5)
+            player:addStatusEffect(xi.effect.ATT_BOOST, attBonus, 0, 360)
+            xi.soloSynergy.flash(player, 'Hasso: extended + ATT (solo bonus)!')
+        end
+
+        target:addStatusEffect(xi.effect.HASSO, strboost, 0, duration)
     end
 end
 

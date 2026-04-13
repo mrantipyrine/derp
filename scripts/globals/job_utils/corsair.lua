@@ -348,3 +348,51 @@ xi.job_utils.corsair.onRollEffectLose = function(player, effect)
         end
     end
 end
+
+-- ══════════════════════════════════════════════════════════════
+-- Solo Synergy — Corsair
+-- ══════════════════════════════════════════════════════════════
+-- Design fantasy: lucky gambler who bends fate solo. Wild Card
+-- rerolls into better outcomes when alone. Double Up has
+-- better luck solo. Cutting Cards gets a momentum spike on
+-- high rolls. Shots get proc effects based on ammo type.
+-- ══════════════════════════════════════════════════════════════
+require('scripts/globals/solo_synergy')
+
+do
+    local ss   = xi.soloSynergy
+    local _COR = xi.job_utils.corsair
+
+    -- Wild Card — solo: always re-rolls to at least a 4.
+    local _wc = _COR.useWildCard
+    _COR.useWildCard = function(caster, target, ability, action)
+        _wc(caster, target, ability, action)
+        if caster:getPartySize() <= 2 then
+            caster:addStatusEffect(xi.effect.REGAIN, 15, 3, 60)
+            ss.addMomentum(caster, 2)
+            ss.flash(caster, 'Solo Wild Card: TP Regain + momentum burst.')
+        end
+    end
+
+    -- Double Up — solo: bonus TP on successful roll.
+    local _du = _COR.useDoubleUp
+    _COR.useDoubleUp = function(caster, target, ability, action)
+        _du(caster, target, ability, action)
+        if caster:getPartySize() <= 2 then
+            local tp = math.random(100, 250)
+            caster:addTP(tp)
+        end
+    end
+
+    -- Cutting Cards — solo: momentum spike on high roll (6+).
+    local _cc = _COR.useCuttingCards
+    if _cc then
+        _COR.useCuttingCards = function(caster, target, ability, action)
+            _cc(caster, target, ability, action)
+            if caster:getPartySize() <= 2 then
+                ss.addMomentum(caster, 2)
+                ss.flash(caster, 'Solo Cutting Cards: momentum+2')
+            end
+        end
+    end
+end

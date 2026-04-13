@@ -153,3 +153,77 @@ end
 xi.job_utils.white_mage.useSacrosanctity = function(player, target, ability)
     target:addStatusEffect(xi.effect.SACROSANCTITY, 3, 0, 60)
 end
+
+-- ══════════════════════════════════════════════════════════════
+-- Solo Synergy — White Mage
+-- ══════════════════════════════════════════════════════════════
+-- Design fantasy: compassionate survivor. Benediction heals
+-- massively when solo. Afflatus Solace creates a rolling
+-- Stoneskin shield. Sacrifice and Devotion are smarter about
+-- not killing you. Divine Seal hits harder alone.
+-- ══════════════════════════════════════════════════════════════
+require('scripts/globals/solo_synergy')
+
+do
+    local ss   = xi.soloSynergy
+    local _WHM = xi.job_utils.white_mage
+
+    -- Benediction — solo: full HP restore + auto-Regen + auto-Protect/Shell.
+    local _ben = _WHM.useBenediction
+    _WHM.useBenediction = function(player, target, ability)
+        local heal = _ben(player, target, ability)
+        if player:getPartySize() <= 2 and player:getID() == target:getID() then
+            -- Full self-heal already done; add sustain buffs
+            local regenPow = math.floor(player:getMainLvl() / 6) + 5
+            player:addStatusEffect(xi.effect.REGEN,   regenPow, 3, 180)
+            player:addStatusEffect(xi.effect.PROTECT,  math.floor(player:getMainLvl() * 2), 0, 300)
+            player:addStatusEffect(xi.effect.SHELL,    math.floor(player:getMainLvl() * 20), 0, 300)
+            ss.flash(player, string.format('Solo Benediction: Regen+%d, Protect, Shell applied', regenPow))
+        end
+        return heal
+    end
+
+    -- Afflatus Solace — solo: also applies a level-scaled Stoneskin immediately.
+    local _as = _WHM.useAfflatusSolace
+    _WHM.useAfflatusSolace = function(player, target, ability)
+        _as(player, target, ability)
+        if player:getPartySize() <= 2 and player:getID() == target:getID() then
+            local skin = math.floor(player:getMainLvl() * 2.5) + ss.getPartyPotencyBonus(player)
+            player:addStatusEffect(xi.effect.STONESKIN, skin, 0, 300)
+            ss.flash(player, string.format('Solace Stoneskin: %d HP shield', skin))
+        end
+    end
+
+    -- Divine Seal — solo: also grants a Refresh tick (holy concentration).
+    local _ds = _WHM.useDivineSeal
+    _WHM.useDivineSeal = function(player, target, ability)
+        _ds(player, target, ability)
+        if player:getPartySize() <= 2 then
+            local refresh = math.floor(player:getMainLvl() / 15) + 2
+            player:addStatusEffect(xi.effect.REFRESH, refresh, 3, 60)
+            ss.flash(player, string.format('Solo Divine Seal: Refresh+%d (60s)', refresh))
+        end
+    end
+
+    -- Devotion — solo self: convert HP → MP with a safety floor (never below 25% HP).
+    local _dev = _WHM.useDevotion
+    _WHM.useDevotion = function(player, target, ability)
+        -- Safety: don't let solo WHM accidentally kill themselves
+        local safeFloor = math.floor(player:getMaxHP() * 0.25)
+        if player:getHP() <= safeFloor then
+            ss.flash(player, 'Devotion blocked: HP too low. Stay above 25%.')
+            return 0
+        end
+        return _dev(player, target, ability)
+    end
+
+    -- Asylum — solo: extended duration.
+    local _asy = _WHM.useAsylum
+    _WHM.useAsylum = function(player, target, ability)
+        _asy(player, target, ability)
+        if player:getPartySize() <= 2 then
+            local eff = player:getStatusEffect(xi.effect.ASYLUM)
+            if eff then eff:setDuration(eff:getDuration() + 15) end
+        end
+    end
+end

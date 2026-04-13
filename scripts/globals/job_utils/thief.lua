@@ -463,3 +463,91 @@ end
 xi.job_utils.thief.useTrickAttack = function(player, target, ability)
     player:addStatusEffect(xi.effect.TRICK_ATTACK, 1, 0, 60)
 end
+
+-- ══════════════════════════════════════════════════════════════
+-- Solo Synergy — Thief
+-- ══════════════════════════════════════════════════════════════
+-- Design fantasy: momentum-fueled opportunist. SA/TA reward
+-- positional play. Flee generates TP. Hide builds momentum
+-- for a powerful opener. Mug is more rewarding solo.
+-- ══════════════════════════════════════════════════════════════
+require('scripts/globals/solo_synergy')
+
+do
+    local ss   = xi.soloSynergy
+    local _THF = xi.job_utils.thief
+
+    -- Sneak Attack — solo: also grant a short Haste burst (quick followup).
+    local _sa = _THF.useSneakAttack
+    _THF.useSneakAttack = function(player, target, ability)
+        _sa(player, target, ability)
+        if player:getPartySize() <= 2 then
+            player:addStatusEffect(xi.effect.HASTE, 8, 0, 10)
+            ss.addMomentum(player, 1)
+        end
+    end
+
+    -- Trick Attack — solo: converts the enmity transfer into a TP bonus.
+    local _ta = _THF.useTrickAttack
+    if _ta then
+        _THF.useTrickAttack = function(player, target, ability)
+            _ta(player, target, ability)
+            if player:getPartySize() <= 2 then
+                -- No tank to dump enmity on — convert to raw TP instead
+                player:addTP(math.random(200, 400))
+                ss.flash(player, 'Solo Trick Attack: TP bonus instead of enmity transfer.')
+            end
+        end
+    end
+
+    -- Flee — generates TP while running and sharpens evasion.
+    local _flee = _THF.useFlee
+    _THF.useFlee = function(player, target, ability)
+        _flee(player, target, ability)
+        local tp = math.random(150, 350)
+        player:addTP(tp)
+        player:addStatusEffect(xi.effect.EVASION_BOOST, 20, 0, 30)
+        ss.flash(player, string.format('Flee: TP+%d, EVA+20', tp))
+    end
+
+    -- Hide — while hidden, momentum builds passively. Opener from hide = Surge check.
+    local _hide = _THF.useHide
+    _THF.useHide = function(player, target, ability)
+        _hide(player, target, ability)
+        ss.addMomentum(player, 2)
+        ss.flash(player, 'Hide: momentum building...')
+    end
+
+    -- Assassin's Charge — bonus TP on proc for solo.
+    local _ac = _THF.useAssassinsCharge
+    if _ac then
+        _THF.useAssassinsCharge = function(player, target, ability)
+            _ac(player, target, ability)
+            if player:getPartySize() <= 2 then
+                player:addTP(math.random(100, 250))
+                ss.flash(player, 'Solo Assassin\'s Charge: bonus TP')
+            end
+        end
+    end
+
+    -- Feint — solo: also applies a slow to the target.
+    local _feint = _THF.useFeint
+    if _feint then
+        _THF.useFeint = function(player, target, ability)
+            _feint(player, target, ability)
+            if player:getPartySize() <= 2 and target and target:isMob() then
+                ss.trySlow(target, 60, player:getMainLvl())
+                ss.flash(player, 'Solo Feint: Slow proc chance applied.')
+            end
+        end
+    end
+
+    -- Bully — momentum on use.
+    local _bully = _THF.useBully
+    if _bully then
+        _THF.useBully = function(player, target, ability)
+            _bully(player, target, ability)
+            ss.addMomentum(player, 1)
+        end
+    end
+end
