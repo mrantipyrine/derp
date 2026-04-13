@@ -22,7 +22,6 @@
 -- GM commands:
 --   scripts/commands/dynworld.lua
 -----------------------------------
-require('scripts/globals/zone')
 -----------------------------------
 
 xi = xi or {}
