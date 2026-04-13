@@ -443,16 +443,23 @@ xi.dynamicWorld.getRandomSpawnPoint = function(zone)
     return nil
 end
 
--- Get zone's appropriate level range based on region or existing mobs
+-- Get zone's appropriate level range.
+-- Priority: per-zone ZONE_LEVELS override > region levelRange > default.
 xi.dynamicWorld.getZoneLevelRange = function(zoneId)
+    -- 1. Check per-zone override table (most accurate)
+    local zoneLevels = xi.settings.dynamicworld and xi.settings.dynamicworld.ZONE_LEVELS
+    if zoneLevels and zoneLevels[zoneId] then
+        return zoneLevels[zoneId]
+    end
+
+    -- 2. Fall back to region-level range
     local state = xi.dynamicWorld.state
     local regionName = state.zoneToRegion[zoneId]
-
     if regionName and state.regionData[regionName] then
         return state.regionData[regionName].levelRange
     end
 
-    -- Fallback: use a mid-range default
+    -- 3. Last resort default
     return { 20, 40 }
 end
 

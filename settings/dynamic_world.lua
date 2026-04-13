@@ -107,6 +107,78 @@ xi.settings.dynamicworld =
     CLEANUP_INTERVAL            = 60,       -- Seconds between cleanup passes
 
     -----------------------------------------------------------------------
+    -- Per-Zone Level Ranges
+    -- Maps each zone ID to its appropriate { min, max } mob level range.
+    -- getZoneLevelRange() checks here first, then falls back to the
+    -- region's levelRange, then to a default of { 20, 40 }.
+    -- Based on actual FFXI mob levels in each zone.
+    -----------------------------------------------------------------------
+    ZONE_LEVELS =
+    {
+        -- ── Original Zones ──────────────────────────────────────────────
+        [100] = {  1,  9 },   -- West Ronfaure
+        [101] = {  1,  9 },   -- East Ronfaure
+        [102] = { 10, 21 },   -- La Theine Plateau
+        [103] = { 10, 22 },   -- Valkurm Dunes
+        [104] = { 15, 28 },   -- Jugner Forest
+        [105] = { 25, 40 },   -- Batallia Downs
+        [106] = {  1,  9 },   -- North Gustaberg
+        [107] = {  1,  9 },   -- South Gustaberg
+        [108] = { 10, 22 },   -- Konschtat Highlands
+        [109] = { 20, 33 },   -- Pashhow Marshlands
+        [110] = { 30, 43 },   -- Rolanberry Fields
+        [111] = { 40, 52 },   -- Beaucedine Glacier
+        [112] = { 47, 58 },   -- Xarcabard
+        [113] = { 40, 52 },   -- Cape Teriggan
+        [114] = { 45, 58 },   -- Eastern Altepa Desert
+        [115] = {  1,  9 },   -- West Sarutabaruta
+        [116] = {  1,  9 },   -- East Sarutabaruta
+        [117] = { 10, 22 },   -- Tahrongi Canyon
+        [118] = { 15, 27 },   -- Buburimu Peninsula
+        [119] = { 25, 38 },   -- Meriphataud Mountains
+        [120] = { 33, 48 },   -- Sauromugue Champaign
+        [121] = { 35, 50 },   -- Sanctuary of Zi'Tah
+        [122] = { 42, 58 },   -- Ro'Maeve
+        [123] = { 38, 52 },   -- Yuhtunga Jungle
+        [124] = { 44, 58 },   -- Yhoator Jungle
+        [125] = { 45, 58 },   -- Western Altepa Desert
+        [126] = { 20, 33 },   -- Qufim Island
+        [127] = { 60, 72 },   -- Behemoth's Dominion
+        [128] = { 65, 75 },   -- Valley of Sorrows
+
+        -- ── Chains of Promathia ─────────────────────────────────────────
+        [ 24] = { 30, 52 },   -- Lufaise Meadows
+        [ 25] = { 35, 55 },   -- Misareaux Coast
+
+        -- ── Treasures of Aht Urhgan ─────────────────────────────────────
+        [ 51] = { 55, 72 },   -- Wajaom Woodlands
+        [ 52] = { 55, 72 },   -- Bhaflau Thickets
+        [ 61] = { 60, 75 },   -- Mount Zhayolm
+        [ 65] = { 62, 75 },   -- Mamook
+        [ 68] = { 63, 75 },   -- Aydeewa Subterrane
+        [ 79] = { 65, 75 },   -- Caedarva Mire
+
+        -- ── Wings of the Goddess [S] zones ──────────────────────────────
+        [ 81] = {  1, 12 },   -- East Ronfaure [S]
+        [ 82] = { 18, 32 },   -- Jugner Forest [S]
+        [ 83] = { 22, 40 },   -- Vunkerl Inlet [S]
+        [ 84] = { 30, 48 },   -- Batallia Downs [S]
+        [ 88] = {  1, 12 },   -- North Gustaberg [S]
+        [ 89] = { 22, 40 },   -- Grauberg [S]
+        [ 90] = { 28, 45 },   -- Pashhow Marshlands [S]
+        [ 91] = { 35, 52 },   -- Rolanberry Fields [S]
+        [ 95] = {  1, 12 },   -- West Sarutabaruta [S]
+        [ 97] = { 30, 48 },   -- Meriphataud Mountains [S]
+        [ 98] = { 38, 55 },   -- Sauromugue Champaign [S]
+        [136] = { 48, 62 },   -- Beaucedine Glacier [S]
+        [137] = { 55, 70 },   -- Xarcabard [S]
+
+        -- ── Seekers of Adoulin ───────────────────────────────────────────
+        [260] = { 90, 99 },   -- Yahse Hunting Grounds
+        [261] = { 90, 99 },   -- Ceizak Battlegrounds
+    },
+
+    -----------------------------------------------------------------------
     -- Zone Eligibility
     -- Only outdoor overworld zones participate. Add/remove zone IDs here.
     -- By default, all major outdoor zones from each expansion are included.

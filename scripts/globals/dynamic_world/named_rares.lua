@@ -1033,8 +1033,13 @@ nr.trySpawn = function(key)
         end,
     }
 
-    local mob = zone:spawnMob(entityTable)
+    -- Use insertDynamicEntity (same as regular spawner) so the mob is
+    -- properly registered as a dynamic entity with all lifecycle hooks.
+    local mob = zone:insertDynamicEntity(entityTable)
     if mob then
+        mob:setSpawn(pos.x, pos.y, pos.z, pos.rot)
+        mob:spawn()
+
         nr.alive[key] = mob
 
         -- Announce the spawn to the zone
@@ -1078,8 +1083,11 @@ nr.forceSpawn = function(key)
         return false, 'Unknown named rare: ' .. tostring(key)
     end
 
-    -- Temporarily zero the kill timer so isReady passes
-    SetServerVariable('DW_NR_' .. key, 0)
+    -- Set kill time to exactly (now - spawnTimer) so the rare is ready
+    -- AND the spawn window is still fully open. Setting to 0 broke the
+    -- window check because windowEnd = 0 + spawnTimer + spawnWindow, which
+    -- is a unix timestamp from 1970 — always expired.
+    SetServerVariable('DW_NR_' .. key, os.time() - config.spawnTimer)
 
     -- Clear alive reference so trySpawn won't bail
     nr.alive[key] = nil

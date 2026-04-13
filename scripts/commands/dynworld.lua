@@ -114,8 +114,21 @@ local function cmdInfo(player)
         local name = template and template.packetName or 'Unknown'
         local tierName = xi.dynamicWorld.tierName[entData.tier] or '?'
         local alive = (entData.entity and entData.entity:isAlive()) and 'Alive' or 'Dead'
-        player:printToPlayer(string.format('  [%s] %s (Lv%d-%d) [%s]',
-            tierName, name, entData.minLevel or 0, entData.maxLevel or 0, alive), xi.msg.channel.SYSTEM_3)
+
+        -- Get current position if entity is alive
+        local posStr = ''
+        if entData.entity and entData.entity:isAlive() then
+            local x = entData.entity:getXPos()
+            local y = entData.entity:getYPos()
+            local z = entData.entity:getZPos()
+            if x and y and z then
+                posStr = string.format(' @ (%.1f, %.1f, %.1f)', x, y, z)
+            end
+        end
+
+        player:printToPlayer(string.format('  [%s] %s (Lv%d-%d) [%s]%s',
+            tierName, name, entData.minLevel or 0, entData.maxLevel or 0, alive, posStr),
+            xi.msg.channel.SYSTEM_3)
         count = count + 1
     end
 end
