@@ -15,7 +15,7 @@ local spawner = xi.dynamicWorld.spawner
 -- Settings helpers
 -----------------------------------
 local function getSetting(key)
-    local s = xi.settings.dynamicWorld
+    local s = xi.settings.dynamicworld
     return s and s[key]
 end
 

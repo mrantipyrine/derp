@@ -16,7 +16,7 @@ local behaviors = xi.dynamicWorld.behaviors
 local behaviorDb = {}
 
 local function getSetting(key)
-    local s = xi.settings.dynamicWorld
+    local s = xi.settings.dynamicworld
     return s and s[key]
 end
 

@@ -10,7 +10,7 @@
 xi = xi or {}
 xi.settings = xi.settings or {}
 
-xi.settings.dynamicWorld =
+xi.settings.dynamicworld =
 {
     -- Master switch
     ENABLED = true,

@@ -140,11 +140,11 @@ local function cmdChain(player)
     end
 
     local elapsed = os.time() - chain.lastKill
-    local window = (xi.settings.dynamicWorld and xi.settings.dynamicWorld.CHAIN_WINDOW) or 180
+    local window = (xi.settings.dynamicworld and xi.settings.dynamicworld.CHAIN_WINDOW) or 180
     local remaining = window - elapsed
     local bonus = math.min(
-        chain.count * ((xi.settings.dynamicWorld and xi.settings.dynamicWorld.CHAIN_BONUS_PER_KILL) or 0.15),
-        (xi.settings.dynamicWorld and xi.settings.dynamicWorld.CHAIN_BONUS_MAX) or 2.0
+        chain.count * ((xi.settings.dynamicworld and xi.settings.dynamicworld.CHAIN_BONUS_PER_KILL) or 0.15),
+        (xi.settings.dynamicworld and xi.settings.dynamicworld.CHAIN_BONUS_MAX) or 2.0
     )
 
     player:printToPlayer(string.format('[DynWorld] Chain: x%d | Bonus: +%d%% EXP | Time left: %ds',

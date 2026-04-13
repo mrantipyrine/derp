@@ -3768,7 +3768,7 @@ db.combo_revenge_fighter =
 
 -- Called when a player kills a dynamic world mob
 synergies.onDynamicKill = function(mob, player, template, tier)
-    if not xi.settings.dynamicWorld.SYNERGIES_ENABLED then
+    if not xi.settings.dynamicworld.SYNERGIES_ENABLED then
         return
     end
 
@@ -3793,7 +3793,7 @@ end
 
 -- Called when a player engages a dynamic world mob
 synergies.onDynamicEngage = function(mob, player, template, tier)
-    if not xi.settings.dynamicWorld.SYNERGIES_ENABLED then
+    if not xi.settings.dynamicworld.SYNERGIES_ENABLED then
         return
     end
 
@@ -3823,7 +3823,7 @@ end
 
 -- Called when player enters a zone with dynamic entities (passive synergies)
 synergies.onZoneIn = function(player, zoneId)
-    if not xi.settings.dynamicWorld.SYNERGIES_ENABLED then
+    if not xi.settings.dynamicworld.SYNERGIES_ENABLED then
         return
     end
 
@@ -3859,7 +3859,7 @@ end
 
 -- Called when a player uses a weapon skill on a dynamic world mob
 synergies.onDynamicWeaponSkill = function(player, mob, template, tier, wsid)
-    if not xi.settings.dynamicWorld.SYNERGIES_ENABLED then
+    if not xi.settings.dynamicworld.SYNERGIES_ENABLED then
         return
     end
 
@@ -3884,7 +3884,7 @@ end
 
 -- Called when a player casts a spell on/near a dynamic world mob
 synergies.onDynamicSpellCast = function(player, mob, template, tier, spellId)
-    if not xi.settings.dynamicWorld.SYNERGIES_ENABLED then
+    if not xi.settings.dynamicworld.SYNERGIES_ENABLED then
         return
     end
 
@@ -3909,7 +3909,7 @@ end
 
 -- Called when a player uses a job ability near a dynamic world mob
 synergies.onDynamicAbility = function(player, mob, template, tier, abilityId)
-    if not xi.settings.dynamicWorld.SYNERGIES_ENABLED then
+    if not xi.settings.dynamicworld.SYNERGIES_ENABLED then
         return
     end
 

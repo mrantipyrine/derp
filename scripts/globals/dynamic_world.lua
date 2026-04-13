@@ -83,7 +83,7 @@ require('scripts/globals/dynamic_world/synergies')
 -- Utility: Safe settings access
 -----------------------------------
 local function getSetting(key)
-    local settings = xi.settings.dynamicWorld
+    local settings = xi.settings.dynamicworld
     if settings == nil then
         return nil
     end
@@ -94,7 +94,7 @@ end
 -- Initialize
 -----------------------------------
 xi.dynamicWorld.init = function()
-    local settings = xi.settings.dynamicWorld
+    local settings = xi.settings.dynamicworld
     if not settings or not settings.ENABLED then
         printf('[DynamicWorld] System is DISABLED in settings.')
         return

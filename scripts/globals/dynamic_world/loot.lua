@@ -25,7 +25,7 @@ xi.dynamicWorld.loot = xi.dynamicWorld.loot or {}
 local loot = xi.dynamicWorld.loot
 
 local function getSetting(key)
-    local s = xi.settings.dynamicWorld
+    local s = xi.settings.dynamicworld
     return s and s[key]
 end
 
