@@ -1075,34 +1075,107 @@ nr.init = function()
 end
 
 -----------------------------------
--- GM helper: force spawn a specific named rare by key
+-- GM helper: force spawn a specific named rare by key.
+-- Pass the calling player so the rare always spawns near them.
 -----------------------------------
-nr.forceSpawn = function(key)
+nr.forceSpawn = function(key, player)
     local config = nr.db[key]
     if not config then
         return false, 'Unknown named rare: ' .. tostring(key)
     end
 
-    -- Set kill time to exactly (now - spawnTimer) so the rare is ready
-    -- AND the spawn window is still fully open. Setting to 0 broke the
-    -- window check because windowEnd = 0 + spawnTimer + spawnWindow, which
-    -- is a unix timestamp from 1970 — always expired.
-    SetServerVariable('DW_NR_' .. key, os.time() - config.spawnTimer)
-
-    -- Clear alive reference so trySpawn won't bail
+    -- Clear alive reference so we don't bail on "already alive"
     nr.alive[key] = nil
 
-    -- Override spawn chance to guarantee a spawn
-    local savedChance = config.spawnChance
-    config.spawnChance = 1000
-    local result = nr.trySpawn(key)
-    config.spawnChance = savedChance
+    -- Set kill time to (now - spawnTimer) so the rare is ready
+    -- AND the spawn window is still fully open.
+    SetServerVariable('DW_NR_' .. key, os.time() - config.spawnTimer)
 
-    if result then
-        return true, string.format('%s forced into the world.', config.name)
+    -- Determine spawn zone and position.
+    -- Always spawn near the requesting player so the GM can see the mob.
+    local spawnZone = nil
+    local spawnPos  = nil
+
+    if player then
+        spawnZone = player:getZone()
+        if spawnZone then
+            local px  = player:getXPos()
+            local py  = player:getYPos()
+            local pz  = player:getZPos()
+            local ang = math.random() * math.pi * 2
+            local dist = 5 + math.random() * 5
+            spawnPos = {
+                x   = px + math.cos(ang) * dist,
+                y   = py,
+                z   = pz + math.sin(ang) * dist,
+                rot = math.random(0, 255),
+            }
+        end
     end
 
-    return false, string.format('Failed to spawn %s (no valid spawn point?)', config.name)
+    -- Fallback: pick from config zones and find a mob-based point
+    if not spawnZone then
+        local zoneId = config.zones[math.random(#config.zones)]
+        spawnZone = GetZone(zoneId)
+        if not spawnZone then
+            return false, string.format('Failed: could not load zone for %s', config.name)
+        end
+        spawnPos = xi.dynamicWorld.getRandomSpawnPoint(spawnZone)
+        if not spawnPos then
+            return false, string.format('Failed: no mobs in zone %d to anchor spawn point for %s. Try being in the zone.', zoneId, config.name)
+        end
+    end
+
+    local chosenRef = pickGroupRef(config)
+
+    local entityTable =
+    {
+        objtype               = xi.objType.MOB,
+        name                  = config.name:gsub(' ', '_'),
+        packetName            = config.packetName,
+        x                     = spawnPos.x,
+        y                     = spawnPos.y,
+        z                     = spawnPos.z,
+        rotation              = spawnPos.rot,
+        groupId               = chosenRef.groupId,
+        groupZoneId           = chosenRef.groupZoneId,
+        minLevel              = config.level[1],
+        maxLevel              = config.level[2],
+        releaseIdOnDisappear  = true,
+        specialSpawnAnimation = true,
+        isAggro               = config.isAggro or false,
+        onMobDeath            = function(mob, killer, optParams)
+            SetServerVariable('DW_NR_' .. key, os.time())
+            nr.alive[key] = nil
+            if config.deathMsg then
+                local z = mob:getZone()
+                if z then z:broadcastMessage(config.deathMsg) end
+            end
+            if killer then
+                nr.awardLoot(key, mob, killer)
+            end
+        end,
+    }
+
+    local mob = spawnZone:insertDynamicEntity(entityTable)
+    if not mob then
+        return false, string.format('Failed: insertDynamicEntity returned nil for %s — check groupRef (groupId=%d, groupZoneId=%d)',
+            config.name, chosenRef.groupId, chosenRef.groupZoneId)
+    end
+
+    mob:setSpawn(spawnPos.x, spawnPos.y, spawnPos.z, spawnPos.rot)
+    mob:spawn()
+    nr.alive[key] = mob
+
+    local z = mob:getZone()
+    if z then
+        z:broadcastMessage(string.format(
+            'A strange presence stirs in the area... %s has appeared!',
+            config.packetName
+        ))
+    end
+
+    return true, string.format('%s has appeared near you!', config.name)
 end
 
 -----------------------------------

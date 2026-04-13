@@ -122,7 +122,8 @@ local function cmdInfo(player)
             local y = entData.entity:getYPos()
             local z = entData.entity:getZPos()
             if x and y and z then
-                posStr = string.format(' @ (%.1f, %.1f, %.1f)', x, y, z)
+                local grid = xi.dynamicWorld.posToGrid(x, z, zoneId)
+                posStr = string.format(' @ %s (%.1f, %.1f, %.1f)', grid, x, y, z)
             end
         end
 
@@ -220,7 +221,7 @@ commandObj.onTrigger = function(player, args)
             printErr(player, '[DynWorld] Usage: !dynworld rare <key>  (use !dynworld rares to see keys)')
             return
         end
-        local ok, msg = xi.dynamicWorld.namedRares.forceSpawn(key)
+        local ok, msg = xi.dynamicWorld.namedRares.forceSpawn(key, player)
         player:printToPlayer('[DynWorld] ' .. msg, xi.msg.channel.SYSTEM_3)
     else
         showHelp(player)

@@ -384,36 +384,52 @@ xi.dynamicWorld.weightedRandom = function(weights)
     return #weights
 end
 
--- Get a random valid spawn position from existing mobs in a zone.
--- Uses existing mob positions as known-good navmesh locations,
--- then validates the offset position with zone:isNavigablePoint().
-xi.dynamicWorld.getRandomSpawnPoint = function(zone)
+-- Get a random valid spawn position in a zone.
+-- First tries positions derived from existing mobs (guaranteed valid navmesh
+-- locations). If the zone has no mobs (e.g. no players present), falls back
+-- to player positions. Returns nil only if truly nothing is available.
+xi.dynamicWorld.getRandomSpawnPoint = function(zone, anchorEntity)
+    -- Build a list of anchor entities to sample positions from.
+    -- Priority: existing mobs > players in zone > provided anchorEntity.
+    local anchors = {}
+
     local mobs = zone:getMobs()
-    if mobs == nil then
-        return nil
+    if mobs then
+        for _, mob in pairs(mobs) do
+            table.insert(anchors, mob)
+        end
     end
 
-    -- getMobs may return a table or userdata; handle both
-    local mobList = {}
-    for _, mob in pairs(mobs) do
-        table.insert(mobList, mob)
+    -- If no mobs, try players as anchor points
+    if #anchors == 0 then
+        local players = zone:getPlayers()
+        if players then
+            for _, p in pairs(players) do
+                table.insert(anchors, p)
+            end
+        end
     end
 
-    if #mobList == 0 then
+    -- If a specific anchor entity was passed (e.g. the calling player), use it
+    if anchorEntity then
+        table.insert(anchors, anchorEntity)
+    end
+
+    if #anchors == 0 then
         return nil
     end
 
     -- Try up to 15 times to find a valid, navigable position
-    for attempt = 1, math.min(15, #mobList) do
-        local mob = mobList[math.random(#mobList)]
-        if mob then
-            local x = mob:getXPos()
-            local y = mob:getYPos()
-            local z = mob:getZPos()
+    for attempt = 1, 15 do
+        local anchor = anchors[math.random(#anchors)]
+        if anchor then
+            local x = anchor:getXPos()
+            local y = anchor:getYPos()
+            local z = anchor:getZPos()
 
             -- Skip (0,0,0) — often a default/invalid position
             if x ~= 0 or y ~= 0 or z ~= 0 then
-                -- Add random offset to avoid stacking on the source mob
+                -- Add random offset to avoid stacking on the anchor
                 local offsetX = math.random() * 8 - 4
                 local offsetZ = math.random() * 8 - 4
                 local testX = x + offsetX
@@ -428,7 +444,7 @@ xi.dynamicWorld.getRandomSpawnPoint = function(zone)
                         rot = math.random(0, 255),
                     }
                 else
-                    -- Fallback: use exact mob position (guaranteed valid)
+                    -- Offset invalid, use exact anchor position (known good)
                     return {
                         x = x,
                         y = y,
@@ -441,6 +457,85 @@ xi.dynamicWorld.getRandomSpawnPoint = function(zone)
     end
 
     return nil
+end
+
+-----------------------------------
+-- Convert world coordinates to FFXI map grid notation (e.g. "H-6").
+-- Each zone has different coordinate extents so we use a per-zone bounds
+-- table derived from zone NPC/mob positions.  Bounds are estimates —
+-- they're accurate enough for a GM to locate a mob on the in-game map.
+-- Column A = west edge, P = east edge.  Row 1 = north, 16 = south.
+-----------------------------------
+local _zoneBounds =
+{
+    -- { minX, maxX, minZ, maxZ }  (Z increases going south)
+    -- ── Original Zones ───────────────────────────────────────────────
+    [100] = { -700,  700, -700,  700 },   -- West Ronfaure
+    [101] = {  100,  600, -100,  700 },   -- East Ronfaure
+    [102] = { -650,  600, -600,  800 },   -- La Theine Plateau
+    [103] = { -800, 1000, -550,  300 },   -- Valkurm Dunes
+    [104] = { -250,  700, -650,  700 },   -- Jugner Forest
+    [105] = { -800,  150,    0,  600 },   -- Batallia Downs
+    [106] = { -700,  800, -100,  750 },   -- North Gustaberg
+    [107] = {  100,  900, -800,    0 },   -- South Gustaberg
+    [108] = { -400,  400,  -50,  550 },   -- Konschtat Highlands
+    [109] = {  250,  700, -200,  850 },   -- Pashhow Marshlands
+    [110] = { -800,  450, -600,  650 },   -- Rolanberry Fields
+    [111] = { -550,  450, -700,  500 },   -- Beaucedine Glacier
+    [112] = { -500,  750, -700,  600 },   -- Xarcabard
+    [113] = { -450,  300, -350,  700 },   -- Cape Teriggan
+    [114] = { -450,  400, -500,  600 },   -- Eastern Altepa Desert
+    [115] = { -200,  600, -350,  900 },   -- West Sarutabaruta
+    [116] = { -200,  600, -350,  900 },   -- East Sarutabaruta
+    [117] = { -500,  450, -600,  550 },   -- Tahrongi Canyon
+    [118] = { -750,  350, -400,  350 },   -- Buburimu Peninsula
+    [119] = { -450,  800, -800,  650 },   -- Meriphataud Mountains
+    [120] = {    0,  850, -600,  600 },   -- Sauromugue Champaign
+    [121] = { -500,  500, -500,  500 },   -- Sanctuary of Zi'Tah
+    [122] = { -500,  500, -500,  500 },   -- Ro'Maeve
+    [123] = { -750,  550, -700,  700 },   -- Yuhtunga Jungle
+    [124] = { -700,  750, -700,  450 },   -- Yhoator Jungle
+    [125] = { -950,  700, -900,  600 },   -- Western Altepa Desert
+    [126] = { -600,  350, -450,  550 },   -- Qufim Island
+    [127] = { -600,  600, -600,  600 },   -- Behemoth's Dominion
+    [128] = { -600,  600, -600,  600 },   -- Valley of Sorrows
+    -- ── Chains of Promathia ──────────────────────────────────────────
+    [ 24] = { -650,  550, -500,  400 },   -- Lufaise Meadows
+    [ 25] = { -650,  400, -100,  700 },   -- Misareaux Coast
+    -- ── Treasures of Aht Urhgan ──────────────────────────────────────
+    [ 51] = { -800,  400, -850,  800 },   -- Wajaom Woodlands
+    [ 52] = { -550,  500, -950,  750 },   -- Bhaflau Thickets
+    [ 61] = { -650,  800, -700,  500 },   -- Mount Zhayolm
+    [ 65] = { -400,  350, -450,  100 },   -- Mamook
+    [ 68] = { -500,  500, -500,  500 },   -- Aydeewa Subterrane
+    [ 79] = { -900,  900, -900,  800 },   -- Caedarva Mire
+    -- ── Wings of the Goddess [S] ─────────────────────────────────────
+    [ 81] = {  100,  600, -100,  700 },   -- East Ronfaure [S]
+    [ 82] = { -250,  700, -650,  700 },   -- Jugner Forest [S]
+    [ 83] = { -500,  500, -500,  500 },   -- Vunkerl Inlet [S]
+    [ 84] = { -800,  150,    0,  600 },   -- Batallia Downs [S]
+    [ 88] = { -700,  800, -100,  750 },   -- North Gustaberg [S]
+    [ 89] = { -500,  500, -500,  500 },   -- Grauberg [S]
+    [ 90] = {  250,  700, -200,  850 },   -- Pashhow Marshlands [S]
+    [ 91] = { -800,  450, -600,  650 },   -- Rolanberry Fields [S]
+    [ 95] = { -200,  600, -350,  900 },   -- West Sarutabaruta [S]
+    [ 97] = { -450,  800, -800,  650 },   -- Meriphataud Mountains [S]
+    [ 98] = {    0,  850, -600,  600 },   -- Sauromugue Champaign [S]
+    [136] = { -550,  450, -700,  500 },   -- Beaucedine Glacier [S]
+    [137] = { -500,  750, -700,  600 },   -- Xarcabard [S]
+    -- ── Seekers of Adoulin ───────────────────────────────────────────
+    [260] = { -400,  550, -400,  250 },   -- Yahse Hunting Grounds
+    [261] = { -550,  450, -500,  400 },   -- Ceizak Battlegrounds
+}
+
+xi.dynamicWorld.posToGrid = function(x, z, zoneId)
+    local b = _zoneBounds[zoneId] or { -700, 700, -700, 700 }
+    local minX, maxX, minZ, maxZ = b[1], b[2], b[3], b[4]
+    local col = math.floor((x - minX) / ((maxX - minX) / 16.0)) + 1
+    local row = math.floor((z - minZ) / ((maxZ - minZ) / 16.0)) + 1
+    col = math.max(1, math.min(16, col))
+    row = math.max(1, math.min(16, row))
+    return string.format('%s-%d', string.char(64 + col), row)
 end
 
 -- Get zone's appropriate level range.
