@@ -36,6 +36,45 @@ local function pickGroupRef(config)
 end
 
 -----------------------------------
+-- Roll a tier for this rare spawn.
+-- Named rares are always at least Elite — they're Notorious Monsters.
+-- 70% chance Elite, 30% chance Apex.
+-----------------------------------
+local RARE_TIER_ELITE = xi.dynamicWorld.tier.ELITE
+local RARE_TIER_APEX  = xi.dynamicWorld.tier.APEX
+
+local function rollRareTier()
+    return math.random(100) <= 30 and RARE_TIER_APEX or RARE_TIER_ELITE
+end
+
+-----------------------------------
+-- Compute level range for a named rare based on its tier and zone level.
+-- Named rares are always well above zone level so they check as IT
+-- even without the CHECK_AS_NM flag — but we set that flag too.
+-----------------------------------
+local function calcRareLevel(config, tier, zoneId)
+    local zoneRange = xi.dynamicWorld.getZoneLevelRange(zoneId)
+    local zoneMax   = zoneRange[2] or 10
+
+    local minLv, maxLv
+    if tier == RARE_TIER_APEX then
+        -- Apex: zone max + 25–35 (very scary)
+        minLv = math.min(99, zoneMax + 25)
+        maxLv = math.min(99, zoneMax + 35)
+    else
+        -- Elite: zone max + 12–20 (definitely IT)
+        minLv = math.min(99, zoneMax + 12)
+        maxLv = math.min(99, zoneMax + 20)
+    end
+
+    -- Never go below the config's own floor (some rares are intentionally high)
+    minLv = math.max(minLv, config.level[1])
+    maxLv = math.max(maxLv, config.level[2])
+
+    return minLv, maxLv
+end
+
+-----------------------------------
 -- Named Rare Database
 -----------------------------------
 -- groupRef: find valid IDs with:
@@ -994,6 +1033,11 @@ nr.trySpawn = function(key)
     local pos = xi.dynamicWorld.getRandomSpawnPoint(zone)
     if not pos then return false end
 
+    -- Roll a tier for this spawn (70% Elite, 30% Apex)
+    local tier   = rollRareTier()
+    local isApex = (tier == RARE_TIER_APEX)
+    local minLv, maxLv = calcRareLevel(config, tier, zoneId)
+
     -- Pick one groupRef variant for this spawn (for visual size variety)
     local chosenRef = pickGroupRef(config)
 
@@ -1008,11 +1052,26 @@ nr.trySpawn = function(key)
         rotation              = pos.rot,
         groupId               = chosenRef.groupId,
         groupZoneId           = chosenRef.groupZoneId,
-        minLevel              = config.level[1],
-        maxLevel              = config.level[2],
+        minLevel              = minLv,
+        maxLevel              = maxLv,
         releaseIdOnDisappear  = true,
         specialSpawnAnimation = true,
-        isAggro               = config.isAggro or false,
+        isAggro               = true,   -- Named rares are always aggressive
+        onMobSpawn            = function(mob)
+            -- Flag as NM: forces /check to return "Impossible to Gauge"
+            mob:setMobMod(xi.mobMod.CHECK_AS_NM, 1)
+            -- Never links with nearby mobs
+            mob:setMobMod(xi.mobMod.NO_LINK, 1)
+
+            -- Apex rares get a hefty HP bonus on top of their higher level
+            if isApex then
+                local baseHP = mob:getMaxHP()
+                mob:setHP(math.floor(baseHP * 2.0))
+            end
+
+            mob:setLocalVar('DW_NR_KEY_HASH', 0) -- placeholder; key stored in closure
+            mob:setLocalVar('DW_NR_TIER', tier)
+        end,
         onMobDeath            = function(mob, player, optParams)
             -- Record kill time for respawn timer
             SetServerVariable('DW_NR_' .. key, os.time())
@@ -1021,20 +1080,17 @@ nr.trySpawn = function(key)
             -- Announce the kill to the zone
             if config.deathMsg then
                 local z = mob:getZone()
-                if z then
-                    z:broadcastMessage(config.deathMsg)
-                end
+                if z then z:broadcastMessage(config.deathMsg) end
             end
 
-            -- Give loot
+            -- Give loot (tier passed so loot system can scale rates)
             if player then
-                nr.awardLoot(key, mob, player)
+                nr.awardLoot(key, mob, player, tier)
             end
         end,
     }
 
-    -- Use insertDynamicEntity (same as regular spawner) so the mob is
-    -- properly registered as a dynamic entity with all lifecycle hooks.
+    -- Use insertDynamicEntity so the mob is a full dynamic entity
     local mob = zone:insertDynamicEntity(entityTable)
     if mob then
         mob:setSpawn(pos.x, pos.y, pos.z, pos.rot)
@@ -1042,13 +1098,20 @@ nr.trySpawn = function(key)
 
         nr.alive[key] = mob
 
-        -- Announce the spawn to the zone
+        -- Announce the spawn — Apex rares get a more dramatic message
         local z = mob:getZone()
         if z then
-            z:broadcastMessage(string.format(
-                'A strange presence stirs in the area... %s has appeared!',
-                config.packetName
-            ))
+            if isApex then
+                z:broadcastMessage(string.format(
+                    '!! A tremendous evil presence descends upon the area... %s has appeared !!',
+                    config.packetName
+                ))
+            else
+                z:broadcastMessage(string.format(
+                    'A strange presence stirs in the area... %s has appeared!',
+                    config.packetName
+                ))
+            end
         end
 
         return true
@@ -1126,7 +1189,12 @@ nr.forceSpawn = function(key, player)
         end
     end
 
-    local chosenRef = pickGroupRef(config)
+    -- Roll tier and compute level (same logic as trySpawn)
+    local tier        = rollRareTier()
+    local isApex      = (tier == RARE_TIER_APEX)
+    local spawnZoneId = spawnZone:getID()
+    local minLv, maxLv = calcRareLevel(config, tier, spawnZoneId)
+    local chosenRef   = pickGroupRef(config)
 
     local entityTable =
     {
@@ -1139,11 +1207,22 @@ nr.forceSpawn = function(key, player)
         rotation              = spawnPos.rot,
         groupId               = chosenRef.groupId,
         groupZoneId           = chosenRef.groupZoneId,
-        minLevel              = config.level[1],
-        maxLevel              = config.level[2],
+        minLevel              = minLv,
+        maxLevel              = maxLv,
         releaseIdOnDisappear  = true,
         specialSpawnAnimation = true,
-        isAggro               = config.isAggro or false,
+        isAggro               = true,
+        onMobSpawn            = function(mob)
+            -- Force /check to return "Impossible to Gauge" like a true NM
+            mob:setMobMod(xi.mobMod.CHECK_AS_NM, 1)
+            mob:setMobMod(xi.mobMod.NO_LINK, 1)
+            -- Apex rares are extra beefy
+            if isApex then
+                local baseHP = mob:getMaxHP()
+                mob:setHP(math.floor(baseHP * 2.0))
+            end
+            mob:setLocalVar('DW_NR_TIER', tier)
+        end,
         onMobDeath            = function(mob, killer, optParams)
             SetServerVariable('DW_NR_' .. key, os.time())
             nr.alive[key] = nil
@@ -1152,7 +1231,7 @@ nr.forceSpawn = function(key, player)
                 if z then z:broadcastMessage(config.deathMsg) end
             end
             if killer then
-                nr.awardLoot(key, mob, killer)
+                nr.awardLoot(key, mob, killer, tier)
             end
         end,
     }
@@ -1169,13 +1248,21 @@ nr.forceSpawn = function(key, player)
 
     local z = mob:getZone()
     if z then
-        z:broadcastMessage(string.format(
-            'A strange presence stirs in the area... %s has appeared!',
-            config.packetName
-        ))
+        if isApex then
+            z:broadcastMessage(string.format(
+                '!! A tremendous evil presence descends upon the area... %s has appeared !!',
+                config.packetName
+            ))
+        else
+            z:broadcastMessage(string.format(
+                'A strange presence stirs in the area... %s has appeared!',
+                config.packetName
+            ))
+        end
     end
 
-    return true, string.format('%s has appeared near you!', config.name)
+    local tierLabel = isApex and '[APEX] ' or '[ELITE] '
+    return true, string.format('%s%s has appeared near you! (Lv%d-%d)', tierLabel, config.name, minLv, maxLv)
 end
 
 -----------------------------------
