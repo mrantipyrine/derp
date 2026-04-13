@@ -514,6 +514,32 @@ REPLACE INTO `item_mods` VALUES (30464, 2,40),(30464, 6, 6),(30464, 1, 8),(30464
 REPLACE INTO `item_mods` VALUES (30465, 4, 6),(30465, 6, 6),(30465, 2,40),(30465,11,12);  -- STR+6 VIT+6 HP+40 ATT+12
 
 -- =============================================================================
+-- THE JIMS  (Little Jim = giant, Big Jim = tiny — find goblin groupRefs first)
+-- =============================================================================
+
+-- --- Little Jim (10h timer, lv25-32, midlands) — uses a LARGE goblin model ---
+REPLACE INTO `item_basic` VALUES (30520,0,"Little_Jim's_Big_Trophy","little_jims_big_trophy",1,46660,99,1,0);
+REPLACE INTO `item_basic` VALUES (30521,0,"Little_Jim's_Big_Boots","little_jims_big_boots",1,46660,99,0,6000);
+REPLACE INTO `item_basic` VALUES (30522,0,"Little_Jim's_Big_Ring","little_jims_big_ring",1,46660,99,0,9000);
+
+REPLACE INTO `item_equipment` VALUES (30521,"little_jims_big_boots",  25,0,4194303,0,0,0,2048,0,0,0); -- FEET
+REPLACE INTO `item_equipment` VALUES (30522,"little_jims_big_ring",   25,0,4194303,0,0,0,  64,0,0,0); -- RING
+
+REPLACE INTO `item_mods` VALUES (30521, 6,10),(30521, 1,14),(30521, 2,60),(30521,47, 8);   -- VIT+10 DEF+14 HP+60 Haste+8
+REPLACE INTO `item_mods` VALUES (30522, 4,10),(30522, 6, 8),(30522,11,18),(30522, 2,50);   -- STR+10 VIT+8 ATT+18 HP+50
+
+-- --- Big Jim (10h timer, lv25-32, midlands) — uses a SMALL goblin model ---
+REPLACE INTO `item_basic` VALUES (30523,0,"Big_Jim's_Small_Trophy","big_jims_small_trophy",1,46660,99,1,0);
+REPLACE INTO `item_basic` VALUES (30524,0,"Big_Jim's_Small_Hat","big_jims_small_hat",1,46660,99,0,6000);
+REPLACE INTO `item_basic` VALUES (30525,0,"Big_Jim's_Small_Ring","big_jims_small_ring",1,46660,99,0,9000);
+
+REPLACE INTO `item_equipment` VALUES (30524,"big_jims_small_hat",     25,0,4194303,0,0,0,   1,0,0,0); -- HEAD
+REPLACE INTO `item_equipment` VALUES (30525,"big_jims_small_ring",    25,0,4194303,0,0,0,  64,0,0,0); -- RING
+
+REPLACE INTO `item_mods` VALUES (30524, 5,10),(30524, 7,10),(30524,12,16),(30524,13,14),(30524,47, 8); -- DEX+10 AGI+10 ACC+16 EVA+14 Haste+8
+REPLACE INTO `item_mods` VALUES (30525, 5, 8),(30525, 4, 8),(30525,11,16),(30525,12,14),(30525, 2,50); -- DEX+8 STR+8 ATT+16 ACC+14 HP+50
+
+-- =============================================================================
 -- VERIFY (run manually after applying)
 -- =============================================================================
 -- SELECT i.itemid, i.name, e.level, e.slot, e.jobs

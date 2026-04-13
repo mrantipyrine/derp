@@ -25,6 +25,16 @@ local nr = xi.dynamicWorld.namedRares
 -- Track currently alive named rares: key -> mob entity reference
 nr.alive = nr.alive or {}
 
+-- Pick a random groupRef from a config entry.
+-- Supports either a single 'groupRef' or a 'groupRefs' array for visual variety.
+local function pickGroupRef(config)
+    local refs = config.groupRefs
+    if refs and #refs > 0 then
+        return refs[math.random(#refs)]
+    end
+    return config.groupRef
+end
+
 -----------------------------------
 -- Named Rare Database
 -----------------------------------
@@ -854,6 +864,63 @@ nr.db = {
         },
         deathMsg = "Squirmy Sherman squirms his last squirm.",
     },
+
+    -- ================================================================
+    -- THE JIMS  (goblin size joke)
+    -- "Little Jim" is enormous. "Big Jim" is tiny.
+    -- ================================================================
+    --
+    -- To find appropriately sized goblin groupRefs, run on your DB:
+    --   SELECT groupid, zoneid, name FROM mob_groups WHERE name LIKE '%Goblin%' ORDER BY name LIMIT 30;
+    --
+    -- Pick a large variant (Goblin Lord / Chief / Ambusher) for Little Jim's groupRef.
+    -- Pick a small variant (Goblin Peddler / Tapster / Weaver) for Big Jim's groupRef.
+    -- Replace groupId/groupZoneId below with your findings.
+    -- ================================================================
+
+    little_jim =
+    {
+        name        = 'Little Jim',
+        packetName  = 'Little Jim',
+        -- TODO: set this to a LARGE goblin variant (Goblin Lord, Chief, etc.)
+        -- e.g. { groupId = ???, groupZoneId = ??? }
+        groupRef    = { groupId = 6, groupZoneId = 100 },
+        zones       = { 103, 111, 112, 113 },
+        level       = { 25, 32 },
+        spawnTimer  = 10 * 3600,
+        spawnWindow = 3 * 3600,
+        spawnChance = 180,
+        isAggro     = true,
+        loot        =
+        {
+            { itemId = 30520, rate = 1000 },    -- Little Jim's Big Trophy (trophy)
+            { itemId = 30521, rate = 400  },    -- Little Jim's Big Boots
+            { itemId = 30522, rate = 150  },    -- Little Jim's Big Ring
+        },
+        deathMsg    = 'Little Jim falls. He was not, in fact, little.',
+    },
+
+    big_jim =
+    {
+        name        = 'Big Jim',
+        packetName  = 'Big Jim',
+        -- TODO: set this to a SMALL goblin variant (Goblin Peddler, Tapster, etc.)
+        -- e.g. { groupId = ???, groupZoneId = ??? }
+        groupRef    = { groupId = 6, groupZoneId = 100 },
+        zones       = { 103, 111, 112, 113 },
+        level       = { 25, 32 },
+        spawnTimer  = 10 * 3600,
+        spawnWindow = 3 * 3600,
+        spawnChance = 180,
+        isAggro     = true,
+        loot        =
+        {
+            { itemId = 30523, rate = 1000 },    -- Big Jim's Small Trophy (trophy)
+            { itemId = 30524, rate = 400  },    -- Big Jim's Small Hat
+            { itemId = 30525, rate = 150  },    -- Big Jim's Small Ring
+        },
+        deathMsg    = 'Big Jim falls. He was not, in fact, big.',
+    },
 }
 
 -----------------------------------
@@ -927,6 +994,9 @@ nr.trySpawn = function(key)
     local pos = xi.dynamicWorld.getRandomSpawnPoint(zone)
     if not pos then return false end
 
+    -- Pick one groupRef variant for this spawn (for visual size variety)
+    local chosenRef = pickGroupRef(config)
+
     local entityTable =
     {
         objtype               = xi.objType.MOB,
@@ -936,8 +1006,8 @@ nr.trySpawn = function(key)
         y                     = pos.y,
         z                     = pos.z,
         rotation              = pos.rot,
-        groupId               = config.groupRef.groupId,
-        groupZoneId           = config.groupRef.groupZoneId,
+        groupId               = chosenRef.groupId,
+        groupZoneId           = chosenRef.groupZoneId,
         minLevel              = config.level[1],
         maxLevel              = config.level[2],
         releaseIdOnDisappear  = true,

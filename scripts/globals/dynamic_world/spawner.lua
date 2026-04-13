@@ -20,6 +20,26 @@ local function getSetting(key)
 end
 
 -----------------------------------
+-- Pick a random groupRef from a template.
+-- Templates can define a single 'groupRef' or a 'groupRefs' array for
+-- visual variety (different mob_groups rows = different models/sizes).
+-- At spawn time we pick one at random, giving each entity a different look.
+--
+-- To add size variants for a template, query your DB:
+--   SELECT groupid, zoneid, name FROM mob_groups
+--   WHERE name LIKE '%Rabbit%' ORDER BY name;
+-- Then populate groupRefs with the rows that represent small/medium/large
+-- or different visual versions of that mob family.
+-----------------------------------
+local function pickGroupRef(template)
+    local refs = template.groupRefs
+    if refs and #refs > 0 then
+        return refs[math.random(#refs)]
+    end
+    return template.groupRef
+end
+
+-----------------------------------
 -- Evaluate: decide whether to spawn new entities in a zone
 -----------------------------------
 spawner.evaluate = function(zone, zd, state)
@@ -131,6 +151,9 @@ spawner.spawnEntity = function(zone, zd, state, tier)
     minLevel = math.min(minLevel, 99)
     maxLevel = math.min(maxLevel, 99)
 
+    -- Pick a random visual variant for this spawn
+    local chosenRef = pickGroupRef(template)
+
     -- Build the entity table
     local entityTable = {
         objtype     = xi.objType.MOB,
@@ -140,8 +163,8 @@ spawner.spawnEntity = function(zone, zd, state, tier)
         y           = pos.y,
         z           = pos.z,
         rotation    = pos.rot,
-        groupId     = template.groupRef.groupId,
-        groupZoneId = template.groupRef.groupZoneId,
+        groupId     = chosenRef.groupId,
+        groupZoneId = chosenRef.groupZoneId,
         minLevel    = minLevel,
         maxLevel    = maxLevel,
         releaseIdOnDisappear = true,
@@ -440,6 +463,9 @@ spawner.tryRevengeSpawn = function(mob, killer, zd, state, template, tier, gener
     -- Determine if overleveled for zone (for aggro purposes)
     local isOverleveled = revengeMinLevel > levelRange[2]
 
+    -- Revenge mobs pick a random visual variant too
+    local revengeRef = pickGroupRef(template)
+
     -- Build the entity
     local entityTable = {
         objtype     = xi.objType.MOB,
@@ -449,8 +475,8 @@ spawner.tryRevengeSpawn = function(mob, killer, zd, state, template, tier, gener
         y           = deathY,
         z           = deathZ,
         rotation    = math.random(0, 255),
-        groupId     = template.groupRef.groupId,
-        groupZoneId = template.groupRef.groupZoneId,
+        groupId     = revengeRef.groupId,
+        groupZoneId = revengeRef.groupZoneId,
         minLevel    = revengeMinLevel,
         maxLevel    = revengeMaxLevel,
         releaseIdOnDisappear = true,

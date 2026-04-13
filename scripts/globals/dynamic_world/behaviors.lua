@@ -20,6 +20,15 @@ local function getSetting(key)
     return s and s[key]
 end
 
+-- Pick a random groupRef from a template (supports groupRefs array or single groupRef).
+local function pickGroupRef(template)
+    local refs = template.groupRefs
+    if refs and #refs > 0 then
+        return refs[math.random(#refs)]
+    end
+    return template.groupRef
+end
+
 -- Safe distance check (checkDistance can return nil)
 local function safeDistance(entityA, entityB)
     if not entityA or not entityB then
@@ -374,6 +383,7 @@ behaviorDb.elite_commander =
             mob:setLocalVar('DW_ADDS_SPAWNED', 1)
             local addCount = math.random(1, 2)
             for i = 1, addCount do
+                local addRef = pickGroupRef(template)  -- one pick per add, consistent pair
                 local addEntity = zone:insertDynamicEntity({
                     objtype = xi.objType.MOB,
                     name = 'Rallied_Grunt',
@@ -382,8 +392,8 @@ behaviorDb.elite_commander =
                     y = mob:getYPos(),
                     z = mob:getZPos() + math.random(-3, 3),
                     rotation = mob:getRotPos(),
-                    groupId = template.groupRef.groupId,
-                    groupZoneId = template.groupRef.groupZoneId,
+                    groupId = addRef.groupId,
+                    groupZoneId = addRef.groupZoneId,
                     minLevel = math.max(1, mob:getMainLvl() - 5),
                     maxLevel = mob:getMainLvl() - 2,
                     releaseIdOnDisappear = true,

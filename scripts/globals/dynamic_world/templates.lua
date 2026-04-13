@@ -23,7 +23,19 @@ xi.dynamicWorld.templates = xi.dynamicWorld.templates or {}
 -- Each entry:
 --   name           - Internal name (shown to GMs)
 --   packetName     - Display name players see
---   groupRef       - { groupId, groupZoneId } referencing mob_groups for base model
+--   groupRefs      - Array of { groupId, groupZoneId } entries. One is picked
+--                    randomly at each spawn, giving visual variety (different
+--                    mob_groups rows can reference different model sizes/variants).
+--                    A single-entry array is fine if no variants exist.
+--                    FALLBACK: groupRef = { groupId, groupZoneId } still works.
+--
+--   To find size variants for a mob family, query:
+--     SELECT groupid, zoneid, name, minLevel
+--       FROM mob_groups
+--      WHERE name LIKE '%Rabbit%'
+--      ORDER BY minLevel;
+--   Lower-level entries often reference smaller models; higher-level = bigger.
+--
 --   tier           - Which tier(s) this template can be used for
 --   levelOffset    - { min, max } added to zone's base level range
 --   regions        - nil (all) or list of region names this can spawn in
@@ -47,7 +59,15 @@ db.empowered_hare =
 {
     name            = 'Empowered Hare',
     packetName      = 'Empowered Hare',
-    groupRef        = { groupId = 6, groupZoneId = 100 },  -- Wild Rabbit, West Ronfaure
+    -- Multiple groupRefs = random visual variant picked each spawn.
+    -- TODO: replace with real results from:
+    --   SELECT groupid, zoneid, name, minLevel FROM mob_groups
+    --   WHERE name LIKE '%Rabbit%' OR name LIKE '%Hare%' ORDER BY minLevel;
+    groupRefs = {
+        { groupId = 6, groupZoneId = 100 },  -- Wild Rabbit (small, low lv)
+        { groupId = 6, groupZoneId = 100 },  -- TODO: replace with mid-size rabbit variant
+        { groupId = 6, groupZoneId = 100 },  -- TODO: replace with large rabbit variant
+    },
     tier            = { xi.dynamicWorld.tier.WANDERER },
     levelOffset     = { 2, 5 },
     regions         = { 'ronfaure', 'sarutabaruta', 'gustaberg' },
@@ -62,7 +82,14 @@ db.frenzied_tiger =
 {
     name            = 'Frenzied Tiger',
     packetName      = 'Frenzied Tiger',
-    groupRef        = { groupId = 28, groupZoneId = 2 },   -- Forest Tiger, Carpenters Landing
+    -- TODO: replace with results from:
+    --   SELECT groupid, zoneid, name, minLevel FROM mob_groups
+    --   WHERE name LIKE '%Tiger%' ORDER BY minLevel;
+    groupRefs = {
+        { groupId = 28, groupZoneId = 2 },   -- Forest Tiger (smaller/younger)
+        { groupId = 28, groupZoneId = 2 },   -- TODO: mid-size tiger variant
+        { groupId = 28, groupZoneId = 2 },   -- TODO: large tiger variant (e.g. Tigon, Sabertooth)
+    },
     tier            = { xi.dynamicWorld.tier.WANDERER, xi.dynamicWorld.tier.NOMAD },
     levelOffset     = { 3, 7 },
     regions         = { 'ronfaure', 'midlands', 'elshimo' },
@@ -77,7 +104,14 @@ db.glinting_beetle =
 {
     name            = 'Glinting Beetle',
     packetName      = 'Glinting Beetle',
-    groupRef        = { groupId = 6, groupZoneId = 100 },  -- Placeholder: replace with beetle groupRef
+    -- TODO: replace with results from:
+    --   SELECT groupid, zoneid, name, minLevel FROM mob_groups
+    --   WHERE name LIKE '%Beetle%' OR name LIKE '%Crawler%' ORDER BY minLevel;
+    groupRefs = {
+        { groupId = 6, groupZoneId = 100 },  -- TODO: small beetle variant
+        { groupId = 6, groupZoneId = 100 },  -- TODO: medium beetle variant
+        { groupId = 6, groupZoneId = 100 },  -- TODO: large beetle variant
+    },
     tier            = { xi.dynamicWorld.tier.WANDERER },
     levelOffset     = { 1, 4 },
     regions         = { 'gustaberg', 'midlands' },
@@ -92,7 +126,15 @@ db.emboldened_orc =
 {
     name            = 'Emboldened Orc',
     packetName      = 'Emboldened Orc',
-    groupRef        = { groupId = 14, groupZoneId = 2 },   -- Orcish Grunt, Carpenters Landing
+    -- TODO: replace with results from:
+    --   SELECT groupid, zoneid, name, minLevel FROM mob_groups
+    --   WHERE name LIKE '%Orc%' ORDER BY minLevel;
+    -- Orcs have noticeably different models: Grunt (small) → Warrior → Brawler (large)
+    groupRefs = {
+        { groupId = 14, groupZoneId = 2 },  -- TODO: Orcish Grunt (small)
+        { groupId = 14, groupZoneId = 2 },  -- TODO: Orcish Warrior (medium)
+        { groupId = 14, groupZoneId = 2 },  -- TODO: Orcish Brawler (large/hulking)
+    },
     tier            = { xi.dynamicWorld.tier.WANDERER, xi.dynamicWorld.tier.NOMAD },
     levelOffset     = { 3, 6 },
     regions         = { 'ronfaure', 'gustaberg', 'midlands' },
@@ -113,7 +155,14 @@ db.vagrant_coeurl =
 {
     name            = 'Vagrant Coeurl',
     packetName      = 'Vagrant Coeurl',
-    groupRef        = { groupId = 9, groupZoneId = 7 },    -- Attohwa Coeurl, Attohwa Chasm
+    -- TODO: replace with results from:
+    --   SELECT groupid, zoneid, name, minLevel FROM mob_groups
+    --   WHERE name LIKE '%Coeurl%' OR name LIKE '%Lynx%' ORDER BY minLevel;
+    groupRefs = {
+        { groupId = 9, groupZoneId = 7 },   -- TODO: smaller/younger coeurl variant
+        { groupId = 9, groupZoneId = 7 },   -- TODO: standard coeurl
+        { groupId = 9, groupZoneId = 7 },   -- TODO: large/elder coeurl variant
+    },
     tier            = { xi.dynamicWorld.tier.NOMAD },
     levelOffset     = { 5, 10 },
     regions         = { 'midlands', 'elshimo', 'aradjiah' },
@@ -128,7 +177,16 @@ db.wandering_shade =
 {
     name            = 'Wandering Shade',
     packetName      = 'Wandering Shade',
-    groupRef        = { groupId = 35, groupZoneId = 2 },   -- Wight, Carpenters Landing
+    -- Undead vary a lot visually. Mix Wight / Ghost / Specter models for variety.
+    -- TODO: replace with results from:
+    --   SELECT groupid, zoneid, name, minLevel FROM mob_groups
+    --   WHERE name LIKE '%Wight%' OR name LIKE '%Ghost%' OR name LIKE '%Specter%'
+    --   ORDER BY minLevel;
+    groupRefs = {
+        { groupId = 35, groupZoneId = 2 },  -- TODO: Wight (small wispy)
+        { groupId = 35, groupZoneId = 2 },  -- TODO: Ghost variant (different silhouette)
+        { groupId = 35, groupZoneId = 2 },  -- TODO: Specter / Wraith (larger)
+    },
     tier            = { xi.dynamicWorld.tier.NOMAD },
     levelOffset     = { 5, 12 },
     regions         = nil,  -- Can appear anywhere
@@ -143,7 +201,15 @@ db.treasure_goblin =
 {
     name            = 'Treasure Goblin',
     packetName      = 'Treasure Goblin',
-    groupRef        = { groupId = 14, groupZoneId = 2 },   -- Placeholder: replace with goblin groupRef
+    -- Goblins have skinny/standard/big variants. Use them!
+    -- TODO: replace with results from:
+    --   SELECT groupid, zoneid, name, minLevel FROM mob_groups
+    --   WHERE name LIKE '%Goblin%' ORDER BY minLevel LIMIT 20;
+    groupRefs = {
+        { groupId = 14, groupZoneId = 2 },  -- TODO: small goblin (Goblin Mugger / Robber type)
+        { groupId = 14, groupZoneId = 2 },  -- TODO: standard goblin (Goblin Trader)
+        { groupId = 14, groupZoneId = 2 },  -- TODO: chubby goblin (Goblin Butcher / large variant)
+    },
     tier            = { xi.dynamicWorld.tier.NOMAD, xi.dynamicWorld.tier.ELITE },
     levelOffset     = { 0, 3 },
     regions         = nil,  -- Can appear anywhere
@@ -158,7 +224,14 @@ db.roaming_merchant =
 {
     name            = 'Pilgrim Merchant',
     packetName      = 'Pilgrim Merchant',
-    groupRef        = { groupId = 14, groupZoneId = 2 },   -- Placeholder: NPC type preferred
+    -- Merchants can appear as different beastman/humanoid types for flavor.
+    -- TODO: ideally use actual NPC-type humanoid models. Query:
+    --   SELECT groupid, zoneid, name FROM mob_groups
+    --   WHERE name LIKE '%Goblin%Trader%' OR name LIKE '%Merchant%' LIMIT 10;
+    groupRefs = {
+        { groupId = 14, groupZoneId = 2 },  -- TODO: goblin merchant look
+        { groupId = 14, groupZoneId = 2 },  -- TODO: alternative merchant look
+    },
     tier            = { xi.dynamicWorld.tier.NOMAD },
     levelOffset     = { 0, 0 },
     regions         = nil,
@@ -180,7 +253,14 @@ db.dread_hunter =
 {
     name            = 'Dread Hunter',
     packetName      = 'Dread Hunter',
-    groupRef        = { groupId = 17, groupZoneId = 7 },   -- Master Coeurl, Attohwa Chasm
+    -- Elite coeurls. Higher-level coeurls tend to be larger models.
+    -- TODO: replace with results from:
+    --   SELECT groupid, zoneid, name, minLevel FROM mob_groups
+    --   WHERE name LIKE '%Coeurl%' AND minLevel >= 40 ORDER BY minLevel;
+    groupRefs = {
+        { groupId = 17, groupZoneId = 7 },  -- TODO: large coeurl variant 1
+        { groupId = 17, groupZoneId = 7 },  -- TODO: large coeurl variant 2
+    },
     tier            = { xi.dynamicWorld.tier.ELITE },
     levelOffset     = { 8, 15 },
     regions         = { 'midlands', 'aradjiah', 'shadowreign' },
@@ -195,7 +275,16 @@ db.fell_commander =
 {
     name            = 'Fell Commander',
     packetName      = 'Fell Commander',
-    groupRef        = { groupId = 14, groupZoneId = 2 },   -- Placeholder: beastman NM ref
+    -- Commanders can be Orcs, Quadavs, or Yagudo depending on region. Mix for flavor.
+    -- TODO: replace with results from:
+    --   SELECT groupid, zoneid, name, minLevel FROM mob_groups
+    --   WHERE (name LIKE '%Orc%' OR name LIKE '%Quadav%' OR name LIKE '%Yagudo%')
+    --   AND minLevel >= 30 ORDER BY minLevel LIMIT 20;
+    groupRefs = {
+        { groupId = 14, groupZoneId = 2 },  -- TODO: Orc commander variant
+        { groupId = 14, groupZoneId = 2 },  -- TODO: Quadav commander variant
+        { groupId = 14, groupZoneId = 2 },  -- TODO: Yagudo commander variant
+    },
     tier            = { xi.dynamicWorld.tier.ELITE },
     levelOffset     = { 10, 15 },
     regions         = { 'ronfaure', 'gustaberg', 'sarutabaruta', 'shadowreign' },
@@ -210,7 +299,15 @@ db.crystal_golem =
 {
     name            = 'Crystal Golem',
     packetName      = 'Crystal Golem',
-    groupRef        = { groupId = 6, groupZoneId = 100 },  -- Placeholder: arcana/golem ref
+    -- Golems have very distinct size differences between families.
+    -- TODO: replace with results from:
+    --   SELECT groupid, zoneid, name, minLevel FROM mob_groups
+    --   WHERE name LIKE '%Golem%' OR name LIKE '%Automaton%' OR name LIKE '%Puppet%'
+    --   ORDER BY minLevel;
+    groupRefs = {
+        { groupId = 6, groupZoneId = 100 },  -- TODO: small/medium golem variant
+        { groupId = 6, groupZoneId = 100 },  -- TODO: large/hulking golem variant
+    },
     tier            = { xi.dynamicWorld.tier.ELITE },
     levelOffset     = { 10, 18 },
     regions         = { 'midlands', 'tavnazia' },
@@ -225,7 +322,16 @@ db.storm_elemental =
 {
     name            = 'Storm Nexus',
     packetName      = 'Storm Nexus',
-    groupRef        = { groupId = 12, groupZoneId = 2 },   -- Thunder Elemental, Carpenters
+    -- Mix elemental types for visual variety (they all look quite different!)
+    -- TODO: replace with results from:
+    --   SELECT groupid, zoneid, name, minLevel FROM mob_groups
+    --   WHERE name LIKE '%Elemental%' ORDER BY name;
+    groupRefs = {
+        { groupId = 12, groupZoneId = 2 },  -- TODO: Thunder Elemental
+        { groupId = 12, groupZoneId = 2 },  -- TODO: Fire Elemental (different glow)
+        { groupId = 12, groupZoneId = 2 },  -- TODO: Ice Elemental (different glow)
+        { groupId = 12, groupZoneId = 2 },  -- TODO: Dark Elemental (largest/scariest)
+    },
     tier            = { xi.dynamicWorld.tier.ELITE },
     levelOffset     = { 5, 12 },
     regions         = nil,
@@ -247,7 +353,16 @@ db.void_wyrm =
 {
     name            = 'Void Wyrm',
     packetName      = 'Void Wyrm',
-    groupRef        = { groupId = 5, groupZoneId = 154 },  -- Fafnir, Dragon's Aery
+    -- Dragons vary hugely in size. Mix wyrm types for variety.
+    -- TODO: replace with results from:
+    --   SELECT groupid, zoneid, name, minLevel FROM mob_groups
+    --   WHERE name LIKE '%Wyrm%' OR name LIKE '%Dragon%' OR name LIKE '%Wyvern%'
+    --   ORDER BY minLevel DESC LIMIT 15;
+    groupRefs = {
+        { groupId = 5, groupZoneId = 154 },  -- TODO: Fafnir-sized dragon (massive)
+        { groupId = 5, groupZoneId = 154 },  -- TODO: medium wyrm variant
+        { groupId = 5, groupZoneId = 154 },  -- TODO: wyvern variant (smaller, more agile look)
+    },
     tier            = { xi.dynamicWorld.tier.APEX },
     levelOffset     = { 15, 25 },
     regions         = { 'midlands', 'aradjiah' },
@@ -263,7 +378,16 @@ db.abyssal_demon =
 {
     name            = 'Abyssal Tyrant',
     packetName      = 'Abyssal Tyrant',
-    groupRef        = { groupId = 21, groupZoneId = 5 },   -- Dread Demon, Uleguerand
+    -- Demons come in multiple distinct models (Ahriman / Demon / Fomor).
+    -- TODO: replace with results from:
+    --   SELECT groupid, zoneid, name, minLevel FROM mob_groups
+    --   WHERE name LIKE '%Demon%' OR name LIKE '%Fomor%' OR name LIKE '%Ahriman%'
+    --   ORDER BY minLevel DESC LIMIT 15;
+    groupRefs = {
+        { groupId = 21, groupZoneId = 5 },  -- TODO: Dread Demon (large humanoid demon)
+        { groupId = 21, groupZoneId = 5 },  -- TODO: Ahriman variant (floating eyeball demon)
+        { groupId = 21, groupZoneId = 5 },  -- TODO: Fomor variant (ghost-demon hybrid)
+    },
     tier            = { xi.dynamicWorld.tier.APEX },
     levelOffset     = { 15, 25 },
     regions         = { 'midlands', 'shadowreign' },
@@ -279,7 +403,16 @@ db.ancient_king =
 {
     name            = 'Ancient King',
     packetName      = 'Ancient King',
-    groupRef        = { groupId = 34, groupZoneId = 2 },   -- Sabertooth Tiger (placeholder for NM)
+    -- Big boss types: Ogres, Giants, Titans. Noticeably different sizes.
+    -- TODO: replace with results from:
+    --   SELECT groupid, zoneid, name, minLevel FROM mob_groups
+    --   WHERE name LIKE '%Ogre%' OR name LIKE '%Giant%' OR name LIKE '%Titan%'
+    --   ORDER BY minLevel DESC LIMIT 15;
+    groupRefs = {
+        { groupId = 34, groupZoneId = 2 },  -- TODO: Ogre variant (medium huge)
+        { groupId = 34, groupZoneId = 2 },  -- TODO: Giant variant (very large)
+        { groupId = 34, groupZoneId = 2 },  -- TODO: Titan/colossus variant (massive)
+    },
     tier            = { xi.dynamicWorld.tier.APEX },
     levelOffset     = { 12, 20 },
     regions         = nil,  -- Can appear anywhere
