@@ -1,438 +1,371 @@
 -----------------------------------
 -- Dynamic World: Entity Templates
 -----------------------------------
--- Defines the archetypes for dynamic world entities.
--- Each template specifies a mob_groups reference (groupId + groupZoneId)
--- for visual appearance, plus level scaling, behavior flags, and flavor.
---
--- IMPORTANT: groupId/groupZoneId must reference valid mob_groups rows
--- in YOUR database. The defaults below use common mobs found on most
--- FFXI servers. Adjust if your DB has different IDs.
---
--- To find valid group references:
---   SELECT groupid, zoneid, poolid, name, minLevel, maxLevel
---   FROM mob_groups WHERE name LIKE '%Tiger%';
+-- All groupId/groupZoneId values confirmed against live DB.
 -----------------------------------
 
 xi = xi or {}
 xi.dynamicWorld = xi.dynamicWorld or {}
 xi.dynamicWorld.templates = xi.dynamicWorld.templates or {}
 
------------------------------------
--- Template Database
--- Each entry:
---   name           - Internal name (shown to GMs)
---   packetName     - Display name players see
---   groupRefs      - Array of { groupId, groupZoneId } entries. One is picked
---                    randomly at each spawn, giving visual variety (different
---                    mob_groups rows can reference different model sizes/variants).
---                    A single-entry array is fine if no variants exist.
---                    FALLBACK: groupRef = { groupId, groupZoneId } still works.
---
---   To find size variants for a mob family, query:
---     SELECT groupid, zoneid, name, minLevel
---       FROM mob_groups
---      WHERE name LIKE '%Rabbit%'
---      ORDER BY minLevel;
---   Lower-level entries often reference smaller models; higher-level = bigger.
---
---   tier           - Which tier(s) this template can be used for
---   levelOffset    - { min, max } added to zone's base level range
---   regions        - nil (all) or list of region names this can spawn in
---   behavior       - string key into behaviors table
---   lootTable      - string key into loot tables
---   isAggro        - Does it aggro?
---   expMultiplier  - Additional multiplier on top of tier multiplier
---   description    - Flavor text for GM tools
------------------------------------
-
 xi.dynamicWorld.templates.db = {}
 local db = xi.dynamicWorld.templates.db
 
 -----------------------------------
 -- TIER 1: WANDERERS
--- Common mobs. Slightly tougher than normal, small EXP bonus.
--- Zone-bound, standard roaming.
 -----------------------------------
 
-db.empowered_hare =
+db.empowered_crawler =
 {
-    name            = 'Empowered Hare',
-    packetName      = 'Empowered Hare',
-    -- Multiple groupRefs = random visual variant picked each spawn.
-    -- TODO: replace with real results from:
-    --   SELECT groupid, zoneid, name, minLevel FROM mob_groups
-    --   WHERE name LIKE '%Rabbit%' OR name LIKE '%Hare%' ORDER BY minLevel;
+    name        = 'Empowered Crawler',
+    packetName  = 'Empowered Crawler',
+    -- Crawler: zone 115 (W.Sarutabaruta lv3-8), zone 116 (E.Saruta lv3-6)
     groupRefs = {
-        { groupId = 6, groupZoneId = 100 },  -- Wild Rabbit (small, low lv)
-        { groupId = 6, groupZoneId = 100 },  -- TODO: replace with mid-size rabbit variant
-        { groupId = 6, groupZoneId = 100 },  -- TODO: replace with large rabbit variant
+        { groupId = 10, groupZoneId = 115 },
+        { groupId = 22, groupZoneId = 115 },
+        { groupId = 9,  groupZoneId = 116 },
     },
-    tier            = { xi.dynamicWorld.tier.WANDERER },
-    levelOffset     = { 2, 5 },
-    regions         = { 'ronfaure', 'sarutabaruta', 'gustaberg' },
-    behavior        = 'wanderer_standard',
-    lootTable       = 'wanderer_common',
-    isAggro         = false,
-    expMultiplier   = 1.0,
-    description     = 'A rabbit crackling with strange energy. Tougher than it looks.',
+    tier          = { xi.dynamicWorld.tier.WANDERER },
+    levelOffset   = { 2, 5 },
+    regions       = { 'sarutabaruta', 'ronfaure', 'gustaberg' },
+    behavior      = 'wanderer_standard',
+    lootTable     = 'wanderer_common',
+    isAggro       = false,
+    expMultiplier = 1.0,
+    description   = 'A crawler pulsing with strange energy.',
 }
 
-db.frenzied_tiger =
+db.frenzied_bat =
 {
-    name            = 'Frenzied Tiger',
-    packetName      = 'Frenzied Tiger',
-    -- TODO: replace with results from:
-    --   SELECT groupid, zoneid, name, minLevel FROM mob_groups
-    --   WHERE name LIKE '%Tiger%' ORDER BY minLevel;
+    name        = 'Frenzied Bat',
+    packetName  = 'Frenzied Bat',
+    -- Acro_Bat: zone 102 (La Theine lv8-11)
+    -- Ancient_Bat: zone 121 (Zi Tah lv26-28), zone 126 (Qufim lv27-29)
     groupRefs = {
-        { groupId = 28, groupZoneId = 2 },   -- Forest Tiger (smaller/younger)
-        { groupId = 28, groupZoneId = 2 },   -- TODO: mid-size tiger variant
-        { groupId = 28, groupZoneId = 2 },   -- TODO: large tiger variant (e.g. Tigon, Sabertooth)
+        { groupId = 20, groupZoneId = 102 },
+        { groupId = 9,  groupZoneId = 121 },
+        { groupId = 29, groupZoneId = 126 },
     },
-    tier            = { xi.dynamicWorld.tier.WANDERER, xi.dynamicWorld.tier.NOMAD },
-    levelOffset     = { 3, 7 },
-    regions         = { 'ronfaure', 'midlands', 'elshimo' },
-    behavior        = 'wanderer_aggressive',
-    lootTable       = 'wanderer_uncommon',
-    isAggro         = true,
-    expMultiplier   = 1.1,
-    description     = 'A tiger with bloodshot eyes and unnatural speed.',
+    tier          = { xi.dynamicWorld.tier.WANDERER, xi.dynamicWorld.tier.NOMAD },
+    levelOffset   = { 2, 6 },
+    regions       = { 'ronfaure', 'midlands', 'sarutabaruta' },
+    behavior      = 'wanderer_aggressive',
+    lootTable     = 'wanderer_common',
+    isAggro       = true,
+    expMultiplier = 1.0,
+    description   = 'A bat driven into a frenzy by strange energies.',
 }
 
-db.glinting_beetle =
+db.enraged_bomb =
 {
-    name            = 'Glinting Beetle',
-    packetName      = 'Glinting Beetle',
-    -- TODO: replace with results from:
-    --   SELECT groupid, zoneid, name, minLevel FROM mob_groups
-    --   WHERE name LIKE '%Beetle%' OR name LIKE '%Crawler%' ORDER BY minLevel;
+    name        = 'Enraged Bomb',
+    packetName  = 'Enraged Bomb',
+    -- Bomb: zone 100 (W.Ronfaure lv8-10), zone 101 (E.Ronfaure lv8-10)
+    -- Grenade: zone 102 (La Theine lv15-17), zone 108 (Konschtat lv15-17), zone 117 (Tahrongi lv15-17)
     groupRefs = {
-        { groupId = 6, groupZoneId = 100 },  -- TODO: small beetle variant
-        { groupId = 6, groupZoneId = 100 },  -- TODO: medium beetle variant
-        { groupId = 6, groupZoneId = 100 },  -- TODO: large beetle variant
+        { groupId = 24, groupZoneId = 100 },
+        { groupId = 24, groupZoneId = 101 },
+        { groupId = 26, groupZoneId = 102 },
+        { groupId = 21, groupZoneId = 108 },
+        { groupId = 28, groupZoneId = 117 },
     },
-    tier            = { xi.dynamicWorld.tier.WANDERER },
-    levelOffset     = { 1, 4 },
-    regions         = { 'gustaberg', 'midlands' },
-    behavior        = 'wanderer_standard',
-    lootTable       = 'wanderer_common',
-    isAggro         = false,
-    expMultiplier   = 1.0,
-    description     = 'A beetle whose shell shimmers with an otherworldly sheen.',
+    tier          = { xi.dynamicWorld.tier.WANDERER },
+    levelOffset   = { 1, 4 },
+    regions       = { 'ronfaure', 'gustaberg', 'sarutabaruta' },
+    behavior      = 'wanderer_aggressive',
+    lootTable     = 'wanderer_common',
+    isAggro       = true,
+    expMultiplier = 1.1,
+    description   = 'A bomb pulsing with unstable energy.',
 }
 
-db.emboldened_orc =
+db.rogue_quadav =
 {
-    name            = 'Emboldened Orc',
-    packetName      = 'Emboldened Orc',
-    -- TODO: replace with results from:
-    --   SELECT groupid, zoneid, name, minLevel FROM mob_groups
-    --   WHERE name LIKE '%Orc%' ORDER BY minLevel;
-    -- Orcs have noticeably different models: Grunt (small) → Warrior → Brawler (large)
+    name        = 'Rogue Quadav',
+    packetName  = 'Rogue Quadav',
+    -- Amber/Amethyst Quadav: zones 106/107/108 lv3-10
+    -- Brass Quadav: zones 106/109 lv20-26
     groupRefs = {
-        { groupId = 14, groupZoneId = 2 },  -- TODO: Orcish Grunt (small)
-        { groupId = 14, groupZoneId = 2 },  -- TODO: Orcish Warrior (medium)
-        { groupId = 14, groupZoneId = 2 },  -- TODO: Orcish Brawler (large/hulking)
+        { groupId = 23, groupZoneId = 106 },
+        { groupId = 25, groupZoneId = 107 },
+        { groupId = 12, groupZoneId = 108 },
+        { groupId = 21, groupZoneId = 109 },
     },
-    tier            = { xi.dynamicWorld.tier.WANDERER, xi.dynamicWorld.tier.NOMAD },
-    levelOffset     = { 3, 6 },
-    regions         = { 'ronfaure', 'gustaberg', 'midlands' },
-    behavior        = 'wanderer_aggressive',
-    lootTable       = 'wanderer_uncommon',
-    isAggro         = true,
-    expMultiplier   = 1.1,
-    description     = 'An orc scout, bolder than its kin, ranging far from the stronghold.',
+    tier          = { xi.dynamicWorld.tier.WANDERER, xi.dynamicWorld.tier.NOMAD },
+    levelOffset   = { 3, 7 },
+    regions       = { 'gustaberg' },
+    behavior      = 'wanderer_aggressive',
+    lootTable     = 'wanderer_uncommon',
+    isAggro       = true,
+    expMultiplier = 1.1,
+    description   = 'A Quadav warrior separated from its battalion, wandering and hostile.',
 }
 
 -----------------------------------
 -- TIER 2: NOMADS
--- Cross-zone roamers. Moderate power, good rewards.
--- Migrate between connected zones in their region.
 -----------------------------------
 
-db.vagrant_coeurl =
+db.frenzied_tiger =
 {
-    name            = 'Vagrant Coeurl',
-    packetName      = 'Vagrant Coeurl',
-    -- TODO: replace with results from:
-    --   SELECT groupid, zoneid, name, minLevel FROM mob_groups
-    --   WHERE name LIKE '%Coeurl%' OR name LIKE '%Lynx%' ORDER BY minLevel;
+    name        = 'Frenzied Tiger',
+    packetName  = 'Frenzied Tiger',
+    -- Forest_Tiger: zone 104 (Jugner lv22-25), zone 2 (lv22-25)
     groupRefs = {
-        { groupId = 9, groupZoneId = 7 },   -- TODO: smaller/younger coeurl variant
-        { groupId = 9, groupZoneId = 7 },   -- TODO: standard coeurl
-        { groupId = 9, groupZoneId = 7 },   -- TODO: large/elder coeurl variant
+        { groupId = 16, groupZoneId = 104 },
+        { groupId = 28, groupZoneId = 2   },
     },
-    tier            = { xi.dynamicWorld.tier.NOMAD },
-    levelOffset     = { 5, 10 },
-    regions         = { 'midlands', 'elshimo', 'aradjiah' },
-    behavior        = 'nomad_predator',
-    lootTable       = 'nomad_predator',
-    isAggro         = true,
-    expMultiplier   = 1.0,
-    description     = 'A coeurl with no territory, roaming between zones hunting prey.',
+    tier          = { xi.dynamicWorld.tier.NOMAD },
+    levelOffset   = { 3, 8 },
+    regions       = { 'ronfaure', 'midlands', 'elshimo' },
+    behavior      = 'nomad_predator',
+    lootTable     = 'nomad_predator',
+    isAggro       = true,
+    expMultiplier = 1.1,
+    description   = 'A tiger with bloodshot eyes and unnatural speed.',
 }
 
 db.wandering_shade =
 {
-    name            = 'Wandering Shade',
-    packetName      = 'Wandering Shade',
-    -- Undead vary a lot visually. Mix Wight / Ghost / Specter models for variety.
-    -- TODO: replace with results from:
-    --   SELECT groupid, zoneid, name, minLevel FROM mob_groups
-    --   WHERE name LIKE '%Wight%' OR name LIKE '%Ghost%' OR name LIKE '%Specter%'
-    --   ORDER BY minLevel;
+    name        = 'Wandering Shade',
+    packetName  = 'Wandering Shade',
+    -- Ghost: zone 102 (La Theine lv15-17), zone 108 (Konschtat lv15-17), zone 117 (Tahrongi lv15-17)
     groupRefs = {
-        { groupId = 35, groupZoneId = 2 },  -- TODO: Wight (small wispy)
-        { groupId = 35, groupZoneId = 2 },  -- TODO: Ghost variant (different silhouette)
-        { groupId = 35, groupZoneId = 2 },  -- TODO: Specter / Wraith (larger)
+        { groupId = 33, groupZoneId = 102 },
+        { groupId = 14, groupZoneId = 108 },
+        { groupId = 7,  groupZoneId = 117 },
     },
-    tier            = { xi.dynamicWorld.tier.NOMAD },
-    levelOffset     = { 5, 12 },
-    regions         = nil,  -- Can appear anywhere
-    behavior        = 'nomad_ghost',
-    lootTable       = 'nomad_arcane',
-    isAggro         = true,
-    expMultiplier   = 1.2,
-    description     = 'A restless spirit drifting between the boundaries of zones.',
+    tier          = { xi.dynamicWorld.tier.NOMAD },
+    levelOffset   = { 5, 12 },
+    regions       = nil,
+    behavior      = 'nomad_ghost',
+    lootTable     = 'nomad_arcane',
+    isAggro       = true,
+    expMultiplier = 1.2,
+    description   = 'A restless spirit drifting between zones.',
 }
 
 db.treasure_goblin =
 {
-    name            = 'Treasure Goblin',
-    packetName      = 'Treasure Goblin',
-    -- Goblins have skinny/standard/big variants. Use them!
-    -- TODO: replace with results from:
-    --   SELECT groupid, zoneid, name, minLevel FROM mob_groups
-    --   WHERE name LIKE '%Goblin%' ORDER BY minLevel LIMIT 20;
+    name        = 'Treasure Goblin',
+    packetName  = 'Treasure Goblin',
+    -- Grenade/Cluster models for a chubby explosive look
+    -- Cluster: zone 24 (Lufaise lv38-40) for the big variant
     groupRefs = {
-        { groupId = 14, groupZoneId = 2 },  -- TODO: small goblin (Goblin Mugger / Robber type)
-        { groupId = 14, groupZoneId = 2 },  -- TODO: standard goblin (Goblin Trader)
-        { groupId = 14, groupZoneId = 2 },  -- TODO: chubby goblin (Goblin Butcher / large variant)
+        { groupId = 26, groupZoneId = 102 },
+        { groupId = 21, groupZoneId = 108 },
+        { groupId = 28, groupZoneId = 117 },
+        { groupId = 15, groupZoneId = 24  },
     },
-    tier            = { xi.dynamicWorld.tier.NOMAD, xi.dynamicWorld.tier.ELITE },
-    levelOffset     = { 0, 3 },
-    regions         = nil,  -- Can appear anywhere
-    behavior        = 'treasure_goblin',
-    lootTable       = 'treasure_goblin',
-    isAggro         = false,
-    expMultiplier   = 0.5,      -- Low EXP, all about the loot
-    description     = 'A goblin stuffed with treasure. It WILL try to run away.',
+    tier          = { xi.dynamicWorld.tier.NOMAD, xi.dynamicWorld.tier.ELITE },
+    levelOffset   = { 0, 3 },
+    regions       = nil,
+    behavior      = 'treasure_goblin',
+    lootTable     = 'treasure_goblin',
+    isAggro       = false,
+    expMultiplier = 0.5,
+    description   = 'A bomb stuffed with stolen loot. It WILL try to run.',
 }
 
 db.roaming_merchant =
 {
-    name            = 'Pilgrim Merchant',
-    packetName      = 'Pilgrim Merchant',
-    -- Merchants can appear as different beastman/humanoid types for flavor.
-    -- TODO: ideally use actual NPC-type humanoid models. Query:
-    --   SELECT groupid, zoneid, name FROM mob_groups
-    --   WHERE name LIKE '%Goblin%Trader%' OR name LIKE '%Merchant%' LIMIT 10;
+    name        = 'Pilgrim Merchant',
+    packetName  = 'Pilgrim Merchant',
+    -- Goobbue zone 109 (Pashhow lv22-25)
     groupRefs = {
-        { groupId = 14, groupZoneId = 2 },  -- TODO: goblin merchant look
-        { groupId = 14, groupZoneId = 2 },  -- TODO: alternative merchant look
+        { groupId = 15, groupZoneId = 109 },
     },
-    tier            = { xi.dynamicWorld.tier.NOMAD },
-    levelOffset     = { 0, 0 },
-    regions         = nil,
-    behavior        = 'nomad_merchant',
-    lootTable       = 'none',
-    isAggro         = false,
-    expMultiplier   = 0,
-    isMerchant      = true,     -- Special flag: spawns as NPC, not mob
-    description     = 'A traveling merchant. Protect them for rare wares.',
+    tier          = { xi.dynamicWorld.tier.NOMAD },
+    levelOffset   = { 0, 0 },
+    regions       = nil,
+    behavior      = 'nomad_merchant',
+    lootTable     = 'none',
+    isAggro       = false,
+    expMultiplier = 0,
+    isMerchant    = true,
+    description   = 'A traveling merchant. Protect them for rare wares.',
+}
+
+db.rampaging_goobbue =
+{
+    name        = 'Rampaging Goobbue',
+    packetName  = 'Rampagng Goobbue',
+    -- Goobbue: zone 109 (lv22-25), zone 90 (lv71-73)
+    groupRefs = {
+        { groupId = 15, groupZoneId = 109 },
+        { groupId = 16, groupZoneId = 90  },
+    },
+    tier          = { xi.dynamicWorld.tier.NOMAD, xi.dynamicWorld.tier.ELITE },
+    levelOffset   = { 5, 10 },
+    regions       = { 'midlands', 'sarutabaruta', 'shadowreign' },
+    behavior      = 'nomad_predator',
+    lootTable     = 'nomad_predator',
+    isAggro       = true,
+    expMultiplier = 1.2,
+    description   = 'A goobbue torn from its grove, rampaging across open fields.',
 }
 
 -----------------------------------
 -- TIER 3: ELITES
--- Rare, dangerous. High EXP, dynamic loot.
--- Can be zone-bound or regional.
 -----------------------------------
 
 db.dread_hunter =
 {
-    name            = 'Dread Hunter',
-    packetName      = 'Dread Hunter',
-    -- Elite coeurls. Higher-level coeurls tend to be larger models.
-    -- TODO: replace with results from:
-    --   SELECT groupid, zoneid, name, minLevel FROM mob_groups
-    --   WHERE name LIKE '%Coeurl%' AND minLevel >= 40 ORDER BY minLevel;
+    name        = 'Dread Hunter',
+    packetName  = 'Dread Hunter',
+    -- Coeurl: zone 119 (Meriphataud lv22-26)
+    -- Carnivorous_Crawler: zone 109 lv20-23, zone 118 lv20-23
     groupRefs = {
-        { groupId = 17, groupZoneId = 7 },  -- TODO: large coeurl variant 1
-        { groupId = 17, groupZoneId = 7 },  -- TODO: large coeurl variant 2
+        { groupId = 35, groupZoneId = 119 },
+        { groupId = 26, groupZoneId = 109 },
+        { groupId = 24, groupZoneId = 118 },
     },
-    tier            = { xi.dynamicWorld.tier.ELITE },
-    levelOffset     = { 8, 15 },
-    regions         = { 'midlands', 'aradjiah', 'shadowreign' },
-    behavior        = 'elite_hunter',
-    lootTable       = 'elite_predator',
-    isAggro         = true,
-    expMultiplier   = 1.0,
-    description     = 'An apex predator that has consumed too many crystals. Glows with malice.',
+    tier          = { xi.dynamicWorld.tier.ELITE },
+    levelOffset   = { 8, 15 },
+    regions       = { 'midlands', 'sarutabaruta', 'aradjiah', 'shadowreign' },
+    behavior      = 'elite_hunter',
+    lootTable     = 'elite_predator',
+    isAggro       = true,
+    expMultiplier = 1.0,
+    description   = 'A coeurl that has consumed too many crystals. Glows with malice.',
 }
 
 db.fell_commander =
 {
-    name            = 'Fell Commander',
-    packetName      = 'Fell Commander',
-    -- Commanders can be Orcs, Quadavs, or Yagudo depending on region. Mix for flavor.
-    -- TODO: replace with results from:
-    --   SELECT groupid, zoneid, name, minLevel FROM mob_groups
-    --   WHERE (name LIKE '%Orc%' OR name LIKE '%Quadav%' OR name LIKE '%Yagudo%')
-    --   AND minLevel >= 30 ORDER BY minLevel LIMIT 20;
+    name        = 'Fell Commander',
+    packetName  = 'Fell Commander',
+    -- Brass_Quadav: zone 109 lv20-26, zone 106 lv20-25
+    -- Bronze_Quadav: zone 110 lv30-36
     groupRefs = {
-        { groupId = 14, groupZoneId = 2 },  -- TODO: Orc commander variant
-        { groupId = 14, groupZoneId = 2 },  -- TODO: Quadav commander variant
-        { groupId = 14, groupZoneId = 2 },  -- TODO: Yagudo commander variant
+        { groupId = 21, groupZoneId = 109 },
+        { groupId = 37, groupZoneId = 106 },
+        { groupId = 13, groupZoneId = 110 },
     },
-    tier            = { xi.dynamicWorld.tier.ELITE },
-    levelOffset     = { 10, 15 },
-    regions         = { 'ronfaure', 'gustaberg', 'sarutabaruta', 'shadowreign' },
-    behavior        = 'elite_commander',
-    lootTable       = 'elite_beastman',
-    isAggro         = true,
-    expMultiplier   = 1.2,
-    description     = 'A beastman war leader rallying scattered forces across the frontier.',
-}
-
-db.crystal_golem =
-{
-    name            = 'Crystal Golem',
-    packetName      = 'Crystal Golem',
-    -- Golems have very distinct size differences between families.
-    -- TODO: replace with results from:
-    --   SELECT groupid, zoneid, name, minLevel FROM mob_groups
-    --   WHERE name LIKE '%Golem%' OR name LIKE '%Automaton%' OR name LIKE '%Puppet%'
-    --   ORDER BY minLevel;
-    groupRefs = {
-        { groupId = 6, groupZoneId = 100 },  -- TODO: small/medium golem variant
-        { groupId = 6, groupZoneId = 100 },  -- TODO: large/hulking golem variant
-    },
-    tier            = { xi.dynamicWorld.tier.ELITE },
-    levelOffset     = { 10, 18 },
-    regions         = { 'midlands', 'tavnazia' },
-    behavior        = 'elite_tank',
-    lootTable       = 'elite_arcane',
-    isAggro         = true,
-    expMultiplier   = 1.3,
-    description     = 'A construct of fused crystals. Incredibly durable. Drops rare materials.',
+    tier          = { xi.dynamicWorld.tier.ELITE },
+    levelOffset   = { 10, 15 },
+    regions       = { 'gustaberg', 'midlands', 'shadowreign' },
+    behavior      = 'elite_commander',
+    lootTable     = 'elite_beastman',
+    isAggro       = true,
+    expMultiplier = 1.2,
+    description   = 'A Quadav war-leader rallying scattered forces across the frontier.',
 }
 
 db.storm_elemental =
 {
-    name            = 'Storm Nexus',
-    packetName      = 'Storm Nexus',
-    -- Mix elemental types for visual variety (they all look quite different!)
-    -- TODO: replace with results from:
-    --   SELECT groupid, zoneid, name, minLevel FROM mob_groups
-    --   WHERE name LIKE '%Elemental%' ORDER BY name;
+    name        = 'Storm Nexus',
+    packetName  = 'Storm Nexus',
+    -- Dark_Elemental: zone 111 lv44-46, zone 112 lv48-50, zone 25 lv42-44, zone 79 lv74-76
+    -- Fire_Elemental: zone 103 lv28-30, zone 119 lv27-29, zone 110 lv38-40
     groupRefs = {
-        { groupId = 12, groupZoneId = 2 },  -- TODO: Thunder Elemental
-        { groupId = 12, groupZoneId = 2 },  -- TODO: Fire Elemental (different glow)
-        { groupId = 12, groupZoneId = 2 },  -- TODO: Ice Elemental (different glow)
-        { groupId = 12, groupZoneId = 2 },  -- TODO: Dark Elemental (largest/scariest)
+        { groupId = 19, groupZoneId = 111 },
+        { groupId = 9,  groupZoneId = 112 },
+        { groupId = 22, groupZoneId = 103 },
+        { groupId = 28, groupZoneId = 119 },
+        { groupId = 16, groupZoneId = 25  },
+        { groupId = 34, groupZoneId = 79  },
     },
-    tier            = { xi.dynamicWorld.tier.ELITE },
-    levelOffset     = { 5, 12 },
-    regions         = nil,
-    behavior        = 'elite_elemental',
-    lootTable       = 'elite_elemental',
-    isAggro         = true,
-    expMultiplier   = 1.5,
-    hasAura         = true,     -- Grants EXP buff to nearby players even before Apex
-    description     = 'A convergence of elemental energy. Being near it empowers adventurers.',
+    tier          = { xi.dynamicWorld.tier.ELITE },
+    levelOffset   = { 5, 12 },
+    regions       = nil,
+    behavior      = 'elite_elemental',
+    lootTable     = 'elite_elemental',
+    isAggro       = true,
+    expMultiplier = 1.5,
+    hasAura       = true,
+    description   = 'A convergence of elemental energy. Empowers nearby adventurers.',
+}
+
+db.crystal_golem =
+{
+    name        = 'Crystal Golem',
+    packetName  = 'Crystal Golem',
+    -- Goobbue large zone 90 (lv71-73) as hulking construct stand-in
+    groupRefs = {
+        { groupId = 16, groupZoneId = 90  },
+        { groupId = 15, groupZoneId = 109 },
+    },
+    tier          = { xi.dynamicWorld.tier.ELITE },
+    levelOffset   = { 10, 18 },
+    regions       = { 'midlands', 'tavnazia' },
+    behavior      = 'elite_tank',
+    lootTable     = 'elite_arcane',
+    isAggro       = true,
+    expMultiplier = 1.3,
+    description   = 'A construct of fused crystals. Incredibly durable.',
 }
 
 -----------------------------------
 -- TIER 4: APEX
--- Boss-tier. Massive rewards. Spawns minions.
--- Radiates EXP aura. Region-wide spawn.
 -----------------------------------
 
 db.void_wyrm =
 {
-    name            = 'Void Wyrm',
-    packetName      = 'Void Wyrm',
-    -- Dragons vary hugely in size. Mix wyrm types for variety.
-    -- TODO: replace with results from:
-    --   SELECT groupid, zoneid, name, minLevel FROM mob_groups
-    --   WHERE name LIKE '%Wyrm%' OR name LIKE '%Dragon%' OR name LIKE '%Wyvern%'
-    --   ORDER BY minLevel DESC LIMIT 15;
+    name        = 'Void Wyrm',
+    packetName  = 'Void Wyrm',
+    -- Fafnir: zone 77 lv80 (large), zone 154 lv90 (massive)
     groupRefs = {
-        { groupId = 5, groupZoneId = 154 },  -- TODO: Fafnir-sized dragon (massive)
-        { groupId = 5, groupZoneId = 154 },  -- TODO: medium wyrm variant
-        { groupId = 5, groupZoneId = 154 },  -- TODO: wyvern variant (smaller, more agile look)
+        { groupId = 162, groupZoneId = 77  },
+        { groupId = 5,   groupZoneId = 154 },
     },
-    tier            = { xi.dynamicWorld.tier.APEX },
-    levelOffset     = { 15, 25 },
-    regions         = { 'midlands', 'aradjiah' },
-    behavior        = 'apex_dragon',
-    lootTable       = 'apex_dragon',
-    isAggro         = true,
-    expMultiplier   = 1.0,
-    minionTemplate  = 'empowered_hare',     -- What it spawns as minions (overridden by behavior)
-    description     = 'A wyrm torn from the void. The earth trembles in its wake.',
+    tier          = { xi.dynamicWorld.tier.APEX },
+    levelOffset   = { 15, 25 },
+    regions       = { 'midlands', 'aradjiah' },
+    behavior      = 'apex_dragon',
+    lootTable     = 'apex_dragon',
+    isAggro       = true,
+    expMultiplier = 1.0,
+    minionTemplate  = 'frenzied_tiger',
+    description   = 'A wyrm torn from the void. The earth trembles in its wake.',
 }
 
 db.abyssal_demon =
 {
-    name            = 'Abyssal Tyrant',
-    packetName      = 'Abyssal Tyrant',
-    -- Demons come in multiple distinct models (Ahriman / Demon / Fomor).
-    -- TODO: replace with results from:
-    --   SELECT groupid, zoneid, name, minLevel FROM mob_groups
-    --   WHERE name LIKE '%Demon%' OR name LIKE '%Fomor%' OR name LIKE '%Ahriman%'
-    --   ORDER BY minLevel DESC LIMIT 15;
+    name        = 'Abyssal Tyrant',
+    packetName  = 'Abyssal Tyrant',
+    -- Dark_Elemental high-level: zone 112 lv48-50, zone 79 lv74-76, zone 25 lv42-44
     groupRefs = {
-        { groupId = 21, groupZoneId = 5 },  -- TODO: Dread Demon (large humanoid demon)
-        { groupId = 21, groupZoneId = 5 },  -- TODO: Ahriman variant (floating eyeball demon)
-        { groupId = 21, groupZoneId = 5 },  -- TODO: Fomor variant (ghost-demon hybrid)
+        { groupId = 9,  groupZoneId = 112 },
+        { groupId = 34, groupZoneId = 79  },
+        { groupId = 16, groupZoneId = 25  },
     },
-    tier            = { xi.dynamicWorld.tier.APEX },
-    levelOffset     = { 15, 25 },
-    regions         = { 'midlands', 'shadowreign' },
-    behavior        = 'apex_demon',
-    lootTable       = 'apex_demon',
-    isAggro         = true,
-    expMultiplier   = 1.2,
+    tier          = { xi.dynamicWorld.tier.APEX },
+    levelOffset   = { 15, 25 },
+    regions       = { 'midlands', 'shadowreign' },
+    behavior      = 'apex_demon',
+    lootTable     = 'apex_demon',
+    isAggro       = true,
+    expMultiplier = 1.2,
     minionTemplate  = 'wandering_shade',
-    description     = 'A demon lord who tears open rifts, summoning shades from the beyond.',
+    description   = 'A demon lord who tears open rifts, summoning shades from the beyond.',
 }
 
 db.ancient_king =
 {
-    name            = 'Ancient King',
-    packetName      = 'Ancient King',
-    -- Big boss types: Ogres, Giants, Titans. Noticeably different sizes.
-    -- TODO: replace with results from:
-    --   SELECT groupid, zoneid, name, minLevel FROM mob_groups
-    --   WHERE name LIKE '%Ogre%' OR name LIKE '%Giant%' OR name LIKE '%Titan%'
-    --   ORDER BY minLevel DESC LIMIT 15;
+    name        = 'Ancient King',
+    packetName  = 'Ancient King',
+    -- Adamantoise: zone 128 lv70, zone 77 lv80
     groupRefs = {
-        { groupId = 34, groupZoneId = 2 },  -- TODO: Ogre variant (medium huge)
-        { groupId = 34, groupZoneId = 2 },  -- TODO: Giant variant (very large)
-        { groupId = 34, groupZoneId = 2 },  -- TODO: Titan/colossus variant (massive)
+        { groupId = 6,   groupZoneId = 128 },
+        { groupId = 260, groupZoneId = 77  },
     },
-    tier            = { xi.dynamicWorld.tier.APEX },
-    levelOffset     = { 12, 20 },
-    regions         = nil,  -- Can appear anywhere
-    behavior        = 'apex_king',
-    lootTable       = 'apex_king',
-    isAggro         = true,
-    expMultiplier   = 1.5,
-    minionTemplate  = 'emboldened_orc',
-    description     = 'A forgotten king who walks again. Commands an army of the risen.',
+    tier          = { xi.dynamicWorld.tier.APEX },
+    levelOffset   = { 12, 20 },
+    regions       = nil,
+    behavior      = 'apex_king',
+    lootTable     = 'apex_king',
+    isAggro       = true,
+    expMultiplier = 1.5,
+    minionTemplate  = 'rogue_quadav',
+    description   = 'An ancient king walking again. Its shell alone could shelter a village.',
 }
 
 -----------------------------------
 -- Template Lookup Helpers
 -----------------------------------
 
--- Get all templates valid for a given tier and region
 xi.dynamicWorld.templates.getForTierAndRegion = function(tier, regionName)
     local results = {}
     for key, template in pairs(db) do
-        -- Check tier match
         local tierMatch = false
         for _, t in ipairs(template.tier) do
             if t == tier then
@@ -442,9 +375,7 @@ xi.dynamicWorld.templates.getForTierAndRegion = function(tier, regionName)
         end
 
         if tierMatch then
-            -- Check region match
             if template.regions == nil then
-                -- nil means available everywhere
                 table.insert(results, { key = key, template = template })
             elseif regionName then
                 for _, r in ipairs(template.regions) do
@@ -460,12 +391,10 @@ xi.dynamicWorld.templates.getForTierAndRegion = function(tier, regionName)
     return results
 end
 
--- Get a specific template by key
 xi.dynamicWorld.templates.get = function(key)
     return db[key]
 end
 
--- Get all template keys
 xi.dynamicWorld.templates.getAllKeys = function()
     local keys = {}
     for key, _ in pairs(db) do
