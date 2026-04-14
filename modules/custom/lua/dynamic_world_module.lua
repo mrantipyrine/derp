@@ -34,6 +34,16 @@ end)
 m:addOverride('xi.server.onTimeServerTick', function()
     super()
 
+    -- Lazy init: if onServerStart didn't fire (or failed), self-heal on first tick
+    if xi.dynamicWorld.state and not xi.dynamicWorld.state.initialized then
+        if xi.settings.dynamicworld and xi.settings.dynamicworld.ENABLED then
+            xi.dynamicWorld.init()
+            printf('[DynamicWorld Module] Lazy-initialized on first tick.')
+        else
+            return
+        end
+    end
+
     if not xi.dynamicWorld.state or not xi.dynamicWorld.state.running then
         return
     end
