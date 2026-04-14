@@ -40,6 +40,15 @@ local function cmdStatus(player)
         tostring(status.running), status.globalCount, status.activeZones), xi.msg.channel.SYSTEM_3)
     player:printToPlayer(string.format('[DynWorld] Wanderers: %d | Nomads: %d | Elites: %d | Apex: %d',
         status.wanderers, status.nomads, status.elites, status.apex), xi.msg.channel.SYSTEM_3)
+
+    -- Diagnostics
+    local state  = xi.dynamicWorld.state
+    local cfg    = xi.settings.dynamicworld
+    player:printToPlayer(string.format('[DynWorld] Diag: initialized=%s | eligibleZones=%d | settings=%s | ENABLED=%s',
+        tostring(state and state.initialized),
+        state and xi.dynamicWorld.countKeys(state.eligibleZones) or 0,
+        tostring(cfg ~= nil),
+        tostring(cfg and cfg.ENABLED)), xi.msg.channel.SYSTEM_3)
 end
 
 local function cmdSpawn(player, tier, count)
