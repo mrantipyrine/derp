@@ -415,11 +415,33 @@ xi.dynamicWorld.getRandomSpawnPoint = function(zone, anchorEntity)
         table.insert(anchors, anchorEntity)
     end
 
+    -- Fallback: zone has no mobs or players yet (e.g. server just started,
+    -- zone has never been visited). Sample random points from the zone's
+    -- known bounds and validate against the navmesh.
     if #anchors == 0 then
+        local zoneId = zone:getID()
+        local b = _zoneBounds[zoneId]
+        if b then
+            for attempt = 1, 30 do
+                local x = b[1] + math.random() * (b[2] - b[1])
+                local z = b[3] + math.random() * (b[4] - b[3])
+                -- Y=0 is almost always correct for outdoor zones; navmesh
+                -- will reject the point if the terrain doesn't exist there.
+                if zone:isNavigablePoint({ x = x, y = 0, z = z }) then
+                    return {
+                        x   = x,
+                        y   = 0,
+                        z   = z,
+                        rot = math.random(0, 255),
+                    }
+                end
+            end
+        end
+        -- No bounds entry or all navmesh checks failed — can't spawn here yet.
         return nil
     end
 
-    -- Try up to 15 times to find a valid, navigable position
+    -- Try up to 15 times to find a valid, navigable position near an anchor
     for attempt = 1, 15 do
         local anchor = anchors[math.random(#anchors)]
         if anchor then

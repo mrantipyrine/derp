@@ -17,7 +17,7 @@ local m = Module:new('dynamic-world')
 m:addOverride('xi.server.onServerStart', function()
     super()
 
-    if xi.settings.dynamicWorld and xi.settings.dynamicWorld.ENABLED then
+    if xi.settings.dynamicworld and xi.settings.dynamicworld.ENABLED then
         xi.dynamicWorld.init()
         printf('[DynamicWorld Module] System initialized on server start.')
     else
