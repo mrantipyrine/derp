@@ -6,6 +6,7 @@
 -- spawn evaluation and roaming from onTimeServerTick.
 -----------------------------------
 require('modules/module_utils')
+require('settings/dynamic_world')
 require('scripts/globals/dynamic_world')
 -----------------------------------
 
