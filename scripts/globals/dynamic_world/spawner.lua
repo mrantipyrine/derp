@@ -44,22 +44,24 @@ end
 -----------------------------------
 spawner.evaluate = function(zone, zd, state)
     local maxPerZone = getSetting('MAX_ENTITIES_PER_ZONE') or 15
+    local minPerZone = getSetting('MIN_ENTITIES_PER_ZONE') or 10
     local globalCap  = getSetting('GLOBAL_ENTITY_CAP') or 500
     local batchSize  = getSetting('MAX_SPAWN_BATCH_SIZE') or 3
 
     -- Cleanup dead entities first
     spawner.cleanup(zone, zd, state)
 
-    -- Check caps
-    if state.globalCount >= globalCap then
+    -- Hard global cap — but never let it prevent filling the minimum
+    if state.globalCount >= globalCap and zd.count >= minPerZone then
         return
     end
 
+    -- Hard per-zone max
     if zd.count >= maxPerZone then
         return
     end
 
-    -- Despawn entities in empty zones
+    -- Count players in zone
     local players = zone:getPlayers()
     local playerCount = 0
     if players then
@@ -70,19 +72,36 @@ spawner.evaluate = function(zone, zd, state)
 
     if playerCount == 0 then
         local despawnTime = getSetting('DESPAWN_EMPTY_ZONE_TIME') or 600
-        -- Don't spawn in empty zones, and gradually despawn existing ones
-        for targid, entData in pairs(zd.entities) do
-            if os.time() - entData.spawnTime > despawnTime then
-                spawner.despawnEntity(zone, zd, state, targid)
+        local now = os.time()
+
+        -- Only despawn entities that are ABOVE the minimum floor and have aged out.
+        -- Never drop below MIN_ENTITIES_PER_ZONE — this keeps every zone pre-populated
+        -- so players don't zone into an empty map.
+        if zd.count > minPerZone then
+            for targid, entData in pairs(zd.entities) do
+                if zd.count <= minPerZone then
+                    break
+                end
+                if now - entData.spawnTime > despawnTime then
+                    spawner.despawnEntity(zone, zd, state, targid)
+                end
             end
         end
+
+        -- If we're below the minimum, fill up to it even with no players present
+        if zd.count < minPerZone and state.globalCount < globalCap then
+            local toSpawn = math.min(minPerZone - zd.count, batchSize, globalCap - state.globalCount)
+            for i = 1, toSpawn do
+                spawner.spawnEntity(zone, zd, state, spawner.rollTier())
+            end
+        end
+
         return
     end
 
-    -- Calculate desired entity count based on player presence
-    -- More players = more spawns (up to cap)
+    -- Players are present — desired count scales with player count, floored by minimum
     local desiredCount = math.min(
-        math.floor(3 + playerCount * 1.5),
+        math.max(minPerZone, math.floor(minPerZone + playerCount * 1.5)),
         maxPerZone
     )
 

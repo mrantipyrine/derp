@@ -19,10 +19,11 @@ xi.settings.dynamicworld =
     -- Spawn Budget
     -----------------------------------------------------------------------
     MAX_ENTITIES_PER_ZONE       = 15,       -- Hard cap per zone (of 511 dynamic entity max)
+    MIN_ENTITIES_PER_ZONE       = 10,       -- Minimum entities kept alive in every eligible zone at all times
     GLOBAL_ENTITY_CAP           = 500,      -- Server-wide cap across all zones
     SPAWN_CHECK_INTERVAL        = 120,      -- Seconds between spawn evaluation ticks
     STAGGER_DELAY               = 5,        -- Seconds between individual spawns (prevents packet storm)
-    DESPAWN_EMPTY_ZONE_TIME     = 600,      -- Seconds before despawning entities in empty zones
+    DESPAWN_EMPTY_ZONE_TIME     = 600,      -- Seconds before despawning entities ABOVE the minimum in empty zones
 
     -----------------------------------------------------------------------
     -- Tier Weights (must total 100)
