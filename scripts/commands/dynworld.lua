@@ -300,6 +300,17 @@ commandObj.onTrigger = function(player, args)
         cmdStop(player)
     elseif subcommand == 'info' then
         cmdInfo(player)
+    elseif subcommand == 'init' then
+        local p = function(msg) player:printToPlayer('[DWInit] ' .. msg, xi.msg.channel.SYSTEM_3) end
+        local s = xi.settings.dynamicworld
+        p('settings=' .. tostring(s ~= nil) .. ' ENABLED=' .. tostring(s and s.ENABLED))
+        local ok, err = pcall(xi.dynamicWorld.init)
+        if ok then
+            local st = xi.dynamicWorld.state
+            p('OK | initialized=' .. tostring(st.initialized) .. ' zones=' .. xi.dynamicWorld.countKeys(st.eligibleZones))
+        else
+            p('ERROR: ' .. tostring(err))
+        end
     elseif subcommand == 'test' then
         cmdTest(player)
     elseif subcommand == 'synergies' then
