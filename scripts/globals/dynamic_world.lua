@@ -84,10 +84,7 @@ require('scripts/globals/dynamic_world/named_rares')
 -----------------------------------
 local function getSetting(key)
     local settings = xi.settings.dynamicworld
-    if settings == nil then
-        return nil
-    end
-    return settings[key]
+    return settings and settings[key] or nil
 end
 
 -----------------------------------
@@ -147,10 +144,10 @@ local ZONE_LEVELS =
 -- Initialize
 -----------------------------------
 xi.dynamicWorld.init = function()
-    -- Scalar tunables still come from settings (ENABLED, caps, timers, etc.)
+    -- ENABLED check: default true, only skip if explicitly set false
     local settings = xi.settings.dynamicworld
-    if not settings or not settings.ENABLED then
-        printf('[DynamicWorld] System is DISABLED in settings.')
+    if settings and settings.ENABLED == false then
+        printf('[DynamicWorld] Disabled via settings.')
         return
     end
 
