@@ -174,6 +174,105 @@ local function cmdChain(player)
         chain.count, math.floor(bonus * 100), math.max(0, remaining)), xi.msg.channel.SYSTEM_3)
 end
 
+local function cmdTest(player)
+    local p = function(msg) player:printToPlayer('[DWTest] ' .. msg, xi.msg.channel.SYSTEM_3) end
+    local zone   = player:getZone()
+    local zoneId = zone:getID()
+    local state  = xi.dynamicWorld.state
+
+    p(string.format('Zone: %d | initialized: %s | running: %s',
+        zoneId, tostring(state.initialized), tostring(state.running)))
+
+    -- Step 1: ensure init
+    if not state.initialized then
+        xi.dynamicWorld.init()
+        p('Called init(). initialized now: ' .. tostring(state.initialized))
+    end
+
+    -- Step 2: region lookup
+    local region = state.zoneToRegion[zoneId]
+    p('Region: ' .. tostring(region))
+
+    -- Step 3: template candidates for tier 1
+    local candidates = xi.dynamicWorld.templates.getForTierAndRegion(1, region)
+    p(string.format('Tier-1 candidates for region "%s": %d', tostring(region), #candidates))
+    if #candidates == 0 then
+        candidates = xi.dynamicWorld.templates.getForTierAndRegion(1, nil)
+        p('Fallback (no region): ' .. #candidates .. ' candidates')
+    end
+    if #candidates == 0 then
+        p('FAIL: no templates available at all for tier 1')
+        return
+    end
+
+    local chosen   = candidates[1]
+    local template = chosen.template
+    p('Template: ' .. template.name)
+
+    -- Step 4: spawn point
+    local pos = xi.dynamicWorld.getRandomSpawnPoint(zone, player)
+    if not pos then
+        p('FAIL: getRandomSpawnPoint returned nil')
+        return
+    end
+    p(string.format('SpawnPoint: %.1f, %.1f, %.1f', pos.x, pos.y, pos.z))
+
+    -- Step 5: groupRef
+    local refs = template.groupRefs
+    local ref  = refs and refs[1] or template.groupRef
+    if not ref then
+        p('FAIL: no groupRef on template')
+        return
+    end
+    p(string.format('GroupRef: groupId=%d groupZoneId=%d', ref.groupId, ref.groupZoneId))
+
+    -- Step 6: level range
+    local lr  = xi.dynamicWorld.getZoneLevelRange(zoneId)
+    local min = math.max(1, lr[1] + (template.levelOffset[1] or 0))
+    local max = math.max(min, lr[2] + (template.levelOffset[2] or 0))
+    p(string.format('Levels: %d-%d', min, max))
+
+    -- Step 7: insertDynamicEntity
+    local entityTable = {
+        objtype     = xi.objType.MOB,
+        name        = template.name:gsub(' ', '_') .. '_TEST',
+        packetName  = template.packetName,
+        x           = pos.x,
+        y           = pos.y,
+        z           = pos.z,
+        rotation    = pos.rot,
+        groupId     = ref.groupId,
+        groupZoneId = ref.groupZoneId,
+        minLevel    = min,
+        maxLevel    = max,
+        releaseIdOnDisappear  = true,
+        specialSpawnAnimation = true,
+    }
+
+    local ok, entity = pcall(function() return zone:insertDynamicEntity(entityTable) end)
+    if not ok then
+        p('FAIL: insertDynamicEntity threw error: ' .. tostring(entity))
+        return
+    end
+    if not entity then
+        p('FAIL: insertDynamicEntity returned nil')
+        return
+    end
+    p('insertDynamicEntity OK. targID: ' .. tostring(entity:getTargID()))
+
+    -- Step 8: setSpawn + spawn
+    local ok2, err2 = pcall(function()
+        entity:setSpawn(pos.x, pos.y, pos.z, pos.rot)
+        entity:spawn()
+    end)
+    if not ok2 then
+        p('FAIL: spawn() threw error: ' .. tostring(err2))
+        return
+    end
+    p('spawn() OK. isSpawned: ' .. tostring(entity:isSpawned()))
+    p('SUCCESS - check your surroundings for ' .. template.packetName)
+end
+
 commandObj.onTrigger = function(player, args)
     if not args or args == '' then
         showHelp(player)
@@ -201,6 +300,8 @@ commandObj.onTrigger = function(player, args)
         cmdStop(player)
     elseif subcommand == 'info' then
         cmdInfo(player)
+    elseif subcommand == 'test' then
+        cmdTest(player)
     elseif subcommand == 'synergies' then
         cmdSynergies(player)
     elseif subcommand == 'chain' then
