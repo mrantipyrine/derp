@@ -17,13 +17,8 @@ local m = Module:new('dynamic-world')
 -----------------------------------
 m:addOverride('xi.server.onServerStart', function()
     super()
-
-    if xi.settings.dynamicworld and xi.settings.dynamicworld.ENABLED then
-        xi.dynamicWorld.init()
-        printf('[DynamicWorld Module] System initialized on server start.')
-    else
-        printf('[DynamicWorld Module] System is disabled in settings.')
-    end
+    xi.dynamicWorld.init()
+    printf('[DynamicWorld Module] System initialized on server start.')
 end)
 
 -----------------------------------
@@ -34,14 +29,10 @@ end)
 m:addOverride('xi.server.onTimeServerTick', function()
     super()
 
-    -- Lazy init: if onServerStart didn't fire (or failed), self-heal on first tick
+    -- Lazy init: self-heal if onServerStart didn't fire
+    -- init() itself handles the ENABLED=false check
     if xi.dynamicWorld.state and not xi.dynamicWorld.state.initialized then
-        if xi.settings.dynamicworld and xi.settings.dynamicworld.ENABLED then
-            xi.dynamicWorld.init()
-            printf('[DynamicWorld Module] Lazy-initialized on first tick.')
-        else
-            return
-        end
+        xi.dynamicWorld.init()
     end
 
     if not xi.dynamicWorld.state or not xi.dynamicWorld.state.running then
