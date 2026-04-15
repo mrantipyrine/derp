@@ -91,9 +91,63 @@ local function getSetting(key)
 end
 
 -----------------------------------
+-- Zone and Region Config
+-- Kept here (not in settings/) because the C++ settings loader only
+-- pushes back primitive values — tables like ELIGIBLE_ZONES and REGIONS
+-- get silently dropped during the push-back phase.
+-----------------------------------
+local ELIGIBLE_ZONES =
+{
+    -- Original Outdoor Zones
+    100, 101, 102, 103, 104, 105,
+    106, 107, 108, 109, 110, 111,
+    112, 113, 114, 115, 116, 117,
+    118, 119, 120, 121, 122, 123,
+    124, 125, 126, 127, 128,
+    -- CoP
+    24, 25,
+    -- ToAU
+    51, 52, 61, 65, 68, 79,
+    -- WotG
+    81, 82, 83, 84, 88, 89,
+    90, 91, 95, 97, 98, 136, 137,
+    -- SoA
+    260, 261,
+}
+
+local REGIONS =
+{
+    ronfaure     = { zones = { 100, 101, 102, 104, 105 },                   levelRange = { 1,  15 } },
+    gustaberg    = { zones = { 106, 107, 108, 109, 110 },                   levelRange = { 1,  15 } },
+    sarutabaruta = { zones = { 115, 116, 117, 118, 119, 120 },              levelRange = { 1,  15 } },
+    midlands     = { zones = { 103, 111, 112, 113, 114, 121, 122, 125, 126, 127, 128 }, levelRange = { 20, 75 } },
+    elshimo      = { zones = { 123, 124 },                                  levelRange = { 25, 55 } },
+    tavnazia     = { zones = { 24,  25  },                                  levelRange = { 30, 60 } },
+    aradjiah     = { zones = { 51,  52,  61, 65, 68, 79 },                  levelRange = { 55, 80 } },
+    shadowreign  = { zones = { 81,  82,  83, 84, 88, 89, 90, 91, 95, 97, 98, 136, 137 }, levelRange = { 50, 80 } },
+}
+
+local ZONE_LEVELS =
+{
+    [100]={1,9}, [101]={1,9},   [102]={10,21}, [103]={10,22}, [104]={15,28},
+    [105]={25,40},[106]={1,9},  [107]={1,9},   [108]={10,22}, [109]={20,33},
+    [110]={30,43},[111]={40,52},[112]={47,58}, [113]={40,52}, [114]={45,58},
+    [115]={1,9},  [116]={1,9},  [117]={10,22}, [118]={15,27}, [119]={25,38},
+    [120]={33,48},[121]={35,50},[122]={42,58}, [123]={38,52}, [124]={44,58},
+    [125]={45,58},[126]={20,33},[127]={60,72}, [128]={65,75},
+    [24]={30,52}, [25]={35,55},
+    [51]={55,72}, [52]={55,72}, [61]={60,75},  [65]={62,75},  [68]={63,75}, [79]={65,75},
+    [81]={1,12},  [82]={18,32}, [83]={22,40},  [84]={30,48},  [88]={1,12},
+    [89]={22,40}, [90]={28,45}, [91]={35,52},  [95]={1,12},   [97]={30,48},
+    [98]={38,55}, [136]={48,62},[137]={55,70},
+    [260]={90,99},[261]={90,99},
+}
+
+-----------------------------------
 -- Initialize
 -----------------------------------
 xi.dynamicWorld.init = function()
+    -- Scalar tunables still come from settings (ENABLED, caps, timers, etc.)
     local settings = xi.settings.dynamicworld
     if not settings or not settings.ENABLED then
         printf('[DynamicWorld] System is DISABLED in settings.')
@@ -102,21 +156,21 @@ xi.dynamicWorld.init = function()
 
     local state = xi.dynamicWorld.state
 
-    -- Build eligible zone lookup set
+    -- Build eligible zone lookup set from local config (not settings tables)
     state.eligibleZones = {}
-    for _, zoneId in ipairs(settings.ELIGIBLE_ZONES or {}) do
+    for _, zoneId in ipairs(ELIGIBLE_ZONES) do
         state.eligibleZones[zoneId] = true
     end
 
-    -- Build region maps
+    -- Build region maps from local config
     state.zoneToRegion = {}
     state.regionData = {}
-    for regionName, regionInfo in pairs(settings.REGIONS or {}) do
+    for regionName, regionInfo in pairs(REGIONS) do
         state.regionData[regionName] = {
-            zones = regionInfo.zones or {},
-            levelRange = regionInfo.levelRange or { 1, 75 },
+            zones      = regionInfo.zones,
+            levelRange = regionInfo.levelRange,
         }
-        for _, zoneId in ipairs(regionInfo.zones or {}) do
+        for _, zoneId in ipairs(regionInfo.zones) do
             state.zoneToRegion[zoneId] = regionName
         end
     end
@@ -125,9 +179,9 @@ xi.dynamicWorld.init = function()
     state.zoneData = {}
     for zoneId, _ in pairs(state.eligibleZones) do
         state.zoneData[zoneId] = {
-            entities    = {},           -- [targid] = { template, tier, spawnTime, ... }
-            count       = 0,
-            lastTick    = 0,
+            entities      = {},
+            count         = 0,
+            lastTick      = 0,
             lastRoamCheck = 0,
             pendingSpawns = 0,
         }
@@ -138,7 +192,6 @@ xi.dynamicWorld.init = function()
     state.initialized = true
     state.running = true
 
-    -- Init named rares (clears stale alive references from last session)
     xi.dynamicWorld.namedRares.init()
 
     printf('[DynamicWorld] Initialized. %d eligible zones, %d regions, %d named rares.',
@@ -563,10 +616,9 @@ end
 -- Get zone's appropriate level range.
 -- Priority: per-zone ZONE_LEVELS override > region levelRange > default.
 xi.dynamicWorld.getZoneLevelRange = function(zoneId)
-    -- 1. Check per-zone override table (most accurate)
-    local zoneLevels = xi.settings.dynamicworld and xi.settings.dynamicworld.ZONE_LEVELS
-    if zoneLevels and zoneLevels[zoneId] then
-        return zoneLevels[zoneId]
+    -- 1. Check local ZONE_LEVELS table (C++ settings drops table values so we own this)
+    if ZONE_LEVELS[zoneId] then
+        return ZONE_LEVELS[zoneId]
     end
 
     -- 2. Fall back to region-level range

@@ -108,13 +108,15 @@ xi.settings.dynamicworld =
     CLEANUP_INTERVAL            = 60,       -- Seconds between cleanup passes
 
     -----------------------------------------------------------------------
-    -- Per-Zone Level Ranges
-    -- Maps each zone ID to its appropriate { min, max } mob level range.
-    -- getZoneLevelRange() checks here first, then falls back to the
-    -- region's levelRange, then to a default of { 20, 40 }.
-    -- Based on actual FFXI mob levels in each zone.
+    -- NOTE: ZONE_LEVELS, ELIGIBLE_ZONES, and REGIONS have been moved to
+    -- scripts/globals/dynamic_world.lua as local Lua constants.
+    -- The C++ settings loader silently drops table values during push-back,
+    -- so they must live in Lua-owned files instead.
     -----------------------------------------------------------------------
-    ZONE_LEVELS =
+}
+
+--[[  REMOVED TABLE CONFIGS (kept here as reference only, not loaded)
+    ZONE_LEVELS_REFERENCE =
     {
         -- ── Original Zones ──────────────────────────────────────────────
         [100] = {  1,  9 },   -- West Ronfaure
@@ -178,123 +180,4 @@ xi.settings.dynamicworld =
         [260] = { 90, 99 },   -- Yahse Hunting Grounds
         [261] = { 90, 99 },   -- Ceizak Battlegrounds
     },
-
-    -----------------------------------------------------------------------
-    -- Zone Eligibility
-    -- Only outdoor overworld zones participate. Add/remove zone IDs here.
-    -- By default, all major outdoor zones from each expansion are included.
-    -----------------------------------------------------------------------
-    ELIGIBLE_ZONES =
-    {
-        -- Original Outdoor Zones
-        100, -- West Ronfaure
-        101, -- East Ronfaure
-        102, -- La Theine Plateau
-        103, -- Valkurm Dunes
-        104, -- Jugner Forest
-        105, -- Batallia Downs
-        106, -- North Gustaberg
-        107, -- South Gustaberg
-        108, -- Konschtat Highlands
-        109, -- Pashhow Marshlands
-        110, -- Rolanberry Fields
-        111, -- Beaucedine Glacier
-        112, -- Xarcabard
-        113, -- Cape Teriggan
-        114, -- Eastern Altepa Desert
-        115, -- West Sarutabaruta
-        116, -- East Sarutabaruta
-        117, -- Tahrongi Canyon
-        118, -- Buburimu Peninsula
-        119, -- Meriphataud Mountains
-        120, -- Sauromugue Champaign
-        121, -- Sanctuary of Zi'Tah
-        122, -- Ro'Maeve
-        123, -- Yuhtunga Jungle
-        124, -- Yhoator Jungle
-        125, -- Western Altepa Desert
-        126, -- Qufim Island
-        127, -- Behemoth's Dominion
-        128, -- Valley of Sorrows
-
-        -- CoP Zones
-        24,  -- Lufaise Meadows
-        25,  -- Misareaux Coast
-
-        -- ToAU Outdoor Zones
-        51,  -- Wajaom Woodlands
-        52,  -- Bhaflau Thickets
-        61,  -- Mount Zhayolm
-        65,  -- Mamook
-        68,  -- Aydeewa Subterrane
-        79,  -- Caedarva Mire
-
-        -- WotG Outdoor Zones
-        81,  -- East Ronfaure [S]
-        82,  -- Jugner Forest [S]
-        83,  -- Vunkerl Inlet [S]
-        84,  -- Batallia Downs [S]
-        88,  -- North Gustaberg [S]
-        89,  -- Grauberg [S]
-        90,  -- Pashhow Marshlands [S]
-        91,  -- Rolanberry Fields [S]
-        95,  -- West Sarutabaruta [S]
-        97,  -- Meriphataud Mountains [S]
-        98,  -- Sauromugue Champaign [S]
-        136, -- Beaucedine Glacier [S]
-        137, -- Xarcabard [S]
-
-        -- SoA Zones
-        260, -- Yahse Hunting Grounds
-        261, -- Ceizak Battlegrounds
-    },
-
-    -----------------------------------------------------------------------
-    -- Region Connectivity (for Nomad roaming)
-    -- Maps region names to lists of connected zone IDs.
-    -- Nomads can migrate between any zones in their region.
-    -----------------------------------------------------------------------
-    REGIONS =
-    {
-        ronfaure =
-        {
-            zones = { 100, 101, 102, 104, 105 },
-            levelRange = { 1, 15 },
-        },
-        gustaberg =
-        {
-            zones = { 106, 107, 108, 109, 110 },
-            levelRange = { 1, 15 },
-        },
-        sarutabaruta =
-        {
-            zones = { 115, 116, 117, 118, 119, 120 },
-            levelRange = { 1, 15 },
-        },
-        midlands =
-        {
-            zones = { 103, 111, 112, 113, 114, 121, 122, 125, 126, 127, 128 },
-            levelRange = { 20, 75 },
-        },
-        elshimo =
-        {
-            zones = { 123, 124 },
-            levelRange = { 25, 55 },
-        },
-        tavnazia =
-        {
-            zones = { 24, 25 },
-            levelRange = { 30, 60 },
-        },
-        aradjiah =
-        {
-            zones = { 51, 52, 61, 65, 68, 79 },
-            levelRange = { 55, 80 },
-        },
-        shadowreign =
-        {
-            zones = { 81, 82, 83, 84, 88, 89, 90, 91, 95, 97, 98, 136, 137 },
-            levelRange = { 50, 80 },
-        },
-    },
-}
+]]
