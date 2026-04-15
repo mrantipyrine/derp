@@ -21,8 +21,8 @@ xi.settings.dynamicworld =
     MAX_ENTITIES_PER_ZONE       = 15,       -- Hard cap per zone (of 511 dynamic entity max)
     MIN_ENTITIES_PER_ZONE       = 10,       -- Minimum entities kept alive in every eligible zone at all times
     GLOBAL_ENTITY_CAP           = 500,      -- Server-wide cap across all zones
-    SPAWN_CHECK_INTERVAL        = 120,      -- Seconds between spawn evaluation ticks
-    STAGGER_DELAY               = 5,        -- Seconds between individual spawns (prevents packet storm)
+    SPAWN_CHECK_INTERVAL        = 30,       -- Seconds between spawn evaluation ticks
+    STAGGER_DELAY               = 2,        -- Seconds between individual spawns (prevents packet storm)
     DESPAWN_EMPTY_ZONE_TIME     = 600,      -- Seconds before despawning entities ABOVE the minimum in empty zones
 
     -----------------------------------------------------------------------
@@ -103,7 +103,7 @@ xi.settings.dynamicworld =
     -----------------------------------------------------------------------
     -- Performance
     -----------------------------------------------------------------------
-    MAX_SPAWN_BATCH_SIZE        = 3,        -- Max entities spawned per tick per zone
+    MAX_SPAWN_BATCH_SIZE        = 5,        -- Max entities spawned per tick per zone
     TICK_BUDGET_MS              = 50,       -- Max time spent on dynamic world per server tick
     CLEANUP_INTERVAL            = 60,       -- Seconds between cleanup passes
 
