@@ -638,3 +638,10 @@ xi.dynamicWorld.getRegionZones = function(zoneId)
     end
     return state.regionData[regionName].zones
 end
+
+-----------------------------------
+-- Auto-initialize on load.
+-- Runs every time this file is loaded (server start, filewatcher reload).
+-- Bypasses all module hook timing issues entirely.
+-----------------------------------
+xi.dynamicWorld.init()
