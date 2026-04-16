@@ -98,8 +98,8 @@ spawner.evaluate = function(zone, zd, state)
             end
         else
             -- No spawn this tick — build pressure toward rarer tiers
-            zd.elitePressure = math.min(zd.elitePressure + 1, 30)
-            zd.apexPressure  = math.min(zd.apexPressure  + 1, 20)
+            zd.elitePressure = math.min((zd.elitePressure or 0) + 1, 30)
+            zd.apexPressure  = math.min((zd.apexPressure or 0) + 1, 20)
         end
 
         return
@@ -115,8 +115,8 @@ spawner.evaluate = function(zone, zd, state)
 
     if toSpawn <= 0 then
         -- Zone is full — pressure still builds
-        zd.elitePressure = math.min(zd.elitePressure + 1, 30)
-        zd.apexPressure  = math.min(zd.apexPressure  + 1, 20)
+        zd.elitePressure = math.min((zd.elitePressure or 0) + 1, 30)
+        zd.apexPressure  = math.min((zd.apexPressure or 0) + 1, 20)
         return
     end
 
@@ -133,14 +133,14 @@ end
 -----------------------------------
 spawner.updatePressure = function(zd, tier)
     if tier == xi.dynamicWorld.tier.ELITE then
-        zd.elitePressure = math.max(0, zd.elitePressure - 10)
+        zd.elitePressure = math.max(0, (zd.elitePressure or 0) - 10)
     elseif tier == xi.dynamicWorld.tier.APEX then
-        zd.elitePressure = math.max(0, zd.elitePressure - 5)
-        zd.apexPressure  = math.max(0, zd.apexPressure  - 10)
+        zd.elitePressure = math.max(0, (zd.elitePressure or 0) - 5)
+        zd.apexPressure  = math.max(0, (zd.apexPressure or 0) - 10)
     else
         -- Common spawns nudge pressure up slightly
-        zd.elitePressure = math.min(zd.elitePressure + 0.5, 30)
-        zd.apexPressure  = math.min(zd.apexPressure  + 0.25, 20)
+        zd.elitePressure = math.min((zd.elitePressure or 0) + 0.5, 30)
+        zd.apexPressure  = math.min((zd.apexPressure or 0) + 0.25, 20)
     end
 end
 

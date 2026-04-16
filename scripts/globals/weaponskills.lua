@@ -1146,12 +1146,43 @@ xi.weaponskills.handleWeaponskillEffect = function(actor, target, effectId, acti
 end
 
 -----------------------------------
--- Solo Synergy: Weaponskill Hooks
+-- Weaponskill Hooks
 -- Wraps doPhysicalWeaponskill and doRangedWeaponskill to add:
+--   * Splash damage — every WS deals reduced damage to nearby enemies
 --   * Combo Window — WS chain within 10s gives TP bonus + momentum
---   * Party size TP trickle on kill (momentum handled via onMobDeath)
 --   * Bloodbath bonus damage for low-HP solo attackers
+--   * Surge burst at max momentum
 -----------------------------------
+
+-- Splash damage tuning (change here to adjust)
+local WS_SPLASH_RADIUS      = 5.0   -- yalms around primary target
+local WS_SPLASH_DMG_PCT     = 0.35  -- splash targets take 35% of primary damage
+
+local function doWSSplash(attacker, primaryTarget, primaryDmg, attackType, dmgType)
+    if primaryDmg <= 0 then return end
+    local zone = attacker:getZone()
+    if not zone then return end
+
+    local mobs = zone:getMobs()
+    if not mobs then return end
+
+    local splashDmg = math.floor(primaryDmg * WS_SPLASH_DMG_PCT)
+    if splashDmg <= 0 then return end
+
+    for _, mob in pairs(mobs) do
+        if mob and
+           mob:isAlive() and
+           mob:getID() ~= primaryTarget:getID() and
+           primaryTarget:checkDistance(mob) <= WS_SPLASH_RADIUS
+        then
+            mob:takeDamage(splashDmg, attacker, attackType, dmgType)
+            -- Attacker gains reduced TP from splash; mob feeds less TP
+            attacker:addTP(math.floor(5 * WS_SPLASH_ATTACKER_TP_MULT))
+            mob:updateEnmityFromDamage(attacker, splashDmg)
+        end
+    end
+end
+
 do
     local ss = xi.soloSynergy
 
@@ -1165,6 +1196,14 @@ do
 
         if not attacker or not attacker:isPC() then
             return finaldmg, crit, tpHits, extraHits, shadows
+        end
+
+        -----------------------------------
+        -- Splash damage to nearby enemies
+        -----------------------------------
+        if finaldmg > 0 and target and target:isAlive() then
+            local weapDmgType = attacker:getWeaponDamageType(xi.slot.MAIN)
+            doWSSplash(attacker, target, finaldmg, xi.attackType.PHYSICAL, weapDmgType)
         end
 
         if not ss then return finaldmg, crit, tpHits, extraHits, shadows end
@@ -1228,6 +1267,11 @@ do
 
         if not attacker or not attacker:isPC() then
             return finaldmg, crit, tpHits, extraHits, shadows
+        end
+
+        -- Splash for ranged WSs
+        if finaldmg > 0 and target and target:isAlive() then
+            doWSSplash(attacker, target, finaldmg, xi.attackType.RANGED, xi.damageType.PIERCING)
         end
 
         if not ss then return finaldmg, crit, tpHits, extraHits, shadows end
