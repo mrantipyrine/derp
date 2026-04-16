@@ -31,37 +31,6 @@ local function pickGroupRef(template)
     return template.groupRef
 end
 
--- Safe distance check (checkDistance can return nil)
-local function safeDistance(entityA, entityB)
-    if not entityA or not entityB then
-        return 9999
-    end
-    local dist = entityA:checkDistance(entityB)
-    return dist or 9999
-end
-
--- Safe broadcast to nearby players
-local function announceNearby(zone, source, range, msg)
-    if not zone then return end
-    local players = zone:getPlayers()
-    if not players then return end
-    for _, player in pairs(players) do
-        if safeDistance(player, source) < range then
-            player:printToPlayer(msg, xi.msg.channel.SYSTEM_3)
-        end
-    end
-end
-
--- Safe broadcast to all players in zone
-local function announceZone(zone, msg)
-    if not zone then return end
-    local players = zone:getPlayers()
-    if not players then return end
-    for _, player in pairs(players) do
-        player:printToPlayer(msg, xi.msg.channel.SYSTEM_3)
-    end
-end
-
 -- Reusable aura pulse: notifies nearby players at an interval
 local function pulseAura(mob, msg, rangeOverride)
     local now = os.time()
@@ -74,7 +43,7 @@ local function pulseAura(mob, msg, rangeOverride)
 
     mob:setLocalVar('DW_AURA_LAST_TICK', now)
     local range = rangeOverride or (getSetting('APEX_AURA_RANGE') or 50)
-    announceNearby(mob:getZone(), mob, range, msg)
+    xi.dynamicWorld.announceNearby(mob:getZone(), mob, range, msg)
 end
 
 -----------------------------------

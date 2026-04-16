@@ -421,6 +421,38 @@ end
 -----------------------------------
 -- Helpers
 -----------------------------------
+
+-- Safe distance check (checkDistance can return nil)
+xi.dynamicWorld.safeDistance = function(entityA, entityB)
+    if not entityA or not entityB then
+        return 9999
+    end
+    local dist = entityA:checkDistance(entityB)
+    return dist or 9999
+end
+
+-- Safe broadcast to nearby players
+xi.dynamicWorld.announceNearby = function(zone, source, range, msg)
+    if not zone then return end
+    local players = zone:getPlayers()
+    if not players then return end
+    for _, player in pairs(players) do
+        if xi.dynamicWorld.safeDistance(player, source) < range then
+            player:printToPlayer(msg, xi.msg.channel.SYSTEM_3)
+        end
+    end
+end
+
+-- Safe broadcast to all players in zone
+xi.dynamicWorld.announceZone = function(zone, msg)
+    if not zone then return end
+    local players = zone:getPlayers()
+    if not players then return end
+    for _, player in pairs(players) do
+        player:printToPlayer(msg, xi.msg.channel.SYSTEM_3)
+    end
+end
+
 xi.dynamicWorld.countKeys = function(tbl)
     local n = 0
     for _ in pairs(tbl) do

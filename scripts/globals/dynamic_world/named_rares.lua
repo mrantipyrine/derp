@@ -1101,7 +1101,7 @@ nr.trySpawn = function(key)
             -- Announce the kill to the zone
             if config.deathMsg then
                 local z = mob:getZone()
-                if z then z:broadcastMessage(config.deathMsg) end
+                if z then xi.dynamicWorld.announceZone(z, config.deathMsg) end
             end
 
             -- Give loot (tier passed so loot system can scale rates)
@@ -1123,12 +1123,12 @@ nr.trySpawn = function(key)
         local z = mob:getZone()
         if z then
             if isApex then
-                z:broadcastMessage(string.format(
+                xi.dynamicWorld.announceZone(z, string.format(
                     '!! A tremendous evil presence descends upon the area... %s has appeared !!',
                     config.packetName
                 ))
             else
-                z:broadcastMessage(string.format(
+                xi.dynamicWorld.announceZone(z, string.format(
                     'A strange presence stirs in the area... %s has appeared!',
                     config.packetName
                 ))
@@ -1249,7 +1249,7 @@ nr.forceSpawn = function(key, player)
             nr.alive[key] = nil
             if config.deathMsg then
                 local z = mob:getZone()
-                if z then z:broadcastMessage(config.deathMsg) end
+                if z then xi.dynamicWorld.announceZone(z, config.deathMsg) end
             end
             if killer then
                 nr.awardLoot(key, mob, killer, tier)
@@ -1270,12 +1270,12 @@ nr.forceSpawn = function(key, player)
     local z = mob:getZone()
     if z then
         if isApex then
-            z:broadcastMessage(string.format(
+            xi.dynamicWorld.announceZone(z, string.format(
                 '!! A tremendous evil presence descends upon the area... %s has appeared !!',
                 config.packetName
             ))
         else
-            z:broadcastMessage(string.format(
+            xi.dynamicWorld.announceZone(z, string.format(
                 'A strange presence stirs in the area... %s has appeared!',
                 config.packetName
             ))
