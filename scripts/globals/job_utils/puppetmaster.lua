@@ -412,7 +412,7 @@ do
                     local potency = ss.scaledPower(player, 5, 0.3)
                     pet:addStatusEffect(xi.effect.REGEN, potency, 3, 60)
                     pet:addStatusEffect(xi.effect.ATT_BOOST, 20, 0, 60)
-                    ss.flash(player, 'Overdrive: automaton surges (solo bonus)\!')
+                    ss.flash(player, 'Overdrive: automaton surges (solo bonus)!')
                 end
             end
         end

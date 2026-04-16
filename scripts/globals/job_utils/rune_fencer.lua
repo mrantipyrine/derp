@@ -887,7 +887,7 @@ do
                 local bonusDmg = ss.getMomentum(player) * ss.scaledPower(player, 4, 0.5)
                 if bonusDmg > 0 then
                     target:takeDamage(bonusDmg, player, xi.attackType.MAGICAL, xi.damageType.DARK)
-                    ss.flash(player, string.format('Lunge: momentum burst +%d dmg\!', bonusDmg))
+                    ss.flash(player, string.format('Lunge: momentum burst +%d dmg!', bonusDmg))
                 end
             end
         end
@@ -904,7 +904,7 @@ do
                 if eff then
                     eff:setDuration(eff:getDuration() + 60)
                 end
-                ss.flash(player, 'Vallation: extended (solo bonus)\!')
+                ss.flash(player, 'Vallation: extended (solo bonus)!')
             end
         end
     end

@@ -176,7 +176,7 @@ do
         end
         if ss.isBloodbath(player) then
             player:addStatusEffect(xi.effect.ATT_BOOST, 30, 0, 30)
-            ss.flash(player, 'BLOODBATH SOULEATER — Dark Surge\! ATT+30')
+            ss.flash(player, 'BLOODBATH SOULEATER — Dark Surge! ATT+30')
         end
     end
 

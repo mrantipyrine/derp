@@ -67,7 +67,7 @@ do
             if player:getPartySize() <= 2 then
                 player:addStatusEffect(xi.effect.REGEN, ss.scaledPower(player, 3, 0.1), 3, 90)
                 player:addStatusEffect(xi.effect.REFRESH, 2, 0, 90)
-                ss.flash(player, 'Soul Voice: Regen+Refresh (solo bonus)\!')
+                ss.flash(player, 'Soul Voice: Regen+Refresh (solo bonus)!')
             end
         end
     end
@@ -126,7 +126,7 @@ do
         end
     end
 
-    -- Pianissimo: solo = momentum+1 (self-songs still count\!)
+    -- Pianissimo: solo = momentum+1 (self-songs still count!)
     local _pian = BRD.usePianissimo
     if _pian then
         BRD.usePianissimo = function(player, target, ability, action)

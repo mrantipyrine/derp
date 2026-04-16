@@ -541,7 +541,7 @@ do
                 player:addStatusEffect(xi.effect.HASTE, 15, 0, 60)
                 ss.addMomentum(player, 2)
                 ss.flashMomentum(player)
-                ss.flash(player, 'Trance: Haste (solo bonus)\!')
+                ss.flash(player, 'Trance: Haste (solo bonus)!')
             end
         end
     end

@@ -133,7 +133,7 @@ do
             player:addStatusEffect(xi.effect.TRIPLE_ATTACK, 25, 0, 15)
             player:addStatusEffect(xi.effect.CRIT_DEF_BONUS, 20, 0, 15)
             ss.resetStacks(player, 'WAR_RAGE')
-            ss.flash(player, 'FRENZY\! Triple Attack burst (15s). Rage reset.')
+            ss.flash(player, 'FRENZY! Triple Attack burst (15s). Rage reset.')
         else
             ss.flash(player, string.format('Rage [%d/5] — ATK+%d', rage, extra))
         end
@@ -186,7 +186,7 @@ do
             -- extend the Mighty Strikes effect
             local eff = player:getStatusEffect(xi.effect.MIGHTY_STRIKES)
             if eff then eff:setDuration(eff:getDuration() + bonus) end
-            ss.flash(player, string.format('Rage consumed\! Mighty Strikes +%ds', bonus))
+            ss.flash(player, string.format('Rage consumed! Mighty Strikes +%ds', bonus))
         end
         ss.addMomentum(player, 3)
     end
@@ -197,7 +197,7 @@ do
         _retal(player, target, ability)
         if ss.isBloodbath(player) then
             player:addStatusEffect(xi.effect.COUNTER_BOOST, 15, 0, 180)
-            ss.flash(player, 'Bloodbath\! Counter damage surges.')
+            ss.flash(player, 'Bloodbath! Counter damage surges.')
         end
     end
 end

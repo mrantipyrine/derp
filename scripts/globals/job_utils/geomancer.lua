@@ -533,7 +533,7 @@ do
                     eff:setDuration(eff:getDuration() + 30)
                 end
                 player:addStatusEffect(xi.effect.REGEN, ss.scaledPower(player, 3, 0.1), 3, 90)
-                ss.flash(player, 'Bolster: extended + Regen (solo bonus)\!')
+                ss.flash(player, 'Bolster: extended + Regen (solo bonus)!')
             end
         end
     end
@@ -547,7 +547,7 @@ do
                 player:addTP(math.random(100, 200))
                 ss.addMomentum(player, 2)
                 ss.flashMomentum(player)
-                ss.flash(player, 'Blaze of Glory: TP surge (solo bonus)\!')
+                ss.flash(player, 'Blaze of Glory: TP surge (solo bonus)!')
             end
         end
     end
@@ -572,7 +572,7 @@ do
             if player:getPartySize() <= 2 then
                 local mpReturn = ss.scaledPower(player, 20, 1.0)
                 ss.restoreMP(player, mpReturn)
-                ss.flash(player, string.format('Full Circle: +%d MP (solo bonus)\!', mpReturn))
+                ss.flash(player, string.format('Full Circle: +%d MP (solo bonus)!', mpReturn))
             end
         end
     end

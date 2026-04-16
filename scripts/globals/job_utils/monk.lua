@@ -219,7 +219,7 @@ do
             player:addTP(math.random(80, 180) * stacks)
         end
         if stacks >= 5 then
-            ss.flash(player, 'Ki MAXED [5/5] — Chi Blast will detonate\!')
+            ss.flash(player, 'Ki MAXED [5/5] — Chi Blast will detonate!')
         else
             ss.flash(player, string.format('Ki [%d/5] STR+%d', stacks, strGain))
         end
@@ -251,7 +251,7 @@ do
             player:addMod(xi.mod.MND, mndSurge)
             local result = _chi(player, target, ability)
             player:delMod(xi.mod.MND, mndSurge)
-            ss.flash(player, 'DETONATION\! Full ki released\!')
+            ss.flash(player, 'DETONATION! Full ki released!')
             ss.addMomentum(player, 3)
             return result
         else
@@ -297,7 +297,7 @@ do
         local stacks = ss.getStacks(player, 'MNK_BOOST')
         if stacks >= 5 then
             ss.triggerSurge(player)
-            ss.flash(player, 'Inner Strength + full ki = Surge\!')
+            ss.flash(player, 'Inner Strength + full ki = Surge!')
         end
     end
 end

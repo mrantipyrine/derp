@@ -668,7 +668,7 @@ do
                     local potency = ss.scaledPower(player, 3, 0.25)
                     pet:addStatusEffect(xi.effect.REGEN, potency, 3, 120)
                     pet:addStatusEffect(xi.effect.ATT_BOOST, 25, 0, 120)
-                    ss.flash(player, 'Familiar: pet empowered (solo bonus)\!')
+                    ss.flash(player, 'Familiar: pet empowered (solo bonus)!')
                 end
             end
         end
