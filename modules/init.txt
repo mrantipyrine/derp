@@ -39,4 +39,4 @@
 custom/commands/
 custom/lua/test_npcs_in_gm_home.lua
 custom/lua/dynamic_world_module.lua
-
+custom/lua/dynamic_world_module.lua
