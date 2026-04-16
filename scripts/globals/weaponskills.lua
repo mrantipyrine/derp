@@ -1217,7 +1217,7 @@ do
             local tpReward = math.floor(200 * (comboBonus - 1.0) * 10)  -- +200-600 TP depending on tier
             attacker:addTP(tpReward)
             ss.addMomentum(attacker, 1)
-            ss.flash(attacker, string.format('WS Combo! +%d TP, momentum up!', tpReward))
+            ss.flash(attacker, string.format('WS Combo\! +%d TP, momentum up\!', tpReward))
             ss.flashMomentum(attacker)
         end
 
@@ -1236,7 +1236,7 @@ do
                 local weapDmgType = attacker:getWeaponDamageType(xi.slot.MAIN)
                 target:takeDamage(bonus, attacker, xi.attackType.PHYSICAL, weapDmgType)
                 finaldmg = finaldmg + bonus
-                ss.flash(attacker, string.format('Bloodbath! +%d WS damage!', bonus))
+                ss.flash(attacker, string.format('Bloodbath\! +%d WS damage\!', bonus))
             end
         end
 
@@ -1251,7 +1251,7 @@ do
                 finaldmg = finaldmg + surgeDmg
             end
             ss.triggerSurge(attacker, nil)
-            ss.flash(attacker, string.format('SURGE BURST! +%d WS damage!', surgeDmg))
+            ss.flash(attacker, string.format('SURGE BURST\! +%d WS damage\!', surgeDmg))
         end
 
         return finaldmg, crit, tpHits, extraHits, shadows
@@ -1282,7 +1282,7 @@ do
             local tpReward = math.floor(200 * (comboBonus - 1.0) * 10)
             attacker:addTP(tpReward)
             ss.addMomentum(attacker, 1)
-            ss.flash(attacker, string.format('WS Combo! +%d TP, momentum up!', tpReward))
+            ss.flash(attacker, string.format('WS Combo\! +%d TP, momentum up\!', tpReward))
             ss.flashMomentum(attacker)
         end
         ss.openComboWindow(attacker, wsID)
@@ -1293,7 +1293,7 @@ do
             target:takeDamage(surgeDmg, attacker, xi.attackType.RANGED, xi.damageType.PIERCING)
             finaldmg = finaldmg + surgeDmg
             ss.triggerSurge(attacker, nil)
-            ss.flash(attacker, string.format('SURGE BURST! +%d ranged WS damage!', surgeDmg))
+            ss.flash(attacker, string.format('SURGE BURST\! +%d ranged WS damage\!', surgeDmg))
         end
 
         return finaldmg, crit, tpHits, extraHits, shadows
