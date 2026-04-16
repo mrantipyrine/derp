@@ -147,7 +147,7 @@ behaviorDb.nomad_predator =
         mob:setMobMod(xi.mobMod.ROAM_COOL, 5)
         mob:setMobMod(xi.mobMod.ROAM_DISTANCE, 20)  -- Wide patrol
         mob:setMobMod(xi.mobMod.SIGHT_RANGE, 18)
-        mob:setMobMod(xi.mobMod.LINKING_RANGE, 0)    -- Solo predator, no links
+        mob:setMobMod(xi.mobMod.NO_LINK, 1)    -- Solo predator, no links
         -- Stat boost
         mob:addMod(xi.mod.ATT, 25)
         mob:addMod(xi.mod.DEF, 20)

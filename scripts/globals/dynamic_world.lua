@@ -27,6 +27,17 @@
 xi = xi or {}
 xi.dynamicWorld = xi.dynamicWorld or {}
 
+-- Robustness: ensure common mobMod enums are available
+-- This prevents nil errors if the core enums fail to load correctly.
+xi.mobMod = xi.mobMod or {}
+xi.mobMod.SIGHT_RANGE    = xi.mobMod.SIGHT_RANGE or 4
+xi.mobMod.ROAM_DISTANCE = xi.mobMod.ROAM_DISTANCE or 31
+xi.mobMod.ROAM_COOL     = xi.mobMod.ROAM_COOL or 36
+xi.mobMod.CHECK_AS_NM   = xi.mobMod.CHECK_AS_NM or 49
+xi.mobMod.NO_MOVE       = xi.mobMod.NO_MOVE or 65
+xi.mobMod.NO_AGGRO      = xi.mobMod.NO_AGGRO or 67
+xi.mobMod.NO_LINK       = xi.mobMod.NO_LINK or 69
+
 -----------------------------------
 -- Tier Enum
 -----------------------------------
