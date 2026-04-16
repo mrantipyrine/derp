@@ -92,8 +92,14 @@ spawner.evaluate = function(zone, zd, state)
         if zd.count < minPerZone and state.globalCount < globalCap then
             local toSpawn = math.min(minPerZone - zd.count, batchSize, globalCap - state.globalCount)
             for i = 1, toSpawn do
-                spawner.spawnEntity(zone, zd, state, spawner.rollTier())
+                local tier = spawner.rollTier(zd)
+                spawner.spawnEntity(zone, zd, state, tier)
+                spawner.updatePressure(zd, tier)
             end
+        else
+            -- No spawn this tick — build pressure toward rarer tiers
+            zd.elitePressure = math.min(zd.elitePressure + 1, 30)
+            zd.apexPressure  = math.min(zd.apexPressure  + 1, 20)
         end
 
         return
@@ -108,26 +114,59 @@ spawner.evaluate = function(zone, zd, state)
     local toSpawn = math.min(desiredCount - zd.count, batchSize, globalCap - state.globalCount)
 
     if toSpawn <= 0 then
+        -- Zone is full — pressure still builds
+        zd.elitePressure = math.min(zd.elitePressure + 1, 30)
+        zd.apexPressure  = math.min(zd.apexPressure  + 1, 20)
         return
     end
 
     -- Roll tiers and spawn
     for i = 1, toSpawn do
-        local tier = spawner.rollTier()
+        local tier = spawner.rollTier(zd)
         spawner.spawnEntity(zone, zd, state, tier)
+        spawner.updatePressure(zd, tier)
     end
 end
 
 -----------------------------------
--- Roll a tier based on configured weights
+-- Pressure update: rare spawns relieve pressure; no spawn builds it
 -----------------------------------
-spawner.rollTier = function()
-    local weights = {
-        getSetting('TIER_WEIGHT_WANDERER') or 55,
-        getSetting('TIER_WEIGHT_NOMAD') or 20,
-        getSetting('TIER_WEIGHT_ELITE') or 15,
-        getSetting('TIER_WEIGHT_APEX') or 10,
-    }
+spawner.updatePressure = function(zd, tier)
+    if tier == xi.dynamicWorld.tier.ELITE then
+        zd.elitePressure = math.max(0, zd.elitePressure - 10)
+    elseif tier == xi.dynamicWorld.tier.APEX then
+        zd.elitePressure = math.max(0, zd.elitePressure - 5)
+        zd.apexPressure  = math.max(0, zd.apexPressure  - 10)
+    else
+        -- Common spawns nudge pressure up slightly
+        zd.elitePressure = math.min(zd.elitePressure + 0.5, 30)
+        zd.apexPressure  = math.min(zd.apexPressure  + 0.25, 20)
+    end
+end
+
+-----------------------------------
+-- Roll a tier based on configured weights + zone pressure
+-- elitePressure/apexPressure accumulate when those tiers haven't spawned
+-- recently, making rare tiers increasingly likely over time.
+-----------------------------------
+spawner.rollTier = function(zd)
+    local wanderer = getSetting('TIER_WEIGHT_WANDERER') or 55
+    local nomad    = getSetting('TIER_WEIGHT_NOMAD')    or 20
+    local elite    = getSetting('TIER_WEIGHT_ELITE')    or 15
+    local apex     = getSetting('TIER_WEIGHT_APEX')     or 10
+
+    local elitePressure = zd and zd.elitePressure or 0
+    local apexPressure  = zd and zd.apexPressure  or 0
+
+    elite = elite + elitePressure
+    apex  = apex  + apexPressure
+
+    -- Shave common tiers proportionally so total doesn't inflate forever
+    local pressureTax = elitePressure + apexPressure
+    wanderer = math.max(5, wanderer - math.floor(pressureTax * 0.70))
+    nomad    = math.max(3, nomad    - math.floor(pressureTax * 0.30))
+
+    local weights = { wanderer, nomad, elite, apex }
 
     return xi.dynamicWorld.weightedRandom(weights)
 end

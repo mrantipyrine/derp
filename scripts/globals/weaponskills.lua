@@ -907,6 +907,11 @@ end
 
 -- After WS damage is calculated and damage reduction has been taken into account by the calling function,
 -- handles displaying the appropriate action/message, delivering the damage to the mob, and any enmity from it
+-- Splash TP tuning — reduce TP gain/feed for secondary (AoE) WS targets.
+-- Set to 1.0 to disable splash TP reduction entirely.
+local WS_SPLASH_ATTACKER_TP_MULT = 0.25  -- attacker earns 25% TP per splash hit
+local WS_SPLASH_TARGET_TP_MULT   = 0.25  -- splash targets feed 25% TP to attacker
+
 xi.weaponskills.takeWeaponskillDamage = function(defender, attacker, wsParams, primaryMsg, attack, wsResults, action)
     local finaldmg = wsResults.finalDmg
 
@@ -948,6 +953,14 @@ xi.weaponskills.takeWeaponskillDamage = function(defender, attacker, wsParams, p
     local attackerTPMult = wsParams.attackerTPMult or 1
     local isJump         = wsParams.isJump or false
 
+    -- Splash TP reduction: secondary/AoE hits grant and feed less TP
+    local splashAttackerMult = 1.0
+    local splashTargetMult   = 1.0
+    if not primaryMsg then
+        splashAttackerMult = WS_SPLASH_ATTACKER_TP_MULT
+        splashTargetMult   = WS_SPLASH_TARGET_TP_MULT
+    end
+
     -- DA/TA/QA/OaT/Oa2-3 etc give full TP return per hit on Jumps
     if isJump then
         -- Don't feed TP and don't gain TP from takeWeaponskillDamage
@@ -955,7 +968,17 @@ xi.weaponskills.takeWeaponskillDamage = function(defender, attacker, wsParams, p
         wsResults.extraHitsLanded = 0
     end
 
-    finaldmg = defender:takeWeaponskillDamage(attacker, finaldmg, attack.type, attack.damageType, attack.slot, primaryMsg, wsResults.tpHitsLanded * attackerTPMult, (wsResults.extraHitsLanded * 10) + wsResults.bonusTP, targetTPMult)
+    finaldmg = defender:takeWeaponskillDamage(
+        attacker,
+        finaldmg,
+        attack.type,
+        attack.damageType,
+        attack.slot,
+        primaryMsg,
+        math.floor(wsResults.tpHitsLanded * attackerTPMult * splashAttackerMult),
+        math.floor(((wsResults.extraHitsLanded * 10) + wsResults.bonusTP) * splashAttackerMult),
+        targetTPMult * splashTargetMult
+    )
 
     if wsResults.tpHitsLanded + wsResults.extraHitsLanded > 0 then
         if finaldmg >= 0 then

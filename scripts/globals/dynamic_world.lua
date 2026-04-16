@@ -181,6 +181,8 @@ xi.dynamicWorld.init = function()
             lastTick      = 0,
             lastRoamCheck = 0,
             pendingSpawns = 0,
+            elitePressure = 0,
+            apexPressure  = 0,
         }
     end
 
