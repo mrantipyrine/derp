@@ -1155,8 +1155,8 @@ end
 -----------------------------------
 
 -- Splash damage tuning (change here to adjust)
-local WS_SPLASH_RADIUS      = 5.0   -- yalms around primary target
-local WS_SPLASH_DMG_PCT     = 0.35  -- splash targets take 35% of primary damage
+local WS_SPLASH_RADIUS      = 6.0   -- yalms around primary target
+local WS_SPLASH_DMG_PCT     = 0.50  -- splash targets take 50% of primary damage
 
 local function doWSSplash(attacker, primaryTarget, primaryDmg, attackType, dmgType)
     if primaryDmg <= 0 then return end
