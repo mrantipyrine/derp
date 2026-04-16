@@ -8,6 +8,8 @@
 -- Behaviors determine how entities move, fight, and interact.
 -----------------------------------
 
+require('scripts/enum/mob_mod')
+
 xi = xi or {}
 xi.dynamicWorld = xi.dynamicWorld or {}
 xi.dynamicWorld.behaviors = xi.dynamicWorld.behaviors or {}

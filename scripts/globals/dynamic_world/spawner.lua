@@ -7,6 +7,18 @@
 
 xi = xi or {}
 xi.dynamicWorld = xi.dynamicWorld or {}
+xi.dynamicWorld.tier = xi.dynamicWorld.tier or {
+    WANDERER = 1,
+    NOMAD    = 2,
+    ELITE    = 3,
+    APEX     = 4,
+}
+xi.dynamicWorld.tierName = xi.dynamicWorld.tierName or {
+    [1] = 'Wanderer',
+    [2] = 'Nomad',
+    [3] = 'Elite',
+    [4] = 'Apex',
+}
 xi.dynamicWorld.spawner = xi.dynamicWorld.spawner or {}
 
 local spawner = xi.dynamicWorld.spawner
