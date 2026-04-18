@@ -471,17 +471,32 @@ end
 ---@param dmg integer
 ---@return integer
 function utils.stoneskin(target, dmg)
-    --handling stoneskin
+    -- handling stoneskin
     if dmg > 0 then
+        -- 1. Check for standard Stoneskin
         local skin = target:getMod(xi.mod.STONESKIN)
         if skin > 0 then
-            if skin > dmg then --absorb all damage
+            if skin > dmg then -- absorb all damage
                 target:delMod(xi.mod.STONESKIN, dmg)
                 return 0
-            else --absorbs some damage then wear
+            else -- absorbs some damage then wear
                 target:delStatusEffect(xi.effect.STONESKIN)
                 target:setMod(xi.mod.STONESKIN, 0)
-                return dmg - skin
+                dmg = dmg - skin
+            end
+        end
+        
+        -- 2. Check for Divine Shield (Solo Synergy Overheal)
+        if dmg > 0 then
+            local divineShield = target:getLocalVar('SS_DIVINE_SHIELD')
+            if divineShield > 0 then
+                if divineShield > dmg then
+                    target:setLocalVar('SS_DIVINE_SHIELD', divineShield - dmg)
+                    return 0
+                else
+                    target:setLocalVar('SS_DIVINE_SHIELD', 0)
+                    return dmg - divineShield
+                end
             end
         end
     end

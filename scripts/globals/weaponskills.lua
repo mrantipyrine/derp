@@ -1364,6 +1364,16 @@ do
         -----------------------------------
         ss.empowerPet(attacker, finaldmg)
 
+        -----------------------------------
+        -- 9. Elemental Ward (Bar-spell bonus)
+        -----------------------------------
+        local wardEle, wardDmg = ss.getElementalWardBonus(attacker)
+        if wardEle > 0 and wardDmg > 0 then
+            target:takeDamage(wardDmg, attacker, xi.attackType.MAGICAL, xi.damageType.ELEMENTAL + wardEle)
+            finaldmg = finaldmg + wardDmg
+            ss.flash(attacker, 'WARD BURST! Elemental resonance hit.')
+        end
+
         return finaldmg, crit, tpHits, extraHits, shadows
     end
 

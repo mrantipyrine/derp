@@ -579,6 +579,11 @@ xi.spells.enhancing.useEnhancingSpell = function(caster, target, spell)
     else
         if target:addStatusEffect(spellEffect, finalPower, tickTime, duration, 0, magicDefenseBonus, tier) then
             spell:setMsg(xi.msg.basic.MAGIC_GAIN_EFFECT)
+            
+            -- Solo Synergy: Bar-spell and White Magic bonuses
+            if xi.soloSynergy then
+                xi.soloSynergy.applyWhiteSynergy(caster, target, spell)
+            end
         else
             spell:setMsg(xi.msg.basic.MAGIC_NO_EFFECT) -- No effect.
         end
