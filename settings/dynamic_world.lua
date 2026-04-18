@@ -101,6 +101,16 @@ xi.settings.dynamicworld =
     REVENGE_CHANCE_MULTIPLIER   = 1.0,      -- Multiply base chances (0.5 = half, 2.0 = double)
 
     -----------------------------------------------------------------------
+    -- Respawn Windows
+    -- When a dynamic entity is killed its slot respawns after a short delay
+    -- rather than waiting for the next spawn evaluation tick.
+    -- Set RESPAWN_ENABLED = false to let the tick system handle it instead.
+    -----------------------------------------------------------------------
+    RESPAWN_ENABLED             = true,
+    RESPAWN_DELAY_MIN           = 45,       -- Min seconds before a killed entity's slot refills
+    RESPAWN_DELAY_MAX           = 120,      -- Max seconds before a killed entity's slot refills
+
+    -----------------------------------------------------------------------
     -- Performance
     -----------------------------------------------------------------------
     MAX_SPAWN_BATCH_SIZE        = 5,        -- Max entities spawned per tick per zone

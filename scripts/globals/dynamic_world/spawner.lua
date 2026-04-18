@@ -773,6 +773,42 @@ spawner.onEntityDeath = function(mob, killer, zd, state, template, tier, targid,
 
     -- Try to spawn a revenge entity
     spawner.tryRevengeSpawn(mob, killer, zd, state, template, tier, revengeGeneration)
+
+    -- Schedule a respawn to refill the slot left by this entity.
+    -- This fires independently of the tick so population recovers quickly.
+    if getSetting('RESPAWN_ENABLED') ~= false then
+        local minSec = getSetting('RESPAWN_DELAY_MIN') or 45
+        local maxSec = getSetting('RESPAWN_DELAY_MAX') or 120
+        local delayMs = math.random(minSec, maxSec) * 1000
+
+        mob:timer(delayMs, function(deadMob)
+            local rZone = deadMob:getZone()
+            if not rZone then return end
+
+            -- Only respawn if players are present in the zone
+            local rPlayers   = rZone:getPlayers()
+            local playerCount = 0
+            if rPlayers then
+                for _ in pairs(rPlayers) do playerCount = playerCount + 1 end
+            end
+            if playerCount == 0 then return end
+
+            local maxPerZone = getSetting('MAX_ENTITIES_PER_ZONE') or 15
+            local minPerZone = getSetting('MIN_ENTITIES_PER_ZONE') or 3
+            local globalCap  = getSetting('GLOBAL_ENTITY_CAP') or 500
+
+            local desiredCount = math.min(
+                math.max(minPerZone, math.floor(minPerZone + playerCount * 1.5)),
+                maxPerZone
+            )
+
+            if zd.count < desiredCount and state.globalCount < globalCap then
+                local respawnTier = spawner.rollTier(zd)
+                spawner.spawnEntity(rZone, zd, state, respawnTier)
+                spawner.updatePressure(zd, respawnTier)
+            end
+        end)
+    end
 end
 
 -----------------------------------
