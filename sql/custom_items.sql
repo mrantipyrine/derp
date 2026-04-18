@@ -1319,262 +1319,262 @@ REPLACE INTO `item_mods` VALUES
 -- ============================================================
 
 -- Wooly Winifred trophy + gear
-REPLACE INTO `item_basic` VALUES (30530, 0, 'Winifred's Fleece', 'WnfrdFlce', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30531, 0, 'Winifred's Wool Cap', 'WnfrdWCap', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30530, 0, 'Winifred\'s Fleece', 'WnfrdFlce', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30531, 0, 'Winifred\'s Wool Cap', 'WnfrdWCap', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30531, 'WnfrdWCap', 28, 0, 4194303, 0, 0, 0, 1, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30531, 1, 14);
 REPLACE INTO `item_mods` VALUES (30531, 14, 6);
 REPLACE INTO `item_mods` VALUES (30531, 2, 30);
-REPLACE INTO `item_basic` VALUES (30532, 0, 'Winifred's Wool Mittens', 'WnfrdWMit', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30532, 0, 'Winifred\'s Wool Mittens', 'WnfrdWMit', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30532, 'WnfrdWMit', 28, 0, 4194303, 0, 0, 0, 32, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30532, 1, 10);
 REPLACE INTO `item_mods` VALUES (30532, 12, 4);
 REPLACE INTO `item_mods` VALUES (30532, 29, 10);
 
 -- Bouncy Beatrice trophy + gear
-REPLACE INTO `item_basic` VALUES (30533, 0, 'Beatrice's Lucky Foot', 'BtrcesFt', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30534, 0, 'Beatrice's Sprinting Shoes', 'BtrceSShoe', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30533, 0, 'Beatrice\'s Lucky Foot', 'BtrcesFt', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30534, 0, 'Beatrice\'s Sprinting Shoes', 'BtrceSShoe', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30534, 'BtrceSShoe', 22, 0, 4194303, 0, 0, 0, 2048, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30534, 1, 8);
 REPLACE INTO `item_mods` VALUES (30534, 23, 6);
 REPLACE INTO `item_mods` VALUES (30534, 68, 12);
-REPLACE INTO `item_basic` VALUES (30535, 0, 'Beatrice's Hopping Hakama', 'BtrceHHkm', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30535, 0, 'Beatrice\'s Hopping Hakama', 'BtrceHHkm', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30535, 'BtrceHHkm', 22, 0, 4194303, 0, 0, 0, 1024, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30535, 1, 11);
 REPLACE INTO `item_mods` VALUES (30535, 13, 5);
 REPLACE INTO `item_mods` VALUES (30535, 25, 8);
 
 -- Crushing Clyde trophy + gear
-REPLACE INTO `item_basic` VALUES (30536, 0, 'Clyde's Shell Shard', 'ClydeShrd', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30537, 0, 'Clyde's Carapace Gauntlets', 'ClydeCGnt', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30536, 0, 'Clyde\'s Shell Shard', 'ClydeShrd', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30537, 0, 'Clyde\'s Carapace Gauntlets', 'ClydeCGnt', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30537, 'ClydeCGnt', 32, 0, 4194303, 0, 0, 0, 32, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30537, 1, 15);
 REPLACE INTO `item_mods` VALUES (30537, 14, 7);
 REPLACE INTO `item_mods` VALUES (30537, 2, 40);
-REPLACE INTO `item_basic` VALUES (30538, 0, 'Clyde's Pincer Belt', 'ClydePBlt', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30538, 0, 'Clyde\'s Pincer Belt', 'ClydePBlt', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30538, 'ClydePBlt', 32, 0, 4194303, 0, 0, 0, 512, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30538, 1, 6);
 REPLACE INTO `item_mods` VALUES (30538, 12, 5);
 REPLACE INTO `item_mods` VALUES (30538, 29, 12);
 
 -- Sneaky Seraphine trophy + gear
-REPLACE INTO `item_basic` VALUES (30539, 0, 'Seraphine's Stolen Trinket', 'SrphnTrnk', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30540, 0, 'Seraphine's Sneak Boots', 'SrphnSBts', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30539, 0, 'Seraphine\'s Stolen Trinket', 'SrphnTrnk', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30540, 0, 'Seraphine\'s Sneak Boots', 'SrphnSBts', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30540, 'SrphnSBts', 35, 0, 4194303, 0, 0, 0, 2048, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30540, 1, 9);
 REPLACE INTO `item_mods` VALUES (30540, 23, 7);
 REPLACE INTO `item_mods` VALUES (30540, 68, 14);
-REPLACE INTO `item_basic` VALUES (30541, 0, 'Seraphine's Rogue Ring', 'SrphnRRng', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30541, 0, 'Seraphine\'s Rogue Ring', 'SrphnRRng', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30541, 'SrphnRRng', 35, 0, 4194303, 0, 0, 0, 64, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30541, 13, 5);
 REPLACE INTO `item_mods` VALUES (30541, 25, 10);
 REPLACE INTO `item_mods` VALUES (30541, 29, 8);
 
 -- Crackling Cordelia trophy + gear
-REPLACE INTO `item_basic` VALUES (30542, 0, 'Cordelia's Whisker', 'CrdelaWhsk', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30543, 0, 'Cordelia's Static Earring', 'CrdelaEar', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30542, 0, 'Cordelia\'s Whisker', 'CrdelaWhsk', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30543, 0, 'Cordelia\'s Static Earring', 'CrdelaEar', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30543, 'CrdelaEar', 45, 0, 4194303, 0, 0, 0, 4, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30543, 25, 6);
 REPLACE INTO `item_mods` VALUES (30543, 28, 12);
 REPLACE INTO `item_mods` VALUES (30543, 30, 8);
-REPLACE INTO `item_basic` VALUES (30544, 0, 'Cordelia's Shock Mantle', 'CrdelasMnt', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30544, 0, 'Cordelia\'s Shock Mantle', 'CrdelasMnt', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30544, 'CrdelasMnt', 45, 0, 4194303, 0, 0, 0, 256, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30544, 1, 10);
 REPLACE INTO `item_mods` VALUES (30544, 12, 5);
 REPLACE INTO `item_mods` VALUES (30544, 29, 14);
 
 -- Ferocious Frederica trophy + gear
-REPLACE INTO `item_basic` VALUES (30545, 0, 'Frederica's Fang', 'FrdrcaFng', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30546, 0, 'Frederica's Predator Cloak', 'FrdrcaClk', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30545, 0, 'Frederica\'s Fang', 'FrdrcaFng', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30546, 0, 'Frederica\'s Predator Cloak', 'FrdrcaClk', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30546, 'FrdrcaClk', 52, 0, 4194303, 0, 0, 0, 256, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30546, 1, 12);
 REPLACE INTO `item_mods` VALUES (30546, 12, 7);
 REPLACE INTO `item_mods` VALUES (30546, 29, 18);
-REPLACE INTO `item_basic` VALUES (30547, 0, 'Frederica's Hunting Hose', 'FrdrcaHse', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30547, 0, 'Frederica\'s Hunting Hose', 'FrdrcaHse', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30547, 'FrdrcaHse', 52, 0, 4194303, 0, 0, 0, 1024, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30547, 1, 13);
 REPLACE INTO `item_mods` VALUES (30547, 23, 6);
 REPLACE INTO `item_mods` VALUES (30547, 68, 15);
 
 -- Manic Millicent trophy + gear
-REPLACE INTO `item_basic` VALUES (30548, 0, 'Millicent's Dried Petal', 'MllcntPtl', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30549, 0, 'Millicent's Bloom Headband', 'MllcntHbd', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30548, 0, 'Millicent\'s Dried Petal', 'MllcntPtl', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30549, 0, 'Millicent\'s Bloom Headband', 'MllcntHbd', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30549, 'MllcntHbd', 28, 0, 4194303, 0, 0, 0, 1, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30549, 1, 9);
 REPLACE INTO `item_mods` VALUES (30549, 68, 6);
 REPLACE INTO `item_mods` VALUES (30549, 9, 35);
-REPLACE INTO `item_basic` VALUES (30550, 0, 'Millicent's Garden Gloves', 'MllcntGGl', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30550, 0, 'Millicent\'s Garden Gloves', 'MllcntGGl', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30550, 'MllcntGGl', 28, 0, 4194303, 0, 0, 0, 32, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30550, 1, 7);
 REPLACE INTO `item_mods` VALUES (30550, 25, 5);
 REPLACE INTO `item_mods` VALUES (30550, 28, 10);
 
 -- Brutal Brendan trophy + gear
-REPLACE INTO `item_basic` VALUES (30551, 0, 'Brendan's Carapace Chip', 'BrndnCrpC', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30552, 0, 'Brendan's Armored Breastplate', 'BrndnABpl', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30551, 0, 'Brendan\'s Carapace Chip', 'BrndnCrpC', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30552, 0, 'Brendan\'s Armored Breastplate', 'BrndnABpl', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30552, 'BrndnABpl', 40, 0, 4194303, 0, 0, 0, 16, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30552, 1, 22);
 REPLACE INTO `item_mods` VALUES (30552, 14, 7);
 REPLACE INTO `item_mods` VALUES (30552, 2, 55);
-REPLACE INTO `item_basic` VALUES (30553, 0, 'Brendan's Iron Greaves', 'BrndnIGrv', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30553, 0, 'Brendan\'s Iron Greaves', 'BrndnIGrv', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30553, 'BrndnIGrv', 40, 0, 4194303, 0, 0, 0, 2048, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30553, 1, 13);
 REPLACE INTO `item_mods` VALUES (30553, 12, 5);
 REPLACE INTO `item_mods` VALUES (30553, 29, 12);
 
 -- Gale Gertrude trophy + gear
-REPLACE INTO `item_basic` VALUES (30554, 0, 'Gertrude's Tailfeather', 'GrtrdTlft', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30555, 0, 'Gertrude's Galeforce Mantle', 'GrtrdGMnt', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30554, 0, 'Gertrude\'s Tailfeather', 'GrtrdTlft', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30555, 0, 'Gertrude\'s Galeforce Mantle', 'GrtrdGMnt', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30555, 'GrtrdGMnt', 42, 0, 4194303, 0, 0, 0, 256, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30555, 1, 11);
 REPLACE INTO `item_mods` VALUES (30555, 23, 7);
 REPLACE INTO `item_mods` VALUES (30555, 68, 16);
-REPLACE INTO `item_basic` VALUES (30556, 0, 'Gertrude's Windrunner Shoes', 'GrtrdWShs', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30556, 0, 'Gertrude\'s Windrunner Shoes', 'GrtrdWShs', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30556, 'GrtrdWShs', 42, 0, 4194303, 0, 0, 0, 2048, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30556, 1, 10);
 REPLACE INTO `item_mods` VALUES (30556, 13, 6);
 REPLACE INTO `item_mods` VALUES (30556, 25, 12);
 
 -- Venomous Valentina trophy + gear
-REPLACE INTO `item_basic` VALUES (30557, 0, 'Valentina's Stinger', 'VlntnStng', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30558, 0, 'Valentina's Hexed Hairpin', 'VlntnHHpn', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30557, 0, 'Valentina\'s Stinger', 'VlntnStng', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30558, 0, 'Valentina\'s Hexed Hairpin', 'VlntnHHpn', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30558, 'VlntnHHpn', 36, 0, 4194303, 0, 0, 0, 1, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30558, 1, 8);
 REPLACE INTO `item_mods` VALUES (30558, 25, 6);
 REPLACE INTO `item_mods` VALUES (30558, 30, 10);
-REPLACE INTO `item_basic` VALUES (30559, 0, 'Valentina's Venom Ring', 'VlntnVRng', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30559, 0, 'Valentina\'s Venom Ring', 'VlntnVRng', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30559, 'VlntnVRng', 36, 0, 4194303, 0, 0, 0, 64, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30559, 25, 5);
 REPLACE INTO `item_mods` VALUES (30559, 28, 12);
 REPLACE INTO `item_mods` VALUES (30559, 9, 30);
 
 -- Deep Dweller Deidre trophy + gear
-REPLACE INTO `item_basic` VALUES (30560, 0, 'Deidre's Earthen Core', 'DdrErtCr', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30561, 0, 'Deidre's Burrower's Boots', 'DdrBrwBts', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30560, 0, 'Deidre\'s Earthen Core', 'DdrErtCr', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30561, 0, 'Deidre\'s Burrower\'s Boots', 'DdrBrwBts', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30561, 'DdrBrwBts', 44, 0, 4194303, 0, 0, 0, 2048, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30561, 1, 12);
 REPLACE INTO `item_mods` VALUES (30561, 14, 6);
 REPLACE INTO `item_mods` VALUES (30561, 2, 40);
-REPLACE INTO `item_basic` VALUES (30562, 0, 'Deidre's Mudskin Belt', 'DdrMdsBlt', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30562, 0, 'Deidre\'s Mudskin Belt', 'DdrMdsBlt', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30562, 'DdrMdsBlt', 44, 0, 4194303, 0, 0, 0, 512, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30562, 1, 7);
 REPLACE INTO `item_mods` VALUES (30562, 12, 5);
 REPLACE INTO `item_mods` VALUES (30562, 29, 14);
 
 -- Venerable Vincenzo trophy + gear
-REPLACE INTO `item_basic` VALUES (30563, 0, 'Vincenzo's Scale', 'VncznScle', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30564, 0, 'Vincenzo's Scaled Cuisses', 'VncznSCss', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30563, 0, 'Vincenzo\'s Scale', 'VncznScle', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30564, 0, 'Vincenzo\'s Scaled Cuisses', 'VncznSCss', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30564, 'VncznSCss', 50, 0, 4194303, 0, 0, 0, 1024, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30564, 1, 15);
 REPLACE INTO `item_mods` VALUES (30564, 14, 7);
 REPLACE INTO `item_mods` VALUES (30564, 2, 50);
-REPLACE INTO `item_basic` VALUES (30565, 0, 'Vincenzo's Tough Tail Ring', 'VncznTRng', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30565, 0, 'Vincenzo\'s Tough Tail Ring', 'VncznTRng', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30565, 'VncznTRng', 50, 0, 4194303, 0, 0, 0, 64, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30565, 1, 4);
 REPLACE INTO `item_mods` VALUES (30565, 12, 6);
 REPLACE INTO `item_mods` VALUES (30565, 29, 14);
 
 -- Grunt Gideon trophy + gear
-REPLACE INTO `item_basic` VALUES (30566, 0, 'Gideon's Rusty Axe', 'GdnRAxe', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30567, 0, 'Gideon's Studded Armband', 'GdnSArmb', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30566, 0, 'Gideon\'s Rusty Axe', 'GdnRAxe', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30567, 0, 'Gideon\'s Studded Armband', 'GdnSArmb', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30567, 'GdnSArmb', 10, 0, 4194303, 0, 0, 0, 32, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30567, 1, 6);
 REPLACE INTO `item_mods` VALUES (30567, 12, 3);
 REPLACE INTO `item_mods` VALUES (30567, 29, 6);
-REPLACE INTO `item_basic` VALUES (30568, 0, 'Gideon's Grunt Belt', 'GdnGBlt', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30568, 0, 'Gideon\'s Grunt Belt', 'GdnGBlt', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30568, 'GdnGBlt', 10, 0, 4194303, 0, 0, 0, 512, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30568, 1, 3);
 REPLACE INTO `item_mods` VALUES (30568, 14, 2);
 REPLACE INTO `item_mods` VALUES (30568, 2, 15);
 
 -- Sergeant Sven trophy + gear
-REPLACE INTO `item_basic` VALUES (30569, 0, 'Sven's Campaign Medal', 'SvnCMdl', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30570, 0, 'Sven's Warchief Helm', 'SvnWCHlm', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30569, 0, 'Sven\'s Campaign Medal', 'SvnCMdl', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30570, 0, 'Sven\'s Warchief Helm', 'SvnWCHlm', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30570, 'SvnWCHlm', 22, 0, 4194303, 0, 0, 0, 1, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30570, 1, 11);
 REPLACE INTO `item_mods` VALUES (30570, 12, 5);
 REPLACE INTO `item_mods` VALUES (30570, 14, 4);
-REPLACE INTO `item_basic` VALUES (30571, 0, 'Sven's Battle Mantle', 'SvnBtlMnt', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30571, 0, 'Sven\'s Battle Mantle', 'SvnBtlMnt', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30571, 'SvnBtlMnt', 22, 0, 4194303, 0, 0, 0, 256, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30571, 1, 8);
 REPLACE INTO `item_mods` VALUES (30571, 29, 10);
 REPLACE INTO `item_mods` VALUES (30571, 12, 4);
 
 -- Raging Reginald trophy + gear
-REPLACE INTO `item_basic` VALUES (30572, 0, 'Reginald's Battle Standard', 'RgnldStnd', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30573, 0, 'Reginald's Warbound Hauberk', 'RgnldWHbk', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30572, 0, 'Reginald\'s Battle Standard', 'RgnldStnd', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30573, 0, 'Reginald\'s Warbound Hauberk', 'RgnldWHbk', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30573, 'RgnldWHbk', 35, 0, 4194303, 0, 0, 0, 16, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30573, 1, 20);
 REPLACE INTO `item_mods` VALUES (30573, 12, 7);
 REPLACE INTO `item_mods` VALUES (30573, 2, 60);
-REPLACE INTO `item_basic` VALUES (30574, 0, 'Reginald's Crusher Greaves', 'RgnldCGrv', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30574, 0, 'Reginald\'s Crusher Greaves', 'RgnldCGrv', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30574, 'RgnldCGrv', 35, 0, 4194303, 0, 0, 0, 2048, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30574, 1, 12);
 REPLACE INTO `item_mods` VALUES (30574, 14, 6);
 REPLACE INTO `item_mods` VALUES (30574, 29, 14);
 
 -- Overlord Ophelia trophy + gear
-REPLACE INTO `item_basic` VALUES (30575, 0, 'Ophelia's Warlord Crown', 'OphlCrwn', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30576, 0, 'Ophelia's Dominion Plate', 'OphlDPlt', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30575, 0, 'Ophelia\'s Warlord Crown', 'OphlCrwn', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30576, 0, 'Ophelia\'s Dominion Plate', 'OphlDPlt', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30576, 'OphlDPlt', 50, 0, 4194303, 0, 0, 0, 16, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30576, 1, 26);
 REPLACE INTO `item_mods` VALUES (30576, 12, 9);
 REPLACE INTO `item_mods` VALUES (30576, 14, 8);
 REPLACE INTO `item_mods` VALUES (30576, 2, 80);
-REPLACE INTO `item_basic` VALUES (30577, 0, 'Ophelia's Conquest Ring', 'OphlCRng', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30577, 0, 'Ophelia\'s Conquest Ring', 'OphlCRng', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30577, 'OphlCRng', 50, 0, 4194303, 0, 0, 0, 64, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30577, 12, 6);
 REPLACE INTO `item_mods` VALUES (30577, 29, 16);
 REPLACE INTO `item_mods` VALUES (30577, 2, 25);
 
 -- Fledgling Fenwick trophy + gear
-REPLACE INTO `item_basic` VALUES (30578, 0, 'Fenwick's Broken Talon', 'FnwkTln', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30579, 0, 'Fenwick's Initiate Sandals', 'FnwkISndl', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30578, 0, 'Fenwick\'s Broken Talon', 'FnwkTln', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30579, 0, 'Fenwick\'s Initiate Sandals', 'FnwkISndl', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30579, 'FnwkISndl', 10, 0, 4194303, 0, 0, 0, 2048, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30579, 1, 5);
 REPLACE INTO `item_mods` VALUES (30579, 23, 3);
 REPLACE INTO `item_mods` VALUES (30579, 68, 6);
-REPLACE INTO `item_basic` VALUES (30580, 0, 'Fenwick's Novice Sash', 'FnwkNSsh', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30580, 0, 'Fenwick\'s Novice Sash', 'FnwkNSsh', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30580, 'FnwkNSsh', 10, 0, 4194303, 0, 0, 0, 512, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30580, 1, 3);
 REPLACE INTO `item_mods` VALUES (30580, 13, 2);
 REPLACE INTO `item_mods` VALUES (30580, 25, 4);
 
 -- Devout Delilah trophy + gear
-REPLACE INTO `item_basic` VALUES (30581, 0, 'Delilah's Prayer Beads', 'DllhPBds', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30582, 0, 'Delilah's Chanter's Collar', 'DllhCCll', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30581, 0, 'Delilah\'s Prayer Beads', 'DllhPBds', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30582, 0, 'Delilah\'s Chanter\'s Collar', 'DllhCCll', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30582, 'DllhCCll', 22, 0, 4194303, 0, 0, 0, 2, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30582, 68, 5);
 REPLACE INTO `item_mods` VALUES (30582, 9, 30);
 REPLACE INTO `item_mods` VALUES (30582, 30, 6);
-REPLACE INTO `item_basic` VALUES (30583, 0, 'Delilah's Sacred Earring', 'DllhSEar', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30583, 0, 'Delilah\'s Sacred Earring', 'DllhSEar', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30583, 'DllhSEar', 22, 0, 4194303, 0, 0, 0, 4, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30583, 25, 4);
 REPLACE INTO `item_mods` VALUES (30583, 28, 8);
 REPLACE INTO `item_mods` VALUES (30583, 9, 20);
 
 -- High Priest Horatio trophy + gear
-REPLACE INTO `item_basic` VALUES (30584, 0, 'Horatio's Holy Relic', 'HrtHlyRlc', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30585, 0, 'Horatio's Zealot's Mitre', 'HrtZMtre', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30584, 0, 'Horatio\'s Holy Relic', 'HrtHlyRlc', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30585, 0, 'Horatio\'s Zealot\'s Mitre', 'HrtZMtre', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30585, 'HrtZMtre', 35, 0, 4194303, 0, 0, 0, 1, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30585, 1, 10);
 REPLACE INTO `item_mods` VALUES (30585, 68, 7);
 REPLACE INTO `item_mods` VALUES (30585, 9, 50);
-REPLACE INTO `item_basic` VALUES (30586, 0, 'Horatio's Faith Ring', 'HrtFthRng', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30586, 0, 'Horatio\'s Faith Ring', 'HrtFthRng', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30586, 'HrtFthRng', 35, 0, 4194303, 0, 0, 0, 64, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30586, 68, 5);
 REPLACE INTO `item_mods` VALUES (30586, 30, 10);
 REPLACE INTO `item_mods` VALUES (30586, 9, 25);
 
 -- Divine Diomedea trophy + gear
-REPLACE INTO `item_basic` VALUES (30587, 0, 'Diomedea's Golden Feather', 'DmdaGFthr', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30588, 0, 'Diomedea's Ascension Robe', 'DmdaARbe', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30587, 0, 'Diomedea\'s Golden Feather', 'DmdaGFthr', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30588, 0, 'Diomedea\'s Ascension Robe', 'DmdaARbe', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30588, 'DmdaARbe', 50, 0, 4194303, 0, 0, 0, 16, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30588, 1, 16);
 REPLACE INTO `item_mods` VALUES (30588, 68, 9);
 REPLACE INTO `item_mods` VALUES (30588, 9, 80);
 REPLACE INTO `item_mods` VALUES (30588, 30, 10);
-REPLACE INTO `item_basic` VALUES (30589, 0, 'Diomedea's Halo Headband', 'DmdaHHbd', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30589, 0, 'Diomedea\'s Halo Headband', 'DmdaHHbd', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30589, 'DmdaHHbd', 50, 0, 4194303, 0, 0, 0, 1, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30589, 1, 11);
 REPLACE INTO `item_mods` VALUES (30589, 25, 7);
@@ -1582,53 +1582,53 @@ REPLACE INTO `item_mods` VALUES (30589, 28, 14);
 REPLACE INTO `item_mods` VALUES (30589, 9, 40);
 
 -- Copper Cornelius trophy + gear
-REPLACE INTO `item_basic` VALUES (30590, 0, 'Cornelius's Copper Scale', 'CrnlsCpSc', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30591, 0, 'Cornelius's Shell Shield Shard', 'CrnlsSShr', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30590, 0, 'Cornelius\'s Copper Scale', 'CrnlsCpSc', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30591, 0, 'Cornelius\'s Shell Shield Shard', 'CrnlsSShr', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30591, 'CrnlsSShr', 10, 0, 4194303, 0, 0, 0, 32, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30591, 1, 7);
 REPLACE INTO `item_mods` VALUES (30591, 14, 3);
 REPLACE INTO `item_mods` VALUES (30591, 2, 20);
-REPLACE INTO `item_basic` VALUES (30592, 0, 'Cornelius's Miner's Anklet', 'CrnlsAnkl', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30592, 0, 'Cornelius\'s Miner\'s Anklet', 'CrnlsAnkl', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30592, 'CrnlsAnkl', 10, 0, 4194303, 0, 0, 0, 2048, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30592, 1, 5);
 REPLACE INTO `item_mods` VALUES (30592, 12, 2);
 REPLACE INTO `item_mods` VALUES (30592, 14, 2);
 
 -- Silver Sylvester trophy + gear
-REPLACE INTO `item_basic` VALUES (30593, 0, 'Sylvester's Silver Ingot', 'SlvstIngot', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30594, 0, 'Sylvester's Polished Cuirass', 'SlvstPCrs', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30593, 0, 'Sylvester\'s Silver Ingot', 'SlvstIngot', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30594, 0, 'Sylvester\'s Polished Cuirass', 'SlvstPCrs', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30594, 'SlvstPCrs', 22, 0, 4194303, 0, 0, 0, 16, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30594, 1, 17);
 REPLACE INTO `item_mods` VALUES (30594, 14, 5);
 REPLACE INTO `item_mods` VALUES (30594, 2, 45);
-REPLACE INTO `item_basic` VALUES (30595, 0, 'Sylvester's Guard Collar', 'SlvstGCll', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30595, 0, 'Sylvester\'s Guard Collar', 'SlvstGCll', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30595, 'SlvstGCll', 22, 0, 4194303, 0, 0, 0, 2, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30595, 1, 5);
 REPLACE INTO `item_mods` VALUES (30595, 14, 4);
 REPLACE INTO `item_mods` VALUES (30595, 29, 6);
 
 -- Boulder Basil trophy + gear
-REPLACE INTO `item_basic` VALUES (30596, 0, 'Basil's Boulder Chip', 'BaslBChip', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30597, 0, 'Basil's Fortress Greaves', 'BaslFGrv', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30596, 0, 'Basil\'s Boulder Chip', 'BaslBChip', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30597, 0, 'Basil\'s Fortress Greaves', 'BaslFGrv', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30597, 'BaslFGrv', 35, 0, 4194303, 0, 0, 0, 2048, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30597, 1, 14);
 REPLACE INTO `item_mods` VALUES (30597, 14, 7);
 REPLACE INTO `item_mods` VALUES (30597, 2, 50);
-REPLACE INTO `item_basic` VALUES (30598, 0, 'Basil's Rampart Ring', 'BaslRRng', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30598, 0, 'Basil\'s Rampart Ring', 'BaslRRng', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30598, 'BaslRRng', 35, 0, 4194303, 0, 0, 0, 64, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30598, 1, 5);
 REPLACE INTO `item_mods` VALUES (30598, 14, 5);
 REPLACE INTO `item_mods` VALUES (30598, 29, 8);
 
 -- Diamond Desmond trophy + gear
-REPLACE INTO `item_basic` VALUES (30599, 0, 'Desmond's Diamond Carapace', 'DsmndDCrp', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30600, 0, 'Desmond's Ironclad Hauberk', 'DsmndIHbk', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30599, 0, 'Desmond\'s Diamond Carapace', 'DsmndDCrp', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30600, 0, 'Desmond\'s Ironclad Hauberk', 'DsmndIHbk', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30600, 'DsmndIHbk', 50, 0, 4194303, 0, 0, 0, 16, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30600, 1, 27);
 REPLACE INTO `item_mods` VALUES (30600, 14, 9);
 REPLACE INTO `item_mods` VALUES (30600, 2, 90);
 REPLACE INTO `item_mods` VALUES (30600, 29, 10);
-REPLACE INTO `item_basic` VALUES (30601, 0, 'Desmond's Warden's Visor', 'DsmndWVsr', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30601, 0, 'Desmond\'s Warden\'s Visor', 'DsmndWVsr', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30601, 'DsmndWVsr', 50, 0, 4194303, 0, 0, 0, 1, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30601, 1, 16);
 REPLACE INTO `item_mods` VALUES (30601, 14, 7);
@@ -1636,158 +1636,158 @@ REPLACE INTO `item_mods` VALUES (30601, 2, 55);
 REPLACE INTO `item_mods` VALUES (30601, 29, 8);
 
 -- Flittering Fiona trophy + gear
-REPLACE INTO `item_basic` VALUES (30602, 0, 'Fiona's Membrane Scrap', 'FnaMmbScp', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30603, 0, 'Fiona's Wing Earring', 'FnaWngEar', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30602, 0, 'Fiona\'s Membrane Scrap', 'FnaMmbScp', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30603, 0, 'Fiona\'s Wing Earring', 'FnaWngEar', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30603, 'FnaWngEar', 8, 0, 4194303, 0, 0, 0, 4, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30603, 23, 3);
 REPLACE INTO `item_mods` VALUES (30603, 68, 5);
 REPLACE INTO `item_mods` VALUES (30603, 13, 2);
-REPLACE INTO `item_basic` VALUES (30604, 0, 'Fiona's Night Sandals', 'FnaNgtSnd', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30604, 0, 'Fiona\'s Night Sandals', 'FnaNgtSnd', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30604, 'FnaNgtSnd', 8, 0, 4194303, 0, 0, 0, 2048, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30604, 1, 4);
 REPLACE INTO `item_mods` VALUES (30604, 23, 3);
 REPLACE INTO `item_mods` VALUES (30604, 68, 6);
 
 -- Echo Edgar trophy + gear
-REPLACE INTO `item_basic` VALUES (30605, 0, 'Edgar's Sonic Wing', 'EdgrSnWng', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30606, 0, 'Edgar's Echolocation Earring', 'EdgrEEar', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30605, 0, 'Edgar\'s Sonic Wing', 'EdgrSnWng', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30606, 0, 'Edgar\'s Echolocation Earring', 'EdgrEEar', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30606, 'EdgrEEar', 18, 0, 4194303, 0, 0, 0, 4, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30606, 13, 4);
 REPLACE INTO `item_mods` VALUES (30606, 25, 7);
 REPLACE INTO `item_mods` VALUES (30606, 23, 4);
-REPLACE INTO `item_basic` VALUES (30607, 0, 'Edgar's Shadow Mitts', 'EdgrShMtt', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30607, 0, 'Edgar\'s Shadow Mitts', 'EdgrShMtt', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30607, 'EdgrShMtt', 18, 0, 4194303, 0, 0, 0, 32, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30607, 1, 8);
 REPLACE INTO `item_mods` VALUES (30607, 23, 5);
 REPLACE INTO `item_mods` VALUES (30607, 68, 10);
 
 -- Vampiric Valerian trophy + gear
-REPLACE INTO `item_basic` VALUES (30608, 0, 'Valerian's Blood Fang', 'VlrnBlFng', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30609, 0, 'Valerian's Night Cowl', 'VlrnNtCwl', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30608, 0, 'Valerian\'s Blood Fang', 'VlrnBlFng', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30609, 0, 'Valerian\'s Night Cowl', 'VlrnNtCwl', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30609, 'VlrnNtCwl', 32, 0, 4194303, 0, 0, 0, 1, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30609, 1, 10);
 REPLACE INTO `item_mods` VALUES (30609, 23, 6);
 REPLACE INTO `item_mods` VALUES (30609, 68, 12);
-REPLACE INTO `item_basic` VALUES (30610, 0, 'Valerian's Vampire Ring', 'VlrnVRng', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30610, 0, 'Valerian\'s Vampire Ring', 'VlrnVRng', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30610, 'VlrnVRng', 32, 0, 4194303, 0, 0, 0, 64, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30610, 23, 4);
 REPLACE INTO `item_mods` VALUES (30610, 13, 5);
 REPLACE INTO `item_mods` VALUES (30610, 25, 9);
 
 -- Ancient Araminta trophy + gear
-REPLACE INTO `item_basic` VALUES (30611, 0, 'Araminta's Ancient Fang', 'ArmntAFng', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30612, 0, 'Araminta's Dusk Mantle', 'ArmntDMnt', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30611, 0, 'Araminta\'s Ancient Fang', 'ArmntAFng', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30612, 0, 'Araminta\'s Dusk Mantle', 'ArmntDMnt', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30612, 'ArmntDMnt', 45, 0, 4194303, 0, 0, 0, 256, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30612, 1, 11);
 REPLACE INTO `item_mods` VALUES (30612, 23, 8);
 REPLACE INTO `item_mods` VALUES (30612, 68, 18);
-REPLACE INTO `item_basic` VALUES (30613, 0, 'Araminta's Haste Anklet', 'ArmntHAnk', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30613, 0, 'Araminta\'s Haste Anklet', 'ArmntHAnk', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30613, 'ArmntHAnk', 45, 0, 4194303, 0, 0, 0, 2048, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30613, 1, 10);
 REPLACE INTO `item_mods` VALUES (30613, 23, 6);
 REPLACE INTO `item_mods` VALUES (30613, 384, 4);
 
 -- Slithering Silas trophy + gear
-REPLACE INTO `item_basic` VALUES (30614, 0, 'Silas's Shed Scale', 'SlsShdScl', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30615, 0, 'Silas's Snakeskin Sandals', 'SlsSnkSnd', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30614, 0, 'Silas\'s Shed Scale', 'SlsShdScl', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30615, 0, 'Silas\'s Snakeskin Sandals', 'SlsSnkSnd', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30615, 'SlsSnkSnd', 8, 0, 4194303, 0, 0, 0, 2048, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30615, 1, 4);
 REPLACE INTO `item_mods` VALUES (30615, 23, 3);
 REPLACE INTO `item_mods` VALUES (30615, 68, 5);
-REPLACE INTO `item_basic` VALUES (30616, 0, 'Silas's Coil Sash', 'SlsColSsh', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30616, 0, 'Silas\'s Coil Sash', 'SlsColSsh', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30616, 'SlsColSsh', 8, 0, 4194303, 0, 0, 0, 512, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30616, 1, 3);
 REPLACE INTO `item_mods` VALUES (30616, 12, 2);
 REPLACE INTO `item_mods` VALUES (30616, 29, 4);
 
 -- Hypnotic Heloise trophy + gear
-REPLACE INTO `item_basic` VALUES (30617, 0, 'Heloise's Mesmer Scale', 'HlseMmSc', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30618, 0, 'Heloise's Charmer's Collar', 'HlseCCll', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30617, 0, 'Heloise\'s Mesmer Scale', 'HlseMmSc', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30618, 0, 'Heloise\'s Charmer\'s Collar', 'HlseCCll', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30618, 'HlseCCll', 20, 0, 4194303, 0, 0, 0, 2, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30618, 28, 5);
 REPLACE INTO `item_mods` VALUES (30618, 68, 4);
 REPLACE INTO `item_mods` VALUES (30618, 9, 20);
-REPLACE INTO `item_basic` VALUES (30619, 0, 'Heloise's Luring Earring', 'HlseLEar', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30619, 0, 'Heloise\'s Luring Earring', 'HlseLEar', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30619, 'HlseLEar', 20, 0, 4194303, 0, 0, 0, 4, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30619, 28, 4);
 REPLACE INTO `item_mods` VALUES (30619, 25, 3);
 REPLACE INTO `item_mods` VALUES (30619, 30, 7);
 
 -- Constrictor Cressida trophy + gear
-REPLACE INTO `item_basic` VALUES (30620, 0, 'Cressida's Crushing Coil', 'CrsdCrCl', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30621, 0, 'Cressida's Squeeze Gloves', 'CrsdSqGlv', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30620, 0, 'Cressida\'s Crushing Coil', 'CrsdCrCl', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30621, 0, 'Cressida\'s Squeeze Gloves', 'CrsdSqGlv', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30621, 'CrsdSqGlv', 34, 0, 4194303, 0, 0, 0, 32, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30621, 1, 11);
 REPLACE INTO `item_mods` VALUES (30621, 12, 6);
 REPLACE INTO `item_mods` VALUES (30621, 29, 12);
-REPLACE INTO `item_basic` VALUES (30622, 0, 'Cressida's Binding Belt', 'CrsdBBlt', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30622, 0, 'Cressida\'s Binding Belt', 'CrsdBBlt', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30622, 'CrsdBBlt', 34, 0, 4194303, 0, 0, 0, 512, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30622, 1, 6);
 REPLACE INTO `item_mods` VALUES (30622, 14, 5);
 REPLACE INTO `item_mods` VALUES (30622, 2, 35);
 
 -- Venom Duchess Viviane trophy + gear
-REPLACE INTO `item_basic` VALUES (30623, 0, 'Viviane's Venom Sac', 'VvneVnSc', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30624, 0, 'Viviane's Toxic Tiara', 'VvneTxTar', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30623, 0, 'Viviane\'s Venom Sac', 'VvneVnSc', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30624, 0, 'Viviane\'s Toxic Tiara', 'VvneTxTar', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30624, 'VvneTxTar', 48, 0, 4194303, 0, 0, 0, 1, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30624, 1, 12);
 REPLACE INTO `item_mods` VALUES (30624, 25, 7);
 REPLACE INTO `item_mods` VALUES (30624, 28, 14);
 REPLACE INTO `item_mods` VALUES (30624, 30, 8);
-REPLACE INTO `item_basic` VALUES (30625, 0, 'Viviane's Serpent Ring', 'VvneSrpRng', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30625, 0, 'Viviane\'s Serpent Ring', 'VvneSrpRng', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30625, 'VvneSrpRng', 48, 0, 4194303, 0, 0, 0, 64, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30625, 25, 5);
 REPLACE INTO `item_mods` VALUES (30625, 30, 10);
 REPLACE INTO `item_mods` VALUES (30625, 9, 30);
 
 -- Buzzing Barnabas trophy + gear
-REPLACE INTO `item_basic` VALUES (30626, 0, 'Barnabas's Compound Eye', 'BrnbsCmEy', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30627, 0, 'Barnabas's Wing Brooch', 'BrnbsWBrc', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30626, 0, 'Barnabas\'s Compound Eye', 'BrnbsCmEy', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30627, 0, 'Barnabas\'s Wing Brooch', 'BrnbsWBrc', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30627, 'BrnbsWBrc', 10, 0, 4194303, 0, 0, 0, 2, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30627, 13, 3);
 REPLACE INTO `item_mods` VALUES (30627, 25, 5);
 REPLACE INTO `item_mods` VALUES (30627, 23, 2);
-REPLACE INTO `item_basic` VALUES (30628, 0, 'Barnabas's Buzzer Boots', 'BrnbsBBts', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30628, 0, 'Barnabas\'s Buzzer Boots', 'BrnbsBBts', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30628, 'BrnbsBBts', 10, 0, 4194303, 0, 0, 0, 2048, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30628, 1, 5);
 REPLACE INTO `item_mods` VALUES (30628, 23, 3);
 REPLACE INTO `item_mods` VALUES (30628, 68, 7);
 
 -- Droning Dorothea trophy + gear
-REPLACE INTO `item_basic` VALUES (30629, 0, 'Dorothea's Drone Claw', 'DrthaDrnCl', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30630, 0, 'Dorothea's Carapace Vest', 'DrthaCV', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30629, 0, 'Dorothea\'s Drone Claw', 'DrthaDrnCl', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30630, 0, 'Dorothea\'s Carapace Vest', 'DrthaCV', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30630, 'DrthaCV', 25, 0, 4194303, 0, 0, 0, 16, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30630, 1, 14);
 REPLACE INTO `item_mods` VALUES (30630, 14, 4);
 REPLACE INTO `item_mods` VALUES (30630, 2, 40);
-REPLACE INTO `item_basic` VALUES (30631, 0, 'Dorothea's Hum Ring', 'DrthaHRng', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30631, 0, 'Dorothea\'s Hum Ring', 'DrthaHRng', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30631, 'DrthaHRng', 25, 0, 4194303, 0, 0, 0, 64, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30631, 13, 4);
 REPLACE INTO `item_mods` VALUES (30631, 25, 8);
 REPLACE INTO `item_mods` VALUES (30631, 29, 6);
 
 -- Plague Bearer Percival trophy + gear
-REPLACE INTO `item_basic` VALUES (30632, 0, 'Percival's Plague Gland', 'PrcvlPlGl', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30633, 0, 'Percival's Pestilent Mask', 'PrcvlPMsk', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30632, 0, 'Percival\'s Plague Gland', 'PrcvlPlGl', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30633, 0, 'Percival\'s Pestilent Mask', 'PrcvlPMsk', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30633, 'PrcvlPMsk', 38, 0, 4194303, 0, 0, 0, 1, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30633, 1, 11);
 REPLACE INTO `item_mods` VALUES (30633, 25, 5);
 REPLACE INTO `item_mods` VALUES (30633, 28, 10);
-REPLACE INTO `item_basic` VALUES (30634, 0, 'Percival's Blight Mantle', 'PrcvlBMnt', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30634, 0, 'Percival\'s Blight Mantle', 'PrcvlBMnt', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30634, 'PrcvlBMnt', 38, 0, 4194303, 0, 0, 0, 256, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30634, 1, 9);
 REPLACE INTO `item_mods` VALUES (30634, 12, 5);
 REPLACE INTO `item_mods` VALUES (30634, 29, 12);
 
 -- Swarm Queen Sophonias trophy + gear
-REPLACE INTO `item_basic` VALUES (30635, 0, 'Sophonias's Royal Jelly', 'SphnsRJly', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30636, 0, 'Sophonias's Hivemind Helm', 'SphnHMHlm', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30635, 0, 'Sophonias\'s Royal Jelly', 'SphnsRJly', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30636, 0, 'Sophonias\'s Hivemind Helm', 'SphnHMHlm', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30636, 'SphnHMHlm', 52, 0, 4194303, 0, 0, 0, 1, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30636, 1, 14);
 REPLACE INTO `item_mods` VALUES (30636, 25, 8);
 REPLACE INTO `item_mods` VALUES (30636, 28, 16);
 REPLACE INTO `item_mods` VALUES (30636, 9, 50);
-REPLACE INTO `item_basic` VALUES (30637, 0, 'Sophonias's Drone Tassets', 'SphnDTsst', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30637, 0, 'Sophonias\'s Drone Tassets', 'SphnDTsst', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30637, 'SphnDTsst', 52, 0, 4194303, 0, 0, 0, 1024, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30637, 1, 15);
 REPLACE INTO `item_mods` VALUES (30637, 14, 7);
@@ -1795,212 +1795,212 @@ REPLACE INTO `item_mods` VALUES (30637, 2, 60);
 REPLACE INTO `item_mods` VALUES (30637, 1, 3);
 
 -- Gnawing Nathaniel trophy + gear
-REPLACE INTO `item_basic` VALUES (30638, 0, 'Nathaniel's Gnawed Bone', 'NthnlBone', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30639, 0, 'Nathaniel's Rotting Armband', 'NthnlRArmb', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30638, 0, 'Nathaniel\'s Gnawed Bone', 'NthnlBone', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30639, 0, 'Nathaniel\'s Rotting Armband', 'NthnlRArmb', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30639, 'NthnlRArmb', 14, 0, 4194303, 0, 0, 0, 32, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30639, 1, 5);
 REPLACE INTO `item_mods` VALUES (30639, 12, 3);
 REPLACE INTO `item_mods` VALUES (30639, 29, 6);
-REPLACE INTO `item_basic` VALUES (30640, 0, 'Nathaniel's Grave Sandals', 'NthnlGSnd', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30640, 0, 'Nathaniel\'s Grave Sandals', 'NthnlGSnd', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30640, 'NthnlGSnd', 14, 0, 4194303, 0, 0, 0, 2048, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30640, 1, 4);
 REPLACE INTO `item_mods` VALUES (30640, 23, 2);
 REPLACE INTO `item_mods` VALUES (30640, 68, 5);
 
 -- Festering Francesca trophy + gear
-REPLACE INTO `item_basic` VALUES (30641, 0, 'Francesca's Fetid Finger', 'FrncsFFng', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30642, 0, 'Francesca's Blight Earring', 'FrncsBEar', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30641, 0, 'Francesca\'s Fetid Finger', 'FrncsFFng', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30642, 0, 'Francesca\'s Blight Earring', 'FrncsBEar', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30642, 'FrncsBEar', 26, 0, 4194303, 0, 0, 0, 4, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30642, 25, 4);
 REPLACE INTO `item_mods` VALUES (30642, 28, 8);
 REPLACE INTO `item_mods` VALUES (30642, 30, 5);
-REPLACE INTO `item_basic` VALUES (30643, 0, 'Francesca's Moaning Ring', 'FrncsRng', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30643, 0, 'Francesca\'s Moaning Ring', 'FrncsRng', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30643, 'FrncsRng', 26, 0, 4194303, 0, 0, 0, 64, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30643, 25, 3);
 REPLACE INTO `item_mods` VALUES (30643, 28, 7);
 REPLACE INTO `item_mods` VALUES (30643, 9, 20);
 
 -- Hunger Ravaged Hortensia trophy + gear
-REPLACE INTO `item_basic` VALUES (30644, 0, 'Hortensia's Hunger Bile', 'HrtnHBle', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30645, 0, 'Hortensia's Maw Guard', 'HrtnMwGrd', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30644, 0, 'Hortensia\'s Hunger Bile', 'HrtnHBle', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30645, 0, 'Hortensia\'s Maw Guard', 'HrtnMwGrd', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30645, 'HrtnMwGrd', 38, 0, 4194303, 0, 0, 0, 16, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30645, 1, 18);
 REPLACE INTO `item_mods` VALUES (30645, 14, 5);
 REPLACE INTO `item_mods` VALUES (30645, 2, 55);
-REPLACE INTO `item_basic` VALUES (30646, 0, 'Hortensia's Gnash Gauntlets', 'HrtnGGnt', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30646, 0, 'Hortensia\'s Gnash Gauntlets', 'HrtnGGnt', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30646, 'HrtnGGnt', 38, 0, 4194303, 0, 0, 0, 32, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30646, 1, 12);
 REPLACE INTO `item_mods` VALUES (30646, 12, 6);
 REPLACE INTO `item_mods` VALUES (30646, 29, 13);
 
 -- Carrion Cornelius trophy + gear
-REPLACE INTO `item_basic` VALUES (30647, 0, 'Cornelius's Carrion Crown', 'CrnlsCCrn', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30648, 0, 'Cornelius's Death Shroud', 'CrnlsDShr', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30647, 0, 'Cornelius\'s Carrion Crown', 'CrnlsCCrn', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30648, 0, 'Cornelius\'s Death Shroud', 'CrnlsDShr', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30648, 'CrnlsDShr', 50, 0, 4194303, 0, 0, 0, 16, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30648, 1, 22);
 REPLACE INTO `item_mods` VALUES (30648, 25, 8);
 REPLACE INTO `item_mods` VALUES (30648, 28, 16);
 REPLACE INTO `item_mods` VALUES (30648, 9, 60);
-REPLACE INTO `item_basic` VALUES (30649, 0, 'Cornelius's Grave Ring', 'CrnlsGRng', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30649, 0, 'Cornelius\'s Grave Ring', 'CrnlsGRng', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30649, 'CrnlsGRng', 50, 0, 4194303, 0, 0, 0, 64, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30649, 25, 6);
 REPLACE INTO `item_mods` VALUES (30649, 30, 12);
 REPLACE INTO `item_mods` VALUES (30649, 28, 10);
 
 -- Rattling Roderick trophy + gear
-REPLACE INTO `item_basic` VALUES (30650, 0, 'Roderick's Finger Bone', 'RdrckFBne', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30651, 0, 'Roderick's Bone Earring', 'RdrckBEar', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30650, 0, 'Roderick\'s Finger Bone', 'RdrckFBne', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30651, 0, 'Roderick\'s Bone Earring', 'RdrckBEar', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30651, 'RdrckBEar', 12, 0, 4194303, 0, 0, 0, 4, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30651, 25, 3);
 REPLACE INTO `item_mods` VALUES (30651, 28, 5);
 REPLACE INTO `item_mods` VALUES (30651, 9, 10);
-REPLACE INTO `item_basic` VALUES (30652, 0, 'Roderick's Rattling Greaves', 'RdrckRGrv', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30652, 0, 'Roderick\'s Rattling Greaves', 'RdrckRGrv', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30652, 'RdrckRGrv', 12, 0, 4194303, 0, 0, 0, 2048, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30652, 1, 5);
 REPLACE INTO `item_mods` VALUES (30652, 14, 2);
 REPLACE INTO `item_mods` VALUES (30652, 2, 15);
 
 -- Cursed Cavendish trophy + gear
-REPLACE INTO `item_basic` VALUES (30653, 0, 'Cavendish's Cursed Skull', 'CvndshSkl', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30654, 0, 'Cavendish's Hex Collar', 'CvndshHCl', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30653, 0, 'Cavendish\'s Cursed Skull', 'CvndshSkl', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30654, 0, 'Cavendish\'s Hex Collar', 'CvndshHCl', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30654, 'CvndshHCl', 26, 0, 4194303, 0, 0, 0, 2, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30654, 25, 5);
 REPLACE INTO `item_mods` VALUES (30654, 30, 8);
 REPLACE INTO `item_mods` VALUES (30654, 9, 25);
-REPLACE INTO `item_basic` VALUES (30655, 0, 'Cavendish's Marrow Earring', 'CvndshEar', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30655, 0, 'Cavendish\'s Marrow Earring', 'CvndshEar', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30655, 'CvndshEar', 26, 0, 4194303, 0, 0, 0, 4, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30655, 25, 4);
 REPLACE INTO `item_mods` VALUES (30655, 28, 9);
 REPLACE INTO `item_mods` VALUES (30655, 30, 6);
 
 -- Bonewalker Benedict trophy + gear
-REPLACE INTO `item_basic` VALUES (30656, 0, 'Benedict's Animated Femur', 'BndctFmur', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30657, 0, 'Benedict's Deathmarch Boots', 'BndctDBts', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30656, 0, 'Benedict\'s Animated Femur', 'BndctFmur', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30657, 0, 'Benedict\'s Deathmarch Boots', 'BndctDBts', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30657, 'BndctDBts', 38, 0, 4194303, 0, 0, 0, 2048, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30657, 1, 12);
 REPLACE INTO `item_mods` VALUES (30657, 25, 5);
 REPLACE INTO `item_mods` VALUES (30657, 28, 10);
-REPLACE INTO `item_basic` VALUES (30658, 0, 'Benedict's Undying Belt', 'BndctUBlt', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30658, 0, 'Benedict\'s Undying Belt', 'BndctUBlt', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30658, 'BndctUBlt', 38, 0, 4194303, 0, 0, 0, 512, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30658, 1, 5);
 REPLACE INTO `item_mods` VALUES (30658, 14, 4);
 REPLACE INTO `item_mods` VALUES (30658, 2, 30);
 
 -- Lich Lord Leontine trophy + gear
-REPLACE INTO `item_basic` VALUES (30659, 0, 'Leontine's Lich Crystal', 'LntLchCry', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30660, 0, 'Leontine's Necromancer's Robe', 'LntNRobe', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30659, 0, 'Leontine\'s Lich Crystal', 'LntLchCry', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30660, 0, 'Leontine\'s Necromancer\'s Robe', 'LntNRobe', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30660, 'LntNRobe', 52, 0, 4194303, 0, 0, 0, 16, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30660, 1, 18);
 REPLACE INTO `item_mods` VALUES (30660, 25, 10);
 REPLACE INTO `item_mods` VALUES (30660, 28, 20);
 REPLACE INTO `item_mods` VALUES (30660, 9, 80);
-REPLACE INTO `item_basic` VALUES (30661, 0, 'Leontine's Soul Drinker Ring', 'LntSDRng', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30661, 0, 'Leontine\'s Soul Drinker Ring', 'LntSDRng', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30661, 'LntSDRng', 52, 0, 4194303, 0, 0, 0, 64, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30661, 25, 7);
 REPLACE INTO `item_mods` VALUES (30661, 28, 14);
 REPLACE INTO `item_mods` VALUES (30661, 30, 12);
 
 -- Snapping Simeon trophy + gear
-REPLACE INTO `item_basic` VALUES (30662, 0, 'Simeon's Snapping Claw', 'SmeonClaw', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30663, 0, 'Simeon's Chitin Wristlets', 'SmeonWrst', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30662, 0, 'Simeon\'s Snapping Claw', 'SmeonClaw', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30663, 0, 'Simeon\'s Chitin Wristlets', 'SmeonWrst', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30663, 'SmeonWrst', 14, 0, 4194303, 0, 0, 0, 32, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30663, 1, 6);
 REPLACE INTO `item_mods` VALUES (30663, 12, 3);
 REPLACE INTO `item_mods` VALUES (30663, 29, 7);
-REPLACE INTO `item_basic` VALUES (30664, 0, 'Simeon's Stinger Earring', 'SmeonSEar', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30664, 0, 'Simeon\'s Stinger Earring', 'SmeonSEar', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30664, 'SmeonSEar', 14, 0, 4194303, 0, 0, 0, 4, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30664, 13, 3);
 REPLACE INTO `item_mods` VALUES (30664, 25, 5);
 REPLACE INTO `item_mods` VALUES (30664, 29, 4);
 
 -- Venomous Vespera trophy + gear
-REPLACE INTO `item_basic` VALUES (30665, 0, 'Vespera's Venom Sac', 'VsprVnSc', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30666, 0, 'Vespera's Toxic Mantle', 'VsprTxMnt', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30665, 0, 'Vespera\'s Venom Sac', 'VsprVnSc', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30666, 0, 'Vespera\'s Toxic Mantle', 'VsprTxMnt', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30666, 'VsprTxMnt', 28, 0, 4194303, 0, 0, 0, 256, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30666, 1, 9);
 REPLACE INTO `item_mods` VALUES (30666, 25, 5);
 REPLACE INTO `item_mods` VALUES (30666, 28, 10);
-REPLACE INTO `item_basic` VALUES (30667, 0, 'Vespera's Chitin Belt', 'VsprCBlt', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30667, 0, 'Vespera\'s Chitin Belt', 'VsprCBlt', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30667, 'VsprCBlt', 28, 0, 4194303, 0, 0, 0, 512, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30667, 1, 6);
 REPLACE INTO `item_mods` VALUES (30667, 14, 4);
 REPLACE INTO `item_mods` VALUES (30667, 2, 30);
 
 -- Pincer Patriarch Ptolemy trophy + gear
-REPLACE INTO `item_basic` VALUES (30668, 0, 'Ptolemy's Giant Pincer', 'PtlmyPncr', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30669, 0, 'Ptolemy's Armored Cuisses', 'PtlmyACss', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30668, 0, 'Ptolemy\'s Giant Pincer', 'PtlmyPncr', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30669, 0, 'Ptolemy\'s Armored Cuisses', 'PtlmyACss', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30669, 'PtlmyACss', 40, 0, 4194303, 0, 0, 0, 1024, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30669, 1, 16);
 REPLACE INTO `item_mods` VALUES (30669, 14, 6);
 REPLACE INTO `item_mods` VALUES (30669, 2, 50);
-REPLACE INTO `item_basic` VALUES (30670, 0, 'Ptolemy's Exoskeleton Ring', 'PtlmyERng', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30670, 0, 'Ptolemy\'s Exoskeleton Ring', 'PtlmyERng', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30670, 'PtlmyERng', 40, 0, 4194303, 0, 0, 0, 64, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30670, 1, 4);
 REPLACE INTO `item_mods` VALUES (30670, 14, 5);
 REPLACE INTO `item_mods` VALUES (30670, 29, 7);
 
 -- Deathstalker Dagny trophy + gear
-REPLACE INTO `item_basic` VALUES (30671, 0, 'Dagny's Deathstalker Barb', 'DgnyDSBrb', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30672, 0, 'Dagny's Reaper's Carapace', 'DgnyRCrp', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30671, 0, 'Dagny\'s Deathstalker Barb', 'DgnyDSBrb', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30672, 0, 'Dagny\'s Reaper\'s Carapace', 'DgnyRCrp', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30672, 'DgnyRCrp', 52, 0, 4194303, 0, 0, 0, 16, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30672, 1, 24);
 REPLACE INTO `item_mods` VALUES (30672, 12, 8);
 REPLACE INTO `item_mods` VALUES (30672, 29, 18);
 REPLACE INTO `item_mods` VALUES (30672, 2, 60);
-REPLACE INTO `item_basic` VALUES (30673, 0, 'Dagny's Fatal Earring', 'DgnyFEar', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30673, 0, 'Dagny\'s Fatal Earring', 'DgnyFEar', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30673, 'DgnyFEar', 52, 0, 4194303, 0, 0, 0, 4, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30673, 12, 6);
 REPLACE INTO `item_mods` VALUES (30673, 25, 14);
 REPLACE INTO `item_mods` VALUES (30673, 29, 12);
 
 -- Weaving Wendy trophy + gear
-REPLACE INTO `item_basic` VALUES (30674, 0, 'Wendy's Silk Thread', 'WndySThrd', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30675, 0, 'Wendy's Web Ring', 'WndyWRng', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30674, 0, 'Wendy\'s Silk Thread', 'WndySThrd', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30675, 0, 'Wendy\'s Web Ring', 'WndyWRng', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30675, 'WndyWRng', 10, 0, 4194303, 0, 0, 0, 64, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30675, 13, 3);
 REPLACE INTO `item_mods` VALUES (30675, 25, 4);
 REPLACE INTO `item_mods` VALUES (30675, 23, 2);
-REPLACE INTO `item_basic` VALUES (30676, 0, 'Wendy's Spinner Sandals', 'WndySpSnd', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30676, 0, 'Wendy\'s Spinner Sandals', 'WndySpSnd', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30676, 'WndySpSnd', 10, 0, 4194303, 0, 0, 0, 2048, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30676, 1, 4);
 REPLACE INTO `item_mods` VALUES (30676, 23, 3);
 REPLACE INTO `item_mods` VALUES (30676, 68, 6);
 
 -- Sticky Stanislava trophy + gear
-REPLACE INTO `item_basic` VALUES (30677, 0, 'Stanislava's Web Sac', 'StnslaWSc', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30678, 0, 'Stanislava's Gossamer Collar', 'StnslaGCl', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30677, 0, 'Stanislava\'s Web Sac', 'StnslaWSc', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30678, 0, 'Stanislava\'s Gossamer Collar', 'StnslaGCl', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30678, 'StnslaGCl', 24, 0, 4194303, 0, 0, 0, 2, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30678, 13, 4);
 REPLACE INTO `item_mods` VALUES (30678, 25, 7);
 REPLACE INTO `item_mods` VALUES (30678, 23, 4);
-REPLACE INTO `item_basic` VALUES (30679, 0, 'Stanislava's Spinner's Mitts', 'StnslasMtt', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30679, 0, 'Stanislava\'s Spinner\'s Mitts', 'StnslasMtt', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30679, 'StnslasMtt', 24, 0, 4194303, 0, 0, 0, 32, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30679, 1, 8);
 REPLACE INTO `item_mods` VALUES (30679, 13, 4);
 REPLACE INTO `item_mods` VALUES (30679, 25, 8);
 
 -- Ensnaring Eleanor trophy + gear
-REPLACE INTO `item_basic` VALUES (30680, 0, 'Eleanor's Ensnaring Fang', 'ElnrEnFng', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30681, 0, 'Eleanor's Arachnid Vest', 'ElnrArVst', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30680, 0, 'Eleanor\'s Ensnaring Fang', 'ElnrEnFng', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30681, 0, 'Eleanor\'s Arachnid Vest', 'ElnrArVst', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30681, 'ElnrArVst', 36, 0, 4194303, 0, 0, 0, 16, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30681, 1, 17);
 REPLACE INTO `item_mods` VALUES (30681, 13, 6);
 REPLACE INTO `item_mods` VALUES (30681, 25, 12);
-REPLACE INTO `item_basic` VALUES (30682, 0, 'Eleanor's Silkweave Belt', 'ElnrSWBlt', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30682, 0, 'Eleanor\'s Silkweave Belt', 'ElnrSWBlt', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30682, 'ElnrSWBlt', 36, 0, 4194303, 0, 0, 0, 512, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30682, 1, 5);
 REPLACE INTO `item_mods` VALUES (30682, 23, 5);
 REPLACE INTO `item_mods` VALUES (30682, 68, 10);
 
 -- Great Weaver Gwendolyn trophy + gear
-REPLACE INTO `item_basic` VALUES (30683, 0, 'Gwendolyn's Crown Web', 'GwndlnCWeb', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30684, 0, 'Gwendolyn's Silken Tiara', 'GwndlnSTar', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30683, 0, 'Gwendolyn\'s Crown Web', 'GwndlnCWeb', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30684, 0, 'Gwendolyn\'s Silken Tiara', 'GwndlnSTar', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30684, 'GwndlnSTar', 50, 0, 4194303, 0, 0, 0, 1, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30684, 1, 13);
 REPLACE INTO `item_mods` VALUES (30684, 13, 8);
 REPLACE INTO `item_mods` VALUES (30684, 25, 16);
 REPLACE INTO `item_mods` VALUES (30684, 23, 6);
-REPLACE INTO `item_basic` VALUES (30685, 0, 'Gwendolyn's Silk Mantle', 'GwndlnSMnt', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30685, 0, 'Gwendolyn\'s Silk Mantle', 'GwndlnSMnt', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30685, 'GwndlnSMnt', 50, 0, 4194303, 0, 0, 0, 256, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30685, 1, 11);
 REPLACE INTO `item_mods` VALUES (30685, 13, 6);
@@ -2008,346 +2008,346 @@ REPLACE INTO `item_mods` VALUES (30685, 25, 12);
 REPLACE INTO `item_mods` VALUES (30685, 384, 3);
 
 -- Oozing Oswald trophy + gear
-REPLACE INTO `item_basic` VALUES (30686, 0, 'Oswald's Ooze Sample', 'OswldOze', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30687, 0, 'Oswald's Slick Ring', 'OswldSRng', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30686, 0, 'Oswald\'s Ooze Sample', 'OswldOze', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30687, 0, 'Oswald\'s Slick Ring', 'OswldSRng', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30687, 'OswldSRng', 8, 0, 4194303, 0, 0, 0, 64, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30687, 25, 2);
 REPLACE INTO `item_mods` VALUES (30687, 30, 4);
 REPLACE INTO `item_mods` VALUES (30687, 9, 10);
-REPLACE INTO `item_basic` VALUES (30688, 0, 'Oswald's Slime Sandals', 'OswldSlSnd', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30688, 0, 'Oswald\'s Slime Sandals', 'OswldSlSnd', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30688, 'OswldSlSnd', 8, 0, 4194303, 0, 0, 0, 2048, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30688, 1, 3);
 REPLACE INTO `item_mods` VALUES (30688, 23, 2);
 REPLACE INTO `item_mods` VALUES (30688, 68, 4);
 
 -- Bubbling Borghild trophy + gear
-REPLACE INTO `item_basic` VALUES (30689, 0, 'Borghild's Bubbling Mass', 'BrghldBMs', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30690, 0, 'Borghild's Viscous Collar', 'BrghldVCl', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30689, 0, 'Borghild\'s Bubbling Mass', 'BrghldBMs', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30690, 0, 'Borghild\'s Viscous Collar', 'BrghldVCl', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30690, 'BrghldVCl', 20, 0, 4194303, 0, 0, 0, 2, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30690, 25, 4);
 REPLACE INTO `item_mods` VALUES (30690, 28, 7);
 REPLACE INTO `item_mods` VALUES (30690, 9, 20);
-REPLACE INTO `item_basic` VALUES (30691, 0, 'Borghild's Acid Earring', 'BrghldAEar', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30691, 0, 'Borghild\'s Acid Earring', 'BrghldAEar', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30691, 'BrghldAEar', 20, 0, 4194303, 0, 0, 0, 4, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30691, 25, 3);
 REPLACE INTO `item_mods` VALUES (30691, 28, 6);
 REPLACE INTO `item_mods` VALUES (30691, 30, 5);
 
 -- Corrosive Callista trophy + gear
-REPLACE INTO `item_basic` VALUES (30692, 0, 'Callista's Acid Sac', 'CllstAcSc', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30693, 0, 'Callista's Dissolving Mitts', 'CllstDMtt', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30692, 0, 'Callista\'s Acid Sac', 'CllstAcSc', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30693, 0, 'Callista\'s Dissolving Mitts', 'CllstDMtt', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30693, 'CllstDMtt', 34, 0, 4194303, 0, 0, 0, 32, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30693, 1, 10);
 REPLACE INTO `item_mods` VALUES (30693, 25, 5);
 REPLACE INTO `item_mods` VALUES (30693, 28, 10);
-REPLACE INTO `item_basic` VALUES (30694, 0, 'Callista's Caustic Ring', 'CllstCRng', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30694, 0, 'Callista\'s Caustic Ring', 'CllstCRng', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30694, 'CllstCRng', 34, 0, 4194303, 0, 0, 0, 64, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30694, 25, 4);
 REPLACE INTO `item_mods` VALUES (30694, 30, 8);
 REPLACE INTO `item_mods` VALUES (30694, 28, 7);
 
 -- Primordial Proteus trophy + gear
-REPLACE INTO `item_basic` VALUES (30695, 0, 'Proteus's Ancient Ooze', 'PrtsAncOz', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30696, 0, 'Proteus's Primal Robe', 'PrtsaPRbe', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30695, 0, 'Proteus\'s Ancient Ooze', 'PrtsAncOz', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30696, 0, 'Proteus\'s Primal Robe', 'PrtsaPRbe', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30696, 'PrtsaPRbe', 48, 0, 4194303, 0, 0, 0, 16, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30696, 1, 16);
 REPLACE INTO `item_mods` VALUES (30696, 25, 9);
 REPLACE INTO `item_mods` VALUES (30696, 28, 18);
 REPLACE INTO `item_mods` VALUES (30696, 9, 70);
-REPLACE INTO `item_basic` VALUES (30697, 0, 'Proteus's Shifting Ring', 'PrtsaShRng', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30697, 0, 'Proteus\'s Shifting Ring', 'PrtsaShRng', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30697, 'PrtsaShRng', 48, 0, 4194303, 0, 0, 0, 64, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30697, 25, 6);
 REPLACE INTO `item_mods` VALUES (30697, 28, 12);
 REPLACE INTO `item_mods` VALUES (30697, 30, 10);
 
 -- Splashing Salvatore trophy + gear
-REPLACE INTO `item_basic` VALUES (30698, 0, 'Salvatore's Fin Spine', 'SlvtrFSp', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30699, 0, 'Salvatore's Gill Earring', 'SlvtrGEar', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30698, 0, 'Salvatore\'s Fin Spine', 'SlvtrFSp', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30699, 0, 'Salvatore\'s Gill Earring', 'SlvtrGEar', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30699, 'SlvtrGEar', 12, 0, 4194303, 0, 0, 0, 4, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30699, 12, 3);
 REPLACE INTO `item_mods` VALUES (30699, 29, 5);
 REPLACE INTO `item_mods` VALUES (30699, 25, 3);
-REPLACE INTO `item_basic` VALUES (30700, 0, 'Salvatore's Wader Boots', 'SlvtrWBts', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30700, 0, 'Salvatore\'s Wader Boots', 'SlvtrWBts', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30700, 'SlvtrWBts', 12, 0, 4194303, 0, 0, 0, 2048, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30700, 1, 5);
 REPLACE INTO `item_mods` VALUES (30700, 23, 3);
 REPLACE INTO `item_mods` VALUES (30700, 68, 6);
 
 -- Snapping Sicily trophy + gear
-REPLACE INTO `item_basic` VALUES (30701, 0, 'Sicily's Bite Mark', 'ScllyBtMk', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30702, 0, 'Sicily's River Belt', 'SclllyRBlt', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30701, 0, 'Sicily\'s Bite Mark', 'ScllyBtMk', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30702, 0, 'Sicily\'s River Belt', 'SclllyRBlt', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30702, 'SclllyRBlt', 24, 0, 4194303, 0, 0, 0, 512, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30702, 1, 5);
 REPLACE INTO `item_mods` VALUES (30702, 12, 4);
 REPLACE INTO `item_mods` VALUES (30702, 29, 8);
-REPLACE INTO `item_basic` VALUES (30703, 0, 'Sicily's Scale Mail', 'ScllySMl', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30703, 0, 'Sicily\'s Scale Mail', 'ScllySMl', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30703, 'ScllySMl', 24, 0, 4194303, 0, 0, 0, 16, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30703, 1, 15);
 REPLACE INTO `item_mods` VALUES (30703, 14, 4);
 REPLACE INTO `item_mods` VALUES (30703, 2, 35);
 
 -- Torrent Tiberius trophy + gear
-REPLACE INTO `item_basic` VALUES (30704, 0, 'Tiberius's Torrent Scale', 'TbrsaTSc', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30705, 0, 'Tiberius's Current Mantle', 'TbrsaCMnt', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30704, 0, 'Tiberius\'s Torrent Scale', 'TbrsaTSc', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30705, 0, 'Tiberius\'s Current Mantle', 'TbrsaCMnt', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30705, 'TbrsaCMnt', 36, 0, 4194303, 0, 0, 0, 256, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30705, 1, 9);
 REPLACE INTO `item_mods` VALUES (30705, 12, 5);
 REPLACE INTO `item_mods` VALUES (30705, 29, 12);
-REPLACE INTO `item_basic` VALUES (30706, 0, 'Tiberius's Rushing Ring', 'TbrsaRRng', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30706, 0, 'Tiberius\'s Rushing Ring', 'TbrsaRRng', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30706, 'TbrsaRRng', 36, 0, 4194303, 0, 0, 0, 64, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30706, 12, 4);
 REPLACE INTO `item_mods` VALUES (30706, 29, 10);
 REPLACE INTO `item_mods` VALUES (30706, 25, 6);
 
 -- Deep King Delacroix trophy + gear
-REPLACE INTO `item_basic` VALUES (30707, 0, 'Delacroix's King Scale', 'DlcxKgSc', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30708, 0, 'Delacroix's Maelstrom Helm', 'DlcxMHlm', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30707, 0, 'Delacroix\'s King Scale', 'DlcxKgSc', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30708, 0, 'Delacroix\'s Maelstrom Helm', 'DlcxMHlm', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30708, 'DlcxMHlm', 48, 0, 4194303, 0, 0, 0, 1, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30708, 1, 14);
 REPLACE INTO `item_mods` VALUES (30708, 12, 7);
 REPLACE INTO `item_mods` VALUES (30708, 14, 5);
 REPLACE INTO `item_mods` VALUES (30708, 2, 50);
-REPLACE INTO `item_basic` VALUES (30709, 0, 'Delacroix's Abyssal Ring', 'DlcxAbRng', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30709, 0, 'Delacroix\'s Abyssal Ring', 'DlcxAbRng', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30709, 'DlcxAbRng', 48, 0, 4194303, 0, 0, 0, 64, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30709, 12, 6);
 REPLACE INTO `item_mods` VALUES (30709, 29, 14);
 REPLACE INTO `item_mods` VALUES (30709, 25, 10);
 
 -- Lumbering Loretta trophy + gear
-REPLACE INTO `item_basic` VALUES (30710, 0, 'Loretta's Long Neck Bone', 'LrttaNBn', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30711, 0, 'Loretta's Padded Neckguard', 'LrttaPNGd', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30710, 0, 'Loretta\'s Long Neck Bone', 'LrttaNBn', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30711, 0, 'Loretta\'s Padded Neckguard', 'LrttaPNGd', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30711, 'LrttaPNGd', 14, 0, 4194303, 0, 0, 0, 2, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30711, 1, 4);
 REPLACE INTO `item_mods` VALUES (30711, 14, 3);
 REPLACE INTO `item_mods` VALUES (30711, 2, 20);
-REPLACE INTO `item_basic` VALUES (30712, 0, 'Loretta's Stomper Boots', 'LrttaSBts', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30712, 0, 'Loretta\'s Stomper Boots', 'LrttaSBts', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30712, 'LrttaSBts', 14, 0, 4194303, 0, 0, 0, 2048, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30712, 1, 6);
 REPLACE INTO `item_mods` VALUES (30712, 12, 3);
 REPLACE INTO `item_mods` VALUES (30712, 14, 2);
 
 -- Thundering Thaddeus trophy + gear
-REPLACE INTO `item_basic` VALUES (30713, 0, 'Thaddeus's Resonance Spine', 'ThdsRSp', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30714, 0, 'Thaddeus's Stampede Mantle', 'ThadsMnt', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30713, 0, 'Thaddeus\'s Resonance Spine', 'ThdsRSp', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30714, 0, 'Thaddeus\'s Stampede Mantle', 'ThadsMnt', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30714, 'ThadsMnt', 28, 0, 4194303, 0, 0, 0, 256, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30714, 1, 8);
 REPLACE INTO `item_mods` VALUES (30714, 12, 5);
 REPLACE INTO `item_mods` VALUES (30714, 29, 10);
-REPLACE INTO `item_basic` VALUES (30715, 0, 'Thaddeus's Trample Belt', 'ThdsaTBlt', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30715, 0, 'Thaddeus\'s Trample Belt', 'ThdsaTBlt', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30715, 'ThdsaTBlt', 28, 0, 4194303, 0, 0, 0, 512, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30715, 1, 6);
 REPLACE INTO `item_mods` VALUES (30715, 14, 5);
 REPLACE INTO `item_mods` VALUES (30715, 2, 35);
 
 -- Crasher Crisanta trophy + gear
-REPLACE INTO `item_basic` VALUES (30716, 0, 'Crisanta's Ivory Spine', 'CrsntaISp', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30717, 0, 'Crisanta's Ivory Cuisses', 'CrsntaICss', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30716, 0, 'Crisanta\'s Ivory Spine', 'CrsntaISp', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30717, 0, 'Crisanta\'s Ivory Cuisses', 'CrsntaICss', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30717, 'CrsntaICss', 40, 0, 4194303, 0, 0, 0, 1024, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30717, 1, 15);
 REPLACE INTO `item_mods` VALUES (30717, 14, 7);
 REPLACE INTO `item_mods` VALUES (30717, 2, 55);
-REPLACE INTO `item_basic` VALUES (30718, 0, 'Crisanta's Charge Ring', 'CrsntaCRng', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30718, 0, 'Crisanta\'s Charge Ring', 'CrsntaCRng', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30718, 'CrsntaCRng', 40, 0, 4194303, 0, 0, 0, 64, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30718, 12, 5);
 REPLACE INTO `item_mods` VALUES (30718, 29, 12);
 REPLACE INTO `item_mods` VALUES (30718, 14, 4);
 
 -- Patriarch Percival trophy + gear
-REPLACE INTO `item_basic` VALUES (30719, 0, 'Percival's Grand Spine', 'PrcvlGSp', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30720, 0, 'Percival's Behemoth Plate', 'PrcvlBPlt', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30719, 0, 'Percival\'s Grand Spine', 'PrcvlGSp', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30720, 0, 'Percival\'s Behemoth Plate', 'PrcvlBPlt', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30720, 'PrcvlBPlt', 54, 0, 4194303, 0, 0, 0, 16, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30720, 1, 26);
 REPLACE INTO `item_mods` VALUES (30720, 12, 8);
 REPLACE INTO `item_mods` VALUES (30720, 14, 9);
 REPLACE INTO `item_mods` VALUES (30720, 2, 80);
-REPLACE INTO `item_basic` VALUES (30721, 0, 'Percival's Titan's Collar', 'PrcvlTCll', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30721, 0, 'Percival\'s Titan\'s Collar', 'PrcvlTCll', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30721, 'PrcvlTCll', 54, 0, 4194303, 0, 0, 0, 2, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30721, 14, 7);
 REPLACE INTO `item_mods` VALUES (30721, 2, 60);
 REPLACE INTO `item_mods` VALUES (30721, 29, 8);
 
 -- Clumsy Clemens trophy + gear
-REPLACE INTO `item_basic` VALUES (30722, 0, 'Clemens's Club Fragment', 'ClmnsCFrg', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30723, 0, 'Clemens's Brutish Armguard', 'ClmnsBAGd', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30722, 0, 'Clemens\'s Club Fragment', 'ClmnsCFrg', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30723, 0, 'Clemens\'s Brutish Armguard', 'ClmnsBAGd', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30723, 'ClmnsBAGd', 18, 0, 4194303, 0, 0, 0, 32, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30723, 1, 8);
 REPLACE INTO `item_mods` VALUES (30723, 12, 4);
 REPLACE INTO `item_mods` VALUES (30723, 29, 8);
-REPLACE INTO `item_basic` VALUES (30724, 0, 'Clemens's Stumbler Ring', 'ClmnsStRng', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30724, 0, 'Clemens\'s Stumbler Ring', 'ClmnsStRng', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30724, 'ClmnsStRng', 18, 0, 4194303, 0, 0, 0, 64, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30724, 12, 3);
 REPLACE INTO `item_mods` VALUES (30724, 14, 3);
 REPLACE INTO `item_mods` VALUES (30724, 2, 20);
 
 -- Booming Bartholomew trophy + gear
-REPLACE INTO `item_basic` VALUES (30725, 0, 'Bartholomew's Thunder Stone', 'BrthlmTStn', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30726, 0, 'Bartholomew's Boulderfist Helm', 'BrthlmBHlm', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30725, 0, 'Bartholomew\'s Thunder Stone', 'BrthlmTStn', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30726, 0, 'Bartholomew\'s Boulderfist Helm', 'BrthlmBHlm', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30726, 'BrthlmBHlm', 30, 0, 4194303, 0, 0, 0, 1, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30726, 1, 12);
 REPLACE INTO `item_mods` VALUES (30726, 12, 6);
 REPLACE INTO `item_mods` VALUES (30726, 14, 5);
-REPLACE INTO `item_basic` VALUES (30727, 0, 'Bartholomew's Stone Belt', 'BrthlmSBlt', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30727, 0, 'Bartholomew\'s Stone Belt', 'BrthlmSBlt', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30727, 'BrthlmSBlt', 30, 0, 4194303, 0, 0, 0, 512, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30727, 1, 7);
 REPLACE INTO `item_mods` VALUES (30727, 12, 5);
 REPLACE INTO `item_mods` VALUES (30727, 29, 11);
 
 -- Crusher Conrad trophy + gear
-REPLACE INTO `item_basic` VALUES (30728, 0, 'Conrad's Crusher Knuckle', 'CnrdCKnk', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30729, 0, 'Conrad's Mountain Hauberk', 'CnrdMHbk', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30728, 0, 'Conrad\'s Crusher Knuckle', 'CnrdCKnk', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30729, 0, 'Conrad\'s Mountain Hauberk', 'CnrdMHbk', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30729, 'CnrdMHbk', 42, 0, 4194303, 0, 0, 0, 16, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30729, 1, 22);
 REPLACE INTO `item_mods` VALUES (30729, 12, 8);
 REPLACE INTO `item_mods` VALUES (30729, 14, 6);
 REPLACE INTO `item_mods` VALUES (30729, 2, 65);
-REPLACE INTO `item_basic` VALUES (30730, 0, 'Conrad's Earthshaker Boots', 'CnrdESBts', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30730, 0, 'Conrad\'s Earthshaker Boots', 'CnrdESBts', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30730, 'CnrdESBts', 42, 0, 4194303, 0, 0, 0, 2048, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30730, 1, 13);
 REPLACE INTO `item_mods` VALUES (30730, 12, 6);
 REPLACE INTO `item_mods` VALUES (30730, 29, 14);
 
 -- Titan Theobald trophy + gear
-REPLACE INTO `item_basic` VALUES (30731, 0, 'Theobald's Titan Core', 'ThbldTCr', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30732, 0, 'Theobald's Colossus Plate', 'ThbldCPlt', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30731, 0, 'Theobald\'s Titan Core', 'ThbldTCr', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30732, 0, 'Theobald\'s Colossus Plate', 'ThbldCPlt', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30732, 'ThbldCPlt', 55, 0, 4194303, 0, 0, 0, 16, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30732, 1, 28);
 REPLACE INTO `item_mods` VALUES (30732, 12, 10);
 REPLACE INTO `item_mods` VALUES (30732, 14, 9);
 REPLACE INTO `item_mods` VALUES (30732, 2, 90);
-REPLACE INTO `item_basic` VALUES (30733, 0, 'Theobald's Worldbreaker Ring', 'ThbldWRng', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30733, 0, 'Theobald\'s Worldbreaker Ring', 'ThbldWRng', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30733, 'ThbldWRng', 55, 0, 4194303, 0, 0, 0, 64, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30733, 12, 8);
 REPLACE INTO `item_mods` VALUES (30733, 29, 20);
 REPLACE INTO `item_mods` VALUES (30733, 14, 6);
 
 -- Mossy Mortimer trophy + gear
-REPLACE INTO `item_basic` VALUES (30734, 0, 'Mortimer's Mossy Bark', 'MrtmrMBrk', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30735, 0, 'Mortimer's Bark Ring', 'MrtmrBkRng', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30734, 0, 'Mortimer\'s Mossy Bark', 'MrtmrMBrk', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30735, 0, 'Mortimer\'s Bark Ring', 'MrtmrBkRng', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30735, 'MrtmrBkRng', 12, 0, 4194303, 0, 0, 0, 64, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30735, 68, 3);
 REPLACE INTO `item_mods` VALUES (30735, 9, 15);
 REPLACE INTO `item_mods` VALUES (30735, 30, 4);
-REPLACE INTO `item_basic` VALUES (30736, 0, 'Mortimer's Root Sandals', 'MrtmrRSnd', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30736, 0, 'Mortimer\'s Root Sandals', 'MrtmrRSnd', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30736, 'MrtmrRSnd', 12, 0, 4194303, 0, 0, 0, 2048, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30736, 1, 5);
 REPLACE INTO `item_mods` VALUES (30736, 68, 2);
 REPLACE INTO `item_mods` VALUES (30736, 9, 10);
 
 -- Ancient Aldric trophy + gear
-REPLACE INTO `item_basic` VALUES (30737, 0, 'Aldric's Ancient Heartwood', 'AldrHrtwd', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30738, 0, 'Aldric's Heartwood Earring', 'AldrHEar', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30737, 0, 'Aldric\'s Ancient Heartwood', 'AldrHrtwd', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30738, 0, 'Aldric\'s Heartwood Earring', 'AldrHEar', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30738, 'AldrHEar', 26, 0, 4194303, 0, 0, 0, 4, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30738, 68, 5);
 REPLACE INTO `item_mods` VALUES (30738, 9, 25);
 REPLACE INTO `item_mods` VALUES (30738, 30, 7);
-REPLACE INTO `item_basic` VALUES (30739, 0, 'Aldric's Gnarled Collar', 'AldrGCll', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30739, 0, 'Aldric\'s Gnarled Collar', 'AldrGCll', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30739, 'AldrGCll', 26, 0, 4194303, 0, 0, 0, 2, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30739, 68, 4);
 REPLACE INTO `item_mods` VALUES (30739, 25, 3);
 REPLACE INTO `item_mods` VALUES (30739, 9, 20);
 
 -- Elder Grove Elspeth trophy + gear
-REPLACE INTO `item_basic` VALUES (30740, 0, 'Elspeth's Elder Sap', 'ElsptESap', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30741, 0, 'Elspeth's Grove Mantle', 'ElsptGMnt', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30740, 0, 'Elspeth\'s Elder Sap', 'ElsptESap', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30741, 0, 'Elspeth\'s Grove Mantle', 'ElsptGMnt', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30741, 'ElsptGMnt', 38, 0, 4194303, 0, 0, 0, 256, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30741, 1, 10);
 REPLACE INTO `item_mods` VALUES (30741, 68, 6);
 REPLACE INTO `item_mods` VALUES (30741, 9, 40);
-REPLACE INTO `item_basic` VALUES (30742, 0, 'Elspeth's Nature's Ring', 'ElsptNRng', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30742, 0, 'Elspeth\'s Nature\'s Ring', 'ElsptNRng', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30742, 'ElsptNRng', 38, 0, 4194303, 0, 0, 0, 64, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30742, 68, 5);
 REPLACE INTO `item_mods` VALUES (30742, 30, 9);
 REPLACE INTO `item_mods` VALUES (30742, 9, 30);
 
 -- World Tree Wilhelmina trophy + gear
-REPLACE INTO `item_basic` VALUES (30743, 0, 'Wilhelmina's World Core', 'WhlmnaWCr', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30744, 0, 'Wilhelmina's Ancient Robe', 'WhlmnaARbe', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30743, 0, 'Wilhelmina\'s World Core', 'WhlmnaWCr', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30744, 0, 'Wilhelmina\'s Ancient Robe', 'WhlmnaARbe', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30744, 'WhlmnaARbe', 52, 0, 4194303, 0, 0, 0, 16, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30744, 1, 17);
 REPLACE INTO `item_mods` VALUES (30744, 68, 10);
 REPLACE INTO `item_mods` VALUES (30744, 9, 90);
 REPLACE INTO `item_mods` VALUES (30744, 28, 16);
-REPLACE INTO `item_basic` VALUES (30745, 0, 'Wilhelmina's Canopy Ring', 'WhlmnaCRng', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30745, 0, 'Wilhelmina\'s Canopy Ring', 'WhlmnaCRng', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30745, 'WhlmnaCRng', 52, 0, 4194303, 0, 0, 0, 64, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30745, 68, 7);
 REPLACE INTO `item_mods` VALUES (30745, 30, 13);
 REPLACE INTO `item_mods` VALUES (30745, 9, 40);
 
 -- Mischief Marcelino trophy + gear
-REPLACE INTO `item_basic` VALUES (30746, 0, 'Marcelino's Imp Horn', 'MrclnHrn', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30747, 0, 'Marcelino's Prankster Earring', 'MrclnPEar', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30746, 0, 'Marcelino\'s Imp Horn', 'MrclnHrn', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30747, 0, 'Marcelino\'s Prankster Earring', 'MrclnPEar', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30747, 'MrclnPEar', 20, 0, 4194303, 0, 0, 0, 4, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30747, 23, 4);
 REPLACE INTO `item_mods` VALUES (30747, 68, 7);
 REPLACE INTO `item_mods` VALUES (30747, 13, 3);
-REPLACE INTO `item_basic` VALUES (30748, 0, 'Marcelino's Trick Ring', 'MrclnTRng', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30748, 0, 'Marcelino\'s Trick Ring', 'MrclnTRng', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30748, 'MrclnTRng', 20, 0, 4194303, 0, 0, 0, 64, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30748, 23, 3);
 REPLACE INTO `item_mods` VALUES (30748, 13, 3);
 REPLACE INTO `item_mods` VALUES (30748, 25, 6);
 
 -- Trickster Temperance trophy + gear
-REPLACE INTO `item_basic` VALUES (30749, 0, 'Temperance's Trick Tail', 'TmprTTail', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30750, 0, 'Temperance's Jester Hat', 'TmprJHat', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30749, 0, 'Temperance\'s Trick Tail', 'TmprTTail', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30750, 0, 'Temperance\'s Jester Hat', 'TmprJHat', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30750, 'TmprJHat', 32, 0, 4194303, 0, 0, 0, 1, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30750, 1, 9);
 REPLACE INTO `item_mods` VALUES (30750, 23, 6);
 REPLACE INTO `item_mods` VALUES (30750, 68, 12);
-REPLACE INTO `item_basic` VALUES (30751, 0, 'Temperance's Chaos Collar', 'TmprCCll', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30751, 0, 'Temperance\'s Chaos Collar', 'TmprCCll', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30751, 'TmprCCll', 32, 0, 4194303, 0, 0, 0, 2, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30751, 25, 4);
 REPLACE INTO `item_mods` VALUES (30751, 23, 4);
 REPLACE INTO `item_mods` VALUES (30751, 30, 7);
 
 -- Hexing Hieronymus trophy + gear
-REPLACE INTO `item_basic` VALUES (30752, 0, 'Hieronymus's Hex Wand', 'HrnmsHWnd', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30753, 0, 'Hieronymus's Spelltwist Robe', 'HrnmsSRbe', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30752, 0, 'Hieronymus\'s Hex Wand', 'HrnmsHWnd', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30753, 0, 'Hieronymus\'s Spelltwist Robe', 'HrnmsSRbe', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30753, 'HrnmsSRbe', 44, 0, 4194303, 0, 0, 0, 16, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30753, 1, 15);
 REPLACE INTO `item_mods` VALUES (30753, 25, 8);
 REPLACE INTO `item_mods` VALUES (30753, 28, 16);
 REPLACE INTO `item_mods` VALUES (30753, 9, 60);
-REPLACE INTO `item_basic` VALUES (30754, 0, 'Hieronymus's Imp Ring', 'HrnmsIRng', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30754, 0, 'Hieronymus\'s Imp Ring', 'HrnmsIRng', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30754, 'HrnmsIRng', 44, 0, 4194303, 0, 0, 0, 64, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30754, 25, 5);
 REPLACE INTO `item_mods` VALUES (30754, 30, 11);
 REPLACE INTO `item_mods` VALUES (30754, 28, 9);
 
 -- Grand Trickster Gregoire trophy + gear
-REPLACE INTO `item_basic` VALUES (30755, 0, 'Gregoire's Grand Staff', 'GrgrGStff', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30756, 0, 'Gregoire's Chaos Mantle', 'GrgrCMnt', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30755, 0, 'Gregoire\'s Grand Staff', 'GrgrGStff', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30756, 0, 'Gregoire\'s Chaos Mantle', 'GrgrCMnt', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30756, 'GrgrCMnt', 54, 0, 4194303, 0, 0, 0, 256, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30756, 1, 12);
 REPLACE INTO `item_mods` VALUES (30756, 25, 9);
 REPLACE INTO `item_mods` VALUES (30756, 28, 18);
 REPLACE INTO `item_mods` VALUES (30756, 23, 6);
-REPLACE INTO `item_basic` VALUES (30757, 0, 'Gregoire's Mayhem Ring', 'GrgrMRng', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30757, 0, 'Gregoire\'s Mayhem Ring', 'GrgrMRng', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30757, 'GrgrMRng', 54, 0, 4194303, 0, 0, 0, 64, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30757, 25, 7);
 REPLACE INTO `item_mods` VALUES (30757, 28, 14);
 REPLACE INTO `item_mods` VALUES (30757, 30, 12);
 
 -- Tiny Tortuga trophy + gear
-REPLACE INTO `item_basic` VALUES (30758, 0, 'Tortuga's Candle Stub', 'TrtgaCndl', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30759, 0, 'Tortuga's Lantern Ring', 'TrtgaLRng', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30758, 0, 'Tortuga\'s Candle Stub', 'TrtgaCndl', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30759, 0, 'Tortuga\'s Lantern Ring', 'TrtgaLRng', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30759, 'TrtgaLRng', 30, 0, 4194303, 0, 0, 0, 64, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30759, 25, 3);
 REPLACE INTO `item_mods` VALUES (30759, 30, 5);
 REPLACE INTO `item_mods` VALUES (30759, 9, 15);
-REPLACE INTO `item_basic` VALUES (30760, 0, 'Tortuga's Grudge Boots', 'TrtgaGBts', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30760, 0, 'Tortuga\'s Grudge Boots', 'TrtgaGBts', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30760, 'TrtgaGBts', 30, 0, 4194303, 0, 0, 0, 2048, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30760, 1, 8);
 REPLACE INTO `item_mods` VALUES (30760, 25, 4);
 REPLACE INTO `item_mods` VALUES (30760, 28, 7);
 
 -- Shuffling Sebastiano trophy + gear
-REPLACE INTO `item_basic` VALUES (30761, 0, 'Sebastiano's Chef's Knife', 'SbstnCKnf', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30762, 0, 'Sebastiano's Culinary Collar', 'SbstnCCll', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30761, 0, 'Sebastiano\'s Chef\'s Knife', 'SbstnCKnf', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30762, 0, 'Sebastiano\'s Culinary Collar', 'SbstnCCll', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30762, 'SbstnCCll', 40, 0, 4194303, 0, 0, 0, 2, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30762, 12, 5);
 REPLACE INTO `item_mods` VALUES (30762, 29, 10);
 REPLACE INTO `item_mods` VALUES (30762, 25, 7);
-REPLACE INTO `item_basic` VALUES (30763, 0, 'Sebastiano's Green Apron', 'SbstnGApn', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30763, 0, 'Sebastiano\'s Green Apron', 'SbstnGApn', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30763, 'SbstnGApn', 40, 0, 4194303, 0, 0, 0, 16, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30763, 1, 16);
 REPLACE INTO `item_mods` VALUES (30763, 12, 6);
@@ -2355,14 +2355,14 @@ REPLACE INTO `item_mods` VALUES (30763, 29, 14);
 REPLACE INTO `item_mods` VALUES (30763, 2, 40);
 
 -- Grudge Bearer Giuliana trophy + gear
-REPLACE INTO `item_basic` VALUES (30764, 0, 'Giuliana's Everyone's Grudge', 'GlnaGrdge', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30765, 0, 'Giuliana's Revenge Mantle', 'GlnaRMnt', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30764, 0, 'Giuliana\'s Everyone\'s Grudge', 'GlnaGrdge', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30765, 0, 'Giuliana\'s Revenge Mantle', 'GlnaRMnt', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30765, 'GlnaRMnt', 50, 0, 4194303, 0, 0, 0, 256, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30765, 1, 12);
 REPLACE INTO `item_mods` VALUES (30765, 12, 7);
 REPLACE INTO `item_mods` VALUES (30765, 25, 6);
 REPLACE INTO `item_mods` VALUES (30765, 29, 14);
-REPLACE INTO `item_basic` VALUES (30766, 0, 'Giuliana's Karma Ring', 'GlnaKRng', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30766, 0, 'Giuliana\'s Karma Ring', 'GlnaKRng', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30766, 'GlnaKRng', 50, 0, 4194303, 0, 0, 0, 64, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30766, 12, 5);
 REPLACE INTO `item_mods` VALUES (30766, 25, 5);
@@ -2370,718 +2370,718 @@ REPLACE INTO `item_mods` VALUES (30766, 29, 10);
 REPLACE INTO `item_mods` VALUES (30766, 30, 8);
 
 -- The Last Tonberry trophy + gear
-REPLACE INTO `item_basic` VALUES (30767, 0, 'Last Tonberry's Lantern', 'LstTnLnt', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30768, 0, 'Last Tonberry's Final Robe', 'LstTnFRbe', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30767, 0, 'Last Tonberry\'s Lantern', 'LstTnLnt', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30768, 0, 'Last Tonberry\'s Final Robe', 'LstTnFRbe', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30768, 'LstTnFRbe', 60, 0, 4194303, 0, 0, 0, 16, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30768, 1, 20);
 REPLACE INTO `item_mods` VALUES (30768, 25, 11);
 REPLACE INTO `item_mods` VALUES (30768, 28, 22);
 REPLACE INTO `item_mods` VALUES (30768, 9, 90);
-REPLACE INTO `item_basic` VALUES (30769, 0, 'Last Tonberry's Legend Ring', 'LstTnLRng', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30769, 0, 'Last Tonberry\'s Legend Ring', 'LstTnLRng', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30769, 'LstTnLRng', 60, 0, 4194303, 0, 0, 0, 64, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30769, 25, 8);
 REPLACE INTO `item_mods` VALUES (30769, 28, 16);
 REPLACE INTO `item_mods` VALUES (30769, 30, 14);
 
 -- Rippling Rocco trophy + gear
-REPLACE INTO `item_basic` VALUES (30770, 0, 'Rocco's Tide Scale', 'RccTdSc', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30771, 0, 'Rocco's River Boots', 'RccoRBts', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30770, 0, 'Rocco\'s Tide Scale', 'RccTdSc', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30771, 0, 'Rocco\'s River Boots', 'RccoRBts', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30771, 'RccoRBts', 16, 0, 4194303, 0, 0, 0, 2048, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30771, 1, 6);
 REPLACE INTO `item_mods` VALUES (30771, 23, 4);
 REPLACE INTO `item_mods` VALUES (30771, 68, 8);
-REPLACE INTO `item_basic` VALUES (30772, 0, 'Rocco's Current Earring', 'RccoAEar', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30772, 0, 'Rocco\'s Current Earring', 'RccoAEar', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30772, 'RccoAEar', 16, 0, 4194303, 0, 0, 0, 4, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30772, 13, 3);
 REPLACE INTO `item_mods` VALUES (30772, 25, 5);
 REPLACE INTO `item_mods` VALUES (30772, 23, 3);
 
 -- Tidecaller Thessaly trophy + gear
-REPLACE INTO `item_basic` VALUES (30773, 0, 'Thessaly's Tide Totem', 'ThslyTTtm', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30774, 0, 'Thessaly's Wavecrest Collar', 'ThslyCCll', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30773, 0, 'Thessaly\'s Tide Totem', 'ThslyTTtm', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30774, 0, 'Thessaly\'s Wavecrest Collar', 'ThslyCCll', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30774, 'ThslyCCll', 30, 0, 4194303, 0, 0, 0, 2, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30774, 12, 4);
 REPLACE INTO `item_mods` VALUES (30774, 14, 4);
 REPLACE INTO `item_mods` VALUES (30774, 2, 30);
-REPLACE INTO `item_basic` VALUES (30775, 0, 'Thessaly's Reef Mantle', 'ThslyRMnt', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30775, 0, 'Thessaly\'s Reef Mantle', 'ThslyRMnt', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30775, 'ThslyRMnt', 30, 0, 4194303, 0, 0, 0, 256, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30775, 1, 8);
 REPLACE INTO `item_mods` VALUES (30775, 12, 5);
 REPLACE INTO `item_mods` VALUES (30775, 29, 10);
 
 -- Brine Baron Baldassare trophy + gear
-REPLACE INTO `item_basic` VALUES (30776, 0, 'Baldassare's Abyssal Scale', 'BldsrABSc', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30777, 0, 'Baldassare's Leviathan Helm', 'BldsrLHlm', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30776, 0, 'Baldassare\'s Abyssal Scale', 'BldsrABSc', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30777, 0, 'Baldassare\'s Leviathan Helm', 'BldsrLHlm', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30777, 'BldsrLHlm', 42, 0, 4194303, 0, 0, 0, 1, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30777, 1, 14);
 REPLACE INTO `item_mods` VALUES (30777, 12, 7);
 REPLACE INTO `item_mods` VALUES (30777, 14, 5);
 REPLACE INTO `item_mods` VALUES (30777, 2, 45);
-REPLACE INTO `item_basic` VALUES (30778, 0, 'Baldassare's Deep Ring', 'BldsrDRng', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30778, 0, 'Baldassare\'s Deep Ring', 'BldsrDRng', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30778, 'BldsrDRng', 42, 0, 4194303, 0, 0, 0, 64, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30778, 12, 5);
 REPLACE INTO `item_mods` VALUES (30778, 29, 12);
 REPLACE INTO `item_mods` VALUES (30778, 14, 4);
 
 -- Deep Sovereign Desideria trophy + gear
-REPLACE INTO `item_basic` VALUES (30779, 0, 'Desideria's Sovereign Fin', 'DsdraSFin', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30780, 0, 'Desideria's Abyssal Robe', 'DsdraARbe', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30779, 0, 'Desideria\'s Sovereign Fin', 'DsdraSFin', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30780, 0, 'Desideria\'s Abyssal Robe', 'DsdraARbe', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30780, 'DsdraARbe', 54, 0, 4194303, 0, 0, 0, 16, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30780, 1, 20);
 REPLACE INTO `item_mods` VALUES (30780, 25, 8);
 REPLACE INTO `item_mods` VALUES (30780, 28, 16);
 REPLACE INTO `item_mods` VALUES (30780, 9, 60);
-REPLACE INTO `item_basic` VALUES (30781, 0, 'Desideria's Trident Ring', 'DsdraTRng', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30781, 0, 'Desideria\'s Trident Ring', 'DsdraTRng', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30781, 'DsdraTRng', 54, 0, 4194303, 0, 0, 0, 64, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30781, 12, 6);
 REPLACE INTO `item_mods` VALUES (30781, 29, 14);
 REPLACE INTO `item_mods` VALUES (30781, 25, 5);
 
 -- Prancing Persephone trophy + gear
-REPLACE INTO `item_basic` VALUES (30782, 0, 'Persephone's Plume', 'PrsphnPlme', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30783, 0, 'Persephone's Featherlight Earring', 'PrsphnEar', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30782, 0, 'Persephone\'s Plume', 'PrsphnPlme', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30783, 0, 'Persephone\'s Featherlight Earring', 'PrsphnEar', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30783, 'PrsphnEar', 24, 0, 4194303, 0, 0, 0, 4, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30783, 23, 5);
 REPLACE INTO `item_mods` VALUES (30783, 68, 9);
 REPLACE INTO `item_mods` VALUES (30783, 13, 3);
-REPLACE INTO `item_basic` VALUES (30784, 0, 'Persephone's Gallop Shoes', 'PrsphnGShs', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30784, 0, 'Persephone\'s Gallop Shoes', 'PrsphnGShs', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30784, 'PrsphnGShs', 24, 0, 4194303, 0, 0, 0, 2048, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30784, 1, 8);
 REPLACE INTO `item_mods` VALUES (30784, 23, 5);
 REPLACE INTO `item_mods` VALUES (30784, 68, 10);
 
 -- Thunderwing Theron trophy + gear
-REPLACE INTO `item_basic` VALUES (30785, 0, 'Theron's Thunder Plume', 'ThrnTPlme', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30786, 0, 'Theron's Storm Mantle', 'ThrnStMnt', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30785, 0, 'Theron\'s Thunder Plume', 'ThrnTPlme', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30786, 0, 'Theron\'s Storm Mantle', 'ThrnStMnt', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30786, 'ThrnStMnt', 36, 0, 4194303, 0, 0, 0, 256, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30786, 1, 10);
 REPLACE INTO `item_mods` VALUES (30786, 23, 6);
 REPLACE INTO `item_mods` VALUES (30786, 12, 5);
 REPLACE INTO `item_mods` VALUES (30786, 29, 10);
-REPLACE INTO `item_basic` VALUES (30787, 0, 'Theron's Gale Ring', 'ThrnGRng', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30787, 0, 'Theron\'s Gale Ring', 'ThrnGRng', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30787, 'ThrnGRng', 36, 0, 4194303, 0, 0, 0, 64, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30787, 23, 5);
 REPLACE INTO `item_mods` VALUES (30787, 13, 4);
 REPLACE INTO `item_mods` VALUES (30787, 25, 9);
 
 -- Skydancer Sabastienne trophy + gear
-REPLACE INTO `item_basic` VALUES (30788, 0, 'Sabastienne's Sky Scale', 'SbstSkyScl', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30789, 0, 'Sabastienne's Aerial Helm', 'SbstAHlm', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30788, 0, 'Sabastienne\'s Sky Scale', 'SbstSkyScl', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30789, 0, 'Sabastienne\'s Aerial Helm', 'SbstAHlm', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30789, 'SbstAHlm', 46, 0, 4194303, 0, 0, 0, 1, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30789, 1, 13);
 REPLACE INTO `item_mods` VALUES (30789, 23, 7);
 REPLACE INTO `item_mods` VALUES (30789, 68, 14);
 REPLACE INTO `item_mods` VALUES (30789, 13, 5);
-REPLACE INTO `item_basic` VALUES (30790, 0, 'Sabastienne's Wing Belt', 'SbstWBlt', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30790, 0, 'Sabastienne\'s Wing Belt', 'SbstWBlt', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30790, 'SbstWBlt', 46, 0, 4194303, 0, 0, 0, 512, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30790, 1, 6);
 REPLACE INTO `item_mods` VALUES (30790, 23, 6);
 REPLACE INTO `item_mods` VALUES (30790, 384, 4);
 
 -- Heavenrider Hieronyma trophy + gear
-REPLACE INTO `item_basic` VALUES (30791, 0, 'Hieronyma's Heaven Scale', 'HrnymHSc', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30792, 0, 'Hieronyma's Celestial Plate', 'HrnymCPlt', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30791, 0, 'Hieronyma\'s Heaven Scale', 'HrnymHSc', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30792, 0, 'Hieronyma\'s Celestial Plate', 'HrnymCPlt', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30792, 'HrnymCPlt', 56, 0, 4194303, 0, 0, 0, 16, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30792, 1, 23);
 REPLACE INTO `item_mods` VALUES (30792, 12, 8);
 REPLACE INTO `item_mods` VALUES (30792, 23, 8);
 REPLACE INTO `item_mods` VALUES (30792, 2, 70);
-REPLACE INTO `item_basic` VALUES (30793, 0, 'Hieronyma's Ascent Ring', 'HrnymARng', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30793, 0, 'Hieronyma\'s Ascent Ring', 'HrnymARng', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30793, 'HrnymARng', 56, 0, 4194303, 0, 0, 0, 64, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30793, 23, 7);
 REPLACE INTO `item_mods` VALUES (30793, 13, 6);
 REPLACE INTO `item_mods` VALUES (30793, 25, 14);
 
 -- Fledgling Fiorentina trophy + gear
-REPLACE INTO `item_basic` VALUES (30794, 0, 'Fiorentina's Pin Feather', 'FrntnPFth', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30795, 0, 'Fiorentina's Downy Earring', 'FrntnDEar', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30794, 0, 'Fiorentina\'s Pin Feather', 'FrntnPFth', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30795, 0, 'Fiorentina\'s Downy Earring', 'FrntnDEar', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30795, 'FrntnDEar', 18, 0, 4194303, 0, 0, 0, 4, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30795, 23, 4);
 REPLACE INTO `item_mods` VALUES (30795, 68, 7);
 REPLACE INTO `item_mods` VALUES (30795, 13, 3);
-REPLACE INTO `item_basic` VALUES (30796, 0, 'Fiorentina's Talon Ring', 'FrntnTRng', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30796, 0, 'Fiorentina\'s Talon Ring', 'FrntnTRng', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30796, 'FrntnTRng', 18, 0, 4194303, 0, 0, 0, 64, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30796, 12, 3);
 REPLACE INTO `item_mods` VALUES (30796, 29, 6);
 REPLACE INTO `item_mods` VALUES (30796, 25, 4);
 
 -- Stormrider Sigismund trophy + gear
-REPLACE INTO `item_basic` VALUES (30797, 0, 'Sigismund's Storm Feather', 'SgsmndSFth', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30798, 0, 'Sigismund's Cloudpiercer Helm', 'SgsmndCHlm', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30797, 0, 'Sigismund\'s Storm Feather', 'SgsmndSFth', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30798, 0, 'Sigismund\'s Cloudpiercer Helm', 'SgsmndCHlm', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30798, 'SgsmndCHlm', 32, 0, 4194303, 0, 0, 0, 1, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30798, 1, 12);
 REPLACE INTO `item_mods` VALUES (30798, 12, 5);
 REPLACE INTO `item_mods` VALUES (30798, 23, 5);
 REPLACE INTO `item_mods` VALUES (30798, 68, 10);
-REPLACE INTO `item_basic` VALUES (30799, 0, 'Sigismund's Gale Mantle', 'SgsmndGMnt', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30799, 0, 'Sigismund\'s Gale Mantle', 'SgsmndGMnt', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30799, 'SgsmndGMnt', 32, 0, 4194303, 0, 0, 0, 256, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30799, 1, 9);
 REPLACE INTO `item_mods` VALUES (30799, 12, 5);
 REPLACE INTO `item_mods` VALUES (30799, 29, 11);
 
 -- Tempest Lord Tancred trophy + gear
-REPLACE INTO `item_basic` VALUES (30800, 0, 'Tancred's Tempest Quill', 'TncrTmpstQ', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30801, 0, 'Tancred's Cyclone Plate', 'TncrCyPlt', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30800, 0, 'Tancred\'s Tempest Quill', 'TncrTmpstQ', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30801, 0, 'Tancred\'s Cyclone Plate', 'TncrCyPlt', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30801, 'TncrCyPlt', 46, 0, 4194303, 0, 0, 0, 16, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30801, 1, 22);
 REPLACE INTO `item_mods` VALUES (30801, 12, 8);
 REPLACE INTO `item_mods` VALUES (30801, 23, 6);
 REPLACE INTO `item_mods` VALUES (30801, 2, 65);
-REPLACE INTO `item_basic` VALUES (30802, 0, 'Tancred's Thunderstrike Ring', 'TncrTRng', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30802, 0, 'Tancred\'s Thunderstrike Ring', 'TncrTRng', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30802, 'TncrTRng', 46, 0, 4194303, 0, 0, 0, 64, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30802, 12, 6);
 REPLACE INTO `item_mods` VALUES (30802, 29, 14);
 REPLACE INTO `item_mods` VALUES (30802, 23, 5);
 
 -- Ancient Roc Andromeda trophy + gear
-REPLACE INTO `item_basic` VALUES (30803, 0, 'Andromeda's Ancient Quill', 'AndrAQll', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30804, 0, 'Andromeda's Skyshatter Plate', 'AndrSSPlt', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30803, 0, 'Andromeda\'s Ancient Quill', 'AndrAQll', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30804, 0, 'Andromeda\'s Skyshatter Plate', 'AndrSSPlt', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30804, 'AndrSSPlt', 58, 0, 4194303, 0, 0, 0, 16, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30804, 1, 27);
 REPLACE INTO `item_mods` VALUES (30804, 12, 10);
 REPLACE INTO `item_mods` VALUES (30804, 23, 8);
 REPLACE INTO `item_mods` VALUES (30804, 2, 85);
-REPLACE INTO `item_basic` VALUES (30805, 0, 'Andromeda's Legend Ring', 'AndrLRng', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30805, 0, 'Andromeda\'s Legend Ring', 'AndrLRng', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30805, 'AndrLRng', 58, 0, 4194303, 0, 0, 0, 64, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30805, 12, 8);
 REPLACE INTO `item_mods` VALUES (30805, 29, 20);
 REPLACE INTO `item_mods` VALUES (30805, 23, 6);
 
 -- Stumbling Sebastiano trophy + gear
-REPLACE INTO `item_basic` VALUES (30806, 0, 'Sebastiano's Cactus Spine', 'SbstnCSpn', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30807, 0, 'Sebastiano's Prickly Ring', 'SbstnPRng', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30806, 0, 'Sebastiano\'s Cactus Spine', 'SbstnCSpn', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30807, 0, 'Sebastiano\'s Prickly Ring', 'SbstnPRng', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30807, 'SbstnPRng', 22, 0, 4194303, 0, 0, 0, 64, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30807, 12, 3);
 REPLACE INTO `item_mods` VALUES (30807, 29, 6);
 REPLACE INTO `item_mods` VALUES (30807, 13, 2);
-REPLACE INTO `item_basic` VALUES (30808, 0, 'Sebastiano's Sand Boots', 'SbstnSBts', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30808, 0, 'Sebastiano\'s Sand Boots', 'SbstnSBts', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30808, 'SbstnSBts', 22, 0, 4194303, 0, 0, 0, 2048, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30808, 1, 6);
 REPLACE INTO `item_mods` VALUES (30808, 23, 4);
 REPLACE INTO `item_mods` VALUES (30808, 68, 8);
 
 -- Pirouetting Pradinelda trophy + gear
-REPLACE INTO `item_basic` VALUES (30809, 0, 'Pradinelda's Cactus Flower', 'PrdnldCFlr', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30810, 0, 'Pradinelda's Desert Mantle', 'PrdnldDMnt', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30809, 0, 'Pradinelda\'s Cactus Flower', 'PrdnldCFlr', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30810, 0, 'Pradinelda\'s Desert Mantle', 'PrdnldDMnt', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30810, 'PrdnldDMnt', 34, 0, 4194303, 0, 0, 0, 256, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30810, 1, 9);
 REPLACE INTO `item_mods` VALUES (30810, 14, 5);
 REPLACE INTO `item_mods` VALUES (30810, 2, 35);
-REPLACE INTO `item_basic` VALUES (30811, 0, 'Pradinelda's Spine Belt', 'PrdnldSBlt', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30811, 0, 'Pradinelda\'s Spine Belt', 'PrdnldSBlt', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30811, 'PrdnldSBlt', 34, 0, 4194303, 0, 0, 0, 512, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30811, 1, 6);
 REPLACE INTO `item_mods` VALUES (30811, 12, 4);
 REPLACE INTO `item_mods` VALUES (30811, 29, 10);
 
 -- Spiky Serafina trophy + gear
-REPLACE INTO `item_basic` VALUES (30812, 0, 'Serafina's Great Spine', 'SrfnaGSp', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30813, 0, 'Serafina's Desert Crown', 'SrfnaDCrn', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30812, 0, 'Serafina\'s Great Spine', 'SrfnaGSp', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30813, 0, 'Serafina\'s Desert Crown', 'SrfnaDCrn', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30813, 'SrfnaDCrn', 46, 0, 4194303, 0, 0, 0, 1, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30813, 1, 13);
 REPLACE INTO `item_mods` VALUES (30813, 12, 6);
 REPLACE INTO `item_mods` VALUES (30813, 14, 5);
 REPLACE INTO `item_mods` VALUES (30813, 2, 40);
-REPLACE INTO `item_basic` VALUES (30814, 0, 'Serafina's Oasis Ring', 'SrfnaORng', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30814, 0, 'Serafina\'s Oasis Ring', 'SrfnaORng', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30814, 'SrfnaORng', 46, 0, 4194303, 0, 0, 0, 64, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30814, 12, 5);
 REPLACE INTO `item_mods` VALUES (30814, 14, 4);
 REPLACE INTO `item_mods` VALUES (30814, 29, 12);
 
 -- Lord of the Desert Lazaro trophy + gear
-REPLACE INTO `item_basic` VALUES (30815, 0, 'Lazaro's Desert Heart', 'LzrDsrtHrt', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30816, 0, 'Lazaro's Cacti King Plate', 'LzrCKPlt', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30815, 0, 'Lazaro\'s Desert Heart', 'LzrDsrtHrt', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30816, 0, 'Lazaro\'s Cacti King Plate', 'LzrCKPlt', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30816, 'LzrCKPlt', 58, 0, 4194303, 0, 0, 0, 16, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30816, 1, 25);
 REPLACE INTO `item_mods` VALUES (30816, 12, 9);
 REPLACE INTO `item_mods` VALUES (30816, 14, 8);
 REPLACE INTO `item_mods` VALUES (30816, 2, 80);
-REPLACE INTO `item_basic` VALUES (30817, 0, 'Lazaro's Mirage Ring', 'LzrMRng', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30817, 0, 'Lazaro\'s Mirage Ring', 'LzrMRng', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30817, 'LzrMRng', 58, 0, 4194303, 0, 0, 0, 64, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30817, 12, 7);
 REPLACE INTO `item_mods` VALUES (30817, 29, 18);
 REPLACE INTO `item_mods` VALUES (30817, 14, 5);
 
 -- Lowing Lorcan trophy + gear
-REPLACE INTO `item_basic` VALUES (30818, 0, 'Lorcan's Horn Chip', 'LrcnHrnCp', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30819, 0, 'Lorcan's Stampede Belt', 'LrcnStBlt', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30818, 0, 'Lorcan\'s Horn Chip', 'LrcnHrnCp', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30819, 0, 'Lorcan\'s Stampede Belt', 'LrcnStBlt', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30819, 'LrcnStBlt', 20, 0, 4194303, 0, 0, 0, 512, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30819, 1, 5);
 REPLACE INTO `item_mods` VALUES (30819, 14, 3);
 REPLACE INTO `item_mods` VALUES (30819, 2, 20);
-REPLACE INTO `item_basic` VALUES (30820, 0, 'Lorcan's Hide Boots', 'LrcnHdBts', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30820, 0, 'Lorcan\'s Hide Boots', 'LrcnHdBts', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30820, 'LrcnHdBts', 20, 0, 4194303, 0, 0, 0, 2048, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30820, 1, 6);
 REPLACE INTO `item_mods` VALUES (30820, 12, 3);
 REPLACE INTO `item_mods` VALUES (30820, 14, 2);
 
 -- Thunderhoof Theokleia trophy + gear
-REPLACE INTO `item_basic` VALUES (30821, 0, 'Theokleia's Hoof Fragment', 'ThklHFrg', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30822, 0, 'Theokleia's Charge Mantle', 'ThklCMnt', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30821, 0, 'Theokleia\'s Hoof Fragment', 'ThklHFrg', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30822, 0, 'Theokleia\'s Charge Mantle', 'ThklCMnt', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30822, 'ThklCMnt', 34, 0, 4194303, 0, 0, 0, 256, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30822, 1, 9);
 REPLACE INTO `item_mods` VALUES (30822, 12, 5);
 REPLACE INTO `item_mods` VALUES (30822, 29, 11);
-REPLACE INTO `item_basic` VALUES (30823, 0, 'Theokleia's Bull Collar', 'ThklBCll', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30823, 0, 'Theokleia\'s Bull Collar', 'ThklBCll', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30823, 'ThklBCll', 34, 0, 4194303, 0, 0, 0, 2, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30823, 14, 5);
 REPLACE INTO `item_mods` VALUES (30823, 2, 35);
 REPLACE INTO `item_mods` VALUES (30823, 29, 5);
 
 -- Gore King Godfrey trophy + gear
-REPLACE INTO `item_basic` VALUES (30824, 0, 'Godfrey's Gore Horn', 'GdfrGHrn', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30825, 0, 'Godfrey's Warlord Helm', 'GdfrWHlm', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30824, 0, 'Godfrey\'s Gore Horn', 'GdfrGHrn', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30825, 0, 'Godfrey\'s Warlord Helm', 'GdfrWHlm', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30825, 'GdfrWHlm', 46, 0, 4194303, 0, 0, 0, 1, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30825, 1, 14);
 REPLACE INTO `item_mods` VALUES (30825, 12, 7);
 REPLACE INTO `item_mods` VALUES (30825, 14, 6);
 REPLACE INTO `item_mods` VALUES (30825, 2, 50);
-REPLACE INTO `item_basic` VALUES (30826, 0, 'Godfrey's Gorger Ring', 'GdfrGRng', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30826, 0, 'Godfrey\'s Gorger Ring', 'GdfrGRng', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30826, 'GdfrGRng', 46, 0, 4194303, 0, 0, 0, 64, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30826, 12, 5);
 REPLACE INTO `item_mods` VALUES (30826, 14, 5);
 REPLACE INTO `item_mods` VALUES (30826, 29, 12);
 
 -- Primal Patricia trophy + gear
-REPLACE INTO `item_basic` VALUES (30827, 0, 'Patricia's Primal Horn', 'PatPHrn', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30828, 0, 'Patricia's Titanplate Hauberk', 'PatTPHbk', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30827, 0, 'Patricia\'s Primal Horn', 'PatPHrn', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30828, 0, 'Patricia\'s Titanplate Hauberk', 'PatTPHbk', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30828, 'PatTPHbk', 56, 0, 4194303, 0, 0, 0, 16, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30828, 1, 28);
 REPLACE INTO `item_mods` VALUES (30828, 12, 9);
 REPLACE INTO `item_mods` VALUES (30828, 14, 9);
 REPLACE INTO `item_mods` VALUES (30828, 2, 90);
-REPLACE INTO `item_basic` VALUES (30829, 0, 'Patricia's Ancient Ring', 'PatARng', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30829, 0, 'Patricia\'s Ancient Ring', 'PatARng', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30829, 'PatARng', 56, 0, 4194303, 0, 0, 0, 64, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30829, 12, 7);
 REPLACE INTO `item_mods` VALUES (30829, 29, 18);
 REPLACE INTO `item_mods` VALUES (30829, 14, 6);
 
 -- Sand Trap Sigrid trophy + gear
-REPLACE INTO `item_basic` VALUES (30830, 0, 'Sigrid's Sanded Jaw', 'SgrdSJaw', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30831, 0, 'Sigrid's Pit Sandals', 'SgrdPtSnd', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30830, 0, 'Sigrid\'s Sanded Jaw', 'SgrdSJaw', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30831, 0, 'Sigrid\'s Pit Sandals', 'SgrdPtSnd', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30831, 'SgrdPtSnd', 18, 0, 4194303, 0, 0, 0, 2048, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30831, 1, 5);
 REPLACE INTO `item_mods` VALUES (30831, 23, 4);
 REPLACE INTO `item_mods` VALUES (30831, 68, 8);
-REPLACE INTO `item_basic` VALUES (30832, 0, 'Sigrid's Trap Ring', 'SgrdTRng', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30832, 0, 'Sigrid\'s Trap Ring', 'SgrdTRng', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30832, 'SgrdTRng', 18, 0, 4194303, 0, 0, 0, 64, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30832, 13, 3);
 REPLACE INTO `item_mods` VALUES (30832, 25, 5);
 REPLACE INTO `item_mods` VALUES (30832, 23, 2);
 
 -- Burrowing Bellancourt trophy + gear
-REPLACE INTO `item_basic` VALUES (30833, 0, 'Bellancourt's Mandible', 'BlncrtMndb', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30834, 0, 'Bellancourt's Chitin Mitts', 'BlncrtCMtt', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30833, 0, 'Bellancourt\'s Mandible', 'BlncrtMndb', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30834, 0, 'Bellancourt\'s Chitin Mitts', 'BlncrtCMtt', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30834, 'BlncrtCMtt', 30, 0, 4194303, 0, 0, 0, 32, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30834, 1, 9);
 REPLACE INTO `item_mods` VALUES (30834, 13, 5);
 REPLACE INTO `item_mods` VALUES (30834, 25, 9);
-REPLACE INTO `item_basic` VALUES (30835, 0, 'Bellancourt's Sand Belt', 'BlncrtSBlt', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30835, 0, 'Bellancourt\'s Sand Belt', 'BlncrtSBlt', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30835, 'BlncrtSBlt', 30, 0, 4194303, 0, 0, 0, 512, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30835, 1, 5);
 REPLACE INTO `item_mods` VALUES (30835, 23, 4);
 REPLACE INTO `item_mods` VALUES (30835, 68, 9);
 
 -- Crusher Crescentia trophy + gear
-REPLACE INTO `item_basic` VALUES (30836, 0, 'Crescentia's Crushing Jaw', 'CrscntCJaw', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30837, 0, 'Crescentia's Armored Hauberk', 'CrscntAHbk', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30836, 0, 'Crescentia\'s Crushing Jaw', 'CrscntCJaw', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30837, 0, 'Crescentia\'s Armored Hauberk', 'CrscntAHbk', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30837, 'CrscntAHbk', 42, 0, 4194303, 0, 0, 0, 16, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30837, 1, 20);
 REPLACE INTO `item_mods` VALUES (30837, 14, 6);
 REPLACE INTO `item_mods` VALUES (30837, 2, 60);
-REPLACE INTO `item_basic` VALUES (30838, 0, 'Crescentia's Exo Ring', 'CrscntERng', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30838, 0, 'Crescentia\'s Exo Ring', 'CrscntERng', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30838, 'CrscntERng', 42, 0, 4194303, 0, 0, 0, 64, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30838, 1, 4);
 REPLACE INTO `item_mods` VALUES (30838, 14, 5);
 REPLACE INTO `item_mods` VALUES (30838, 29, 7);
 
 -- Antlion Emperor Adalbert trophy + gear
-REPLACE INTO `item_basic` VALUES (30839, 0, 'Adalbert's Emperor Mandible', 'AdlbrtEMndb', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30840, 0, 'Adalbert's Titan Carapace', 'AdlbrtTCrp', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30839, 0, 'Adalbert\'s Emperor Mandible', 'AdlbrtEMndb', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30840, 0, 'Adalbert\'s Titan Carapace', 'AdlbrtTCrp', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30840, 'AdlbrtTCrp', 54, 0, 4194303, 0, 0, 0, 16, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30840, 1, 26);
 REPLACE INTO `item_mods` VALUES (30840, 12, 8);
 REPLACE INTO `item_mods` VALUES (30840, 14, 8);
 REPLACE INTO `item_mods` VALUES (30840, 2, 80);
-REPLACE INTO `item_basic` VALUES (30841, 0, 'Adalbert's Sovereign Ring', 'AdlbrtSRng', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30841, 0, 'Adalbert\'s Sovereign Ring', 'AdlbrtSRng', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30841, 'AdlbrtSRng', 54, 0, 4194303, 0, 0, 0, 64, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30841, 12, 6);
 REPLACE INTO `item_mods` VALUES (30841, 13, 5);
 REPLACE INTO `item_mods` VALUES (30841, 29, 16);
 
 -- Winged Wilhelmus trophy + gear
-REPLACE INTO `item_basic` VALUES (30842, 0, 'Wilhelmus's Scale', 'WhlmsScle', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30843, 0, 'Wilhelmus's Wing Ring', 'WhlmsWRng', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30842, 0, 'Wilhelmus\'s Scale', 'WhlmsScle', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30843, 0, 'Wilhelmus\'s Wing Ring', 'WhlmsWRng', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30843, 'WhlmsWRng', 26, 0, 4194303, 0, 0, 0, 64, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30843, 12, 3);
 REPLACE INTO `item_mods` VALUES (30843, 29, 7);
 REPLACE INTO `item_mods` VALUES (30843, 23, 3);
-REPLACE INTO `item_basic` VALUES (30844, 0, 'Wilhelmus's Claw Boots', 'WhlmsCBts', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30844, 0, 'Wilhelmus\'s Claw Boots', 'WhlmsCBts', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30844, 'WhlmsCBts', 26, 0, 4194303, 0, 0, 0, 2048, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30844, 1, 7);
 REPLACE INTO `item_mods` VALUES (30844, 23, 4);
 REPLACE INTO `item_mods` VALUES (30844, 68, 9);
 
 -- Frost Drake Frederik trophy + gear
-REPLACE INTO `item_basic` VALUES (30845, 0, 'Frederik's Frost Scale', 'FrdrkFSc', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30846, 0, 'Frederik's Ice Drake Helm', 'FrdrkIDHlm', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30845, 0, 'Frederik\'s Frost Scale', 'FrdrkFSc', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30846, 0, 'Frederik\'s Ice Drake Helm', 'FrdrkIDHlm', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30846, 'FrdrkIDHlm', 38, 0, 4194303, 0, 0, 0, 1, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30846, 1, 12);
 REPLACE INTO `item_mods` VALUES (30846, 25, 5);
 REPLACE INTO `item_mods` VALUES (30846, 28, 10);
 REPLACE INTO `item_mods` VALUES (30846, 30, 7);
-REPLACE INTO `item_basic` VALUES (30847, 0, 'Frederik's Blizzard Mantle', 'FrdrkBMnt', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30847, 0, 'Frederik\'s Blizzard Mantle', 'FrdrkBMnt', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30847, 'FrdrkBMnt', 38, 0, 4194303, 0, 0, 0, 256, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30847, 1, 9);
 REPLACE INTO `item_mods` VALUES (30847, 25, 6);
 REPLACE INTO `item_mods` VALUES (30847, 28, 12);
 
 -- Venomfang Valentinus trophy + gear
-REPLACE INTO `item_basic` VALUES (30848, 0, 'Valentinus's Venom Gland', 'VlntnVGld', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30849, 0, 'Valentinus's Wyvern Hauberk', 'VlntnWHbk', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30848, 0, 'Valentinus\'s Venom Gland', 'VlntnVGld', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30849, 0, 'Valentinus\'s Wyvern Hauberk', 'VlntnWHbk', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30849, 'VlntnWHbk', 50, 0, 4194303, 0, 0, 0, 16, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30849, 1, 22);
 REPLACE INTO `item_mods` VALUES (30849, 12, 8);
 REPLACE INTO `item_mods` VALUES (30849, 29, 16);
 REPLACE INTO `item_mods` VALUES (30849, 2, 60);
-REPLACE INTO `item_basic` VALUES (30850, 0, 'Valentinus's Fang Ring', 'VlntnFRng', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30850, 0, 'Valentinus\'s Fang Ring', 'VlntnFRng', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30850, 'VlntnFRng', 50, 0, 4194303, 0, 0, 0, 64, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30850, 12, 6);
 REPLACE INTO `item_mods` VALUES (30850, 29, 14);
 REPLACE INTO `item_mods` VALUES (30850, 25, 10);
 
 -- Ancient Wyrm Agrippa trophy + gear
-REPLACE INTO `item_basic` VALUES (30851, 0, 'Agrippa's Wyrm Heart', 'AgrppWHrt', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30852, 0, 'Agrippa's Ancient Drake Plate', 'AgrppADPlt', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30851, 0, 'Agrippa\'s Wyrm Heart', 'AgrppWHrt', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30852, 0, 'Agrippa\'s Ancient Drake Plate', 'AgrppADPlt', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30852, 'AgrppADPlt', 60, 0, 4194303, 0, 0, 0, 16, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30852, 1, 28);
 REPLACE INTO `item_mods` VALUES (30852, 12, 10);
 REPLACE INTO `item_mods` VALUES (30852, 25, 8);
 REPLACE INTO `item_mods` VALUES (30852, 2, 85);
-REPLACE INTO `item_basic` VALUES (30853, 0, 'Agrippa's Dominion Ring', 'AgrppDRng', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30853, 0, 'Agrippa\'s Dominion Ring', 'AgrppDRng', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30853, 'AgrppDRng', 60, 0, 4194303, 0, 0, 0, 64, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30853, 12, 8);
 REPLACE INTO `item_mods` VALUES (30853, 29, 20);
 REPLACE INTO `item_mods` VALUES (30853, 25, 6);
 
 -- Wind Up Wilhelmina trophy + gear
-REPLACE INTO `item_basic` VALUES (30854, 0, 'Wilhelmina's Clockwork Gear', 'WhlmCGear', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30855, 0, 'Wilhelmina's Gear Ring', 'WhlmGRng', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30854, 0, 'Wilhelmina\'s Clockwork Gear', 'WhlmCGear', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30855, 0, 'Wilhelmina\'s Gear Ring', 'WhlmGRng', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30855, 'WhlmGRng', 20, 0, 4194303, 0, 0, 0, 64, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30855, 25, 3);
 REPLACE INTO `item_mods` VALUES (30855, 30, 5);
 REPLACE INTO `item_mods` VALUES (30855, 9, 15);
-REPLACE INTO `item_basic` VALUES (30856, 0, 'Wilhelmina's Mechanical Boots', 'WhlmMBts', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30856, 0, 'Wilhelmina\'s Mechanical Boots', 'WhlmMBts', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30856, 'WhlmMBts', 20, 0, 4194303, 0, 0, 0, 2048, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30856, 1, 6);
 REPLACE INTO `item_mods` VALUES (30856, 25, 3);
 REPLACE INTO `item_mods` VALUES (30856, 28, 6);
 
 -- Clockwork Calogero trophy + gear
-REPLACE INTO `item_basic` VALUES (30857, 0, 'Calogero's Mainspring', 'ClgrMainSp', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30858, 0, 'Calogero's Automaton Collar', 'ClgrACll', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30857, 0, 'Calogero\'s Mainspring', 'ClgrMainSp', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30858, 0, 'Calogero\'s Automaton Collar', 'ClgrACll', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30858, 'ClgrACll', 32, 0, 4194303, 0, 0, 0, 2, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30858, 25, 5);
 REPLACE INTO `item_mods` VALUES (30858, 30, 8);
 REPLACE INTO `item_mods` VALUES (30858, 28, 8);
-REPLACE INTO `item_basic` VALUES (30859, 0, 'Calogero's Gear Belt', 'ClgrGBlt', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30859, 0, 'Calogero\'s Gear Belt', 'ClgrGBlt', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30859, 'ClgrGBlt', 32, 0, 4194303, 0, 0, 0, 512, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30859, 1, 5);
 REPLACE INTO `item_mods` VALUES (30859, 25, 4);
 REPLACE INTO `item_mods` VALUES (30859, 28, 7);
 
 -- Arcane Armature Agatha trophy + gear
-REPLACE INTO `item_basic` VALUES (30860, 0, 'Agatha's Arcane Core', 'AgtArcCr', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30861, 0, 'Agatha's Arcane Hauberk', 'AgtArcHbk', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30860, 0, 'Agatha\'s Arcane Core', 'AgtArcCr', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30861, 0, 'Agatha\'s Arcane Hauberk', 'AgtArcHbk', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30861, 'AgtArcHbk', 44, 0, 4194303, 0, 0, 0, 16, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30861, 1, 18);
 REPLACE INTO `item_mods` VALUES (30861, 25, 8);
 REPLACE INTO `item_mods` VALUES (30861, 28, 16);
 REPLACE INTO `item_mods` VALUES (30861, 9, 55);
-REPLACE INTO `item_basic` VALUES (30862, 0, 'Agatha's Mystic Ring', 'AgtMysRng', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30862, 0, 'Agatha\'s Mystic Ring', 'AgtMysRng', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30862, 'AgtMysRng', 44, 0, 4194303, 0, 0, 0, 64, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30862, 25, 6);
 REPLACE INTO `item_mods` VALUES (30862, 28, 11);
 REPLACE INTO `item_mods` VALUES (30862, 30, 9);
 
 -- Prime Puppet Ptolemais trophy + gear
-REPLACE INTO `item_basic` VALUES (30863, 0, 'Ptolemais's Prime Core', 'PtlmPrmCr', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30864, 0, 'Ptolemais's Perfect Body', 'PtlmPBdy', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30863, 0, 'Ptolemais\'s Prime Core', 'PtlmPrmCr', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30864, 0, 'Ptolemais\'s Perfect Body', 'PtlmPBdy', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30864, 'PtlmPBdy', 56, 0, 4194303, 0, 0, 0, 16, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30864, 1, 24);
 REPLACE INTO `item_mods` VALUES (30864, 25, 10);
 REPLACE INTO `item_mods` VALUES (30864, 28, 20);
 REPLACE INTO `item_mods` VALUES (30864, 9, 80);
-REPLACE INTO `item_basic` VALUES (30865, 0, 'Ptolemais's Overseer Ring', 'PtlmOvRng', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30865, 0, 'Ptolemais\'s Overseer Ring', 'PtlmOvRng', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30865, 'PtlmOvRng', 56, 0, 4194303, 0, 0, 0, 64, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30865, 25, 7);
 REPLACE INTO `item_mods` VALUES (30865, 28, 16);
 REPLACE INTO `item_mods` VALUES (30865, 30, 13);
 
 -- Dancing Dervish trophy + gear
-REPLACE INTO `item_basic` VALUES (30866, 0, 'Dervish's Spinning Blade', 'DrvshSpBld', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30867, 0, 'Dervish's Blade Ring', 'DrvshBRng', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30866, 0, 'Dervish\'s Spinning Blade', 'DrvshSpBld', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30867, 0, 'Dervish\'s Blade Ring', 'DrvshBRng', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30867, 'DrvshBRng', 24, 0, 4194303, 0, 0, 0, 64, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30867, 12, 3);
 REPLACE INTO `item_mods` VALUES (30867, 29, 7);
 REPLACE INTO `item_mods` VALUES (30867, 13, 3);
-REPLACE INTO `item_basic` VALUES (30868, 0, 'Dervish's Dance Belt', 'DrvshDBlt', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30868, 0, 'Dervish\'s Dance Belt', 'DrvshDBlt', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30868, 'DrvshDBlt', 24, 0, 4194303, 0, 0, 0, 512, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30868, 1, 5);
 REPLACE INTO `item_mods` VALUES (30868, 12, 4);
 REPLACE INTO `item_mods` VALUES (30868, 29, 8);
 
 -- Whirling Wenceslas trophy + gear
-REPLACE INTO `item_basic` VALUES (30869, 0, 'Wenceslas's Whirling Edge', 'WncslsWEdg', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30870, 0, 'Wenceslas's Vortex Earring', 'WncslsVEar', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30869, 0, 'Wenceslas\'s Whirling Edge', 'WncslsWEdg', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30870, 0, 'Wenceslas\'s Vortex Earring', 'WncslsVEar', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30870, 'WncslsVEar', 36, 0, 4194303, 0, 0, 0, 4, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30870, 12, 5);
 REPLACE INTO `item_mods` VALUES (30870, 29, 9);
 REPLACE INTO `item_mods` VALUES (30870, 25, 7);
-REPLACE INTO `item_basic` VALUES (30871, 0, 'Wenceslas's Animated Mantle', 'WncslsAMnt', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30871, 0, 'Wenceslas\'s Animated Mantle', 'WncslsAMnt', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30871, 'WncslsAMnt', 36, 0, 4194303, 0, 0, 0, 256, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30871, 1, 9);
 REPLACE INTO `item_mods` VALUES (30871, 12, 5);
 REPLACE INTO `item_mods` VALUES (30871, 29, 12);
 
 -- Cursed Blade Corneline trophy + gear
-REPLACE INTO `item_basic` VALUES (30872, 0, 'Corneline's Cursed Steel', 'CrnlnCStl', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30873, 0, 'Corneline's Haunted Hauberk', 'CrnlnHHbk', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30872, 0, 'Corneline\'s Cursed Steel', 'CrnlnCStl', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30873, 0, 'Corneline\'s Haunted Hauberk', 'CrnlnHHbk', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30873, 'CrnlnHHbk', 48, 0, 4194303, 0, 0, 0, 16, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30873, 1, 20);
 REPLACE INTO `item_mods` VALUES (30873, 12, 8);
 REPLACE INTO `item_mods` VALUES (30873, 29, 16);
 REPLACE INTO `item_mods` VALUES (30873, 2, 55);
-REPLACE INTO `item_basic` VALUES (30874, 0, 'Corneline's Phantom Ring', 'CrnlnPhRng', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30874, 0, 'Corneline\'s Phantom Ring', 'CrnlnPhRng', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30874, 'CrnlnPhRng', 48, 0, 4194303, 0, 0, 0, 64, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30874, 12, 6);
 REPLACE INTO `item_mods` VALUES (30874, 29, 14);
 REPLACE INTO `item_mods` VALUES (30874, 25, 4);
 
 -- Eternal Executioner Emerick trophy + gear
-REPLACE INTO `item_basic` VALUES (30875, 0, 'Emerick's Eternal Edge', 'EmrckEEdge', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30876, 0, 'Emerick's Executioner Plate', 'EmrckEPlt', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30875, 0, 'Emerick\'s Eternal Edge', 'EmrckEEdge', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30876, 0, 'Emerick\'s Executioner Plate', 'EmrckEPlt', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30876, 'EmrckEPlt', 58, 0, 4194303, 0, 0, 0, 16, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30876, 1, 26);
 REPLACE INTO `item_mods` VALUES (30876, 12, 10);
 REPLACE INTO `item_mods` VALUES (30876, 29, 20);
 REPLACE INTO `item_mods` VALUES (30876, 2, 75);
-REPLACE INTO `item_basic` VALUES (30877, 0, 'Emerick's Death Ring', 'EmrckDRng', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30877, 0, 'Emerick\'s Death Ring', 'EmrckDRng', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30877, 'EmrckDRng', 58, 0, 4194303, 0, 0, 0, 64, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30877, 12, 8);
 REPLACE INTO `item_mods` VALUES (30877, 29, 20);
 REPLACE INTO `item_mods` VALUES (30877, 13, 6);
 
 -- Wailing Wilhemina trophy + gear
-REPLACE INTO `item_basic` VALUES (30878, 0, 'Wilhemina's Ghostly Wisp', 'WhlmnaGWsp', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30879, 0, 'Wilhemina's Banshee Earring', 'WhlmnaEar', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30878, 0, 'Wilhemina\'s Ghostly Wisp', 'WhlmnaGWsp', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30879, 0, 'Wilhemina\'s Banshee Earring', 'WhlmnaEar', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30879, 'WhlmnaEar', 16, 0, 4194303, 0, 0, 0, 4, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30879, 25, 3);
 REPLACE INTO `item_mods` VALUES (30879, 28, 6);
 REPLACE INTO `item_mods` VALUES (30879, 30, 4);
-REPLACE INTO `item_basic` VALUES (30880, 0, 'Wilhemina's Spirit Ring', 'WhlmnaSpRng', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30880, 0, 'Wilhemina\'s Spirit Ring', 'WhlmnaSpRng', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30880, 'WhlmnaSpRng', 16, 0, 4194303, 0, 0, 0, 64, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30880, 25, 3);
 REPLACE INTO `item_mods` VALUES (30880, 9, 15);
 REPLACE INTO `item_mods` VALUES (30880, 30, 5);
 
 -- Shrieking Sigismonda trophy + gear
-REPLACE INTO `item_basic` VALUES (30881, 0, 'Sigismonda's Wail Remnant', 'SgsmndaWR', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30882, 0, 'Sigismonda's Banshee Collar', 'SgsmndBCll', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30881, 0, 'Sigismonda\'s Wail Remnant', 'SgsmndaWR', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30882, 0, 'Sigismonda\'s Banshee Collar', 'SgsmndBCll', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30882, 'SgsmndBCll', 28, 0, 4194303, 0, 0, 0, 2, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30882, 25, 5);
 REPLACE INTO `item_mods` VALUES (30882, 30, 8);
 REPLACE INTO `item_mods` VALUES (30882, 9, 25);
-REPLACE INTO `item_basic` VALUES (30883, 0, 'Sigismonda's Haunting Mitts', 'SgsmndHMtt', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30883, 0, 'Sigismonda\'s Haunting Mitts', 'SgsmndHMtt', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30883, 'SgsmndHMtt', 28, 0, 4194303, 0, 0, 0, 32, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30883, 1, 8);
 REPLACE INTO `item_mods` VALUES (30883, 25, 4);
 REPLACE INTO `item_mods` VALUES (30883, 28, 8);
 
 -- Phantom Phantasia trophy + gear
-REPLACE INTO `item_basic` VALUES (30884, 0, 'Phantasia's Ectoplasm', 'PhntsaEctp', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30885, 0, 'Phantasia's Specter Robe', 'PhntsaSRbe', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30884, 0, 'Phantasia\'s Ectoplasm', 'PhntsaEctp', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30885, 0, 'Phantasia\'s Specter Robe', 'PhntsaSRbe', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30885, 'PhntsaSRbe', 40, 0, 4194303, 0, 0, 0, 16, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30885, 1, 15);
 REPLACE INTO `item_mods` VALUES (30885, 25, 7);
 REPLACE INTO `item_mods` VALUES (30885, 28, 14);
 REPLACE INTO `item_mods` VALUES (30885, 9, 55);
-REPLACE INTO `item_basic` VALUES (30886, 0, 'Phantasia's Wraith Ring', 'PhntsaWRng', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30886, 0, 'Phantasia\'s Wraith Ring', 'PhntsaWRng', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30886, 'PhntsaWRng', 40, 0, 4194303, 0, 0, 0, 64, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30886, 25, 5);
 REPLACE INTO `item_mods` VALUES (30886, 30, 9);
 REPLACE INTO `item_mods` VALUES (30886, 28, 8);
 
 -- Eternal Mourner Euphemia trophy + gear
-REPLACE INTO `item_basic` VALUES (30887, 0, 'Euphemia's Eternal Tear', 'EphEtrTear', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30888, 0, 'Euphemia's Mourning Robe', 'EphMRobe', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30887, 0, 'Euphemia\'s Eternal Tear', 'EphEtrTear', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30888, 0, 'Euphemia\'s Mourning Robe', 'EphMRobe', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30888, 'EphMRobe', 52, 0, 4194303, 0, 0, 0, 16, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30888, 1, 18);
 REPLACE INTO `item_mods` VALUES (30888, 25, 9);
 REPLACE INTO `item_mods` VALUES (30888, 28, 18);
 REPLACE INTO `item_mods` VALUES (30888, 9, 75);
-REPLACE INTO `item_basic` VALUES (30889, 0, 'Euphemia's Lament Ring', 'EphLmtRng', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30889, 0, 'Euphemia\'s Lament Ring', 'EphLmtRng', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30889, 'EphLmtRng', 52, 0, 4194303, 0, 0, 0, 64, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30889, 25, 7);
 REPLACE INTO `item_mods` VALUES (30889, 28, 14);
 REPLACE INTO `item_mods` VALUES (30889, 30, 12);
 
 -- Blinking Bartholomea trophy + gear
-REPLACE INTO `item_basic` VALUES (30890, 0, 'Bartholomea's Petrified Eye', 'BrthlmaEye', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30891, 0, 'Bartholomea's Eye Earring', 'BrthlmaEar', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30890, 0, 'Bartholomea\'s Petrified Eye', 'BrthlmaEye', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30891, 0, 'Bartholomea\'s Eye Earring', 'BrthlmaEar', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30891, 'BrthlmaEar', 20, 0, 4194303, 0, 0, 0, 4, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30891, 25, 4);
 REPLACE INTO `item_mods` VALUES (30891, 30, 7);
 REPLACE INTO `item_mods` VALUES (30891, 9, 15);
-REPLACE INTO `item_basic` VALUES (30892, 0, 'Bartholomea's Gaze Ring', 'BrthlmaRng', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30892, 0, 'Bartholomea\'s Gaze Ring', 'BrthlmaRng', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30892, 'BrthlmaRng', 20, 0, 4194303, 0, 0, 0, 64, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30892, 25, 3);
 REPLACE INTO `item_mods` VALUES (30892, 30, 5);
 REPLACE INTO `item_mods` VALUES (30892, 28, 6);
 
 -- Staring Stanislao trophy + gear
-REPLACE INTO `item_basic` VALUES (30893, 0, 'Stanislao's Crystal Eye', 'StnsloEye', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30894, 0, 'Stanislao's Watcher's Collar', 'StnslaWCll', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30893, 0, 'Stanislao\'s Crystal Eye', 'StnsloEye', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30894, 0, 'Stanislao\'s Watcher\'s Collar', 'StnslaWCll', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30894, 'StnslaWCll', 32, 0, 4194303, 0, 0, 0, 2, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30894, 25, 5);
 REPLACE INTO `item_mods` VALUES (30894, 30, 9);
 REPLACE INTO `item_mods` VALUES (30894, 9, 25);
-REPLACE INTO `item_basic` VALUES (30895, 0, 'Stanislao's All-Seeing Mitts', 'StnslaAMtt', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30895, 0, 'Stanislao\'s All-Seeing Mitts', 'StnslaAMtt', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30895, 'StnslaAMtt', 32, 0, 4194303, 0, 0, 0, 32, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30895, 1, 9);
 REPLACE INTO `item_mods` VALUES (30895, 25, 5);
 REPLACE INTO `item_mods` VALUES (30895, 28, 9);
 
 -- Paralytic Paracelsina trophy + gear
-REPLACE INTO `item_basic` VALUES (30896, 0, 'Paracelsina's Petrify Gaze', 'PrclsPGze', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30897, 0, 'Paracelsina's Stone Visor', 'PrclsSVsr', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30896, 0, 'Paracelsina\'s Petrify Gaze', 'PrclsPGze', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30897, 0, 'Paracelsina\'s Stone Visor', 'PrclsSVsr', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30897, 'PrclsSVsr', 44, 0, 4194303, 0, 0, 0, 1, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30897, 1, 12);
 REPLACE INTO `item_mods` VALUES (30897, 25, 7);
 REPLACE INTO `item_mods` VALUES (30897, 30, 12);
 REPLACE INTO `item_mods` VALUES (30897, 28, 10);
-REPLACE INTO `item_basic` VALUES (30898, 0, 'Paracelsina's Petri Ring', 'PrclsPRng', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30898, 0, 'Paracelsina\'s Petri Ring', 'PrclsPRng', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30898, 'PrclsPRng', 44, 0, 4194303, 0, 0, 0, 64, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30898, 25, 5);
 REPLACE INTO `item_mods` VALUES (30898, 30, 10);
 REPLACE INTO `item_mods` VALUES (30898, 9, 30);
 
 -- All Seeing Arbogast trophy + gear
-REPLACE INTO `item_basic` VALUES (30899, 0, 'Arbogast's Omniscient Eye', 'ArbgstOEye', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30900, 0, 'Arbogast's Seer's Robe', 'ArbgstSRbe', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30899, 0, 'Arbogast\'s Omniscient Eye', 'ArbgstOEye', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30900, 0, 'Arbogast\'s Seer\'s Robe', 'ArbgstSRbe', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30900, 'ArbgstSRbe', 56, 0, 4194303, 0, 0, 0, 16, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30900, 1, 17);
 REPLACE INTO `item_mods` VALUES (30900, 25, 10);
 REPLACE INTO `item_mods` VALUES (30900, 28, 20);
 REPLACE INTO `item_mods` VALUES (30900, 30, 14);
-REPLACE INTO `item_basic` VALUES (30901, 0, 'Arbogast's Oracle Ring', 'ArbgstORng', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30901, 0, 'Arbogast\'s Oracle Ring', 'ArbgstORng', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30901, 'ArbgstORng', 56, 0, 4194303, 0, 0, 0, 64, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30901, 25, 8);
 REPLACE INTO `item_mods` VALUES (30901, 28, 16);
 REPLACE INTO `item_mods` VALUES (30901, 30, 14);
 
 -- Scavenging Svetlana trophy + gear
-REPLACE INTO `item_basic` VALUES (30902, 0, 'Svetlana's Talon', 'SvtlnTln', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30903, 0, 'Svetlana's Buzzard Earring', 'SvtlnBEar', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30902, 0, 'Svetlana\'s Talon', 'SvtlnTln', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30903, 0, 'Svetlana\'s Buzzard Earring', 'SvtlnBEar', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30903, 'SvtlnBEar', 16, 0, 4194303, 0, 0, 0, 4, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30903, 23, 3);
 REPLACE INTO `item_mods` VALUES (30903, 68, 6);
 REPLACE INTO `item_mods` VALUES (30903, 13, 2);
-REPLACE INTO `item_basic` VALUES (30904, 0, 'Svetlana's Scavenger Boots', 'SvtlnSBts', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30904, 0, 'Svetlana\'s Scavenger Boots', 'SvtlnSBts', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30904, 'SvtlnSBts', 16, 0, 4194303, 0, 0, 0, 2048, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30904, 1, 5);
 REPLACE INTO `item_mods` VALUES (30904, 23, 3);
 REPLACE INTO `item_mods` VALUES (30904, 68, 7);
 
 -- Carrion Circling Casimira trophy + gear
-REPLACE INTO `item_basic` VALUES (30905, 0, 'Casimira's Charnel Feather', 'CsmraCFth', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30906, 0, 'Casimira's Death Glide Mantle', 'CsmraDGMnt', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30905, 0, 'Casimira\'s Charnel Feather', 'CsmraCFth', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30906, 0, 'Casimira\'s Death Glide Mantle', 'CsmraDGMnt', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30906, 'CsmraDGMnt', 28, 0, 4194303, 0, 0, 0, 256, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30906, 1, 8);
 REPLACE INTO `item_mods` VALUES (30906, 23, 5);
 REPLACE INTO `item_mods` VALUES (30906, 68, 11);
-REPLACE INTO `item_basic` VALUES (30907, 0, 'Casimira's Gyre Ring', 'CsmraGRng', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30907, 0, 'Casimira\'s Gyre Ring', 'CsmraGRng', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30907, 'CsmraGRng', 28, 0, 4194303, 0, 0, 0, 64, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30907, 23, 4);
 REPLACE INTO `item_mods` VALUES (30907, 13, 3);
 REPLACE INTO `item_mods` VALUES (30907, 25, 7);
 
 -- Bone Picker Bonaventura trophy + gear
-REPLACE INTO `item_basic` VALUES (30908, 0, 'Bonaventura's Picking Beak', 'BnvntPBeak', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30909, 0, 'Bonaventura's Gyre Helm', 'BnvntGHlm', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30908, 0, 'Bonaventura\'s Picking Beak', 'BnvntPBeak', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30909, 0, 'Bonaventura\'s Gyre Helm', 'BnvntGHlm', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30909, 'BnvntGHlm', 40, 0, 4194303, 0, 0, 0, 1, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30909, 1, 12);
 REPLACE INTO `item_mods` VALUES (30909, 23, 6);
 REPLACE INTO `item_mods` VALUES (30909, 13, 5);
 REPLACE INTO `item_mods` VALUES (30909, 68, 12);
-REPLACE INTO `item_basic` VALUES (30910, 0, 'Bonaventura's Carrion Belt', 'BnvntCBlt', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30910, 0, 'Bonaventura\'s Carrion Belt', 'BnvntCBlt', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30910, 'BnvntCBlt', 40, 0, 4194303, 0, 0, 0, 512, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30910, 1, 5);
 REPLACE INTO `item_mods` VALUES (30910, 12, 4);
 REPLACE INTO `item_mods` VALUES (30910, 29, 10);
 
 -- Sky Sovereign Seraphinus trophy + gear
-REPLACE INTO `item_basic` VALUES (30911, 0, 'Seraphinus's Sovereign Feather', 'SrphnusSFth', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30912, 0, 'Seraphinus's Skyking Plate', 'SrphnusSKPlt', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30911, 0, 'Seraphinus\'s Sovereign Feather', 'SrphnusSFth', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30912, 0, 'Seraphinus\'s Skyking Plate', 'SrphnusSKPlt', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30912, 'SrphnusSKPlt', 52, 0, 4194303, 0, 0, 0, 16, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30912, 1, 23);
 REPLACE INTO `item_mods` VALUES (30912, 12, 8);
 REPLACE INTO `item_mods` VALUES (30912, 23, 7);
 REPLACE INTO `item_mods` VALUES (30912, 2, 65);
-REPLACE INTO `item_basic` VALUES (30913, 0, 'Seraphinus's Dominion Ring', 'SrphnusDRng', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30913, 0, 'Seraphinus\'s Dominion Ring', 'SrphnusDRng', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30913, 'SrphnusDRng', 52, 0, 4194303, 0, 0, 0, 64, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30913, 12, 6);
 REPLACE INTO `item_mods` VALUES (30913, 29, 14);
 REPLACE INTO `item_mods` VALUES (30913, 23, 5);
 
 -- Chittering Chichester trophy + gear
-REPLACE INTO `item_basic` VALUES (30914, 0, 'Chichester's Shiny Pebble', 'ChchtrPbl', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30915, 0, 'Chichester's Chatter Ring', 'ChchtrCRng', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30914, 0, 'Chichester\'s Shiny Pebble', 'ChchtrPbl', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30915, 0, 'Chichester\'s Chatter Ring', 'ChchtrCRng', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30915, 'ChchtrCRng', 18, 0, 4194303, 0, 0, 0, 64, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30915, 13, 3);
 REPLACE INTO `item_mods` VALUES (30915, 25, 5);
 REPLACE INTO `item_mods` VALUES (30915, 23, 3);
-REPLACE INTO `item_basic` VALUES (30916, 0, 'Chichester's Nimble Boots', 'ChchtrNBts', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30916, 0, 'Chichester\'s Nimble Boots', 'ChchtrNBts', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30916, 'ChchtrNBts', 18, 0, 4194303, 0, 0, 0, 2048, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30916, 1, 6);
 REPLACE INTO `item_mods` VALUES (30916, 23, 4);
 REPLACE INTO `item_mods` VALUES (30916, 68, 8);
 
 -- Thieving Theodolinda trophy + gear
-REPLACE INTO `item_basic` VALUES (30917, 0, 'Theodolinda's Stolen Gem', 'ThdlndSGm', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30918, 0, 'Theodolinda's Pickpocket Mitts', 'ThdlndPMtt', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30917, 0, 'Theodolinda\'s Stolen Gem', 'ThdlndSGm', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30918, 0, 'Theodolinda\'s Pickpocket Mitts', 'ThdlndPMtt', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30918, 'ThdlndPMtt', 30, 0, 4194303, 0, 0, 0, 32, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30918, 1, 9);
 REPLACE INTO `item_mods` VALUES (30918, 13, 5);
 REPLACE INTO `item_mods` VALUES (30918, 25, 10);
-REPLACE INTO `item_basic` VALUES (30919, 0, 'Theodolinda's Swift Earring', 'ThdlndSEar', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30919, 0, 'Theodolinda\'s Swift Earring', 'ThdlndSEar', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30919, 'ThdlndSEar', 30, 0, 4194303, 0, 0, 0, 4, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30919, 23, 4);
 REPLACE INTO `item_mods` VALUES (30919, 13, 4);
 REPLACE INTO `item_mods` VALUES (30919, 384, 3);
 
 -- Banana Baron Balthazar trophy + gear
-REPLACE INTO `item_basic` VALUES (30920, 0, 'Balthazar's Royal Banana', 'BlthzrRBnn', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30921, 0, 'Balthazar's Jungle Crown', 'BlthzrJCrn', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30920, 0, 'Balthazar\'s Royal Banana', 'BlthzrRBnn', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30921, 0, 'Balthazar\'s Jungle Crown', 'BlthzrJCrn', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30921, 'BlthzrJCrn', 42, 0, 4194303, 0, 0, 0, 1, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30921, 1, 12);
 REPLACE INTO `item_mods` VALUES (30921, 23, 6);
 REPLACE INTO `item_mods` VALUES (30921, 13, 5);
 REPLACE INTO `item_mods` VALUES (30921, 68, 11);
-REPLACE INTO `item_basic` VALUES (30922, 0, 'Balthazar's Treetop Belt', 'BlthzrTBlt', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30922, 0, 'Balthazar\'s Treetop Belt', 'BlthzrTBlt', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30922, 'BlthzrTBlt', 42, 0, 4194303, 0, 0, 0, 512, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30922, 1, 5);
 REPLACE INTO `item_mods` VALUES (30922, 23, 5);
 REPLACE INTO `item_mods` VALUES (30922, 384, 4);
 
 -- Primate Prince Pelagius trophy + gear
-REPLACE INTO `item_basic` VALUES (30923, 0, 'Pelagius's Primate Insignia', 'PlgsPInsig', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30924, 0, 'Pelagius's Jungle King Robe', 'PlgsJKRbe', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30923, 0, 'Pelagius\'s Primate Insignia', 'PlgsPInsig', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30924, 0, 'Pelagius\'s Jungle King Robe', 'PlgsJKRbe', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30924, 'PlgsJKRbe', 54, 0, 4194303, 0, 0, 0, 16, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30924, 1, 19);
 REPLACE INTO `item_mods` VALUES (30924, 23, 8);
 REPLACE INTO `item_mods` VALUES (30924, 13, 7);
 REPLACE INTO `item_mods` VALUES (30924, 2, 60);
-REPLACE INTO `item_basic` VALUES (30925, 0, 'Pelagius's Alpha Ring', 'PlgsAlpRng', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30925, 0, 'Pelagius\'s Alpha Ring', 'PlgsAlpRng', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30925, 'PlgsAlpRng', 54, 0, 4194303, 0, 0, 0, 64, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30925, 23, 6);
 REPLACE INTO `item_mods` VALUES (30925, 13, 5);
@@ -3089,55 +3089,55 @@ REPLACE INTO `item_mods` VALUES (30925, 25, 13);
 REPLACE INTO `item_mods` VALUES (30925, 384, 3);
 
 -- Gnashing Guildenstern trophy + gear
-REPLACE INTO `item_basic` VALUES (30926, 0, 'Guildenstern's Cracked Claw', 'GldnsternCC', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30927, 0, 'Guildenstern's Gnole Bracers', 'GldnstrnBrc', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30926, 0, 'Guildenstern\'s Cracked Claw', 'GldnsternCC', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30927, 0, 'Guildenstern\'s Gnole Bracers', 'GldnstrnBrc', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30927, 'GldnstrnBrc', 22, 0, 4194303, 0, 0, 0, 32, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30927, 1, 8);
 REPLACE INTO `item_mods` VALUES (30927, 12, 4);
 REPLACE INTO `item_mods` VALUES (30927, 29, 8);
-REPLACE INTO `item_basic` VALUES (30928, 0, 'Guildenstern's Howl Belt', 'GldnstrnHBlt', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30928, 0, 'Guildenstern\'s Howl Belt', 'GldnstrnHBlt', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30928, 'GldnstrnHBlt', 22, 0, 4194303, 0, 0, 0, 512, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30928, 1, 5);
 REPLACE INTO `item_mods` VALUES (30928, 14, 3);
 REPLACE INTO `item_mods` VALUES (30928, 2, 20);
 
 -- Pack Lord Petronio trophy + gear
-REPLACE INTO `item_basic` VALUES (30929, 0, 'Petronio's Pack Mark', 'PtrnoPMrk', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30930, 0, 'Petronio's Packmaster Helm', 'PtrnoPHlm', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30929, 0, 'Petronio\'s Pack Mark', 'PtrnoPMrk', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30930, 0, 'Petronio\'s Packmaster Helm', 'PtrnoPHlm', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30930, 'PtrnoPHlm', 34, 0, 4194303, 0, 0, 0, 1, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30930, 1, 12);
 REPLACE INTO `item_mods` VALUES (30930, 12, 6);
 REPLACE INTO `item_mods` VALUES (30930, 14, 4);
 REPLACE INTO `item_mods` VALUES (30930, 2, 35);
-REPLACE INTO `item_basic` VALUES (30931, 0, 'Petronio's Den Ring', 'PtrnoDRng', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30931, 0, 'Petronio\'s Den Ring', 'PtrnoDRng', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30931, 'PtrnoDRng', 34, 0, 4194303, 0, 0, 0, 64, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30931, 12, 4);
 REPLACE INTO `item_mods` VALUES (30931, 29, 10);
 REPLACE INTO `item_mods` VALUES (30931, 14, 3);
 
 -- Mauling Malaclypse trophy + gear
-REPLACE INTO `item_basic` VALUES (30932, 0, 'Malaclypse's Maul Fang', 'MlclpsMFng', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30933, 0, 'Malaclypse's Savager Hauberk', 'MlclpsSHbk', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30932, 0, 'Malaclypse\'s Maul Fang', 'MlclpsMFng', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30933, 0, 'Malaclypse\'s Savager Hauberk', 'MlclpsSHbk', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30933, 'MlclpsSHbk', 44, 0, 4194303, 0, 0, 0, 16, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30933, 1, 21);
 REPLACE INTO `item_mods` VALUES (30933, 12, 7);
 REPLACE INTO `item_mods` VALUES (30933, 14, 6);
 REPLACE INTO `item_mods` VALUES (30933, 2, 60);
-REPLACE INTO `item_basic` VALUES (30934, 0, 'Malaclypse's Pack Ring', 'MlclpsPRng', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30934, 0, 'Malaclypse\'s Pack Ring', 'MlclpsPRng', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30934, 'MlclpsPRng', 44, 0, 4194303, 0, 0, 0, 64, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30934, 12, 5);
 REPLACE INTO `item_mods` VALUES (30934, 29, 12);
 REPLACE INTO `item_mods` VALUES (30934, 14, 4);
 
 -- Alpha Apollinarius trophy + gear
-REPLACE INTO `item_basic` VALUES (30935, 0, 'Apollinarius's Alpha Fang', 'ApllnrsAFng', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30936, 0, 'Apollinarius's Alpha Plate', 'ApllnrsAPlt', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30935, 0, 'Apollinarius\'s Alpha Fang', 'ApllnrsAFng', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30936, 0, 'Apollinarius\'s Alpha Plate', 'ApllnrsAPlt', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30936, 'ApllnrsAPlt', 54, 0, 4194303, 0, 0, 0, 16, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30936, 1, 26);
 REPLACE INTO `item_mods` VALUES (30936, 12, 9);
 REPLACE INTO `item_mods` VALUES (30936, 14, 8);
 REPLACE INTO `item_mods` VALUES (30936, 2, 80);
-REPLACE INTO `item_basic` VALUES (30937, 0, 'Apollinarius's Pack Crown', 'ApllnrsPCrn', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30937, 0, 'Apollinarius\'s Pack Crown', 'ApllnrsPCrn', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30937, 'ApllnrsPCrn', 54, 0, 4194303, 0, 0, 0, 1, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30937, 1, 15);
 REPLACE INTO `item_mods` VALUES (30937, 12, 7);
@@ -3145,217 +3145,217 @@ REPLACE INTO `item_mods` VALUES (30937, 14, 6);
 REPLACE INTO `item_mods` VALUES (30937, 2, 50);
 
 -- Tiny Tortoise Tibalt trophy + gear
-REPLACE INTO `item_basic` VALUES (30938, 0, 'Tibalt's Shell Chip', 'TbltShCp', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30939, 0, 'Tibalt's Shell Ring', 'TbltShRng', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30938, 0, 'Tibalt\'s Shell Chip', 'TbltShCp', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30939, 0, 'Tibalt\'s Shell Ring', 'TbltShRng', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30939, 'TbltShRng', 26, 0, 4194303, 0, 0, 0, 64, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30939, 1, 4);
 REPLACE INTO `item_mods` VALUES (30939, 14, 3);
 REPLACE INTO `item_mods` VALUES (30939, 29, 5);
-REPLACE INTO `item_basic` VALUES (30940, 0, 'Tibalt's Plated Sandals', 'TbltPSnd', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30940, 0, 'Tibalt\'s Plated Sandals', 'TbltPSnd', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30940, 'TbltPSnd', 26, 0, 4194303, 0, 0, 0, 2048, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30940, 1, 8);
 REPLACE INTO `item_mods` VALUES (30940, 14, 3);
 REPLACE INTO `item_mods` VALUES (30940, 2, 25);
 
 -- Armored Archibald trophy + gear
-REPLACE INTO `item_basic` VALUES (30941, 0, 'Archibald's Spiked Shell', 'ArchbldSSh', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30942, 0, 'Archibald's Fortress Collar', 'ArchbldFCl', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30941, 0, 'Archibald\'s Spiked Shell', 'ArchbldSSh', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30942, 0, 'Archibald\'s Fortress Collar', 'ArchbldFCl', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30942, 'ArchbldFCl', 40, 0, 4194303, 0, 0, 0, 2, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30942, 1, 6);
 REPLACE INTO `item_mods` VALUES (30942, 14, 6);
 REPLACE INTO `item_mods` VALUES (30942, 2, 40);
 REPLACE INTO `item_mods` VALUES (30942, 29, 6);
-REPLACE INTO `item_basic` VALUES (30943, 0, 'Archibald's Rampart Boots', 'ArchbldRBts', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30943, 0, 'Archibald\'s Rampart Boots', 'ArchbldRBts', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30943, 'ArchbldRBts', 40, 0, 4194303, 0, 0, 0, 2048, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30943, 1, 13);
 REPLACE INTO `item_mods` VALUES (30943, 14, 5);
 REPLACE INTO `item_mods` VALUES (30943, 2, 40);
 
 -- Elder Shell Eleanor trophy + gear
-REPLACE INTO `item_basic` VALUES (30944, 0, 'Eleanor's Elder Shell', 'ElnrEldSh', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30945, 0, 'Eleanor's Ancient Carapace', 'ElnrACrp', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30944, 0, 'Eleanor\'s Elder Shell', 'ElnrEldSh', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30945, 0, 'Eleanor\'s Ancient Carapace', 'ElnrACrp', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30945, 'ElnrACrp', 52, 0, 4194303, 0, 0, 0, 16, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30945, 1, 26);
 REPLACE INTO `item_mods` VALUES (30945, 14, 9);
 REPLACE INTO `item_mods` VALUES (30945, 2, 80);
 REPLACE INTO `item_mods` VALUES (30945, 29, 10);
-REPLACE INTO `item_basic` VALUES (30946, 0, 'Eleanor's Stone Ring', 'ElnrStnRng', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30946, 0, 'Eleanor\'s Stone Ring', 'ElnrStnRng', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30946, 'ElnrStnRng', 52, 0, 4194303, 0, 0, 0, 64, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30946, 14, 6);
 REPLACE INTO `item_mods` VALUES (30946, 2, 50);
 REPLACE INTO `item_mods` VALUES (30946, 29, 8);
 
 -- Adamantoise Emperor Alexandros trophy + gear
-REPLACE INTO `item_basic` VALUES (30947, 0, 'Alexandros's Imperial Shell', 'AlxndrsISh', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30948, 0, 'Alexandros's Titan Fortress', 'AlxndrsTF', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30947, 0, 'Alexandros\'s Imperial Shell', 'AlxndrsISh', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30948, 0, 'Alexandros\'s Titan Fortress', 'AlxndrsTF', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30948, 'AlxndrsTF', 60, 0, 4194303, 0, 0, 0, 16, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30948, 1, 32);
 REPLACE INTO `item_mods` VALUES (30948, 14, 11);
 REPLACE INTO `item_mods` VALUES (30948, 2, 110);
 REPLACE INTO `item_mods` VALUES (30948, 29, 12);
-REPLACE INTO `item_basic` VALUES (30949, 0, 'Alexandros's Bastion Ring', 'AlxndrsBRng', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30949, 0, 'Alexandros\'s Bastion Ring', 'AlxndrsBRng', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30949, 'AlxndrsBRng', 60, 0, 4194303, 0, 0, 0, 64, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30949, 14, 8);
 REPLACE INTO `item_mods` VALUES (30949, 2, 65);
 REPLACE INTO `item_mods` VALUES (30949, 29, 10);
 
 -- Coiling Callirhoe trophy + gear
-REPLACE INTO `item_basic` VALUES (30950, 0, 'Callirhoe's Coil Ring', 'CllrhoeRng', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30951, 0, 'Callirhoe's Serpentine Earring', 'CllrhoeEar', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30950, 0, 'Callirhoe\'s Coil Ring', 'CllrhoeRng', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30951, 0, 'Callirhoe\'s Serpentine Earring', 'CllrhoeEar', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30951, 'CllrhoeEar', 22, 0, 4194303, 0, 0, 0, 4, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30951, 28, 4);
 REPLACE INTO `item_mods` VALUES (30951, 25, 3);
 REPLACE INTO `item_mods` VALUES (30951, 30, 6);
-REPLACE INTO `item_basic` VALUES (30952, 0, 'Callirhoe's Scale Sash', 'CllrhoeSsh', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30952, 0, 'Callirhoe\'s Scale Sash', 'CllrhoeSsh', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30952, 'CllrhoeSsh', 22, 0, 4194303, 0, 0, 0, 512, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30952, 1, 5);
 REPLACE INTO `item_mods` VALUES (30952, 28, 3);
 REPLACE INTO `item_mods` VALUES (30952, 9, 20);
 
 -- Charming Chrysanthema trophy + gear
-REPLACE INTO `item_basic` VALUES (30953, 0, 'Chrysanthema's Charm Bead', 'ChrsnthmCBd', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30954, 0, 'Chrysanthema's Enchanting Collar', 'ChrsnthmCCl', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30953, 0, 'Chrysanthema\'s Charm Bead', 'ChrsnthmCBd', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30954, 0, 'Chrysanthema\'s Enchanting Collar', 'ChrsnthmCCl', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30954, 'ChrsnthmCCl', 34, 0, 4194303, 0, 0, 0, 2, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30954, 28, 6);
 REPLACE INTO `item_mods` VALUES (30954, 68, 5);
 REPLACE INTO `item_mods` VALUES (30954, 9, 30);
-REPLACE INTO `item_basic` VALUES (30955, 0, 'Chrysanthema's Lure Ring', 'ChrsnthmLRng', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30955, 0, 'Chrysanthema\'s Lure Ring', 'ChrsnthmLRng', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30955, 'ChrsnthmLRng', 34, 0, 4194303, 0, 0, 0, 64, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30955, 28, 5);
 REPLACE INTO `item_mods` VALUES (30955, 25, 4);
 REPLACE INTO `item_mods` VALUES (30955, 30, 8);
 
 -- Seductive Seraphimia trophy + gear
-REPLACE INTO `item_basic` VALUES (30956, 0, 'Seraphimia's Seduction Scale', 'SrphmSdcSc', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30957, 0, 'Seraphimia's Siren Robe', 'SrphmSRbe', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30956, 0, 'Seraphimia\'s Seduction Scale', 'SrphmSdcSc', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30957, 0, 'Seraphimia\'s Siren Robe', 'SrphmSRbe', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30957, 'SrphmSRbe', 46, 0, 4194303, 0, 0, 0, 16, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30957, 1, 16);
 REPLACE INTO `item_mods` VALUES (30957, 28, 8);
 REPLACE INTO `item_mods` VALUES (30957, 25, 6);
 REPLACE INTO `item_mods` VALUES (30957, 9, 65);
-REPLACE INTO `item_basic` VALUES (30958, 0, 'Seraphimia's Temptress Ring', 'SrphmTmpRng', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30958, 0, 'Seraphimia\'s Temptress Ring', 'SrphmTmpRng', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30958, 'SrphmTmpRng', 46, 0, 4194303, 0, 0, 0, 64, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30958, 28, 6);
 REPLACE INTO `item_mods` VALUES (30958, 25, 5);
 REPLACE INTO `item_mods` VALUES (30958, 30, 10);
 
 -- Serpent Queen Sophronia trophy + gear
-REPLACE INTO `item_basic` VALUES (30959, 0, 'Sophronia's Royal Scale', 'SphrnaRSc', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30960, 0, 'Sophronia's Sea Queen Tiara', 'SphrnaSTar', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30959, 0, 'Sophronia\'s Royal Scale', 'SphrnaRSc', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30960, 0, 'Sophronia\'s Sea Queen Tiara', 'SphrnaSTar', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30960, 'SphrnaSTar', 58, 0, 4194303, 0, 0, 0, 1, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30960, 1, 15);
 REPLACE INTO `item_mods` VALUES (30960, 28, 9);
 REPLACE INTO `item_mods` VALUES (30960, 25, 7);
 REPLACE INTO `item_mods` VALUES (30960, 9, 55);
-REPLACE INTO `item_basic` VALUES (30961, 0, 'Sophronia's Sovereign Ring', 'SphrnaSOvRng', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30961, 0, 'Sophronia\'s Sovereign Ring', 'SphrnaSOvRng', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30961, 'SphrnaSOvRng', 58, 0, 4194303, 0, 0, 0, 64, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30961, 28, 7);
 REPLACE INTO `item_mods` VALUES (30961, 25, 6);
 REPLACE INTO `item_mods` VALUES (30961, 30, 13);
 
 -- Bloodsucking Barnard trophy + gear
-REPLACE INTO `item_basic` VALUES (30962, 0, 'Barnard's Bloodsack', 'BrndBlSck', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30963, 0, 'Barnard's Crimson Earring', 'BrndCEar', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30962, 0, 'Barnard\'s Bloodsack', 'BrndBlSck', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30963, 0, 'Barnard\'s Crimson Earring', 'BrndCEar', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30963, 'BrndCEar', 12, 0, 4194303, 0, 0, 0, 4, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30963, 14, 3);
 REPLACE INTO `item_mods` VALUES (30963, 2, 15);
 REPLACE INTO `item_mods` VALUES (30963, 29, 3);
-REPLACE INTO `item_basic` VALUES (30964, 0, 'Barnard's Drain Ring', 'BrndDrRng', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30964, 0, 'Barnard\'s Drain Ring', 'BrndDrRng', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30964, 'BrndDrRng', 12, 0, 4194303, 0, 0, 0, 64, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30964, 25, 2);
 REPLACE INTO `item_mods` VALUES (30964, 30, 4);
 REPLACE INTO `item_mods` VALUES (30964, 9, 10);
 
 -- Gorging Griselda trophy + gear
-REPLACE INTO `item_basic` VALUES (30965, 0, 'Griselda's Bloated Sac', 'GrsldaBSc', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30966, 0, 'Griselda's Blood Collar', 'GrsldaBCll', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30965, 0, 'Griselda\'s Bloated Sac', 'GrsldaBSc', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30966, 0, 'Griselda\'s Blood Collar', 'GrsldaBCll', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30966, 'GrsldaBCll', 24, 0, 4194303, 0, 0, 0, 2, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30966, 14, 4);
 REPLACE INTO `item_mods` VALUES (30966, 2, 25);
 REPLACE INTO `item_mods` VALUES (30966, 29, 5);
-REPLACE INTO `item_basic` VALUES (30967, 0, 'Griselda's Gorge Mitts', 'GrsldaGMtt', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30967, 0, 'Griselda\'s Gorge Mitts', 'GrsldaGMtt', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30967, 'GrsldaGMtt', 24, 0, 4194303, 0, 0, 0, 32, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30967, 1, 8);
 REPLACE INTO `item_mods` VALUES (30967, 14, 4);
 REPLACE INTO `item_mods` VALUES (30967, 2, 30);
 
 -- Plasma Draining Placida trophy + gear
-REPLACE INTO `item_basic` VALUES (30968, 0, 'Placida's Ichor Flask', 'PlcdaIchrF', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30969, 0, 'Placida's Marrow Hauberk', 'PlcdaMHbk', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30968, 0, 'Placida\'s Ichor Flask', 'PlcdaIchrF', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30969, 0, 'Placida\'s Marrow Hauberk', 'PlcdaMHbk', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30969, 'PlcdaMHbk', 36, 0, 4194303, 0, 0, 0, 16, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30969, 1, 17);
 REPLACE INTO `item_mods` VALUES (30969, 14, 6);
 REPLACE INTO `item_mods` VALUES (30969, 2, 55);
 REPLACE INTO `item_mods` VALUES (30969, 29, 6);
-REPLACE INTO `item_basic` VALUES (30970, 0, 'Placida's Siphon Ring', 'PlcdaSpRng', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30970, 0, 'Placida\'s Siphon Ring', 'PlcdaSpRng', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30970, 'PlcdaSpRng', 36, 0, 4194303, 0, 0, 0, 64, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30970, 14, 4);
 REPLACE INTO `item_mods` VALUES (30970, 2, 30);
 REPLACE INTO `item_mods` VALUES (30970, 29, 7);
 
 -- Ancient Lamprey Augustine trophy + gear
-REPLACE INTO `item_basic` VALUES (30971, 0, 'Augustine's Ancient Sucker', 'AgstnASckr', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30972, 0, 'Augustine's Life Drain Robe', 'AgstnLDRbe', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30971, 0, 'Augustine\'s Ancient Sucker', 'AgstnASckr', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30972, 0, 'Augustine\'s Life Drain Robe', 'AgstnLDRbe', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30972, 'AgstnLDRbe', 50, 0, 4194303, 0, 0, 0, 16, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30972, 1, 19);
 REPLACE INTO `item_mods` VALUES (30972, 14, 8);
 REPLACE INTO `item_mods` VALUES (30972, 2, 70);
 REPLACE INTO `item_mods` VALUES (30972, 25, 6);
-REPLACE INTO `item_basic` VALUES (30973, 0, 'Augustine's Vital Ring', 'AgstnVtRng', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30973, 0, 'Augustine\'s Vital Ring', 'AgstnVtRng', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30973, 'AgstnVtRng', 50, 0, 4194303, 0, 0, 0, 64, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30973, 14, 6);
 REPLACE INTO `item_mods` VALUES (30973, 2, 45);
 REPLACE INTO `item_mods` VALUES (30973, 29, 8);
 
 -- Larval Lavrentiy trophy + gear
-REPLACE INTO `item_basic` VALUES (30974, 0, 'Lavrentiy's Larval Silk', 'LvrntLSilk', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30975, 0, 'Lavrentiy's Chrysalis Ring', 'LvrnCRng', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30974, 0, 'Lavrentiy\'s Larval Silk', 'LvrntLSilk', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30975, 0, 'Lavrentiy\'s Chrysalis Ring', 'LvrnCRng', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30975, 'LvrnCRng', 18, 0, 4194303, 0, 0, 0, 64, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30975, 25, 3);
 REPLACE INTO `item_mods` VALUES (30975, 9, 15);
 REPLACE INTO `item_mods` VALUES (30975, 30, 4);
-REPLACE INTO `item_basic` VALUES (30976, 0, 'Lavrentiy's Wriggle Boots', 'LvrnWBts', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30976, 0, 'Lavrentiy\'s Wriggle Boots', 'LvrnWBts', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30976, 'LvrnWBts', 18, 0, 4194303, 0, 0, 0, 2048, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30976, 1, 5);
 REPLACE INTO `item_mods` VALUES (30976, 23, 3);
 REPLACE INTO `item_mods` VALUES (30976, 68, 7);
 
 -- Spinning Sebestyen trophy + gear
-REPLACE INTO `item_basic` VALUES (30977, 0, 'Sebestyen's Cocoon Silk', 'SbstynCSilk', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30978, 0, 'Sebestyen's Web Collar', 'SbstynWCll', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30977, 0, 'Sebestyen\'s Cocoon Silk', 'SbstynCSilk', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30978, 0, 'Sebestyen\'s Web Collar', 'SbstynWCll', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30978, 'SbstynWCll', 30, 0, 4194303, 0, 0, 0, 2, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30978, 25, 4);
 REPLACE INTO `item_mods` VALUES (30978, 9, 25);
 REPLACE INTO `item_mods` VALUES (30978, 30, 6);
-REPLACE INTO `item_basic` VALUES (30979, 0, 'Sebestyen's Spinner Mitts', 'SbstynSMtt', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30979, 0, 'Sebestyen\'s Spinner Mitts', 'SbstynSMtt', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30979, 'SbstynSMtt', 30, 0, 4194303, 0, 0, 0, 32, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30979, 1, 9);
 REPLACE INTO `item_mods` VALUES (30979, 25, 4);
 REPLACE INTO `item_mods` VALUES (30979, 28, 8);
 
 -- Metamorphing Melchior trophy + gear
-REPLACE INTO `item_basic` VALUES (30980, 0, 'Melchior's Morphing Core', 'MlchrMCr', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30981, 0, 'Melchior's Transform Robe', 'MlchrTRbe', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30980, 0, 'Melchior\'s Morphing Core', 'MlchrMCr', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30981, 0, 'Melchior\'s Transform Robe', 'MlchrTRbe', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30981, 'MlchrTRbe', 42, 0, 4194303, 0, 0, 0, 16, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30981, 1, 17);
 REPLACE INTO `item_mods` VALUES (30981, 25, 7);
 REPLACE INTO `item_mods` VALUES (30981, 28, 14);
 REPLACE INTO `item_mods` VALUES (30981, 9, 55);
-REPLACE INTO `item_basic` VALUES (30982, 0, 'Melchior's Emergence Ring', 'MlchrERng', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30982, 0, 'Melchior\'s Emergence Ring', 'MlchrERng', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30982, 'MlchrERng', 42, 0, 4194303, 0, 0, 0, 64, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30982, 25, 5);
 REPLACE INTO `item_mods` VALUES (30982, 30, 9);
 REPLACE INTO `item_mods` VALUES (30982, 28, 8);
 
 -- Melpomene trophy + gear
-REPLACE INTO `item_basic` VALUES (30983, 0, 'Melpomene's Chrysalis', 'MlpmChrys', 1, 46660, 0, 1, 0);
-REPLACE INTO `item_basic` VALUES (30984, 0, 'Melpomene's Ascendant Robe', 'MlpmARbe', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30983, 0, 'Melpomene\'s Chrysalis', 'MlpmChrys', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30984, 0, 'Melpomene\'s Ascendant Robe', 'MlpmARbe', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30984, 'MlpmARbe', 56, 0, 4194303, 0, 0, 0, 16, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30984, 1, 21);
 REPLACE INTO `item_mods` VALUES (30984, 25, 10);
 REPLACE INTO `item_mods` VALUES (30984, 28, 20);
 REPLACE INTO `item_mods` VALUES (30984, 9, 85);
-REPLACE INTO `item_basic` VALUES (30985, 0, 'Melpomene's Chrysalis Ring', 'MlpmCRng', 1, 46660, 0, 1, 0);
+REPLACE INTO `item_basic` VALUES (30985, 0, 'Melpomene\'s Chrysalis Ring', 'MlpmCRng', 1, 46660, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (30985, 'MlpmCRng', 56, 0, 4194303, 0, 0, 0, 64, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES (30985, 25, 7);
 REPLACE INTO `item_mods` VALUES (30985, 28, 15);
