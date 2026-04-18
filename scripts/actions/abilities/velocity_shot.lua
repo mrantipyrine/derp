@@ -1,9 +1,8 @@
 -----------------------------------
 -- Ability: Velocity Shot
--- Increases attack power and speed of ranged attacks, while reducing attack power and speed of melee attacks.
--- Obtained: Ranger Level 45
--- Recast Time: 5:00 minutes
--- Duration: 2 hours
+-- Job: Ranger
+-- Increases ranged damage/speed, reduces melee.
+-- Solo bonus: extra Racc to ensure the ranged specialist lands every shot.
 -----------------------------------
 local abilityObject = {}
 
@@ -13,6 +12,20 @@ end
 
 abilityObject.onUseAbility = function(player, target, ability)
     player:addStatusEffect(xi.effect.VELOCITY_SHOT, 1, 0, 7200)
+
+    local lvl   = player:getMainLvl()
+    local isRNG = player:getMainJob() == xi.job.RNG
+
+    local raccBonus = isRNG and math.floor(lvl * 0.22) or math.floor(lvl * 0.11)
+
+    player:addMod(xi.mod.RACC, raccBonus)
+    player:timer(7200000, function(p)
+        p:delMod(xi.mod.RACC, raccBonus)
+    end)
+
+    if xi.soloSynergy then
+        xi.soloSynergy.flashBuff(player, 'Velocity Shot', string.format('Racc +%d', raccBonus))
+    end
 end
 
 return abilityObject
