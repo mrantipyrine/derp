@@ -15,6 +15,9 @@ spellObject.onSpellCast = function(caster, target, spell)
 
     if target:addStatusEffect(xi.effect.DREAD_SPIKES, 0, 0, duration, 0, drainAmount, 1) then
         spell:setMsg(xi.msg.basic.MAGIC_GAIN_EFFECT)
+        if xi.soloSynergy then
+            xi.soloSynergy.applyBlackSelfBuffSynergy(caster, target, spell, xi.effect.DREAD_SPIKES)
+        end
     else
         spell:setMsg(xi.msg.basic.MAGIC_NO_EFFECT)
     end

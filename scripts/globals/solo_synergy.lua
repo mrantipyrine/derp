@@ -189,7 +189,7 @@ local ELEMENT_DAYS = {
     [xi.element.ICE]       = xi.day.ICEDAY,
     [xi.element.WIND]      = xi.day.WINDSDAY,
     [xi.element.EARTH]     = xi.day.EARTHSDAY,
-    [xi.element.THUNDER]   = xi.day.LIGHTNINGSDAY,
+    [xi.element.THUNDER]   = xi.day.LIGHTNINGDAY,
     [xi.element.WATER]     = xi.day.WATERSDAY,
     [xi.element.LIGHT]     = xi.day.LIGHTSDAY,
     [xi.element.DARK]      = xi.day.DARKSDAY,
@@ -276,6 +276,20 @@ local ELEMENT_PRIMER_VARS = {
     [xi.element.WATER]   = 'SS_PRI_WATER',
 }
 
+ss.primeElementTarget = function(target, element, duration)
+    local primerVar = ELEMENT_PRIMER_VARS[element]
+    if not target or not primerVar then
+        return false
+    end
+
+    target:setLocalVar(primerVar, 1)
+    target:timer((duration or 15) * 1000, function(t)
+        t:setLocalVar(primerVar, 0)
+    end)
+
+    return true
+end
+
 -- Returns a multiplier based on active primers on the target.
 -- Certain elements "react" to others for double damage.
 ss.getMagicComboMultiplier = function(caster, target, spell)
@@ -335,14 +349,7 @@ ss.applyMagicSynergy = function(caster, target, spell, damage)
     end
 
     -- 2. Apply Elemental Primers (100% chance on damaging spells for solo/small groups)
-    local primerVar = ELEMENT_PRIMER_VARS[element]
-    if primerVar then
-        target:setLocalVar(primerVar, 1)
-        -- Primers expire after 15 seconds if not used
-        target:timer(15000, function(t)
-            t:setLocalVar(primerVar, 0)
-        end)
-    end
+    ss.primeElementTarget(target, element, 15)
 
     -- 3. Element-Specific Identity Effects
     local baseChance = 20 + ss.getPartyPotencyBonus(caster)
@@ -368,6 +375,219 @@ ss.applyMagicSynergy = function(caster, target, spell, damage)
         local tpGain = math.random(10, 50)
         caster:addTP(tpGain)
     end
+end
+
+local BLACK_ENFEEBLE_ELEMENTS =
+{
+    [xi.effect.BURN]  = xi.element.FIRE,
+    [xi.effect.FROST] = xi.element.ICE,
+    [xi.effect.CHOKE] = xi.element.WIND,
+    [xi.effect.RASP]  = xi.element.EARTH,
+    [xi.effect.SHOCK] = xi.element.THUNDER,
+    [xi.effect.DROWN] = xi.element.WATER,
+}
+
+local BLACK_ENFEEBLE_WEIGHT =
+{
+    [xi.effect.PETRIFICATION]       = 3,
+    [xi.effect.STUN]                = 3,
+    [xi.effect.CURSE_I]             = 3,
+    [xi.effect.MAGIC_EVASION_DOWN]  = 2,
+    [xi.effect.EVASION_DOWN]        = 2,
+    [xi.effect.WEIGHT]              = 2,
+    [xi.effect.BIND]                = 2,
+    [xi.effect.SLEEP_I]             = 2,
+    [xi.effect.BLINDNESS]           = 1,
+    [xi.effect.PLAGUE]              = 1,
+    [xi.effect.POISON]              = 1,
+}
+
+ss.applyBlackEnfeebleSynergy = function(caster, target, spell, spellEffect)
+    if
+        not caster or
+        not target or
+        not spell or
+        not caster:isPC() or
+        target:isPC() or
+        spell:getSpellGroup() ~= xi.magic.spellGroup.BLACK or
+        caster:getPartySize() > 3
+    then
+        return
+    end
+
+    local element = BLACK_ENFEEBLE_ELEMENTS[spellEffect]
+    if element then
+        ss.primeElementTarget(target, element, 20)
+        ss.flash(caster, 'Elemental weakness exposed.')
+        return
+    end
+
+    local weight = BLACK_ENFEEBLE_WEIGHT[spellEffect] or 1
+    target:setLocalVar('SS_BLACK_ENFEEBLED', math.max(target:getLocalVar('SS_BLACK_ENFEEBLED') or 0, weight))
+    target:timer(20000, function(t)
+        t:setLocalVar('SS_BLACK_ENFEEBLED', 0)
+    end)
+
+    ss.flash(caster, 'Exploit opening primed.')
+end
+
+ss.getBlackEnfeebleMultiplier = function(caster, target, spell)
+    if
+        not caster or
+        not target or
+        not spell or
+        not caster:isPC() or
+        target:isPC() or
+        spell:getSpellGroup() ~= xi.magic.spellGroup.BLACK or
+        caster:getPartySize() > 3
+    then
+        return 1.0
+    end
+
+    local weight = target:getLocalVar('SS_BLACK_ENFEEBLED') or 0
+    if weight <= 0 then
+        return 1.0
+    end
+
+    target:setLocalVar('SS_BLACK_ENFEEBLED', 0)
+    ss.flash(caster, 'Exploit opening!')
+
+    return 1.0 + math.min(weight, 3) * 0.05
+end
+
+local BLACK_SELF_BUFF_ELEMENTS =
+{
+    [xi.effect.BLAZE_SPIKES] = xi.element.FIRE,
+    [xi.effect.ICE_SPIKES]   = xi.element.ICE,
+    [xi.effect.SHOCK_SPIKES] = xi.element.THUNDER,
+    [xi.effect.DREAD_SPIKES] = xi.element.DARK,
+    [xi.effect.ENDARK]       = xi.element.DARK,
+}
+
+ss.applyBlackSelfBuffSynergy = function(caster, target, spell, spellEffect)
+    if
+        not caster or
+        not target or
+        not spell or
+        not caster:isPC() or
+        caster:getID() ~= target:getID() or
+        spell:getSpellGroup() ~= xi.magic.spellGroup.BLACK or
+        caster:getPartySize() > 3
+    then
+        return
+    end
+
+    local element = BLACK_SELF_BUFF_ELEMENTS[spellEffect]
+    if element then
+        caster:setLocalVar('SS_BLACK_WARD_ELEMENT', element)
+        caster:timer(180000, function(p)
+            p:setLocalVar('SS_BLACK_WARD_ELEMENT', 0)
+        end)
+        ss.flash(caster, 'Arcane ward primed.')
+    elseif spellEffect == xi.effect.KLIMAFORM then
+        caster:setLocalVar('SS_KLIMAFORM_FOCUS', 1)
+        caster:timer(180000, function(p)
+            p:setLocalVar('SS_KLIMAFORM_FOCUS', 0)
+        end)
+        ss.flash(caster, 'Klimaform focus primed.')
+    end
+end
+
+ss.getBlackSelfBuffMultiplier = function(caster, spell)
+    if
+        not caster or
+        not spell or
+        not caster:isPC() or
+        spell:getSpellGroup() ~= xi.magic.spellGroup.BLACK or
+        caster:getPartySize() > 3
+    then
+        return 1.0
+    end
+
+    local multiplier = 1.0
+    local element    = spell:getElement()
+
+    if element > xi.element.NONE and element == (caster:getLocalVar('SS_BLACK_WARD_ELEMENT') or 0) then
+        caster:setLocalVar('SS_BLACK_WARD_ELEMENT', 0)
+        multiplier = multiplier * 1.20
+        ss.flash(caster, 'Arcane ward released.')
+    end
+
+    if
+        element >= xi.element.FIRE and
+        element <= xi.element.DARK and
+        caster:getLocalVar('SS_KLIMAFORM_FOCUS') == 1
+    then
+        caster:setLocalVar('SS_KLIMAFORM_FOCUS', 0)
+        multiplier = multiplier * 1.15
+        ss.flash(caster, 'Klimaform focus released.')
+    end
+
+    return multiplier
+end
+
+local RESONANCE_BUFFS =
+{
+    [xi.element.FIRE]    = xi.effect.BLAZE_SPIKES,
+    [xi.element.ICE]     = xi.effect.ICE_SPIKES,
+    [xi.element.WIND]    = xi.effect.BLINK,
+    [xi.element.EARTH]   = xi.effect.STONESKIN,
+    [xi.element.THUNDER] = xi.effect.SHOCK_SPIKES,
+    [xi.element.WATER]   = xi.effect.AQUAVEIL,
+}
+
+local RESONANCE_DAYS =
+{
+    [xi.element.FIRE]    = xi.day.FIRESDAY,
+    [xi.element.ICE]     = xi.day.ICEDAY,
+    [xi.element.WIND]    = xi.day.WINDSDAY,
+    [xi.element.EARTH]   = xi.day.EARTHSDAY,
+    [xi.element.THUNDER] = xi.day.LIGHTNINGDAY,
+    [xi.element.WATER]   = xi.day.WATERSDAY,
+}
+
+-- Elemental -ra spells echo when the caster has a matching defensive ward.
+-- This keeps the "prepare a ward, then cast into it" solo/small-group theme
+-- centralized instead of hand-copying extra useDamageSpell calls per spell.
+ss.castElementalResonanceSpell = function(caster, target, spell)
+    local total = xi.spells.damage.useDamageSpell(caster, target, spell)
+
+    if
+        not caster or
+        not target or
+        not caster:isPC() or
+        target:isPC() or
+        caster:getPartySize() > 3
+    then
+        return total
+    end
+
+    local element = spell:getElement()
+    local ward    = RESONANCE_BUFFS[element]
+    if not ward or not caster:hasStatusEffect(ward) then
+        return total
+    end
+
+    local isBLM      = caster:getMainJob() == xi.job.BLM
+    local chance     = isBLM and 30 or 10
+    local extraCasts = isBLM and 2 or 1
+
+    if RESONANCE_DAYS[element] == VanadielDayOfTheWeek() then
+        chance = chance + 15
+        if isBLM then
+            extraCasts = extraCasts + 1
+        end
+    end
+
+    if math.random(100) <= chance then
+        for _ = 1, extraCasts do
+            total = total + xi.spells.damage.useDamageSpell(caster, target, spell)
+        end
+
+        ss.flash(caster, string.format('Elemental resonance! %d echo%s.', extraCasts, extraCasts == 1 and '' or 'es'))
+    end
+
+    return total
 end
 
 -----------------------------------

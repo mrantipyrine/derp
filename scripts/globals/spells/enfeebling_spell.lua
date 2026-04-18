@@ -461,6 +461,9 @@ xi.spells.enfeebling.useEnfeeblingSpell = function(caster, target, spell)
             spell:setMsg(xi.msg.basic.MAGIC_NO_EFFECT)
         else
             spell:setMsg(xi.msg.basic.MAGIC_ERASE)
+            if xi.soloSynergy then
+                xi.soloSynergy.applyBlackEnfeebleSynergy(caster, target, spell, spellEffect)
+            end
         end
 
         return spellEffect
@@ -486,6 +489,10 @@ xi.spells.enfeebling.useEnfeeblingSpell = function(caster, target, spell)
             caster:triggerRoeEvent(xi.roeTrigger.MAGIC_BURST)
         else
             spell:setMsg(xi.msg.basic.MAGIC_ENFEEB_IS + message)
+        end
+
+        if xi.soloSynergy then
+            xi.soloSynergy.applyBlackEnfeebleSynergy(caster, target, spell, spellEffect)
         end
     else
         spell:setMsg(xi.msg.basic.MAGIC_NO_EFFECT)
