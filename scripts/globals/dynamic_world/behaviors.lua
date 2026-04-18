@@ -219,7 +219,7 @@ behaviorDb.treasure_goblin =
             local nearestDist = 999
             local nearestPlayer = nil
             for _, player in pairs(players) do
-                local dist = safeDistance(mob, player)
+                local dist = xi.dynamicWorld.safeDistance(mob, player)
                 if dist < nearestDist then
                     nearestDist = dist
                     nearestPlayer = player
