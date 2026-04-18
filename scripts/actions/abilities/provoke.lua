@@ -1,7 +1,9 @@
 -----------------------------------
 -- Ability: Provoke
 -- Job: Warrior
--- Restores Health / Gains TP 
+-- Taunt + fight-starter. Grabs enmity, generates TP, gives a brief VIT spike.
+-- No HP restore — Defender is your survive button.
+-- Fixed: removed undefined tpGain reference.
 -----------------------------------
 local abilityObject = {}
 
@@ -10,26 +12,20 @@ abilityObject.onAbilityCheck = function(player, target, ability)
 end
 
 abilityObject.onUseAbility = function(player, target, ability)
+    local lvl   = player:getMainLvl()
+    local isWAR = player:getMainJob() == xi.job.WAR
 
-
-    -- Restore HP based on job
-    local hpRestorePercent = player:getMainJob() == xi.job.WAR and math.random(30, 80) or 0
-    local lostHP = player:getMaxHP() - player:getHP()
-    local hpToRestore = math.floor(lostHP * hpRestorePercent / 100)
-    player:setHP(player:getHP() + hpToRestore)
-
-    -- Increase TP
-    player:addTP(player:getMainJob() == xi.job.WAR and math.random(700, 1400) or math.random(100, 700))
-
-    -- Increase VIT 
-    local vitIncrease = player:getMainLvl() <= 8 and 1 or player:getMainJob() == xi.job.WAR and player:getMainLvl() / 6 or player:getMainLvl() / 8
-    
-    -- 3 minutes in seconds
-    duration = 25
-
-    player:addStatusEffect(xi.effect.VIT_BOOST, vitIncrease, 0, duration, 0, 0, 0)
+    -- TP on taunt: rewards opening with Provoke, not spamming it for healing
+    local tpGain = isWAR and math.random(300, 500) or math.random(80, 200)
     player:addTP(tpGain)
 
+    -- Brief VIT bump — makes the next hit a little less painful
+    local vitBoost   = math.max(1, isWAR and math.floor(lvl / 6) or math.floor(lvl / 10))
+    local vitDuration = 25
+    player:addStatusEffect(xi.effect.VIT_BOOST, vitBoost, 0, vitDuration, 0, 0, 0)
+
+    -- Enmity transfer handled by the base ability
+    xi.job_utils.warrior.useProvoke(player, target, ability)
 end
 
 return abilityObject

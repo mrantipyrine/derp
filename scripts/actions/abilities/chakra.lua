@@ -1,9 +1,9 @@
 -----------------------------------
 -- Ability: Chakra
--- Cures certain status effects and restores a small amount of HP to user.
--- Obtained: Monk Level 35
--- Recast Time: 5:00
--- Duration: Instant
+-- Job: Monk
+-- The sustain button. HP restore stays — it's the whole point of Chakra.
+-- Heal is VIT-based (deterministic, scales with gear) not a 30-80% lottery.
+-- Clears status effects and keeps offensive buffs rolling after.
 -----------------------------------
 local abilityObject = {}
 
@@ -12,49 +12,32 @@ abilityObject.onAbilityCheck = function(player, target, ability)
 end
 
 abilityObject.onUseAbility = function(player, target, ability)
-    local isMainJobMonk = player:getMainJob() == xi.job.MNK
-    local mainLevel = player:getMainLvl()
-    
-    -- Set duration (2 minutes = 120 seconds, 4 minutes = 240 seconds for Monks)
-    local duration = isMainJobMonk and 240 or 120
-    
-    -- Calculate vitality, attack, accuracy, and regain based on level and job
-    local vitIncrease, attackIncrease, accuracyIncrease, regainAmount
-    if isMainJobMonk then
-        -- Monks gain higher boosts (level / 6, rounded down)
-        vitIncrease = math.floor(mainLevel / 6)
-        attackIncrease = math.floor(mainLevel / 6)
-        accuracyIncrease = math.floor(mainLevel / 6)
-        regainAmount = math.floor(mainLevel / 6)
-    else
-        -- Other jobs gain lower boosts (level / 8, rounded down)
-        vitIncrease = math.floor(mainLevel / 8)
-        attackIncrease = math.floor(mainLevel / 8)
-        accuracyIncrease = math.floor(mainLevel / 8)
-        regainAmount = math.floor(mainLevel / 8)
-    end
-    
-    -- Restore HP for Monks
-    if isMainJobMonk then
-        local hpRestorePercent = math.random(30, 80)
-        local lostHP = player:getMaxHP() - player:getHP()
-        local hpToRestore = math.floor(lostHP * hpRestorePercent / 100)
-        player:setHP(player:getHP() + hpToRestore)
-    end
-    
-    -- Cure status effects (Blind, Poison, Paralyze)
+    local isMNK  = player:getMainJob() == xi.job.MNK
+    local lvl    = player:getMainLvl()
+    local vit    = player:getStat(xi.mod.VIT)
+    local duration = isMNK and 120 or 60
+
+    -- VIT-based heal: rewards stacking VIT, not gambling on RNG
+    local healMult = isMNK and 3.0 or 1.5
+    local heal     = math.floor(vit * healMult)
+    local lostHP   = player:getMaxHP() - player:getHP()
+    player:setHP(player:getHP() + math.min(heal, lostHP))
+
+    -- Status cleanse (retail function)
     player:delStatusEffect(xi.effect.BLINDNESS)
     player:delStatusEffect(xi.effect.POISON)
     player:delStatusEffect(xi.effect.PARALYSIS)
-    
-    -- Apply vitality, attack, accuracy, and regain effects
-    player:addStatusEffect(xi.effect.VIT_BOOST, vitIncrease, 0, duration, 0, 0, 0)
-    player:addMod(xi.mod.ATT, attackIncrease, 3, duration, 0, 10, 1)
-    player:addMod(xi.mod.ACC, accuracyIncrease, 3, duration, 0, 10, 1)
-    player:addStatusEffect(xi.effect.REGAIN, regainAmount, 3, duration, 0, 10, 1)
-    
 
-    -- Trigger the Chakra ability and return its result
+    -- Stat buffs: keep offensive pressure after the heal
+    local statBonus = isMNK and math.floor(lvl / 7) or math.floor(lvl / 10)
+    player:addMod(xi.mod.ATT, statBonus, 3, duration, 0, 10, 1)
+    player:addMod(xi.mod.ACC, statBonus, 3, duration, 0, 10, 1)
+    player:addStatusEffect(xi.effect.VIT_BOOST, statBonus, 0, duration, 0, 0, 0)
+
+    -- Regain: trickle TP while recovering
+    local regainAmt = isMNK and math.floor(lvl / 10) or math.floor(lvl / 14)
+    player:addStatusEffect(xi.effect.REGAIN, regainAmt, 3, duration, 0, 10, 1)
+
     return xi.job_utils.monk.useChakra(player, target, ability)
 end
 

@@ -1,6 +1,9 @@
 -----------------------------------
 -- Ability: Defender
 -- Job: Warrior
+-- The survive button. Hit this when you're in trouble.
+-- DEF boost + ATT penalty handled by job_utils.
+-- WAR main gets Regen to sustain the defensive window. No full-heal.
 -----------------------------------
 local abilityObject = {}
 
@@ -9,26 +12,23 @@ abilityObject.onAbilityCheck = function(player, target, ability)
 end
 
 abilityObject.onUseAbility = function(player, target, ability)
+    local lvl   = player:getMainLvl()
+    local isWAR = player:getMainJob() == xi.job.WAR
+
+    -- Core DEF boost + ATT penalty lives in job_utils
     xi.job_utils.warrior.useDefender(player, target, ability)
 
-    local maxHP = 30
-    local duration = 90
-    local defIncrease = player:getMainLvl() / 4
+    local duration = isWAR and 180 or 90
 
-    if player:getMainJob() == xi.job.WAR then
-        maxHP = maxHP * 0.8
-        duration = 179
-        defIncrease = player:getMainLvl()
-        player:addStatusEffect(xi.effect.REGEN, player:getMainLvl() / 2 , 1, duration )
+    -- Max HP boost — meaningful breathing room, not a full heal
+    local hpBoost = isWAR and 20 or 10
+    player:addStatusEffect(xi.effect.MAX_HP_BOOST, hpBoost, 1, duration)
+
+    -- WAR main only: Regen to sustain through the window
+    if isWAR then
+        local regenPow = math.max(3, math.floor(lvl / 12))
+        player:addStatusEffect(xi.effect.REGEN, regenPow, 3, duration)
     end
-
-    -- Increase Max HP and Restore 80% missing  
-    player:addStatusEffect(xi.effect.MAX_HP_BOOST, maxHP, 1, duration)
-
-    local lostHP = player:getMaxHP() - player:getHP()
-    local hpToRestore = math.floor(lostHP * 0.8)
-    player:setHP(player:getHP() + hpToRestore)
-
 end
 
 return abilityObject

@@ -1,9 +1,8 @@
 -----------------------------------
 -- Ability: Dodge
--- Enhances user's evasion.
--- Obtained: Monk Level 15
--- Recast Time: 5:00
--- Duration: 2:00 (4:50 for Monks)
+-- Job: Monk
+-- Pure evasion. Removed the MAX_HP_BOOST (that was insane at 200%).
+-- MNK gets a real EVA number and a brief stoneskin-style buffer instead.
 -----------------------------------
 local abilityObject = {}
 
@@ -12,38 +11,23 @@ abilityObject.onAbilityCheck = function(player, target, ability)
 end
 
 abilityObject.onUseAbility = function(player, target, ability)
-    local isMainJobMonk = player:getMainJob() == xi.job.MNK
-    local mainLevel = player:getMainLvl()
-    
-    -- Set duration (2 minutes = 120 seconds, 4:50 = 290 seconds for Monks)
-    local duration = isMainJobMonk and 290 or 120
-    
-    -- Calculate evasion and HP boost based on level and job
-    local evasionIncrease, hpBoostPower
-    if mainLevel <= 8 then
-        -- Low-level characters (level 8 or below) get fixed +10 evasion and +10% max HP
-        evasionIncrease = 10
-        hpBoostPower = isMainJobMonk and 10 or 0
-    elseif isMainJobMonk then
-        -- Monks gain higher evasion and HP boost (level * 8/3, rounded down, capped at 200)
-        evasionIncrease = math.min(math.floor(mainLevel * 8 / 3), 200)
-        hpBoostPower = math.min(math.floor(mainLevel * 8 / 3), 200)
-    else
-        -- Other jobs gain lower evasion boost (level * 2, rounded down) and no HP boost
-        evasionIncrease = math.floor(mainLevel * 2)
-        hpBoostPower = 0
+    local isMNK = player:getMainJob() == xi.job.MNK
+    local lvl   = player:getMainLvl()
+    local duration = isMNK and 290 or 120
+
+    -- EVA: meaningful but not "untouchable"
+    -- MNK: floor(lvl * 0.5) = ~37 at 75. Sub: floor(lvl * 0.25) = ~18.
+    local evaBonus = isMNK and math.floor(lvl * 0.50) or math.floor(lvl * 0.25)
+    evaBonus = math.max(5, evaBonus)
+
+    player:addStatusEffect(xi.effect.EVASION_BOOST, evaBonus, 3, duration, 0, 10, 1)
+
+    -- MNK only: small stoneskin-equivalent — absorbs a couple of hits
+    if isMNK then
+        local shield = math.floor(lvl * 2.5)  -- ~187 at 75, absorbs a big hit
+        player:addStatusEffect(xi.effect.STONESKIN, shield, 0, duration)
     end
 
-    -- Apply max HP boost for Monks if applicable
-    if hpBoostPower > 0 then
-        -- Increase maximum HP by hpBoostPower% for the duration
-        player:addStatusEffect(xi.effect.MAX_HP_BOOST, hpBoostPower, 3, duration, 0, 10, 1)
-    end
-
-    -- Apply evasion boost
-    player:addStatusEffect(xi.effect.EVASION_BOOST, evasionIncrease, 3, duration, 0, 10, 1)
-
-    -- Trigger the Dodge ability
     xi.job_utils.monk.useDodge(player, target, ability)
 end
 

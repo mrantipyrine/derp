@@ -2,7 +2,7 @@
 -- Ability: Meditate
 -- Gradually charges TP.
 -- Obtained: Samurai Level 30
--- Recast Time: 3:00 (Can be reduced to 2:30 using Merit Points)
+-- Recast Time: 3:00 (reducible via merits)
 -- Duration: 15 seconds
 -----------------------------------
 local abilityObject = {}
@@ -19,43 +19,24 @@ abilityObject.onUseAbility = function(player, target, ability)
         amount = 20
     end
 
-    -- Solo Synergy: solo/duo gets bonus TP per tick and +5s duration
+    -- Solo/duo bonus: +5 TP/tick and +5s window (down from +8, still meaningful)
     if player:getPartySize() <= 2 and xi.soloSynergy then
-        amount   = amount + 8                -- extra TP per tick
-        duration = duration + 5             -- longer window to build TP
+        amount   = amount + 5
+        duration = duration + 5
         local stacks = xi.soloSynergy.getMomentum(player)
         if stacks >= 5 then
-            -- Deep focus: Meditate also restores a chunk of MP at high momentum
             xi.soloSynergy.restoreMP(player, xi.soloSynergy.scaledPower(player, 20, 1.0))
         end
         xi.soloSynergy.flash(player, 'Meditate: enhanced TP charge (solo bonus)!')
     end
 
+    -- Prime Echo Strike once per Meditate use (single do-block, no double-wrap)
+    if xi.soloSynergy then
+        xi.soloSynergy.onAbilityUse(player, target, ability)
+        player:setLocalVar('SS_ECHO_STRIKE', 1)
+    end
+
     player:addStatusEffectEx(xi.effect.MEDITATE, 0, amount, 3, duration)
 end
 
-do
-    local ss = require("scripts/globals/solo_synergy")
-    if not ss or ss == true then ss = xi.soloSynergy end
-
-    local _orig = abilityObject.onUseAbility
-    abilityObject.onUseAbility = function(p, t, a)
-        ss.onAbilityUse(p, t, a)
-        _orig(p, t, a)
-        p:setLocalVar('SS_ECHO_STRIKE', 1)
-    end
-end
-
 return abilityObject
-
--- Solo Synergy — Samurai (75 Era Strict)
-do
-    local ss = xi.soloSynergy
-    local _orig = abilityObject.onUseAbility
-    abilityObject.onUseAbility = function(player, target, ability)
-        ss.onAbilityUse(player, target, ability)
-        _orig(player, target, ability)
-        player:setLocalVar('SS_ECHO_STRIKE', 1)
-        ss.flash(player, 'ECHO STRIKE primed: next WS hits twice.')
-    end
-end
