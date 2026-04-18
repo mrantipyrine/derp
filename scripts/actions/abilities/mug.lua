@@ -1,7 +1,10 @@
+-----------------------------------
 -- Ability: Mug
--- Steal gil from enemy.
+-- Steal HP and TP from an enemy.
 -- Obtained: Thief Level 35
 -- Recast Time: 5:00
+-- Removed: 20% insta-kill chance. That wasn't Mug, that was a cheat code.
+-- Kept: HP and TP drain with reasonable scaling.
 -----------------------------------
 local abilityObject = {}
 
@@ -11,34 +14,26 @@ end
 
 abilityObject.onUseAbility = function(player, target, ability, action)
     if player:getMainJob() ~= xi.job.THF then
-        return
+        return xi.job_utils.thief.useMug(player, target, ability, action)
     end
 
-    local targetLevel = target:getMainLvl()
+    local lvl = player:getMainLvl()
 
-    if targetLevel >= 80 then
-        return
+    -- HP steal: decent sustain, scales with level
+    local hpSteal = lvl > 40 and math.random(200, 500) or math.random(80, 250)
+    -- TP steal: punishes the mob, rewards you
+    local tpSteal = lvl > 40 and math.random(400, 800) or math.random(150, 400)
+
+    -- Cap stolen HP to what target actually has
+    hpSteal = math.min(hpSteal, target:getHP() - 1)
+
+    if hpSteal > 0 then
+        player:addHP(hpSteal)
+        target:addHP(-hpSteal)
     end
 
-    local hpPercent = target:getMaxHP() / target:getHP() 
-    if hpPercent > 0.2 and math.random(0, 100) <= 20 then
-        target:setHP(0)
-        return
-    end
-
-    local hpSteal = math.random(300, 800)
-    local tpSteal = math.random(1000, 1500)
-
-    if player:getMainLvl() > 40 then
-        hpSteal = math.random(500, 1100)
-        tpSteal = math.random(1500, 2000)
-    end
-
-    player:addHP(hpSteal)
     player:addTP(tpSteal)
-
     target:addTP(-tpSteal)
-    target:addHP(-hpSteal)
 
     return xi.job_utils.thief.useMug(player, target, ability, action)
 end

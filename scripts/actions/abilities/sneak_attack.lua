@@ -1,8 +1,10 @@
+-----------------------------------
 -- Ability: Sneak Attack
 -- Deals critical damage when striking from behind.
 -- Obtained: Thief Level 15
--- Recast Time: 1:00
--- Duration: 1:00
+-- Recast Time: 1:00 / Duration: 1:00
+-- Fixed: global variable leaks (power/duration), return typo (abilityObject4).
+-- Scaled: 375 ACC+ATT was way too high. Now 25/12 — meaningful not insane.
 -----------------------------------
 local abilityObject = {}
 
@@ -11,21 +13,15 @@ abilityObject.onAbilityCheck = function(player, target, ability)
 end
 
 abilityObject.onUseAbility = function(player, target, ability)
+    local isTHF   = player:getMainJob() == xi.job.THF
+    local duration = 60
 
-    power = player:getMainLvl()
-    duration = 60
-
-    --- maybe into their own if statements instead of one block?
-    --- is this providing too much?
-    if player:getMainJob() == xi.job.THF then
-        power = power * 5
-    end
-
-    player:addMod(xi.mod.ACC, power, 3, duration, 3, 10, 1)
-    player:addMod(xi.mod.ATT, power, 3, duration, 3, 10, 1)
+    -- ACC + ATT: sets up the SA crit cleanly. THF main gets more.
+    local bonus = isTHF and 25 or 12
+    player:addMod(xi.mod.ACC, bonus, 3, duration, 0, 10, 1)
+    player:addMod(xi.mod.ATT, bonus, 3, duration, 0, 10, 1)
 
     xi.job_utils.thief.useSneakAttack(player, target, ability)
-
 end
 
-return abilityObject4
+return abilityObject

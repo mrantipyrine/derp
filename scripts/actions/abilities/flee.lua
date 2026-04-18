@@ -2,14 +2,9 @@
 -- Ability: Flee
 -- Increases movement speed.
 -- Obtained: Thief Level 25
--- Recast Time: 5:00
--- Duration: 0:30
--- print to player 
--- local function error(player, msg)
--- player:printToPlayer(msg)
--- player:printToPlayer('!reset (player)')
--- end
-
+-- Recast Time: 5:00 / Duration: 0:30
+-- THF identity: speed = offensive burst. DA bonus during Flee window.
+-- Fixed: player.delMod -> player:delMod (dot crash), scaled DA down from lvl*1.
 -----------------------------------
 local abilityObject = {}
 
@@ -17,19 +12,13 @@ abilityObject.onAbilityCheck = function(player, target, ability)
     return 0, 0
 end
 
-
 abilityObject.onUseAbility = function(player, target, ability)
-    
-    local duration = 200
-    local power = player:getMainLvl()
+    local isTHF    = player:getMainJob() == xi.job.THF
+    local duration = 30   -- matches Flee's actual duration
 
-    -- Making Flee useful for solo play 
-    if player:getMainJob() == xi.job.THF then
-       power = power * 10
-    end
-
-    player.delMod(xi.mod.DOUBLE_ATTACK, power)
-    player:addMod(xi.mod.DOUBLE_ATTACK, power, 3, duration)
+    -- DA during sprint: moving fast = attacking fast. Fun, not broken.
+    local daRate = isTHF and 15 or 8
+    player:addMod(xi.mod.DOUBLE_ATTACK, daRate, 3, duration, 0, 10, 1)
 
     xi.job_utils.thief.useFlee(player, target, ability)
 end
