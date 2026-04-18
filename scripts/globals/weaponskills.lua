@@ -1291,6 +1291,17 @@ do
             attacker:setLocalVar('SS_AZURE_FLOW', 0)
             attacker:addStatusEffect(xi.effect.AZURE_LORE, 1, 0, 15) -- Short burst of power
             ss.flash(attacker, 'AZURE FLOW! Magic potential peaking.')
+        elseif mainJob == xi.job.NIN and attacker:getLocalVar('SS_SHADOW_BOND') == 1 then
+            attacker:setLocalVar('SS_SHADOW_BOND', 0)
+            jaMult = jaMult + 0.15
+            -- Refill 1 shadow if possible
+            local effect = attacker:getStatusEffect(xi.effect.COPY_IMAGE)
+            if effect then
+                effect:setPower(effect:getPower() + 1)
+            else
+                attacker:addStatusEffect(xi.effect.COPY_IMAGE, 1, 0, 300)
+            end
+            ss.flash(attacker, 'SHADOW BOND! Damage up and shadow refilled.')
         elseif mainJob == xi.job.RNG and attacker:getLocalVar('SS_DEADEYE') == 1 then
             attacker:setLocalVar('SS_DEADEYE', 0)
             jaMult = jaMult + 0.35
