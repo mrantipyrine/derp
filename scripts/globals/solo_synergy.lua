@@ -129,10 +129,18 @@ ss.flashMomentum = function(player)
     if m >= MAX_MOMENTUM then
         ss.flash(player, 'SURGE! [10/10] Maximum momentum!')
     elseif m >= 7 then
-        ss.flash(player, string.format('Momentum [%d/10] — building fast!', m))
+        ss.flash(player, string.format('Momentum [%d/10] ~ building fast!', m))
     elseif m >= 4 then
         ss.flash(player, string.format('Momentum [%d/10]', m))
     end
+end
+
+-- Announce a non-retail buff gained from a JA. Yellow, short, informative.
+-- Usage: ss.flashBuff(player, 'Aggressor', 'DA +15%  ATT +22')
+ss.flashBuff = function(player, abilityName, buffSummary)
+    if not player or not player:isPC() then return end
+    local msg = string.format('[%s] %s', abilityName, buffSummary)
+    player:printToPlayer(msg, xi.msg.channel.SYSTEM_3)
 end
 
 -----------------------------------

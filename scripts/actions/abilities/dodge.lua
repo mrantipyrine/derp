@@ -28,6 +28,10 @@ abilityObject.onUseAbility = function(player, target, ability)
         player:addStatusEffect(xi.effect.STONESKIN, shield, 0, duration)
     end
 
+    if xi.soloSynergy then
+        local tag = isMNK and ('EVA +' .. evaBonus .. '  Stoneskin') or ('EVA +' .. evaBonus)
+        xi.soloSynergy.flashBuff(player, 'Dodge', tag)
+    end
     xi.job_utils.monk.useDodge(player, target, ability)
 end
 

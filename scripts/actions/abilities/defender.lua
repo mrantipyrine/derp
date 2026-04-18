@@ -28,6 +28,11 @@ abilityObject.onUseAbility = function(player, target, ability)
     if isWAR then
         local regenPow = math.max(3, math.floor(lvl / 12))
         player:addStatusEffect(xi.effect.REGEN, regenPow, 3, duration)
+        if xi.soloSynergy then
+            xi.soloSynergy.flashBuff(player, 'Defender', 'MaxHP +' .. hpBoost .. '%  Regen +' .. regenPow)
+        end
+    elseif xi.soloSynergy then
+        xi.soloSynergy.flashBuff(player, 'Defender', 'MaxHP +' .. hpBoost .. '%')
     end
 end
 

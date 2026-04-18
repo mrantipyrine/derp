@@ -38,6 +38,10 @@ abilityObject.onUseAbility = function(player, target, ability)
     local regainAmt = isMNK and math.floor(lvl / 10) or math.floor(lvl / 14)
     player:addStatusEffect(xi.effect.REGAIN, regainAmt, 3, duration, 0, 10, 1)
 
+    if xi.soloSynergy then
+        local healAmt = math.min(math.floor(vit * healMult), lostHP)
+        xi.soloSynergy.flashBuff(player, 'Chakra', 'HP +' .. healAmt .. '  ATT/ACC +' .. statBonus)
+    end
     return xi.job_utils.monk.useChakra(player, target, ability)
 end
 

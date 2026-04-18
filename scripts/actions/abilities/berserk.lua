@@ -22,6 +22,9 @@ abilityObject.onUseAbility = function(player, target, ability)
     player:addMod(xi.mod.ATT,               attBonus, 3, duration, 0, 10, 1)
     player:addMod(xi.mod.DOUBLE_ATTACK,     daRate,   3, duration, 0, 10, 1)
     player:addMod(xi.mod.DOUBLE_ATTACK_DMG, daDmg,    3, duration, 0, 10, 1)
+    if xi.soloSynergy then
+        xi.soloSynergy.flashBuff(player, 'Berserk', 'ATT +' .. attBonus .. '  DA +' .. daRate .. '%')
+    end
 end
 
 return abilityObject

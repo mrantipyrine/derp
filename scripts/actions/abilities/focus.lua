@@ -38,6 +38,10 @@ abilityObject.onUseAbility = function(player, target, ability)
         player:addStatusEffect(xi.effect.COUNTER_BOOST, lvl, 3, duration, 0, 10, 1)
     end
 
+    if xi.soloSynergy then
+        local tag = 'ACC +' .. accBonus .. '  TA +' .. taRate .. '%  TP +' .. tpGain
+        xi.soloSynergy.flashBuff(player, 'Focus', tag)
+    end
     xi.job_utils.monk.useFocus(player, target, ability)
 end
 

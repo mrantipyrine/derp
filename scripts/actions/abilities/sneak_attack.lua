@@ -21,6 +21,9 @@ abilityObject.onUseAbility = function(player, target, ability)
     player:addMod(xi.mod.ACC, bonus, 3, duration, 0, 10, 1)
     player:addMod(xi.mod.ATT, bonus, 3, duration, 0, 10, 1)
 
+    if xi.soloSynergy then
+        xi.soloSynergy.flashBuff(player, 'Sneak Attack', 'ACC +' .. bonus .. '  ATT +' .. bonus)
+    end
     xi.job_utils.thief.useSneakAttack(player, target, ability)
 end
 

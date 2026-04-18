@@ -20,6 +20,9 @@ abilityObject.onUseAbility = function(player, target, ability)
     local daRate = isTHF and 15 or 8
     player:addMod(xi.mod.DOUBLE_ATTACK, daRate, 3, duration, 0, 10, 1)
 
+    if xi.soloSynergy then
+        xi.soloSynergy.flashBuff(player, 'Flee', 'DA +' .. daRate .. '% during sprint')
+    end
     xi.job_utils.thief.useFlee(player, target, ability)
 end
 

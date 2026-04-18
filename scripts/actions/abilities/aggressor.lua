@@ -35,6 +35,11 @@ abilityObject.onUseAbility = function(player, target, ability)
 
     player:addMod(xi.mod.ATT, attBonus, 3, duration, 0, 10, 1)
 
+    if xi.soloSynergy then
+        local wep = player:getWeaponSkillType(xi.slot.MAIN) == xi.skill.GREAT_AXE
+        local tag = wep and 'TA +' .. daRate .. '%  Haste' or 'DA +' .. daRate .. '%  ATT +' .. attBonus
+        xi.soloSynergy.flashBuff(player, 'Aggressor', tag)
+    end
     xi.job_utils.warrior.useAggressor(player, target, ability)
 end
 

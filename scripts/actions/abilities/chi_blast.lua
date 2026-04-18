@@ -28,6 +28,9 @@ abilityObject.onUseAbility = function(player, target, ability)
     player:addStatusEffect(xi.effect.REGEN,  regenAmt,  3, duration, 0, 10, 1)
     player:addStatusEffect(xi.effect.REGAIN, regainAmt, 3, duration, 0, 10, 1)
 
+    if xi.soloSynergy then
+        xi.soloSynergy.flashBuff(player, 'Chi Blast', 'TP Drained  Regen +' .. regenAmt .. '  Regain +' .. regainAmt)
+    end
     return xi.job_utils.monk.useChiBlast(player, target, ability)
 end
 

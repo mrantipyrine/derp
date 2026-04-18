@@ -35,6 +35,9 @@ abilityObject.onUseAbility = function(player, target, ability, action)
     player:addTP(tpSteal)
     target:addTP(-tpSteal)
 
+    if xi.soloSynergy then
+        xi.soloSynergy.flashBuff(player, 'Mug', 'HP +'.. hpSteal ..'  TP +'.. tpSteal ..' drained')
+    end
     return xi.job_utils.thief.useMug(player, target, ability, action)
 end
 

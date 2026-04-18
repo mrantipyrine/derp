@@ -29,6 +29,9 @@ abilityObject.onUseAbility = function(player, target, ability)
     player:addMod(xi.mod.REGAIN, regainAmt, 3, regainDur, 0, 10, 1)
     player:addTP(tpBurst)
 
+    if xi.soloSynergy then
+        xi.soloSynergy.flashBuff(player, 'Warcry', 'ACC +' .. accBonus .. '  TP +' .. tpBurst .. '  Regain +' .. regainAmt)
+    end
     return xi.job_utils.warrior.useWarcry(player, target, ability)
 end
 

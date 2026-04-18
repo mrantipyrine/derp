@@ -23,6 +23,9 @@ abilityObject.onUseAbility = function(player, target, ability)
     -- TP: get to your next WS faster, not loop forever
     local tpGain = isMNK and math.random(400, 700) or math.random(100, 300)
     player:addTP(tpGain)
+    if xi.soloSynergy then
+        xi.soloSynergy.flashBuff(player, 'Boost', 'STR +' .. strBoost .. '  TP +' .. tpGain)
+    end
 end
 
 return abilityObject

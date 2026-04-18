@@ -25,6 +25,9 @@ abilityObject.onUseAbility = function(player, target, ability)
     player:addStatusEffect(xi.effect.VIT_BOOST, vitBoost, 0, vitDuration, 0, 0, 0)
 
     -- Enmity transfer handled by the base ability
+    if xi.soloSynergy then
+        xi.soloSynergy.flashBuff(player, 'Provoke', 'TP +' .. tpGain .. '  VIT +' .. vitBoost)
+    end
     xi.job_utils.warrior.useProvoke(player, target, ability)
 end
 
