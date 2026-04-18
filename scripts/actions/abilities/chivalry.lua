@@ -1,9 +1,8 @@
 -----------------------------------
 -- Ability: Chivalry
+-- Job: Paladin
 -- Converts TP to MP.
--- Obtained: Paladin Level 75 (Must be Purchased with Merit Points)
--- Recast Time: 0:10:00 (+5% MP granted per additional upgrade)
--- Duration: Instant
+-- Solo bonus: bonus MP on top + Regain to rebuild TP quickly.
 -----------------------------------
 local abilityObject = {}
 
@@ -12,7 +11,22 @@ abilityObject.onAbilityCheck = function(player, target, ability)
 end
 
 abilityObject.onUseAbility = function(player, target, ability)
-    return xi.job_utils.paladin.useChivalry(player, target, ability)
+    local result = xi.job_utils.paladin.useChivalry(player, target, ability)
+
+    local lvl   = player:getMainLvl()
+    local isPLD = player:getMainJob() == xi.job.PLD
+
+    local mpBonus = isPLD and math.floor(lvl * 1.2) or math.floor(lvl * 0.5)
+    local regain  = isPLD and math.max(2, math.floor(lvl / 14)) or 1
+
+    player:addMP(mpBonus)
+    player:addStatusEffect(xi.effect.REGAIN, regain * 10, 3, 30)
+
+    if xi.soloSynergy then
+        xi.soloSynergy.flashBuff(player, 'Chivalry', string.format('MP +%d  Regain +%d (30s)', mpBonus, regain))
+    end
+
+    return result
 end
 
 return abilityObject
