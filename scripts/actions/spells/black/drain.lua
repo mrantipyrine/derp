@@ -36,7 +36,7 @@ spellObject.onSpellCast = function(caster, target, spell)
     params.attribute = xi.mod.INT
     params.skillType = xi.skill.DARK_MAGIC
     params.bonus = 1.0
-    local resist = applyResistance(caster, target, spell, params)
+    local resist = applyResistanceEffect(caster, target, spell, params)
     --get the resisted damage
     dmg = dmg * resist
     --add on bonuses (staff/day/weather/jas/mab/etc all go in this function)
@@ -55,8 +55,9 @@ spellObject.onSpellCast = function(caster, target, spell)
         dmg = targetHP
     end
 
-    player:addHP(targetHP)
-    return targetHP
+    caster:addHP(dmg)
+    spell:setMsg(xi.msg.basic.MAGIC_DRAIN_HP)
+    return dmg
 end
 
 
