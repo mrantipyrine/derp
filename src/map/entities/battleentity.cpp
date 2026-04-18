@@ -2263,6 +2263,22 @@ void CBattleEntity::OnMobSkillFinished(CMobSkillState& state, action_t& action)
                         target.addEffectMessage = 287 + effect;
                     }
                     target.additionalEffect = effect;
+
+                    // AoE skillchain splash — mob/pet/trust weaponskill
+                    if (loc.zone)
+                    {
+                        constexpr float SC_AOE_RADIUS = 8.0f;
+                        constexpr float SC_AOE_MULT   = 0.5f;
+                        loc.zone->ForEachMob([&](CMobEntity* PMobSplash)
+                        {
+                            if (PMobSplash == nullptr || static_cast<CBattleEntity*>(PMobSplash) == PTargetFound || !PMobSplash->isAlive()) { return; }
+                            if (distance(PTargetFound->loc.p, PMobSplash->loc.p) <= SC_AOE_RADIUS)
+                            {
+                                battleutils::TakeSkillchainDamage(this, static_cast<CBattleEntity*>(PMobSplash),
+                                    static_cast<int32>(target.param * SC_AOE_MULT), nullptr);
+                            }
+                        });
+                    }
                 }
 
                 first = false;

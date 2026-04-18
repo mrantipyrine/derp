@@ -593,6 +593,22 @@ void CTrustEntity::OnWeaponSkillFinished(CWeaponSkillState& state, action_t& act
                                 actionTarget.addEffectMessage = 287 + effect;
                             }
                             actionTarget.additionalEffect = effect;
+
+                            // AoE skillchain splash — trust weaponskill
+                            if (loc.zone)
+                            {
+                                constexpr float SC_AOE_RADIUS = 8.0f;
+                                constexpr float SC_AOE_MULT   = 0.5f;
+                                loc.zone->ForEachMob([&](CMobEntity* PMobSplash)
+                                {
+                                    if (PMobSplash == nullptr || static_cast<CBattleEntity*>(PMobSplash) == PBattleTarget || !PMobSplash->isAlive()) { return; }
+                                    if (distance(PBattleTarget->loc.p, PMobSplash->loc.p) <= SC_AOE_RADIUS)
+                                    {
+                                        battleutils::TakeSkillchainDamage(this, static_cast<CBattleEntity*>(PMobSplash),
+                                            static_cast<int32>(damage * SC_AOE_MULT), taChar);
+                                    }
+                                });
+                            }
                         }
                     }
                 }

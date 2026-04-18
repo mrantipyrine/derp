@@ -1316,6 +1316,23 @@ void CCharEntity::OnCastFinished(CMagicState& state, action_t& action)
                     actionTarget.addEffectParam   = skillChainDamage;
                     actionTarget.addEffectMessage = 287 + effect;
                     actionTarget.additionalEffect = effect;
+
+                    // AoE skillchain splash: hit all mobs within 8 yalms of the primary target for 50% damage
+                    constexpr float SC_AOE_RADIUS = 8.0f;
+                    constexpr float SC_AOE_MULT   = 0.5f;
+                    for (auto& [id, PMobSplash] : SpawnMOBList)
+                    {
+                        auto* PBSplash = dynamic_cast<CBattleEntity*>(PMobSplash);
+                        if (PBSplash == nullptr || PBSplash == PTarget || !PBSplash->isAlive())
+                        {
+                            continue;
+                        }
+                        if (distance(PTarget->loc.p, PBSplash->loc.p) <= SC_AOE_RADIUS)
+                        {
+                            battleutils::TakeSkillchainDamage(static_cast<CBattleEntity*>(this), PBSplash,
+                                static_cast<int32>(actionTarget.param * SC_AOE_MULT), taChar);
+                        }
+                    }
                 }
                 if (StatusEffectContainer->HasStatusEffect({ EFFECT_SEKKANOKI, EFFECT_MEIKYO_SHISUI }))
                 {
@@ -1410,6 +1427,22 @@ void CCharEntity::OnCastFinished(CMagicState& state, action_t& action)
                         actionTarget.addEffectMessage = 287 + effect;
                     }
                     actionTarget.additionalEffect = effect;
+
+                    // AoE skillchain splash — immanence
+                    {
+                        constexpr float SC_AOE_RADIUS = 8.0f;
+                        constexpr float SC_AOE_MULT   = 0.5f;
+                        for (auto& [id, PMobSplash] : SpawnMOBList)
+                        {
+                            auto* PBSplash = dynamic_cast<CBattleEntity*>(PMobSplash);
+                            if (PBSplash == nullptr || PBSplash == PTarget || !PBSplash->isAlive()) { continue; }
+                            if (distance(PTarget->loc.p, PBSplash->loc.p) <= SC_AOE_RADIUS)
+                            {
+                                battleutils::TakeSkillchainDamage(static_cast<CBattleEntity*>(this), PBSplash,
+                                    static_cast<int32>(actionTarget.param * SC_AOE_MULT), nullptr);
+                            }
+                        }
+                    }
 
                     // Closing a skillchain with an immanence Helix will make the magic burst window longer
                     auto scEffect = PTarget->StatusEffectContainer->GetStatusEffect(EFFECT_SKILLCHAIN, 0);
@@ -1605,6 +1638,22 @@ void CCharEntity::OnWeaponSkillFinished(CWeaponSkillState& state, action_t& acti
                             }
 
                             actionTarget.additionalEffect = effect;
+
+                            // AoE skillchain splash — weaponskill
+                            {
+                                constexpr float SC_AOE_RADIUS = 8.0f;
+                                constexpr float SC_AOE_MULT   = 0.5f;
+                                for (auto& [id, PMobSplash] : SpawnMOBList)
+                                {
+                                    auto* PBSplash = dynamic_cast<CBattleEntity*>(PMobSplash);
+                                    if (PBSplash == nullptr || PBSplash == PBattleTarget || !PBSplash->isAlive()) { continue; }
+                                    if (distance(PBattleTarget->loc.p, PBSplash->loc.p) <= SC_AOE_RADIUS)
+                                    {
+                                        battleutils::TakeSkillchainDamage(this, PBSplash,
+                                            static_cast<int32>(damage * SC_AOE_MULT), taChar);
+                                    }
+                                }
+                            }
 
                             // Despite appearances, ws_points_skillchain is not a multiplier it is just an amount "per element"
                             auto wsPointsSkillchain = settings::get<uint8>("map.WS_POINTS_SKILLCHAIN");
