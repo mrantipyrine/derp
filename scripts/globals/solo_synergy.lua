@@ -566,6 +566,58 @@ ss.empowerPet = function(master, damage)
     end
 end
 
+-- Called by Cure spells to grant a defensive shield.
+ss.applyCureSynergy = function(caster, target, amount)
+    if not caster or not caster:isPC() then return end
+    if amount <= 0 then return end
+    if caster:getPartySize() > 3 then return end
+
+    -- Divine Shield: Short stoneskin based on cure amount
+    local shieldPower = math.floor(amount * 0.20)
+    if shieldPower > 0 then
+        -- We use a local var to track the shield since overwriting core Stoneskin is risky
+        local currentShield = target:getLocalVar('SS_DIVINE_SHIELD')
+        target:setLocalVar('SS_DIVINE_SHIELD', math.max(currentShield, shieldPower))
+        
+        -- The shield expires in 15 seconds
+        target:timer(15000, function(t)
+            t:setLocalVar('SS_DIVINE_SHIELD', 0)
+        end)
+        
+        ss.flash(caster, string.format('Divine Shield! +%d protective aura.', shieldPower))
+    end
+end
+
+-- Handles non-damaging White Magic synergy (Bar-spells, etc)
+ss.applyWhiteSynergy = function(caster, target, spell)
+    if not caster or not caster:isPC() then return end
+    local spellEffect = spell:getSpellGroup() -- We'll check the specific effect ID
+    local element = spell:getElement()
+    
+    -- Bar-Element Synergy: Next physical hit deals bonus elemental damage
+    if element >= xi.element.FIRE and element <= xi.element.WATER then
+        -- Check if it's a bar-element spell
+        local id = spell:getID()
+        if id >= 60 and id <= 71 then -- Barfire to Barwatera
+            target:setLocalVar('SS_BAR_ELEMENT', element)
+            target:setLocalVar('SS_BAR_POWER', caster:getMainLvl())
+            ss.flash(caster, 'Elemental Ward! Physical attacks infused.')
+        end
+    end
+end
+
+-- Returns bonus elemental damage if a Bar-spell primer is active.
+ss.getElementalWardBonus = function(player)
+    local element = player:getLocalVar('SS_BAR_ELEMENT')
+    if element > 0 then
+        local power = player:getLocalVar('SS_BAR_POWER') or 0
+        -- Consumes on next WS for a big burst of elemental damage
+        player:setLocalVar('SS_BAR_ELEMENT', 0)
+        return element, math.floor(power * 2.5) -- Scaled bonus
+    end
+    return 0, 0
+end
+
 -----------------------------------
 -- Sub-job synergy table
 -- Returns a list of stat/effect bonuses for specific sub-job combos.

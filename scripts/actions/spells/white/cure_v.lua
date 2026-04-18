@@ -101,6 +101,11 @@ spellObject.onSpellCast = function(caster, target, spell)
 
         target:addHP(final)
 
+        -- Solo Synergy: Divine Shield
+        if xi.soloSynergy then
+            xi.soloSynergy.applyCureSynergy(caster, target, final)
+        end
+
         target:wakeUp()
 
         -- pass in fixed enmity values of 300 CE and 600 VE

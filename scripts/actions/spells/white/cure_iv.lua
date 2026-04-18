@@ -91,6 +91,12 @@ spellObject.onSpellCast = function(caster, target, spell)
         end
 
         target:addHP(final)
+
+        -- Solo Synergy: Divine Shield
+        if xi.soloSynergy then
+            xi.soloSynergy.applyCureSynergy(caster, target, final)
+        end
+
         target:wakeUp()
         caster:updateEnmityFromCure(target, final)
     else
