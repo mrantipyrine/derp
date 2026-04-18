@@ -1,10 +1,8 @@
 -----------------------------------
 -- Ability: Haste Samba
--- Inflicts the next target you strike with Haste daze, increasing the attack speed of all those engaged in battle with it.
--- Obtained: Dancer Level 45
--- TP Cost: 35%
--- Recast Time: 1:00
--- Duration: 1:30
+-- Job: Dancer
+-- Inflicts Haste daze on struck enemy.
+-- Solo bonus: AGI + Regain — the dancer keeps the rhythm flowing.
 -----------------------------------
 local abilityObject = {}
 
@@ -14,12 +12,10 @@ abilityObject.onAbilityCheck = function(player, target, ability)
     elseif player:getTP() < 350 then
         return xi.msg.basic.NOT_ENOUGH_TP, 0
     end
-
     return 0, 0
 end
 
 abilityObject.onUseAbility = function(player, target, ability)
-    -- Only remove TP if the player doesn't have Trance.
     if not player:hasStatusEffect(xi.effect.TRANCE) then
         player:delTP(350)
     end
@@ -29,6 +25,18 @@ abilityObject.onUseAbility = function(player, target, ability)
     player:delStatusEffect(xi.effect.DRAIN_SAMBA)
     player:delStatusEffect(xi.effect.ASPIR_SAMBA)
     player:addStatusEffect(xi.effect.HASTE_SAMBA, 500 + player:getMerit(xi.merit.HASTE_SAMBA_EFFECT), 0, duration)
+
+    local lvl   = player:getMainLvl()
+    local isDNC = player:getMainJob() == xi.job.DNC
+    local agiBonus = isDNC and math.floor(lvl * 0.14) or math.floor(lvl * 0.07)
+    local regain   = isDNC and math.max(2, math.floor(lvl / 14)) or 1
+    player:addMod(xi.mod.AGI, agiBonus)
+    player:addStatusEffect(xi.effect.REGAIN, regain * 10, 3, math.floor(duration))
+    player:timer(math.floor(duration) * 1000, function(p) p:delMod(xi.mod.AGI, agiBonus) end)
+
+    if xi.soloSynergy then
+        xi.soloSynergy.flashBuff(player, 'Haste Samba', string.format('AGI +%d  Regain +%d', agiBonus, regain))
+    end
 end
 
 return abilityObject
