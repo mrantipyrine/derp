@@ -3,7 +3,6 @@
 -----------------------------------
 require('scripts/globals/ability')
 require('scripts/globals/combat/magic_hit_rate')
-require('scripts/globals/jobpoints')
 require('scripts/globals/spells/damage_spell')
 require('scripts/globals/weaponskills')
 -----------------------------------
@@ -224,11 +223,10 @@ end
 
 xi.job_utils.dragoon.useAncientCircle = function(player, target, ability)
     local duration = 180 + player:getMod(xi.mod.ANCIENT_CIRCLE_DURATION)
-    local jpValue  = player:getJobPointLevel(xi.jp.ANCIENT_CIRCLE_EFFECT)
     local power    = 5
 
     if player:getMainJob() == xi.job.DRG then
-        power = 15 + jpValue
+        power = 15
     end
 
     power = power + player:getMod(xi.mod.ANCIENT_CIRCLE_POTENCY)
@@ -381,7 +379,6 @@ xi.job_utils.dragoon.useSpiritLink = function(player, target, ability)
 
     if wyvern:getHP() ~= wyvern:getMaxHP() then
         drainamount = (math.random(25, 35) / 100) * playerHP
-        drainamount = drainamount * (1 - (0.01 * player:getJobPointLevel(xi.jp.SPIRIT_LINK_EFFECT)))
     end
 
     -- Handle Stoneskin.
@@ -625,7 +622,6 @@ xi.job_utils.dragoon.useHealingBreath = function(wyvern, target, skill, action)
         wyvern:delStatusEffect(xi.effect.MAGIC_ATK_BOOST)
     end
 
-    local jobPointBonus       = master:getJobPointLevel(xi.jp.WYVERN_BREATH_EFFECT) * 10
     local breathAugmentsBonus = 1 + master:getMod(xi.mod.UNCAPPED_WYVERN_BREATH) / 100
     local gear                = master:getMod(xi.mod.WYVERN_BREATH) -- Master gear that enhances breath
     local base                = healingBreathTable[skill:getID()][1]
@@ -633,7 +629,7 @@ xi.job_utils.dragoon.useHealingBreath = function(wyvern, target, skill, action)
 
     -- gear cap of 64/256 in multiplier
     local multiplier      = (baseMultiplier + math.min(gear, 64) + math.floor(deepMult)) / 256
-    local curePower       = math.floor(wyvern:getMaxHP() * multiplier) + base + jobPointBonus * breathAugmentsBonus
+    local curePower       = math.floor(wyvern:getMaxHP() * multiplier) + base * breathAugmentsBonus
     local totalHPRestored = target:addHP(curePower)
 
     skill:setMsg(xi.msg.basic.JA_RECOVERS_HP_2)
@@ -674,14 +670,13 @@ xi.job_utils.dragoon.useDamageBreath = function(wyvern, target, skill, action, d
         wyvern:delStatusEffect(xi.effect.MAGIC_ATK_BOOST)
     end
 
-    local jobPointBonus       = master:getJobPointLevel(xi.jp.WYVERN_BREATH_EFFECT) * 10
     local breathAugmentsBonus = master:getMod(xi.mod.UNCAPPED_WYVERN_BREATH) / 100
     local gearMultiplier      = master:getMod(xi.mod.WYVERN_BREATH) -- Master gear that enhances breath
 
     -- gear cap of 64/256 in multiplier
     gearMultiplier = 1.0 + (math.min(gearMultiplier, 64)) / 256
 
-    local damage = math.floor(wyvern:getHP() / 6 + 15 + jobPointBonus) * gearMultiplier * (1.0 + breathAugmentsBonus + deepBreathingMultiplier)
+    local damage = math.floor(wyvern:getHP() / 6 + 15) * gearMultiplier * (1.0 + breathAugmentsBonus + deepBreathingMultiplier)
 
     -- strafe merits are +10 per merit
     local strafeMeritPower = master:getMerit(xi.merit.STRAFE_EFFECT)
@@ -847,7 +842,6 @@ xi.job_utils.dragoon.addWyvernExp = function(player, exp)
         numLevelUps = math.floor((prevExp + currentExp) / 200) - math.floor(prevExp / 200)
 
         if numLevelUps ~= 0 then
-            local wyvernAttributeIncreaseEffectJP = player:getJobPointLevel(xi.jp.WYVERN_ATTR_BONUS)
             local wyvernBonusDA = player:getMod(xi.mod.WYVERN_ATTRIBUTE_DA)
 
             wyvern:addMod(xi.mod.ACC, 6 * numLevelUps)
@@ -859,8 +853,6 @@ xi.job_utils.dragoon.addWyvernExp = function(player, exp)
 
             player:messageBasic(xi.msg.basic.STATUS_INCREASED, 0, 0, wyvern)
 
-            player:addMod(xi.mod.ATT, wyvernAttributeIncreaseEffectJP * numLevelUps)
-            player:addMod(xi.mod.DEF, wyvernAttributeIncreaseEffectJP * numLevelUps)
             player:addMod(xi.mod.ATTP, 4 * numLevelUps)
             player:addMod(xi.mod.DEFP, 4 * numLevelUps)
             player:addMod(xi.mod.HASTE_ABILITY, 200 * numLevelUps)
@@ -876,85 +868,19 @@ xi.job_utils.dragoon.addWyvernExp = function(player, exp)
 end
 
 -- ══════════════════════════════════════════════════════════════
--- Solo Synergy — Dragoon
--- ══════════════════════════════════════════════════════════════
--- Design fantasy: dragon-bonded warrior. The wyvern keeps you
--- alive solo via Healing Breath procs. Jump generates TP.
--- High Jump also drops a DEF buff. Ancient Circle makes dragon
--- hunts way more rewarding. Spirit Surge powers up and heals.
+-- Solo Synergy — Dragoon (75 Era Strict)
 -- ══════════════════════════════════════════════════════════════
 require('scripts/globals/solo_synergy')
 
 do
-    local ss   = xi.soloSynergy
+    local ss = xi.soloSynergy
     local _DRG = xi.job_utils.dragoon
 
-    -- Jump — solo: bonus TP on landing.
     local _jump = _DRG.useJump
-    _DRG.useJump = function(player, target, ability, action)
-        local result = _jump(player, target, ability, action)
-        if player:getPartySize() <= 2 then
-            local tp = math.random(150, 300)
-            player:addTP(tp)
-            ss.addMomentum(player, 1)
-            ss.flash(player, string.format('Solo Jump: TP+%d', tp))
-        end
-        return result
-    end
-
-    -- High Jump — solo: also applies DEF Down on target.
-    local _hjump = _DRG.useHighJump
-    _DRG.useHighJump = function(player, target, ability, action)
-        local result = _hjump(player, target, ability, action)
-        if player:getPartySize() <= 2 and target and target:isMob() then
-            target:addStatusEffect(xi.effect.DEFENSE_DOWN, 15, 0, 30)
-            ss.flash(player, 'Solo High Jump: target DEF Down.')
-        end
-        return result
-    end
-
-    -- Spirit Jump — solo: also grants an elemental ATT bonus briefly.
-    local _sjump = _DRG.useSpiritJump
-    _DRG.useSpiritJump = function(player, target, ability, action)
-        local result = _sjump(player, target, ability, action)
-        if player:getPartySize() <= 2 then
-            player:addStatusEffect(xi.effect.ATT_BOOST, 20, 0, 20)
-            ss.addMomentum(player, 1)
-        end
-        return result
-    end
-
-    -- Ancient Circle — solo: bigger bonus vs dragons + momentum on use.
-    local _ac = _DRG.useAncientCircle
-    _DRG.useAncientCircle = function(player, target, ability)
-        _ac(player, target, ability)
-        if player:getPartySize() <= 2 then
-            player:addStatusEffect(xi.effect.ATT_BOOST, 15, 0, 180)
-            ss.addMomentum(player, 1)
-            ss.flash(player, 'Solo Ancient Circle: ATT+15 vs dragons.')
-        end
-    end
-
-    -- Spirit Link — solo: the HP transfer also heals the wyvern fully.
-    local _sl = _DRG.useSpiritLink
-    _DRG.useSpiritLink = function(player, target, ability)
-        _sl(player, target, ability)
-        if player:getPartySize() <= 2 then
-            local pet = player:getPet()
-            if pet then
-                pet:setHP(pet:getMaxHP())
-                ss.flash(player, 'Solo Spirit Link: wyvern fully restored.')
-            end
-        end
-    end
-
-    -- Deep Breathing — solo: extend wyvern breath healing window.
-    local _db = _DRG.useDeepBreathing
-    _DRG.useDeepBreathing = function(player, target, ability)
-        _db(player, target, ability)
-        if player:getPartySize() <= 2 then
-            local eff = player:getStatusEffect(xi.effect.DEEP_BREATHING)
-            if eff then eff:setDuration(eff:getDuration() + 20) end
-        end
+    _DRG.useJump = function(player, target, ability)
+        ss.onAbilityUse(player, target, ability)
+        _jump(player, target, ability)
+        player:addStatusEffect(xi.effect.HASTE, 150, 0, 15) -- Dragon Force
+        ss.flash(player, 'Dragon Force! Attack speed surged.')
     end
 end

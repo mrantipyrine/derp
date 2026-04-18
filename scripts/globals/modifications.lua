@@ -46,6 +46,8 @@ xi.modifications.applySMN = function(player, refreshPower)
     if refreshPower > 0 then
         player:addStatusEffect(xi.effect.REFRESH, refreshPower, 0, 0)
     end
+    -- 75 Era Buff: Massive Perpetuation reduction for solo/small group
+    player:addMod(xi.mod.AVATAR_PERPETUATION, -15)
 end
 
 xi.modifications.applyBRD = function(player, refreshPower)

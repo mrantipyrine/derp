@@ -150,3 +150,24 @@ do
         end
     end
 end
+
+do
+    local ss = xi.soloSynergy
+    local _BLU = xi.job_utils.blue_mage
+
+    local _ca = _BLU.useChainAffinity
+    _BLU.useChainAffinity = function(player, target, ability, action)
+        ss.onAbilityUse(player, target, ability)
+        local res = _ca(player, target, ability, action)
+        player:setLocalVar('SS_AZURE_FLOW', 1)
+        return res
+    end
+
+    local _ba = _BLU.useBurstAffinity
+    _BLU.useBurstAffinity = function(player, target, ability, action)
+        ss.onAbilityUse(player, target, ability)
+        local res = _ba(player, target, ability, action)
+        player:setLocalVar('SS_AZURE_FLOW', 1)
+        return res
+    end
+end

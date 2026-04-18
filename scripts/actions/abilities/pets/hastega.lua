@@ -13,10 +13,9 @@ abilityObject.onPetAbility = function(target, pet, petskill, summoner, action)
 
     xi.job_utils.summoner.onUseBloodPact(target, petskill, summoner, action)
 
-    -- Garuda's Hastega is a weird exception and uses 153/1024 instead of 150/1024 like Haste spell
-    -- That's why it overwrites some things regular haste won't. 153/1024 ~14.94%
+    -- Garuda's Hastega Buff: Increased to 25% (2560/10240) and extended duration
     local typeEffect = xi.effect.HASTE
-    if target:addStatusEffect(typeEffect, 1494, 0, duration) then
+    if target:addStatusEffect(typeEffect, 2560, 0, duration * 2) then
         if target:getID() == action:getPrimaryTargetID() then
             petskill:setMsg(xi.msg.basic.SKILL_GAIN_EFFECT_2)
         else

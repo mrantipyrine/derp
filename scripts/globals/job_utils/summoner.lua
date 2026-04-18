@@ -2,7 +2,6 @@
 -- Summoner Job Utilities
 -----------------------------------
 require('scripts/globals/ability')
-require('scripts/globals/jobpoints')
 require('scripts/globals/combat/tp')
 -----------------------------------
 xi = xi or {}
@@ -45,7 +44,6 @@ local function getBaseMPCost(player, ability)
         [xi.jobAbility.HASTEGA]          = 129,
         [xi.jobAbility.PREDATOR_CLAWS]   = 164,
         [xi.jobAbility.WIND_BLADE]       = 182,
-        [xi.jobAbility.HASTEGA_II]       = 248,
         -- Titan
         [xi.jobAbility.ROCK_THROW]       =  10,
         [xi.jobAbility.STONE_II]         =  24,
@@ -89,7 +87,6 @@ local function getBaseMPCost(player, ability)
         [xi.jobAbility.DIAMOND_STORM]    = 138,
         [xi.jobAbility.RUSH]             = 164,
         [xi.jobAbility.HEAVENLY_STRIKE]  = 182,
-        [xi.jobAbility.CRYSTAL_BLESSING] = 201,
         -- Ramuh
         [xi.jobAbility.SHOCK_STRIKE]     =   6,
         [xi.jobAbility.THUNDER_II]       =  24,
@@ -100,7 +97,6 @@ local function getBaseMPCost(player, ability)
         [xi.jobAbility.THUNDER_IV]       = 118,
         [xi.jobAbility.CHAOTIC_STRIKE]   = 164,
         [xi.jobAbility.THUNDERSTORM]     = 182,
-        [xi.jobAbility.VOLT_STRIKE]      = 229,
         -- Diabolos
         [xi.jobAbility.CAMISADO]         =  20,
         [xi.jobAbility.ULTIMATE_TERROR]  =  27,
@@ -111,20 +107,12 @@ local function getBaseMPCost(player, ability)
         [xi.jobAbility.DREAM_SHROUD]     = 121,
         [xi.jobAbility.BLINDSIDE]        = 147,
         [xi.jobAbility.NIGHT_TERROR]     = 177,
-        [xi.jobAbility.PAVOR_NOCTURNUS]  = 246,
         -- Cait Sith
         [xi.jobAbility.REGAL_SCRATCH]    = 5,
         [xi.jobAbility.MEWING_LULLABY]   = 61,
         [xi.jobAbility.EARIE_EYE]        = 134,
-        [xi.jobAbility.LEVEL_QM_HOLY]    = 235,
         [xi.jobAbility.RAISE_II]         = 160,
         [xi.jobAbility.RERAISE_II]       = 80,
-        -- Siren
-        [xi.jobAbility.WELT]             =   9,
-        [xi.jobAbility.ROUNDHOUSE]       =  52,
-        [xi.jobAbility.SONIC_BUFFET]     = 164,
-        [xi.jobAbility.TORNADO_II]       = 182,
-        [xi.jobAbility.HYSTERIC_ASSAULT] = 222,
     }
 
     local baseMPCost = nil
@@ -262,7 +250,7 @@ xi.job_utils.summoner.useManaCede = function(player, ability, action)
 
     if avatar ~= nil then
         local avatarTP = avatar:getTP()
-        local bonusTP = 1000 + player:getJobPointLevel(xi.jp.MANA_CEDE_EFFECT) * 50
+        local bonusTP = 1000
         local manaCedeBonus = (100 + player:getMod(xi.mod.ENHANCES_MANA_CEDE)) / 100
         local avatarNewTP = utils.clamp(avatarTP + bonusTP * manaCedeBonus, 1000, 3000)
 
@@ -319,43 +307,4 @@ xi.job_utils.summoner.useSoothingRuby = function(target, pet, petskill, summoner
     end
 
     return effectsErased
-end
-
--- ══════════════════════════════════════════════════════════════
--- Solo Synergy — Summoner
--- ══════════════════════════════════════════════════════════════
--- Design fantasy: avatar-powered destroyer. BP timers feel
--- faster solo. Astral Conduit is more rewarding. Avatar gets
--- a HP/MP sustain aura when solo. Apogee hits harder.
--- ══════════════════════════════════════════════════════════════
-require('scripts/globals/solo_synergy')
-
-do
-    local ss   = xi.soloSynergy
-    local _SMN = xi.job_utils.summoner
-
-    -- Mana Cede — solo: also restores a portion of MP to the player.
-    local _mc = _SMN.useManaCede
-    if _mc then
-        _SMN.useManaCede = function(player, ability, action)
-            _mc(player, ability, action)
-            if player:getPartySize() <= 2 then
-                ss.restoreMPPct(player, 0.10)
-                ss.flash(player, 'Solo Mana Cede: MP+10% returned to caster.')
-            end
-        end
-    end
-end
-
--- Avatar solo sustain: wired into onMobEngaged via setLocalVar flag.
--- When solo, avatars get a persistent Regen + ATT bonus.
-xi.soloSynergy = xi.soloSynergy or {}
-xi.soloSynergy.boostSMNPet = function(player, pet)
-    if not player or not pet then return end
-    if player:getPartySize() <= 2 then
-        local regenPow = math.floor(player:getMainLvl() / 8) + 5
-        local attBonus = math.floor(player:getMainLvl() / 4)
-        pet:addStatusEffect(xi.effect.REGEN,     regenPow, 3, 300)
-        pet:addStatusEffect(xi.effect.ATT_BOOST, attBonus, 0, 300)
-    end
 end

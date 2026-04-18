@@ -147,10 +147,6 @@ xi.job_utils.ranger.useEagleEyeShot = function(player, target, ability, action)
 
     params.enmityMult = 0.5
 
-    -- Job Point Bonus Damage
-    local jpValue = player:getJobPointLevel(xi.jp.EAGLE_EYE_SHOT_EFFECT)
-    player:addMod(xi.mod.ALL_WSDMG_ALL_HITS, jpValue * 3)
-
     local damage, _, tpHits, extraHits = xi.weaponskills.doRangedWeaponskill(player, target, 0, params, tp, action, true)
 
     -- Set the message id ourselves
@@ -231,7 +227,7 @@ xi.job_utils.ranger.useShadowbind = function(player, target, ability, action)
         action:setAnimation(target:getID(), action:getAnimation(target:getID()) + 1)
     end
 
-    local duration      = 30 + player:getMod(xi.mod.SHADOW_BIND_EXT) + player:getJobPointLevel(xi.jp.SHADOWBIND_DURATION)
+    local duration      = 30 + player:getMod(xi.mod.SHADOW_BIND_EXT)
     local recycleChance = player:getMod(xi.mod.RECYCLE) + player:getMerit(xi.merit.RECYCLE)
 
     if player:hasStatusEffect(xi.effect.UNLIMITED_SHOT) then
@@ -349,80 +345,19 @@ xi.job_utils.ranger.useOverkill = function(player, target, ability, action)
 end
 
 -- ══════════════════════════════════════════════════════════════
--- Solo Synergy — Ranger
--- ══════════════════════════════════════════════════════════════
--- Design fantasy: precision hunter. Eagle Eye Shot scales with
--- distance and momentum. Barrage fires more bolts solo.
--- Camouflage gives a momentum burst opener. Bounty Shot
--- increases drops solo. Shadowbind procs a slow on top.
+-- Solo Synergy — Ranger (75 Era Strict)
 -- ══════════════════════════════════════════════════════════════
 require('scripts/globals/solo_synergy')
 
 do
-    local ss   = xi.soloSynergy
+    local ss = xi.soloSynergy
     local _RNG = xi.job_utils.ranger
 
-    -- Eagle Eye Shot — solo: bonus damage scales with momentum stacks.
-    local _ees = _RNG.useEagleEyeShot
-    _RNG.useEagleEyeShot = function(player, target, ability, action)
-        local result = _ees(player, target, ability, action)
-        if player:getPartySize() <= 2 then
-            local m      = ss.getMomentum(player)
-            local bonus  = math.floor(player:getMainLvl() * 0.5 * (1 + m * 0.1))
-            if target then
-                target:takeDamage(bonus, player, xi.attackType.RANGED, xi.damageType.PIERCING)
-            end
-            ss.addMomentum(player, 2)
-            ss.flash(player, string.format('Eagle Eye Shot: +%d solo bonus (momentum %d)', bonus, m))
-        end
-        return result
-    end
-
-    -- Barrage — solo: fires 1-2 extra arrows based on level.
-    local _bar = _RNG.useBarrage
-    _RNG.useBarrage = function(player, target, ability, action)
-        _bar(player, target, ability, action)
-        if player:getPartySize() <= 2 then
-            local extra = player:getMainLvl() >= 50 and 2 or 1
-            player:addStatusEffect(xi.effect.BARRAGE, extra, 0, 10)
-            ss.flash(player, string.format('Solo Barrage: +%d extra arrows', extra))
-        end
-    end
-
-    -- Sharpshot — solo: also grants a guaranteed critical hit on next ranged attack.
-    local _ss2 = _RNG.useSharpshot
-    _RNG.useSharpshot = function(player, target, ability, action)
-        _ss2(player, target, ability, action)
-        if player:getPartySize() <= 2 then
-            player:addStatusEffect(xi.effect.CRIT_DEF_BONUS, 30, 0, 15)
-            ss.flash(player, 'Solo Sharpshot: guaranteed crit window (15s)')
-        end
-    end
-
-    -- Camouflage — entering stealth builds momentum like Hide.
-    local _cam = _RNG.useCamouflage
-    _RNG.useCamouflage = function(player, target, ability, action)
-        _cam(player, target, ability, action)
-        ss.addMomentum(player, 2)
-        ss.flash(player, 'Camouflage: momentum building...')
-    end
-
-    -- Bounty Shot — solo: drop rate bonus flag for loot system.
-    local _bsh = _RNG.useBountyShot
-    _RNG.useBountyShot = function(player, target, ability, action)
-        _bsh(player, target, ability, action)
-        if player:getPartySize() <= 2 then
-            player:setLocalVar('SS_RNG_BOUNTY_SOLO', 1)
-            ss.flash(player, 'Solo Bounty Shot: drop rate enhanced.')
-        end
-    end
-
-    -- Shadowbind — also procs Slow on top of bind.
-    local _sbind = _RNG.useShadowbind
-    _RNG.useShadowbind = function(player, target, ability, action)
-        _sbind(player, target, ability, action)
-        if target and target:isMob() then
-            ss.trySlow(target, 50, player:getMainLvl())
-        end
+    local _ss = _RNG.useSharpshot
+    _RNG.useSharpshot = function(player, target, ability)
+        ss.onAbilityUse(player, target, ability)
+        _ss(player, target, ability)
+        player:setLocalVar('SS_DEADEYE', 1)
+        ss.flash(player, 'DEADEYE primed: massive Ranged WS bonus.')
     end
 end

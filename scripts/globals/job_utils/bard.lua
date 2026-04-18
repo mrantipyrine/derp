@@ -137,3 +137,25 @@ do
         end
     end
 end
+
+-- ══════════════════════════════════════════════════════════════
+-- Solo Synergy Wrappers
+-- ══════════════════════════════════════════════════════════════
+do
+    local ss = require("scripts/globals/solo_synergy")
+    if not ss or ss == true then ss = xi.soloSynergy end
+
+    -- Generic onSongCast wrapper
+    xi.job_utils.bard.onSongCast = function(p, t, a)
+        ss.onAbilityUse(p, t, a)
+        p:setLocalVar('SS_RESONANCE', 1)
+    end
+
+    -- Wrap Pianissimo as a song utility
+    local _pian = xi.job_utils.bard.usePianissimo
+    xi.job_utils.bard.usePianissimo = function(p, t, a)
+        ss.onAbilityUse(p, t, a)
+        _pian(p, t, a)
+        p:setLocalVar('SS_RESONANCE', 1)
+    end
+end

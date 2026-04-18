@@ -256,6 +256,113 @@ ss.resetStacks = function(player, key)
 end
 
 -----------------------------------
+-- Magic Synergy System
+-----------------------------------
+
+local ELEMENT_PRIMER_VARS = {
+    [xi.element.FIRE]    = 'SS_PRI_FIRE',
+    [xi.element.ICE]     = 'SS_PRI_ICE',
+    [xi.element.WIND]    = 'SS_PRI_WIND',
+    [xi.element.EARTH]   = 'SS_PRI_EARTH',
+    [xi.element.THUNDER] = 'SS_PRI_THUNDER',
+    [xi.element.WATER]   = 'SS_PRI_WATER',
+}
+
+-- Returns a multiplier based on active primers on the target.
+-- Certain elements "react" to others for double damage.
+ss.getMagicComboMultiplier = function(caster, target, spell)
+    if not target then return 1.0 end
+    local element = spell:getElement()
+    local multiplier = 1.0
+
+    -- Combo Rules (Reacting Element -> Required Primer)
+    local combos = {
+        [xi.element.THUNDER] = xi.element.WATER,   -- Water + Thunder = Conductive Burst
+        [xi.element.WIND]    = xi.element.FIRE,    -- Fire + Wind = Firestorm
+        [xi.element.EARTH]   = xi.element.ICE,     -- Ice + Earth = Shatter
+        [xi.element.WATER]   = xi.element.THUNDER, -- Thunder + Water = Electrolysis
+        [xi.element.ICE]     = xi.element.WIND,    -- Wind + Ice = Blizzard
+        [xi.element.FIRE]    = xi.element.EARTH,   -- Earth + Fire = Magma
+    }
+
+    local requiredPrimer = combos[element]
+    if requiredPrimer then
+        local varName = ELEMENT_PRIMER_VARS[requiredPrimer]
+        if target:getLocalVar(varName) == 1 then
+            multiplier = 2.0 -- Double damage!
+            target:setLocalVar(varName, 0) -- Consume primer
+            ss.flash(caster, 'ELEMENTAL COMBO! Double damage!')
+        end
+    end
+
+    return multiplier
+end
+
+-- Applies elemental primers or secondary effects after damage lands.
+ss.applyMagicSynergy = function(caster, target, spell, damage)
+    if not target or not target:isAlive() then return end
+    local element = spell:getElement()
+    local lv      = caster:getMainLvl()
+    local mainJob = caster:getMainJob()
+
+    -- 1. Apply Job-Specific Perks (Globalized from your original logic)
+    if mainJob == xi.job.BLM then
+        -- 30% MP Refund
+        if math.random(100) <= 30 then
+            local mpCost = spell:getMPCost()
+            ss.restoreMP(caster, mpCost)
+            ss.flash(caster, 'Magic Mastery! MP refunded.')
+        end
+
+        -- Auto-Spikes for high-tier mages
+        local spikes = {
+            [xi.element.THUNDER] = xi.effect.SHOCK_SPIKES,
+            [xi.element.ICE]     = xi.effect.ICE_SPIKES,
+            [xi.element.FIRE]    = xi.effect.BLAZE_SPIKES,
+        }
+        if spikes[element] and not caster:hasStatusEffect(spikes[element]) then
+            local power = math.floor(lv / 6) * 10
+            caster:addStatusEffect(spikes[element], power, 3, 180)
+        end
+    end
+
+    -- 2. Apply Elemental Primers (100% chance on damaging spells for solo/small groups)
+    local primerVar = ELEMENT_PRIMER_VARS[element]
+    if primerVar then
+        target:setLocalVar(primerVar, 1)
+        -- Primers expire after 15 seconds if not used
+        target:timer(15000, function(t)
+            t:setLocalVar(primerVar, 0)
+        end)
+    end
+
+    -- 3. Element-Specific Identity Effects
+    local baseChance = 20 + ss.getPartyPotencyBonus(caster)
+
+    if element == xi.element.THUNDER then
+        ss.tryParalyze(target, baseChance, lv)
+    elseif element == xi.element.ICE then
+        ss.tryProc(target, baseChance, xi.effect.WEIGHT, 30, 30) -- Frozen: weight/slow
+    elseif element == xi.element.FIRE then
+        -- Ignite: target takes more physical damage (handled via a temporary local var check in physical code later)
+        target:setLocalVar('SS_IGNITED', 1)
+        target:timer(15000, function(t) t:setLocalVar('SS_IGNITED', 0) end)
+    elseif element == xi.element.WATER then
+        -- Saturate: Recover MP based on damage
+        local mpGain = math.max(1, math.floor(damage * 0.05))
+        ss.restoreMP(caster, mpGain)
+    elseif element == xi.element.LIGHT then
+        -- Hallowed: Heal caster based on damage
+        local hpGain = math.max(1, math.floor(damage * 0.10))
+        ss.restoreHP(caster, hpGain)
+    elseif element == xi.element.DARK then
+        -- Corrupt: Drain TP
+        local tpGain = math.random(10, 50)
+        caster:addTP(tpGain)
+    end
+end
+
+-----------------------------------
 -- HP Restore helper — safe setHP wrapper.
 -----------------------------------
 ss.restoreHP = function(player, amount)
@@ -322,6 +429,140 @@ ss.triggerSurge = function(player, surgeEffects)
         for _, e in ipairs(surgeEffects) do
             player:addStatusEffect(e.effect, e.power or 10, 0, e.duration or 30)
         end
+    end
+end
+
+-----------------------------------
+-- Reactive Synergy (JA <-> WS)
+-----------------------------------
+
+-- Called when an ability is used to "prime" the next weaponskill.
+ss.onAbilityUse = function(player, target, ability)
+    if not player or not player:isPC() then return end
+    
+    local abilityId = ability:getID()
+    player:setLocalVar('SS_LAST_JA', abilityId)
+    player:setLocalVar('SS_JA_PRIMER_TIME', os.time())
+    
+    -- 1. If "Flowing Spirit" is active from a big WS, try to double the JA effect
+    -- (This works by adding extra mods if the JA is standard, or setting a flag for job_utils)
+    if player:getLocalVar('SS_FLOW_ACTIVE') == 1 then
+        player:setLocalVar('SS_FLOW_ACTIVE', 0)
+        ss.flash(player, 'SPIRIT BURST! Ability power doubled.')
+        -- We return 2.0 to tell the caller to double the power if it supports it
+        return 2.0
+    end
+
+    -- 2. If in Surge state, give a massive boost to the primer
+    if ss.isSurge(player) then
+        player:setLocalVar('SS_SURGE_PRIMER', 1)
+        ss.flash(player, 'SURGE! Next Weaponskill will be devastating.')
+    end
+    
+    return 1.0
+end
+
+-- Called by weaponskills.lua to see if any JA bonus applies.
+-- Returns a multiplier (1.0+) and a message.
+ss.getWSAbilityBonus = function(player)
+    local lastJa    = player:getLocalVar('SS_LAST_JA') or 0
+    local primerTime = player:getLocalVar('SS_JA_PRIMER_TIME') or 0
+    local isSurge   = player:getLocalVar('SS_SURGE_PRIMER') == 1
+    
+    -- Primers only last 20 seconds
+    if os.time() - primerTime > 20 then
+        return 1.0
+    end
+    
+    local multiplier = 1.0
+    
+    -- Specific JA -> WS synergies
+    -- (You can add any ability IDs here)
+    if lastJa == 1 then -- Berserk
+        multiplier = multiplier + 0.15 -- +15% damage
+    elseif lastJa == 2 then -- Warcry
+        multiplier = multiplier + 0.10 -- +10% damage
+    elseif lastJa == 5 then -- Aggressor
+        multiplier = multiplier + 0.05 -- +5% damage, but we'll assume it hits harder
+    end
+    
+    -- Global Surge bonus (50% extra damage)
+    if isSurge then
+        multiplier = multiplier + 0.50
+        player:setLocalVar('SS_SURGE_PRIMER', 0)
+        ss.resetMomentum(player)
+    end
+    
+    -- Clean up primer after use
+    player:setLocalVar('SS_JA_PRIMER_TIME', 0)
+    
+    return multiplier
+end
+
+-- Called after a WS lands.
+-- Big hits reduce JA recasts for solo/small groups.
+ss.onWeaponskillHit = function(player, target, damage)
+    if not player or not player:isPC() then return end
+    if player:getPartySize() > 3 then return end
+    
+    -- Threshold for "Cooling Flow": hit for 20% of your own Max HP
+    local threshold = player:getMaxHP() * 0.2
+    if damage >= threshold then
+        -- Reduce all JA recasts by 3-5 seconds
+        -- Note: core usually handles recast reduction, but we can flash a message
+        -- and use player:setLocalVar('SS_FLOW_ACTIVE', 1) for the next JA.
+        player:setLocalVar('SS_FLOW_ACTIVE', 1)
+        ss.flash(player, 'Flowing Spirit! Next Job Ability power doubled.')
+    end
+end
+
+-- Called by weaponskills.lua to empower the player's pet.
+-- Supports BST Jug Pets, PUP Automatons, and DRG Wyverns.
+ss.empowerPet = function(master, damage)
+    if not master or not master:isPC() then return end
+    
+    local pet = master:getPet()
+    if not pet or not pet:isAlive() then return end
+    
+    local lv = master:getMainLvl()
+    local mainJob = master:getMainJob()
+    
+    -- 1. Global Pet Bonus: +250 TP on Master WS
+    pet:addTP(250)
+    
+    -- 2. Job-Specific Pet Empowerment
+    if mainJob == xi.job.BST then
+        -- Beastial Surge: Attack and Haste
+        pet:addStatusEffect(xi.effect.ATTACK_BOOST, 20, 0, 15)
+        pet:addStatusEffect(xi.effect.HASTE, 150, 0, 15)
+        
+        -- If master has Flowing Spirit active, reset a Ready charge (Recast ID 102)
+        if master:getLocalVar('SS_FLOW_ACTIVE') == 1 then
+            master:addRecast(xi.recast.ABILITY, 102, -10)
+            ss.flash(master, 'BESTIAL FRENZY! Pet empowered, Ready charge up.')
+        else
+            ss.flash(master, 'Coordinated Assault! Pet TP +250.')
+        end
+        
+    elseif mainJob == xi.job.DRG then
+        -- Wyvern's Fury: Wyvern gains Attack and Accuracy boost
+        pet:addStatusEffect(xi.effect.ATTACK_BOOST, 30, 0, 15)
+        pet:addStatusEffect(xi.effect.ACCURACY_BOOST, 20, 0, 15)
+
+        -- Wyvern's Breath: Wyvern heals the master for 5% of WS damage
+        local heal = math.floor(damage * 0.05)
+        if heal > 0 then
+            ss.restoreHP(master, heal)
+            ss.flash(master, string.format('Wyvern Bond! Attack up and healed for %d.', heal))
+        end
+        
+    elseif mainJob == xi.job.PUP then
+        -- Automaton Overdrive: Instantly remove 1 Burden from all elements
+        -- Note: core often handles burden via setLocalVar or internal methods.
+        -- We'll give the automaton a short Haste/Store TP boost instead.
+        pet:addStatusEffect(xi.effect.HASTE, 200, 0, 20)
+        pet:addStatusEffect(xi.effect.STORE_TP, 25, 0, 20)
+        ss.flash(master, 'Clockwork Surge! Automaton Haste Up.')
     end
 end
 

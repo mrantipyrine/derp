@@ -1,7 +1,6 @@
 -----------------------------------
 -- Dancer Job Utilities
 -----------------------------------
-require('scripts/globals/jobpoints')
 require('scripts/globals/magic')
 require('scripts/globals/weaponskills')
 -----------------------------------
@@ -243,9 +242,8 @@ end
 -----------------------------------
 xi.job_utils.dancer.useStepAbility = function(player, target, ability, action, stepEffect, missId, hitId)
     local hitType          = missId
-    local stepDurationGift = player:getJobPointLevel(xi.jp.STEP_DURATION)
     local debuffStacks     = 1
-    local debuffDuration   = 60 + stepDurationGift
+    local debuffDuration   = 60
 
     -- Only remove TP if the player doesn't have Trance.
     if not player:hasStatusEffect(xi.effect.TRANCE) then
@@ -280,7 +278,7 @@ xi.job_utils.dancer.useStepAbility = function(player, target, ability, action, s
             debuffDuration   = debuffEffect:getDuration()
 
             debuffStacks   = math.min(debuffStacks, maxSteps)
-            debuffDuration = math.min(debuffEffect:getDuration() + 30 + stepDurationGift, 120 + stepDurationGift)
+            debuffDuration = math.min(debuffEffect:getDuration() + 30, 120)
 
             if maxSteps >= origDebuffStacks then
                 target:delStatusEffectSilent(stepEffect)
@@ -335,14 +333,13 @@ xi.job_utils.dancer.useNoFootRiseAbility = function(player, target, ability, act
 end
 
 xi.job_utils.dancer.useReverseFlourishAbility = function(player, target, ability, action)
-    local reverseFlourishBonus = player:getJobPointLevel(xi.jp.FLOURISH_II_EFFECT)
     local numMerits            = player:getMerit(xi.merit.REVERSE_FLOURISH_EFFECT)
     local gearMod              = player:getMod(xi.mod.REVERSE_FLOURISH_EFFECT)
     local numMoves             = player:getStatusEffect(xi.effect.FINISHING_MOVE_1):getPower()
     local tpGained             = 0
 
     local usedMoves = math.min(numMoves, 5)
-    tpGained = (95 + reverseFlourishBonus) * usedMoves + (5 + gearMod) * usedMoves ^ 2 + 30 * numMerits
+    tpGained = 95 * usedMoves + (5 + gearMod) * usedMoves ^ 2 + 30 * numMerits
 
     player:addTP(tpGained)
     setFinishingMoves(player, numMoves - usedMoves)
@@ -351,12 +348,11 @@ xi.job_utils.dancer.useReverseFlourishAbility = function(player, target, ability
 end
 
 xi.job_utils.dancer.useAnimatedFlourishAbility = function(player, target, ability, action)
-    local jpBonusVE = player:getJobPointLevel(xi.jp.FLOURISH_I_EFFECT) * 10
     local numMoves  = player:getStatusEffect(xi.effect.FINISHING_MOVE_1):getPower()
     local veGranted = numMoves >= 2 and 1500 or 1000
     local usedMoves = numMoves >= 2 and 2 or 1
 
-    target:addEnmity(player, 0, veGranted + jpBonusVE)
+    target:addEnmity(player, 0, veGranted)
     setFinishingMoves(player, numMoves - usedMoves)
 end
 
@@ -366,7 +362,7 @@ xi.job_utils.dancer.useDesperateFlourishAbility = function(player, target, abili
     setFinishingMoves(player, numMoves - 1)
 
     if
-        math.random() <= xi.weaponskills.getHitRate(player, target, player:getJobPointLevel(xi.jp.FLOURISH_I_EFFECT)) or
+        math.random() <= xi.weaponskills.getHitRate(player, target, 0) or
         (player:hasStatusEffect(xi.effect.SNEAK_ATTACK) and player:isBehind(target))
     then
         local spell  = GetSpell(xi.magic.spell.GRAVITY)
@@ -412,7 +408,7 @@ xi.job_utils.dancer.useViolentFlourishAbility = function(player, target, ability
         {
             diff      = 0,
             skillType = player:getWeaponSkillType(xi.slot.MAIN),
-            bonus     = 50 - target:getMod(xi.mod.STUNRES) + player:getMod(xi.mod.VFLOURISH_MACC) + player:getJobPointLevel(xi.jp.FLOURISH_I_EFFECT),
+            bonus     = 50 - target:getMod(xi.mod.STUNRES) + player:getMod(xi.mod.VFLOURISH_MACC),
         }
 
         local weaponDamage = player:getWeaponDmg()
@@ -523,97 +519,4 @@ xi.job_utils.dancer.useWaltzAbility = function(player, target, ability, action)
     player:updateEnmityFromCure(target, amtCured)
 
     return amtCured
-end
-
------------------------------------
--- Solo Synergy: Dancer
------------------------------------
-do
-    local ss  = xi.soloSynergy
-    local DNC = xi.job_utils.dancer
-
-    -- Trance: solo = momentum+2 + Haste
-    local _trance = DNC.useTranceAbility
-    if _trance then
-        DNC.useTranceAbility = function(player, target, ability, action)
-            _trance(player, target, ability, action)
-            if player:getPartySize() <= 2 then
-                player:addStatusEffect(xi.effect.HASTE, 15, 0, 60)
-                ss.addMomentum(player, 2)
-                ss.flashMomentum(player)
-                ss.flash(player, 'Trance: Haste (solo bonus)!')
-            end
-        end
-    end
-
-    -- Contradance: solo = also grants Haste for 30s
-    local _contra = DNC.useContradanceAbility
-    if _contra then
-        DNC.useContradanceAbility = function(player, target, ability, action)
-            _contra(player, target, ability, action)
-            if player:getPartySize() <= 2 then
-                player:addStatusEffect(xi.effect.HASTE, 10, 0, 30)
-            end
-        end
-    end
-
-    -- Saber Dance: solo = TP gain bonus (+50 TP on use)
-    local _saber = DNC.useSaberDanceAbility
-    if _saber then
-        DNC.useSaberDanceAbility = function(player, target, ability, action)
-            _saber(player, target, ability, action)
-            if player:getPartySize() <= 2 then
-                player:addTP(50)
-            end
-        end
-    end
-
-    -- Fan Dance: solo = DEF bonus + momentum+1
-    local _fan = DNC.useFanDanceAbility
-    if _fan then
-        DNC.useFanDanceAbility = function(player, target, ability, action)
-            _fan(player, target, ability, action)
-            if player:getPartySize() <= 2 then
-                player:addStatusEffect(xi.effect.DEF_BONUS, 10, 0, 60)
-                ss.addMomentum(player, 1)
-            end
-        end
-    end
-
-    -- Waltz heals: solo = bonus 10–20% heal on self
-    local _waltz = DNC.useWaltzAbility
-    if _waltz then
-        DNC.useWaltzAbility = function(player, target, ability, action)
-            local healed = _waltz(player, target, ability, action)
-            if player:getPartySize() <= 2 and target:getID() == player:getID() then
-                local bonus = math.floor((healed or 0) * 0.15)
-                if bonus > 0 then
-                    ss.restoreHP(player, bonus)
-                end
-            end
-            return healed
-        end
-    end
-
-    -- Reverse Flourish (finishing moves → TP): solo = extra TP trickle
-    local _rf = DNC.useReverseFlourishAbility
-    if _rf then
-        DNC.useReverseFlourishAbility = function(player, target, ability, action)
-            _rf(player, target, ability, action)
-            if player:getPartySize() <= 2 then
-                player:addTP(math.random(30, 80))
-            end
-        end
-    end
-
-    -- Wild Flourish: solo = tryStun chance 25%
-    local _wf = DNC.useWildFlourishAbility
-    if _wf then
-        DNC.useWildFlourishAbility = function(player, target, ability, action)
-            _wf(player, target, ability, action)
-            if player:getPartySize() <= 2 then
-                ss.tryStun(target, 25)
-            end
-        end
-    end
 end

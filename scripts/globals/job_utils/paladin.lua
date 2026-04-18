@@ -31,9 +31,6 @@ xi.job_utils.paladin.checkIntervene = function(player, target, ability)
 end
 
 xi.job_utils.paladin.checkInvincible = function(player, target, ability)
-    local jpValue = player:getJobPointLevel(xi.jp.INVINCIBLE_EFFECT)
-
-    ability:setVE(ability:getVE() + 100 * jpValue)
     ability:setRecast(math.max(0, ability:getRecast() - player:getMod(xi.mod.ONE_HOUR_RECAST) * 60))
 
     return 0, 0
@@ -73,8 +70,7 @@ end
 xi.job_utils.paladin.useCover = function(player, target, ability)
     local baseDuration = 15
     local bonusTime    = utils.clamp(math.floor((player:getStat(xi.mod.VIT) + player:getStat(xi.mod.MND) - target:getStat(xi.mod.VIT) * 2) / 4), 0, 15)
-    local jpValue      = player:getJobPointLevel(xi.jp.COVER_DURATION)
-    local duration     = baseDuration + bonusTime + player:getMerit(xi.merit.COVER_EFFECT_LENGTH) + player:getMod(xi.mod.COVER_DURATION) + jpValue
+    local duration     = baseDuration + bonusTime + player:getMerit(xi.merit.COVER_EFFECT_LENGTH) + player:getMod(xi.mod.COVER_DURATION)
 
     player:addStatusEffect(xi.effect.COVER, player:getMod(xi.mod.COVER_TO_MP), 0, duration)
     player:setLocalVar('COVER_ABILITY_TARGET', target:getID())
@@ -117,7 +113,6 @@ end
 xi.job_utils.paladin.useIntervene = function(player, target, ability)
     -- TODO: Retail testing to determine damage
     local shieldSize = player:getShieldSize()
-    local jpValue    = 1 + (player:getJobPointLevel(xi.jp.INTERVENE_EFFECT) / 100)
     local damage     = math.floor(player:getMainLvl() * 3.36)
 
     if shieldSize == 2 then
@@ -127,8 +122,6 @@ xi.job_utils.paladin.useIntervene = function(player, target, ability)
     elseif shieldSize == 4 then
         damage = 67 + damage
     end
-
-    damage = damage * jpValue
 
     target:addStatusEffect(xi.effect.INTERVENE, 1, 0, 30)
 
@@ -144,8 +137,7 @@ xi.job_utils.paladin.useMajesty = function(player, target, ability)
 end
 
 xi.job_utils.paladin.usePalisade = function(player, target, ability)
-    local jpValue = player:getJobPointLevel(xi.jp.PALISADE_EFFECT)
-    local power   = 30 + jpValue
+    local power   = 30
 
     player:addStatusEffect(xi.effect.PALISADE, power, 0, 60)
 end
@@ -162,24 +154,21 @@ xi.job_utils.paladin.useSentinel = function(player, target, ability)
     local power       = (90 + player:getMod(xi.mod.SENTINEL_EFFECT)) * 100
     local guardian    = player:getMerit(xi.merit.GUARDIAN)
     local enhGuardian = player:getMod(xi.mod.ENHANCES_GUARDIAN) * (guardian / 19)
-    local jpValue     = player:getJobPointLevel(xi.jp.SENTINEL_EFFECT)
     local duration    = 30 + enhGuardian
 
     -- Sent as positive power because UINTs, man.
-    player:addStatusEffect(xi.effect.SENTINEL, power, 3, duration, 0, guardian + jpValue)
+    player:addStatusEffect(xi.effect.SENTINEL, power, 3, duration, 0, guardian)
 end
 
 xi.job_utils.paladin.useSepulcher = function(player, target, ability)
     local power    = 20
-    local jpValue  = player:getJobPointLevel(xi.jp.SEPULCHER_DURATION)
-    local duration = 180 + jpValue
+    local duration = 180
 
     target:addStatusEffect(xi.effect.SEPULCHER, power, 0, duration)
 end
 
 xi.job_utils.paladin.useShieldBash = function(player, target, ability)
     local shieldSize = player:getShieldSize()
-    local jpValue    = player:getJobPointLevel(xi.jp.SHIELD_BASH_EFFECT)
     local damage     = math.floor(player:getMainLvl() * 0.273)
     local chance     = 90
 
@@ -199,7 +188,7 @@ xi.job_utils.paladin.useShieldBash = function(player, target, ability)
         damage = math.floor(damage)
     end
 
-    damage = damage + player:getMod(xi.mod.SHIELD_BASH) + (jpValue * 10)
+    damage = damage + player:getMod(xi.mod.SHIELD_BASH)
 
     -- Calculate stun proc chance
     chance = chance + (player:getMainLvl() - target:getMainLvl()) * 5
@@ -222,104 +211,19 @@ xi.job_utils.paladin.useShieldBash = function(player, target, ability)
 end
 
 -- ══════════════════════════════════════════════════════════════
--- Solo Synergy — Paladin
--- ══════════════════════════════════════════════════════════════
--- Design fantasy: immovable guardian. Sentinel and Rampart
--- make solo tanking feel powerful. Invincible lasts longer.
--- Cover fortifies self when there's no one to protect.
--- Chivalry returns MP based on damage absorbed.
+-- Solo Synergy — Paladin (75 Era Strict)
 -- ══════════════════════════════════════════════════════════════
 require('scripts/globals/solo_synergy')
 
 do
-    local ss   = xi.soloSynergy
+    local ss = xi.soloSynergy
     local _PLD = xi.job_utils.paladin
 
-    -- Sentinel — solo: extended duration + Regen during the shield window.
-    local _sent = _PLD.useSentinel
-    if _sent then
-        _PLD.useSentinel = function(player, target, ability)
-            _sent(player, target, ability)
-            if player:getPartySize() <= 2 then
-                local regenPow = math.floor(player:getMainLvl() / 8) + 4
-                player:addStatusEffect(xi.effect.REGEN, regenPow, 3, 30)
-                -- Extend Sentinel by 15s for solo
-                local eff = player:getStatusEffect(xi.effect.SENTINEL)
-                if eff then eff:setDuration(eff:getDuration() + 15) end
-                ss.flash(player, string.format('Solo Sentinel: +15s, Regen+%d', regenPow))
-            end
-        end
-    end
-
-    -- Invincible — solo: lasts 10s longer.
-    local _inv = _PLD.useInvincible
-    if _inv then
-        _PLD.useInvincible = function(player, target, ability)
-            _inv(player, target, ability)
-            if player:getPartySize() <= 2 then
-                local eff = player:getStatusEffect(xi.effect.INVINCIBLE)
-                if eff then eff:setDuration(eff:getDuration() + 10) end
-                ss.flash(player, 'Solo Invincible: +10s')
-            end
-        end
-    end
-
-    -- Cover — when solo (no ally to cover), grants a short DEF surge to self.
-    local _cover = _PLD.useCover
-    if _cover then
-        _PLD.useCover = function(player, target, ability)
-            _cover(player, target, ability)
-            if player:getPartySize() <= 1 then
-                local defBonus = math.floor(player:getMainLvl() / 4) + 15
-                player:addStatusEffect(xi.effect.DEF_BONUS, defBonus, 0, 15)
-                ss.flash(player, string.format('Solo Cover: self-fortify DEF+%d (15s)', defBonus))
-            end
-        end
-    end
-
-    -- Shield Bash — solo: also applies an ACC debuff to target.
-    local _sb = _PLD.useShieldBash
-    if _sb then
-        _PLD.useShieldBash = function(player, target, ability)
-            _sb(player, target, ability)
-            if player:getPartySize() <= 2 and target and target:isMob() then
-                target:addStatusEffect(xi.effect.ACCURACY_DOWN, 20, 0, 20)
-                ss.flash(player, 'Solo Shield Bash: ACC Down on target.')
-            end
-        end
-    end
-
-    -- Chivalry — solo: scales MP return with how hurt you are (bloodbath synergy).
-    local _chiv = _PLD.useChivalry
-    if _chiv then
-        _PLD.useChivalry = function(player, target, ability)
-            _chiv(player, target, ability)
-            if player:getPartySize() <= 2 then
-                local bloodMult = ss.getBloodbathMult(player)
-                local mpBonus   = math.floor(player:getMaxMP() * 0.05 * bloodMult)
-                ss.restoreMP(player, mpBonus)
-                ss.flash(player, string.format('Solo Chivalry: MP+%d (bloodbath x%.1f)', mpBonus, bloodMult))
-            end
-        end
-    end
-
-    -- Holy Circle — solo: also grants a short ATK bonus vs undead (divine wrath).
-    local _hc = _PLD.useHolyCircle
-    if _hc then
-        _PLD.useHolyCircle = function(player, target, ability)
-            _hc(player, target, ability)
-            if player:getPartySize() <= 2 then
-                player:addStatusEffect(xi.effect.ATT_BOOST, 15, 0, 180)
-            end
-        end
-    end
-
-    -- Rampart — add momentum on use (fortifying the line).
-    local _ramp = _PLD.useRampart
-    if _ramp then
-        _PLD.useRampart = function(player, target, ability)
-            _ramp(player, target, ability)
-            ss.addMomentum(player, 1)
-        end
+    local _sentinel = _PLD.useSentinel
+    _PLD.useSentinel = function(player, target, ability)
+        ss.onAbilityUse(player, target, ability)
+        _sentinel(player, target, ability)
+        player:setLocalVar('SS_RETRIBUTION', 1)
+        ss.flash(player, 'RETRIBUTION primed: next WS scales with DEF.')
     end
 end

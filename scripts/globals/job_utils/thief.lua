@@ -123,11 +123,6 @@ xi.job_utils.thief.checkSteal = function(player, target, ability)
     if player:getFreeSlotsCount() == 0 then
         return xi.msg.basic.FULL_INVENTORY, 0
     else
-        -- JP Recast Reduction
-        local jpValue = player:getJobPointLevel(xi.jp.STEAL_RECAST)
-
-        ability:setRecast(ability:getRecast() - 2 * jpValue)
-
         return 0, 0
     end
 end
@@ -151,9 +146,7 @@ xi.job_utils.thief.useAssassinsCharge = function(player, target, ability)
 end
 
 xi.job_utils.thief.useBully = function(player, target, ability)
-    local jpValue = player:getJobPointLevel(xi.jp.BULLY_EFFECT)
-
-    target:addStatusEffectEx(xi.effect.DOUBT, xi.effect.INTIMIDATE, 15 + jpValue, 0, 30)
+    target:addStatusEffectEx(xi.effect.DOUBT, xi.effect.INTIMIDATE, 15, 0, 30)
 
     return xi.effect.INTIMIDATE
 end
@@ -197,21 +190,6 @@ xi.job_utils.thief.useDespoil = function(player, target, ability, action)
     local level         = utils.getActiveJobLevel(player, xi.job.THF)
     local despoilMod    = player:getMod(xi.mod.DESPOIL)
     local despoilChance = 50 + despoilMod * 2 + level - target:getMainLvl() -- Same math as Steal
-
-    -- TODO: Need to verify if there's a message associated with this
-    local jpValue = player:getJobPointLevel(xi.jp.DESPOIL_EFFECT)
-
-    if jpValue > 0 and player:getMainJob() == xi.job.THF then
-        local tpSteal = jpValue * 0.02
-        local mobTP = target:getTP()
-
-        if tpSteal > mobTP then
-            tpSteal = mobTP
-        end
-
-        target:addTP(-tpSteal)
-        player:addTP(tpSteal)
-    end
 
     local despoiled = target:getDespoilItem()
 
@@ -276,7 +254,6 @@ end
 xi.job_utils.thief.useLarceny = function(player, target, ability, action)
     local effectStolen
     local effectID = 0
-    local jpValue  = player:getJobPointLevel(xi.jp.LARCENY_EFFECT)
 
     -- SP Abilities have priority, check if one is present first
     for i = 1, #stealableSPEffects do
@@ -289,19 +266,13 @@ xi.job_utils.thief.useLarceny = function(player, target, ability, action)
     -- Default is no SP Ability found
     if effectStolen == nil then
         effectID = player:stealStatusEffect(target)
-
-        local newStatus = player:getStatusEffect(effectID)
-
-        if newStatus then
-            newStatus:setDuration((newStatus:getDuration() + jpValue) * 1000)
-        end
     -- Copy an SP Ability if found
     else
         local newID       = effectStolen:getEffectType()
         local newIcon     = effectStolen:getIcon()
         local newPower    = effectStolen:getPower()
         local newTick     = effectStolen:getTick()
-        local newDuration = effectStolen:getDuration() + jpValue
+        local newDuration = effectStolen:getDuration()
         local newSubType  = effectStolen:getSubType()
         local newSubPower = effectStolen:getSubPower()
         local newTier     = effectStolen:getTier()
@@ -326,20 +297,6 @@ end
 xi.job_utils.thief.useMug = function(player, target, ability, action)
     local thfLevel = utils.getActiveJobLevel(player, xi.job.THF)
     local gil      = 0
-    -- TODO: Need to verify if there's a message associated with this
-    local jpValue = player:getJobPointLevel(xi.jp.MUG_EFFECT)
-
-    if jpValue > 0 and player:getMainJob() == xi.job.THF then
-        local hpSteal = ((player:getStat(xi.mod.AGI) + player:getStat(xi.mod.DEX)) * jpValue) * 0.05
-        local mobHP = target:getHP()
-
-        if hpSteal > mobHP then
-            hpSteal = mobHP
-        end
-
-        target:addHP(-hpSteal)
-        player:addHP(hpSteal)
-    end
 
     local mugChance = 90 + thfLevel - target:getMainLvl()
 
@@ -465,89 +422,26 @@ xi.job_utils.thief.useTrickAttack = function(player, target, ability)
 end
 
 -- ══════════════════════════════════════════════════════════════
--- Solo Synergy — Thief
--- ══════════════════════════════════════════════════════════════
--- Design fantasy: momentum-fueled opportunist. SA/TA reward
--- positional play. Flee generates TP. Hide builds momentum
--- for a powerful opener. Mug is more rewarding solo.
+-- Solo Synergy — Thief (75 Era Strict)
 -- ══════════════════════════════════════════════════════════════
 require('scripts/globals/solo_synergy')
 
 do
-    local ss   = xi.soloSynergy
+    local ss = xi.soloSynergy
     local _THF = xi.job_utils.thief
 
-    -- Sneak Attack — solo: also grant a short Haste burst (quick followup).
     local _sa = _THF.useSneakAttack
     _THF.useSneakAttack = function(player, target, ability)
+        ss.onAbilityUse(player, target, ability)
         _sa(player, target, ability)
-        if player:getPartySize() <= 2 then
-            player:addStatusEffect(xi.effect.HASTE, 8, 0, 10)
-            ss.addMomentum(player, 1)
-        end
+        player:setLocalVar('SS_LARCENY', 1)
+        ss.flash(player, 'LARCENY primed: next WS steals 250 TP.')
     end
 
-    -- Trick Attack — solo: converts the enmity transfer into a TP bonus.
     local _ta = _THF.useTrickAttack
-    if _ta then
-        _THF.useTrickAttack = function(player, target, ability)
-            _ta(player, target, ability)
-            if player:getPartySize() <= 2 then
-                -- No tank to dump enmity on — convert to raw TP instead
-                player:addTP(math.random(200, 400))
-                ss.flash(player, 'Solo Trick Attack: TP bonus instead of enmity transfer.')
-            end
-        end
-    end
-
-    -- Flee — generates TP while running and sharpens evasion.
-    local _flee = _THF.useFlee
-    _THF.useFlee = function(player, target, ability)
-        _flee(player, target, ability)
-        local tp = math.random(150, 350)
-        player:addTP(tp)
-        player:addStatusEffect(xi.effect.EVASION_BOOST, 20, 0, 30)
-        ss.flash(player, string.format('Flee: TP+%d, EVA+20', tp))
-    end
-
-    -- Hide — while hidden, momentum builds passively. Opener from hide = Surge check.
-    local _hide = _THF.useHide
-    _THF.useHide = function(player, target, ability)
-        _hide(player, target, ability)
-        ss.addMomentum(player, 2)
-        ss.flash(player, 'Hide: momentum building...')
-    end
-
-    -- Assassin's Charge — bonus TP on proc for solo.
-    local _ac = _THF.useAssassinsCharge
-    if _ac then
-        _THF.useAssassinsCharge = function(player, target, ability)
-            _ac(player, target, ability)
-            if player:getPartySize() <= 2 then
-                player:addTP(math.random(100, 250))
-                ss.flash(player, 'Solo Assassin\'s Charge: bonus TP')
-            end
-        end
-    end
-
-    -- Feint — solo: also applies a slow to the target.
-    local _feint = _THF.useFeint
-    if _feint then
-        _THF.useFeint = function(player, target, ability)
-            _feint(player, target, ability)
-            if player:getPartySize() <= 2 and target and target:isMob() then
-                ss.trySlow(target, 60, player:getMainLvl())
-                ss.flash(player, 'Solo Feint: Slow proc chance applied.')
-            end
-        end
-    end
-
-    -- Bully — momentum on use.
-    local _bully = _THF.useBully
-    if _bully then
-        _THF.useBully = function(player, target, ability)
-            _bully(player, target, ability)
-            ss.addMomentum(player, 1)
-        end
+    _THF.useTrickAttack = function(player, target, ability)
+        ss.onAbilityUse(player, target, ability)
+        _ta(player, target, ability)
+        player:setLocalVar('SS_LARCENY', 1)
     end
 end

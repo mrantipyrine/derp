@@ -1174,12 +1174,22 @@ end
 --   * Element-based status procs after damage lands
 --   * BLM Elemental Seal solo flag → enhanced proc chance
 --   * Day/Weather stacking bonus (already in ss, additive here)
+--   * MAGIC SYNERGY: Elemental Combos and Job Perks
 -----------------------------------
 do
     local _orig = xi.spells.damage.useDamageSpell
 
     xi.spells.damage.useDamageSpell = function(caster, target, spell, customMultiplier)
-        local finalDamage = _orig(caster, target, spell, customMultiplier)
+        local ss = xi.soloSynergy
+        local multiplier = customMultiplier or 1
+
+        -- 1. Apply Elemental Combo multiplier (Double damage if primer active)
+        if ss and caster:isPC() and not target:isPC() then
+            multiplier = multiplier * ss.getMagicComboMultiplier(caster, target, spell)
+        end
+
+        -- Call original logic with our new multiplier
+        local finalDamage = _orig(caster, target, spell, multiplier)
 
         -- Only enhance for live player casters vs non-player targets
         if not caster or not caster:isPC() then return finalDamage end
@@ -1187,14 +1197,13 @@ do
         if target:isPC() then return finalDamage end
         if finalDamage <= 0 then return finalDamage end
 
-        local ss = xi.soloSynergy
         if not ss then return finalDamage end
 
         local spellElement = spell:getElement()
         local lv           = caster:getMainLvl()
 
         -----------------------------------
-        -- 1. Party size damage bonus
+        -- 2. Party size damage bonus
         -----------------------------------
         local partyMult = ss.getPartyBonus(caster)
         if partyMult > 1.0 then
@@ -1206,7 +1215,7 @@ do
         end
 
         -----------------------------------
-        -- 2. Bloodbath bonus
+        -- 3. Bloodbath bonus
         -----------------------------------
         local bbMult = ss.getBloodbathMult(caster)
         if bbMult > 1.0 and ss.isBloodbath(caster) then
@@ -1218,51 +1227,12 @@ do
         end
 
         -----------------------------------
-        -- 3. Element-based status procs
+        -- 4. Magic Synergy Perks & Primers
         -----------------------------------
-        -- Determine base proc chance (boosted if BLM Elemental Seal solo flag set)
-        local sealBonus = caster:getLocalVar('SS_BLM_SEAL_SOLO') == 1 and 40 or 0
-        caster:setLocalVar('SS_BLM_SEAL_SOLO', 0) -- consume flag
-
-        -- Cascade flag (from BLM job_utils): double-cast effect → bonus proc chance
-        local cascadeBonus = caster:getLocalVar('SS_BLM_CASCADE') == 1 and 20 or 0
-        caster:setLocalVar('SS_BLM_CASCADE', 0)
-
-        -- DRK Dark Seal flag
-        local drkSealBonus = caster:getLocalVar('SS_DRK_SEAL_BONUS') == 1 and 30 or 0
-        caster:setLocalVar('SS_DRK_SEAL_BONUS', 0)
-
-        local baseChance = 15 + sealBonus + cascadeBonus + drkSealBonus
-
-        if spellElement == xi.element.THUNDER then
-            -- Thunder → Paralysis
-            ss.tryParalyze(target, baseChance, lv)
-        elseif spellElement == xi.element.DARK then
-            -- Dark → Blind + Slow
-            ss.tryBlind(target, baseChance, lv)
-            ss.trySlow(target, math.floor(baseChance / 2), lv)
-        elseif spellElement == xi.element.WIND then
-            -- Wind → Blind
-            ss.tryBlind(target, baseChance, lv)
-        elseif spellElement == xi.element.WATER then
-            -- Water → Slow
-            ss.trySlow(target, baseChance, lv)
-        elseif spellElement == xi.element.EARTH then
-            -- Earth → Poison
-            ss.tryPoison(target, baseChance, lv)
-        elseif spellElement == xi.element.ICE then
-            -- Ice → Slow (frozen slows movement/attacks)
-            ss.trySlow(target, baseChance, lv)
-        elseif spellElement == xi.element.FIRE then
-            -- Fire → nothing per-hit, but short DOT-like Poison (burning)
-            ss.tryPoison(target, math.floor(baseChance * 0.6), lv)
-        elseif spellElement == xi.element.LIGHT then
-            -- Light (Divine) → Stun flash
-            ss.tryStun(target, math.floor(baseChance * 0.5))
-        end
+        ss.applyMagicSynergy(caster, target, spell, finalDamage)
 
         -----------------------------------
-        -- 4. Momentum trickle for big hits
+        -- 5. Momentum trickle for big hits
         --    Solo/duo casters build stacks on crits / big nukes
         -----------------------------------
         if caster:getPartySize() <= 2 then

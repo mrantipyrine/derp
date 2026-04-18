@@ -4,7 +4,6 @@
 require('scripts/globals/ability')
 require('scripts/globals/combat/magic_hit_rate')
 require('scripts/globals/weaponskills')
-require('scripts/globals/jobpoints')
 require('scripts/globals/spells/damage_spell')
 require('scripts/globals/utils')
 -----------------------------------
@@ -24,10 +23,9 @@ end
 local function applyRuneEnhancement(effectType, player)
     local runLevel      = getRUNLevel(player)
     local meritBonus    = player:getMerit(xi.merit.MERIT_RUNE_ENHANCE) -- 2 more elemental resistance per merit for a maximum total of (2*5) = 10 (power of merit is 2 per level)
-    local jobPointBonus = player:getJobPointLevel(xi.jp.RUNE_ENCHANTMENT_EFFECT) -- 1 more elemental resistance per level for a maximum total of 20
 
     -- see https://www.bg-wiki.com/ffxi/Category:Rune
-    local power = math.floor((49 * runLevel / 99) + 5.5) + meritBonus + jobPointBonus
+    local power = math.floor((49 * runLevel / 99) + 5.5) + meritBonus
     player:addStatusEffect(effectType, power, 0, 300)
 end
 
@@ -68,7 +66,7 @@ end
 -- source https://www.bg-wiki.com/ffxi/Vivacious_Pulse
 local function calculateVivaciousPulseHealing(target)
     local divineMagicSkillLevel = target:getSkillLevel(xi.skill.DIVINE_MAGIC)
-    local hpHealAmount          = 10 + math.floor(divineMagicSkillLevel / 2 * (100 + target:getJobPointLevel(xi.jp.VIVACIOUS_PULSE_EFFECT)) / 100) -- Bonus of 1-20%  from Vivacious pulse job points.
+    local hpHealAmount          = 10 + math.floor(divineMagicSkillLevel / 2)
     local tenebraeRuneCount     = 0
     local bonusPct              = (100 + target:getMod(xi.mod.VIVACIOUS_PULSE_POTENCY)) / 100
     local debuffs               = {}
@@ -106,7 +104,7 @@ local function calculateVivaciousPulseHealing(target)
     end
 
     if tenebraeRuneCount > 0 then -- only restore MP if there's one or more tenebrae rune active
-        local mpHealAmount = math.floor(divineMagicSkillLevel / 10 * (100 + target:getJobPointLevel(xi.jp.VIVACIOUS_PULSE_EFFECT)) / 100) * (tenebraeRuneCount + 1)
+        local mpHealAmount = math.floor(divineMagicSkillLevel / 10) * (tenebraeRuneCount + 1)
         target:addMP(mpHealAmount) -- augment bonusPct does not apply here according to testing.
     end
 
@@ -351,8 +349,7 @@ end
 xi.job_utils.rune_fencer.onSwordplayEffectTick = function(target, effect)
     local power         = effect:getPower()
     local tickPower     = 3
-    local jobPointBonus = target:getJobPointLevel(xi.jp.SWORDPLAY_EFFECT)
-    local maxPower      = 60 + jobPointBonus  -- ACC/EVA bonus caps at 60, + 1 per level of job point.
+    local maxPower      = 60  -- ACC/EVA bonus caps at 60
 
     if power < maxPower then
         if power + tickPower > maxPower then
@@ -421,7 +418,6 @@ xi.job_utils.rune_fencer.useVallationValiance = function(player, target, ability
     local meritBonus            = player:getMerit(xi.merit.MERIT_VALLATION_EFFECT)
     local inspirationMerits     = player:getMerit(xi.merit.MERIT_INSPIRATION)
     local inspirationFCBonus    = inspirationMerits + inspirationMerits / 10 * player:getMod(xi.mod.ENHANCES_INSPIRATION)  -- 10 FC per merit level, plus 2% per level from AF2 leg aug
-    local jobPointBonusDuration = player:getJobPointLevel(xi.jp.VALLATION_DURATION)
 
     sdtPower = (sdtPower + meritBonus) * 100
 
@@ -436,7 +432,7 @@ xi.job_utils.rune_fencer.useVallationValiance = function(player, target, ability
 
     if abilityID == xi.jobAbility.VALIANCE then -- apply effects to entire party (including target) (Valiance)
         local party    = player:getParty()
-        local duration = 180 + jobPointBonusDuration
+        local duration = 180
 
         for _, member in pairs(party) do
             if
@@ -458,7 +454,7 @@ xi.job_utils.rune_fencer.useVallationValiance = function(player, target, ability
         if target:hasStatusEffect(xi.effect.LIEMENT) then -- no effect if Liement is up
             ability:setMsg(xi.msg.basic.JA_NO_EFFECT_2)
         else
-            local duration = 120 + jobPointBonusDuration
+            local duration = 120
 
             target:delStatusEffectSilent(xi.effect.VALIANCE) -- Vallation overwrites Valiance
             applyVallationValianceSDTMods(target, sdtTypes, sdtPower, xi.effect.VALLATION, duration)
@@ -569,7 +565,6 @@ xi.job_utils.rune_fencer.useSwipeLunge = function(player, target, ability, actio
     local highestRuneEffectCount = player:countEffect(highestRuneEffect)
     local weaponSkillType        = player:getWeaponSkillType(xi.slot.MAIN)
     local gearBonus              = player:getMod(xi.mod.SWIPE)
-    local jobPointBonus          = player:getJobPointLevel(xi.jp.SWIPE_EFFECT)
     local bonusMacc              = player:getMerit(xi.merit.MERIT_RUNE_ENHANCE)
     local numHits                = 1
 
@@ -577,7 +572,7 @@ xi.job_utils.rune_fencer.useSwipeLunge = function(player, target, ability, actio
         numHits = player:getActiveRuneCount()  -- num hits equals num active runes
     end
 
-    local skillModifier    = (player:getSkillLevel(weaponSkillType) + player:getILvlSkill()) * (1 + jobPointBonus / 100)
+    local skillModifier    = (player:getSkillLevel(weaponSkillType) + player:getILvlSkill())
     local shadowsHit       = 0
     local cumulativeDamage = 0
     local runesUsed        = 0
@@ -732,7 +727,6 @@ xi.job_utils.rune_fencer.useGambit = function(player, target, ability, action)
     local weaponSkillType       = player:getWeaponSkillType(xi.slot.MAIN)
     local runeEffects           = player:getAllRuneEffects()
     local sdtPower              = -10
-    local jobPointBonusDuration = player:getJobPointLevel(xi.jp.GAMBIT_DURATION)
     local gearBonusDuration     = player:getMod(xi.mod.GAMBIT_DURATION)
 
     action:speceffect(target:getID(), getSpecEffectElementEffusion(highestRune)) -- set element color for animation.
@@ -749,7 +743,7 @@ xi.job_utils.rune_fencer.useGambit = function(player, target, ability, action)
         i = i + 1
     end
 
-    local duration = 60 + jobPointBonusDuration + gearBonusDuration
+    local duration = 60 + gearBonusDuration
 
     applyGambitSDTMods(target, sdtTypes, sdtPower, xi.effect.GAMBIT, duration)
 
@@ -802,7 +796,7 @@ end
 
 -- see https://www.bg-wiki.com/ffxi/One_for_All
 xi.job_utils.rune_fencer.useOneForAll = function(player, target, ability, action)
-    local duration = 30 + player:getJobPointLevel(xi.jp.ONE_FOR_ALL_DURATION)
+    local duration = 30
 
     if player:getID() ~= target:getID() then -- Only the caster can apply effects, including to the party
         return
@@ -867,118 +861,5 @@ xi.job_utils.rune_fencer.useLiement = function(player, target, ability, action)
         end
     else -- apply effects to self only
         applyLiementEffect(target, absorbTypes, absorbPower, duration)
-    end
-end
-
------------------------------------
--- Solo Synergy: Rune Fencer
------------------------------------
-do
-    local ss  = xi.soloSynergy
-    local RNF = xi.job_utils.rune_fencer
-
-    -- Lunge / Swipe: solo = damage scales with momentum
-    local _sl = RNF.useSwipeLunge
-    if _sl then
-        RNF.useSwipeLunge = function(player, target, ability, action)
-            _sl(player, target, ability, action)
-            if player:getPartySize() <= 2 and ss.getMomentum(player) >= 3 then
-                -- Momentum burst: deal additional magical damage based on stacks
-                local bonusDmg = ss.getMomentum(player) * ss.scaledPower(player, 4, 0.5)
-                if bonusDmg > 0 then
-                    target:takeDamage(bonusDmg, player, xi.attackType.MAGICAL, xi.damageType.DARK)
-                    ss.flash(player, string.format('Lunge: momentum burst +%d dmg!', bonusDmg))
-                end
-            end
-        end
-    end
-
-    -- Vallation / Valiance: solo = extend by 60s
-    local _vv = RNF.useVallationValiance
-    if _vv then
-        RNF.useVallationValiance = function(player, target, ability, action)
-            _vv(player, target, ability, action)
-            if player:getPartySize() <= 2 then
-                local eff = player:getStatusEffect(xi.effect.VALLATION)
-                          or player:getStatusEffect(xi.effect.VALIANCE)
-                if eff then
-                    eff:setDuration(eff:getDuration() + 60)
-                end
-                ss.flash(player, 'Vallation: extended (solo bonus)!')
-            end
-        end
-    end
-
-    -- Swordplay: solo = also grants Haste for 45s
-    local _sp = RNF.useSwordplay
-    if _sp then
-        RNF.useSwordplay = function(player, target, ability, action)
-            _sp(player, target, ability, action)
-            if player:getPartySize() <= 2 then
-                player:addStatusEffect(xi.effect.HASTE, 10, 0, 45)
-            end
-        end
-    end
-
-    -- Vivacious Pulse: solo = bonus HP return scales with momentum
-    local _vp = RNF.useVivaciousPulse
-    if _vp then
-        RNF.useVivaciousPulse = function(player, target, ability, action)
-            _vp(player, target, ability, action)
-            if player:getPartySize() <= 2 then
-                local bonus = ss.scaledPower(player, 10, 0.8) * (1 + ss.getMomentum(player) * 0.05)
-                ss.restoreHP(player, math.floor(bonus))
-            end
-        end
-    end
-
-    -- Pflug: solo = extend by 30s
-    local _pf = RNF.usePflug
-    if _pf then
-        RNF.usePflug = function(player, target, ability, action)
-            _pf(player, target, ability, action)
-            if player:getPartySize() <= 2 then
-                local eff = player:getStatusEffect(xi.effect.PFLUG)
-                if eff then
-                    eff:setDuration(eff:getDuration() + 30)
-                end
-            end
-        end
-    end
-
-    -- Gambit: solo = momentum+2 (bold offensive rune play)
-    local _gam = RNF.useGambit
-    if _gam then
-        RNF.useGambit = function(player, target, ability, action)
-            _gam(player, target, ability, action)
-            if player:getPartySize() <= 2 then
-                ss.addMomentum(player, 2)
-                ss.flashMomentum(player)
-            end
-        end
-    end
-
-    -- Rayke: solo = tryBlind 30% bonus + trySlow 20%
-    local _ray = RNF.useRayke
-    if _ray then
-        RNF.useRayke = function(player, target, ability, action)
-            _ray(player, target, ability, action)
-            if player:getPartySize() <= 2 then
-                ss.tryBlind(target, 30, player:getMainLvl())
-                ss.trySlow(target, 20, player:getMainLvl())
-            end
-        end
-    end
-
-    -- Rune Enchantment: each rune application = momentum+1
-    local _re = RNF.useRuneEnchantment
-    if _re then
-        RNF.useRuneEnchantment = function(player, target, ability, effect, action)
-            _re(player, target, ability, effect, action)
-            if player:getPartySize() <= 2 then
-                ss.addMomentum(player, 1)
-                ss.flashMomentum(player)
-            end
-        end
     end
 end

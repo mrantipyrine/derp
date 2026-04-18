@@ -1227,7 +1227,96 @@ do
         ss.openComboWindow(attacker, wsID)
 
         -----------------------------------
-        -- 3. Bloodbath bonus — extra physical damage when low HP (solo/duo only)
+        -- 3. Party size damage bonus (solo/small group)
+        -----------------------------------
+        local partyMult = ss.getPartyBonus(attacker)
+        if partyMult > 1.0 then
+            local bonus = math.floor(finaldmg * (partyMult - 1.0))
+            if bonus > 0 then
+                local weapDmgType = attacker:getWeaponDamageType(xi.slot.MAIN)
+                target:takeDamage(bonus, attacker, xi.attackType.PHYSICAL, weapDmgType)
+                finaldmg = finaldmg + bonus
+            end
+        end
+
+        -----------------------------------
+        -- 4. Reactive Synergy (JA -> WS)
+        -----------------------------------
+        local jaMult = ss.getWSAbilityBonus(attacker)
+        
+        -- Job-Specific Synergy Logic
+        local jobBonus = 0
+        local mainJob = attacker:getMainJob()
+        
+        if mainJob == xi.job.THF and attacker:getLocalVar('SS_LARCENY') == 1 then
+            attacker:setLocalVar('SS_LARCENY', 0)
+            attacker:addTP(250)
+            ss.flash(attacker, 'LARCENY! +250 TP stolen.')
+        elseif mainJob == xi.job.RDM and attacker:getLocalVar('SS_SPELLBLADE') == 1 then
+            attacker:setLocalVar('SS_SPELLBLADE', 0)
+            jaMult = jaMult + 0.25
+            ss.flash(attacker, 'SPELLBLADE! Damage surged.')
+        elseif mainJob == xi.job.PLD and attacker:getLocalVar('SS_RETRIBUTION') == 1 then
+            attacker:setLocalVar('SS_RETRIBUTION', 0)
+            jobBonus = math.floor(attacker:getStat(xi.mod.DEF) / 2)
+            ss.flash(attacker, string.format('RETRIBUTION! +%d DEF-based damage.', jobBonus))
+        elseif mainJob == xi.job.MNK and attacker:getLocalVar('SS_FOCUS_STRIKE') == 1 then
+            attacker:setLocalVar('SS_FOCUS_STRIKE', 0)
+            jaMult = jaMult + 0.20
+            ss.flash(attacker, 'FOCUS STRIKE! Precision hit.')
+        elseif mainJob == xi.job.DRK and attacker:getLocalVar('SS_EXECUTE') == 1 then
+            attacker:setLocalVar('SS_EXECUTE', 0)
+            local missingHP = target:getMaxHP() - target:getHP()
+            jobBonus = math.floor(missingHP * 0.10) -- 10% of missing HP as bonus dmg
+            ss.flash(attacker, string.format('EXECUTE! +%d lethal damage.', jobBonus))
+        elseif mainJob == xi.job.SAM and attacker:getLocalVar('SS_ECHO_STRIKE') == 1 then
+            attacker:setLocalVar('SS_ECHO_STRIKE', 0)
+            jaMult = jaMult + 0.50 -- Representing the "double hit" as massive dmg boost
+            ss.flash(attacker, 'ECHO STRIKE! Phantom blow landed.')
+        elseif mainJob == xi.job.BRD and attacker:getLocalVar('SS_RESONANCE') == 1 then
+            attacker:setLocalVar('SS_RESONANCE', 0)
+            -- Handled in splash logic if needed, or flat boost here
+            jaMult = jaMult + 0.15
+            ss.flash(attacker, 'SONIC RESONANCE! Echoing hit.')
+        elseif mainJob == xi.job.DNC and attacker:getLocalVar('SS_DANCE_STRIKE') == 1 then
+            attacker:setLocalVar('SS_DANCE_STRIKE', 0)
+            attacker:addStatusEffect(xi.effect.FINISHING_MOVE_1, 2, 0, 120)
+            ss.flash(attacker, 'DANCE STRIKE! +2 Finishing Moves.')
+        elseif mainJob == xi.job.SMN and attacker:getLocalVar('SS_AVATAR_BOND') == 1 then
+            attacker:setLocalVar('SS_AVATAR_BOND', 0)
+            local pet = attacker:getPet()
+            if pet then pet:addTP(1000) end
+            ss.flash(attacker, 'AVATAR BOND! Pet TP surged.')
+        elseif mainJob == xi.job.BLU and attacker:getLocalVar('SS_AZURE_FLOW') == 1 then
+            attacker:setLocalVar('SS_AZURE_FLOW', 0)
+            attacker:addStatusEffect(xi.effect.AZURE_LORE, 1, 0, 15) -- Short burst of power
+            ss.flash(attacker, 'AZURE FLOW! Magic potential peaking.')
+        elseif mainJob == xi.job.RNG and attacker:getLocalVar('SS_DEADEYE') == 1 then
+            attacker:setLocalVar('SS_DEADEYE', 0)
+            jaMult = jaMult + 0.35
+            attacker:addTP(100)
+            ss.flash(attacker, 'DEADEYE! Precision shot +100 TP.')
+        elseif mainJob == xi.job.WHM and attacker:getLocalVar('SS_HEALING_BLADE') == 1 then
+            attacker:setLocalVar('SS_HEALING_BLADE', 0)
+            local heal = math.floor(finaldmg * 0.20)
+            ss.restoreHP(attacker, heal)
+            ss.flash(attacker, string.format('HEALING BLADE! Party restored for %d.', heal))
+        end
+
+        if jaMult > 1.0 or jobBonus > 0 then
+            local bonus = math.floor(finaldmg * (jaMult - 1.0)) + jobBonus
+            if bonus > 0 then
+                local weapDmgType = attacker:getWeaponDamageType(xi.slot.MAIN)
+                target:takeDamage(bonus, attacker, xi.attackType.PHYSICAL, weapDmgType)
+                finaldmg = finaldmg + bonus
+                if jaMult > 1.0 then
+                    ss.flash(attacker, string.format('Synergy Strike! +%d bonus damage', bonus))
+                end
+            end
+        end
+
+        -----------------------------------
+        -- 5. Bloodbath bonus — extra physical damage when low HP (solo/duo only)
         -----------------------------------
         if attacker:getPartySize() <= 2 and ss.isBloodbath(attacker) and finaldmg > 0 then
             local bbMult = ss.getBloodbathMult(attacker)
@@ -1241,7 +1330,7 @@ do
         end
 
         -----------------------------------
-        -- 4. Surge burst on max momentum
+        -- 6. Surge burst on max momentum
         -----------------------------------
         if ss.isSurge(attacker) and finaldmg > 0 then
             local surgeDmg = math.floor(finaldmg * 0.30)
@@ -1253,6 +1342,16 @@ do
             ss.triggerSurge(attacker, nil)
             ss.flash(attacker, string.format('SURGE BURST! +%d WS damage!', surgeDmg))
         end
+
+        -----------------------------------
+        -- 7. Flowing Spirit (WS -> JA tracking)
+        -----------------------------------
+        ss.onWeaponskillHit(attacker, target, finaldmg)
+
+        -----------------------------------
+        -- 8. Pet Empowerment (Master -> Pet synergy)
+        -----------------------------------
+        ss.empowerPet(attacker, finaldmg)
 
         return finaldmg, crit, tpHits, extraHits, shadows
     end

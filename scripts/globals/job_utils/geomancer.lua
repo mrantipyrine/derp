@@ -4,7 +4,6 @@
 require('scripts/globals/ability')
 require('scripts/globals/pets')
 require('scripts/globals/weaponskills')
-require('scripts/globals/jobpoints')
 -----------------------------------
 xi = xi or {}
 xi.job_utils = xi.job_utils or {}
@@ -436,7 +435,6 @@ xi.job_utils.geomancer.spawnLuopan = function(player, target, spell)
     local potency      = getEffectPotency(player, effect)
     local finalPotency = potency
     local targetType   = geoData[spellID].targetType
-    local bolsterValue = 0
 
     -- set a local var to adjust potency values after an ability has worn off
     luopan:setLocalVar('GEO_POTENCY', potency)
@@ -460,18 +458,13 @@ xi.job_utils.geomancer.spawnLuopan = function(player, target, spell)
     -- Change the luopans appearance to match the effect
     luopan:setModelId(modelID)
 
-    -- get the job point value of BOLSTER_EFFECT if Bolster is active
-    if player:hasStatusEffect(xi.effect.BOLSTER) then
-        bolsterValue = player:getJobPointLevel(xi.jp.BOLSTER_EFFECT)
-    end
-
     if player:hasStatusEffect(xi.effect.BLAZE_OF_GLORY) then
         player:delStatusEffect(xi.effect.BLAZE_OF_GLORY)
-        luopan:setHP((luopan:getMaxHP() / 2) + (luopan:getMaxHP() * (0.01 * player:getJobPointLevel(xi.jp.BLAZE_OF_GLORY_EFFECT))))
+        luopan:setHP(luopan:getMaxHP() / 2)
     end
 
     -- Set HP loss over time
-    luopan:addMod(xi.mod.REGEN_DOWN, math.floor(luopan:getMainLvl() / 4) - bolsterValue)
+    luopan:addMod(xi.mod.REGEN_DOWN, math.floor(luopan:getMainLvl() / 4))
 
     -- Innate Damage Taken -50%
     luopan:addMod(xi.mod.DMG, -5000)
@@ -492,7 +485,6 @@ end
 -- Ability Effect Wear Adjustments
 -----------------------------------
 xi.job_utils.geomancer.bolsterOnEffectLose = function(target, effect)
-    local bolsterJP = target:getJobPointLevel(xi.jp.BOLSTER_EFFECT)
     local pet       = target:getPet()
 
     -- Luopan Geo effect
@@ -501,7 +493,6 @@ xi.job_utils.geomancer.bolsterOnEffectLose = function(target, effect)
         local currentPotency = pet:getStatusEffect(xi.effect.COLURE_ACTIVE):getSubPower()
         if currentPotency == geoPotency * 2 then -- will always be this value with Bolster or Blaze of Glory active
             pet:getStatusEffect(xi.effect.COLURE_ACTIVE):setSubPower(geoPotency)
-            pet:setMod(xi.mod.REGEN_DOWN, pet:getMod(xi.mod.REGEN_DOWN) + bolsterJP)
         end
     end
 
@@ -511,92 +502,6 @@ xi.job_utils.geomancer.bolsterOnEffectLose = function(target, effect)
         local currentPotency = target:getStatusEffect(xi.effect.COLURE_ACTIVE):getSubPower()
         if currentPotency == indiPotency * 2 then -- will always be this value with Bolster active
             target:getStatusEffect(xi.effect.COLURE_ACTIVE):setSubPower(indiPotency)
-        end
-    end
-end
-
------------------------------------
--- Solo Synergy: Geomancer
------------------------------------
-do
-    local ss  = xi.soloSynergy
-    local GEO = xi.job_utils.geomancer
-
-    -- Bolster: solo = extend by 30s + Regen for self
-    local _bol = GEO.bolster
-    if _bol then
-        GEO.bolster = function(player, target, ability, action)
-            _bol(player, target, ability, action)
-            if player:getPartySize() <= 2 then
-                local eff = player:getStatusEffect(xi.effect.BOLSTER)
-                if eff then
-                    eff:setDuration(eff:getDuration() + 30)
-                end
-                player:addStatusEffect(xi.effect.REGEN, ss.scaledPower(player, 3, 0.1), 3, 90)
-                ss.flash(player, 'Bolster: extended + Regen (solo bonus)!')
-            end
-        end
-    end
-
-    -- Blaze of Glory: solo = momentum+2 + TP restore
-    local _bog = GEO.blazeOfGlory
-    if _bog then
-        GEO.blazeOfGlory = function(player, target, ability, action)
-            _bog(player, target, ability, action)
-            if player:getPartySize() <= 2 then
-                player:addTP(math.random(100, 200))
-                ss.addMomentum(player, 2)
-                ss.flashMomentum(player)
-                ss.flash(player, 'Blaze of Glory: TP surge (solo bonus)!')
-            end
-        end
-    end
-
-    -- Life Cycle: solo = smaller HP cost (heal self 10%)
-    local _lc = GEO.lifeCycle
-    if _lc then
-        GEO.lifeCycle = function(player, target, ability, action)
-            _lc(player, target, ability, action)
-            if player:getPartySize() <= 2 then
-                -- Recoup a fraction of HP spent (solo sacrifice shouldn't be as harsh)
-                ss.restoreHPPct(player, 0.10)
-            end
-        end
-    end
-
-    -- Full Circle: solo = MP return bonus
-    local _fc = GEO.fullCircle
-    if _fc then
-        GEO.fullCircle = function(player, target, ability, action)
-            _fc(player, target, ability, action)
-            if player:getPartySize() <= 2 then
-                local mpReturn = ss.scaledPower(player, 20, 1.0)
-                ss.restoreMP(player, mpReturn)
-                ss.flash(player, string.format('Full Circle: +%d MP (solo bonus)!', mpReturn))
-            end
-        end
-    end
-
-    -- Ecliptic Attrition: solo = momentum+1
-    local _ea = GEO.eclipticAttrition
-    if _ea then
-        GEO.eclipticAttrition = function(player, target, ability, action)
-            _ea(player, target, ability, action)
-            if player:getPartySize() <= 2 then
-                ss.addMomentum(player, 1)
-                ss.flashMomentum(player)
-            end
-        end
-    end
-
-    -- Widened Compass: solo = Regen for self
-    local _wc = GEO.widenedCompass
-    if _wc then
-        GEO.widenedCompass = function(player, target, ability, action)
-            _wc(player, target, ability, action)
-            if player:getPartySize() <= 2 then
-                player:addStatusEffect(xi.effect.REGEN, 3, 3, 60)
-            end
         end
     end
 end

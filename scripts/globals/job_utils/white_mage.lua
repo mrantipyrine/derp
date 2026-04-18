@@ -227,3 +227,15 @@ do
         end
     end
 end
+
+do
+    local ss = xi.soloSynergy
+    local _WHM = xi.job_utils.white_mage
+
+    local _ds = _WHM.useDivineSeal
+    _WHM.useDivineSeal = function(player, target, ability)
+        ss.onAbilityUse(player, target, ability)
+        _ds(player, target, ability)
+        player:setLocalVar('SS_HEALING_BLADE', 1)
+    end
+end

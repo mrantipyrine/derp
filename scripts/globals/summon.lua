@@ -358,6 +358,9 @@ xi.summon.avatarFinalAdjustments = function(dmg, mob, skill, target, skilltype, 
     end
 
     -- Calculate Blood Pact Damage before stoneskin
+    -- 75 Era Buff: 2.0x base multiplier for pet damage to make them truly scary
+    local eraMult = 2.0
+    dmg = math.floor(dmg * eraMult)
     dmg = math.floor(dmg + dmg * mob:getMod(xi.mod.BP_DAMAGE) / 100)
 
     if dmg < 0 then

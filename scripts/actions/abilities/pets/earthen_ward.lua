@@ -9,7 +9,8 @@ end
 
 abilityObject.onPetAbility = function(target, pet, petskill, summoner, action)
     target:delStatusEffect(xi.effect.STONESKIN)
-    local amount = pet:getMainLvl() * 2 + 50
+    -- 75 Era Buff: Massively stronger Earthen Ward (10 HP per level + 500 base)
+    local amount = pet:getMainLvl() * 10 + 500
 
     xi.job_utils.summoner.onUseBloodPact(target, petskill, summoner, action)
 
