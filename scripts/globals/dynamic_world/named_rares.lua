@@ -362,9 +362,9 @@ nr.db = {
         isAggro     = false,
         loot        =
         {
-            { itemId = 793, rate = 1000 },    -- Morris's Sporeling (trophy, always)
-            { itemId = 792, rate = 400  },    -- Morris's Wide Brim
-            { itemId = 794, rate = 150  },    -- Mycelium Medal
+            { itemId = 16402, rate = 1000 },    -- Morris's Sporeling (trophy, always)
+            { itemId = 16384, rate = 400  },    -- Morris's Wide Brim
+            { itemId = 16415, rate = 150  },    -- Mycelium Medal
         },
         deathMsg = 'Mushroom Morris tips his wide brim one last time.',
     },
@@ -611,9 +611,9 @@ nr.db = {
         isAggro     = true,
         loot        =
         {
-            { itemId = 799, rate = 1000 },    -- Sabrina's Saber-Fang (trophy)
-            { itemId = 800, rate = 400  },    -- Sabrina's Feral Legs
-            { itemId = 801, rate = 150  },    -- Sabrina's Apex Ring
+            { itemId = 16464, rate = 1000 },    -- Sabrina's Saber-Fang (trophy)
+            { itemId = 16474, rate = 400  },    -- Sabrina's Feral Legs
+            { itemId = 16561, rate = 150  },    -- Sabrina's Apex Ring
         },
         deathMsg = "Saber Sabrina's enormous fangs finally still.",
     },
@@ -969,9 +969,9 @@ nr.db = {
         isAggro     = true,
         loot        =
         {
-            { itemId = 802, rate = 1000 },    -- Ernest's Earthen Core (trophy)
-            { itemId = 803, rate = 400  },    -- Ernest's Burrower Vest
-            { itemId = 804, rate = 150  },    -- Ernest's Tremor Boots
+            { itemId = 16570, rate = 1000 },    -- Ernest's Earthen Core (trophy)
+            { itemId = 16573, rate = 400  },    -- Ernest's Burrower Vest
+            { itemId = 16574, rate = 150  },    -- Ernest's Tremor Boots
         },
         deathMsg = "Earthcrawler Ernest sinks back into the earth. He was always more comfortable underground.",
     },
@@ -992,9 +992,9 @@ nr.db = {
         isAggro     = true,
         loot        =
         {
-            { itemId = 805, rate = 1000 },    -- Sally's Scale Chip (trophy)
-            { itemId = 806, rate = 400  },    -- Sally's Scale Ring
-            { itemId = 807, rate = 150  },    -- Sally's Tail Belt
+            { itemId = 16715, rate = 1000 },    -- Sally's Scale Chip (trophy)
+            { itemId = 17055, rate = 400  },    -- Sally's Scale Ring
+            { itemId = 17084, rate = 150  },    -- Sally's Tail Belt
         },
         deathMsg = "Scaly Sally's iridescent scales scatter across the ground.",
     },
@@ -1012,9 +1012,9 @@ nr.db = {
         isAggro     = true,
         loot        =
         {
-            { itemId = 808, rate = 1000 },    -- Carlos's Cold Scale (trophy)
-            { itemId = 809, rate = 400  },    -- Carlos's Reptile Vest
-            { itemId = 810, rate = 150  },    -- Carlos's Venom Earring
+            { itemId = 17107, rate = 1000 },    -- Carlos's Cold Scale (trophy)
+            { itemId = 17109, rate = 400  },    -- Carlos's Reptile Vest
+            { itemId = 17168, rate = 150  },    -- Carlos's Venom Earring
         },
         deathMsg = "Cold-blooded Carlos stares at you with cold, unblinking eyes. Then he falls over.",
     },
@@ -1032,9 +1032,9 @@ nr.db = {
         isAggro     = true,
         loot        =
         {
-            { itemId = 811, rate = 1000 },    -- Boris's Basilisk Eye (trophy)
-            { itemId = 812, rate = 400  },    -- Boris's Granite Carapace
-            { itemId = 813, rate = 150  },    -- Boris's Stone Gaze Ring
+            { itemId = 17169, rate = 1000 },    -- Boris's Basilisk Eye (trophy)
+            { itemId = 17171, rate = 400  },    -- Boris's Granite Carapace
+            { itemId = 17752, rate = 150  },    -- Boris's Stone Gaze Ring
         },
         deathMsg = "Basilisk Boris's legendary gaze dims. You'll never be turned to stone again.",
     },

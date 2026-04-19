@@ -1,10 +1,10 @@
 -- =============================================================================
 -- CUSTOM ITEMS - Dynamic World Drops
 -- =============================================================================
--- Safe ID range: 792-30999 (vanilla tops out ~29695)
+-- Safe ID range: 16384-30999 (vanilla tops out ~29695)
 --
 -- HOW TO ADD A NEW ITEM:
---   1. Pick the next unused ID in the 792+ range
+--   1. Pick the next unused ID in the 16384+ range
 --   2. Add a row to item_basic   (name, stack, flags, AH slot, sell price)
 --   3. Add a row to item_equipment OR item_weapon (equip stats)
 --   4. Add rows to item_mods     (stat bonuses: DEF, STR, INT, etc.)
@@ -43,39 +43,39 @@ USE aoniaxi;
 -- A rare Fungar with a wide hat and suspicious grin.
 -- -----------------------------------------------------------------------------
 
--- [792] Morris's Wide Brim  (head, all jobs, lv1, silly flavor)
+-- [16384] Morris's Wide Brim  (head, all jobs, lv1, silly flavor)
 REPLACE INTO `item_basic` VALUES
-    (792, 0, "Morris's_Wide_Brim", "morriss_wide_brim", 1, 59476, 99, 0, 500);
+    (16384, 0, "Morris's_Wide_Brim", "morriss_wide_brim", 1, 59476, 99, 0, 500);
 
 REPLACE INTO `item_equipment` VALUES
     -- itemId  name                    lv  ilv  jobs       MId  shieldSz  scriptType  slot  rslot  rslotlook  su_lv
-    (792, "morriss_wide_brim",        1,   0,  4194303,    0,        0,         0,    1,     0,         0,     0);
+    (16384, "morriss_wide_brim",        1,   0,  4194303,    0,        0,         0,    1,     0,         0,     0);
     --                                                       ^all jobs              ^HEAD slot
 
 REPLACE INTO `item_mods` VALUES
-    (792,  2,  50),   -- HP +50
-    (792,  13,   5),   -- MND +5   (he's wise in mushroom ways)
-    (792, 14,   5);   -- CHR +5   (very charming hat)
+    (16384,  2,  50),   -- HP +50
+    (16384,  13,   5),   -- MND +5   (he's wise in mushroom ways)
+    (16384, 14,   5);   -- CHR +5   (very charming hat)
 
 
--- [793] Morris's Sporeling  (rare key item / curiosity, no equip — just a trophy drop)
+-- [16402] Morris's Sporeling  (rare key item / curiosity, no equip — just a trophy drop)
 REPLACE INTO `item_basic` VALUES
-    (793, 0, "Morris's_Sporeling", "morriss_sporeling", 1, 59476, 99, 1, 0);
+    (16402, 0, "Morris's_Sporeling", "morriss_sporeling", 1, 59476, 99, 1, 0);
     -- NoSale=1, BaseSell=0 — unsellable trophy
 
 
--- [794] Mycelium Medal  (neck, all jobs, lv10, rare reward)
+-- [16415] Mycelium Medal  (neck, all jobs, lv10, rare reward)
 REPLACE INTO `item_basic` VALUES
-    (794, 0, "Mycelium_Medal", "mycelium_medal", 1, 59476, 99, 0, 800);
+    (16415, 0, "Mycelium_Medal", "mycelium_medal", 1, 59476, 99, 0, 16474);
 
 REPLACE INTO `item_equipment` VALUES
-    (794, "mycelium_medal",           10,  0,  4194303,    0,        0,         0,    4,     0,         0,     0);
+    (16415, "mycelium_medal",           10,  0,  4194303,    0,        0,         0,    4,     0,         0,     0);
     --                                                                                   ^NECK slot
 
 REPLACE INTO `item_mods` VALUES
-    (794,  2,  30),   -- HP +30
-    (794,  5,  15),   -- MP +15
-    (794, 384,   5);   -- Haste +5
+    (16415,  2,  30),   -- HP +30
+    (16415,  5,  15),   -- MP +15
+    (16415, 384,   5);   -- Haste +5
 
 
 -- =============================================================================
@@ -83,47 +83,47 @@ REPLACE INTO `item_mods` VALUES
 -- Generic rare drops from Elite / Apex tiers
 -- =============================================================================
 
--- [795] Wanderer's Token  (ring, all jobs, lv1)
+-- [16424] Wanderer's Token  (ring, all jobs, lv1)
 REPLACE INTO `item_basic` VALUES
-    (795, 0, "Wanderer's_Token", "wanderers_token", 1, 59476, 99, 0, 200);
+    (16424, 0, "Wanderer's_Token", "wanderers_token", 1, 59476, 99, 0, 200);
 REPLACE INTO `item_equipment` VALUES
-    (795, "wanderers_token",           1,  0,  4194303,    0,        0,         0,   64,     0,         0,     0);
+    (16424, "wanderers_token",           1,  0,  4194303,    0,        0,         0,   64,     0,         0,     0);
 REPLACE INTO `item_mods` VALUES
-    (795,  8,   3),   -- STR +3
-    (795,  9,   3);   -- DEX +3
+    (16424,  8,   3),   -- STR +3
+    (16424,  9,   3);   -- DEX +3
 
--- [796] Nomad's Cord  (waist, all jobs, lv20)
+-- [16435] Nomad's Cord  (waist, all jobs, lv20)
 REPLACE INTO `item_basic` VALUES
-    (796, 0, "Nomad's_Cord", "nomads_cord", 1, 59476, 99, 0, 1000);
+    (16435, 0, "Nomad's_Cord", "nomads_cord", 1, 59476, 99, 0, 1000);
 REPLACE INTO `item_equipment` VALUES
-    (796, "nomads_cord",              20,  0,  4194303,    0,        0,         0,  512,     0,         0,     0);
+    (16435, "nomads_cord",              20,  0,  4194303,    0,        0,         0,  512,     0,         0,     0);
 REPLACE INTO `item_mods` VALUES
-    (796,  8,   5),   -- STR +5
-    (796,  10,   5),   -- VIT +5
-    (796, 23,  10);   -- ATT +10
+    (16435,  8,   5),   -- STR +5
+    (16435,  10,   5),   -- VIT +5
+    (16435, 23,  10);   -- ATT +10
 
--- [797] Elite's Resolve  (back, all jobs, lv40)
+-- [16436] Elite's Resolve  (back, all jobs, lv40)
 REPLACE INTO `item_basic` VALUES
-    (797, 0, "Elite's_Resolve", "elites_resolve", 1, 59476, 99, 0, 3000);
+    (16436, 0, "Elite's_Resolve", "elites_resolve", 1, 59476, 99, 0, 3000);
 REPLACE INTO `item_equipment` VALUES
-    (797, "elites_resolve",           40,  0,  4194303,    0,        0,         0,  256,     0,         0,     0);
+    (16436, "elites_resolve",           40,  0,  4194303,    0,        0,         0,  256,     0,         0,     0);
 REPLACE INTO `item_mods` VALUES
-    (797,  2,  50),   -- HP +50
-    (797,  8,   8),   -- STR +8
-    (797, 23,  15),   -- ATT +15
-    (797, 25,  10);   -- ACC +10
+    (16436,  2,  50),   -- HP +50
+    (16436,  8,   8),   -- STR +8
+    (16436, 23,  15),   -- ATT +15
+    (16436, 25,  10);   -- ACC +10
 
--- [798] Apex Shard  (ring, all jobs, lv50)
+-- [16462] Apex Shard  (ring, all jobs, lv50)
 REPLACE INTO `item_basic` VALUES
-    (798, 0, "Apex_Shard", "apex_shard", 1, 59476, 99, 0, 10000);
+    (16462, 0, "Apex_Shard", "apex_shard", 1, 59476, 99, 0, 10000);
 REPLACE INTO `item_equipment` VALUES
-    (798, "apex_shard",               50,  0,  4194303,    0,        0,         0,   64,     0,         0,     0);
+    (16462, "apex_shard",               50,  0,  4194303,    0,        0,         0,   64,     0,         0,     0);
 REPLACE INTO `item_mods` VALUES
-    (798,  2, 100),   -- HP +100
-    (798,  5,  50),   -- MP +50
-    (798,  8,  10),   -- STR +10
-    (798,  12,  10),   -- INT +10
-    (798, 384,  10);   -- Haste +10
+    (16462,  2, 100),   -- HP +100
+    (16462,  5,  50),   -- MP +50
+    (16462,  8,  10),   -- STR +10
+    (16462,  12,  10),   -- INT +10
+    (16462, 384,  10);   -- Haste +10
 
 
 -- =============================================================================
@@ -135,1173 +135,1173 @@ REPLACE INTO `item_mods` VALUES
 -- SHEEP
 -- =========================================================
 
--- Wooly William (lv6-8) — 30100-30102
+-- Wooly William (lv6-8) — 18467-18527
 REPLACE INTO `item_basic` VALUES
-    (30100, 0, "William's_Wool", "williams_wool", 1, 59476, 99, 0, 50);
+    (18467, 0, "William's_Wool", "williams_wool", 1, 59476, 99, 0, 50);
 -- trophy, no equip
 
 REPLACE INTO `item_basic` VALUES
-    (30101, 0, "William's_Woolcap", "williams_woolcap", 1, 59476, 99, 0, 300);
+    (18526, 0, "William's_Woolcap", "williams_woolcap", 1, 59476, 99, 0, 300);
 REPLACE INTO `item_equipment` VALUES
-    (30101, "williams_woolcap",          5,  0,  4194303,    0,   0,  0,   1,  0,  0,  0);
+    (18526, "williams_woolcap",          5,  0,  4194303,    0,   0,  0,   1,  0,  0,  0);
 REPLACE INTO `item_mods` VALUES
-    (30101,  1,   3),   -- DEF +3
-    (30101,  2,  15),   -- HP +15
-    (30101, 14,   3);   -- CHR +3
+    (18526,  1,   3),   -- DEF +3
+    (18526,  2,  15),   -- HP +15
+    (18526, 14,   3);   -- CHR +3
 
 REPLACE INTO `item_basic` VALUES
-    (30102, 0, "William's_Woolmitt", "williams_woolmitt", 1, 59476, 99, 0, 500);
+    (18527, 0, "William's_Woolmitt", "williams_woolmitt", 1, 59476, 99, 0, 500);
 REPLACE INTO `item_equipment` VALUES
-    (30102, "williams_woolmitt",         5,  0,  4194303,    0,   0,  0,  32,  0,  0,  0);
+    (18527, "williams_woolmitt",         5,  0,  4194303,    0,   0,  0,  32,  0,  0,  0);
 REPLACE INTO `item_mods` VALUES
-    (30102,  1,   2),   -- DEF +2
-    (30102,  10,   3),   -- VIT +3
-    (30102,  13,   3);   -- MND +3
+    (18527,  1,   2),   -- DEF +2
+    (18527,  10,   3),   -- VIT +3
+    (18527,  13,   3);   -- MND +3
 
 
--- Baa-rbara (lv10-13) — 30103-30105
+-- Baa-rbara (lv10-13) — 18528-18530
 REPLACE INTO `item_basic` VALUES
-    (30103, 0, "Baarbara's_Bell", "baarbaras_bell", 1, 59476, 99, 0, 50);
+    (18528, 0, "Baarbara's_Bell", "baarbaras_bell", 1, 59476, 99, 0, 50);
 
 REPLACE INTO `item_basic` VALUES
-    (30104, 0, "Baarbara's_Collar", "baarbaras_collar", 1, 59476, 99, 0, 600);
+    (18529, 0, "Baarbara's_Collar", "baarbaras_collar", 1, 59476, 99, 0, 600);
 REPLACE INTO `item_equipment` VALUES
-    (30104, "baarbaras_collar",         10,  0,  4194303,    0,   0,  0,   2,  0,  0,  0);
+    (18529, "baarbaras_collar",         10,  0,  4194303,    0,   0,  0,   2,  0,  0,  0);
 REPLACE INTO `item_mods` VALUES
-    (30104,  2,  20),   -- HP +20
-    (30104, 14,   5),   -- CHR +5
-    (30104,  13,   3);   -- MND +3
+    (18529,  2,  20),   -- HP +20
+    (18529, 14,   5),   -- CHR +5
+    (18529,  13,   3);   -- MND +3
 
 REPLACE INTO `item_basic` VALUES
-    (30105, 0, "Baarbara's_Ribbon", "baarbaras_ribbon", 1, 59476, 99, 0, 900);
+    (18530, 0, "Baarbara's_Ribbon", "baarbaras_ribbon", 1, 59476, 99, 0, 900);
 REPLACE INTO `item_equipment` VALUES
-    (30105, "baarbaras_ribbon",         10,  0,  4194303,    0,   0,  0, 512,  0,  0,  0);
+    (18530, "baarbaras_ribbon",         10,  0,  4194303,    0,   0,  0, 512,  0,  0,  0);
 REPLACE INTO `item_mods` VALUES
-    (30105, 68,   5),   -- EVA +5
-    (30105,  11,   4),   -- AGI +4
-    (30105, 14,   4);   -- CHR +4
+    (18530, 68,   5),   -- EVA +5
+    (18530,  11,   4),   -- AGI +4
+    (18530, 14,   4);   -- CHR +4
 
 
--- Lambchop Larry (lv20-24) — 30106-30108
+-- Lambchop Larry (lv20-24) — 18548-18550
 REPLACE INTO `item_basic` VALUES
-    (30106, 0, "Larry's_Lambchop", "larrys_lambchop", 1, 59476, 99, 0, 50);
+    (18548, 0, "Larry's_Lambchop", "larrys_lambchop", 1, 59476, 99, 0, 50);
 
 REPLACE INTO `item_basic` VALUES
-    (30107, 0, "Larry's_Lucky_Fleece", "larrys_lucky_fleece", 1, 59476, 99, 0, 1200);
+    (18549, 0, "Larry's_Lucky_Fleece", "larrys_lucky_fleece", 1, 59476, 99, 0, 1200);
 REPLACE INTO `item_equipment` VALUES
-    (30107, "larrys_lucky_fleece",      20,  0,  4194303,    0,   0,  0, 256,  0,  0,  0);
+    (18549, "larrys_lucky_fleece",      20,  0,  4194303,    0,   0,  0, 256,  0,  0,  0);
 REPLACE INTO `item_mods` VALUES
-    (30107,  1,   8),   -- DEF +8
-    (30107,  2,  30),   -- HP +30
-    (30107, 68,   5);   -- EVA +5
+    (18549,  1,   8),   -- DEF +8
+    (18549,  2,  30),   -- HP +30
+    (18549, 68,   5);   -- EVA +5
 
 REPLACE INTO `item_basic` VALUES
-    (30108, 0, "Larry's_Lanyard", "larrys_lanyard", 1, 59476, 99, 0, 1800);
+    (18550, 0, "Larry's_Lanyard", "larrys_lanyard", 1, 59476, 99, 0, 1800);
 REPLACE INTO `item_equipment` VALUES
-    (30108, "larrys_lanyard",           20,  0,  4194303,    0,   0,  0,   2,  0,  0,  0);
+    (18550, "larrys_lanyard",           20,  0,  4194303,    0,   0,  0,   2,  0,  0,  0);
 REPLACE INTO `item_mods` VALUES
-    (30108,  8,   5),   -- STR +5
-    (30108, 23,   8),   -- ATT +8
-    (30108, 25,   5);   -- ACC +5
+    (18550,  8,   5),   -- STR +5
+    (18550, 23,   8),   -- ATT +8
+    (18550, 25,   5);   -- ACC +5
 
 
--- Shear Sharon (lv35-40) — 30109-30111
+-- Shear Sharon (lv35-40) — 18567-18569
 REPLACE INTO `item_basic` VALUES
-    (30109, 0, "Sharon's_Golden_Fleece", "sharons_golden_fleece", 1, 59476, 99, 0, 100);
+    (18567, 0, "Sharon's_Golden_Fleece", "sharons_golden_fleece", 1, 59476, 99, 0, 100);
 
 REPLACE INTO `item_basic` VALUES
-    (30110, 0, "Sharon's_Shears", "sharons_shears", 1, 59476, 99, 0, 4000);
+    (18568, 0, "Sharon's_Shears", "sharons_shears", 1, 59476, 99, 0, 4000);
 REPLACE INTO `item_equipment` VALUES
-    (30110, "sharons_shears",           35,  0,  4194303,    0,   0,  0,  32,  0,  0,  0);
+    (18568, "sharons_shears",           35,  0,  4194303,    0,   0,  0,  32,  0,  0,  0);
 REPLACE INTO `item_mods` VALUES
-    (30110,  1,  12),   -- DEF +12
-    (30110,  9,   8),   -- DEX +8
-    (30110, 25,  10),   -- ACC +10
-    (30110, 23,   8);   -- ATT +8
+    (18568,  1,  12),   -- DEF +12
+    (18568,  9,   8),   -- DEX +8
+    (18568, 25,  10),   -- ACC +10
+    (18568, 23,   8);   -- ATT +8
 
 REPLACE INTO `item_basic` VALUES
-    (30111, 0, "Sharon's_Silken_Mantle", "sharons_silken_mantle", 1, 59476, 99, 0, 6000);
+    (18569, 0, "Sharon's_Silken_Mantle", "sharons_silken_mantle", 1, 59476, 99, 0, 6000);
 REPLACE INTO `item_equipment` VALUES
-    (30111, "sharons_silken_mantle",    35,  0,  4194303,    0,   0,  0, 256,  0,  0,  0);
+    (18569, "sharons_silken_mantle",    35,  0,  4194303,    0,   0,  0, 256,  0,  0,  0);
 REPLACE INTO `item_mods` VALUES
-    (30111,  1,  10),   -- DEF +10
-    (30111,  2,  40),   -- HP +40
-    (30111,  5,  20),   -- MP +20
-    (30111, 29,   8);   -- MDEF +8
+    (18569,  1,  10),   -- DEF +10
+    (18569,  2,  40),   -- HP +40
+    (18569,  5,  20),   -- MP +20
+    (18569, 29,   8);   -- MDEF +8
 
 
 -- =========================================================
 -- RABBITS
 -- =========================================================
 
--- Cottontail Tom (lv5-7) — 30130-30132
+-- Cottontail Tom (lv5-7) — 18570-18795
 REPLACE INTO `item_basic` VALUES
-    (30130, 0, "Tom's_Cottontail", "toms_cottontail", 1, 59476, 99, 0, 50);
+    (18570, 0, "Tom's_Cottontail", "toms_cottontail", 1, 59476, 99, 0, 50);
 
 REPLACE INTO `item_basic` VALUES
-    (30131, 0, "Tom's_Lucky_Foot", "toms_lucky_foot", 1, 59476, 99, 0, 300);
+    (18636, 0, "Tom's_Lucky_Foot", "toms_lucky_foot", 1, 59476, 99, 0, 300);
 REPLACE INTO `item_equipment` VALUES
-    (30131, "toms_lucky_foot",           5,  0,  4194303,    0,   0,  0,  64,  0,  0,  0);
+    (18636, "toms_lucky_foot",           5,  0,  4194303,    0,   0,  0,  64,  0,  0,  0);
 REPLACE INTO `item_mods` VALUES
-    (30131,  11,   3),   -- AGI +3
-    (30131, 68,   3);   -- EVA +3
+    (18636,  11,   3),   -- AGI +3
+    (18636, 68,   3);   -- EVA +3
 
 REPLACE INTO `item_basic` VALUES
-    (30132, 0, "Tom's_Hop_Boots", "toms_hop_boots", 1, 59476, 99, 0, 500);
+    (18795, 0, "Tom's_Hop_Boots", "toms_hop_boots", 1, 59476, 99, 0, 500);
 REPLACE INTO `item_equipment` VALUES
-    (30132, "toms_hop_boots",            5,  0,  4194303,    0,   0,  0, 2048,  0,  0,  0);
+    (18795, "toms_hop_boots",            5,  0,  4194303,    0,   0,  0, 2048,  0,  0,  0);
 REPLACE INTO `item_mods` VALUES
-    (30132,  1,   2),   -- DEF +2
-    (30132,  11,   4),   -- AGI +4
-    (30132, 68,   3);   -- EVA +3
+    (18795,  1,   2),   -- DEF +2
+    (18795,  11,   4),   -- AGI +4
+    (18795, 68,   3);   -- EVA +3
 
 
--- Hopscotch Harvey (lv10-13) — 30133-30135
+-- Hopscotch Harvey (lv10-13) — 18796-18798
 REPLACE INTO `item_basic` VALUES
-    (30133, 0, "Harvey's_Hopstone", "harveys_hopstone", 1, 59476, 99, 0, 50);
+    (18796, 0, "Harvey's_Hopstone", "harveys_hopstone", 1, 59476, 99, 0, 50);
 
 REPLACE INTO `item_basic` VALUES
-    (30134, 0, "Harvey's_Hop_Ring", "harveys_hop_ring", 1, 59476, 99, 0, 600);
+    (18797, 0, "Harvey's_Hop_Ring", "harveys_hop_ring", 1, 59476, 99, 0, 600);
 REPLACE INTO `item_equipment` VALUES
-    (30134, "harveys_hop_ring",         10,  0,  4194303,    0,   0,  0,  64,  0,  0,  0);
+    (18797, "harveys_hop_ring",         10,  0,  4194303,    0,   0,  0,  64,  0,  0,  0);
 REPLACE INTO `item_mods` VALUES
-    (30134,  11,   5),   -- AGI +5
-    (30134,  9,   3),   -- DEX +3
-    (30134, 68,   5);   -- EVA +5
+    (18797,  11,   5),   -- AGI +5
+    (18797,  9,   3),   -- DEX +3
+    (18797, 68,   5);   -- EVA +5
 
 REPLACE INTO `item_basic` VALUES
-    (30135, 0, "Harvey's_Spring_Earring", "harveys_spring_earring", 1, 59476, 99, 0, 900);
+    (18798, 0, "Harvey's_Spring_Earring", "harveys_spring_earring", 1, 59476, 99, 0, 900);
 REPLACE INTO `item_equipment` VALUES
-    (30135, "harveys_spring_earring",   10,  0,  4194303,    0,   0,  0,   4,  0,  0,  0);
+    (18798, "harveys_spring_earring",   10,  0,  4194303,    0,   0,  0,   4,  0,  0,  0);
 REPLACE INTO `item_mods` VALUES
-    (30135,  11,   6),   -- AGI +6
-    (30135, 384,   3);   -- Haste +3
+    (18798,  11,   6),   -- AGI +6
+    (18798, 384,   3);   -- Haste +3
 
 
--- Bunbun Benedict (lv22-28) — 30136-30138
+-- Bunbun Benedict (lv22-28) — 18799-18835
 REPLACE INTO `item_basic` VALUES
-    (30136, 0, "Benedict's_Bonnet", "benedicts_bonnet_trophy", 1, 59476, 99, 0, 50);
+    (18799, 0, "Benedict's_Bonnet", "benedicts_bonnet_trophy", 1, 59476, 99, 0, 50);
 
 REPLACE INTO `item_basic` VALUES
-    (30137, 0, "Benedict's_Fur_Cap", "benedicts_fur_cap", 1, 59476, 99, 0, 1400);
+    (18800, 0, "Benedict's_Fur_Cap", "benedicts_fur_cap", 1, 59476, 99, 0, 1400);
 REPLACE INTO `item_equipment` VALUES
-    (30137, "benedicts_fur_cap",        22,  0,  4194303,    0,   0,  0,   1,  0,  0,  0);
+    (18800, "benedicts_fur_cap",        22,  0,  4194303,    0,   0,  0,   1,  0,  0,  0);
 REPLACE INTO `item_mods` VALUES
-    (30137,  1,   8),   -- DEF +8
-    (30137,  11,   6),   -- AGI +6
-    (30137, 68,   8),   -- EVA +8
-    (30137,  2,  25);   -- HP +25
+    (18800,  1,   8),   -- DEF +8
+    (18800,  11,   6),   -- AGI +6
+    (18800, 68,   8),   -- EVA +8
+    (18800,  2,  25);   -- HP +25
 
 REPLACE INTO `item_basic` VALUES
-    (30138, 0, "Benedict's_Burrow_Belt", "benedicts_burrow_belt", 1, 59476, 99, 0, 2000);
+    (18835, 0, "Benedict's_Burrow_Belt", "benedicts_burrow_belt", 1, 59476, 99, 0, 2000);
 REPLACE INTO `item_equipment` VALUES
-    (30138, "benedicts_burrow_belt",    22,  0,  4194303,    0,   0,  0, 512,  0,  0,  0);
+    (18835, "benedicts_burrow_belt",    22,  0,  4194303,    0,   0,  0, 512,  0,  0,  0);
 REPLACE INTO `item_mods` VALUES
-    (30138,  9,   6),   -- DEX +6
-    (30138,  11,   6),   -- AGI +6
-    (30138, 25,   8);   -- ACC +8
+    (18835,  9,   6),   -- DEX +6
+    (18835,  11,   6),   -- AGI +6
+    (18835, 25,   8);   -- ACC +8
 
 
--- Twitchy Theodore (lv38-45) — 30139-30141
+-- Twitchy Theodore (lv38-45) — 18836-18838
 REPLACE INTO `item_basic` VALUES
-    (30139, 0, "Theodore's_Twitch", "theodores_twitch", 1, 59476, 99, 0, 100);
+    (18836, 0, "Theodore's_Twitch", "theodores_twitch", 1, 59476, 99, 0, 100);
 
 REPLACE INTO `item_basic` VALUES
-    (30140, 0, "Theodore's_Dash_Greaves", "theodores_dash_greaves", 1, 59476, 99, 0, 5000);
+    (18837, 0, "Theodore's_Dash_Greaves", "theodores_dash_greaves", 1, 59476, 99, 0, 5000);
 REPLACE INTO `item_equipment` VALUES
-    (30140, "theodores_dash_greaves",   38,  0,  4194303,    0,   0,  0, 2048,  0,  0,  0);
+    (18837, "theodores_dash_greaves",   38,  0,  4194303,    0,   0,  0, 2048,  0,  0,  0);
 REPLACE INTO `item_mods` VALUES
-    (30140,  1,  14),   -- DEF +14
-    (30140,  11,  10),   -- AGI +10
-    (30140, 68,  12),   -- EVA +12
-    (30140, 384,   5);   -- Haste +5
+    (18837,  1,  14),   -- DEF +14
+    (18837,  11,  10),   -- AGI +10
+    (18837, 68,  12),   -- EVA +12
+    (18837, 384,   5);   -- Haste +5
 
 REPLACE INTO `item_basic` VALUES
-    (30141, 0, "Theodore's_Panic_Earring", "theodores_panic_earring", 1, 59476, 99, 0, 7000);
+    (18838, 0, "Theodore's_Panic_Earring", "theodores_panic_earring", 1, 59476, 99, 0, 7000);
 REPLACE INTO `item_equipment` VALUES
-    (30141, "theodores_panic_earring",  38,  0,  4194303,    0,   0,  0,   4,  0,  0,  0);
+    (18838, "theodores_panic_earring",  38,  0,  4194303,    0,   0,  0,   4,  0,  0,  0);
 REPLACE INTO `item_mods` VALUES
-    (30141,  11,  10),   -- AGI +10
-    (30141, 68,  15),   -- EVA +15
-    (30141, 384,   4);   -- Haste +4
+    (18838,  11,  10),   -- AGI +10
+    (18838, 68,  15),   -- EVA +15
+    (18838, 384,   4);   -- Haste +4
 
 
 -- =========================================================
 -- CRABS
 -- =========================================================
 
--- Crableg Cameron (lv12-16) — 30160-30162
+-- Crableg Cameron (lv12-16) — 18889-18917
 REPLACE INTO `item_basic` VALUES
-    (30160, 0, "Cameron's_Claw", "camerons_claw", 1, 59476, 99, 0, 50);
+    (18889, 0, "Cameron's_Claw", "camerons_claw", 1, 59476, 99, 0, 50);
 
 REPLACE INTO `item_basic` VALUES
-    (30161, 0, "Cameron's_Shell_Shield", "camerons_shell_shield", 1, 59476, 99, 0, 700);
+    (18890, 0, "Cameron's_Shell_Shield", "camerons_shell_shield", 1, 59476, 99, 0, 700);
 REPLACE INTO `item_equipment` VALUES
-    (30161, "camerons_shell_shield",    12,  0,  4194303,    0,   0,  0,  32,  0,  0,  0);
+    (18890, "camerons_shell_shield",    12,  0,  4194303,    0,   0,  0,  32,  0,  0,  0);
 REPLACE INTO `item_mods` VALUES
-    (30161,  1,   5),   -- DEF +5
-    (30161,  10,   4),   -- VIT +4
-    (30161,  2,  20);   -- HP +20
+    (18890,  1,   5),   -- DEF +5
+    (18890,  10,   4),   -- VIT +4
+    (18890,  2,  20);   -- HP +20
 
 REPLACE INTO `item_basic` VALUES
-    (30162, 0, "Cameron's_Coral_Ring", "camerons_coral_ring", 1, 59476, 99, 0, 1000);
+    (18917, 0, "Cameron's_Coral_Ring", "camerons_coral_ring", 1, 59476, 99, 0, 1000);
 REPLACE INTO `item_equipment` VALUES
-    (30162, "camerons_coral_ring",      12,  0,  4194303,    0,   0,  0,  64,  0,  0,  0);
+    (18917, "camerons_coral_ring",      12,  0,  4194303,    0,   0,  0,  64,  0,  0,  0);
 REPLACE INTO `item_mods` VALUES
-    (30162,  10,   5),   -- VIT +5
-    (30162,  1,   4),   -- DEF +4
-    (30162, 29,   4);   -- MDEF +4
+    (18917,  10,   5),   -- VIT +5
+    (18917,  1,   4),   -- DEF +4
+    (18917, 29,   4);   -- MDEF +4
 
 
--- Old Bay Ollie (lv25-30) — 30163-30165
+-- Old Bay Ollie (lv25-30) — 18918-18920
 REPLACE INTO `item_basic` VALUES
-    (30163, 0, "Ollie's_Old_Shell", "ollies_old_shell", 1, 59476, 99, 0, 50);
+    (18918, 0, "Ollie's_Old_Shell", "ollies_old_shell", 1, 59476, 99, 0, 50);
 
 REPLACE INTO `item_basic` VALUES
-    (30164, 0, "Ollie's_Brine_Gauntlets", "ollies_brine_gauntlets", 1, 59476, 99, 0, 1600);
+    (18919, 0, "Ollie's_Brine_Gauntlets", "ollies_brine_gauntlets", 1, 59476, 99, 0, 1600);
 REPLACE INTO `item_equipment` VALUES
-    (30164, "ollies_brine_gauntlets",   25,  0,  4194303,    0,   0,  0,  32,  0,  0,  0);
+    (18919, "ollies_brine_gauntlets",   25,  0,  4194303,    0,   0,  0,  32,  0,  0,  0);
 REPLACE INTO `item_mods` VALUES
-    (30164,  1,  10),   -- DEF +10
-    (30164,  10,   7),   -- VIT +7
-    (30164,  2,  30),   -- HP +30
-    (30164, 27,   3);   -- Enmity +3
+    (18919,  1,  10),   -- DEF +10
+    (18919,  10,   7),   -- VIT +7
+    (18919,  2,  30),   -- HP +30
+    (18919, 27,   3);   -- Enmity +3
 
 REPLACE INTO `item_basic` VALUES
-    (30165, 0, "Ollie's_Seasoned_Belt", "ollies_seasoned_belt", 1, 59476, 99, 0, 2500);
+    (18920, 0, "Ollie's_Seasoned_Belt", "ollies_seasoned_belt", 1, 59476, 99, 0, 2500);
 REPLACE INTO `item_equipment` VALUES
-    (30165, "ollies_seasoned_belt",     25,  0,  4194303,    0,   0,  0, 512,  0,  0,  0);
+    (18920, "ollies_seasoned_belt",     25,  0,  4194303,    0,   0,  0, 512,  0,  0,  0);
 REPLACE INTO `item_mods` VALUES
-    (30165,  10,   8),   -- VIT +8
-    (30165,  1,   8),   -- DEF +8
-    (30165, 29,   6);   -- MDEF +6
+    (18920,  10,   8),   -- VIT +8
+    (18920,  1,   8),   -- DEF +8
+    (18920, 29,   6);   -- MDEF +6
 
 
--- Bisque Bernard (lv35-42) — 30166-30168
+-- Bisque Bernard (lv35-42) — 19322-19745
 REPLACE INTO `item_basic` VALUES
-    (30166, 0, "Bernard's_Bisque_Bowl", "bernards_bisque_bowl", 1, 59476, 99, 0, 100);
+    (19322, 0, "Bernard's_Bisque_Bowl", "bernards_bisque_bowl", 1, 59476, 99, 0, 100);
 
 REPLACE INTO `item_basic` VALUES
-    (30167, 0, "Bernard's_Tidal_Mail", "bernards_tidal_mail", 1, 59476, 99, 0, 5000);
+    (19411, 0, "Bernard's_Tidal_Mail", "bernards_tidal_mail", 1, 59476, 99, 0, 5000);
 REPLACE INTO `item_equipment` VALUES
-    (30167, "bernards_tidal_mail",      35,  0,  4194303,    0,   0,  0,  16,  0,  0,  0);
+    (19411, "bernards_tidal_mail",      35,  0,  4194303,    0,   0,  0,  16,  0,  0,  0);
 REPLACE INTO `item_mods` VALUES
-    (30167,  1,  18),   -- DEF +18
-    (30167,  10,  10),   -- VIT +10
-    (30167,  2,  50),   -- HP +50
-    (30167, 27,   5);   -- Enmity +5
+    (19411,  1,  18),   -- DEF +18
+    (19411,  10,  10),   -- VIT +10
+    (19411,  2,  50),   -- HP +50
+    (19411, 27,   5);   -- Enmity +5
 
 REPLACE INTO `item_basic` VALUES
-    (30168, 0, "Bernard's_Brine_Earring", "bernards_brine_earring", 1, 59476, 99, 0, 7000);
+    (19745, 0, "Bernard's_Brine_Earring", "bernards_brine_earring", 1, 59476, 99, 0, 7000);
 REPLACE INTO `item_equipment` VALUES
-    (30168, "bernards_brine_earring",   35,  0,  4194303,    0,   0,  0,   4,  0,  0,  0);
+    (19745, "bernards_brine_earring",   35,  0,  4194303,    0,   0,  0,   4,  0,  0,  0);
 REPLACE INTO `item_mods` VALUES
-    (30168,  10,   8),   -- VIT +8
-    (30168, 29,  10),   -- MDEF +10
-    (30168,  5,  20);   -- MP +20
+    (19745,  10,   8),   -- VIT +8
+    (19745, 29,  10),   -- MDEF +10
+    (19745,  5,  20);   -- MP +20
 
 
--- Dungeness Duncan (lv45-52) — 30169-30171
+-- Dungeness Duncan (lv45-52) — 19804-19969
 REPLACE INTO `item_basic` VALUES
-    (30169, 0, "Duncan's_Pincer", "duncans_pincer", 1, 59476, 99, 0, 100);
+    (19804, 0, "Duncan's_Pincer", "duncans_pincer", 1, 59476, 99, 0, 100);
 
 REPLACE INTO `item_basic` VALUES
-    (30170, 0, "Duncan's_Abyssal_Helm", "duncans_abyssal_helm", 1, 59476, 99, 0, 8000);
+    (19968, 0, "Duncan's_Abyssal_Helm", "duncans_abyssal_helm", 1, 59476, 99, 0, 8000);
 REPLACE INTO `item_equipment` VALUES
-    (30170, "duncans_abyssal_helm",     45,  0,  4194303,    0,   0,  0,   1,  0,  0,  0);
+    (19968, "duncans_abyssal_helm",     45,  0,  4194303,    0,   0,  0,   1,  0,  0,  0);
 REPLACE INTO `item_mods` VALUES
-    (30170,  1,  22),   -- DEF +22
-    (30170,  10,  12),   -- VIT +12
-    (30170,  2,  60),   -- HP +60
-    (30170, 29,  10);   -- MDEF +10
+    (19968,  1,  22),   -- DEF +22
+    (19968,  10,  12),   -- VIT +12
+    (19968,  2,  60),   -- HP +60
+    (19968, 29,  10);   -- MDEF +10
 
 REPLACE INTO `item_basic` VALUES
-    (30171, 0, "Duncan's_Deepwater_Ring", "duncans_deepwater_ring", 1, 59476, 99, 0, 12000);
+    (19969, 0, "Duncan's_Deepwater_Ring", "duncans_deepwater_ring", 1, 59476, 99, 0, 12000);
 REPLACE INTO `item_equipment` VALUES
-    (30171, "duncans_deepwater_ring",   45,  0,  4194303,    0,   0,  0,  64,  0,  0,  0);
+    (19969, "duncans_deepwater_ring",   45,  0,  4194303,    0,   0,  0,  64,  0,  0,  0);
 REPLACE INTO `item_mods` VALUES
-    (30171,  10,  12),   -- VIT +12
-    (30171,  1,  15),   -- DEF +15
-    (30171,  2,  80),   -- HP +80
-    (30171, 384,   5);   -- Haste +5
+    (19969,  10,  12),   -- VIT +12
+    (19969,  1,  15),   -- DEF +15
+    (19969,  2,  80),   -- HP +80
+    (19969, 384,   5);   -- Haste +5
 
 
 -- =========================================================
 -- FUNGARS
 -- =========================================================
 
--- Cap'n Chanterelle (lv18-22) — 30190-30192
+-- Cap'n Chanterelle (lv18-22) — 19970-19972
 REPLACE INTO `item_basic` VALUES
-    (30190, 0, "Chanterelle's_Cap", "chanterelles_cap_trophy", 1, 59476, 99, 0, 50);
+    (19970, 0, "Chanterelle's_Cap", "chanterelles_cap_trophy", 1, 59476, 99, 0, 50);
 
 REPLACE INTO `item_basic` VALUES
-    (30191, 0, "Chanterelle's_Spore_Hat", "chanterelles_spore_hat", 1, 59476, 99, 0, 1200);
+    (19971, 0, "Chanterelle's_Spore_Hat", "chanterelles_spore_hat", 1, 59476, 99, 0, 1200);
 REPLACE INTO `item_equipment` VALUES
-    (30191, "chanterelles_spore_hat",   18,  0,  4194303,    0,   0,  0,   1,  0,  0,  0);
+    (19971, "chanterelles_spore_hat",   18,  0,  4194303,    0,   0,  0,   1,  0,  0,  0);
 REPLACE INTO `item_mods` VALUES
-    (30191,  1,   7),   -- DEF +7
-    (30191,  12,   5),   -- INT +5
-    (30191,  5,  20),   -- MP +20
-    (30191, 28,   4);   -- MATK +4
+    (19971,  1,   7),   -- DEF +7
+    (19971,  12,   5),   -- INT +5
+    (19971,  5,  20),   -- MP +20
+    (19971, 28,   4);   -- MATK +4
 
 REPLACE INTO `item_basic` VALUES
-    (30192, 0, "Chanterelle's_Mycelia", "chanterelles_mycelia", 1, 59476, 99, 0, 1800);
+    (19972, 0, "Chanterelle's_Mycelia", "chanterelles_mycelia", 1, 59476, 99, 0, 1800);
 REPLACE INTO `item_equipment` VALUES
-    (30192, "chanterelles_mycelia",     18,  0,  4194303,    0,   0,  0, 512,  0,  0,  0);
+    (19972, "chanterelles_mycelia",     18,  0,  4194303,    0,   0,  0, 512,  0,  0,  0);
 REPLACE INTO `item_mods` VALUES
-    (30192,  12,   6),   -- INT +6
-    (30192,  13,   4),   -- MND +4
-    (30192, 28,   5);   -- MATK +5
+    (19972,  12,   6),   -- INT +6
+    (19972,  13,   4),   -- MND +4
+    (19972, 28,   5);   -- MATK +5
 
 
--- Portobello Pete (lv35-40) — 30193-30195
+-- Portobello Pete (lv35-40) — 19973-19975
 REPLACE INTO `item_basic` VALUES
-    (30193, 0, "Pete's_Portobello", "petes_portobello", 1, 59476, 99, 0, 100);
+    (19973, 0, "Pete's_Portobello", "petes_portobello", 1, 59476, 99, 0, 100);
 
 REPLACE INTO `item_basic` VALUES
-    (30194, 0, "Pete's_Fungal_Robe", "petes_fungal_robe", 1, 59476, 99, 0, 5000);
+    (19974, 0, "Pete's_Fungal_Robe", "petes_fungal_robe", 1, 59476, 99, 0, 5000);
 REPLACE INTO `item_equipment` VALUES
-    (30194, "petes_fungal_robe",        35,  0,  4194303,    0,   0,  0,  16,  0,  0,  0);
+    (19974, "petes_fungal_robe",        35,  0,  4194303,    0,   0,  0,  16,  0,  0,  0);
 REPLACE INTO `item_mods` VALUES
-    (30194,  1,  15),   -- DEF +15
-    (30194,  12,  10),   -- INT +10
-    (30194,  5,  40),   -- MP +40
-    (30194, 28,   8);   -- MATK +8
+    (19974,  1,  15),   -- DEF +15
+    (19974,  12,  10),   -- INT +10
+    (19974,  5,  40),   -- MP +40
+    (19974, 28,   8);   -- MATK +8
 
 REPLACE INTO `item_basic` VALUES
-    (30195, 0, "Pete's_Spore_Necklace", "petes_spore_necklace", 1, 59476, 99, 0, 7000);
+    (19975, 0, "Pete's_Spore_Necklace", "petes_spore_necklace", 1, 59476, 99, 0, 7000);
 REPLACE INTO `item_equipment` VALUES
-    (30195, "petes_spore_necklace",     35,  0,  4194303,    0,   0,  0,   2,  0,  0,  0);
+    (19975, "petes_spore_necklace",     35,  0,  4194303,    0,   0,  0,   2,  0,  0,  0);
 REPLACE INTO `item_mods` VALUES
-    (30195,  12,   8),   -- INT +8
-    (30195, 28,  10),   -- MATK +10
-    (30195, 30,   8);   -- MACC +8
+    (19975,  12,   8),   -- INT +8
+    (19975, 28,  10),   -- MATK +10
+    (19975, 30,   8);   -- MACC +8
 
 
--- Truffle Trevor (lv55-62) — 30196-30198
+-- Truffle Trevor (lv55-62) — 19976-19978
 REPLACE INTO `item_basic` VALUES
-    (30196, 0, "Trevor's_Truffle", "trevors_truffle", 1, 59476, 99, 0, 100);
+    (19976, 0, "Trevor's_Truffle", "trevors_truffle", 1, 59476, 99, 0, 100);
 
 REPLACE INTO `item_basic` VALUES
-    (30197, 0, "Trevor's_Myconid_Crown", "trevors_myconid_crown", 1, 59476, 99, 0, 12000);
+    (19977, 0, "Trevor's_Myconid_Crown", "trevors_myconid_crown", 1, 59476, 99, 0, 12000);
 REPLACE INTO `item_equipment` VALUES
-    (30197, "trevors_myconid_crown",    55,  0,  4194303,    0,   0,  0,   1,  0,  0,  0);
+    (19977, "trevors_myconid_crown",    55,  0,  4194303,    0,   0,  0,   1,  0,  0,  0);
 REPLACE INTO `item_mods` VALUES
-    (30197,  1,  20),   -- DEF +20
-    (30197,  12,  15),   -- INT +15
-    (30197,  5,  60),   -- MP +60
-    (30197, 28,  15),   -- MATK +15
-    (30197, 30,  10);   -- MACC +10
+    (19977,  1,  20),   -- DEF +20
+    (19977,  12,  15),   -- INT +15
+    (19977,  5,  60),   -- MP +60
+    (19977, 28,  15),   -- MATK +15
+    (19977, 30,  10);   -- MACC +10
 
 REPLACE INTO `item_basic` VALUES
-    (30198, 0, "Trevor's_Decay_Ring", "trevors_decay_ring", 1, 59476, 99, 0, 15000);
+    (19978, 0, "Trevor's_Decay_Ring", "trevors_decay_ring", 1, 59476, 99, 0, 15000);
 REPLACE INTO `item_equipment` VALUES
-    (30198, "trevors_decay_ring",       55,  0,  4194303,    0,   0,  0,  64,  0,  0,  0);
+    (19978, "trevors_decay_ring",       55,  0,  4194303,    0,   0,  0,  64,  0,  0,  0);
 REPLACE INTO `item_mods` VALUES
-    (30198,  12,  14),   -- INT +14
-    (30198, 28,  18),   -- MATK +18
-    (30198,  5,  50),   -- MP +50
-    (30198, 384,   5);   -- Haste +5
+    (19978,  12,  14),   -- INT +14
+    (19978, 28,  18),   -- MATK +18
+    (19978,  5,  50),   -- MP +50
+    (19978, 384,   5);   -- Haste +5
 
 
 -- =========================================================
 -- GOBLINS
 -- =========================================================
 
--- Bargain Bruno (lv12-16) — 30220-30222
+-- Bargain Bruno (lv12-16) — 19979-19981
 REPLACE INTO `item_basic` VALUES
-    (30220, 0, "Bruno's_Bargain_Bin", "brunos_bargain_bin", 1, 59476, 99, 0, 50);
+    (19979, 0, "Bruno's_Bargain_Bin", "brunos_bargain_bin", 1, 59476, 99, 0, 50);
 
 REPLACE INTO `item_basic` VALUES
-    (30221, 0, "Bruno's_Discount_Helm", "brunos_discount_helm", 1, 59476, 99, 0, 700);
+    (19980, 0, "Bruno's_Discount_Helm", "brunos_discount_helm", 1, 59476, 99, 0, 700);
 REPLACE INTO `item_equipment` VALUES
-    (30221, "brunos_discount_helm",     12,  0,  4194303,    0,   0,  0,   1,  0,  0,  0);
+    (19980, "brunos_discount_helm",     12,  0,  4194303,    0,   0,  0,   1,  0,  0,  0);
 REPLACE INTO `item_mods` VALUES
-    (30221,  1,   5),   -- DEF +5
-    (30221,  8,   3),   -- STR +3
-    (30221,  9,   3),   -- DEX +3
-    (30221, 14,   3);   -- CHR +3
+    (19980,  1,   5),   -- DEF +5
+    (19980,  8,   3),   -- STR +3
+    (19980,  9,   3),   -- DEX +3
+    (19980, 14,   3);   -- CHR +3
 
 REPLACE INTO `item_basic` VALUES
-    (30222, 0, "Bruno's_Lucky_Pouch", "brunos_lucky_pouch", 1, 59476, 99, 0, 1000);
+    (19981, 0, "Bruno's_Lucky_Pouch", "brunos_lucky_pouch", 1, 59476, 99, 0, 1000);
 REPLACE INTO `item_equipment` VALUES
-    (30222, "brunos_lucky_pouch",       12,  0,  4194303,    0,   0,  0, 512,  0,  0,  0);
+    (19981, "brunos_lucky_pouch",       12,  0,  4194303,    0,   0,  0, 512,  0,  0,  0);
 REPLACE INTO `item_mods` VALUES
-    (30222,  9,   5),   -- DEX +5
-    (30222, 25,   5),   -- ACC +5
-    (30222, 14,   4);   -- CHR +4
+    (19981,  9,   5),   -- DEX +5
+    (19981, 25,   5),   -- ACC +5
+    (19981, 14,   4);   -- CHR +4
 
 
--- Swindler Sam (lv30-36) — 30223-30225
+-- Swindler Sam (lv30-36) — 19982-19984
 REPLACE INTO `item_basic` VALUES
-    (30223, 0, "Sam's_Loaded_Dice", "sams_loaded_dice", 1, 59476, 99, 0, 100);
+    (19982, 0, "Sam's_Loaded_Dice", "sams_loaded_dice", 1, 59476, 99, 0, 100);
 
 REPLACE INTO `item_basic` VALUES
-    (30224, 0, "Sam's_Swindler_Vest", "sams_swindler_vest", 1, 59476, 99, 0, 4000);
+    (19983, 0, "Sam's_Swindler_Vest", "sams_swindler_vest", 1, 59476, 99, 0, 4000);
 REPLACE INTO `item_equipment` VALUES
-    (30224, "sams_swindler_vest",       30,  0,  4194303,    0,   0,  0,  16,  0,  0,  0);
+    (19983, "sams_swindler_vest",       30,  0,  4194303,    0,   0,  0,  16,  0,  0,  0);
 REPLACE INTO `item_mods` VALUES
-    (30224,  1,  14),   -- DEF +14
-    (30224,  9,   8),   -- DEX +8
-    (30224,  11,   6),   -- AGI +6
-    (30224, 68,   8);   -- EVA +8
+    (19983,  1,  14),   -- DEF +14
+    (19983,  9,   8),   -- DEX +8
+    (19983,  11,   6),   -- AGI +6
+    (19983, 68,   8);   -- EVA +8
 
 REPLACE INTO `item_basic` VALUES
-    (30225, 0, "Sam's_Grift_Earring", "sams_grift_earring", 1, 59476, 99, 0, 6000);
+    (19984, 0, "Sam's_Grift_Earring", "sams_grift_earring", 1, 59476, 99, 0, 6000);
 REPLACE INTO `item_equipment` VALUES
-    (30225, "sams_grift_earring",       30,  0,  4194303,    0,   0,  0,   4,  0,  0,  0);
+    (19984, "sams_grift_earring",       30,  0,  4194303,    0,   0,  0,   4,  0,  0,  0);
 REPLACE INTO `item_mods` VALUES
-    (30225,  9,   8),   -- DEX +8
-    (30225, 25,  10),   -- ACC +10
-    (30225, 384,   4);   -- Haste +4
+    (19984,  9,   8),   -- DEX +8
+    (19984, 25,  10),   -- ACC +10
+    (19984, 384,   4);   -- Haste +4
 
 
--- Shiny Steve (lv45-52) — 30226-30228
+-- Shiny Steve (lv45-52) — 19985-19987
 REPLACE INTO `item_basic` VALUES
-    (30226, 0, "Steve's_Shiniest", "steves_shiniest", 1, 59476, 99, 0, 100);
+    (19985, 0, "Steve's_Shiniest", "steves_shiniest", 1, 59476, 99, 0, 100);
 
 REPLACE INTO `item_basic` VALUES
-    (30227, 0, "Steve's_Glittering_Mail", "steves_glittering_mail", 1, 59476, 99, 0, 9000);
+    (19986, 0, "Steve's_Glittering_Mail", "steves_glittering_mail", 1, 59476, 99, 0, 9000);
 REPLACE INTO `item_equipment` VALUES
-    (30227, "steves_glittering_mail",   45,  0,  4194303,    0,   0,  0,  16,  0,  0,  0);
+    (19986, "steves_glittering_mail",   45,  0,  4194303,    0,   0,  0,  16,  0,  0,  0);
 REPLACE INTO `item_mods` VALUES
-    (30227,  1,  22),   -- DEF +22
-    (30227,  9,  12),   -- DEX +12
-    (30227,  11,  10),   -- AGI +10
-    (30227, 25,  15),   -- ACC +15
-    (30227, 68,  10);   -- EVA +10
+    (19986,  1,  22),   -- DEF +22
+    (19986,  9,  12),   -- DEX +12
+    (19986,  11,  10),   -- AGI +10
+    (19986, 25,  15),   -- ACC +15
+    (19986, 68,  10);   -- EVA +10
 
 REPLACE INTO `item_basic` VALUES
-    (30228, 0, "Steve's_Magpie_Ring", "steves_magpie_ring", 1, 59476, 99, 0, 14000);
+    (19987, 0, "Steve's_Magpie_Ring", "steves_magpie_ring", 1, 59476, 99, 0, 14000);
 REPLACE INTO `item_equipment` VALUES
-    (30228, "steves_magpie_ring",       45,  0,  4194303,    0,   0,  0,  64,  0,  0,  0);
+    (19987, "steves_magpie_ring",       45,  0,  4194303,    0,   0,  0,  64,  0,  0,  0);
 REPLACE INTO `item_mods` VALUES
-    (30228,  9,  12),   -- DEX +12
-    (30228, 25,  15),   -- ACC +15
-    (30228, 23,  12),   -- ATT +12
-    (30228, 384,   5);   -- Haste +5
+    (19987,  9,  12),   -- DEX +12
+    (19987, 25,  15),   -- ACC +15
+    (19987, 23,  12),   -- ATT +12
+    (19987, 384,   5);   -- Haste +5
 
 
 -- =========================================================
 -- COEURLS
 -- =========================================================
 
--- Whiskers Wilhelmina (lv30-36) — 30250-30252
+-- Whiskers Wilhelmina (lv30-36) — 19988-19990
 REPLACE INTO `item_basic` VALUES
-    (30250, 0, "Wilhelmina's_Whisker", "wilhelminas_whisker", 1, 59476, 99, 0, 100);
+    (19988, 0, "Wilhelmina's_Whisker", "wilhelminas_whisker", 1, 59476, 99, 0, 100);
 
 REPLACE INTO `item_basic` VALUES
-    (30251, 0, "Wilhelmina's_Fang_Neck", "wilhelminas_fang_necklace", 1, 59476, 99, 0, 3500);
+    (19989, 0, "Wilhelmina's_Fang_Neck", "wilhelminas_fang_necklace", 1, 59476, 99, 0, 3500);
 REPLACE INTO `item_equipment` VALUES
-    (30251, "wilhelminas_fang_necklace",30,  0,  4194303,    0,   0,  0,   2,  0,  0,  0);
+    (19989, "wilhelminas_fang_necklace",30,  0,  4194303,    0,   0,  0,   2,  0,  0,  0);
 REPLACE INTO `item_mods` VALUES
-    (30251, 23,  10),   -- ATT +10
-    (30251,  8,   7),   -- STR +7
-    (30251,  9,   5);   -- DEX +5
+    (19989, 23,  10),   -- ATT +10
+    (19989,  8,   7),   -- STR +7
+    (19989,  9,   5);   -- DEX +5
 
 REPLACE INTO `item_basic` VALUES
-    (30252, 0, "Wilhelmina's_Grace_Legs", "wilhelminas_grace_legs", 1, 59476, 99, 0, 5500);
+    (19990, 0, "Wilhelmina's_Grace_Legs", "wilhelminas_grace_legs", 1, 59476, 99, 0, 5500);
 REPLACE INTO `item_equipment` VALUES
-    (30252, "wilhelminas_grace_legs",   30,  0,  4194303,    0,   0,  0, 1024,  0,  0,  0);
+    (19990, "wilhelminas_grace_legs",   30,  0,  4194303,    0,   0,  0, 1024,  0,  0,  0);
 REPLACE INTO `item_mods` VALUES
-    (30252,  1,  14),   -- DEF +14
-    (30252,  11,   8),   -- AGI +8
-    (30252, 68,  10),   -- EVA +10
-    (30252,  8,   6);   -- STR +6
+    (19990,  1,  14),   -- DEF +14
+    (19990,  11,   8),   -- AGI +8
+    (19990, 68,  10),   -- EVA +10
+    (19990,  8,   6);   -- STR +6
 
 
--- Purring Patricia (lv42-48) — 30253-30255
+-- Purring Patricia (lv42-48) — 19991-19993
 REPLACE INTO `item_basic` VALUES
-    (30253, 0, "Patricia's_Purr_Stone", "patricias_purr_stone", 1, 59476, 99, 0, 100);
+    (19991, 0, "Patricia's_Purr_Stone", "patricias_purr_stone", 1, 59476, 99, 0, 100);
 
 REPLACE INTO `item_basic` VALUES
-    (30254, 0, "Patricia's_Claw_Gauntlets", "patricias_claw_gauntlets", 1, 59476, 99, 0, 7000);
+    (19992, 0, "Patricia's_Claw_Gauntlets", "patricias_claw_gauntlets", 1, 59476, 99, 0, 7000);
 REPLACE INTO `item_equipment` VALUES
-    (30254, "patricias_claw_gauntlets", 42,  0,  4194303,    0,   0,  0,  32,  0,  0,  0);
+    (19992, "patricias_claw_gauntlets", 42,  0,  4194303,    0,   0,  0,  32,  0,  0,  0);
 REPLACE INTO `item_mods` VALUES
-    (30254,  1,  16),   -- DEF +16
-    (30254,  8,  10),   -- STR +10
-    (30254, 23,  14),   -- ATT +14
-    (30254,  9,   8);   -- DEX +8
+    (19992,  1,  16),   -- DEF +16
+    (19992,  8,  10),   -- STR +10
+    (19992, 23,  14),   -- ATT +14
+    (19992,  9,   8);   -- DEX +8
 
 REPLACE INTO `item_basic` VALUES
-    (30255, 0, "Patricia's_Predator_Cape", "patricias_predator_cape", 1, 59476, 99, 0, 10000);
+    (19993, 0, "Patricia's_Predator_Cape", "patricias_predator_cape", 1, 59476, 99, 0, 10000);
 REPLACE INTO `item_equipment` VALUES
-    (30255, "patricias_predator_cape",  42,  0,  4194303,    0,   0,  0, 256,  0,  0,  0);
+    (19993, "patricias_predator_cape",  42,  0,  4194303,    0,   0,  0, 256,  0,  0,  0);
 REPLACE INTO `item_mods` VALUES
-    (30255,  8,  10),   -- STR +10
-    (30255,  11,  10),   -- AGI +10
-    (30255, 23,  12),   -- ATT +12
-    (30255, 25,  12);   -- ACC +12
+    (19993,  8,  10),   -- STR +10
+    (19993,  11,  10),   -- AGI +10
+    (19993, 23,  12),   -- ATT +12
+    (19993, 25,  12);   -- ACC +12
 
 
--- Nine Lives Nigel (lv58-65) — 30256-30258
+-- Nine Lives Nigel (lv58-65) — 19994-19996
 REPLACE INTO `item_basic` VALUES
-    (30256, 0, "Nigel's_Ninth_Life", "nigels_ninth_life", 1, 59476, 99, 0, 100);
+    (19994, 0, "Nigel's_Ninth_Life", "nigels_ninth_life", 1, 59476, 99, 0, 100);
 
 REPLACE INTO `item_basic` VALUES
-    (30257, 0, "Nigel's_Feral_Cuirass", "nigels_feral_cuirass", 1, 59476, 99, 0, 15000);
+    (19995, 0, "Nigel's_Feral_Cuirass", "nigels_feral_cuirass", 1, 59476, 99, 0, 15000);
 REPLACE INTO `item_equipment` VALUES
-    (30257, "nigels_feral_cuirass",     58,  0,  4194303,    0,   0,  0,  16,  0,  0,  0);
+    (19995, "nigels_feral_cuirass",     58,  0,  4194303,    0,   0,  0,  16,  0,  0,  0);
 REPLACE INTO `item_mods` VALUES
-    (30257,  1,  28),   -- DEF +28
-    (30257,  8,  14),   -- STR +14
-    (30257,  9,  12),   -- DEX +12
-    (30257, 23,  18),   -- ATT +18
-    (30257, 25,  15);   -- ACC +15
+    (19995,  1,  28),   -- DEF +28
+    (19995,  8,  14),   -- STR +14
+    (19995,  9,  12),   -- DEX +12
+    (19995, 23,  18),   -- ATT +18
+    (19995, 25,  15);   -- ACC +15
 
 REPLACE INTO `item_basic` VALUES
-    (30258, 0, "Nigel's_Cateye_Ring", "nigels_cateye_ring", 1, 59476, 99, 0, 18000);
+    (19996, 0, "Nigel's_Cateye_Ring", "nigels_cateye_ring", 1, 59476, 99, 0, 18000);
 REPLACE INTO `item_equipment` VALUES
-    (30258, "nigels_cateye_ring",       58,  0,  4194303,    0,   0,  0,  64,  0,  0,  0);
+    (19996, "nigels_cateye_ring",       58,  0,  4194303,    0,   0,  0,  64,  0,  0,  0);
 REPLACE INTO `item_mods` VALUES
-    (30258,  8,  14),   -- STR +14
-    (30258, 23,  20),   -- ATT +20
-    (30258, 25,  18),   -- ACC +18
-    (30258, 384,   6);   -- Haste +6
+    (19996,  8,  14),   -- STR +14
+    (19996, 23,  20),   -- ATT +20
+    (19996, 25,  18),   -- ACC +18
+    (19996, 384,   6);   -- Haste +6
 
 
 -- =========================================================
 -- TIGERS
 -- =========================================================
 
--- Stripey Steve (lv22-28) — 30280-30282
+-- Stripey Steve (lv22-28) — 19997-19999
 REPLACE INTO `item_basic` VALUES
-    (30280, 0, "Steve's_Stripe", "steves_stripe_trophy", 1, 59476, 99, 0, 50);
+    (19997, 0, "Steve's_Stripe", "steves_stripe_trophy", 1, 59476, 99, 0, 50);
 
 REPLACE INTO `item_basic` VALUES
-    (30281, 0, "Steve's_Tiger_Fangs", "steves_tiger_fangs", 1, 59476, 99, 0, 1500);
+    (19998, 0, "Steve's_Tiger_Fangs", "steves_tiger_fangs", 1, 59476, 99, 0, 1500);
 REPLACE INTO `item_equipment` VALUES
-    (30281, "steves_tiger_fangs",       22,  0,  4194303,    0,   0,  0,   2,  0,  0,  0);
+    (19998, "steves_tiger_fangs",       22,  0,  4194303,    0,   0,  0,   2,  0,  0,  0);
 REPLACE INTO `item_mods` VALUES
-    (30281,  8,   6),   -- STR +6
-    (30281, 23,   8),   -- ATT +8
-    (30281, 25,   5);   -- ACC +5
+    (19998,  8,   6),   -- STR +6
+    (19998, 23,   8),   -- ATT +8
+    (19998, 25,   5);   -- ACC +5
 
 REPLACE INTO `item_basic` VALUES
-    (30282, 0, "Steve's_Pelt_Mantle", "steves_pelt_mantle", 1, 59476, 99, 0, 2200);
+    (19999, 0, "Steve's_Pelt_Mantle", "steves_pelt_mantle", 1, 59476, 99, 0, 2200);
 REPLACE INTO `item_equipment` VALUES
-    (30282, "steves_pelt_mantle",       22,  0,  4194303,    0,   0,  0, 256,  0,  0,  0);
+    (19999, "steves_pelt_mantle",       22,  0,  4194303,    0,   0,  0, 256,  0,  0,  0);
 REPLACE INTO `item_mods` VALUES
-    (30282,  1,  10),   -- DEF +10
-    (30282,  8,   7),   -- STR +7
-    (30282,  10,   5),   -- VIT +5
-    (30282,  2,  30);   -- HP +30
+    (19999,  1,  10),   -- DEF +10
+    (19999,  8,   7),   -- STR +7
+    (19999,  10,   5),   -- VIT +5
+    (19999,  2,  30);   -- HP +30
 
 
--- Mauler Maurice (lv38-46) — 30283-30285
+-- Mauler Maurice (lv38-46) — 20000-20002
 REPLACE INTO `item_basic` VALUES
-    (30283, 0, "Maurice's_Mauled_Hide", "maurices_mauled_hide", 1, 59476, 99, 0, 100);
+    (20000, 0, "Maurice's_Mauled_Hide", "maurices_mauled_hide", 1, 59476, 99, 0, 100);
 
 REPLACE INTO `item_basic` VALUES
-    (30284, 0, "Maurice's_Savage_Helm", "maurices_savage_helm", 1, 59476, 99, 0, 6000);
+    (20001, 0, "Maurice's_Savage_Helm", "maurices_savage_helm", 1, 59476, 99, 0, 6000);
 REPLACE INTO `item_equipment` VALUES
-    (30284, "maurices_savage_helm",     38,  0,  4194303,    0,   0,  0,   1,  0,  0,  0);
+    (20001, "maurices_savage_helm",     38,  0,  4194303,    0,   0,  0,   1,  0,  0,  0);
 REPLACE INTO `item_mods` VALUES
-    (30284,  1,  16),   -- DEF +16
-    (30284,  8,  10),   -- STR +10
-    (30284, 23,  14),   -- ATT +14
-    (30284,  2,  40);   -- HP +40
+    (20001,  1,  16),   -- DEF +16
+    (20001,  8,  10),   -- STR +10
+    (20001, 23,  14),   -- ATT +14
+    (20001,  2,  40);   -- HP +40
 
 REPLACE INTO `item_basic` VALUES
-    (30285, 0, "Maurice's_Mauler_Belt", "maurices_mauler_belt", 1, 59476, 99, 0, 9000);
+    (20002, 0, "Maurice's_Mauler_Belt", "maurices_mauler_belt", 1, 59476, 99, 0, 9000);
 REPLACE INTO `item_equipment` VALUES
-    (30285, "maurices_mauler_belt",     38,  0,  4194303,    0,   0,  0, 512,  0,  0,  0);
+    (20002, "maurices_mauler_belt",     38,  0,  4194303,    0,   0,  0, 512,  0,  0,  0);
 REPLACE INTO `item_mods` VALUES
-    (30285,  8,  10),   -- STR +10
-    (30285, 23,  15),   -- ATT +15
-    (30285,  9,   8),   -- DEX +8
-    (30285, 384,   4);   -- Haste +4
+    (20002,  8,  10),   -- STR +10
+    (20002, 23,  15),   -- ATT +15
+    (20002,  9,   8),   -- DEX +8
+    (20002, 384,   4);   -- Haste +4
 
 
--- Saber Sabrina (lv58-65) — 799-801
+-- Saber Sabrina (lv58-65) — 16464-16561
 REPLACE INTO `item_basic` VALUES
-    (799, 0, "Sabrina's_Saber-Fang", "sabrinas_saber_fang", 1, 59476, 99, 0, 100);
+    (16464, 0, "Sabrina's_Saber-Fang", "sabrinas_saber_fang", 1, 59476, 99, 0, 100);
 
 REPLACE INTO `item_basic` VALUES
-    (800, 0, "Sabrina's_Feral_Legs", "sabrinas_feral_legs", 1, 59476, 99, 0, 15000);
+    (16474, 0, "Sabrina's_Feral_Legs", "sabrinas_feral_legs", 1, 59476, 99, 0, 15000);
 REPLACE INTO `item_equipment` VALUES
-    (800, "sabrinas_feral_legs",         58,  0,  4194303,    0,   0,  0, 1024,  0,  0,  0);
+    (16474, "sabrinas_feral_legs",         58,  0,  4194303,    0,   0,  0, 1024,  0,  0,  0);
 REPLACE INTO `item_mods` VALUES
-    (800,  1,  24),   -- DEF +24
-    (800,  8,  14),   -- STR +14
-    (800,  9,  12),   -- DEX +12
-    (800, 23,  18),   -- ATT +18
-    (800, 25,  15);   -- ACC +15
+    (16474,  1,  24),   -- DEF +24
+    (16474,  8,  14),   -- STR +14
+    (16474,  9,  12),   -- DEX +12
+    (16474, 23,  18),   -- ATT +18
+    (16474, 25,  15);   -- ACC +15
 
 REPLACE INTO `item_basic` VALUES
-    (801, 0, "Sabrina's_Apex_Ring", "sabrinas_apex_ring", 1, 59476, 99, 0, 20000);
+    (16561, 0, "Sabrina's_Apex_Ring", "sabrinas_apex_ring", 1, 59476, 99, 0, 20000);
 REPLACE INTO `item_equipment` VALUES
-    (801, "sabrinas_apex_ring",           58,  0,  4194303,    0,   0,  0,  64,  0,  0,  0);
+    (16561, "sabrinas_apex_ring",           58,  0,  4194303,    0,   0,  0,  64,  0,  0,  0);
 REPLACE INTO `item_mods` VALUES
-    (801,  8,  14),   -- STR +14
-    (801, 23,  20),   -- ATT +20
-    (801, 25,  18),   -- ACC +18
-    (801, 384,   6);   -- Haste +6
+    (16561,  8,  14),   -- STR +14
+    (16561, 23,  20),   -- ATT +20
+    (16561, 25,  18),   -- ACC +18
+    (16561, 384,   6);   -- Haste +6
 
 
 -- =========================================================
 -- MANDRAGORAS
 -- =========================================================
 
--- Root Rita (lv6-10) — 30310-30312
+-- Root Rita (lv6-10) — 20003-20005
 REPLACE INTO `item_basic` VALUES
-    (30310, 0, "Rita's_Root", "ritas_root", 1, 59476, 99, 0, 50);
+    (20003, 0, "Rita's_Root", "ritas_root", 1, 59476, 99, 0, 50);
 
 REPLACE INTO `item_basic` VALUES
-    (30311, 0, "Rita's_Leaf_Earring", "ritas_leaf_earring", 1, 59476, 99, 0, 400);
+    (20004, 0, "Rita's_Leaf_Earring", "ritas_leaf_earring", 1, 59476, 99, 0, 400);
 REPLACE INTO `item_equipment` VALUES
-    (30311, "ritas_leaf_earring",        6,  0,  4194303,    0,   0,  0,   4,  0,  0,  0);
+    (20004, "ritas_leaf_earring",        6,  0,  4194303,    0,   0,  0,   4,  0,  0,  0);
 REPLACE INTO `item_mods` VALUES
-    (30311,  13,   3),   -- MND +3
-    (30311, 14,   3),   -- CHR +3
-    (30311,  5,  10);   -- MP +10
+    (20004,  13,   3),   -- MND +3
+    (20004, 14,   3),   -- CHR +3
+    (20004,  5,  10);   -- MP +10
 
 REPLACE INTO `item_basic` VALUES
-    (30312, 0, "Rita's_Petal_Wrist", "ritas_petal_wrist", 1, 59476, 99, 0, 600);
+    (20005, 0, "Rita's_Petal_Wrist", "ritas_petal_wrist", 1, 59476, 99, 0, 600);
 REPLACE INTO `item_equipment` VALUES
-    (30312, "ritas_petal_wrist",         6,  0,  4194303,    0,   0,  0,  32,  0,  0,  0);
+    (20005, "ritas_petal_wrist",         6,  0,  4194303,    0,   0,  0,  32,  0,  0,  0);
 REPLACE INTO `item_mods` VALUES
-    (30312,  1,   3),   -- DEF +3
-    (30312,  13,   4),   -- MND +4
-    (30312,  5,  15);   -- MP +15
+    (20005,  1,   3),   -- DEF +3
+    (20005,  13,   4),   -- MND +4
+    (20005,  5,  15);   -- MP +15
 
 
--- Sprout Spencer (lv22-28) — 30313-30315
+-- Sprout Spencer (lv22-28) — 20006-20008
 REPLACE INTO `item_basic` VALUES
-    (30313, 0, "Spencer's_Sprout", "spencers_sprout", 1, 59476, 99, 0, 50);
+    (20006, 0, "Spencer's_Sprout", "spencers_sprout", 1, 59476, 99, 0, 50);
 
 REPLACE INTO `item_basic` VALUES
-    (30314, 0, "Spencer's_Verdant_Hat", "spencers_verdant_hat", 1, 59476, 99, 0, 1500);
+    (20007, 0, "Spencer's_Verdant_Hat", "spencers_verdant_hat", 1, 59476, 99, 0, 1500);
 REPLACE INTO `item_equipment` VALUES
-    (30314, "spencers_verdant_hat",     22,  0,  4194303,    0,   0,  0,   1,  0,  0,  0);
+    (20007, "spencers_verdant_hat",     22,  0,  4194303,    0,   0,  0,   1,  0,  0,  0);
 REPLACE INTO `item_mods` VALUES
-    (30314,  1,   8),   -- DEF +8
-    (30314,  13,   7),   -- MND +7
-    (30314,  5,  30),   -- MP +30
-    (30314, 14,   5);   -- CHR +5
+    (20007,  1,   8),   -- DEF +8
+    (20007,  13,   7),   -- MND +7
+    (20007,  5,  30),   -- MP +30
+    (20007, 14,   5);   -- CHR +5
 
 REPLACE INTO `item_basic` VALUES
-    (30315, 0, "Spencer's_Bloom_Ring", "spencers_bloom_ring", 1, 59476, 99, 0, 2200);
+    (20008, 0, "Spencer's_Bloom_Ring", "spencers_bloom_ring", 1, 59476, 99, 0, 2200);
 REPLACE INTO `item_equipment` VALUES
-    (30315, "spencers_bloom_ring",      22,  0,  4194303,    0,   0,  0,  64,  0,  0,  0);
+    (20008, "spencers_bloom_ring",      22,  0,  4194303,    0,   0,  0,  64,  0,  0,  0);
 REPLACE INTO `item_mods` VALUES
-    (30315,  13,   7),   -- MND +7
-    (30315,  12,   5),   -- INT +5
-    (30315, 28,   6);   -- MATK +6
+    (20008,  13,   7),   -- MND +7
+    (20008,  12,   5),   -- INT +5
+    (20008, 28,   6);   -- MATK +6
 
 
--- Mandrake Max (lv40-48) — 30316-30318
+-- Mandrake Max (lv40-48) — 20009-20011
 REPLACE INTO `item_basic` VALUES
-    (30316, 0, "Max's_Mandrake_Heart", "maxs_mandrake_heart", 1, 59476, 99, 0, 100);
+    (20009, 0, "Max's_Mandrake_Heart", "maxs_mandrake_heart", 1, 59476, 99, 0, 100);
 
 REPLACE INTO `item_basic` VALUES
-    (30317, 0, "Max's_Shriek_Mask", "maxs_shriek_mask", 1, 59476, 99, 0, 7000);
+    (20010, 0, "Max's_Shriek_Mask", "maxs_shriek_mask", 1, 59476, 99, 0, 7000);
 REPLACE INTO `item_equipment` VALUES
-    (30317, "maxs_shriek_mask",         40,  0,  4194303,    0,   0,  0,   1,  0,  0,  0);
+    (20010, "maxs_shriek_mask",         40,  0,  4194303,    0,   0,  0,   1,  0,  0,  0);
 REPLACE INTO `item_mods` VALUES
-    (30317,  1,  16),   -- DEF +16
-    (30317,  13,  12),   -- MND +12
-    (30317,  12,  10),   -- INT +10
-    (30317,  5,  45),   -- MP +45
-    (30317, 28,  10);   -- MATK +10
+    (20010,  1,  16),   -- DEF +16
+    (20010,  13,  12),   -- MND +12
+    (20010,  12,  10),   -- INT +10
+    (20010,  5,  45),   -- MP +45
+    (20010, 28,  10);   -- MATK +10
 
 REPLACE INTO `item_basic` VALUES
-    (30318, 0, "Max's_Earthscream_Belt", "maxs_earthscream_belt", 1, 59476, 99, 0, 10000);
+    (20011, 0, "Max's_Earthscream_Belt", "maxs_earthscream_belt", 1, 59476, 99, 0, 10000);
 REPLACE INTO `item_equipment` VALUES
-    (30318, "maxs_earthscream_belt",    40,  0,  4194303,    0,   0,  0, 512,  0,  0,  0);
+    (20011, "maxs_earthscream_belt",    40,  0,  4194303,    0,   0,  0, 512,  0,  0,  0);
 REPLACE INTO `item_mods` VALUES
-    (30318,  13,  10),   -- MND +10
-    (30318,  12,  10),   -- INT +10
-    (30318, 28,  12),   -- MATK +12
-    (30318, 30,  10);   -- MACC +10
+    (20011,  13,  10),   -- MND +10
+    (20011,  12,  10),   -- INT +10
+    (20011, 28,  12),   -- MATK +12
+    (20011, 30,  10);   -- MACC +10
 
 
 -- =========================================================
 -- BEETLES
 -- =========================================================
 
--- Click Clack Clayton (lv10-15) — 30340-30342
+-- Click Clack Clayton (lv10-15) — 20012-20014
 REPLACE INTO `item_basic` VALUES
-    (30340, 0, "Clayton's_Clicking_Shell", "claytons_clicking_shell", 1, 59476, 99, 0, 50);
+    (20012, 0, "Clayton's_Clicking_Shell", "claytons_clicking_shell", 1, 59476, 99, 0, 50);
 
 REPLACE INTO `item_basic` VALUES
-    (30341, 0, "Clayton's_Chitin_Legs", "claytons_chitin_legs", 1, 59476, 99, 0, 600);
+    (20013, 0, "Clayton's_Chitin_Legs", "claytons_chitin_legs", 1, 59476, 99, 0, 600);
 REPLACE INTO `item_equipment` VALUES
-    (30341, "claytons_chitin_legs",     10,  0,  4194303,    0,   0,  0, 1024,  0,  0,  0);
+    (20013, "claytons_chitin_legs",     10,  0,  4194303,    0,   0,  0, 1024,  0,  0,  0);
 REPLACE INTO `item_mods` VALUES
-    (30341,  1,   4),   -- DEF +4
-    (30341,  10,   4),   -- VIT +4
-    (30341,  2,  15);   -- HP +15
+    (20013,  1,   4),   -- DEF +4
+    (20013,  10,   4),   -- VIT +4
+    (20013,  2,  15);   -- HP +15
 
 REPLACE INTO `item_basic` VALUES
-    (30342, 0, "Clayton's_Clack_Ring", "claytons_clack_ring", 1, 59476, 99, 0, 900);
+    (20014, 0, "Clayton's_Clack_Ring", "claytons_clack_ring", 1, 59476, 99, 0, 900);
 REPLACE INTO `item_equipment` VALUES
-    (30342, "claytons_clack_ring",      10,  0,  4194303,    0,   0,  0,  64,  0,  0,  0);
+    (20014, "claytons_clack_ring",      10,  0,  4194303,    0,   0,  0,  64,  0,  0,  0);
 REPLACE INTO `item_mods` VALUES
-    (30342,  1,   3),   -- DEF +3
-    (30342,  10,   4),   -- VIT +4
-    (30342,  8,   3);   -- STR +3
+    (20014,  1,   3),   -- DEF +3
+    (20014,  10,   4),   -- VIT +4
+    (20014,  8,   3);   -- STR +3
 
 
--- Dung Douglas (lv28-34) — 30343-30345
+-- Dung Douglas (lv28-34) — 20015-20017
 REPLACE INTO `item_basic` VALUES
-    (30343, 0, "Douglas's_Dung_Ball", "douglass_dung_ball", 1, 59476, 99, 0, 50);
+    (20015, 0, "Douglas's_Dung_Ball", "douglass_dung_ball", 1, 59476, 99, 0, 50);
 
 REPLACE INTO `item_basic` VALUES
-    (30344, 0, "Douglas's_Roller_Boots", "douglass_roller_boots", 1, 59476, 99, 0, 3000);
+    (20016, 0, "Douglas's_Roller_Boots", "douglass_roller_boots", 1, 59476, 99, 0, 3000);
 REPLACE INTO `item_equipment` VALUES
-    (30344, "douglass_roller_boots",    28,  0,  4194303,    0,   0,  0, 2048,  0,  0,  0);
+    (20016, "douglass_roller_boots",    28,  0,  4194303,    0,   0,  0, 2048,  0,  0,  0);
 REPLACE INTO `item_mods` VALUES
-    (30344,  1,  12),   -- DEF +12
-    (30344,  10,   8),   -- VIT +8
-    (30344,  8,   6),   -- STR +6
-    (30344,  2,  30);   -- HP +30
+    (20016,  1,  12),   -- DEF +12
+    (20016,  10,   8),   -- VIT +8
+    (20016,  8,   6),   -- STR +6
+    (20016,  2,  30);   -- HP +30
 
 REPLACE INTO `item_basic` VALUES
-    (30345, 0, "Douglas's_Carapace_Neck", "douglass_carapace_necklace", 1, 59476, 99, 0, 4500);
+    (20017, 0, "Douglas's_Carapace_Neck", "douglass_carapace_necklace", 1, 59476, 99, 0, 4500);
 REPLACE INTO `item_equipment` VALUES
-    (30345, "douglass_carapace_necklace",28,  0,  4194303,    0,   0,  0,   2,  0,  0,  0);
+    (20017, "douglass_carapace_necklace",28,  0,  4194303,    0,   0,  0,   2,  0,  0,  0);
 REPLACE INTO `item_mods` VALUES
-    (30345,  10,   8),   -- VIT +8
-    (30345,  1,   8),   -- DEF +8
-    (30345, 29,   6);   -- MDEF +6
+    (20017,  10,   8),   -- VIT +8
+    (20017,  1,   8),   -- DEF +8
+    (20017, 29,   6);   -- MDEF +6
 
 
--- Scarab Sebastian (lv45-52) — 30346-30348
+-- Scarab Sebastian (lv45-52) — 20018-20020
 REPLACE INTO `item_basic` VALUES
-    (30346, 0, "Sebastian's_Scarab", "sebastians_scarab", 1, 59476, 99, 0, 100);
+    (20018, 0, "Sebastian's_Scarab", "sebastians_scarab", 1, 59476, 99, 0, 100);
 
 REPLACE INTO `item_basic` VALUES
-    (30347, 0, "Sebastian's_Sacred_Helm", "sebastians_sacred_helm", 1, 59476, 99, 0, 9000);
+    (20019, 0, "Sebastian's_Sacred_Helm", "sebastians_sacred_helm", 1, 59476, 99, 0, 9000);
 REPLACE INTO `item_equipment` VALUES
-    (30347, "sebastians_sacred_helm",   45,  0,  4194303,    0,   0,  0,   1,  0,  0,  0);
+    (20019, "sebastians_sacred_helm",   45,  0,  4194303,    0,   0,  0,   1,  0,  0,  0);
 REPLACE INTO `item_mods` VALUES
-    (30347,  1,  22),   -- DEF +22
-    (30347,  10,  12),   -- VIT +12
-    (30347,  8,  10),   -- STR +10
-    (30347,  2,  60),   -- HP +60
-    (30347, 29,   8);   -- MDEF +8
+    (20019,  1,  22),   -- DEF +22
+    (20019,  10,  12),   -- VIT +12
+    (20019,  8,  10),   -- STR +10
+    (20019,  2,  60),   -- HP +60
+    (20019, 29,   8);   -- MDEF +8
 
 REPLACE INTO `item_basic` VALUES
-    (30348, 0, "Sebastian's_Jeweled_Ring", "sebastians_jeweled_ring", 1, 59476, 99, 0, 13000);
+    (20020, 0, "Sebastian's_Jeweled_Ring", "sebastians_jeweled_ring", 1, 59476, 99, 0, 13000);
 REPLACE INTO `item_equipment` VALUES
-    (30348, "sebastians_jeweled_ring",  45,  0,  4194303,    0,   0,  0,  64,  0,  0,  0);
+    (20020, "sebastians_jeweled_ring",  45,  0,  4194303,    0,   0,  0,  64,  0,  0,  0);
 REPLACE INTO `item_mods` VALUES
-    (30348,  10,  12),   -- VIT +12
-    (30348,  1,  12),   -- DEF +12
-    (30348,  2,  70),   -- HP +70
-    (30348, 384,   5);   -- Haste +5
+    (20020,  10,  12),   -- VIT +12
+    (20020,  1,  12),   -- DEF +12
+    (20020,  2,  70),   -- HP +70
+    (20020, 384,   5);   -- Haste +5
 
 
 -- =========================================================
 -- CRAWLERS
 -- =========================================================
 
--- Silk Simon (lv15-20) — 30370-30372
+-- Silk Simon (lv15-20) — 20021-20023
 REPLACE INTO `item_basic` VALUES
-    (30370, 0, "Simon's_Silk_Thread", "simons_silk_thread", 1, 59476, 99, 0, 50);
+    (20021, 0, "Simon's_Silk_Thread", "simons_silk_thread", 1, 59476, 99, 0, 50);
 
 REPLACE INTO `item_basic` VALUES
-    (30371, 0, "Simon's_Silk_Gloves", "simons_silk_gloves", 1, 59476, 99, 0, 1000);
+    (20022, 0, "Simon's_Silk_Gloves", "simons_silk_gloves", 1, 59476, 99, 0, 1000);
 REPLACE INTO `item_equipment` VALUES
-    (30371, "simons_silk_gloves",       15,  0,  4194303,    0,   0,  0,  32,  0,  0,  0);
+    (20022, "simons_silk_gloves",       15,  0,  4194303,    0,   0,  0,  32,  0,  0,  0);
 REPLACE INTO `item_mods` VALUES
-    (30371,  1,   5),   -- DEF +5
-    (30371,  9,   5),   -- DEX +5
-    (30371, 25,   5);   -- ACC +5
+    (20022,  1,   5),   -- DEF +5
+    (20022,  9,   5),   -- DEX +5
+    (20022, 25,   5);   -- ACC +5
 
 REPLACE INTO `item_basic` VALUES
-    (30372, 0, "Simon's_Webbed_Cape", "simons_webbed_cape", 1, 59476, 99, 0, 1500);
+    (20023, 0, "Simon's_Webbed_Cape", "simons_webbed_cape", 1, 59476, 99, 0, 1500);
 REPLACE INTO `item_equipment` VALUES
-    (30372, "simons_webbed_cape",       15,  0,  4194303,    0,   0,  0, 256,  0,  0,  0);
+    (20023, "simons_webbed_cape",       15,  0,  4194303,    0,   0,  0, 256,  0,  0,  0);
 REPLACE INTO `item_mods` VALUES
-    (30372,  1,   6),   -- DEF +6
-    (30372,  11,   5),   -- AGI +5
-    (30372, 68,   6);   -- EVA +6
+    (20023,  1,   6),   -- DEF +6
+    (20023,  11,   5),   -- AGI +5
+    (20023, 68,   6);   -- EVA +6
 
 
--- Cocoon Carl (lv50-58) — 30373-30375
+-- Cocoon Carl (lv50-58) — 20024-20026
 REPLACE INTO `item_basic` VALUES
-    (30373, 0, "Carl's_Cocoon_Shard", "carls_cocoon_shard", 1, 59476, 99, 0, 100);
+    (20024, 0, "Carl's_Cocoon_Shard", "carls_cocoon_shard", 1, 59476, 99, 0, 100);
 
 REPLACE INTO `item_basic` VALUES
-    (30374, 0, "Carl's_Chrysalis_Mail", "carls_chrysalis_mail", 1, 59476, 99, 0, 12000);
+    (20025, 0, "Carl's_Chrysalis_Mail", "carls_chrysalis_mail", 1, 59476, 99, 0, 12000);
 REPLACE INTO `item_equipment` VALUES
-    (30374, "carls_chrysalis_mail",     50,  0,  4194303,    0,   0,  0,  16,  0,  0,  0);
+    (20025, "carls_chrysalis_mail",     50,  0,  4194303,    0,   0,  0,  16,  0,  0,  0);
 REPLACE INTO `item_mods` VALUES
-    (30374,  1,  25),   -- DEF +25
-    (30374,  10,  12),   -- VIT +12
-    (30374,  2,  70),   -- HP +70
-    (30374, 29,  12),   -- MDEF +12
-    (30374, 68,  10);   -- EVA +10
+    (20025,  1,  25),   -- DEF +25
+    (20025,  10,  12),   -- VIT +12
+    (20025,  2,  70),   -- HP +70
+    (20025, 29,  12),   -- MDEF +12
+    (20025, 68,  10);   -- EVA +10
 
 REPLACE INTO `item_basic` VALUES
-    (30375, 0, "Carl's_Metamorph_Ring", "carls_metamorph_ring", 1, 59476, 99, 0, 16000);
+    (20026, 0, "Carl's_Metamorph_Ring", "carls_metamorph_ring", 1, 59476, 99, 0, 16000);
 REPLACE INTO `item_equipment` VALUES
-    (30375, "carls_metamorph_ring",     50,  0,  4194303,    0,   0,  0,  64,  0,  0,  0);
+    (20026, "carls_metamorph_ring",     50,  0,  4194303,    0,   0,  0,  64,  0,  0,  0);
 REPLACE INTO `item_mods` VALUES
-    (30375,  2,  80),   -- HP +80
-    (30375,  5,  40),   -- MP +40
-    (30375,  10,  12),   -- VIT +12
-    (30375, 384,   5);   -- Haste +5
+    (20026,  2,  80),   -- HP +80
+    (20026,  5,  40),   -- MP +40
+    (20026,  10,  12),   -- VIT +12
+    (20026, 384,   5);   -- Haste +5
 
 
 -- =========================================================
 -- BIRDS
 -- =========================================================
 
--- Feather Fred (lv10-15) — 30400-30402
+-- Feather Fred (lv10-15) — 20027-20029
 REPLACE INTO `item_basic` VALUES
-    (30400, 0, "Fred's_Finest_Feather", "freds_finest_feather", 1, 59476, 99, 0, 50);
+    (20027, 0, "Fred's_Finest_Feather", "freds_finest_feather", 1, 59476, 99, 0, 50);
 
 REPLACE INTO `item_basic` VALUES
-    (30401, 0, "Fred's_Down_Vest", "freds_down_vest", 1, 59476, 99, 0, 600);
+    (20028, 0, "Fred's_Down_Vest", "freds_down_vest", 1, 59476, 99, 0, 600);
 REPLACE INTO `item_equipment` VALUES
-    (30401, "freds_down_vest",          10,  0,  4194303,    0,   0,  0,  16,  0,  0,  0);
+    (20028, "freds_down_vest",          10,  0,  4194303,    0,   0,  0,  16,  0,  0,  0);
 REPLACE INTO `item_mods` VALUES
-    (30401,  1,   5),   -- DEF +5
-    (30401,  11,   4),   -- AGI +4
-    (30401, 68,   4);   -- EVA +4
+    (20028,  1,   5),   -- DEF +5
+    (20028,  11,   4),   -- AGI +4
+    (20028, 68,   4);   -- EVA +4
 
 REPLACE INTO `item_basic` VALUES
-    (30402, 0, "Fred's_Talon_Ring", "freds_talon_ring", 1, 59476, 99, 0, 900);
+    (20029, 0, "Fred's_Talon_Ring", "freds_talon_ring", 1, 59476, 99, 0, 900);
 REPLACE INTO `item_equipment` VALUES
-    (30402, "freds_talon_ring",         10,  0,  4194303,    0,   0,  0,  64,  0,  0,  0);
+    (20029, "freds_talon_ring",         10,  0,  4194303,    0,   0,  0,  64,  0,  0,  0);
 REPLACE INTO `item_mods` VALUES
-    (30402,  11,   4),   -- AGI +4
-    (30402,  9,   3),   -- DEX +3
-    (30402, 25,   4);   -- ACC +4
+    (20029,  11,   4),   -- AGI +4
+    (20029,  9,   3),   -- DEX +3
+    (20029, 25,   4);   -- ACC +4
 
 
--- Beaky Beatrice (lv28-35) — 30403-30405
+-- Beaky Beatrice (lv28-35) — 20030-20032
 REPLACE INTO `item_basic` VALUES
-    (30403, 0, "Beatrice's_Beak_Tip", "beatrices_beak_tip", 1, 59476, 99, 0, 50);
+    (20030, 0, "Beatrice's_Beak_Tip", "beatrices_beak_tip", 1, 59476, 99, 0, 50);
 
 REPLACE INTO `item_basic` VALUES
-    (30404, 0, "Beatrice's_Plume_Hat", "beatrices_plume_hat", 1, 59476, 99, 0, 3000);
+    (20031, 0, "Beatrice's_Plume_Hat", "beatrices_plume_hat", 1, 59476, 99, 0, 3000);
 REPLACE INTO `item_equipment` VALUES
-    (30404, "beatrices_plume_hat",      28,  0,  4194303,    0,   0,  0,   1,  0,  0,  0);
+    (20031, "beatrices_plume_hat",      28,  0,  4194303,    0,   0,  0,   1,  0,  0,  0);
 REPLACE INTO `item_mods` VALUES
-    (30404,  1,  10),   -- DEF +10
-    (30404,  11,   8),   -- AGI +8
-    (30404, 68,  10),   -- EVA +10
-    (30404, 14,   5);   -- CHR +5
+    (20031,  1,  10),   -- DEF +10
+    (20031,  11,   8),   -- AGI +8
+    (20031, 68,  10),   -- EVA +10
+    (20031, 14,   5);   -- CHR +5
 
 REPLACE INTO `item_basic` VALUES
-    (30405, 0, "Beatrice's_Wind_Earring", "beatrices_wind_earring", 1, 59476, 99, 0, 4500);
+    (20032, 0, "Beatrice's_Wind_Earring", "beatrices_wind_earring", 1, 59476, 99, 0, 4500);
 REPLACE INTO `item_equipment` VALUES
-    (30405, "beatrices_wind_earring",   28,  0,  4194303,    0,   0,  0,   4,  0,  0,  0);
+    (20032, "beatrices_wind_earring",   28,  0,  4194303,    0,   0,  0,   4,  0,  0,  0);
 REPLACE INTO `item_mods` VALUES
-    (30405,  11,   8),   -- AGI +8
-    (30405, 68,  12),   -- EVA +12
-    (30405, 384,   3);   -- Haste +3
+    (20032,  11,   8),   -- AGI +8
+    (20032, 68,  12),   -- EVA +12
+    (20032, 384,   3);   -- Haste +3
 
 
--- Plume Patricia (lv50-58) — 30406-30408
+-- Plume Patricia (lv50-58) — 20033-20035
 REPLACE INTO `item_basic` VALUES
-    (30406, 0, "Patricia's_Tail_Plume", "patricias_tail_plume", 1, 59476, 99, 0, 100);
+    (20033, 0, "Patricia's_Tail_Plume", "patricias_tail_plume", 1, 59476, 99, 0, 100);
 
 REPLACE INTO `item_basic` VALUES
-    (30407, 0, "Patricia's_Zephyr_Vest", "patricias_zephyr_vest", 1, 59476, 99, 0, 12000);
+    (20034, 0, "Patricia's_Zephyr_Vest", "patricias_zephyr_vest", 1, 59476, 99, 0, 12000);
 REPLACE INTO `item_equipment` VALUES
-    (30407, "patricias_zephyr_vest",    50,  0,  4194303,    0,   0,  0,  16,  0,  0,  0);
+    (20034, "patricias_zephyr_vest",    50,  0,  4194303,    0,   0,  0,  16,  0,  0,  0);
 REPLACE INTO `item_mods` VALUES
-    (30407,  1,  20),   -- DEF +20
-    (30407,  11,  14),   -- AGI +14
-    (30407, 68,  18),   -- EVA +18
-    (30407, 384,   5),   -- Haste +5
-    (30407, 25,  10);   -- ACC +10
+    (20034,  1,  20),   -- DEF +20
+    (20034,  11,  14),   -- AGI +14
+    (20034, 68,  18),   -- EVA +18
+    (20034, 384,   5),   -- Haste +5
+    (20034, 25,  10);   -- ACC +10
 
 REPLACE INTO `item_basic` VALUES
-    (30408, 0, "Patricia's_Gale_Ring", "patricias_gale_ring", 1, 59476, 99, 0, 16000);
+    (20035, 0, "Patricia's_Gale_Ring", "patricias_gale_ring", 1, 59476, 99, 0, 16000);
 REPLACE INTO `item_equipment` VALUES
-    (30408, "patricias_gale_ring",      50,  0,  4194303,    0,   0,  0,  64,  0,  0,  0);
+    (20035, "patricias_gale_ring",      50,  0,  4194303,    0,   0,  0,  64,  0,  0,  0);
 REPLACE INTO `item_mods` VALUES
-    (30408,  11,  14),   -- AGI +14
-    (30408, 68,  20),   -- EVA +20
-    (30408, 384,   6);   -- Haste +6
+    (20035,  11,  14),   -- AGI +14
+    (20035, 68,  20),   -- EVA +20
+    (20035, 384,   6);   -- Haste +6
 
 
 -- =========================================================
 -- BEES
 -- =========================================================
 
--- Honey Harold (lv10-15) — 30430-30432
+-- Honey Harold (lv10-15) — 20036-20038
 REPLACE INTO `item_basic` VALUES
-    (30430, 0, "Harold's_Honeycomb", "harolds_honeycomb", 1, 59476, 99, 0, 50);
+    (20036, 0, "Harold's_Honeycomb", "harolds_honeycomb", 1, 59476, 99, 0, 50);
 
 REPLACE INTO `item_basic` VALUES
-    (30431, 0, "Harold's_Honey_Earring", "harolds_honey_earring", 1, 59476, 99, 0, 600);
+    (20037, 0, "Harold's_Honey_Earring", "harolds_honey_earring", 1, 59476, 99, 0, 600);
 REPLACE INTO `item_equipment` VALUES
-    (30431, "harolds_honey_earring",    10,  0,  4194303,    0,   0,  0,   4,  0,  0,  0);
+    (20037, "harolds_honey_earring",    10,  0,  4194303,    0,   0,  0,   4,  0,  0,  0);
 REPLACE INTO `item_mods` VALUES
-    (30431, 14,   5),   -- CHR +5
-    (30431,  13,   3),   -- MND +3
-    (30431,  2,  15);   -- HP +15
+    (20037, 14,   5),   -- CHR +5
+    (20037,  13,   3),   -- MND +3
+    (20037,  2,  15);   -- HP +15
 
 REPLACE INTO `item_basic` VALUES
-    (30432, 0, "Harold's_Stinger_Ring", "harolds_stinger_ring", 1, 59476, 99, 0, 900);
+    (20038, 0, "Harold's_Stinger_Ring", "harolds_stinger_ring", 1, 59476, 99, 0, 900);
 REPLACE INTO `item_equipment` VALUES
-    (30432, "harolds_stinger_ring",     10,  0,  4194303,    0,   0,  0,  64,  0,  0,  0);
+    (20038, "harolds_stinger_ring",     10,  0,  4194303,    0,   0,  0,  64,  0,  0,  0);
 REPLACE INTO `item_mods` VALUES
-    (30432,  9,   4),   -- DEX +4
-    (30432, 23,   4),   -- ATT +4
-    (30432,  8,   3);   -- STR +3
+    (20038,  9,   4),   -- DEX +4
+    (20038, 23,   4),   -- ATT +4
+    (20038,  8,   3);   -- STR +3
 
 
--- Buzzard Barry (lv30-38) — 30433-30435
+-- Buzzard Barry (lv30-38) — 20039-20041
 REPLACE INTO `item_basic` VALUES
-    (30433, 0, "Barry's_Broken_Wing", "barrys_broken_wing", 1, 59476, 99, 0, 100);
+    (20039, 0, "Barry's_Broken_Wing", "barrys_broken_wing", 1, 59476, 99, 0, 100);
 
 REPLACE INTO `item_basic` VALUES
-    (30434, 0, "Barry's_Venom_Gauntlets", "barrys_venom_gauntlets", 1, 59476, 99, 0, 4000);
+    (20040, 0, "Barry's_Venom_Gauntlets", "barrys_venom_gauntlets", 1, 59476, 99, 0, 4000);
 REPLACE INTO `item_equipment` VALUES
-    (30434, "barrys_venom_gauntlets",   30,  0,  4194303,    0,   0,  0,  32,  0,  0,  0);
+    (20040, "barrys_venom_gauntlets",   30,  0,  4194303,    0,   0,  0,  32,  0,  0,  0);
 REPLACE INTO `item_mods` VALUES
-    (30434,  1,  12),   -- DEF +12
-    (30434,  9,   8),   -- DEX +8
-    (30434, 23,  10),   -- ATT +10
-    (30434,  8,   6);   -- STR +6
+    (20040,  1,  12),   -- DEF +12
+    (20040,  9,   8),   -- DEX +8
+    (20040, 23,  10),   -- ATT +10
+    (20040,  8,   6);   -- STR +6
 
 REPLACE INTO `item_basic` VALUES
-    (30435, 0, "Barry's_Swarm_Necklace", "barrys_swarm_necklace", 1, 59476, 99, 0, 6000);
+    (20041, 0, "Barry's_Swarm_Necklace", "barrys_swarm_necklace", 1, 59476, 99, 0, 6000);
 REPLACE INTO `item_equipment` VALUES
-    (30435, "barrys_swarm_necklace",    30,  0,  4194303,    0,   0,  0,   2,  0,  0,  0);
+    (20041, "barrys_swarm_necklace",    30,  0,  4194303,    0,   0,  0,   2,  0,  0,  0);
 REPLACE INTO `item_mods` VALUES
-    (30435,  8,   8),   -- STR +8
-    (30435, 23,  12),   -- ATT +12
-    (30435, 25,   8);   -- ACC +8
+    (20041,  8,   8),   -- STR +8
+    (20041, 23,  12),   -- ATT +12
+    (20041, 25,   8);   -- ACC +8
 
 
--- Queen Quentin (lv62-70) — 30436-30438
+-- Queen Quentin (lv62-70) — 20042-20044
 REPLACE INTO `item_basic` VALUES
-    (30436, 0, "Quentin's_Royal_Jelly", "quentins_royal_jelly", 1, 59476, 99, 0, 100);
+    (20042, 0, "Quentin's_Royal_Jelly", "quentins_royal_jelly", 1, 59476, 99, 0, 100);
 
 REPLACE INTO `item_basic` VALUES
-    (30437, 0, "Quentin's_Royal_Crown", "quentins_royal_crown", 1, 59476, 99, 0, 18000);
+    (20043, 0, "Quentin's_Royal_Crown", "quentins_royal_crown", 1, 59476, 99, 0, 18000);
 REPLACE INTO `item_equipment` VALUES
-    (30437, "quentins_royal_crown",     62,  0,  4194303,    0,   0,  0,   1,  0,  0,  0);
+    (20043, "quentins_royal_crown",     62,  0,  4194303,    0,   0,  0,   1,  0,  0,  0);
 REPLACE INTO `item_mods` VALUES
-    (30437,  1,  25),   -- DEF +25
-    (30437,  2,  80),   -- HP +80
-    (30437,  5,  40),   -- MP +40
-    (30437, 14,  15),   -- CHR +15
-    (30437,  13,  12);   -- MND +12
+    (20043,  1,  25),   -- DEF +25
+    (20043,  2,  80),   -- HP +80
+    (20043,  5,  40),   -- MP +40
+    (20043, 14,  15),   -- CHR +15
+    (20043,  13,  12);   -- MND +12
 
 REPLACE INTO `item_basic` VALUES
-    (30438, 0, "Quentin's_Hivemind_Ring", "quentins_hivemind_ring", 1, 59476, 99, 0, 22000);
+    (20044, 0, "Quentin's_Hivemind_Ring", "quentins_hivemind_ring", 1, 59476, 99, 0, 22000);
 REPLACE INTO `item_equipment` VALUES
-    (30438, "quentins_hivemind_ring",   62,  0,  4194303,    0,   0,  0,  64,  0,  0,  0);
+    (20044, "quentins_hivemind_ring",   62,  0,  4194303,    0,   0,  0,  64,  0,  0,  0);
 REPLACE INTO `item_mods` VALUES
-    (30438,  12,  14),   -- INT +14
-    (30438,  13,  14),   -- MND +14
-    (30438, 28,  18),   -- MATK +18
-    (30438, 30,  15),   -- MACC +15
-    (30438, 384,   6);   -- Haste +6
+    (20044,  12,  14),   -- INT +14
+    (20044,  13,  14),   -- MND +14
+    (20044, 28,  18),   -- MATK +18
+    (20044, 30,  15),   -- MACC +15
+    (20044, 384,   6);   -- Haste +6
 
 
 -- =========================================================
 -- WORMS
 -- =========================================================
 
--- Wiggles Winston (lv1-5) — 30460-30462
+-- Wiggles Winston (lv1-5) — 20045-20047
 REPLACE INTO `item_basic` VALUES
-    (30460, 0, "Winston's_Wiggle", "winstons_wiggle", 1, 59476, 99, 0, 20);
+    (20045, 0, "Winston's_Wiggle", "winstons_wiggle", 1, 59476, 99, 0, 20);
 
 REPLACE INTO `item_basic` VALUES
-    (30461, 0, "Winston's_Dirt_Ring", "winstons_dirt_ring", 1, 59476, 99, 0, 150);
+    (20046, 0, "Winston's_Dirt_Ring", "winstons_dirt_ring", 1, 59476, 99, 0, 150);
 REPLACE INTO `item_equipment` VALUES
-    (30461, "winstons_dirt_ring",        1,  0,  4194303,    0,   0,  0,  64,  0,  0,  0);
+    (20046, "winstons_dirt_ring",        1,  0,  4194303,    0,   0,  0,  64,  0,  0,  0);
 REPLACE INTO `item_mods` VALUES
-    (30461,  10,   2),   -- VIT +2
-    (30461,  2,  10);   -- HP +10
+    (20046,  10,   2),   -- VIT +2
+    (20046,  2,  10);   -- HP +10
 
 REPLACE INTO `item_basic` VALUES
-    (30462, 0, "Winston's_Earthen_Belt", "winstons_earthen_belt", 1, 59476, 99, 0, 250);
+    (20047, 0, "Winston's_Earthen_Belt", "winstons_earthen_belt", 1, 59476, 99, 0, 250);
 REPLACE INTO `item_equipment` VALUES
-    (30462, "winstons_earthen_belt",     1,  0,  4194303,    0,   0,  0, 512,  0,  0,  0);
+    (20047, "winstons_earthen_belt",     1,  0,  4194303,    0,   0,  0, 512,  0,  0,  0);
 REPLACE INTO `item_mods` VALUES
-    (30462,  10,   3),   -- VIT +3
-    (30462,  8,   2);   -- STR +2
+    (20047,  10,   3),   -- VIT +3
+    (20047,  8,   2);   -- STR +2
 
 
--- Squirmy Sherman (lv18-24) — 30463-30465
+-- Squirmy Sherman (lv18-24) — 20048-20050
 REPLACE INTO `item_basic` VALUES
-    (30463, 0, "Sherman's_Squirm", "shermans_squirm", 1, 59476, 99, 0, 50);
+    (20048, 0, "Sherman's_Squirm", "shermans_squirm", 1, 59476, 99, 0, 50);
 
 REPLACE INTO `item_basic` VALUES
-    (30464, 0, "Sherman's_Subterran_Helm", "shermans_subterran_helm", 1, 59476, 99, 0, 1200);
+    (20049, 0, "Sherman's_Subterran_Helm", "shermans_subterran_helm", 1, 59476, 99, 0, 1200);
 REPLACE INTO `item_equipment` VALUES
-    (30464, "shermans_subterran_helm",  18,  0,  4194303,    0,   0,  0,   1,  0,  0,  0);
+    (20049, "shermans_subterran_helm",  18,  0,  4194303,    0,   0,  0,   1,  0,  0,  0);
 REPLACE INTO `item_mods` VALUES
-    (30464,  1,   7),   -- DEF +7
-    (30464,  10,   5),   -- VIT +5
-    (30464,  2,  25),   -- HP +25
-    (30464,  8,   4);   -- STR +4
+    (20049,  1,   7),   -- DEF +7
+    (20049,  10,   5),   -- VIT +5
+    (20049,  2,  25),   -- HP +25
+    (20049,  8,   4);   -- STR +4
 
 REPLACE INTO `item_basic` VALUES
-    (30465, 0, "Sherman's_Tunnel_Earring", "shermans_tunnel_earring", 1, 59476, 99, 0, 1800);
+    (20050, 0, "Sherman's_Tunnel_Earring", "shermans_tunnel_earring", 1, 59476, 99, 0, 1800);
 REPLACE INTO `item_equipment` VALUES
-    (30465, "shermans_tunnel_earring",  18,  0,  4194303,    0,   0,  0,   4,  0,  0,  0);
+    (20050, "shermans_tunnel_earring",  18,  0,  4194303,    0,   0,  0,   4,  0,  0,  0);
 REPLACE INTO `item_mods` VALUES
-    (30465,  10,   6),   -- VIT +6
-    (30465,  8,   5),   -- STR +5
-    (30465, 23,   6);   -- ATT +6
+    (20050,  10,   6),   -- VIT +6
+    (20050,  8,   5),   -- STR +5
+    (20050, 23,   6);   -- ATT +6
 
 
--- Earthcrawler Ernest (lv40-48) — 802-804
+-- Earthcrawler Ernest (lv40-48) — 16570-16574
 REPLACE INTO `item_basic` VALUES
-    (802, 0, "Ernest's_Earthen_Core", "ernests_earthen_core", 1, 59476, 99, 0, 100);
+    (16570, 0, "Ernest's_Earthen_Core", "ernests_earthen_core", 1, 59476, 99, 0, 100);
 
 REPLACE INTO `item_basic` VALUES
-    (803, 0, "Ernest's_Burrower_Vest", "ernests_burrower_vest", 1, 59476, 99, 0, 8000);
+    (16573, 0, "Ernest's_Burrower_Vest", "ernests_burrower_vest", 1, 59476, 99, 0, 8000);
 REPLACE INTO `item_equipment` VALUES
-    (803, "ernests_burrower_vest",     40,  0,  4194303,    0,   0,  0,  16,  0,  0,  0);
+    (16573, "ernests_burrower_vest",     40,  0,  4194303,    0,   0,  0,  16,  0,  0,  0);
 REPLACE INTO `item_mods` VALUES
-    (803,  1,  17),   -- DEF +17
-    (803,  10,  10),   -- VIT +10
-    (803,  8,   8),   -- STR +8
-    (803,  2,  55);   -- HP +55
+    (16573,  1,  17),   -- DEF +17
+    (16573,  10,  10),   -- VIT +10
+    (16573,  8,   8),   -- STR +8
+    (16573,  2,  55);   -- HP +55
 
 REPLACE INTO `item_basic` VALUES
-    (804, 0, "Ernest's_Tremor_Boots", "ernests_tremor_boots", 1, 59476, 99, 0, 11000);
+    (16574, 0, "Ernest's_Tremor_Boots", "ernests_tremor_boots", 1, 59476, 99, 0, 11000);
 REPLACE INTO `item_equipment` VALUES
-    (804, "ernests_tremor_boots",      40,  0,  4194303,    0,   0,  0, 2048,  0,  0,  0);
+    (16574, "ernests_tremor_boots",      40,  0,  4194303,    0,   0,  0, 2048,  0,  0,  0);
 REPLACE INTO `item_mods` VALUES
-    (804,  1,  14),   -- DEF +14
-    (804,  10,   8),   -- VIT +8
-    (804,  2,  40),   -- HP +40
-    (804, 384,   4);   -- Haste +4
+    (16574,  1,  14),   -- DEF +14
+    (16574,  10,   8),   -- VIT +8
+    (16574,  2,  40),   -- HP +40
+    (16574, 384,   4);   -- Haste +4
 
 
 -- =========================================================
 -- LIZARDS
 -- =========================================================
 
--- Scaly Sally (lv8-12) — 805-807
+-- Scaly Sally (lv8-12) — 16715-17084
 REPLACE INTO `item_basic` VALUES
-    (805, 0, "Sally's_Scale_Chip", "sallys_scale_chip", 1, 59476, 99, 0, 50);
+    (16715, 0, "Sally's_Scale_Chip", "sallys_scale_chip", 1, 59476, 99, 0, 50);
 
 REPLACE INTO `item_basic` VALUES
-    (806, 0, "Sally's_Scale_Ring", "sallys_scale_ring", 1, 59476, 99, 0, 350);
+    (17055, 0, "Sally's_Scale_Ring", "sallys_scale_ring", 1, 59476, 99, 0, 350);
 REPLACE INTO `item_equipment` VALUES
-    (806, "sallys_scale_ring",          8,  0,  4194303,    0,   0,  0,  64,  0,  0,  0);
+    (17055, "sallys_scale_ring",          8,  0,  4194303,    0,   0,  0,  64,  0,  0,  0);
 REPLACE INTO `item_mods` VALUES
-    (806,  9,   4),   -- DEX +4
-    (806,  11,   3),   -- AGI +3
-    (806, 68,   4);   -- EVA +4
+    (17055,  9,   4),   -- DEX +4
+    (17055,  11,   3),   -- AGI +3
+    (17055, 68,   4);   -- EVA +4
 
 REPLACE INTO `item_basic` VALUES
-    (807, 0, "Sally's_Tail_Belt", "sallys_tail_belt", 1, 59476, 99, 0, 550);
+    (17084, 0, "Sally's_Tail_Belt", "sallys_tail_belt", 1, 59476, 99, 0, 550);
 REPLACE INTO `item_equipment` VALUES
-    (807, "sallys_tail_belt",           8,  0,  4194303,    0,   0,  0, 512,  0,  0,  0);
+    (17084, "sallys_tail_belt",           8,  0,  4194303,    0,   0,  0, 512,  0,  0,  0);
 REPLACE INTO `item_mods` VALUES
-    (807,  8,   3),   -- STR +3
-    (807,  9,   3),   -- DEX +3
-    (807,  2,  10);   -- HP +10
+    (17084,  8,   3),   -- STR +3
+    (17084,  9,   3),   -- DEX +3
+    (17084,  2,  10);   -- HP +10
 
 
--- Cold-blooded Carlos (lv30-36) — 808-810
+-- Cold-blooded Carlos (lv30-36) — 17107-17168
 REPLACE INTO `item_basic` VALUES
-    (808, 0, "Carlos's_Cold_Scale", "carloss_cold_scale", 1, 59476, 99, 0, 100);
+    (17107, 0, "Carlos's_Cold_Scale", "carloss_cold_scale", 1, 59476, 99, 0, 100);
 
 REPLACE INTO `item_basic` VALUES
-    (809, 0, "Carlos's_Reptile_Vest", "carloss_reptile_vest", 1, 59476, 99, 0, 4500);
+    (17109, 0, "Carlos's_Reptile_Vest", "carloss_reptile_vest", 1, 59476, 99, 0, 4500);
 REPLACE INTO `item_equipment` VALUES
-    (809, "carloss_reptile_vest",       30,  0,  4194303,    0,   0,  0,  16,  0,  0,  0);
+    (17109, "carloss_reptile_vest",       30,  0,  4194303,    0,   0,  0,  16,  0,  0,  0);
 REPLACE INTO `item_mods` VALUES
-    (809,  1,  13),   -- DEF +13
-    (809,  8,   7),   -- STR +7
-    (809,  10,   7),   -- VIT +7
-    (809,  2,  35);   -- HP +35
+    (17109,  1,  13),   -- DEF +13
+    (17109,  8,   7),   -- STR +7
+    (17109,  10,   7),   -- VIT +7
+    (17109,  2,  35);   -- HP +35
 
 REPLACE INTO `item_basic` VALUES
-    (810, 0, "Carlos's_Venom_Earring", "carloss_venom_earring", 1, 59476, 99, 0, 6500);
+    (17168, 0, "Carlos's_Venom_Earring", "carloss_venom_earring", 1, 59476, 99, 0, 6500);
 REPLACE INTO `item_equipment` VALUES
-    (810, "carloss_venom_earring",      30,  0,  4194303,    0,   0,  0,   4,  0,  0,  0);
+    (17168, "carloss_venom_earring",      30,  0,  4194303,    0,   0,  0,   4,  0,  0,  0);
 REPLACE INTO `item_mods` VALUES
-    (810,  9,   7),   -- DEX +7
-    (810,  11,   6),   -- AGI +6
-    (810, 23,   8);   -- ATT +8
+    (17168,  9,   7),   -- DEX +7
+    (17168,  11,   6),   -- AGI +6
+    (17168, 23,   8);   -- ATT +8
 
 
--- Basilisk Boris (lv52-60) — 811-813
+-- Basilisk Boris (lv52-60) — 17169-17752
 REPLACE INTO `item_basic` VALUES
-    (811, 0, "Boris's_Basilisk_Eye", "boriss_basilisk_eye", 1, 59476, 99, 0, 100);
+    (17169, 0, "Boris's_Basilisk_Eye", "boriss_basilisk_eye", 1, 59476, 99, 0, 100);
 
 REPLACE INTO `item_basic` VALUES
-    (812, 0, "Boris's_Granite_Carapace", "boriss_granite_carapace", 1, 59476, 99, 0, 13000);
+    (17171, 0, "Boris's_Granite_Carapace", "boriss_granite_carapace", 1, 59476, 99, 0, 13000);
 REPLACE INTO `item_equipment` VALUES
-    (812, "boriss_granite_carapace",    52,  0,  4194303,    0,   0,  0,  16,  0,  0,  0);
+    (17171, "boriss_granite_carapace",    52,  0,  4194303,    0,   0,  0,  16,  0,  0,  0);
 REPLACE INTO `item_mods` VALUES
-    (812,  1,  25),   -- DEF +25
-    (812,  10,  14),   -- VIT +14
-    (812,  8,  12),   -- STR +12
-    (812,  2,  70),   -- HP +70
-    (812, 29,  10);   -- MDEF +10
+    (17171,  1,  25),   -- DEF +25
+    (17171,  10,  14),   -- VIT +14
+    (17171,  8,  12),   -- STR +12
+    (17171,  2,  70),   -- HP +70
+    (17171, 29,  10);   -- MDEF +10
 
 REPLACE INTO `item_basic` VALUES
-    (813, 0, "Boris's_Stone_Gaze_Ring", "boriss_stone_gaze_ring", 1, 59476, 99, 0, 17000);
+    (17752, 0, "Boris's_Stone_Gaze_Ring", "boriss_stone_gaze_ring", 1, 59476, 99, 0, 17000);
 REPLACE INTO `item_equipment` VALUES
-    (813, "boriss_stone_gaze_ring",     52,  0,  4194303,    0,   0,  0,  64,  0,  0,  0);
+    (17752, "boriss_stone_gaze_ring",     52,  0,  4194303,    0,   0,  0,  64,  0,  0,  0);
 REPLACE INTO `item_mods` VALUES
-    (813,  8,  12),   -- STR +12
-    (813,  10,  12),   -- VIT +12
-    (813,  1,  14),   -- DEF +14
-    (813, 384,   5);   -- Haste +5
+    (17752,  8,  12),   -- STR +12
+    (17752,  10,  12),   -- VIT +12
+    (17752,  1,  14),   -- DEF +14
+    (17752, 384,   5);   -- Haste +5
 
 
 -- =========================================================
 -- THE JIMS (goblin comedy duo)
 -- =========================================================
 
--- Little Jim (lv25-32, he's enormous) — 30520-30522
+-- Little Jim (lv25-32, he's enormous) — 20051-20053
 REPLACE INTO `item_basic` VALUES
-    (30520, 0, "Little_Jim's_Big_Trophy", "little_jims_big_trophy", 1, 59476, 99, 0, 100);
+    (20051, 0, "Little_Jim's_Big_Trophy", "little_jims_big_trophy", 1, 59476, 99, 0, 100);
 
 REPLACE INTO `item_basic` VALUES
-    (30521, 0, "Little_Jim's_Big_Boots", "little_jims_big_boots", 1, 59476, 99, 0, 2000);
+    (20052, 0, "Little_Jim's_Big_Boots", "little_jims_big_boots", 1, 59476, 99, 0, 2000);
 REPLACE INTO `item_equipment` VALUES
-    (30521, "little_jims_big_boots",    25,  0,  4194303,    0,   0,  0, 2048,  0,  0,  0);
+    (20052, "little_jims_big_boots",    25,  0,  4194303,    0,   0,  0, 2048,  0,  0,  0);
 REPLACE INTO `item_mods` VALUES
-    (30521,  1,  12),   -- DEF +12
-    (30521,  8,   8),   -- STR +8
-    (30521,  10,   8),   -- VIT +8
-    (30521,  2,  35);   -- HP +35
+    (20052,  1,  12),   -- DEF +12
+    (20052,  8,   8),   -- STR +8
+    (20052,  10,   8),   -- VIT +8
+    (20052,  2,  35);   -- HP +35
 
 REPLACE INTO `item_basic` VALUES
-    (30522, 0, "Little_Jim's_Big_Ring", "little_jims_big_ring", 1, 59476, 99, 0, 3000);
+    (20053, 0, "Little_Jim's_Big_Ring", "little_jims_big_ring", 1, 59476, 99, 0, 3000);
 REPLACE INTO `item_equipment` VALUES
-    (30522, "little_jims_big_ring",     25,  0,  4194303,    0,   0,  0,  64,  0,  0,  0);
+    (20053, "little_jims_big_ring",     25,  0,  4194303,    0,   0,  0,  64,  0,  0,  0);
 REPLACE INTO `item_mods` VALUES
-    (30522,  8,   8),   -- STR +8
-    (30522,  10,   8),   -- VIT +8
-    (30522, 23,  10);   -- ATT +10
+    (20053,  8,   8),   -- STR +8
+    (20053,  10,   8),   -- VIT +8
+    (20053, 23,  10);   -- ATT +10
 
 
--- Big Jim (lv25-32, he's tiny) — 30523-30525
+-- Big Jim (lv25-32, he's tiny) — 20054-20056
 REPLACE INTO `item_basic` VALUES
-    (30523, 0, "Big_Jim's_Small_Trophy", "big_jims_small_trophy", 1, 59476, 99, 0, 100);
+    (20054, 0, "Big_Jim's_Small_Trophy", "big_jims_small_trophy", 1, 59476, 99, 0, 100);
 
 REPLACE INTO `item_basic` VALUES
-    (30524, 0, "Big_Jim's_Small_Hat", "big_jims_small_hat", 1, 59476, 99, 0, 2000);
+    (20055, 0, "Big_Jim's_Small_Hat", "big_jims_small_hat", 1, 59476, 99, 0, 2000);
 REPLACE INTO `item_equipment` VALUES
-    (30524, "big_jims_small_hat",       25,  0,  4194303,    0,   0,  0,   1,  0,  0,  0);
+    (20055, "big_jims_small_hat",       25,  0,  4194303,    0,   0,  0,   1,  0,  0,  0);
 REPLACE INTO `item_mods` VALUES
-    (30524,  1,   8),   -- DEF +8
-    (30524,  11,   8),   -- AGI +8
-    (30524,  9,   8),   -- DEX +8
-    (30524, 68,  10);   -- EVA +10
+    (20055,  1,   8),   -- DEF +8
+    (20055,  11,   8),   -- AGI +8
+    (20055,  9,   8),   -- DEX +8
+    (20055, 68,  10);   -- EVA +10
 
 REPLACE INTO `item_basic` VALUES
-    (30525, 0, "Big_Jim's_Small_Ring", "big_jims_small_ring", 1, 59476, 99, 0, 3000);
+    (20056, 0, "Big_Jim's_Small_Ring", "big_jims_small_ring", 1, 59476, 99, 0, 3000);
 REPLACE INTO `item_equipment` VALUES
-    (30525, "big_jims_small_ring",      25,  0,  4194303,    0,   0,  0,  64,  0,  0,  0);
+    (20056, "big_jims_small_ring",      25,  0,  4194303,    0,   0,  0,  64,  0,  0,  0);
 REPLACE INTO `item_mods` VALUES
-    (30525,  11,   8),   -- AGI +8
-    (30525,  9,   8),   -- DEX +8
-    (30525, 25,  10);   -- ACC +10
+    (20056,  11,   8),   -- AGI +8
+    (20056,  9,   8),   -- DEX +8
+    (20056, 25,  10);   -- ACC +10
 
 
 -- =============================================================================
@@ -1310,10 +1310,10 @@ REPLACE INTO `item_mods` VALUES
 -- SELECT i.itemid, i.name, e.level, e.slot, e.jobs
 --   FROM item_basic i
 --   LEFT JOIN item_equipment e ON i.itemid = e.itemId
---  WHERE i.itemid BETWEEN 792 AND 30999
+--  WHERE i.itemid BETWEEN 16384 AND 30999
 --  ORDER BY i.itemid;
 --
--- SELECT * FROM item_mods WHERE itemId BETWEEN 792 AND 30999 ORDER BY itemId, modId;
+-- SELECT * FROM item_mods WHERE itemId BETWEEN 16384 AND 30999 ORDER BY itemId, modId;
 -- ============================================================
 -- AUTO-GENERATED: 152 new named rares (IDs 336-791)
 -- ============================================================
@@ -3382,7 +3382,7 @@ REPLACE INTO `item_mods` VALUES (228,1,5),(228,11,8),(228,68,10),(228,384,5);
 -- 229: Bat Sonar Earring  (EAR, lv5)  — Frenzied Bat
 -- A crystallized membrane granting uncanny spatial awareness.
 -- ---------------------------------------------------------------------------
-REPLACE INTO `item_basic` VALUES (229,0,'bat_sonar_earring','bat_sonar_erng',1,59476,0,0,800);
+REPLACE INTO `item_basic` VALUES (229,0,'bat_sonar_earring','bat_sonar_erng',1,59476,0,0,16474);
 REPLACE INTO `item_equipment` VALUES (229,'bat_sonar_erng',5,0,4194303,0,0,0,4,0,0,0);
 REPLACE INTO `item_mods` VALUES (229,25,10),(229,30,8),(229,11,5);
 
