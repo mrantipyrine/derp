@@ -1429,6 +1429,8 @@ do
     -----------------------------------
     local _origRng = xi.weaponskills.doRangedWeaponskill
     xi.weaponskills.doRangedWeaponskill = function(attacker, target, wsID, wsParams, tp, action, primaryMsg)
+        local hpBefore = target:getHP()
+
         local finaldmg, crit, tpHits, extraHits, shadows =
             _origRng(attacker, target, wsID, wsParams, tp, action, primaryMsg)
 
@@ -1436,9 +1438,26 @@ do
             return finaldmg, crit, tpHits, extraHits, shadows
         end
 
-        -- Splash for ranged WSs
+        local totalDmg = math.max(0, hpBefore - target:getHP())
+        local scDmg    = totalDmg - finaldmg
+
+        -----------------------------------
+        -- 1. Weaponskill Splash
+        -----------------------------------
         if finaldmg > 0 and target and target:isAlive() then
             doWSSplash(attacker, target, finaldmg, xi.attackType.RANGED, xi.damageType.PIERCING)
+        end
+
+        -----------------------------------
+        -- 2. Skillchain Splash
+        -----------------------------------
+        if scDmg > 0 and target and target:isAlive() then
+            local isMatchingDay = false
+            local scEffect = target:getStatusEffect(xi.effect.SKILLCHAIN)
+            if scEffect and ss then
+                isMatchingDay = ss.isSkillchainMatchingDay(scEffect:getPower())
+            end
+            doSCSplash(attacker, target, scDmg, isMatchingDay)
         end
 
         if not ss then return finaldmg, crit, tpHits, extraHits, shadows end
