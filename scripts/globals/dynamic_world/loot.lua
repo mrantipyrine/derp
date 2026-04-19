@@ -429,7 +429,7 @@ loot.tables.nomad_arcane =
 
 loot.tables.treasure_goblin =
 {
-    gil     = { min = 5000, max = 30000 },
+    gil     = { min = 5000, max = 792 },
     rolls   = 5,
     rate    = 500,  -- 50% per roll (jackpot!)
 }
