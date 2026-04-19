@@ -254,10 +254,12 @@ behaviorDb.treasure_goblin =
         mob:addMod(xi.mod.EVA, 30)
 
         -- Announce
-        target:printToPlayer(
-            '[Dynamic World] The Treasure Goblin squeals in panic!',
-            xi.msg.channel.SYSTEM_3
-        )
+        if target:isPC() then
+            target:printToPlayer(
+                '[Dynamic World] The Treasure Goblin squeals in panic!',
+                xi.msg.channel.SYSTEM_3
+            )
+        end
     end,
 
     onMobDeath = function(mob, player, optParams, template, tier)
@@ -388,10 +390,12 @@ behaviorDb.elite_commander =
                 end
             end
 
-            target:printToPlayer(
-                string.format('[Dynamic World] %s calls for reinforcements!', template.packetName),
-                xi.msg.channel.SYSTEM_3
-            )
+            if target:isPC() then
+                target:printToPlayer(
+                    string.format('[Dynamic World] %s calls for reinforcements!', template.packetName),
+                    xi.msg.channel.SYSTEM_3
+                )
+            end
         end
     end,
 
