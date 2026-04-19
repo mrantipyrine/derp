@@ -12,7 +12,6 @@ abilityObject.onAbilityCheck = function(player, target, ability)
 end
 
 abilityObject.onUseAbility = function(player, target, ability)
-    return xi.job_utils.dragoon.useSpiritLink(player, target, ability)
     -- Solo bonus
     local isDRG = player:getMainJob() == xi.job.DRG
     local lvl = player:getMainLvl()
@@ -24,6 +23,8 @@ abilityObject.onUseAbility = function(player, target, ability)
     if xi.soloSynergy then
         xi.soloSynergy.flashBuff(player, 'Spirit Link', string.format('STR +%d  Regain +%d', strBonus, regain))
     end
+
+    return xi.job_utils.dragoon.useSpiritLink(player, target, ability)
 end
 
 return abilityObject

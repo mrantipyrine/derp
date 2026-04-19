@@ -12,7 +12,6 @@ abilityObject.onAbilityCheck = function(player, target, ability)
 end
 
 abilityObject.onUseAbility = function(player, target, ability)
-    return xi.job_utils.beastmaster.onUseAbilityGauge(player, target, ability)
     -- Solo bonus
     local isGEO = player:getMainJob() == xi.job.GEO
     local lvl = player:getMainLvl()
@@ -24,6 +23,8 @@ abilityObject.onUseAbility = function(player, target, ability)
     if xi.soloSynergy then
         xi.soloSynergy.flashBuff(player, 'Gauge', string.format('INT +%d  MND +%d', intBonus, mndBonus))
     end
+
+    return xi.job_utils.beastmaster.onUseAbilityGauge(player, target, ability)
 end
 
 return abilityObject

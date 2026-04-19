@@ -26,7 +26,6 @@ end
 abilityObject.onUseAbility = function(player, target, ability)
     player:addStatusEffect(xi.effect.CELERITY, 1, 0, 60)
 
-    return xi.effect.CELERITY
     -- Solo bonus
     local isSCH = player:getMainJob() == xi.job.SCH
     local lvl = player:getMainLvl()
@@ -38,6 +37,8 @@ abilityObject.onUseAbility = function(player, target, ability)
     if xi.soloSynergy then
         xi.soloSynergy.flashBuff(player, 'Celerity', string.format('INT +%d  MND +%d', intBonus, mndBonus))
     end
+
+    return xi.effect.CELERITY
 end
 
 return abilityObject

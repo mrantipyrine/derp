@@ -35,7 +35,6 @@ abilityObject.onUseAbility = function(player, target, ability, action)
         player:addStatusEffect(xi.effect.AGI_BOOST, bonus, 0, 180, 0, 0, 0)
     end
 
-    return xi.job_utils.thief.useSteal(player, target, ability, action)
     -- Solo bonus
     local isTHF = player:getMainJob() == xi.job.THF
     local lvl = player:getMainLvl()
@@ -47,6 +46,8 @@ abilityObject.onUseAbility = function(player, target, ability, action)
     if xi.soloSynergy then
         xi.soloSynergy.flashBuff(player, 'Steal', string.format('AGI +%d  EVA +%d', agiBonus, evaBonus))
     end
+
+    return xi.job_utils.thief.useSteal(player, target, ability, action)
 end
 
 return abilityObject

@@ -12,7 +12,6 @@ abilityObject.onAbilityCheck = function(player, target, ability)
 end
 
 abilityObject.onUseAbility = function(player, target, ability)
-    return xi.job_utils.beastmaster.onUseAbilityTame(player, target, ability)
     -- Solo bonus
     local isBST = player:getMainJob() == xi.job.BST
     local lvl = player:getMainLvl()
@@ -24,6 +23,8 @@ abilityObject.onUseAbility = function(player, target, ability)
     if xi.soloSynergy then
         xi.soloSynergy.flashBuff(player, 'Tame', string.format('STR +%d  TP +%d', strBonus, tpGain))
     end
+
+    return xi.job_utils.beastmaster.onUseAbilityTame(player, target, ability)
 end
 
 return abilityObject

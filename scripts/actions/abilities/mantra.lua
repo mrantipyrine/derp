@@ -47,7 +47,6 @@ abilityObject.onUseAbility = function(player, target, ability)
         end
     end
 
-    return xi.job_utils.monk.useMantra(player, target, ability)
     -- Solo bonus
     local isMNK = player:getMainJob() == xi.job.MNK
     local lvl = player:getMainLvl()
@@ -59,6 +58,8 @@ abilityObject.onUseAbility = function(player, target, ability)
     if xi.soloSynergy then
         xi.soloSynergy.flashBuff(player, 'Mantra', string.format('STR +%d  TP +%d', strBonus, tpGain))
     end
+
+    return xi.job_utils.monk.useMantra(player, target, ability)
 end
 
 return abilityObject

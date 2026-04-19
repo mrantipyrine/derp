@@ -12,7 +12,6 @@ abilityObject.onAbilityCheck = function(player, target, ability)
 end
 
 abilityObject.onUseAbility = function(player, target, ability)
-    return xi.job_utils.dark_knight.useWeaponBash(player, target, ability)
     -- Solo bonus
     local isWAR = player:getMainJob() == xi.job.WAR
     local lvl = player:getMainLvl()
@@ -24,6 +23,8 @@ abilityObject.onUseAbility = function(player, target, ability)
     if xi.soloSynergy then
         xi.soloSynergy.flashBuff(player, 'Weapon Bash', string.format('STR +%d  ATT +%d', strBonus, attBonus))
     end
+
+    return xi.job_utils.dark_knight.useWeaponBash(player, target, ability)
 end
 
 return abilityObject

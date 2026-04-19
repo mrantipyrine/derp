@@ -18,7 +18,6 @@ end
 abilityObject.onUseAbility = function(player, target, ability)
     player:addStatusEffect(xi.effect.DIFFUSION, 1, 0, 60)
 
-    return xi.effect.DIFFUSION
     -- Solo bonus
     local isGEO = player:getMainJob() == xi.job.GEO
     local lvl = player:getMainLvl()
@@ -30,6 +29,8 @@ abilityObject.onUseAbility = function(player, target, ability)
     if xi.soloSynergy then
         xi.soloSynergy.flashBuff(player, 'Diffusion', string.format('INT +%d  MND +%d', intBonus, mndBonus))
     end
+
+    return xi.effect.DIFFUSION
 end
 
 return abilityObject

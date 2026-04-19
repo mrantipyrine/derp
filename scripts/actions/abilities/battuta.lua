@@ -12,7 +12,6 @@ abilityObject.onAbilityCheck = function(player, target, ability)
 end
 
 abilityObject.onUseAbility = function(player, target, ability, action)
-    return xi.job_utils.rune_fencer.useBattuta(player, target, ability, action)
     -- Solo bonus
     local isDNC = player:getMainJob() == xi.job.DNC
     local lvl = player:getMainLvl()
@@ -24,6 +23,8 @@ abilityObject.onUseAbility = function(player, target, ability, action)
     if xi.soloSynergy then
         xi.soloSynergy.flashBuff(player, 'Battuta', string.format('AGI +%d  EVA +%d', agiBonus, evaBonus))
     end
+
+    return xi.job_utils.rune_fencer.useBattuta(player, target, ability, action)
 end
 
 return abilityObject

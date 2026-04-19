@@ -65,7 +65,6 @@ abilityObject.onUseAbility = function(player, target, ability)
         -- reserved for text related to resist
     end
 
-    return xi.effect.TERROR
     -- Solo bonus
     local isBST = player:getMainJob() == xi.job.BST
     local lvl = player:getMainLvl()
@@ -77,6 +76,8 @@ abilityObject.onUseAbility = function(player, target, ability)
     if xi.soloSynergy then
         xi.soloSynergy.flashBuff(player, 'Feral Howl', string.format('STR +%d  TP +%d', strBonus, tpGain))
     end
+
+    return xi.effect.TERROR
 end
 
 return abilityObject

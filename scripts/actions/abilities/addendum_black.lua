@@ -37,7 +37,6 @@ abilityObject.onUseAbility = function(player, target, ability)
 
     player:addStatusEffectEx(xi.effect.ADDENDUM_BLACK, xi.effect.ADDENDUM_BLACK, effectbonus, 0, 7200, 0, helixbonus, true)
 
-    return xi.effect.ADDENDUM_BLACK
     -- Solo bonus
     local isSCH = player:getMainJob() == xi.job.SCH
     local lvl = player:getMainLvl()
@@ -49,6 +48,8 @@ abilityObject.onUseAbility = function(player, target, ability)
     if xi.soloSynergy then
         xi.soloSynergy.flashBuff(player, 'Addendum Black', string.format('INT +%d  MND +%d', intBonus, mndBonus))
     end
+
+    return xi.effect.ADDENDUM_BLACK
 end
 
 return abilityObject

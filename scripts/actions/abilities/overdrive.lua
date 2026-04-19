@@ -22,7 +22,6 @@ end
 abilityObject.onUseAbility = function(player, target, ability)
     player:addStatusEffect(xi.effect.OVERDRIVE, 0, 0, 60)
 
-    return xi.effect.OVERDRIVE
     -- Solo bonus
     local isPUP = player:getMainJob() == xi.job.PUP
     local lvl = player:getMainLvl()
@@ -34,6 +33,8 @@ abilityObject.onUseAbility = function(player, target, ability)
     if xi.soloSynergy then
         xi.soloSynergy.flashBuff(player, 'Overdrive', string.format('STR +%d  INT +%d', strBonus, intBonus))
     end
+
+    return xi.effect.OVERDRIVE
 end
 
 return abilityObject

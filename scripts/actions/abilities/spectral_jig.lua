@@ -25,7 +25,6 @@ abilityObject.onUseAbility = function(player, target, ability)
         ability:setMsg(xi.msg.basic.NO_EFFECT) -- no effect on player.
     end
 
-    return 1
     -- Solo bonus
     local isDNC = player:getMainJob() == xi.job.DNC
     local lvl = player:getMainLvl()
@@ -37,6 +36,8 @@ abilityObject.onUseAbility = function(player, target, ability)
     if xi.soloSynergy then
         xi.soloSynergy.flashBuff(player, 'Spectral Jig', string.format('AGI +%d  EVA +%d', agiBonus, evaBonus))
     end
+
+    return 1
 end
 
 return abilityObject
