@@ -76,7 +76,6 @@ abilityObject.onUseAbility = function(player, target, ability)
 
     player:removeAmmo()
 
-    return numRemoved
     -- Solo bonus
     local isPUP = player:getMainJob() == xi.job.PUP
     local lvl = player:getMainLvl()
@@ -88,6 +87,8 @@ abilityObject.onUseAbility = function(player, target, ability)
     if xi.soloSynergy then
         xi.soloSynergy.flashBuff(player, 'Maintenance', string.format('STR +%d  INT +%d', strBonus, intBonus))
     end
+
+    return numRemoved
 end
 
 return abilityObject

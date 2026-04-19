@@ -12,7 +12,6 @@ abilityObject.onAbilityCheck = function(player, target, ability)
 end
 
 abilityObject.onUseAbility = function(player, target, ability, action)
-    return xi.job_utils.rune_fencer.useVivaciousPulse(player, target, ability)
     -- Solo bonus
     local isWHM = player:getMainJob() == xi.job.WHM
     local lvl = player:getMainLvl()
@@ -24,6 +23,8 @@ abilityObject.onUseAbility = function(player, target, ability, action)
     if xi.soloSynergy then
         xi.soloSynergy.flashBuff(player, 'Vivacious Pulse', string.format('MND +%d  Regen +%d', mndBonus, regen))
     end
+
+    return xi.job_utils.rune_fencer.useVivaciousPulse(player, target, ability)
 end
 
 return abilityObject

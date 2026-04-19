@@ -25,7 +25,6 @@ abilityObject.onUseAbility = function(player, target, ability)
     player:setLocalVar('MijinGakure', 1)
     player:setHP(0)
 
-    return dmg
     -- Solo bonus
     local isNIN = player:getMainJob() == xi.job.NIN
     local lvl = player:getMainLvl()
@@ -37,6 +36,8 @@ abilityObject.onUseAbility = function(player, target, ability)
     if xi.soloSynergy then
         xi.soloSynergy.flashBuff(player, 'Mijin Gakure', string.format('AGI +%d  TP +%d', agiBonus, tpGain))
     end
+
+    return dmg
 end
 
 return abilityObject

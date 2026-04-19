@@ -12,7 +12,6 @@ abilityObject.onAbilityCheck = function(player, target, ability)
 end
 
 abilityObject.onUseAbility = function(player, target, ability, action)
-    return xi.automaton.onUseManeuver(player, target, ability, action)
     -- Solo bonus
     local isPUP = player:getMainJob() == xi.job.PUP
     local lvl = player:getMainLvl()
@@ -24,6 +23,8 @@ abilityObject.onUseAbility = function(player, target, ability, action)
     if xi.soloSynergy then
         xi.soloSynergy.flashBuff(player, 'Dark Maneuver', string.format('STR +%d  INT +%d', strBonus, intBonus))
     end
+
+    return xi.automaton.onUseManeuver(player, target, ability, action)
 end
 
 return abilityObject

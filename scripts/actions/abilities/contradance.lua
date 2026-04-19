@@ -12,7 +12,6 @@ abilityObject.onAbilityCheck = function(player, target, ability)
 end
 
 abilityObject.onUseAbility = function(player, target, ability)
-    return xi.job_utils.dancer.useContradanceAbility(player, target, ability)
     -- Solo bonus
     local isDNC = player:getMainJob() == xi.job.DNC
     local lvl = player:getMainLvl()
@@ -24,6 +23,8 @@ abilityObject.onUseAbility = function(player, target, ability)
     if xi.soloSynergy then
         xi.soloSynergy.flashBuff(player, 'Contradance', string.format('AGI +%d  EVA +%d', agiBonus, evaBonus))
     end
+
+    return xi.job_utils.dancer.useContradanceAbility(player, target, ability)
 end
 
 return abilityObject

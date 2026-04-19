@@ -69,7 +69,6 @@ abilityObject.onUseAbility = function(player, target, ability)
 
     spirit:delMP(power)
 
-    return player:addMP(power)
     -- Solo bonus
     local isPUP = player:getMainJob() == xi.job.PUP
     local lvl = player:getMainLvl()
@@ -81,6 +80,8 @@ abilityObject.onUseAbility = function(player, target, ability)
     if xi.soloSynergy then
         xi.soloSynergy.flashBuff(player, 'Elemental Siphon', string.format('STR +%d  INT +%d', strBonus, intBonus))
     end
+
+    return player:addMP(power)
 end
 
 return abilityObject

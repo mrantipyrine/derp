@@ -93,7 +93,6 @@ abilityObject.onUseAbility = function(player, target, ability)
     pet:delStatusEffect(xi.effect.REGEN)
     pet:addStatusEffect(xi.effect.REGEN, regenAmount, 3, regenTime) -- 3 = tick, each 3 seconds.
     player:removeAmmo()
-    return totalHealing
     -- Solo bonus
     local isPUP = player:getMainJob() == xi.job.PUP
     local lvl = player:getMainLvl()
@@ -105,6 +104,8 @@ abilityObject.onUseAbility = function(player, target, ability)
     if xi.soloSynergy then
         xi.soloSynergy.flashBuff(player, 'Repair', string.format('STR +%d  INT +%d', strBonus, intBonus))
     end
+
+    return totalHealing
 end
 
 return abilityObject

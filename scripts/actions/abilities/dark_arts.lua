@@ -37,7 +37,6 @@ abilityObject.onUseAbility = function(player, target, ability)
 
     player:addStatusEffect(xi.effect.DARK_ARTS, 1, 0, 7200, 0, helixbonus)
 
-    return xi.effect.DARK_ARTS
     -- Solo bonus
     local isSCH = player:getMainJob() == xi.job.SCH
     local lvl = player:getMainLvl()
@@ -49,6 +48,8 @@ abilityObject.onUseAbility = function(player, target, ability)
     if xi.soloSynergy then
         xi.soloSynergy.flashBuff(player, 'Dark Arts', string.format('INT +%d  MND +%d', intBonus, mndBonus))
     end
+
+    return xi.effect.DARK_ARTS
 end
 
 return abilityObject
