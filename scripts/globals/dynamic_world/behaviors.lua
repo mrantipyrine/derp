@@ -487,7 +487,7 @@ behaviorDb.apex_dragon =
     end,
 
     onMobEngaged = function(mob, target, template, tier)
-        announceZone(mob:getZone(),
+        xi.dynamicWorld.announceZone(mob:getZone(),
             string.format('[Dynamic World] %s has been engaged! The ground trembles!',
                 template.packetName)
         )
@@ -499,7 +499,7 @@ behaviorDb.apex_dragon =
     end,
 
     onMobDeath = function(mob, player, optParams, template, tier)
-        announceZone(mob:getZone(),
+        xi.dynamicWorld.announceZone(mob:getZone(),
             string.format('[Dynamic World] %s has been defeated! The world breathes easier.',
                 template.packetName)
         )
@@ -544,14 +544,14 @@ behaviorDb.apex_demon =
     end,
 
     onMobEngaged = function(mob, target, template, tier)
-        announceZone(mob:getZone(),
+        xi.dynamicWorld.announceZone(mob:getZone(),
             string.format('[Dynamic World] %s tears open a rift to the void!', template.packetName)
         )
         behaviors.spawnApexMinions(mob, target, template, 3)
     end,
 
     onMobDeath = function(mob, player, optParams, template, tier)
-        announceZone(mob:getZone(),
+        xi.dynamicWorld.announceZone(mob:getZone(),
             string.format('[Dynamic World] %s collapses into the rift! Silence returns.', template.packetName)
         )
     end,
@@ -587,14 +587,14 @@ behaviorDb.apex_king =
     end,
 
     onMobEngaged = function(mob, target, template, tier)
-        announceZone(mob:getZone(),
+        xi.dynamicWorld.announceZone(mob:getZone(),
             string.format('[Dynamic World] %s roars: "You dare challenge a KING?!"', template.packetName)
         )
         behaviors.spawnApexMinions(mob, target, template, 4)
     end,
 
     onMobDeath = function(mob, player, optParams, template, tier)
-        announceZone(mob:getZone(),
+        xi.dynamicWorld.announceZone(mob:getZone(),
             '[Dynamic World] The Ancient King falls! His crown clatters to the ground.'
         )
     end,
