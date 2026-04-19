@@ -29,6 +29,10 @@ abilityObject.onUseAbility = function(player, target, ability)
         player:addMP(mp)
         player:delStatusEffectSilent(xi.effect.SUBLIMATION_COMPLETE)
         ability:setMsg(xi.msg.basic.JA_RECOVERS_MP)
+
+        if xi.soloSynergy then
+            xi.soloSynergy.flashBuff(player, 'Sublimation', string.format('MP +%d released', mp))
+        end
     elseif sublimationCharging ~= nil then
         mp           = sublimationCharging:getPower()
         local maxmp  = player:getMaxMP()
@@ -41,12 +45,20 @@ abilityObject.onUseAbility = function(player, target, ability)
         player:addMP(mp)
         player:delStatusEffectSilent(xi.effect.SUBLIMATION_ACTIVATED)
         ability:setMsg(xi.msg.basic.JA_RECOVERS_MP)
+
+        if xi.soloSynergy then
+            xi.soloSynergy.flashBuff(player, 'Sublimation', string.format('MP +%d released', mp))
+        end
     else
         local refresh = player:getStatusEffect(xi.effect.REFRESH)
 
         if refresh == nil or refresh:getSubPower() < 3 then
             player:delStatusEffect(xi.effect.REFRESH)
             player:addStatusEffect(xi.effect.SUBLIMATION_ACTIVATED, 0, 3, 7200)
+
+            if xi.soloSynergy then
+                xi.soloSynergy.flashBuff(player, 'Sublimation', 'Charging...')
+            end
         else
             ability:setMsg(xi.msg.basic.JA_NO_EFFECT_2)
         end

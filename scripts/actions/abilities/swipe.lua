@@ -16,7 +16,18 @@ abilityObject.onAbilityCheck = function(player, target, ability)
 end
 
 abilityObject.onUseAbility = function(player, target, ability, action)
-    return xi.job_utils.rune_fencer.useSwipeLunge(player, target, ability, action)
+    local result = xi.job_utils.rune_fencer.useSwipeLunge(player, target, ability, action)
+
+    -- Solo bonus: small TP refund to maintain melee pressure
+    local isRUN = player:getMainJob() == xi.job.RUN
+    local tpGain = isRUN and math.random(200, 400) or math.random(80, 150)
+    player:addTP(tpGain)
+
+    if xi.soloSynergy then
+        xi.soloSynergy.flashBuff(player, 'Swipe', string.format('TP +%d', tpGain))
+    end
+
+    return result
 end
 
 return abilityObject

@@ -33,6 +33,17 @@ abilityObject.onUseAbility = function(player, target, ability)
     player:addMod(xi.mod.KICK_DMG, offBonus,  3, duration, 0, 10, 1)
 
     xi.job_utils.monk.useFocus(player, target, ability)
+    -- Solo bonus
+    local isMNK = player:getMainJob() == xi.job.MNK
+    local lvl = player:getMainLvl()
+    local strBonus = isMNK and math.floor(lvl * 0.22) or math.floor(lvl * 0.11)
+    local tpGain   = isMNK and math.random(200, 400) or math.random(80, 160)
+    player:addMod(xi.mod.STR, strBonus)
+    player:addTP(tpGain)
+    player:timer(60000, function(p) p:delMod(xi.mod.STR, strBonus) end)
+    if xi.soloSynergy then
+        xi.soloSynergy.flashBuff(player, 'Footwork', string.format('STR +%d  TP +%d', strBonus, tpGain))
+    end
 end
 
 return abilityObject

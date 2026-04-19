@@ -14,6 +14,15 @@ end
 
 abilityObject.onUseAbility = function(player, target, ability, action)
     return xi.job_utils.dancer.useStepAbility(player, target, ability, action, xi.effect.LETHARGIC_DAZE_1, 1, 5)
+    -- Solo bonus
+    local isDNC = player:getMainJob() == xi.job.DNC
+    local lvl = player:getMainLvl()
+    local agiBonus = isDNC and math.floor(lvl * 0.20) or math.floor(lvl * 0.10)
+    player:addMod(xi.mod.AGI, agiBonus)
+    player:timer(30000, function(p) p:delMod(xi.mod.AGI, agiBonus) end)
+    if xi.soloSynergy then
+        xi.soloSynergy.flashBuff(player, 'Quickstep', string.format('AGI +%d', agiBonus))
+    end
 end
 
 return abilityObject

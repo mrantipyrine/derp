@@ -53,6 +53,17 @@ abilityObject.onUseAbility = function(player, target, ability, action)
     action:setAnimation(target:getID(), anim)
     action:speceffect(target:getID(), 1)
 
+    -- Solo bonus: TP so the follow-up WS fires immediately; Regain to chain fast
+    local isSAM = player:getMainJob() == xi.job.SAM
+    local tpGain = isSAM and math.random(500, 800) or math.random(200, 400)
+    player:addTP(tpGain)
+    local regain = isSAM and 3 or 1
+    player:addStatusEffect(xi.effect.REGAIN, regain * 10, 3, 60)
+
+    if xi.soloSynergy then
+        xi.soloSynergy.flashBuff(player, 'Konzen-ittai', string.format('TP +%d  Regain +%d', tpGain, regain))
+    end
+
     return 0
 end
 
