@@ -46,6 +46,15 @@ local function pulseAura(mob, msg, rangeOverride)
     xi.dynamicWorld.announceNearby(mob:getZone(), mob, range, msg)
 end
 
+local function notifyKillerOrNearby(mob, player, msg)
+    if player then
+        player:printToPlayer(msg, xi.msg.channel.SYSTEM_3)
+        return
+    end
+
+    xi.dynamicWorld.announceNearby(mob:getZone(), mob, 50, msg)
+end
+
 -----------------------------------
 -- Behavior Registry
 -----------------------------------
@@ -252,10 +261,7 @@ behaviorDb.treasure_goblin =
     end,
 
     onMobDeath = function(mob, player, optParams, template, tier)
-        player:printToPlayer(
-            '[Dynamic World] The Treasure Goblin bursts open, scattering treasure!',
-            xi.msg.channel.SYSTEM_3
-        )
+        notifyKillerOrNearby(mob, player, '[Dynamic World] The Treasure Goblin bursts open, scattering treasure!')
     end,
 }
 
@@ -279,11 +285,7 @@ behaviorDb.nomad_merchant =
     end,
 
     onMobDeath = function(mob, player, optParams, template, tier)
-        -- Sad message
-        player:printToPlayer(
-            '[Dynamic World] The merchant falls... their wares scatter to the wind.',
-            xi.msg.channel.SYSTEM_3
-        )
+        notifyKillerOrNearby(mob, player, '[Dynamic World] The merchant falls... their wares scatter to the wind.')
     end,
 }
 
