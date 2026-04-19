@@ -33,6 +33,17 @@ abilityObject.onUseAbility = function(player, target, ability)
         player:addStatusEffect(xi.effect.FINISHING_MOVE_2, 1, 0, 7200)
         player:addStatusEffect(xi.effect.TERNARY_FLOURISH, 3, 0, 60, 0, player:getMerit(xi.merit.TERNARY_FLOURISH_EFFECT))
     end
+    -- Solo bonus
+    local isDNC = player:getMainJob() == xi.job.DNC
+    local lvl = player:getMainLvl()
+    local agiBonus = isDNC and math.floor(lvl * 0.22) or math.floor(lvl * 0.11)
+    local tpGain  = isDNC and math.random(200, 400) or math.random(80, 160)
+    player:addMod(xi.mod.AGI, agiBonus)
+    player:addTP(tpGain)
+    player:timer(30000, function(p) p:delMod(xi.mod.AGI, agiBonus) end)
+    if xi.soloSynergy then
+        xi.soloSynergy.flashBuff(player, 'Ternary Flourish', string.format('AGI +%d  TP +%d', agiBonus, tpGain))
+    end
 end
 
 return abilityObject

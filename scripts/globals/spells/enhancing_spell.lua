@@ -583,6 +583,7 @@ xi.spells.enhancing.useEnhancingSpell = function(caster, target, spell)
             -- Solo Synergy: Bar-spell and White Magic bonuses
             if xi.soloSynergy then
                 xi.soloSynergy.applyWhiteSynergy(caster, target, spell)
+                xi.soloSynergy.applyBlackSelfBuffSynergy(caster, target, spell, spellEffect)
             end
         else
             spell:setMsg(xi.msg.basic.MAGIC_NO_EFFECT) -- No effect.

@@ -68,14 +68,13 @@ do
     local ss   = xi.soloSynergy
     local _BLM = xi.job_utils.black_mage
 
-    -- Elemental Seal — solo: flag for damage_spell.lua to double base power
-    -- and pierce one tier of resistance.
+    -- Elemental Seal — solo: flag for damage_spell.lua to amplify next nuke.
     local _es = _BLM.useElementalSeal
     _BLM.useElementalSeal = function(player, target, ability)
         _es(player, target, ability)
         if player:getPartySize() <= 2 then
             player:setLocalVar('SS_BLM_SEAL_SOLO', 1)
-            ss.flash(player, 'Solo Elemental Seal: next nuke deals 2x, resists pierced.')
+            ss.flash(player, 'Solo Elemental Seal: next nuke deals 2x.')
         end
     end
 

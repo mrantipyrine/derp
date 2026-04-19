@@ -13,6 +13,19 @@ end
 
 abilityObject.onUseAbility = function(player, target, ability)
     player:addStatusEffect(xi.effect.SENGIKORI, 12, 0, 60)
+
+    -- Solo bonus: STR spike for the WS that follows
+    local isSAM   = player:getMainJob() == xi.job.SAM
+    local lvl     = player:getMainLvl()
+    local strBonus = isSAM and math.floor(lvl * 0.28) or math.floor(lvl * 0.14)
+    player:addMod(xi.mod.STR, strBonus)
+    player:timer(60000, function(p)
+        p:delMod(xi.mod.STR, strBonus)
+    end)
+
+    if xi.soloSynergy then
+        xi.soloSynergy.flashBuff(player, 'Sengikori', string.format('STR +%d', strBonus))
+    end
 end
 
 return abilityObject

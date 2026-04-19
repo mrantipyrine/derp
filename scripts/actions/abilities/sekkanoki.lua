@@ -14,29 +14,21 @@ end
 abilityObject.onUseAbility = function(player, target, ability)
     target:delStatusEffect(xi.effect.SEKKANOKI)
     target:addStatusEffect(xi.effect.SEKKANOKI, 1, 0, 60)
-end
 
-do
-    local ss = require("scripts/globals/solo_synergy")
-    if not ss or ss == true then ss = xi.soloSynergy end
+    -- Solo bonus: STR and TP so the cheap WS still hits hard
+    local isSAM   = player:getMainJob() == xi.job.SAM
+    local lvl     = player:getMainLvl()
+    local strBonus = isSAM and math.floor(lvl * 0.26) or math.floor(lvl * 0.13)
+    local tpGain   = isSAM and math.random(300, 500) or math.random(100, 200)
+    player:addMod(xi.mod.STR, strBonus)
+    player:addTP(tpGain)
+    player:timer(60000, function(p)
+        p:delMod(xi.mod.STR, strBonus)
+    end)
 
-    local _orig = abilityObject.onUseAbility
-    abilityObject.onUseAbility = function(p, t, a)
-        ss.onAbilityUse(p, t, a)
-        _orig(p, t, a)
-        p:setLocalVar('SS_ECHO_STRIKE', 1)
+    if xi.soloSynergy then
+        xi.soloSynergy.flashBuff(player, 'Sekkanoki', string.format('STR +%d  TP +%d', strBonus, tpGain))
     end
 end
 
 return abilityObject
-
--- Solo Synergy — Samurai (75 Era Strict)
-do
-    local ss = xi.soloSynergy
-    local _orig = abilityObject.onUseAbility
-    abilityObject.onUseAbility = function(player, target, ability)
-        ss.onAbilityUse(player, target, ability)
-        _orig(player, target, ability)
-        player:setLocalVar('SS_ECHO_STRIKE', 1)
-    end
-end

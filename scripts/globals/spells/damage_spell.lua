@@ -1184,8 +1184,31 @@ do
         local multiplier = customMultiplier or 1
 
         -- 1. Apply Elemental Combo multiplier (Double damage if primer active)
-        if ss and caster:isPC() and not target:isPC() then
+        if ss and caster and target and caster:isPC() and not target:isPC() then
             multiplier = multiplier * ss.getMagicComboMultiplier(caster, target, spell)
+            multiplier = multiplier * ss.getBlackEnfeebleMultiplier(caster, target, spell)
+            multiplier = multiplier * ss.getBlackSelfBuffMultiplier(caster, spell)
+
+            if
+                caster:getPartySize() <= 2 and
+                caster:getMainJob() == xi.job.BLM and
+                spell:getSkillType() == xi.skill.ELEMENTAL_MAGIC
+            then
+                if caster:getLocalVar('SS_BLM_SEAL_SOLO') == 1 then
+                    multiplier = multiplier * 2.0
+                    caster:setLocalVar('SS_BLM_SEAL_SOLO', 0)
+                    ss.flash(caster, 'Solo Elemental Seal: nuke amplified.')
+                end
+
+                if caster:getLocalVar('SS_BLM_CASCADE_BONUS') == 1 then
+                    local burst = calculateMagicBurst(caster, spell, target, { AMIIburstBonus = 0 })
+                    if burst > 1.0 then
+                        multiplier = multiplier * 1.35
+                        caster:setLocalVar('SS_BLM_CASCADE_BONUS', 0)
+                        ss.flash(caster, 'Solo Cascade: magic burst amplified.')
+                    end
+                end
+            end
         end
 
         -- Call original logic with our new multiplier
