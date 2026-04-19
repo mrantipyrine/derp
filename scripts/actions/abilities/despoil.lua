@@ -12,7 +12,6 @@ abilityObject.onAbilityCheck = function(player, target, ability)
 end
 
 abilityObject.onUseAbility = function(player, target, ability, action)
-    return xi.job_utils.thief.useDespoil(player, target, ability, action)
     -- Solo bonus
     local isTHF = player:getMainJob() == xi.job.THF
     local lvl = player:getMainLvl()
@@ -24,6 +23,8 @@ abilityObject.onUseAbility = function(player, target, ability, action)
     if xi.soloSynergy then
         xi.soloSynergy.flashBuff(player, 'Despoil', string.format('AGI +%d  EVA +%d', agiBonus, evaBonus))
     end
+
+    return xi.job_utils.thief.useDespoil(player, target, ability, action)
 end
 
 return abilityObject

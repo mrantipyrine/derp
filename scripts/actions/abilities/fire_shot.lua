@@ -77,7 +77,6 @@ abilityObject.onUseAbility = function(player, target, ability, action)
     local _ = player:delItem(xi.item.FIRE_CARD, 1) or player:delItem(xi.item.TRUMP_CARD, 1)
     target:updateClaim(player)
 
-    return dmg
     -- Solo bonus
     local isRNG = player:getMainJob() == xi.job.RNG
     local lvl = player:getMainLvl()
@@ -89,6 +88,8 @@ abilityObject.onUseAbility = function(player, target, ability, action)
     if xi.soloSynergy then
         xi.soloSynergy.flashBuff(player, 'Fire Shot', string.format('RACC +%d  TP +%d', raccBonus, tpGain))
     end
+
+    return dmg
 end
 
 return abilityObject

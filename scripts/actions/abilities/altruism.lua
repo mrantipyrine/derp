@@ -26,7 +26,6 @@ end
 abilityObject.onUseAbility = function(player, target, ability)
     player:addStatusEffect(xi.effect.ALTRUISM, player:getMerit(xi.merit.ALTRUISM), 0, 60)
 
-    return xi.effect.ALTRUISM
     -- Solo bonus
     local isWHM = player:getMainJob() == xi.job.WHM
     local lvl = player:getMainLvl()
@@ -38,6 +37,8 @@ abilityObject.onUseAbility = function(player, target, ability)
     if xi.soloSynergy then
         xi.soloSynergy.flashBuff(player, 'Altruism', string.format('MND +%d  Regen +%d', mndBonus, regen))
     end
+
+    return xi.effect.ALTRUISM
 end
 
 return abilityObject

@@ -48,7 +48,6 @@ abilityObject.onUseAbility = function(player, target, ability, action)
         player:removeAmmo() -- Shadowbind depletes one round of ammo.
     end
 
-    return xi.effect.BIND
     -- Solo bonus
     local isTHF = player:getMainJob() == xi.job.THF
     local lvl = player:getMainLvl()
@@ -60,6 +59,8 @@ abilityObject.onUseAbility = function(player, target, ability, action)
     if xi.soloSynergy then
         xi.soloSynergy.flashBuff(player, 'Shadowbind', string.format('AGI +%d  EVA +%d', agiBonus, evaBonus))
     end
+
+    return xi.effect.BIND
 end
 
 return abilityObject

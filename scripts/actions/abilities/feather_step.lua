@@ -13,7 +13,6 @@ abilityObject.onAbilityCheck = function(player, target, ability)
 end
 
 abilityObject.onUseAbility = function(player, target, ability, action)
-    return xi.job_utils.dancer.useStepAbility(player, target, ability, action, xi.effect.BEWILDERED_DAZE_1, 2, 6)
     -- Solo bonus
     local isDNC = player:getMainJob() == xi.job.DNC
     local lvl = player:getMainLvl()
@@ -23,6 +22,8 @@ abilityObject.onUseAbility = function(player, target, ability, action)
     if xi.soloSynergy then
         xi.soloSynergy.flashBuff(player, 'Feather Step', string.format('AGI +%d', agiBonus))
     end
+
+    return xi.job_utils.dancer.useStepAbility(player, target, ability, action, xi.effect.BEWILDERED_DAZE_1, 2, 6)
 end
 
 return abilityObject

@@ -12,7 +12,6 @@ abilityObject.onAbilityCheck = function(player, target, ability)
 end
 
 abilityObject.onUseAbility = function(player, target, ability, action)
-    return xi.job_utils.dancer.useWaltzAbility(player, target, ability, action)
     -- Solo bonus
     local isDNC = player:getMainJob() == xi.job.DNC
     local lvl = player:getMainLvl()
@@ -22,6 +21,8 @@ abilityObject.onUseAbility = function(player, target, ability, action)
     if xi.soloSynergy then
         xi.soloSynergy.flashBuff(player, 'Curing Waltz Iii', string.format('MND +%d', mndBonus))
     end
+
+    return xi.job_utils.dancer.useWaltzAbility(player, target, ability, action)
 end
 
 return abilityObject

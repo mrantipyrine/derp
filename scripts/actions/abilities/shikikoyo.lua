@@ -25,7 +25,6 @@ abilityObject.onUseAbility = function(player, target, ability)
     player:setTP(1000)
     target:setTP(target:getTP() + pTP)
 
-    return pTP
     -- Solo bonus
     local isSAM = player:getMainJob() == xi.job.SAM
     local lvl = player:getMainLvl()
@@ -37,6 +36,8 @@ abilityObject.onUseAbility = function(player, target, ability)
     if xi.soloSynergy then
         xi.soloSynergy.flashBuff(player, 'Shikikoyo', string.format('STR +%d  TP +%d', strBonus, tpGain))
     end
+
+    return pTP
 end
 
 return abilityObject

@@ -13,7 +13,6 @@ abilityObject.onAbilityCheck = function(player, target, ability)
 end
 
 abilityObject.onUseAbility = function(player, target, ability)
-    return xi.job_utils.geomancer.dematerialize(player, target, ability)
     -- Solo bonus
     local isPUP = player:getMainJob() == xi.job.PUP
     local lvl = player:getMainLvl()
@@ -25,6 +24,8 @@ abilityObject.onUseAbility = function(player, target, ability)
     if xi.soloSynergy then
         xi.soloSynergy.flashBuff(player, 'Dematerialize', string.format('STR +%d  INT +%d', strBonus, intBonus))
     end
+
+    return xi.job_utils.geomancer.dematerialize(player, target, ability)
 end
 
 return abilityObject

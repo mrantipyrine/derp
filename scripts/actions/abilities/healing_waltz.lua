@@ -54,7 +54,6 @@ abilityObject.onUseAbility = function(player, target, ability)
         ability:setMsg(xi.msg.basic.JA_REMOVE_EFFECT)
     end
 
-    return effect
     -- Solo bonus
     local isDNC = player:getMainJob() == xi.job.DNC
     local lvl = player:getMainLvl()
@@ -64,6 +63,8 @@ abilityObject.onUseAbility = function(player, target, ability)
     if xi.soloSynergy then
         xi.soloSynergy.flashBuff(player, 'Healing Waltz', string.format('MND +%d', mndBonus))
     end
+
+    return effect
 end
 
 return abilityObject

@@ -37,7 +37,6 @@ abilityObject.onUseAbility = function(player, target, ability)
 
     ability:setMsg(xi.msg.basic.JA_DAMAGE)
 
-    return damage
     -- Solo bonus
     local isWAR = player:getMainJob() == xi.job.WAR
     local lvl = player:getMainLvl()
@@ -49,6 +48,8 @@ abilityObject.onUseAbility = function(player, target, ability)
     if xi.soloSynergy then
         xi.soloSynergy.flashBuff(player, 'Blade Bash', string.format('STR +%d  ATT +%d', strBonus, attBonus))
     end
+
+    return damage
 end
 
 return abilityObject

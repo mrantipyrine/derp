@@ -12,7 +12,6 @@ abilityObject.onAbilityCheck = function(player, target, ability)
 end
 
 abilityObject.onUseAbility = function(player, target, ability, action)
-    return xi.job_utils.rune_fencer.usePflug(player, target, ability, action)
     -- Solo bonus
     local isGEO = player:getMainJob() == xi.job.GEO
     local lvl = player:getMainLvl()
@@ -24,6 +23,8 @@ abilityObject.onUseAbility = function(player, target, ability, action)
     if xi.soloSynergy then
         xi.soloSynergy.flashBuff(player, 'Pflug', string.format('INT +%d  MND +%d', intBonus, mndBonus))
     end
+
+    return xi.job_utils.rune_fencer.usePflug(player, target, ability, action)
 end
 
 return abilityObject

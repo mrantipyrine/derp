@@ -12,7 +12,6 @@ abilityObject.onAbilityCheck = function(player, target, ability)
 end
 
 abilityObject.onUseAbility = function(player, target, ability)
-    return xi.job_utils.paladin.useIntervene(player, target, ability)
     -- Solo bonus
     local isWHM = player:getMainJob() == xi.job.WHM
     local lvl = player:getMainLvl()
@@ -24,6 +23,8 @@ abilityObject.onUseAbility = function(player, target, ability)
     if xi.soloSynergy then
         xi.soloSynergy.flashBuff(player, 'Intervene', string.format('MND +%d  Regen +%d', mndBonus, regen))
     end
+
+    return xi.job_utils.paladin.useIntervene(player, target, ability)
 end
 
 return abilityObject
