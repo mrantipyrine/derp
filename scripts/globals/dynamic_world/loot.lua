@@ -49,7 +49,11 @@ end
 
 loot.pools = {}
 
--- Level 1-20: Starter rare/ex items (many are quest rewards with nostalgic value)
+-- Level 1-20: Starter rare/ex items, plus unique dynamic world drops
+-- REMOVED: Smithy's Mitts, Carpenter's Gloves, Tanner's Gloves (crafting only)
+-- REMOVED: Caver's Shovel, Waders (crafting tools with no combat value)
+-- REMOVED: Mandraguard (DEF+1), Chocobo Shield (DEF+1), Drover's Mantle (DEF+1)
+-- ADDED: Unique monster-themed drops from IDs 30014-30017
 loot.pools.low =
 {
     -- Weapons
@@ -58,10 +62,7 @@ loot.pools.low =
     17058,  -- Caduceus (R/Ex)
     16637,  -- Deathbringer (Rare, DEF-6 ATT+8)
     16656,  -- Orcish Axe (R/Ex, STR+2)
-    18600,  -- Caver's Shovel (R/Ex, Earth DEF+2)
     -- Shields
-    10807,  -- Mandraguard (R/Ex, DEF+1 CHR+1)
-    10811,  -- Chocobo Shield (R/Ex, DEF+1)
     16185,  -- Pelte (Rare, DEF+6)
     12371,  -- Clipeus (R/Ex, DEF+6)
     -- Head
@@ -69,43 +70,37 @@ loot.pools.low =
     13916,  -- Pumpkin Head (R/Ex)
     13945,  -- Shaded Spectacles (R/Ex)
     11811,  -- Destrier Beret (R/Ex, DEF+7)
-    15198,  -- Sprout Beret (R/Ex)
+    30017,  -- Rogue Scout's Beret (Custom: DEF+8 DEX+7 ACC+10 EVA+8 HP+30)
     -- Body
-    10293,  -- Chocobo Shirt (R/Ex, DEF+2)
-    10250,  -- Moogle Suit (R/Ex, DEF+1)
-    -- Hands
-    14831,  -- Smithy's Mitts (R/Ex, DEF+3 Fire DEF+1)
-    14830,  -- Carpenter's Gloves (R/Ex, DEF+2 Earth DEF+1)
-    14832,  -- Tanner's Gloves (R/Ex, DEF+2 Dark DEF+1)
+    10293,  -- Chocobo Shirt (R/Ex, DEF+2 — a classic!)
+    10250,  -- Moogle Suit (R/Ex, DEF+1 — iconic)
     -- Feet
     13014,  -- Leaping Boots (Rare, DEF+3 DEX+3 AGI+3)
     15351,  -- Bounding Boots (R/Ex, DEF+3 DEX+3 AGI+3)
-    14195,  -- Waders (R/Ex, DEF+2 Water DEF+1)
     -- Neck
     13112,  -- Rabbit Charm (Rare, DEF+1 DEX+1 AGI+1)
-    13116,  -- Silver Name Tag (Rare, Water DEF+5)
     13117,  -- Ranger's Necklace (Rare, RATT+5 RACC+5)
     16279,  -- Pile Chain (R/Ex, HP+3 ACC+1)
-    13183,  -- Wing Pendant (R/Ex, AGI+1)
     -- Waist
-    15455,  -- Red Sash (R/Ex, MATT+1)
     15880,  -- Key Ring Belt (R/Ex, DEF+2 DEX+1)
-    15926,  -- Bronze Bandolier (R/Ex, RACC+1)
     -- Earrings
-    14803,  -- Optical Earring (R/Ex, DEF+1 ACC+1)
+    30015,  -- Bat Sonar Earring (Custom: ACC+10 MACC+8 AGI+5)
     -- Rings
     13495,  -- San d'Orian Ring (R/Ex, DEF+2 STR+1 MND+1)
     13496,  -- Windurstian Ring (R/Ex, MP+3 AGI+1 INT+1)
     13497,  -- Bastokan Ring (R/Ex, HP+3 DEX+1 VIT+1)
+    30016,  -- Bomb Core Fragment (Custom: ATT+15 MATT+12 STR+5 HP-30)
     -- Back
     13607,  -- Mist Silk Cape (Rare, DEF+3 MND+1 Light DEF+3)
-    16243,  -- Drover's Mantle (R/Ex, DEF+1)
+    30014,  -- Crawler's Silk Mantle (Custom: DEF+5 AGI+8 EVA+10 Haste+5)
     -- Ranged
     19221,  -- Firefly (R/Ex, AGI+1)
     21460,  -- Matre Bell (R/Ex, MP+5)
 }
 
--- Level 21-40: Mid-low gear with quest/NM flavor
+-- Level 21-40: Mid-low gear with quest/NM flavor + nomad tier unique drops
+-- ADDED: Tiger's Bloodmane Cloak, Shade Wraith Tabard, Goblin's Overstuffed Satchel,
+--        Goblin's Jackpot Bell
 loot.pools.mid_low =
 {
     -- Weapons
@@ -126,6 +121,7 @@ loot.pools.mid_low =
     14548,  -- Phobos's Cuirass (R/Ex, Lv25)
     14556,  -- Tsukikazu Togi (R/Ex, Lv25)
     14552,  -- Freyr's Jerkin (R/Ex, Lv25)
+    30019,  -- Shade Wraith Tabard (Custom: MP+100 INT+12 MND+10 MATT+18 MDEF+10)
     -- Hands
     14884,  -- Mycophile Cuffs (R/Ex, Lv25)
     14963,  -- Phobos's Gauntlets (R/Ex, Lv25)
@@ -150,10 +146,12 @@ loot.pools.mid_low =
     15296,  -- Tathlum Belt (R/Ex, Lv35)
     13237,  -- Survival Belt (Rare, Lv38)
     13238,  -- Druid's Rope (Rare, Lv40)
+    30020,  -- Goblin's Overstuffed Satchel (Custom: ALL STATS+6 HP+50 MP+30)
     -- Earrings
     11043,  -- Giant's Earring (Rare, Lv30, HP+10 STR+1)
     13359,  -- Bloodbead Earring (Rare, Lv32)
     14767,  -- Evasion Earring (Rare, Lv35)
+    30031,  -- Goblin's Jackpot Bell (Custom: ACC+20 ATT+20 Haste+10 HP+50)
     -- Rings
     14667,  -- Carect Ring (R/Ex, Lv25)
     14660,  -- Bowyer Ring (Rare, Lv29)
@@ -163,6 +161,7 @@ loot.pools.mid_low =
     11529,  -- Frugal Cape (R/Ex, Lv23)
     13680,  -- Variable Mantle (R/Ex, Lv20)
     13659,  -- Mercenary Mantle (Rare, Lv30)
+    30018,  -- Tiger's Bloodmane Cloak (Custom: ATT+22 STR+10 Haste+7 HP+40)
     -- Ranged
     17843,  -- Oliphant (Rare, Lv40)
     19222,  -- Wurger (R/Ex, Lv21)
@@ -213,6 +212,7 @@ loot.pools.mid =
     -- Waist
     15882,  -- Storm Belt (R/Ex, Lv50, STR+4 VIT+4)
     15286,  -- Tilt Belt (Rare, Lv40, ACC+5)
+    30021,  -- Goobbue Rootbelt (Custom: HP+120 VIT+14 STR+10 DEF+20 ATT+15)
     -- Earrings
     14724,  -- Moldavite Earring (R/Ex, Lv47, MACC+5)
     14782,  -- Astral Earring (Rare, Lv45)
@@ -271,6 +271,7 @@ loot.pools.mid_high =
     13148,  -- Evasion Torque (Rare, Lv65)
     13152,  -- Divine Torque (Rare, Lv65)
     13157,  -- Healing Torque (Rare, Lv65)
+    30022,  -- Dread Hunter's Choker (Custom: ATT+28 ACC+20 DEX+12 Haste+8 HP+60)
     -- Waist
     15300,  -- Nebimonite Belt (R/Ex, Lv56)
     15897,  -- Grace Corset (R/Ex, Lv58)
@@ -280,6 +281,7 @@ loot.pools.mid_high =
     13403,  -- Assault Earring (Rare, Lv58)
     14758,  -- Knightly Earring (Rare, Lv59)
     14764,  -- Minuet Earring (Rare, Lv61)
+    30025,  -- Crystal Golem's Heart (Custom: DEF+12 HP+100 VIT+15 MDEF+20)
     -- Rings
     14668,  -- Zoredonite Ring (R/Ex, Lv56)
     13555,  -- Peace Ring (Rare, Lv59)
@@ -287,6 +289,10 @@ loot.pools.mid_high =
     13560,  -- Fire Ring (R/Ex, Lv65)
     13561,  -- Ice Ring (R/Ex, Lv65)
     13562,  -- Wind Ring (R/Ex, Lv65)
+    -- Head
+    30024,  -- Nexus Core Helm (Custom: MATT+25 MACC+18 INT+15 MP+80 Haste+8)
+    -- Hands
+    30023,  -- Fell Commander's Vambrace (Custom: DEF+20 STR+12 ATT+20 ACC+15 HP+80 ENMITY+10)
     -- Back
     13624,  -- Enhancing Mantle (Rare, Lv59)
     11533,  -- Lyricist's Gonnelle (R/Ex, Lv64)
@@ -297,7 +303,9 @@ loot.pools.mid_high =
     17379,  -- Hamelin Flute (Rare, Lv58)
 }
 
--- Level 71-99: Endgame-tier rare/ex items
+-- Level 71-99: Endgame-tier rare/ex items + apex unique dynamic world drops
+-- ADDED: Void Wyrm's Fang, Abyssal Tyrant's Diadem, Ancient King's Carapace,
+--        Apex Soulstone, Wanderer's Legacy, Void Wyrm Scale
 loot.pools.high =
 {
     -- Weapons
@@ -314,6 +322,9 @@ loot.pools.high =
     15077,  -- Assassin's Bonnet (R/Ex, Lv71)
     16159,  -- Zhago's Barbut (R/Ex, Lv71)
     16152,  -- Hissho Hachimaki (R/Ex, Lv71)
+    30027,  -- Abyssal Tyrant's Diadem (Custom: STR+15 INT+15 MND+12 ATT+30 MATT+28 ACC+20 HP+120)
+    -- Body
+    30028,  -- Ancient King's Carapace (Custom: DEF+50 HP+300 VIT+20 MDEF+35 ENMITY+15)
     -- Hands
     15038,  -- Etoile Bangles (R/Ex, Lv71)
     15040,  -- Argute Bracers (R/Ex, Lv71)
@@ -331,6 +342,7 @@ loot.pools.high =
     27510,  -- Fotia Gorget (R/Ex, Lv72)
     11591,  -- Ravager's Gorget (R/Ex, Lv80)
     11593,  -- Goetia Chain (R/Ex, Lv80)
+    30026,  -- Void Wyrm's Fang (Custom: ATT+40 MATT+35 STR+15 INT+12 Haste+12 HP+80)
     -- Waist
     15918,  -- Witch Sash (Rare, Lv71)
     28419,  -- Hachirin-no-Obi (R/Ex, Lv71)
@@ -345,12 +357,15 @@ loot.pools.high =
     14625,  -- Evoker's Ring (R/Ex, Lv71)
     15833,  -- Diverter's Ring (R/Ex, Lv71)
     11643,  -- Odium Ring (Rare, Lv76)
+    30029,  -- Apex Soulstone (Custom: HP+120 MP+80 STR+12 INT+12 ATT+20 MATT+20 Haste+10)
+    30030,  -- Wanderer's Legacy (Custom: HP+150 MP+100 ALL STATS+10 Haste+15)
     -- Back
     16239,  -- Solitaire Cape (R/Ex, Lv71)
     16221,  -- Aileron Mantle (R/Ex, Lv71)
     15464,  -- Corse Cape (Rare, Lv71)
     11553,  -- Cavaro's Mantle (R/Ex, Lv80)
     11555,  -- Ferine Mantle (R/Ex, Lv80)
+    30032,  -- Void Wyrm Scale (Custom: DEF+30 ATT+35 STR+15 VIT+15 HP+150 Haste+10)
     -- Ranged
     18144,  -- Bow of Trials (R/Ex, Lv71)
     18146,  -- Gun of Trials (R/Ex, Lv71)
