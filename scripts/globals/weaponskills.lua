@@ -1160,6 +1160,15 @@ local WS_SPLASH_DMG_PCT     = 0.50  -- splash targets take 50% of primary damage
 local SC_SPLASH_DMG_PCT     = 0.50  -- skillchain splash: 50% of SC damage
 local SC_SPLASH_DAY_BONUS   = 1.00  -- matching day: 100% of SC damage (double splash)
 
+local function isActivelyTargetingAttacker(mob, attacker)
+    if not mob or not attacker or not mob:isEngaged() then
+        return false
+    end
+
+    local target = mob:getTarget()
+    return target and target:getID() == attacker:getID()
+end
+
 local function doWSSplash(attacker, primaryTarget, primaryDmg, attackType, dmgType)
     if primaryDmg <= 0 then return end
     local zone = attacker:getZone()
@@ -1175,6 +1184,7 @@ local function doWSSplash(attacker, primaryTarget, primaryDmg, attackType, dmgTy
         if mob and
            mob:isAlive() and
            mob:getID() ~= primaryTarget:getID() and
+           isActivelyTargetingAttacker(mob, attacker) and
            primaryTarget:checkDistance(mob) <= WS_SPLASH_RADIUS
         then
             mob:takeDamage(splashDmg, attacker, attackType, dmgType)
@@ -1204,6 +1214,7 @@ local function doSCSplash(attacker, primaryTarget, scDmg, isMatchingDay)
         if mob and
            mob:isAlive() and
            mob:getID() ~= primaryTarget:getID() and
+           isActivelyTargetingAttacker(mob, attacker) and
            primaryTarget:checkDistance(mob) <= WS_SPLASH_RADIUS
         then
             -- Skillchain splash is always magical/elemental-ish (treated as SPECIAL/NONE for simplicity)
