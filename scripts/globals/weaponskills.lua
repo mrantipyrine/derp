@@ -1154,9 +1154,11 @@ end
 --   * Surge burst at max momentum
 -----------------------------------
 
--- Splash damage tuning (change here to adjust)
+-- Splash damage tuning
 local WS_SPLASH_RADIUS      = 6.0   -- yalms around primary target
 local WS_SPLASH_DMG_PCT     = 0.50  -- splash targets take 50% of primary damage
+local SC_SPLASH_DMG_PCT     = 0.50  -- skillchain splash: 50% of SC damage
+local SC_SPLASH_DAY_BONUS   = 1.00  -- matching day: 100% of SC damage (double splash)
 
 local function doWSSplash(attacker, primaryTarget, primaryDmg, attackType, dmgType)
     if primaryDmg <= 0 then return end
@@ -1176,8 +1178,36 @@ local function doWSSplash(attacker, primaryTarget, primaryDmg, attackType, dmgTy
            primaryTarget:checkDistance(mob) <= WS_SPLASH_RADIUS
         then
             mob:takeDamage(splashDmg, attacker, attackType, dmgType)
-            -- Attacker gains reduced TP from splash; mob feeds less TP
             attacker:addTP(math.floor(5 * WS_SPLASH_ATTACKER_TP_MULT))
+            mob:updateEnmityFromDamage(attacker, splashDmg)
+        end
+    end
+end
+
+local function doSCSplash(attacker, primaryTarget, scDmg, isMatchingDay)
+    if scDmg <= 0 then return end
+    local zone = attacker:getZone()
+    if not zone then return end
+
+    local mobs = zone:getMobs()
+    if not mobs then return end
+
+    local pct = isMatchingDay and SC_SPLASH_DAY_BONUS or SC_SPLASH_DMG_PCT
+    local splashDmg = math.floor(scDmg * pct)
+    if splashDmg <= 0 then return end
+
+    if isMatchingDay then
+        xi.soloSynergy.flash(attacker, 'RESONATING SPLASH! Day bonus triggered.')
+    end
+
+    for _, mob in pairs(mobs) do
+        if mob and
+           mob:isAlive() and
+           mob:getID() ~= primaryTarget:getID() and
+           primaryTarget:checkDistance(mob) <= WS_SPLASH_RADIUS
+        then
+            -- Skillchain splash is always magical/elemental-ish (treated as SPECIAL/NONE for simplicity)
+            mob:takeDamage(splashDmg, attacker, xi.attackType.SPECIAL, xi.damageType.NONE)
             mob:updateEnmityFromDamage(attacker, splashDmg)
         end
     end
@@ -1191,6 +1221,8 @@ do
     -----------------------------------
     local _origPhys = xi.weaponskills.doPhysicalWeaponskill
     xi.weaponskills.doPhysicalWeaponskill = function(attacker, target, wsID, wsParams, tp, action, primaryMsg, taChar)
+        local hpBefore = target:getHP()
+
         local finaldmg, crit, tpHits, extraHits, shadows =
             _origPhys(attacker, target, wsID, wsParams, tp, action, primaryMsg, taChar)
 
@@ -1198,12 +1230,27 @@ do
             return finaldmg, crit, tpHits, extraHits, shadows
         end
 
+        local totalDmg = math.max(0, hpBefore - target:getHP())
+        local scDmg    = totalDmg - finaldmg
+
         -----------------------------------
-        -- Splash damage to nearby enemies
+        -- 1. Weaponskill Splash
         -----------------------------------
         if finaldmg > 0 and target and target:isAlive() then
             local weapDmgType = attacker:getWeaponDamageType(xi.slot.MAIN)
             doWSSplash(attacker, target, finaldmg, xi.attackType.PHYSICAL, weapDmgType)
+        end
+
+        -----------------------------------
+        -- 2. Skillchain Splash
+        -----------------------------------
+        if scDmg > 0 and target and target:isAlive() then
+            local isMatchingDay = false
+            local scEffect = target:getStatusEffect(xi.effect.SKILLCHAIN)
+            if scEffect and ss then
+                isMatchingDay = ss.isSkillchainMatchingDay(scEffect:getPower())
+            end
+            doSCSplash(attacker, target, scDmg, isMatchingDay)
         end
 
         if not ss then return finaldmg, crit, tpHits, extraHits, shadows end
@@ -1382,6 +1429,8 @@ do
     -----------------------------------
     local _origRng = xi.weaponskills.doRangedWeaponskill
     xi.weaponskills.doRangedWeaponskill = function(attacker, target, wsID, wsParams, tp, action, primaryMsg)
+        local hpBefore = target:getHP()
+
         local finaldmg, crit, tpHits, extraHits, shadows =
             _origRng(attacker, target, wsID, wsParams, tp, action, primaryMsg)
 
@@ -1389,9 +1438,26 @@ do
             return finaldmg, crit, tpHits, extraHits, shadows
         end
 
-        -- Splash for ranged WSs
+        local totalDmg = math.max(0, hpBefore - target:getHP())
+        local scDmg    = totalDmg - finaldmg
+
+        -----------------------------------
+        -- 1. Weaponskill Splash
+        -----------------------------------
         if finaldmg > 0 and target and target:isAlive() then
             doWSSplash(attacker, target, finaldmg, xi.attackType.RANGED, xi.damageType.PIERCING)
+        end
+
+        -----------------------------------
+        -- 2. Skillchain Splash
+        -----------------------------------
+        if scDmg > 0 and target and target:isAlive() then
+            local isMatchingDay = false
+            local scEffect = target:getStatusEffect(xi.effect.SKILLCHAIN)
+            if scEffect and ss then
+                isMatchingDay = ss.isSkillchainMatchingDay(scEffect:getPower())
+            end
+            doSCSplash(attacker, target, scDmg, isMatchingDay)
         end
 
         if not ss then return finaldmg, crit, tpHits, extraHits, shadows end

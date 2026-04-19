@@ -846,6 +846,40 @@ ss.getElementalWardBonus = function(player)
     return 0, 0
 end
 
+-- Maps skillchain resonance IDs to their associated elements.
+local SC_ELEMENTS = {
+    [xi.skillchainType.TRANSFIXION]   = { xi.element.LIGHT },
+    [xi.skillchainType.COMPRESSION]   = { xi.element.DARK },
+    [xi.skillchainType.LIQUEFACTION]  = { xi.element.FIRE },
+    [xi.skillchainType.SCISSION]      = { xi.element.EARTH },
+    [xi.skillchainType.REVERBERATION] = { xi.element.WATER },
+    [xi.skillchainType.DETONATION]    = { xi.element.WIND },
+    [xi.skillchainType.INDURATION]    = { xi.element.ICE },
+    [xi.skillchainType.IMPACTION]     = { xi.element.THUNDER },
+    [xi.skillchainType.GRAVITATION]   = { xi.element.DARK, xi.element.EARTH },
+    [xi.skillchainType.DISTORTION]    = { xi.element.WATER, xi.element.ICE },
+    [xi.skillchainType.FUSION]        = { xi.element.FIRE, xi.element.LIGHT },
+    [xi.skillchainType.FRAGMENTATION] = { xi.element.WIND, xi.element.THUNDER },
+    [xi.skillchainType.LIGHT]         = { xi.element.FIRE, xi.element.LIGHT, xi.element.WIND, xi.element.THUNDER },
+    [xi.skillchainType.DARKNESS]      = { xi.element.DARK, xi.element.EARTH, xi.element.WATER, xi.element.ICE },
+    [xi.skillchainType.LIGHT_II]      = { xi.element.FIRE, xi.element.LIGHT, xi.element.WIND, xi.element.THUNDER },
+    [xi.skillchainType.DARKNESS_II]   = { xi.element.DARK, xi.element.EARTH, xi.element.WATER, xi.element.ICE },
+}
+
+-- Returns true if the skillchain matches the current day's element.
+ss.isSkillchainMatchingDay = function(resonanceId)
+    local elements = SC_ELEMENTS[resonanceId]
+    if not elements then return false end
+    
+    local todayElement = xi.combat.element.getDayElement(VanadielDayOfTheWeek())
+    for _, e in ipairs(elements) do
+        if e == todayElement then
+            return true
+        end
+    end
+    return false
+end
+
 -----------------------------------
 -- Sub-job synergy table
 -- Returns a list of stat/effect bonuses for specific sub-job combos.

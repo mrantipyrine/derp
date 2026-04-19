@@ -32,7 +32,7 @@
 --     47=HASTE 70=ENMITY_DOWN 71=ENMITY_UP
 -- =============================================================================
 
-USE xidb;
+USE aoniaxi;
 
 -- =============================================================================
 -- SECTION 1: NAMED MOB DROPS (rare, fun, personality items)
@@ -3362,346 +3362,162 @@ REPLACE INTO `item_mods` VALUES (30985, 28, 15);
 REPLACE INTO `item_mods` VALUES (30985, 30, 13);
 
 -- =============================================================================
--- SECTION 4: DYNAMIC WORLD UNIQUE MONSTER DROPS (IDs 30014-30032)
--- These replace the boring crafting gloves / junk in the loot pools.
--- Each item is thematically tied to a specific dynamic world monster.
--- All items are Rare+Exclusive (flags 46660), equippable by all jobs.
---
--- slot bitmask: 1=HEAD 2=NECK 4=EAR 16=BODY 32=HANDS 64=RING
---               128=RING2 256=BACK 512=WAIST 1024=LEGS 2048=FEET
--- key mods: 1=DEF 2=HP 5=MP 8=STR 9=DEX 10=VIT 11=AGI 12=INT 13=MND
---           14=CHR 23=ATT 25=ACC 27=ENMITY 28=MATT 29=MDEF 30=MACC
---           68=EVA 384=HASTE_GEAR
+-- =============================================================================
+-- SECTION 4: DYNAMIC WORLD UNIQUE MONSTER DROPS (IDs 228-249)
+-- DAT-resident IDs (exist in client ROM/184/6.DAT) so icons display correctly.
+-- flags=59476 (0xE854) = RARE+EX+NODELIVERY+CANEQUIP+NOAUCTION (matches Empress Hairpin)
+-- All jobs (jobs=4194303), correct slot bitmasks.
+-- ID mapping: 228-231 Wanderer, 232-236 Nomad, 237-240 Elite, 241-249 Apex
 -- =============================================================================
 
--- -------------------------------------------------------------------------
--- [30014] Crawler's Silk Mantle  (BACK, lv8, all jobs)
--- Drops from: Empowered Crawler
+-- ---------------------------------------------------------------------------
+-- 228: Crawler's Silk Mantle  (BACK, lv8)  — Empowered Crawler
 -- Woven from the luminous silk of a magically-charged crawler.
--- Slips attacks like water; feels like wearing a cloud.
--- -------------------------------------------------------------------------
-REPLACE INTO `item_basic` VALUES
-    (30014, 0, "Crawler's_Silk_Mantle", "CrawlSilkMnt", 1, 46660, 99, 0, 1500);
-REPLACE INTO `item_equipment` VALUES
-    (30014, "CrawlSilkMnt", 8, 0, 4194303, 0, 0, 0, 256, 0, 0, 0);
-REPLACE INTO `item_mods` VALUES
-    (30014,  1,   5),   -- DEF +5
-    (30014, 11,   8),   -- AGI +8
-    (30014, 68,  10),   -- EVA +10
-    (30014, 384,  5);   -- Haste +5%
+-- ---------------------------------------------------------------------------
+REPLACE INTO `item_basic` VALUES (228,0,'crawlers_silk_mantle','crawl_silk_mnt',1,59476,0,0,1500);
+REPLACE INTO `item_equipment` VALUES (228,'crawl_silk_mnt',8,0,4194303,0,0,0,256,0,0,0);
+REPLACE INTO `item_mods` VALUES (228,1,5),(228,11,8),(228,68,10),(228,384,5);
 
--- -------------------------------------------------------------------------
--- [30015] Bat Sonar Earring  (EAR, lv5, all jobs)
--- Drops from: Frenzied Bat
--- A crystallized membrane from a bat that hunted by pure sound.
--- Grants uncanny awareness — you hear them before you see them.
--- -------------------------------------------------------------------------
-REPLACE INTO `item_basic` VALUES
-    (30015, 0, "Bat_Sonar_Earring", "BatSonarErng", 1, 46660, 99, 0, 800);
-REPLACE INTO `item_equipment` VALUES
-    (30015, "BatSonarErng", 5, 0, 4194303, 0, 0, 0, 4, 0, 0, 0);
-REPLACE INTO `item_mods` VALUES
-    (30015, 25,  10),   -- ACC +10
-    (30015, 30,   8),   -- MACC +8
-    (30015, 11,   5);   -- AGI +5
+-- ---------------------------------------------------------------------------
+-- 229: Bat Sonar Earring  (EAR, lv5)  — Frenzied Bat
+-- A crystallized membrane granting uncanny spatial awareness.
+-- ---------------------------------------------------------------------------
+REPLACE INTO `item_basic` VALUES (229,0,'bat_sonar_earring','bat_sonar_erng',1,59476,0,0,800);
+REPLACE INTO `item_equipment` VALUES (229,'bat_sonar_erng',5,0,4194303,0,0,0,4,0,0,0);
+REPLACE INTO `item_mods` VALUES (229,25,10),(229,30,8),(229,11,5);
 
--- -------------------------------------------------------------------------
--- [30016] Bomb Core Fragment  (RING, lv10, all jobs)
--- Drops from: Enraged Bomb
--- A shard of a bomb's explosive core, still warm to the touch.
--- Wearing it is inadvisable. Wearing it anyway is spectacular.
--- -------------------------------------------------------------------------
-REPLACE INTO `item_basic` VALUES
-    (30016, 0, "Bomb_Core_Fragment", "BombCoreFrag", 1, 46660, 99, 0, 1200);
-REPLACE INTO `item_equipment` VALUES
-    (30016, "BombCoreFrag", 10, 0, 4194303, 0, 0, 0, 64, 0, 0, 0);
-REPLACE INTO `item_mods` VALUES
-    (30016, 23,  15),   -- ATT +15
-    (30016, 28,  12),   -- MATT +12
-    (30016,  8,   5),   -- STR +5
-    (30016,  2, -30);   -- HP -30 (it IS a bomb fragment)
+-- ---------------------------------------------------------------------------
+-- 230: Bomb Core Fragment  (RING, lv10)  — Enraged Bomb
+-- A shard of a bomb's explosive core. Still warm. Wearing it is inadvisable.
+-- ---------------------------------------------------------------------------
+REPLACE INTO `item_basic` VALUES (230,0,'bomb_core_fragment','bomb_core_frag',1,59476,0,0,1200);
+REPLACE INTO `item_equipment` VALUES (230,'bomb_core_frag',10,0,4194303,0,0,0,64,0,0,0);
+REPLACE INTO `item_mods` VALUES (230,23,15),(230,28,12),(230,8,5),(230,2,-30);
 
--- -------------------------------------------------------------------------
--- [30017] Rogue Scout's Beret  (HEAD, lv12, all jobs)
--- Drops from: Rogue Quadav
--- Standard-issue headgear of a Quadav infiltrator.
--- Smells faintly of brine and regret.
--- -------------------------------------------------------------------------
-REPLACE INTO `item_basic` VALUES
-    (30017, 0, "Rogue_Scout's_Beret", "RogSctBeret", 1, 46660, 99, 0, 2000);
-REPLACE INTO `item_equipment` VALUES
-    (30017, "RogSctBeret", 12, 0, 4194303, 0, 0, 0, 1, 0, 0, 0);
-REPLACE INTO `item_mods` VALUES
-    (30017,  1,   8),   -- DEF +8
-    (30017,  9,   7),   -- DEX +7
-    (30017, 25,  10),   -- ACC +10
-    (30017, 68,   8),   -- EVA +8
-    (30017,  2,  30);   -- HP +30
+-- ---------------------------------------------------------------------------
+-- 231: Rogue Scout's Beret  (HEAD, lv12)  — Rogue Quadav
+-- Standard-issue headgear of a Quadav infiltrator. Smells of brine and regret.
+-- ---------------------------------------------------------------------------
+REPLACE INTO `item_basic` VALUES (231,0,'rogue_scouts_beret','rogue_sct_brt',1,59476,0,0,2000);
+REPLACE INTO `item_equipment` VALUES (231,'rogue_sct_brt',12,0,4194303,0,0,0,1,0,0,0);
+REPLACE INTO `item_mods` VALUES (231,1,8),(231,9,7),(231,25,10),(231,68,8),(231,2,30);
 
--- -------------------------------------------------------------------------
--- [30018] Tiger's Bloodmane Cloak  (BACK, lv25, all jobs)
--- Drops from: Frenzied Tiger
--- A cloak fashioned from the mane of a tiger driven mad by ley-line energy.
--- Still radiates feral heat.
--- -------------------------------------------------------------------------
-REPLACE INTO `item_basic` VALUES
-    (30018, 0, "Tiger's_Bloodmane_Cloak", "TigrBloodMnt", 1, 46660, 99, 0, 5000);
-REPLACE INTO `item_equipment` VALUES
-    (30018, "TigrBloodMnt", 25, 0, 4194303, 0, 0, 0, 256, 0, 0, 0);
-REPLACE INTO `item_mods` VALUES
-    (30018, 23,  22),   -- ATT +22
-    (30018,  8,  10),   -- STR +10
-    (30018, 384,  7),   -- Haste +7%
-    (30018,  2,  40);   -- HP +40
+-- ---------------------------------------------------------------------------
+-- 232: Tiger's Bloodmane Cloak  (BACK, lv25)  — Frenzied Tiger
+-- The vivid mane of a tiger driven mad by ley-line energy. Still radiates heat.
+-- ---------------------------------------------------------------------------
+REPLACE INTO `item_basic` VALUES (232,0,'tigers_bloodmane_cloak','tigr_blood_mnt',1,59476,0,0,5000);
+REPLACE INTO `item_equipment` VALUES (232,'tigr_blood_mnt',25,0,4194303,0,0,0,256,0,0,0);
+REPLACE INTO `item_mods` VALUES (232,23,22),(232,8,10),(232,384,7),(232,2,40);
 
--- -------------------------------------------------------------------------
--- [30019] Shade Wraith Tabard  (BODY, lv30, all jobs)
--- Drops from: Wandering Shade
--- Woven from ectoplasmic essence left behind by a restless spirit.
--- Cold to the touch; warm to the soul. Probably.
--- -------------------------------------------------------------------------
-REPLACE INTO `item_basic` VALUES
-    (30019, 0, "Shade_Wraith_Tabard", "ShadeWrthTab", 1, 46660, 99, 0, 8000);
-REPLACE INTO `item_equipment` VALUES
-    (30019, "ShadeWrthTab", 30, 0, 4194303, 0, 0, 0, 16, 0, 0, 0);
-REPLACE INTO `item_mods` VALUES
-    (30019,  5, 100),   -- MP +100
-    (30019, 12,  12),   -- INT +12
-    (30019, 13,  10),   -- MND +10
-    (30019, 28,  18),   -- MATT +18
-    (30019, 29,  10);   -- MDEF +10
+-- ---------------------------------------------------------------------------
+-- 233: Shade Wraith Tabard  (BODY, lv30)  — Wandering Shade
+-- Woven from ectoplasmic essence. Cold to the touch; warm to the soul. Probably.
+-- ---------------------------------------------------------------------------
+REPLACE INTO `item_basic` VALUES (233,0,'shade_wraith_tabard','shade_wrth_tab',1,59476,0,0,8000);
+REPLACE INTO `item_equipment` VALUES (233,'shade_wrth_tab',30,0,4194303,0,0,0,16,0,0,0);
+REPLACE INTO `item_mods` VALUES (233,5,100),(233,12,12),(233,13,10),(233,28,18),(233,29,10);
 
--- -------------------------------------------------------------------------
--- [30020] Goblin's Overstuffed Satchel  (WAIST, lv20, all jobs)
--- Drops from: Treasure Goblin
--- Contains everything. Seriously. A tiny adventure in belt form.
--- No one knows how it holds so much.
--- -------------------------------------------------------------------------
-REPLACE INTO `item_basic` VALUES
-    (30020, 0, "Goblin's_Overstuffed_Satchel", "GobOvStSach", 1, 46660, 99, 0, 3000);
-REPLACE INTO `item_equipment` VALUES
-    (30020, "GobOvStSach", 20, 0, 4194303, 0, 0, 0, 512, 0, 0, 0);
-REPLACE INTO `item_mods` VALUES
-    (30020,  8,   6),   -- STR +6
-    (30020,  9,   6),   -- DEX +6
-    (30020, 10,   6),   -- VIT +6
-    (30020, 11,   6),   -- AGI +6
-    (30020, 12,   6),   -- INT +6
-    (30020, 13,   6),   -- MND +6
-    (30020, 14,   6),   -- CHR +6
-    (30020,  2,  50),   -- HP +50
-    (30020,  5,  30);   -- MP +30
+-- ---------------------------------------------------------------------------
+-- 234: Goblin's Overstuffed Satchel  (WAIST, lv20)  — Treasure Goblin
+-- Contains everything. No one knows how it holds so much.
+-- ---------------------------------------------------------------------------
+REPLACE INTO `item_basic` VALUES (234,0,'goblins_overstuffed_satchel','gob_ovst_sach',1,59476,0,0,3000);
+REPLACE INTO `item_equipment` VALUES (234,'gob_ovst_sach',20,0,4194303,0,0,0,512,0,0,0);
+REPLACE INTO `item_mods` VALUES (234,8,6),(234,9,6),(234,10,6),(234,11,6),(234,12,6),(234,13,6),(234,14,6),(234,2,50),(234,5,30);
 
--- -------------------------------------------------------------------------
--- [30021] Goobbue Rootbelt  (WAIST, lv35, all jobs)
--- Drops from: Rampaging Goobbue
--- Twisted from the living roots growing off a Goobbue's shoulders.
--- You can still feel it trying to grow.
--- -------------------------------------------------------------------------
-REPLACE INTO `item_basic` VALUES
-    (30021, 0, "Goobbue_Rootbelt", "GoobRootbelt", 1, 46660, 99, 0, 7000);
-REPLACE INTO `item_equipment` VALUES
-    (30021, "GoobRootbelt", 35, 0, 4194303, 0, 0, 0, 512, 0, 0, 0);
-REPLACE INTO `item_mods` VALUES
-    (30021,  2, 120),   -- HP +120
-    (30021, 10,  14),   -- VIT +14
-    (30021,  8,  10),   -- STR +10
-    (30021,  1,  20),   -- DEF +20
-    (30021, 23,  15);   -- ATT +15
+-- ---------------------------------------------------------------------------
+-- 235: Goblin's Jackpot Bell  (EAR, lv40)  — Treasure Goblin (rare variant)
+-- The bell the goblin rings when it strikes it rich. Now it rings for you.
+-- ---------------------------------------------------------------------------
+REPLACE INTO `item_basic` VALUES (235,0,'goblins_jackpot_bell','gob_jkpt_bell',1,59476,0,0,6000);
+REPLACE INTO `item_equipment` VALUES (235,'gob_jkpt_bell',40,0,4194303,0,0,0,4,0,0,0);
+REPLACE INTO `item_mods` VALUES (235,25,20),(235,23,20),(235,384,10),(235,2,50);
 
--- -------------------------------------------------------------------------
--- [30031] Goblin's Jackpot Bell  (EAR, lv40, all jobs)
--- Drops from: Treasure Goblin (rare variant)
--- The bell the goblin rings when it strikes it rich.
--- Now it rings for you.
--- -------------------------------------------------------------------------
-REPLACE INTO `item_basic` VALUES
-    (30031, 0, "Goblin's_Jackpot_Bell", "GobJkptBell", 1, 46660, 99, 0, 6000);
-REPLACE INTO `item_equipment` VALUES
-    (30031, "GobJkptBell", 40, 0, 4194303, 0, 0, 0, 4, 0, 0, 0);
-REPLACE INTO `item_mods` VALUES
-    (30031, 25,  20),   -- ACC +20
-    (30031, 23,  20),   -- ATT +20
-    (30031, 384, 10),   -- Haste +10%
-    (30031,  2,  50);   -- HP +50
+-- ---------------------------------------------------------------------------
+-- 236: Goobbue Rootbelt  (WAIST, lv35)  — Rampaging Goobbue
+-- Twisted from the living roots off a Goobbue's shoulders. Still trying to grow.
+-- ---------------------------------------------------------------------------
+REPLACE INTO `item_basic` VALUES (236,0,'goobbue_rootbelt','goob_rootbelt',1,59476,0,0,7000);
+REPLACE INTO `item_equipment` VALUES (236,'goob_rootbelt',35,0,4194303,0,0,0,512,0,0,0);
+REPLACE INTO `item_mods` VALUES (236,2,120),(236,10,14),(236,8,10),(236,1,20),(236,23,15);
 
--- -------------------------------------------------------------------------
--- [30022] Dread Hunter's Choker  (NECK, lv50, all jobs)
--- Drops from: Dread Hunter (Coeurl)
--- The crystallized mane-fur of a coeurl that fed on too many crystals.
--- It crackles faintly with electrical charge.
--- -------------------------------------------------------------------------
-REPLACE INTO `item_basic` VALUES
-    (30022, 0, "Dread_Hunter's_Choker", "DrdHntChoker", 1, 46660, 99, 0, 12000);
-REPLACE INTO `item_equipment` VALUES
-    (30022, "DrdHntChoker", 50, 0, 4194303, 0, 0, 0, 2, 0, 0, 0);
-REPLACE INTO `item_mods` VALUES
-    (30022, 23,  28),   -- ATT +28
-    (30022, 25,  20),   -- ACC +20
-    (30022,  9,  12),   -- DEX +12
-    (30022, 384,  8),   -- Haste +8%
-    (30022,  2,  60);   -- HP +60
+-- ---------------------------------------------------------------------------
+-- 237: Dread Hunter's Choker  (NECK, lv50)  — Dread Hunter (Coeurl)
+-- Crystallized mane-fur from a coeurl that fed on too many crystals.
+-- ---------------------------------------------------------------------------
+REPLACE INTO `item_basic` VALUES (237,0,'dread_hunters_choker','drd_hnt_chokr',1,59476,0,0,12000);
+REPLACE INTO `item_equipment` VALUES (237,'drd_hnt_chokr',50,0,4194303,0,0,0,2,0,0,0);
+REPLACE INTO `item_mods` VALUES (237,23,28),(237,25,20),(237,9,12),(237,384,8),(237,2,60);
 
--- -------------------------------------------------------------------------
--- [30023] Fell Commander's Vambrace  (HANDS, lv55, all jobs)
--- Drops from: Fell Commander
--- Bronze vambrace stamped with the seal of a Quadav war-leader.
--- The engravings still pulse with beastman battle-magic.
--- -------------------------------------------------------------------------
-REPLACE INTO `item_basic` VALUES
-    (30023, 0, "Fell_Commander's_Vambrace", "FellCmdVamb", 1, 46660, 99, 0, 15000);
-REPLACE INTO `item_equipment` VALUES
-    (30023, "FellCmdVamb", 55, 0, 4194303, 0, 0, 0, 32, 0, 0, 0);
-REPLACE INTO `item_mods` VALUES
-    (30023,  1,  20),   -- DEF +20
-    (30023,  8,  12),   -- STR +12
-    (30023, 23,  20),   -- ATT +20
-    (30023, 25,  15),   -- ACC +15
-    (30023,  2,  80),   -- HP +80
-    (30023, 27,  10);   -- ENMITY +10
+-- ---------------------------------------------------------------------------
+-- 238: Fell Commander's Vambrace  (HANDS, lv55)  — Fell Commander
+-- Bronze vambrace of a Quadav war-leader. The engravings still pulse.
+-- ---------------------------------------------------------------------------
+REPLACE INTO `item_basic` VALUES (238,0,'fell_commanders_vambrace','fell_cmd_vamb',1,59476,0,0,15000);
+REPLACE INTO `item_equipment` VALUES (238,'fell_cmd_vamb',55,0,4194303,0,0,0,32,0,0,0);
+REPLACE INTO `item_mods` VALUES (238,1,20),(238,8,12),(238,23,20),(238,25,15),(238,2,80),(238,27,10);
 
--- -------------------------------------------------------------------------
--- [30024] Nexus Core Helm  (HEAD, lv50, all jobs)
--- Drops from: Storm Nexus
--- A convergence of elemental forces solidified into a helmet.
--- The wearer sees reality slightly differently. This is fine.
--- -------------------------------------------------------------------------
-REPLACE INTO `item_basic` VALUES
-    (30024, 0, "Nexus_Core_Helm", "NexusCoreHelm", 1, 46660, 99, 0, 13000);
-REPLACE INTO `item_equipment` VALUES
-    (30024, "NexusCoreHelm", 50, 0, 4194303, 0, 0, 0, 1, 0, 0, 0);
-REPLACE INTO `item_mods` VALUES
-    (30024, 28,  25),   -- MATT +25
-    (30024, 30,  18),   -- MACC +18
-    (30024, 12,  15),   -- INT +15
-    (30024,  5,  80),   -- MP +80
-    (30024, 384,  8);   -- Haste +8%
+-- ---------------------------------------------------------------------------
+-- 239: Nexus Core Helm  (HEAD, lv50)  — Storm Nexus
+-- Elemental forces solidified into a helmet. The wearer sees reality differently.
+-- ---------------------------------------------------------------------------
+REPLACE INTO `item_basic` VALUES (239,0,'nexus_core_helm','nexus_core_hlm',1,59476,0,0,13000);
+REPLACE INTO `item_equipment` VALUES (239,'nexus_core_hlm',50,0,4194303,0,0,0,1,0,0,0);
+REPLACE INTO `item_mods` VALUES (239,28,25),(239,30,18),(239,12,15),(239,5,80),(239,384,8);
 
--- -------------------------------------------------------------------------
--- [30025] Crystal Golem's Heart  (EAR, lv55, all jobs)
--- Drops from: Crystal Golem
--- The gemstone core that animated the golem.
--- It still pulses with a faint, rhythmic light — like a heartbeat.
--- -------------------------------------------------------------------------
-REPLACE INTO `item_basic` VALUES
-    (30025, 0, "Crystal_Golem's_Heart", "CrystGolmHrt", 1, 46660, 99, 0, 11000);
-REPLACE INTO `item_equipment` VALUES
-    (30025, "CrystGolmHrt", 55, 0, 4194303, 0, 0, 0, 4, 0, 0, 0);
-REPLACE INTO `item_mods` VALUES
-    (30025,  1,  12),   -- DEF +12
-    (30025,  2, 100),   -- HP +100
-    (30025, 10,  15),   -- VIT +15
-    (30025, 29,  20);   -- MDEF +20
+-- ---------------------------------------------------------------------------
+-- 240: Crystal Golem's Heart  (EAR, lv55)  — Crystal Golem
+-- The gemstone core that animated the golem. Still pulses like a heartbeat.
+-- ---------------------------------------------------------------------------
+REPLACE INTO `item_basic` VALUES (240,0,'crystal_golems_heart','cryst_golm_hrt',1,59476,0,0,11000);
+REPLACE INTO `item_equipment` VALUES (240,'cryst_golm_hrt',55,0,4194303,0,0,0,4,0,0,0);
+REPLACE INTO `item_mods` VALUES (240,1,12),(240,2,100),(240,10,15),(240,29,20);
 
--- -------------------------------------------------------------------------
--- [30026] Void Wyrm's Fang  (NECK, lv75, all jobs)
--- Drops from: Void Wyrm
+-- ---------------------------------------------------------------------------
+-- 241: Void Wyrm's Fang  (NECK, lv75)  — Void Wyrm
 -- A tooth from the void dragon, still leaking destructive essence.
--- The leather cord holding it has been burnt three times. It holds.
--- -------------------------------------------------------------------------
-REPLACE INTO `item_basic` VALUES
-    (30026, 0, "Void_Wyrm's_Fang", "VoidWyrmFang", 1, 46660, 99, 0, 40000);
-REPLACE INTO `item_equipment` VALUES
-    (30026, "VoidWyrmFang", 75, 0, 4194303, 0, 0, 0, 2, 0, 0, 0);
-REPLACE INTO `item_mods` VALUES
-    (30026, 23,  40),   -- ATT +40
-    (30026, 28,  35),   -- MATT +35
-    (30026,  8,  15),   -- STR +15
-    (30026, 12,  12),   -- INT +12
-    (30026, 384, 12),   -- Haste +12%
-    (30026,  2,  80);   -- HP +80
+-- ---------------------------------------------------------------------------
+REPLACE INTO `item_basic` VALUES (241,0,'void_wyrms_fang','void_wyrm_fang',1,59476,0,0,40000);
+REPLACE INTO `item_equipment` VALUES (241,'void_wyrm_fang',75,0,4194303,0,0,0,2,0,0,0);
+REPLACE INTO `item_mods` VALUES (241,23,40),(241,28,35),(241,8,15),(241,12,12),(241,384,12),(241,2,80);
 
--- -------------------------------------------------------------------------
--- [30027] Abyssal Tyrant's Diadem  (HEAD, lv75, all jobs)
--- Drops from: Abyssal Tyrant
+-- ---------------------------------------------------------------------------
+-- 242: Abyssal Tyrant's Diadem  (HEAD, lv75)  — Abyssal Tyrant
 -- The horned crown of a demon lord. It fits. This is alarming.
--- Grants the wearer authority over lesser beings and better damage.
--- -------------------------------------------------------------------------
-REPLACE INTO `item_basic` VALUES
-    (30027, 0, "Abyssal_Tyrant's_Diadem", "AbyssTypDiad", 1, 46660, 99, 0, 50000);
-REPLACE INTO `item_equipment` VALUES
-    (30027, "AbyssTypDiad", 75, 0, 4194303, 0, 0, 0, 1, 0, 0, 0);
-REPLACE INTO `item_mods` VALUES
-    (30027,  8,  15),   -- STR +15
-    (30027, 12,  15),   -- INT +15
-    (30027, 13,  12),   -- MND +12
-    (30027, 23,  30),   -- ATT +30
-    (30027, 28,  28),   -- MATT +28
-    (30027, 25,  20),   -- ACC +20
-    (30027, 30,  18),   -- MACC +18
-    (30027,  2, 120);   -- HP +120
+-- ---------------------------------------------------------------------------
+REPLACE INTO `item_basic` VALUES (242,0,'abyssal_tyrants_diadem','abys_typ_diad',1,59476,0,0,50000);
+REPLACE INTO `item_equipment` VALUES (242,'abys_typ_diad',75,0,4194303,0,0,0,1,0,0,0);
+REPLACE INTO `item_mods` VALUES (242,8,15),(242,12,15),(242,13,12),(242,23,30),(242,28,28),(242,25,20),(242,30,18),(242,2,120);
 
--- -------------------------------------------------------------------------
--- [30028] Ancient King's Carapace  (BODY, lv75, all jobs)
--- Drops from: Ancient King
--- Armor shaped from the shell of the Ancient King himself.
--- A village sheltered under this once. You wear it. Same thing.
--- -------------------------------------------------------------------------
-REPLACE INTO `item_basic` VALUES
-    (30028, 0, "Ancient_King's_Carapace", "AncKngCarap", 1, 46660, 99, 0, 60000);
-REPLACE INTO `item_equipment` VALUES
-    (30028, "AncKngCarap", 75, 0, 4194303, 0, 0, 0, 16, 0, 0, 0);
-REPLACE INTO `item_mods` VALUES
-    (30028,  1,  50),   -- DEF +50
-    (30028,  2, 300),   -- HP +300
-    (30028, 10,  20),   -- VIT +20
-    (30028, 29,  35),   -- MDEF +35
-    (30028, 27,  15);   -- ENMITY +15
+-- ---------------------------------------------------------------------------
+-- 243: Ancient King's Carapace  (BODY, lv75)  — Ancient King
+-- Armor shaped from the shell of the Ancient King. A village sheltered here once.
+-- ---------------------------------------------------------------------------
+REPLACE INTO `item_basic` VALUES (243,0,'ancient_kings_carapace','anc_kng_carap',1,59476,0,0,60000);
+REPLACE INTO `item_equipment` VALUES (243,'anc_kng_carap',75,0,4194303,0,0,0,16,0,0,0);
+REPLACE INTO `item_mods` VALUES (243,1,50),(243,2,300),(243,10,20),(243,29,35),(243,27,15);
 
--- -------------------------------------------------------------------------
--- [30029] Apex Soulstone  (RING, lv60, all jobs)
--- Drops from: Apex-tier monsters (generic high-end reward)
+-- ---------------------------------------------------------------------------
+-- 244: Apex Soulstone  (RING, lv60)  — Apex-tier (generic)
 -- A gemstone formed from crystallized dynamic energy.
--- Hums with the power of everything you had to kill to get it.
--- -------------------------------------------------------------------------
-REPLACE INTO `item_basic` VALUES
-    (30029, 0, "Apex_Soulstone", "ApexSoulStn", 1, 46660, 99, 0, 20000);
-REPLACE INTO `item_equipment` VALUES
-    (30029, "ApexSoulStn", 60, 0, 4194303, 0, 0, 0, 64, 0, 0, 0);
-REPLACE INTO `item_mods` VALUES
-    (30029,  2, 120),   -- HP +120
-    (30029,  5,  80),   -- MP +80
-    (30029,  8,  12),   -- STR +12
-    (30029, 12,  12),   -- INT +12
-    (30029, 23,  20),   -- ATT +20
-    (30029, 28,  20),   -- MATT +20
-    (30029, 384, 10);   -- Haste +10%
+-- ---------------------------------------------------------------------------
+REPLACE INTO `item_basic` VALUES (244,0,'apex_soulstone','apex_soulstone',1,59476,0,0,20000);
+REPLACE INTO `item_equipment` VALUES (244,'apex_soulstone',60,0,4194303,0,0,0,64,0,0,0);
+REPLACE INTO `item_mods` VALUES (244,2,120),(244,5,80),(244,8,12),(244,12,12),(244,23,20),(244,28,20),(244,384,10);
 
--- -------------------------------------------------------------------------
--- [30030] Wanderer's Legacy  (RING, lv75, all jobs)
--- Drops from: Apex-tier monsters (the prestige ring)
+-- ---------------------------------------------------------------------------
+-- 245: Wanderer's Legacy  (RING, lv75)  — Apex-tier (prestige)
 -- A ring worn by adventurers who have hunted the Dynamic World thoroughly.
--- Every stat. Every time. No compromises.
--- -------------------------------------------------------------------------
-REPLACE INTO `item_basic` VALUES
-    (30030, 0, "Wanderer's_Legacy", "WandrLegacy", 1, 46660, 99, 0, 75000);
-REPLACE INTO `item_equipment` VALUES
-    (30030, "WandrLegacy", 75, 0, 4194303, 0, 0, 0, 64, 0, 0, 0);
-REPLACE INTO `item_mods` VALUES
-    (30030,  2, 150),   -- HP +150
-    (30030,  5, 100),   -- MP +100
-    (30030,  8,  10),   -- STR +10
-    (30030,  9,  10),   -- DEX +10
-    (30030, 10,  10),   -- VIT +10
-    (30030, 11,  10),   -- AGI +10
-    (30030, 12,  10),   -- INT +10
-    (30030, 13,  10),   -- MND +10
-    (30030, 384, 15);   -- Haste +15%
+-- ---------------------------------------------------------------------------
+REPLACE INTO `item_basic` VALUES (245,0,'wanderers_legacy','wandrers_lgcy',1,59476,0,0,75000);
+REPLACE INTO `item_equipment` VALUES (245,'wandrers_lgcy',75,0,4194303,0,0,0,64,0,0,0);
+REPLACE INTO `item_mods` VALUES (245,2,150),(245,5,100),(245,8,10),(245,9,10),(245,10,10),(245,11,10),(245,12,10),(245,13,10),(245,384,15);
 
--- -------------------------------------------------------------------------
--- [30032] Void Wyrm Scale  (BACK, lv75, all jobs)
--- Drops from: Void Wyrm (alternate drop)
--- A scale the size of a shield, hard as mythril, absorbs blows
--- and somehow also helps you hit harder. Dragons are weird.
--- -------------------------------------------------------------------------
-REPLACE INTO `item_basic` VALUES
-    (30032, 0, "Void_Wyrm_Scale", "VoidWyrmScl", 1, 46660, 99, 0, 45000);
-REPLACE INTO `item_equipment` VALUES
-    (30032, "VoidWyrmScl", 75, 0, 4194303, 0, 0, 0, 256, 0, 0, 0);
-REPLACE INTO `item_mods` VALUES
-    (30032,  1,  30),   -- DEF +30
-    (30032, 23,  35),   -- ATT +35
-    (30032,  8,  15),   -- STR +15
-    (30032, 10,  15),   -- VIT +15
-    (30032,  2, 150),   -- HP +150
-    (30032, 384, 10);   -- Haste +10%
+-- ---------------------------------------------------------------------------
+-- 249: Void Wyrm Scale  (BACK, lv75)  — Void Wyrm (alternate drop)
+-- A scale the size of a shield. Absorbs blows and helps you hit harder.
+-- ---------------------------------------------------------------------------
+REPLACE INTO `item_basic` VALUES (249,0,'void_wyrm_scale','void_wyrm_scl',1,59476,0,0,45000);
+REPLACE INTO `item_equipment` VALUES (249,'void_wyrm_scl',75,0,4194303,0,0,0,256,0,0,0);
+REPLACE INTO `item_mods` VALUES (249,1,30),(249,23,35),(249,8,15),(249,10,15),(249,2,150),(249,384,10);
