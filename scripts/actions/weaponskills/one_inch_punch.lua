@@ -11,6 +11,7 @@
 -- 100%TP    200%TP    300%TP
 -- 1.00      1.00      1.00
 -----------------------------------
+---@type TWeaponSkill
 local weaponskillObject = {}
 
 weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary, action, taChar)
@@ -25,14 +26,6 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
         params.multiHitfTP = true -- http://wiki.ffo.jp/html/2418.html
         params.vit_wsc = 1.0
     end
-
-    local tpGain = math.random(500, 1500)
-    
-    -- Grant TP to the player
-    player:addTP(tpGain)
-
-    local hasteDuration = 120 -- 2 minutes in seconds
-    player:addStatusEffect(xi.effect.HASTE, 30, 3, hasteDuration, 0, 10, 1)
 
     local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)
     return tpHits, extraHits, criticalHit, damage

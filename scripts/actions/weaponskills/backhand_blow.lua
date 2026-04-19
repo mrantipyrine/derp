@@ -10,6 +10,7 @@
 -- 100%TP    200%TP    300%TP
 -- 1.00      1.00      1.00
 -----------------------------------
+---@type TWeaponSkill
 local weaponskillObject = {}
 
 weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary, action, taChar)
@@ -23,14 +24,6 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
         params.multiHitfTP = true -- http://wiki.ffo.jp/html/2419.html
         params.str_wsc = 0.5 params.dex_wsc = 0.5
     end
-
-    local tpGain = math.random(500, 1500)
-
-    -- Grant TP to the player
-    player:addTP(tpGain)
-    
-    local enaeroDuration = 120 -- 2 minutes in seconds
-    player:addStatusEffect(xi.effect.ENAERO, 1, 0, enaeroDuration)
 
     local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)
     return tpHits, extraHits, criticalHit, damage
