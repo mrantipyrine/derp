@@ -11,6 +11,7 @@
 -- 100%TP    200%TP    300%TP
 -- 1.0       2.0       3.5
 -----------------------------------
+---@type TWeaponSkill
 local weaponskillObject = {}
 
 weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary, action, taChar)
@@ -24,20 +25,7 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
         params.str_wsc = 0.6
     end
 
-    -- Add critical hit chance
-    local critChance = 1.0 -- 100% chance to crit
-
     local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)
-    
-    -- Check if critical hit occurs
-    if math.random() < critChance then
-        criticalHit = true
-    end
-
-    local duration = 240 
-    player:addStatusEffect(xi.effect.ENSTONE, math.random(1, player:getMainLvl()), 0, duration)
-    local tpGain = math.random(300, 900)
-
     return tpHits, extraHits, criticalHit, damage
 end
 

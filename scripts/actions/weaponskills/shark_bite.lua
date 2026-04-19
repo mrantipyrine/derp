@@ -11,8 +11,8 @@
 -- Modifiers: DEX:40% AGI:40%
 -- 100%TP    200%TP    300%TP
 --  2.00       4        5.75
--- what to do here
 -----------------------------------
+---@type TWeaponSkill
 local weaponskillObject = {}
 
 weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary, action, taChar)
@@ -26,15 +26,6 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
         params.dex_wsc = 0.4 params.agi_wsc = 0.4
     end
 
-    if math.random(0, 100) >= 30 then
-        player:addTP(1500)
-    end
-
-    local duration = 120 
-
-    player:addMod(xi.mod.TRIPLE_ATTACK, 10, 3, duration, 0, 10, 1)
-    player:addMod(xi.mod.TRIPLE_ATTACK_DMG, 10, 3, duration, 0, 10, 1)
-    
     local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)
     return tpHits, extraHits, criticalHit, damage
 end

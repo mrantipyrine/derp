@@ -205,7 +205,7 @@ behaviorDb.treasure_goblin =
         local fleeTime = mob:getLocalVar('DW_FLEE_TIME')
         if fleeTime > 0 and os.time() >= fleeTime then
             -- Goblin escaped!
-            announceNearby(mob:getZone(), mob, 50,
+            xi.dynamicWorld.announceNearby(mob:getZone(), mob, 50,
                 '[Dynamic World] The Treasure Goblin escaped with its loot!'
             )
             mob:setHP(0)
@@ -322,7 +322,7 @@ behaviorDb.elite_hunter =
                 m:addMod(xi.mod.ATT, 30)
                 m:addMod(xi.mod.DOUBLE_ATTACK, 10)
 
-                announceNearby(m:getZone(), m, 30,
+                xi.dynamicWorld.announceNearby(m:getZone(), m, 30,
                     string.format('[Dynamic World] %s is enraged!', template.packetName)
                 )
             end
@@ -622,6 +622,11 @@ behaviors.spawnApexMinions = function(mob, target, template, count)
         local offsetX = math.random(-5, 5)
         local offsetZ = math.random(-5, 5)
 
+        local groupRef = pickGroupRef(minionTemplate)
+        if not groupRef then
+            break
+        end
+
         local minion = zone:insertDynamicEntity({
             objtype = xi.objType.MOB,
             name = minionTemplate.name:gsub(' ', '_'),
@@ -630,8 +635,8 @@ behaviors.spawnApexMinions = function(mob, target, template, count)
             y = mob:getYPos(),
             z = mob:getZPos() + offsetZ,
             rotation = math.random(0, 255),
-            groupId = minionTemplate.groupRef.groupId,
-            groupZoneId = minionTemplate.groupRef.groupZoneId,
+            groupId = groupRef.groupId,
+            groupZoneId = groupRef.groupZoneId,
             minLevel = math.max(1, mob:getMainLvl() - 10),
             maxLevel = math.max(1, mob:getMainLvl() - 5),
             releaseIdOnDisappear = true,

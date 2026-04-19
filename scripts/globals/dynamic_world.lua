@@ -184,13 +184,20 @@ xi.dynamicWorld.init = function()
     end
 
     -- Initialize per-zone state
+    -- Stagger lastTick/lastRoamCheck across the full interval so all 50+ zones
+    -- don't simultaneously fire their first spawn check on the tick after restart
+    -- (thundering herd). Each zone gets a random offset within its interval.
+    local spawnInterval = getSetting('SPAWN_CHECK_INTERVAL') or 120
+    local roamInterval  = getSetting('ROAM_CHECK_INTERVAL')  or 300
+    local now = os.time()
+
     state.zoneData = {}
     for zoneId, _ in pairs(state.eligibleZones) do
         state.zoneData[zoneId] = {
             entities      = {},
             count         = 0,
-            lastTick      = 0,
-            lastRoamCheck = 0,
+            lastTick      = now - math.random(0, spawnInterval - 1),
+            lastRoamCheck = now - math.random(0, roamInterval  - 1),
             pendingSpawns = 0,
             elitePressure = 0,
             apexPressure  = 0,
@@ -201,6 +208,9 @@ xi.dynamicWorld.init = function()
     state.globalCount = 0
     state.initialized = true
     state.running = true
+
+    -- Also stagger the named rare tick so it doesn't fire on the very first tick
+    state.lastNamedRareTick = now - math.random(0, 299)
 
     xi.dynamicWorld.namedRares.init()
 

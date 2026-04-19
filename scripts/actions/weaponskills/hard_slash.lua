@@ -7,6 +7,7 @@
 -- 100%TP     200%TP     300%TP
 -- 1.5         1.75        2.0
 -----------------------------------
+---@type TWeaponSkill
 local weaponskillObject = {}
 
 weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary, action, taChar)
@@ -19,20 +20,6 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
     if xi.settings.main.USE_ADOULIN_WEAPON_SKILL_CHANGES then
         params.str_wsc = 1.0
     end
-
-    -- Calculate HP restoration based on TP
-    local hpRestore = math.floor(tp / 1000) * 0.2 * player:getMaxHP()
-    player:addHP(hpRestore)
-
-    -- Restore HP to the player
-    if math.random(0, 100) <= 30 then
-        player:addTP(1500)
-    end
-
-    local strIncrease = player:getMainLvl() <= 8 and 1 or player:getMainJob() == xi.job.WAR and player:getMainLvl() / 6 or player:getMainLvl() / 8
-    local duration = 25
-
-    player:addStatusEffect(xi.effect.STR_BOOST, strIncrease, 0, duration, 0, 0, 0)
 
     local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)
     return tpHits, extraHits, criticalHit, damage

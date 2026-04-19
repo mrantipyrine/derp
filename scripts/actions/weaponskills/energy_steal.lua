@@ -1,7 +1,7 @@
 -----------------------------------
 -- Energy Steal
--- this one screams of TP drain maybe adjust others based on level
 -----------------------------------
+---@type TWeaponSkill
 local weaponskillObject = {}
 
 -- https://www.bg-wiki.com/ffxi/Energy_Steal
