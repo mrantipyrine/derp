@@ -285,9 +285,15 @@ local function calcRareLevel(config, tier, zoneId)
         maxLv = math.min(99, zoneMax + 20)
     end
 
-    -- Never go below the config's own floor (some rares are intentionally high)
-    minLv = math.max(minLv, config.level[1])
-    maxLv = math.max(maxLv, config.level[2])
+    -- Never go below the config's own floor (some rares are intentionally high).
+    -- Hand-authored rares use { min, max }; generated rares may use a single level.
+    if type(config.level) == 'table' then
+        minLv = math.max(minLv, config.level[1] or minLv)
+        maxLv = math.max(maxLv, config.level[2] or config.level[1] or maxLv)
+    elseif type(config.level) == 'number' then
+        minLv = math.max(minLv, config.level)
+        maxLv = math.max(maxLv, config.level)
+    end
 
     return minLv, maxLv
 end

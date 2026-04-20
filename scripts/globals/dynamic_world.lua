@@ -540,6 +540,8 @@ xi.dynamicWorld.weightedRandom = function(weights)
     return #weights
 end
 
+local _zoneBounds
+
 -- Get a random valid spawn position in a zone.
 -- First tries positions derived from existing mobs (guaranteed valid navmesh
 -- locations). If the zone has no mobs (e.g. no players present), falls back
@@ -644,7 +646,7 @@ end
 -- they're accurate enough for a GM to locate a mob on the in-game map.
 -- Column A = west edge, P = east edge.  Row 1 = north, 16 = south.
 -----------------------------------
-local _zoneBounds =
+_zoneBounds =
 {
     -- { minX, maxX, minZ, maxZ }  (Z increases going south)
     -- ── Original Zones ───────────────────────────────────────────────
