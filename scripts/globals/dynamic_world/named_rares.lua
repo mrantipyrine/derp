@@ -113,9 +113,9 @@ nr.db = {
         isAggro     = false,
         loot        =
         {
-            { itemId = 6, rate = 1000 },    -- William's Wool (trophy, always)
-            { itemId = 20, rate = 10479  },    -- William's Woolcap
-            { itemId = 79, rate = 150  },    -- William's Woolmitt
+            { itemId = 18467, rate = 1000 },    -- William's Wool (trophy, always)
+            { itemId = 23438, rate = 10479  },    -- William's Woolcap
+            { itemId = 23539, rate = 150  },    -- William's Woolmitt
         },
         deathMsg = 'Wooly William lets out a final, dramatic baa.',
     },
@@ -133,9 +133,9 @@ nr.db = {
         isAggro     = false,
         loot        =
         {
-            { itemId = 80, rate = 1000 },    -- Baa-rbara's Bell (trophy)
-            { itemId = 81, rate = 10479  },    -- Baa-rbara's Collar
-            { itemId = 83, rate = 150  },    -- Baa-rbara's Ribbon
+            { itemId = 18528, rate = 1000 },    -- Baa-rbara's Bell (trophy)
+            { itemId = 26007, rate = 10479  },    -- Baa-rbara's Collar
+            { itemId = 28441, rate = 150  },    -- Baa-rbara's Ribbon
         },
         deathMsg = "Baa-rbara's tinkling bell goes silent.",
     },
@@ -153,9 +153,9 @@ nr.db = {
         isAggro     = false,
         loot        =
         {
-            { itemId = 84, rate = 1000 },    -- Larry's Lambchop (trophy)
-            { itemId = 85, rate = 10479  },    -- Larry's Lucky Fleece
-            { itemId = 86, rate = 150  },    -- Larry's Lanyard
+            { itemId = 18548, rate = 1000 },    -- Larry's Lambchop (trophy)
+            { itemId = 28611, rate = 10479  },    -- Larry's Lucky Fleece
+            { itemId = 26008, rate = 150  },    -- Larry's Lanyard
         },
         deathMsg = 'Lambchop Larry falls over. He seems... satisfied.',
     },
@@ -173,9 +173,9 @@ nr.db = {
         isAggro     = true,
         loot        =
         {
-            { itemId = 89, rate = 1000 },    -- Sharon's Golden Fleece (trophy)
-            { itemId = 90, rate = 10479  },    -- Sharon's Shearing Shears
-            { itemId = 94, rate = 150  },    -- Sharon's Silken Mantle
+            { itemId = 18567, rate = 1000 },    -- Sharon's Golden Fleece (trophy)
+            { itemId = 23529, rate = 10479  },    -- Sharon's Shearing Shears
+            { itemId = 28612, rate = 150  },    -- Sharon's Silken Mantle
         },
         deathMsg = "Shear Sharon's legendary fleece shimmers as she fades.",
     },
@@ -196,9 +196,9 @@ nr.db = {
         isAggro     = false,
         loot        =
         {
-            { itemId = 97, rate = 1000 },
-            { itemId = 145, rate = 10479  },
-            { itemId = 150, rate = 150  },
+            { itemId = 18570, rate = 1000 },
+            { itemId = 14645, rate = 10479  },
+            { itemId = 23751, rate = 150  },
         },
         deathMsg = "Cottontail Tommy hops his last hop.",
     },
@@ -216,9 +216,9 @@ nr.db = {
         isAggro     = false,
         loot        =
         {
-            { itemId = 153, rate = 1000 },
-            { itemId = 155, rate = 10479  },
-            { itemId = 156, rate = 150  },
+            { itemId = 18796, rate = 1000 },
+            { itemId = 11640, rate = 10479  },
+            { itemId = 27526, rate = 150  },
         },
         deathMsg = 'Hopscotch Harvey lands badly on his last jump.',
     },
@@ -236,9 +236,9 @@ nr.db = {
         isAggro     = false,
         loot        =
         {
-            { itemId = 158, rate = 1000 },
-            { itemId = 159, rate = 10479  },
-            { itemId = 160, rate = 150  },
+            { itemId = 18799, rate = 1000 },
+            { itemId = 23439, rate = 10479  },
+            { itemId = 28442, rate = 150  },
         },
         deathMsg = "Bun-bun Benedict's bonnet drifts to the ground.",
     },
@@ -256,9 +256,9 @@ nr.db = {
         isAggro     = true,
         loot        =
         {
-            { itemId = 161, rate = 1000 },
-            { itemId = 162, rate = 10479  },
-            { itemId = 163, rate = 150  },
+            { itemId = 18836, rate = 1000 },
+            { itemId = 23752, rate = 10479  },
+            { itemId = 27527, rate = 150  },
         },
         deathMsg = "Twitchy Theodore twitches one final time.",
     },
@@ -279,9 +279,9 @@ nr.db = {
         isAggro     = true,
         loot        =
         {
-            { itemId = 165, rate = 1000 },
-            { itemId = 166, rate = 10479  },
-            { itemId = 167, rate = 150  },
+            { itemId = 18889, rate = 1000 },
+            { itemId = 23530, rate = 10479  },
+            { itemId = 28529, rate = 150  },
         },
         deathMsg = 'Crab Leg Cameron sidesteps into the afterlife.',
     },
@@ -299,9 +299,9 @@ nr.db = {
         isAggro     = true,
         loot        =
         {
-            { itemId = 168, rate = 1000 },
-            { itemId = 169, rate = 10479  },
-            { itemId = 170, rate = 150  },
+            { itemId = 18918, rate = 1000 },
+            { itemId = 23531, rate = 10479  },
+            { itemId = 28443, rate = 150  },
         },
         deathMsg = "Old Bay Ollie smells delicious. Rest well.",
     },
@@ -319,9 +319,9 @@ nr.db = {
         isAggro     = true,
         loot        =
         {
-            { itemId = 171, rate = 1000 },
-            { itemId = 172, rate = 10479  },
-            { itemId = 173, rate = 150  },
+            { itemId = 19322, rate = 1000 },
+            { itemId = 25692, rate = 10479  },
+            { itemId = 27528, rate = 150  },
         },
         deathMsg = 'Bisque Bernard returns to the sea, undefeated in spirit.',
     },
@@ -339,9 +339,9 @@ nr.db = {
         isAggro     = true,
         loot        =
         {
-            { itemId = 174, rate = 1000 },
-            { itemId = 175, rate = 10479  },
-            { itemId = 176, rate = 150  },
+            { itemId = 19804, rate = 1000 },
+            { itemId = 23440, rate = 10479  },
+            { itemId = 28567, rate = 150  },
         },
         deathMsg = "Dungeness Duncan's claws scrape the ground one last time.",
     },
@@ -382,9 +382,9 @@ nr.db = {
         isAggro     = false,
         loot        =
         {
-            { itemId = 177, rate = 1000 },
-            { itemId = 178, rate = 10479  },
-            { itemId = 179, rate = 150  },
+            { itemId = 19970, rate = 1000 },
+            { itemId = 23441, rate = 10479  },
+            { itemId = 28445, rate = 150  },
         },
         deathMsg = "Cap'n Chanterelle releases a final puff of spores. Godspeed.",
     },
@@ -402,9 +402,9 @@ nr.db = {
         isAggro     = false,
         loot        =
         {
-            { itemId = 180, rate = 1000 },
-            { itemId = 181, rate = 10479  },
-            { itemId = 182, rate = 150  },
+            { itemId = 19973, rate = 1000 },
+            { itemId = 25693, rate = 10479  },
+            { itemId = 26009, rate = 150  },
         },
         deathMsg = 'Portobello Pete collapses with quiet dignity.',
     },
@@ -422,9 +422,9 @@ nr.db = {
         isAggro     = true,
         loot        =
         {
-            { itemId = 183, rate = 1000 },
-            { itemId = 184, rate = 10479  },
-            { itemId = 185, rate = 150  },
+            { itemId = 19976, rate = 1000 },
+            { itemId = 23710, rate = 10479  },
+            { itemId = 11628, rate = 150  },
         },
         deathMsg = "Truffle Trevor was rarer than you knew. Cherish this.",
     },
@@ -445,9 +445,9 @@ nr.db = {
         isAggro     = true,
         loot        =
         {
-            { itemId = 186, rate = 1000 },
-            { itemId = 187, rate = 10479  },
-            { itemId = 188, rate = 150  },
+            { itemId = 19979, rate = 1000 },
+            { itemId = 23711, rate = 10479  },
+            { itemId = 28446, rate = 150  },
         },
         deathMsg = 'Bargain Bruno drops everything. Everything.',
     },
@@ -465,9 +465,9 @@ nr.db = {
         isAggro     = true,
         loot        =
         {
-            { itemId = 189, rate = 1000 },
-            { itemId = 190, rate = 10479  },
-            { itemId = 191, rate = 150  },
+            { itemId = 19982, rate = 1000 },
+            { itemId = 25694, rate = 10479  },
+            { itemId = 27529, rate = 150  },
         },
         deathMsg = "Swindler Sam's last con didn't work out.",
     },
@@ -485,9 +485,9 @@ nr.db = {
         isAggro     = true,
         loot        =
         {
-            { itemId = 195, rate = 1000 },
-            { itemId = 196, rate = 10479  },
-            { itemId = 201, rate = 150  },
+            { itemId = 19985, rate = 1000 },
+            { itemId = 25695, rate = 10479  },
+            { itemId = 11630, rate = 150  },
         },
         deathMsg = "Shiny Steve's collection of shiny things scatters across the ground.",
     },
@@ -508,9 +508,9 @@ nr.db = {
         isAggro     = true,
         loot        =
         {
-            { itemId = 202, rate = 1000 },
-            { itemId = 207, rate = 10479  },
-            { itemId = 212, rate = 150  },
+            { itemId = 19988, rate = 1000 },
+            { itemId = 26010, rate = 10479  },
+            { itemId = 23253, rate = 150  },
         },
         deathMsg = "Whiskers Wilhelmina lands gracefully. Even in defeat.",
     },
@@ -528,9 +528,9 @@ nr.db = {
         isAggro     = true,
         loot        =
         {
-            { itemId = 217, rate = 1000 },
-            { itemId = 218, rate = 10479  },
-            { itemId = 223, rate = 150  },
+            { itemId = 19991, rate = 1000 },
+            { itemId = 23532, rate = 10479  },
+            { itemId = 28614, rate = 150  },
         },
         deathMsg = "Purring Patricia's purr fades into silence.",
     },
@@ -548,9 +548,9 @@ nr.db = {
         isAggro     = true,
         loot        =
         {
-            { itemId = 250, rate = 1000 },
-            { itemId = 251, rate = 10479  },
-            { itemId = 252, rate = 150  },
+            { itemId = 19994, rate = 1000 },
+            { itemId = 25696, rate = 10479  },
+            { itemId = 11631, rate = 150  },
         },
         deathMsg = "Nine Lives Nigel. This was life number nine.",
     },
@@ -571,9 +571,9 @@ nr.db = {
         isAggro     = true,
         loot        =
         {
-            { itemId = 253, rate = 1000 },
-            { itemId = 254, rate = 10479  },
-            { itemId = 255, rate = 150  },
+            { itemId = 19997, rate = 1000 },
+            { itemId = 26011, rate = 10479  },
+            { itemId = 28615, rate = 150  },
         },
         deathMsg = "Stripey Steve's stripes are forever.",
     },
@@ -591,9 +591,9 @@ nr.db = {
         isAggro     = true,
         loot        =
         {
-            { itemId = 256, rate = 1000 },
-            { itemId = 257, rate = 10479  },
-            { itemId = 258, rate = 150  },
+            { itemId = 20000, rate = 1000 },
+            { itemId = 23712, rate = 10479  },
+            { itemId = 28447, rate = 150  },
         },
         deathMsg = "Mauler Maurice lived up to his name. Right up until the end.",
     },
@@ -634,9 +634,9 @@ nr.db = {
         isAggro     = false,
         loot        =
         {
-            { itemId = 259, rate = 1000 },
-            { itemId = 260, rate = 10479  },
-            { itemId = 261, rate = 150  },
+            { itemId = 20003, rate = 1000 },
+            { itemId = 27530, rate = 10479  },
+            { itemId = 23533, rate = 150  },
         },
         deathMsg = "Root Rita's scream was... actually quite melodic.",
     },
@@ -654,9 +654,9 @@ nr.db = {
         isAggro     = false,
         loot        =
         {
-            { itemId = 262, rate = 1000 },
-            { itemId = 263, rate = 10479  },
-            { itemId = 264, rate = 150  },
+            { itemId = 20006, rate = 1000 },
+            { itemId = 23713, rate = 10479  },
+            { itemId = 11632, rate = 150  },
         },
         deathMsg = "Sprout Spencer returns to the earth. Literally.",
     },
@@ -674,9 +674,9 @@ nr.db = {
         isAggro     = true,
         loot        =
         {
-            { itemId = 265, rate = 1000 },
-            { itemId = 266, rate = 10479  },
-            { itemId = 267, rate = 150  },
+            { itemId = 20009, rate = 1000 },
+            { itemId = 23732, rate = 10479  },
+            { itemId = 28448, rate = 150  },
         },
         deathMsg = "Mandrake Max's final scream is heard across three zones.",
     },
@@ -697,9 +697,9 @@ nr.db = {
         isAggro     = false,
         loot        =
         {
-            { itemId = 268, rate = 1000 },
-            { itemId = 269, rate = 10479  },
-            { itemId = 270, rate = 150  },
+            { itemId = 20012, rate = 1000 },
+            { itemId = 23259, rate = 10479  },
+            { itemId = 11634, rate = 150  },
         },
         deathMsg = "Click Clack Clayton clicks and clacks no more.",
     },
@@ -717,9 +717,9 @@ nr.db = {
         isAggro     = false,
         loot        =
         {
-            { itemId = 271, rate = 1000 },
-            { itemId = 273, rate = 10479  },
-            { itemId = 274, rate = 150  },
+            { itemId = 20015, rate = 1000 },
+            { itemId = 23783, rate = 10479  },
+            { itemId = 26012, rate = 150  },
         },
         deathMsg = "Dung Douglas's prized dung ball rolls away, unclaimed.",
     },
@@ -737,9 +737,9 @@ nr.db = {
         isAggro     = true,
         loot        =
         {
-            { itemId = 275, rate = 1000 },
-            { itemId = 276, rate = 10479  },
-            { itemId = 282, rate = 150  },
+            { itemId = 20018, rate = 1000 },
+            { itemId = 23738, rate = 10479  },
+            { itemId = 11635, rate = 150  },
         },
         deathMsg = "Scarab Sebastian's sacred scarab glows faintly as he falls.",
     },
@@ -760,9 +760,9 @@ nr.db = {
         isAggro     = false,
         loot        =
         {
-            { itemId = 287, rate = 1000 },
-            { itemId = 298, rate = 10479  },
-            { itemId = 303, rate = 150  },
+            { itemId = 20021, rate = 1000 },
+            { itemId = 23534, rate = 10479  },
+            { itemId = 28616, rate = 150  },
         },
         deathMsg = "Silk Simon leaves behind only the finest threads.",
     },
@@ -780,9 +780,9 @@ nr.db = {
         isAggro     = true,
         loot        =
         {
-            { itemId = 314, rate = 1000 },
-            { itemId = 315, rate = 10479  },
-            { itemId = 316, rate = 150  },
+            { itemId = 20024, rate = 1000 },
+            { itemId = 25697, rate = 10479  },
+            { itemId = 14646, rate = 150  },
         },
         deathMsg = "Cocoon Carl will emerge again. Eventually.",
     },
@@ -803,9 +803,9 @@ nr.db = {
         isAggro     = false,
         loot        =
         {
-            { itemId = 318, rate = 1000 },
-            { itemId = 319, rate = 10479  },
-            { itemId = 320, rate = 150  },
+            { itemId = 20027, rate = 1000 },
+            { itemId = 25698, rate = 10479  },
+            { itemId = 15549, rate = 150  },
         },
         deathMsg = "Feather Fred sheds his finest feather on the way out.",
     },
@@ -823,9 +823,9 @@ nr.db = {
         isAggro     = false,
         loot        =
         {
-            { itemId = 321, rate = 1000 },
-            { itemId = 322, rate = 10479  },
-            { itemId = 323, rate = 150  },
+            { itemId = 20030, rate = 1000 },
+            { itemId = 23739, rate = 10479  },
+            { itemId = 27531, rate = 150  },
         },
         deathMsg = "Beaky Beatrice lets out one final, indignant squawk.",
     },
@@ -843,9 +843,9 @@ nr.db = {
         isAggro     = true,
         loot        =
         {
-            { itemId = 324, rate = 1000 },
-            { itemId = 325, rate = 10479  },
-            { itemId = 326, rate = 150  },
+            { itemId = 20033, rate = 1000 },
+            { itemId = 25699, rate = 10479  },
+            { itemId = 15550, rate = 150  },
         },
         deathMsg = "Plume Patricia's magnificent tail feathers drift to the ground.",
     },
@@ -866,9 +866,9 @@ nr.db = {
         isAggro     = false,
         loot        =
         {
-            { itemId = 327, rate = 1000 },
-            { itemId = 328, rate = 10479  },
-            { itemId = 329, rate = 150  },
+            { itemId = 20036, rate = 1000 },
+            { itemId = 27532, rate = 10479  },
+            { itemId = 15780, rate = 150  },
         },
         deathMsg = "Honey Harold's buzzzzz fades away.",
     },
@@ -886,9 +886,9 @@ nr.db = {
         isAggro     = true,
         loot        =
         {
-            { itemId = 330, rate = 1000 },
-            { itemId = 331, rate = 10479  },
-            { itemId = 332, rate = 150  },
+            { itemId = 20039, rate = 1000 },
+            { itemId = 23535, rate = 10479  },
+            { itemId = 26013, rate = 150  },
         },
         deathMsg = "Buzzard Barry's angry buzzing finally stops.",
     },
@@ -906,9 +906,9 @@ nr.db = {
         isAggro     = true,
         loot        =
         {
-            { itemId = 333, rate = 1000 },
-            { itemId = 334, rate = 10479  },
-            { itemId = 335, rate = 150  },
+            { itemId = 20042, rate = 1000 },
+            { itemId = 23740, rate = 10479  },
+            { itemId = 15781, rate = 150  },
         },
         deathMsg = "Queen Quentin ruled for exactly one day. A good reign.",
     },
@@ -929,9 +929,9 @@ nr.db = {
         isAggro     = false,
         loot        =
         {
-            { itemId = 4133, rate = 1000 },
-            { itemId = 4149, rate = 10479  },
-            { itemId = 4164, rate = 150  },
+            { itemId = 20045, rate = 1000 },
+            { itemId = 15794, rate = 10479  },
+            { itemId = 28449, rate = 150  },
         },
         deathMsg = "Wiggles Winston wiggles no more.",
     },
@@ -949,9 +949,9 @@ nr.db = {
         isAggro     = false,
         loot        =
         {
-            { itemId = 4170, rate = 1000 },
-            { itemId = 4207, rate = 10479  },
-            { itemId = 4232, rate = 150  },
+            { itemId = 20048, rate = 1000 },
+            { itemId = 23755, rate = 10479  },
+            { itemId = 27533, rate = 150  },
         },
         deathMsg = "Squirmy Sherman squirms his last squirm.",
     },
@@ -1067,9 +1067,9 @@ nr.db = {
         isAggro     = true,
         loot        =
         {
-            { itemId = 4262, rate = 1000 },    -- Little Jim's Big Trophy (trophy)
-            { itemId = 4266, rate = 10479  },    -- Little Jim's Big Boots
-            { itemId = 4274, rate = 150  },    -- Little Jim's Big Ring
+            { itemId = 20051, rate = 1000 },    -- Little Jim's Big Trophy (trophy)
+            { itemId = 23784, rate = 10479  },    -- Little Jim's Big Boots
+            { itemId = 15795, rate = 150  },    -- Little Jim's Big Ring
         },
         deathMsg    = 'Little Jim falls. He was not, in fact, little.',
     },
@@ -1089,9 +1089,9 @@ nr.db = {
         isAggro     = true,
         loot        =
         {
-            { itemId = 4319, rate = 1000 },    -- Big Jim's Small Trophy (trophy)
-            { itemId = 4341, rate = 10479  },    -- Big Jim's Small Hat
-            { itemId = 4348, rate = 150  },    -- Big Jim's Small Ring
+            { itemId = 20054, rate = 1000 },    -- Big Jim's Small Trophy (trophy)
+            { itemId = 23756, rate = 10479  },    -- Big Jim's Small Hat
+            { itemId = 15796, rate = 150  },    -- Big Jim's Small Ring
         },
         deathMsg    = 'Big Jim falls. He was not, in fact, big.',
     },
