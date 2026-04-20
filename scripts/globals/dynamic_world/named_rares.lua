@@ -4021,10 +4021,38 @@ end
 -- GM helper: force spawn a specific named rare by key.
 -- Pass the calling player so the rare always spawns near them.
 -----------------------------------
+nr.resolveKey = function(query)
+    if not query then
+        return nil
+    end
+
+    if nr.db[query] then
+        return query
+    end
+
+    local normalizedQuery = normalizeRareKey(query)
+    if not normalizedQuery then
+        return nil
+    end
+
+    for key, config in pairs(nr.db) do
+        if normalizeRareKey(key) == normalizedQuery or
+            normalizeRareKey(config.name) == normalizedQuery or
+            normalizeRareKey(config.packetName) == normalizedQuery
+        then
+            return key
+        end
+    end
+
+    return nil
+end
+
 nr.forceSpawn = function(key, player)
+    local query = key
+    key = nr.resolveKey(query)
     local config = nr.db[key]
     if not config then
-        return false, 'Unknown named rare: ' .. tostring(key)
+        return false, 'Unknown named rare: ' .. tostring(query)
     end
 
     -- Clear alive reference so we don't bail on "already alive"

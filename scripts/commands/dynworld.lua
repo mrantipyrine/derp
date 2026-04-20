@@ -333,12 +333,12 @@ commandObj.onTrigger = function(player, args)
                 mins = mins % 60
                 stateStr = string.format('%dh%02dm', hrs, mins)
             end
-            player:printToPlayer(string.format('  %-25s [%s]', entry.name, stateStr), xi.msg.channel.SYSTEM_3)
+            player:printToPlayer(string.format('  %-25s key=%s [%s]', entry.name, entry.key, stateStr), xi.msg.channel.SYSTEM_3)
         end
     elseif subcommand == 'rare' then
         -- Force-spawn a specific named rare by key
-        local key = parts[2]
-        if not key then
+        local key = table.concat(parts, ' ', 2)
+        if not key or key == '' then
             printErr(player, '[DynWorld] Usage: !dynworld rare <key>  (use !dynworld rares to see keys)')
             return
         end
