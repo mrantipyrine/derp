@@ -1156,7 +1156,9 @@ end
 
 -- Splash damage tuning
 local WS_SPLASH_RADIUS      = 6.0   -- yalms around primary target
-local WS_SPLASH_DMG_PCT     = 0.50  -- splash targets take 50% of primary damage
+local WS_SPLASH_DMG_MIN_PCT = 0.50  -- splash targets take 50-70% of primary damage
+local WS_SPLASH_DMG_MAX_PCT = 0.70
+local WS_SPLASH_SURGE_PCT   = 1.00  -- max momentum: splash matches primary WS damage
 local SC_SPLASH_DMG_PCT     = 0.50  -- skillchain splash: 50% of SC damage
 local SC_SPLASH_DAY_BONUS   = 1.00  -- matching day: 100% of SC damage (double splash)
 
@@ -1169,6 +1171,14 @@ local function isActivelyTargetingAttacker(mob, attacker)
     return target and target:getID() == attacker:getID()
 end
 
+local function getWSSplashPercent(attacker)
+    if xi.soloSynergy and xi.soloSynergy.isSurging and xi.soloSynergy.isSurging(attacker) then
+        return WS_SPLASH_SURGE_PCT, true
+    end
+
+    return math.random(WS_SPLASH_DMG_MIN_PCT * 100, WS_SPLASH_DMG_MAX_PCT * 100) / 100, false
+end
+
 local function doWSSplash(attacker, primaryTarget, primaryDmg, attackType, dmgType)
     if primaryDmg <= 0 then return end
     local zone = attacker:getZone()
@@ -1177,8 +1187,13 @@ local function doWSSplash(attacker, primaryTarget, primaryDmg, attackType, dmgTy
     local mobs = zone:getMobs()
     if not mobs then return end
 
-    local splashDmg = math.floor(primaryDmg * WS_SPLASH_DMG_PCT)
+    local splashPct, isSurgeSplash = getWSSplashPercent(attacker)
+    local splashDmg = math.floor(primaryDmg * splashPct)
     if splashDmg <= 0 then return end
+
+    if isSurgeSplash and xi.soloSynergy then
+        xi.soloSynergy.flash(attacker, 'SURGE SPLASH! Nearby attackers take full force.')
+    end
 
     for _, mob in pairs(mobs) do
         if mob and
