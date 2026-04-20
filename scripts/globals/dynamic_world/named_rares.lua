@@ -231,6 +231,20 @@ local function getFamilyForKey(key)
     return nil
 end
 
+local function getItemDisplayName(itemId)
+    local item = GetItemByID(itemId)
+    if not item then
+        return string.format('item #%d', itemId)
+    end
+
+    local name = item:getName()
+    if not name or name == '' then
+        return string.format('item #%d', itemId)
+    end
+
+    return (name:gsub('_', ' '))
+end
+
 -- Pick a random groupRef from a config entry.
 -- Supports either a single 'groupRef' or a 'groupRefs' array for visual variety.
 local function pickGroupRef(config)
@@ -1163,7 +1177,7 @@ nr.db = {
         isAggro     = true,
         loot        =
         {
-            { itemId = 11642, rate = 10479  },    -- Sally's Scale Ring
+            { itemId = 11642, rate = 10479  },    -- Sally Scale
             { itemId = 28440, rate = 150  },    -- Sally's Tail Belt
         },
         deathMsg = "Scaly Sally's iridescent scales scatter across the ground.",
@@ -1257,7 +1271,7 @@ nr.db = {
         loot        =
         {
             { itemId = 23756, rate = 10479  },    -- Big Jim's Small Hat
-            { itemId = 15796, rate = 150  },    -- Big Jim's Small Ring
+            { itemId = 15796, rate = 150  },    -- Big Jim Cape
         },
         deathMsg    = 'Big Jim falls. He was not, in fact, big.',
     },
@@ -3841,12 +3855,13 @@ nr.awardLoot = function(key, mob, player)
     if not config or not player then return end
 
     local gotSomething = false
+    local awardedItems = {}
     for _, entry in ipairs(config.loot) do
         if math.random(1000) <= entry.rate then
-            -- addItem triggers the standard "You obtained X." message automatically
             local added = player:addItem(entry.itemId, 1)
             if added then
                 gotSomething = true
+                table.insert(awardedItems, getItemDisplayName(entry.itemId))
             else
                 -- Inventory full — drop on ground near player
                 player:printToPlayer('[Named Rare] Your inventory is full! Loot dropped nearby.', xi.msg.channel.SYSTEM_3)
@@ -3857,6 +3872,11 @@ nr.awardLoot = function(key, mob, player)
     if gotSomething then
         player:printToPlayer(
             string.format('[Named Rare] You defeated %s!', config.name),
+            xi.msg.channel.SYSTEM_3
+        )
+
+        player:printToPlayer(
+            string.format('[Named Rare] %s dropped: %s', config.name, table.concat(awardedItems, ', ')),
             xi.msg.channel.SYSTEM_3
         )
     end
