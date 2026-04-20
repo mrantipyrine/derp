@@ -522,8 +522,8 @@ REPLACE INTO `item_basic` VALUES (4262, 0, 'LttlJm_Trophy', 'lttljm_trophy', 1, 
 REPLACE INTO `item_basic` VALUES (4266, 0, 'LittleJim_Boots', 'littlejim_boots', 1, 59476, 99, 0, 6000);
 REPLACE INTO `item_basic` VALUES (4274, 0, 'Little_Jim_Ring', 'little_jim_ring', 1, 59476, 99, 0, 9000);
 
-REPLACE INTO `item_equipment` VALUES (4266, "little_jims_big_boots", 43, 0, 4194303, 0, 0, 0, 2048, 0, 0, 0); -- FEET
-REPLACE INTO `item_equipment` VALUES (4274, "little_jims_big_ring", 56, 0, 4194303, 0, 0, 0, 64, 0, 0, 0); -- RING
+REPLACE INTO `item_equipment` VALUES (4266, "little_jim_boots", 43, 0, 4194303, 0, 0, 0, 2048, 0, 0, 0); -- FEET
+REPLACE INTO `item_equipment` VALUES (4274, "little_jim_ring", 56, 0, 4194303, 0, 0, 0, 64, 0, 0, 0); -- RING
 
 REPLACE INTO `item_mods` VALUES (4266, 6,10),(4266, 1,14),(4266, 2,60),(4266,47, 8);   -- VIT+10 DEF+14 HP+60 Haste+8
 REPLACE INTO `item_mods` VALUES (4274, 4,10),(4274, 6, 8),(4274,11,18),(4274, 2,50);   -- STR+10 VIT+8 ATT+18 HP+50
@@ -533,8 +533,8 @@ REPLACE INTO `item_basic` VALUES (4319, 0, 'Big_Jim_Trophy', 'big_jim_trophy', 1
 REPLACE INTO `item_basic` VALUES (4341, 0, 'Big_Jim_Hat', 'big_jim_hat', 1, 59476, 99, 0, 6000);
 REPLACE INTO `item_basic` VALUES (4348, 0, 'Big_Jim_Ring', 'big_jim_ring', 1, 59476, 99, 0, 9000);
 
-REPLACE INTO `item_equipment` VALUES (4341, "big_jims_small_hat", 71, 0, 4194303, 0, 0, 0, 1, 0, 0, 0); -- HEAD
-REPLACE INTO `item_equipment` VALUES (4348, "big_jims_small_ring", 63, 0, 4194303, 0, 0, 0, 64, 0, 0, 0); -- RING
+REPLACE INTO `item_equipment` VALUES (4341, "big_jim_hat", 71, 0, 4194303, 0, 0, 0, 1, 0, 0, 0); -- HEAD
+REPLACE INTO `item_equipment` VALUES (4348, "big_jim_ring", 63, 0, 4194303, 0, 0, 0, 64, 0, 0, 0); -- RING
 
 REPLACE INTO `item_mods` VALUES (4341, 5,10),(4341, 7,10),(4341,12,16),(4341,13,14),(4341,47, 8); -- DEX+10 AGI+10 ACC+16 EVA+14 Haste+8
 REPLACE INTO `item_mods` VALUES (4348, 5, 8),(4348, 4, 8),(4348,11,16),(4348,12,14),(4348, 2,50); -- DEX+8 STR+8 ATT+16 ACC+14 HP+50

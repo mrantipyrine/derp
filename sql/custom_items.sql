@@ -1263,7 +1263,7 @@ REPLACE INTO `item_basic` VALUES
 REPLACE INTO `item_basic` VALUES
     (23784, 0, 'LittleJim_Boots', 'littlejim_boots', 1, 59476, 99, 0, 2000);
 REPLACE INTO `item_equipment` VALUES
-    (23784, "little_jims_big_boots", 52, 0, 4194303, 0, 0, 0, 2048, 0, 0, 0);
+    (23784, "little_jim_boots", 52, 0, 4194303, 0, 0, 0, 2048, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
     (23784,  1,  12),   -- DEF +12
     (23784,  8,   8),   -- STR +8
@@ -1273,7 +1273,7 @@ REPLACE INTO `item_mods` VALUES
 REPLACE INTO `item_basic` VALUES
     (15795, 0, 'Little_Jim_Ring', 'little_jim_ring', 1, 59476, 99, 0, 3000);
 REPLACE INTO `item_equipment` VALUES
-    (15795, "little_jims_big_ring", 53, 0, 4194303, 0, 0, 0, 64, 0, 0, 0);
+    (15795, "little_jim_ring", 53, 0, 4194303, 0, 0, 0, 64, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
     (15795,  8,   8),   -- STR +8
     (15795,  10,   8),   -- VIT +8
@@ -1287,7 +1287,7 @@ REPLACE INTO `item_basic` VALUES
 REPLACE INTO `item_basic` VALUES
     (23756, 0, 'Big_Jim_Hat', 'big_jim_hat', 1, 59476, 99, 0, 2000);
 REPLACE INTO `item_equipment` VALUES
-    (23756, "big_jims_small_hat", 52, 0, 4194303, 0, 0, 0, 1, 0, 0, 0);
+    (23756, "big_jim_hat", 52, 0, 4194303, 0, 0, 0, 1, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
     (23756,  1,   8),   -- DEF +8
     (23756,  11,   8),   -- AGI +8
@@ -1297,7 +1297,7 @@ REPLACE INTO `item_mods` VALUES
 REPLACE INTO `item_basic` VALUES
     (15796, 0, 'Big_Jim_Ring', 'big_jim_ring', 1, 59476, 99, 0, 3000);
 REPLACE INTO `item_equipment` VALUES
-    (15796, "big_jims_small_ring", 59, 0, 4194303, 0, 0, 0, 64, 0, 0, 0);
+    (15796, "big_jim_ring", 59, 0, 4194303, 0, 0, 0, 64, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
     (15796,  11,   8),   -- AGI +8
     (15796,  9,   8),   -- DEX +8
