@@ -13,7 +13,8 @@
 --   spawnWindow = seconds the spawn window stays open (random check each tick)
 --   spawnChance = per-tick probability during window (out of 1000)
 --
--- Loot rates are per-1000. Trophy is always 1000 (guaranteed).
+-- Loot rates are per-1000. Loot tables only include mapped equipment/weapon
+-- items; trophy-only item_basic drops are intentionally omitted.
 -----------------------------------
 
 xi = xi or {}
@@ -297,7 +298,7 @@ end
 -- groupRef: find valid IDs with:
 --   SELECT groupid, zoneid, name FROM mob_groups WHERE name LIKE '%Sheep%' LIMIT 10;
 -- zones: which zone IDs this rare can appear in (picks one randomly)
--- loot: { itemId, rate (per 1000) }  Trophy (+0) is always first at rate 1000
+-- loot: { itemId, rate (per 1000) }
 -----------------------------------
 
 nr.db = {
@@ -318,7 +319,6 @@ nr.db = {
         isAggro     = false,
         loot        =
         {
-            { itemId = 18467, rate = 1000 },    -- William's Wool (trophy, always)
             { itemId = 23438, rate = 10479  },    -- William's Woolcap
             { itemId = 23539, rate = 150  },    -- William's Woolmitt
         },
@@ -338,7 +338,7 @@ nr.db = {
         isAggro     = false,
         loot        =
         {
-            { itemId = 18528, rate = 1000 },    -- Baa-rbara's Bell (trophy)
+            { itemId = 18528, rate = 1000 },    -- Baa-rbara's Bell
             { itemId = 26007, rate = 10479  },    -- Baa-rbara's Collar
             { itemId = 28441, rate = 150  },    -- Baa-rbara's Ribbon
         },
@@ -358,7 +358,6 @@ nr.db = {
         isAggro     = false,
         loot        =
         {
-            { itemId = 18548, rate = 1000 },    -- Larry's Lambchop (trophy)
             { itemId = 28611, rate = 10479  },    -- Larry's Lucky Fleece
             { itemId = 26008, rate = 150  },    -- Larry's Lanyard
         },
@@ -378,7 +377,6 @@ nr.db = {
         isAggro     = true,
         loot        =
         {
-            { itemId = 18567, rate = 1000 },    -- Sharon's Golden Fleece (trophy)
             { itemId = 23529, rate = 10479  },    -- Sharon's Shearing Shears
             { itemId = 28612, rate = 150  },    -- Sharon's Silken Mantle
         },
@@ -401,8 +399,7 @@ nr.db = {
         isAggro     = false,
         loot        =
         {
-            { itemId = 18570, rate = 1000 },
-            { itemId = 14645, rate = 10479  },
+            { itemId = 10294, rate = 10479  },
             { itemId = 23751, rate = 150  },
         },
         deathMsg = "Cottontail Tommy hops his last hop.",
@@ -421,8 +418,7 @@ nr.db = {
         isAggro     = false,
         loot        =
         {
-            { itemId = 18796, rate = 1000 },
-            { itemId = 11640, rate = 10479  },
+            { itemId = 10374, rate = 10479  },
             { itemId = 27526, rate = 150  },
         },
         deathMsg = 'Hopscotch Harvey lands badly on his last jump.',
@@ -441,7 +437,6 @@ nr.db = {
         isAggro     = false,
         loot        =
         {
-            { itemId = 18799, rate = 1000 },
             { itemId = 23439, rate = 10479  },
             { itemId = 28442, rate = 150  },
         },
@@ -461,7 +456,6 @@ nr.db = {
         isAggro     = true,
         loot        =
         {
-            { itemId = 18836, rate = 1000 },
             { itemId = 23752, rate = 10479  },
             { itemId = 27527, rate = 150  },
         },
@@ -484,7 +478,6 @@ nr.db = {
         isAggro     = true,
         loot        =
         {
-            { itemId = 18889, rate = 1000 },
             { itemId = 23530, rate = 10479  },
             { itemId = 28529, rate = 150  },
         },
@@ -504,7 +497,6 @@ nr.db = {
         isAggro     = true,
         loot        =
         {
-            { itemId = 18918, rate = 1000 },
             { itemId = 23531, rate = 10479  },
             { itemId = 28443, rate = 150  },
         },
@@ -524,7 +516,6 @@ nr.db = {
         isAggro     = true,
         loot        =
         {
-            { itemId = 19322, rate = 1000 },
             { itemId = 25692, rate = 10479  },
             { itemId = 27528, rate = 150  },
         },
@@ -544,7 +535,6 @@ nr.db = {
         isAggro     = true,
         loot        =
         {
-            { itemId = 19804, rate = 1000 },
             { itemId = 23440, rate = 10479  },
             { itemId = 28567, rate = 150  },
         },
@@ -567,7 +557,6 @@ nr.db = {
         isAggro     = false,
         loot        =
         {
-            { itemId = 16402, rate = 1000 },    -- Morris's Sporeling (trophy, always)
             { itemId = 23437, rate = 10479  },    -- Morris's Wide Brim
             { itemId = 26117, rate = 150  },    -- Mycelium Medal
         },
@@ -587,7 +576,6 @@ nr.db = {
         isAggro     = false,
         loot        =
         {
-            { itemId = 19970, rate = 1000 },
             { itemId = 23441, rate = 10479  },
             { itemId = 28445, rate = 150  },
         },
@@ -607,7 +595,6 @@ nr.db = {
         isAggro     = false,
         loot        =
         {
-            { itemId = 19973, rate = 1000 },
             { itemId = 25693, rate = 10479  },
             { itemId = 26009, rate = 150  },
         },
@@ -627,7 +614,6 @@ nr.db = {
         isAggro     = true,
         loot        =
         {
-            { itemId = 19976, rate = 1000 },
             { itemId = 23710, rate = 10479  },
             { itemId = 11628, rate = 150  },
         },
@@ -650,7 +636,6 @@ nr.db = {
         isAggro     = true,
         loot        =
         {
-            { itemId = 19979, rate = 1000 },
             { itemId = 23711, rate = 10479  },
             { itemId = 28446, rate = 150  },
         },
@@ -670,7 +655,6 @@ nr.db = {
         isAggro     = true,
         loot        =
         {
-            { itemId = 19982, rate = 1000 },
             { itemId = 25694, rate = 10479  },
             { itemId = 27529, rate = 150  },
         },
@@ -690,7 +674,6 @@ nr.db = {
         isAggro     = true,
         loot        =
         {
-            { itemId = 19985, rate = 1000 },
             { itemId = 25695, rate = 10479  },
             { itemId = 11630, rate = 150  },
         },
@@ -713,7 +696,6 @@ nr.db = {
         isAggro     = true,
         loot        =
         {
-            { itemId = 19988, rate = 1000 },
             { itemId = 26010, rate = 10479  },
             { itemId = 23253, rate = 150  },
         },
@@ -733,7 +715,6 @@ nr.db = {
         isAggro     = true,
         loot        =
         {
-            { itemId = 19991, rate = 1000 },
             { itemId = 23532, rate = 10479  },
             { itemId = 28614, rate = 150  },
         },
@@ -753,7 +734,6 @@ nr.db = {
         isAggro     = true,
         loot        =
         {
-            { itemId = 19994, rate = 1000 },
             { itemId = 25696, rate = 10479  },
             { itemId = 11631, rate = 150  },
         },
@@ -776,7 +756,6 @@ nr.db = {
         isAggro     = true,
         loot        =
         {
-            { itemId = 19997, rate = 1000 },
             { itemId = 26011, rate = 10479  },
             { itemId = 28615, rate = 150  },
         },
@@ -796,7 +775,6 @@ nr.db = {
         isAggro     = true,
         loot        =
         {
-            { itemId = 20000, rate = 1000 },
             { itemId = 23712, rate = 10479  },
             { itemId = 28447, rate = 150  },
         },
@@ -816,7 +794,6 @@ nr.db = {
         isAggro     = true,
         loot        =
         {
-            { itemId = 16464, rate = 1000 },    -- Sabrina's Saber-Fang (trophy)
             { itemId = 23265, rate = 10479  },    -- Sabrina's Feral Legs
             { itemId = 11641, rate = 150  },    -- Sabrina's Apex Ring
         },
@@ -839,7 +816,6 @@ nr.db = {
         isAggro     = false,
         loot        =
         {
-            { itemId = 20003, rate = 1000 },
             { itemId = 27530, rate = 10479  },
             { itemId = 23533, rate = 150  },
         },
@@ -859,7 +835,6 @@ nr.db = {
         isAggro     = false,
         loot        =
         {
-            { itemId = 20006, rate = 1000 },
             { itemId = 23713, rate = 10479  },
             { itemId = 11632, rate = 150  },
         },
@@ -879,7 +854,6 @@ nr.db = {
         isAggro     = true,
         loot        =
         {
-            { itemId = 20009, rate = 1000 },
             { itemId = 23732, rate = 10479  },
             { itemId = 28448, rate = 150  },
         },
@@ -902,7 +876,6 @@ nr.db = {
         isAggro     = false,
         loot        =
         {
-            { itemId = 20012, rate = 1000 },
             { itemId = 23259, rate = 10479  },
             { itemId = 11634, rate = 150  },
         },
@@ -922,7 +895,6 @@ nr.db = {
         isAggro     = false,
         loot        =
         {
-            { itemId = 20015, rate = 1000 },
             { itemId = 23783, rate = 10479  },
             { itemId = 26012, rate = 150  },
         },
@@ -942,7 +914,6 @@ nr.db = {
         isAggro     = true,
         loot        =
         {
-            { itemId = 20018, rate = 1000 },
             { itemId = 23738, rate = 10479  },
             { itemId = 11635, rate = 150  },
         },
@@ -965,7 +936,6 @@ nr.db = {
         isAggro     = false,
         loot        =
         {
-            { itemId = 20021, rate = 1000 },
             { itemId = 23534, rate = 10479  },
             { itemId = 28616, rate = 150  },
         },
@@ -985,7 +955,6 @@ nr.db = {
         isAggro     = true,
         loot        =
         {
-            { itemId = 20024, rate = 1000 },
             { itemId = 25697, rate = 10479  },
             { itemId = 14646, rate = 150  },
         },
@@ -1008,7 +977,6 @@ nr.db = {
         isAggro     = false,
         loot        =
         {
-            { itemId = 20027, rate = 1000 },
             { itemId = 25698, rate = 10479  },
             { itemId = 15549, rate = 150  },
         },
@@ -1028,7 +996,6 @@ nr.db = {
         isAggro     = false,
         loot        =
         {
-            { itemId = 20030, rate = 1000 },
             { itemId = 23739, rate = 10479  },
             { itemId = 27531, rate = 150  },
         },
@@ -1048,7 +1015,6 @@ nr.db = {
         isAggro     = true,
         loot        =
         {
-            { itemId = 20033, rate = 1000 },
             { itemId = 25699, rate = 10479  },
             { itemId = 15550, rate = 150  },
         },
@@ -1071,7 +1037,6 @@ nr.db = {
         isAggro     = false,
         loot        =
         {
-            { itemId = 20036, rate = 1000 },
             { itemId = 27532, rate = 10479  },
             { itemId = 15780, rate = 150  },
         },
@@ -1091,7 +1056,6 @@ nr.db = {
         isAggro     = true,
         loot        =
         {
-            { itemId = 20039, rate = 1000 },
             { itemId = 23535, rate = 10479  },
             { itemId = 26013, rate = 150  },
         },
@@ -1111,7 +1075,6 @@ nr.db = {
         isAggro     = true,
         loot        =
         {
-            { itemId = 20042, rate = 1000 },
             { itemId = 23740, rate = 10479  },
             { itemId = 15781, rate = 150  },
         },
@@ -1134,7 +1097,6 @@ nr.db = {
         isAggro     = false,
         loot        =
         {
-            { itemId = 20045, rate = 1000 },
             { itemId = 15794, rate = 10479  },
             { itemId = 28449, rate = 150  },
         },
@@ -1154,7 +1116,6 @@ nr.db = {
         isAggro     = false,
         loot        =
         {
-            { itemId = 20048, rate = 1000 },
             { itemId = 23755, rate = 10479  },
             { itemId = 27533, rate = 150  },
         },
@@ -1174,7 +1135,6 @@ nr.db = {
         isAggro     = true,
         loot        =
         {
-            { itemId = 16570, rate = 1000 },    -- Ernest's Earthen Core (trophy)
             { itemId = 25689, rate = 10479  },    -- Ernest's Burrower Vest
             { itemId = 23750, rate = 150  },    -- Ernest's Tremor Boots
         },
@@ -1197,7 +1157,6 @@ nr.db = {
         isAggro     = true,
         loot        =
         {
-            { itemId = 16715, rate = 1000 },    -- Sally's Scale Chip (trophy)
             { itemId = 11642, rate = 10479  },    -- Sally's Scale Ring
             { itemId = 28440, rate = 150  },    -- Sally's Tail Belt
         },
@@ -1217,7 +1176,6 @@ nr.db = {
         isAggro     = true,
         loot        =
         {
-            { itemId = 17107, rate = 1000 },    -- Carlos's Cold Scale (trophy)
             { itemId = 25690, rate = 10479  },    -- Carlos's Reptile Vest
             { itemId = 26118, rate = 150  },    -- Carlos's Venom Earring
         },
@@ -1237,7 +1195,6 @@ nr.db = {
         isAggro     = true,
         loot        =
         {
-            { itemId = 17169, rate = 1000 },    -- Boris's Basilisk Eye (trophy)
             { itemId = 25691, rate = 10479  },    -- Boris's Granite Carapace
             { itemId = 11643, rate = 150  },    -- Boris's Stone Gaze Ring
         },
@@ -1272,7 +1229,6 @@ nr.db = {
         isAggro     = true,
         loot        =
         {
-            { itemId = 20051, rate = 1000 },    -- Little Jim's Big Trophy (trophy)
             { itemId = 23784, rate = 10479  },    -- Little Jim's Big Boots
             { itemId = 15795, rate = 150  },    -- Little Jim's Big Ring
         },
@@ -1294,7 +1250,6 @@ nr.db = {
         isAggro     = true,
         loot        =
         {
-            { itemId = 20054, rate = 1000 },    -- Big Jim's Small Trophy (trophy)
             { itemId = 23756, rate = 10479  },    -- Big Jim's Small Hat
             { itemId = 15796, rate = 150  },    -- Big Jim's Small Ring
         },
@@ -1313,7 +1268,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 336, rate = 1000 },
             { itemId = 23757, rate = 700 },
             { itemId = 23536, rate = 500 },
         },
@@ -1330,7 +1284,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 339, rate = 1000 },
             { itemId = 23786, rate = 700 },
             { itemId = 23260, rate = 500 },
         },
@@ -1347,7 +1300,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 342, rate = 1000 },
             { itemId = 23537, rate = 700 },
             { itemId = 28450, rate = 500 },
         },
@@ -1364,7 +1316,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 345, rate = 1000 },
             { itemId = 23787, rate = 700 },
             { itemId = 15798, rate = 500 },
         },
@@ -1381,7 +1332,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 348, rate = 1000 },
             { itemId = 27536, rate = 700 },
             { itemId = 28619, rate = 500 },
         },
@@ -1398,7 +1348,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 351, rate = 1000 },
             { itemId = 28618, rate = 700 },
             { itemId = 23261, rate = 500 },
         },
@@ -1415,7 +1364,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 354, rate = 1000 },
             { itemId = 23758, rate = 700 },
             { itemId = 23538, rate = 500 },
         },
@@ -1432,7 +1380,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 357, rate = 1000 },
             { itemId = 25700, rate = 700 },
             { itemId = 23788, rate = 500 },
         },
@@ -1449,7 +1396,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 360, rate = 1000 },
             { itemId = 28599, rate = 700 },
             { itemId = 23706, rate = 500 },
         },
@@ -1466,7 +1412,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 363, rate = 1000 },
             { itemId = 23759, rate = 700 },
             { itemId = 15797, rate = 500 },
         },
@@ -1483,7 +1428,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 366, rate = 1000 },
             { itemId = 24076, rate = 700 },
             { itemId = 28451, rate = 500 },
         },
@@ -1500,7 +1444,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 369, rate = 1000 },
             { itemId = 23252, rate = 700 },
             { itemId = 11665, rate = 500 },
         },
@@ -1517,7 +1460,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 372, rate = 1000 },
             { itemId = 23511, rate = 700 },
             { itemId = 28430, rate = 500 },
         },
@@ -1534,7 +1476,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 375, rate = 1000 },
             { itemId = 23418, rate = 700 },
             { itemId = 28604, rate = 500 },
         },
@@ -1551,7 +1492,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 378, rate = 1000 },
             { itemId = 25701, rate = 700 },
             { itemId = 24077, rate = 500 },
         },
@@ -1568,7 +1508,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 381, rate = 1000 },
             { itemId = 25702, rate = 700 },
             { itemId = 14631, rate = 500 },
         },
@@ -1585,7 +1524,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 384, rate = 1000 },
             { itemId = 24075, rate = 700 },
             { itemId = 28429, rate = 500 },
         },
@@ -1602,7 +1540,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 387, rate = 1000 },
             { itemId = 26014, rate = 700 },
             { itemId = 27537, rate = 500 },
         },
@@ -1619,7 +1556,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 390, rate = 1000 },
             { itemId = 23895, rate = 700 },
             { itemId = 14641, rate = 500 },
         },
@@ -1636,7 +1572,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 393, rate = 1000 },
             { itemId = 25703, rate = 700 },
             { itemId = 23797, rate = 500 },
         },
@@ -1653,7 +1588,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 396, rate = 1000 },
             { itemId = 23544, rate = 700 },
             { itemId = 23785, rate = 500 },
         },
@@ -1670,7 +1604,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 399, rate = 1000 },
             { itemId = 23978, rate = 700 },
             { itemId = 26015, rate = 500 },
         },
@@ -1687,7 +1620,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 402, rate = 1000 },
             { itemId = 23728, rate = 700 },
             { itemId = 14639, rate = 500 },
         },
@@ -1704,7 +1636,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 405, rate = 1000 },
             { itemId = 25705, rate = 700 },
             { itemId = 23896, rate = 500 },
         },
@@ -1721,7 +1652,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 408, rate = 1000 },
             { itemId = 27538, rate = 700 },
             { itemId = 23707, rate = 500 },
         },
@@ -1738,7 +1668,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 411, rate = 1000 },
             { itemId = 27539, rate = 700 },
             { itemId = 23543, rate = 500 },
         },
@@ -1755,7 +1684,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 414, rate = 1000 },
             { itemId = 23761, rate = 700 },
             { itemId = 14637, rate = 500 },
         },
@@ -1772,7 +1700,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 417, rate = 1000 },
             { itemId = 28620, rate = 700 },
             { itemId = 23708, rate = 500 },
         },
@@ -1789,7 +1716,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 420, rate = 1000 },
             { itemId = 23729, rate = 700 },
             { itemId = 28438, rate = 500 },
         },
@@ -1806,7 +1732,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 423, rate = 1000 },
             { itemId = 25538, rate = 700 },
             { itemId = 27535, rate = 500 },
         },
@@ -1823,7 +1748,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 426, rate = 1000 },
             { itemId = 23541, rate = 700 },
             { itemId = 28435, rate = 500 },
         },
@@ -1840,7 +1764,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 429, rate = 1000 },
             { itemId = 23415, rate = 700 },
             { itemId = 14645, rate = 500 },
         },
@@ -1857,7 +1780,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 432, rate = 1000 },
             { itemId = 26003, rate = 700 },
             { itemId = 23709, rate = 500 },
         },
@@ -1874,7 +1796,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 435, rate = 1000 },
             { itemId = 25706, rate = 700 },
             { itemId = 14633, rate = 500 },
         },
@@ -1891,7 +1812,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 438, rate = 1000 },
             { itemId = 23417, rate = 700 },
             { itemId = 28617, rate = 500 },
         },
@@ -1908,7 +1828,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 441, rate = 1000 },
             { itemId = 23416, rate = 700 },
             { itemId = 23264, rate = 500 },
         },
@@ -1925,7 +1844,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 444, rate = 1000 },
             { itemId = 23542, rate = 700 },
             { itemId = 23726, rate = 500 },
         },
@@ -1942,7 +1860,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 447, rate = 1000 },
             { itemId = 27534, rate = 700 },
             { itemId = 14635, rate = 500 },
         },
@@ -1959,7 +1876,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 450, rate = 1000 },
             { itemId = 23979, rate = 700 },
             { itemId = 23540, rate = 500 },
         },
@@ -1976,7 +1892,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 453, rate = 1000 },
             { itemId = 23980, rate = 700 },
             { itemId = 11640, rate = 500 },
         },
@@ -1993,7 +1908,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 456, rate = 1000 },
             { itemId = 26107, rate = 700 },
             { itemId = 23727, rate = 500 },
         },
@@ -2010,7 +1924,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 459, rate = 1000 },
             { itemId = 25537, rate = 700 },
             { itemId = 26105, rate = 500 },
         },
@@ -2027,7 +1940,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 462, rate = 1000 },
             { itemId = 23736, rate = 700 },
             { itemId = 28434, rate = 500 },
         },
@@ -2044,7 +1956,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 465, rate = 1000 },
             { itemId = 23977, rate = 700 },
             { itemId = 14643, rate = 500 },
         },
@@ -2061,7 +1972,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 468, rate = 1000 },
             { itemId = 23510, rate = 700 },
             { itemId = 26106, rate = 500 },
         },
@@ -2078,7 +1988,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 471, rate = 1000 },
             { itemId = 28598, rate = 700 },
             { itemId = 28433, rate = 500 },
         },
@@ -2095,7 +2004,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 474, rate = 1000 },
             { itemId = 23263, rate = 700 },
             { itemId = 15857, rate = 500 },
         },
@@ -2112,7 +2020,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 477, rate = 1000 },
             { itemId = 25682, rate = 700 },
             { itemId = 26116, rate = 500 },
         },
@@ -2129,7 +2036,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 480, rate = 1000 },
             { itemId = 15856, rate = 700 },
             { itemId = 23789, rate = 500 },
         },
@@ -2146,7 +2052,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 483, rate = 1000 },
             { itemId = 26002, rate = 700 },
             { itemId = 27928, rate = 500 },
         },
@@ -2163,7 +2068,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 486, rate = 1000 },
             { itemId = 25683, rate = 700 },
             { itemId = 28432, rate = 500 },
         },
@@ -2180,7 +2084,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 489, rate = 1000 },
             { itemId = 23435, rate = 700 },
             { itemId = 28597, rate = 500 },
         },
@@ -2197,7 +2100,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 492, rate = 1000 },
             { itemId = 11062, rate = 700 },
             { itemId = 28208, rate = 500 },
         },
@@ -2214,7 +2116,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 495, rate = 1000 },
             { itemId = 26001, rate = 700 },
             { itemId = 26108, rate = 500 },
         },
@@ -2231,7 +2132,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 498, rate = 1000 },
             { itemId = 27937, rate = 700 },
             { itemId = 27564, rate = 500 },
         },
@@ -2248,7 +2148,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 501, rate = 1000 },
             { itemId = 25680, rate = 700 },
             { itemId = 27574, rate = 500 },
         },
@@ -2265,7 +2164,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 504, rate = 1000 },
             { itemId = 26115, rate = 700 },
             { itemId = 23661, rate = 500 },
         },
@@ -2282,7 +2180,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 507, rate = 1000 },
             { itemId = 28431, rate = 700 },
             { itemId = 25681, rate = 500 },
         },
@@ -2299,7 +2196,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 510, rate = 1000 },
             { itemId = 28609, rate = 700 },
             { itemId = 28575, rate = 500 },
         },
@@ -2316,7 +2212,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 513, rate = 1000 },
             { itemId = 23434, rate = 700 },
             { itemId = 27568, rate = 500 },
         },
@@ -2333,7 +2228,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 516, rate = 1000 },
             { itemId = 25545, rate = 700 },
             { itemId = 23684, rate = 500 },
         },
@@ -2350,7 +2244,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 519, rate = 1000 },
             { itemId = 28606, rate = 700 },
             { itemId = 26349, rate = 500 },
         },
@@ -2367,7 +2260,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 522, rate = 1000 },
             { itemId = 23262, rate = 700 },
             { itemId = 28550, rate = 500 },
         },
@@ -2384,7 +2276,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 525, rate = 1000 },
             { itemId = 23983, rate = 700 },
             { itemId = 25544, rate = 500 },
         },
@@ -2401,7 +2292,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 528, rate = 1000 },
             { itemId = 23512, rate = 700 },
             { itemId = 10789, rate = 500 },
         },
@@ -2418,7 +2308,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 531, rate = 1000 },
             { itemId = 23419, rate = 700 },
             { itemId = 26345, rate = 500 },
         },
@@ -2435,7 +2324,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 534, rate = 1000 },
             { itemId = 23981, rate = 700 },
             { itemId = 23685, rate = 500 },
         },
@@ -2452,7 +2340,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 537, rate = 1000 },
             { itemId = 23982, rate = 700 },
             { itemId = 28547, rate = 500 },
         },
@@ -2469,7 +2356,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 540, rate = 1000 },
             { itemId = 28534, rate = 700 },
             { itemId = 23686, rate = 500 },
         },
@@ -2486,9 +2372,8 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 543, rate = 1000 },
             { itemId = 28523, rate = 700 },
-            { itemId = 26000, rate = 500 },
+            { itemId = 26042, rate = 500 },
         },
         deathMsg = "Ancient Aldric has been slain! Its rare treasures await...",
     },
@@ -2503,7 +2388,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 546, rate = 1000 },
             { itemId = 28608, rate = 700 },
             { itemId = 28542, rate = 500 },
         },
@@ -2520,7 +2404,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 549, rate = 1000 },
             { itemId = 25687, rate = 700 },
             { itemId = 28564, rate = 500 },
         },
@@ -2537,7 +2420,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 552, rate = 1000 },
             { itemId = 26082, rate = 700 },
             { itemId = 10786, rate = 500 },
         },
@@ -2554,7 +2436,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 555, rate = 1000 },
             { itemId = 23420, rate = 700 },
             { itemId = 26000, rate = 500 },
         },
@@ -2571,7 +2452,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 558, rate = 1000 },
             { itemId = 25684, rate = 700 },
             { itemId = 28553, rate = 500 },
         },
@@ -2588,7 +2468,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 561, rate = 1000 },
             { itemId = 28607, rate = 700 },
             { itemId = 28579, rate = 500 },
         },
@@ -2605,7 +2484,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 564, rate = 1000 },
             { itemId = 28549, rate = 700 },
             { itemId = 23687, rate = 500 },
         },
@@ -2622,7 +2500,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 567, rate = 1000 },
             { itemId = 26006, rate = 700 },
             { itemId = 25685, rate = 500 },
         },
@@ -2639,7 +2516,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 570, rate = 1000 },
             { itemId = 28605, rate = 700 },
             { itemId = 11059, rate = 500 },
         },
@@ -2656,7 +2532,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 573, rate = 1000 },
             { itemId = 25686, rate = 700 },
             { itemId = 10785, rate = 500 },
         },
@@ -2673,7 +2548,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 576, rate = 1000 },
             { itemId = 23688, rate = 700 },
             { itemId = 26083, rate = 500 },
         },
@@ -2690,7 +2564,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 579, rate = 1000 },
             { itemId = 26005, rate = 700 },
             { itemId = 28601, rate = 500 },
         },
@@ -2707,7 +2580,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 582, rate = 1000 },
             { itemId = 23421, rate = 700 },
             { itemId = 10783, rate = 500 },
         },
@@ -2724,7 +2596,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 585, rate = 1000 },
             { itemId = 25688, rate = 700 },
             { itemId = 10787, rate = 500 },
         },
@@ -2741,7 +2612,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 588, rate = 1000 },
             { itemId = 26089, rate = 700 },
             { itemId = 28217, rate = 500 },
         },
@@ -2758,7 +2628,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 591, rate = 1000 },
             { itemId = 11007, rate = 700 },
             { itemId = 10791, rate = 500 },
         },
@@ -2775,7 +2644,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 594, rate = 1000 },
             { itemId = 23423, rate = 700 },
             { itemId = 28436, rate = 500 },
         },
@@ -2792,7 +2660,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 597, rate = 1000 },
             { itemId = 23984, rate = 700 },
             { itemId = 10792, rate = 500 },
         },
@@ -2809,7 +2676,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 600, rate = 1000 },
             { itemId = 26099, rate = 700 },
             { itemId = 10794, rate = 500 },
         },
@@ -2826,7 +2692,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 603, rate = 1000 },
             { itemId = 23424, rate = 700 },
             { itemId = 11000, rate = 500 },
         },
@@ -2843,7 +2708,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 606, rate = 1000 },
             { itemId = 25704, rate = 700 },
             { itemId = 10795, rate = 500 },
         },
@@ -2860,7 +2724,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 609, rate = 1000 },
             { itemId = 23717, rate = 700 },
             { itemId = 10793, rate = 500 },
         },
@@ -2877,7 +2740,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 612, rate = 1000 },
             { itemId = 10790, rate = 700 },
             { itemId = 28339, rate = 500 },
         },
@@ -2894,7 +2756,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 615, rate = 1000 },
             { itemId = 27620, rate = 700 },
             { itemId = 28410, rate = 500 },
         },
@@ -2911,7 +2772,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 618, rate = 1000 },
             { itemId = 23425, rate = 700 },
             { itemId = 10761, rate = 500 },
         },
@@ -2928,7 +2788,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 621, rate = 1000 },
             { itemId = 27797, rate = 700 },
             { itemId = 10755, rate = 500 },
         },
@@ -2945,7 +2804,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 624, rate = 1000 },
             { itemId = 28437, rate = 700 },
             { itemId = 23697, rate = 500 },
         },
@@ -2962,7 +2820,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 627, rate = 1000 },
             { itemId = 28602, rate = 700 },
             { itemId = 26004, rate = 500 },
         },
@@ -2979,7 +2836,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 630, rate = 1000 },
             { itemId = 23422, rate = 700 },
             { itemId = 10756, rate = 500 },
         },
@@ -2996,7 +2852,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 633, rate = 1000 },
             { itemId = 27916, rate = 700 },
             { itemId = 10759, rate = 500 },
         },
@@ -3013,7 +2868,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 636, rate = 1000 },
             { itemId = 23698, rate = 700 },
             { itemId = 10763, rate = 500 },
         },
@@ -3030,7 +2884,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 639, rate = 1000 },
             { itemId = 23513, rate = 700 },
             { itemId = 26325, rate = 500 },
         },
@@ -3047,7 +2900,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 642, rate = 1000 },
             { itemId = 10487, rate = 700 },
             { itemId = 10758, rate = 500 },
         },
@@ -3064,7 +2916,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 645, rate = 1000 },
             { itemId = 10479, rate = 700 },
             { itemId = 10760, rate = 500 },
         },
@@ -3081,7 +2932,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 648, rate = 1000 },
             { itemId = 10762, rate = 700 },
             { itemId = 23699, rate = 500 },
         },
@@ -3098,7 +2948,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 651, rate = 1000 },
             { itemId = 23436, rate = 700 },
             { itemId = 28594, rate = 500 },
         },
@@ -3115,7 +2964,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 654, rate = 1000 },
             { itemId = 23950, rate = 700 },
             { itemId = 10754, rate = 500 },
         },
@@ -3132,7 +2980,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 657, rate = 1000 },
             { itemId = 23951, rate = 700 },
             { itemId = 10757, rate = 500 },
         },
@@ -3149,7 +2996,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 660, rate = 1000 },
             { itemId = 10750, rate = 700 },
             { itemId = 23700, rate = 500 },
         },
@@ -3166,7 +3012,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 663, rate = 1000 },
             { itemId = 25419, rate = 700 },
             { itemId = 28414, rate = 500 },
         },
@@ -3183,7 +3028,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 666, rate = 1000 },
             { itemId = 23952, rate = 700 },
             { itemId = 10753, rate = 500 },
         },
@@ -3200,7 +3044,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 669, rate = 1000 },
             { itemId = 23953, rate = 700 },
             { itemId = 10751, rate = 500 },
         },
@@ -3217,7 +3060,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 672, rate = 1000 },
             { itemId = 11660, rate = 700 },
             { itemId = 26339, rate = 500 },
         },
@@ -3234,7 +3076,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 675, rate = 1000 },
             { itemId = 28521, rate = 700 },
             { itemId = 28595, rate = 500 },
         },
@@ -3251,7 +3092,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 678, rate = 1000 },
             { itemId = 23954, rate = 700 },
             { itemId = 11659, rate = 500 },
         },
@@ -3268,7 +3108,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 681, rate = 1000 },
             { itemId = 23955, rate = 700 },
             { itemId = 11657, rate = 500 },
         },
@@ -3285,7 +3124,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 684, rate = 1000 },
             { itemId = 26080, rate = 700 },
             { itemId = 11658, rate = 500 },
         },
@@ -3302,7 +3140,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 687, rate = 1000 },
             { itemId = 25431, rate = 700 },
             { itemId = 23514, rate = 500 },
         },
@@ -3319,7 +3156,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 690, rate = 1000 },
             { itemId = 23956, rate = 700 },
             { itemId = 11661, rate = 500 },
         },
@@ -3336,7 +3172,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 693, rate = 1000 },
             { itemId = 23957, rate = 700 },
             { itemId = 11662, rate = 500 },
         },
@@ -3353,7 +3188,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 696, rate = 1000 },
             { itemId = 26100, rate = 700 },
             { itemId = 11669, rate = 500 },
         },
@@ -3370,7 +3204,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 699, rate = 1000 },
             { itemId = 25526, rate = 700 },
             { itemId = 23526, rate = 500 },
         },
@@ -3387,7 +3220,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 702, rate = 1000 },
             { itemId = 23760, rate = 700 },
             { itemId = 11674, rate = 500 },
         },
@@ -3404,7 +3236,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 705, rate = 1000 },
             { itemId = 23958, rate = 700 },
             { itemId = 11656, rate = 500 },
         },
@@ -3421,7 +3252,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 708, rate = 1000 },
             { itemId = 26101, rate = 700 },
             { itemId = 23701, rate = 500 },
         },
@@ -3438,7 +3268,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 711, rate = 1000 },
             { itemId = 28596, rate = 700 },
             { itemId = 11663, rate = 500 },
         },
@@ -3455,7 +3284,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 714, rate = 1000 },
             { itemId = 23393, rate = 700 },
             { itemId = 28467, rate = 500 },
         },
@@ -3472,7 +3300,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 717, rate = 1000 },
             { itemId = 23959, rate = 700 },
             { itemId = 11651, rate = 500 },
         },
@@ -3489,7 +3316,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 720, rate = 1000 },
             { itemId = 11670, rate = 700 },
             { itemId = 23702, rate = 500 },
         },
@@ -3506,7 +3332,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 723, rate = 1000 },
             { itemId = 23515, rate = 700 },
             { itemId = 26102, rate = 500 },
         },
@@ -3523,7 +3348,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 726, rate = 1000 },
             { itemId = 23411, rate = 700 },
             { itemId = 28426, rate = 500 },
         },
@@ -3540,7 +3364,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 729, rate = 1000 },
             { itemId = 23960, rate = 700 },
             { itemId = 11672, rate = 500 },
         },
@@ -3557,7 +3380,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 732, rate = 1000 },
             { itemId = 23516, rate = 700 },
             { itemId = 28427, rate = 500 },
         },
@@ -3574,7 +3396,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 735, rate = 1000 },
             { itemId = 23412, rate = 700 },
             { itemId = 11671, rate = 500 },
         },
@@ -3591,7 +3412,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 738, rate = 1000 },
             { itemId = 23961, rate = 700 },
             { itemId = 11668, rate = 500 },
         },
@@ -3608,7 +3428,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 741, rate = 1000 },
             { itemId = 23969, rate = 700 },
             { itemId = 23413, rate = 500 },
         },
@@ -3625,7 +3444,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 744, rate = 1000 },
             { itemId = 11667, rate = 700 },
             { itemId = 23703, rate = 500 },
         },
@@ -3642,7 +3460,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 747, rate = 1000 },
             { itemId = 25527, rate = 700 },
             { itemId = 23704, rate = 500 },
         },
@@ -3659,7 +3476,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 750, rate = 1000 },
             { itemId = 23970, rate = 700 },
             { itemId = 11647, rate = 500 },
         },
@@ -3676,7 +3492,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 753, rate = 1000 },
             { itemId = 23971, rate = 700 },
             { itemId = 11648, rate = 500 },
         },
@@ -3693,7 +3508,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 756, rate = 1000 },
             { itemId = 26103, rate = 700 },
             { itemId = 28428, rate = 500 },
         },
@@ -3710,7 +3524,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 759, rate = 1000 },
             { itemId = 25531, rate = 700 },
             { itemId = 11649, rate = 500 },
         },
@@ -3727,7 +3540,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 762, rate = 1000 },
             { itemId = 23972, rate = 700 },
             { itemId = 11650, rate = 500 },
         },
@@ -3744,7 +3556,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 765, rate = 1000 },
             { itemId = 23414, rate = 700 },
             { itemId = 11646, rate = 500 },
         },
@@ -3761,7 +3572,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 768, rate = 1000 },
             { itemId = 26104, rate = 700 },
             { itemId = 15858, rate = 500 },
         },
@@ -3778,7 +3588,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 771, rate = 1000 },
             { itemId = 25532, rate = 700 },
             { itemId = 23520, rate = 500 },
         },
@@ -3795,7 +3604,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 774, rate = 1000 },
             { itemId = 23973, rate = 700 },
             { itemId = 11637, rate = 500 },
         },
@@ -3812,7 +3620,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 777, rate = 1000 },
             { itemId = 23974, rate = 700 },
             { itemId = 11639, rate = 500 },
         },
@@ -3829,7 +3636,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 780, rate = 1000 },
             { itemId = 11644, rate = 700 },
             { itemId = 23705, rate = 500 },
         },
@@ -3846,7 +3652,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 783, rate = 1000 },
             { itemId = 25533, rate = 700 },
             { itemId = 23528, rate = 500 },
         },
@@ -3863,7 +3668,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 786, rate = 1000 },
             { itemId = 23975, rate = 700 },
             { itemId = 11645, rate = 500 },
         },
@@ -3880,7 +3684,6 @@ nr.db = {
         spawnChance = 0.75,
         isAggro = true,
         loot = {
-            { itemId = 789, rate = 1000 },
             { itemId = 23976, rate = 700 },
             { itemId = 11664, rate = 500 },
         },
