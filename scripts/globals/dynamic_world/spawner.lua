@@ -170,6 +170,15 @@ spawner.rollTier = function(zd)
     local elitePressure = zd and zd.elitePressure or 0
     local apexPressure  = zd and zd.apexPressure  or 0
 
+    if zd and zd.eliteApexOnly then
+        return xi.dynamicWorld.weightedRandom({
+            0,
+            0,
+            70 + elitePressure,
+            30 + apexPressure,
+        })
+    end
+
     elite = elite + elitePressure
     apex  = apex  + apexPressure
 

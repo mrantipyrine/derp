@@ -112,16 +112,34 @@ local ELIGIBLE_ZONES =
     112, 113, 114, 115, 116, 117,
     118, 119, 120, 121, 122, 123,
     124, 125, 126, 127, 128,
+    -- Zilart elite/apex zones
+    130, 153, 154, 159, 160, 176, 177, 178, 205, 208,
     -- CoP
-    24, 25,
+    2, 4, 5, 7, 9, 11, 12, 16, 18, 20, 22, 24, 25, 27, 28, 29, 30, 33, 34, 35,
     -- ToAU
-    51, 52, 61, 65, 68, 79,
+    51, 52, 54, 61, 62, 65, 68, 72, 79,
     -- WotG
-    81, 82, 83, 84, 88, 89,
-    90, 91, 95, 97, 98, 136, 137,
+    81, 82, 83, 84, 85, 88, 89,
+    90, 91, 92, 95, 96, 97, 98, 99,
+    136, 137, 138, 155, 164, 171, 175,
     -- SoA
     260, 261,
 }
+
+local EXPANSION_ELITE_APEX_ZONES =
+{
+    -- Zilart
+    130, 153, 154, 159, 160, 176, 177, 178, 205, 208,
+    -- CoP
+    2, 4, 5, 7, 9, 11, 12, 16, 18, 20, 22, 24, 25, 27, 28, 29, 30, 33, 34, 35,
+    -- ToAU
+    51, 52, 54, 61, 62, 65, 68, 72, 79,
+    -- WotG
+    81, 82, 83, 84, 85, 88, 89, 90, 91, 92, 95, 96, 97, 98, 99,
+    136, 137, 138, 155, 164, 171, 175,
+}
+
+local EXPANSION_SPAWN_INTERVAL = 60
 
 local REGIONS =
 {
@@ -130,9 +148,10 @@ local REGIONS =
     sarutabaruta = { zones = { 115, 116, 117, 118, 119, 120 },              levelRange = { 1,  15 } },
     midlands     = { zones = { 103, 111, 112, 113, 114, 121, 122, 125, 126, 127, 128 }, levelRange = { 20, 75 } },
     elshimo      = { zones = { 123, 124 },                                  levelRange = { 25, 55 } },
-    tavnazia     = { zones = { 24,  25  },                                  levelRange = { 30, 60 } },
-    aradjiah     = { zones = { 51,  52,  61, 65, 68, 79 },                  levelRange = { 55, 80 } },
-    shadowreign  = { zones = { 81,  82,  83, 84, 88, 89, 90, 91, 95, 97, 98, 136, 137 }, levelRange = { 50, 80 } },
+    zilart       = { zones = { 130, 153, 154, 159, 160, 176, 177, 178, 205, 208 }, levelRange = { 60, 85 } },
+    tavnazia     = { zones = { 2, 4, 5, 7, 9, 11, 12, 16, 18, 20, 22, 24, 25, 27, 28, 29, 30, 33, 34, 35 }, levelRange = { 30, 80 } },
+    aradjiah     = { zones = { 51, 52, 54, 61, 62, 65, 68, 72, 79 },        levelRange = { 55, 80 } },
+    shadowreign  = { zones = { 81, 82, 83, 84, 85, 88, 89, 90, 91, 92, 95, 96, 97, 98, 99, 136, 137, 138, 155, 164, 171, 175 }, levelRange = { 50, 80 } },
 }
 
 local ZONE_LEVELS =
@@ -143,13 +162,31 @@ local ZONE_LEVELS =
     [115]={1,9},  [116]={1,9},  [117]={10,22}, [118]={15,27}, [119]={25,38},
     [120]={33,48},[121]={35,50},[122]={42,58}, [123]={38,52}, [124]={44,58},
     [125]={45,58},[126]={20,33},[127]={60,72}, [128]={65,75},
-    [24]={30,52}, [25]={35,55},
-    [51]={55,72}, [52]={55,72}, [61]={60,75},  [65]={62,75},  [68]={63,75}, [79]={65,75},
+    [130]={75,85},[153]={60,75},[154]={70,80}, [159]={55,75}, [160]={60,80},
+    [176]={55,75},[177]={75,85},[178]={75,85}, [205]={55,75}, [208]={50,70},
+    [2]={20,45},  [4]={30,55},  [5]={50,75},   [7]={35,65},   [9]={40,65},
+    [11]={25,45}, [12]={40,60}, [16]={30,50},  [18]={30,50},  [20]={30,50},
+    [22]={50,70}, [24]={30,52}, [25]={35,55},  [27]={35,55},  [28]={40,60},
+    [29]={40,60}, [30]={50,70}, [33]={70,85},  [34]={75,90},  [35]={75,90},
+    [51]={55,72}, [52]={55,72}, [54]={60,78},  [61]={60,75},  [62]={60,78},
+    [65]={62,75}, [68]={63,75}, [72]={65,80},  [79]={65,75},
     [81]={1,12},  [82]={18,32}, [83]={22,40},  [84]={30,48},  [88]={1,12},
-    [89]={22,40}, [90]={28,45}, [91]={35,52},  [95]={1,12},   [97]={30,48},
-    [98]={38,55}, [136]={48,62},[137]={55,70},
+    [85]={55,75}, [89]={22,40}, [90]={28,45},  [91]={35,52},  [92]={55,75},
+    [95]={1,12},  [96]={35,55}, [97]={30,48},  [98]={38,55},  [99]={55,75},
+    [136]={48,62},[137]={55,70},[138]={65,80}, [155]={70,85}, [164]={40,60},
+    [171]={40,60},[175]={40,60},
     [260]={90,99},[261]={90,99},
 }
+
+local function buildSet(list)
+    local set = {}
+    for _, value in ipairs(list) do
+        set[value] = true
+    end
+    return set
+end
+
+local EXPANSION_ELITE_APEX_SET = buildSet(EXPANSION_ELITE_APEX_ZONES)
 
 -----------------------------------
 -- Initialize
@@ -193,14 +230,17 @@ xi.dynamicWorld.init = function()
 
     state.zoneData = {}
     for zoneId, _ in pairs(state.eligibleZones) do
+        local zoneSpawnInterval = EXPANSION_ELITE_APEX_SET[zoneId] and math.min(spawnInterval, EXPANSION_SPAWN_INTERVAL) or spawnInterval
         state.zoneData[zoneId] = {
             entities      = {},
             count         = 0,
-            lastTick      = now - math.random(0, spawnInterval - 1),
+            lastTick      = now - math.random(0, zoneSpawnInterval - 1),
             lastRoamCheck = now - math.random(0, roamInterval  - 1),
             pendingSpawns = 0,
             elitePressure = 0,
             apexPressure  = 0,
+            eliteApexOnly = EXPANSION_ELITE_APEX_SET[zoneId] or false,
+            spawnInterval = zoneSpawnInterval,
         }
     end
 
@@ -241,7 +281,7 @@ xi.dynamicWorld.onZoneTick = function(zone)
     end
 
     local now = os.time()
-    local spawnInterval = getSetting('SPAWN_CHECK_INTERVAL') or 120
+    local spawnInterval = zd.spawnInterval or getSetting('SPAWN_CHECK_INTERVAL') or 120
 
     -- Spawn check
     if now - zd.lastTick >= spawnInterval then
@@ -383,6 +423,15 @@ xi.dynamicWorld.getStatus = function()
     }
 end
 
+xi.dynamicWorld.getEligibleZoneList = function()
+    local zones = {}
+    for _, zoneId in ipairs(ELIGIBLE_ZONES) do
+        zones[#zones + 1] = zoneId
+    end
+
+    return zones
+end
+
 -- Force spawn a specific tier in a zone (for GM use)
 xi.dynamicWorld.forceSpawn = function(zone, tier, count)
     local state = xi.dynamicWorld.state
@@ -391,6 +440,8 @@ xi.dynamicWorld.forceSpawn = function(zone, tier, count)
     if not state.zoneData[zoneId] then
         state.zoneData[zoneId] = {
             entities = {}, count = 0, lastTick = 0, lastRoamCheck = 0, pendingSpawns = 0,
+            eliteApexOnly = EXPANSION_ELITE_APEX_SET[zoneId] or false,
+            spawnInterval = EXPANSION_ELITE_APEX_SET[zoneId] and math.min(getSetting('SPAWN_CHECK_INTERVAL') or 120, EXPANSION_SPAWN_INTERVAL) or getSetting('SPAWN_CHECK_INTERVAL') or 120,
         }
     end
 
