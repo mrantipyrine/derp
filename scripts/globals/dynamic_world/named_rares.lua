@@ -37,13 +37,218 @@ local nr = xi.dynamicWorld.namedRares
 -- Track currently alive named rares: key -> mob entity reference
 nr.alive = nr.alive or {}
 
+-- Reusable visual families for named rares.  Dynamic entities borrow an
+-- existing mob_groups row for model, family, skills, and base behavior, so
+-- these references are deliberately spread across many monster families.
+local familyGroupRefs =
+{
+    sheep       = { { groupId = 13, groupZoneId = 24 }, { groupId = 6, groupZoneId = 25 }, { groupId = 13, groupZoneId = 81 } },
+    rabbit      = { { groupId = 19, groupZoneId = 4 }, { groupId = 1, groupZoneId = 5 }, { groupId = 2, groupZoneId = 6 } },
+    crab        = { { groupId = 1, groupZoneId = 1 }, { groupId = 2, groupZoneId = 2 }, { groupId = 1, groupZoneId = 11 } },
+    funguar     = { { groupId = 7, groupZoneId = 2 }, { groupId = 26, groupZoneId = 2 }, { groupId = 16, groupZoneId = 68 } },
+    goblin      = { { groupId = 23, groupZoneId = 4 }, { groupId = 25, groupZoneId = 4 }, { groupId = 27, groupZoneId = 4 } },
+    coeurl      = { { groupId = 9, groupZoneId = 7 }, { groupId = 17, groupZoneId = 7 }, { groupId = 15, groupZoneId = 45 } },
+    tiger       = { { groupId = 28, groupZoneId = 2 }, { groupId = 34, groupZoneId = 2 }, { groupId = 2, groupZoneId = 5 } },
+    mandragora  = { { groupId = 13, groupZoneId = 4 }, { groupId = 38, groupZoneId = 38 }, { groupId = 1, groupZoneId = 45 } },
+    beetle      = { { groupId = 6, groupZoneId = 2 }, { groupId = 19, groupZoneId = 2 }, { groupId = 32, groupZoneId = 2 } },
+    crawler     = { { groupId = 13, groupZoneId = 68 }, { groupId = 20, groupZoneId = 91 }, { groupId = 30, groupZoneId = 91 } },
+    bird        = { { groupId = 14, groupZoneId = 4 }, { groupId = 21, groupZoneId = 4 }, { groupId = 2, groupZoneId = 30 } },
+    bee         = { { groupId = 10, groupZoneId = 2 }, { groupId = 30, groupZoneId = 2 }, { groupId = 12, groupZoneId = 24 } },
+    worm        = { { groupId = 25, groupZoneId = 7 }, { groupId = 21, groupZoneId = 68 }, { groupId = 24, groupZoneId = 68 } },
+    lizard      = { { groupId = 10, groupZoneId = 7 }, { groupId = 21, groupZoneId = 7 }, { groupId = 44, groupZoneId = 9 } },
+    orc         = { { groupId = 14, groupZoneId = 2 }, { groupId = 15, groupZoneId = 2 }, { groupId = 21, groupZoneId = 2 } },
+    yagudo      = { { groupId = 82, groupZoneId = 37 }, { groupId = 83, groupZoneId = 37 }, { groupId = 84, groupZoneId = 37 } },
+    quadav      = { { groupId = 76, groupZoneId = 37 }, { groupId = 77, groupZoneId = 37 }, { groupId = 78, groupZoneId = 37 } },
+    bat         = { { groupId = 8, groupZoneId = 2 }, { groupId = 9, groupZoneId = 2 }, { groupId = 7, groupZoneId = 5 } },
+    snake       = { { groupId = 36, groupZoneId = 89 }, { groupId = 6, groupZoneId = 90 }, { groupId = 14, groupZoneId = 90 } },
+    leech       = { { groupId = 31, groupZoneId = 15 }, { groupId = 9, groupZoneId = 24 }, { groupId = 24, groupZoneId = 24 } },
+    skeleton    = { { groupId = 24, groupZoneId = 2 }, { groupId = 25, groupZoneId = 2 }, { groupId = 19, groupZoneId = 5 } },
+    scorpion    = { { groupId = 5, groupZoneId = 7 }, { groupId = 29, groupZoneId = 7 }, { groupId = 35, groupZoneId = 7 } },
+    spider      = { { groupId = 44, groupZoneId = 27 }, { groupId = 23, groupZoneId = 51 }, { groupId = 6, groupZoneId = 52 } },
+    slime       = { { groupId = 9, groupZoneId = 1 }, { groupId = 9, groupZoneId = 3 }, { groupId = 5, groupZoneId = 11 } },
+    pugil       = { { groupId = 2, groupZoneId = 1 }, { groupId = 7, groupZoneId = 1 }, { groupId = 17, groupZoneId = 2 } },
+    golem       = { { groupId = 57, groupZoneId = 9 }, { groupId = 85, groupZoneId = 41 }, { groupId = 53, groupZoneId = 77 } },
+    gigas       = { { groupId = 26, groupZoneId = 24 }, { groupId = 27, groupZoneId = 24 }, { groupId = 54, groupZoneId = 24 } },
+    treant      = { { groupId = 66, groupZoneId = 24 }, { groupId = 67, groupZoneId = 24 }, { groupId = 39, groupZoneId = 15 } },
+    pixie       = { { groupId = 24, groupZoneId = 81 }, { groupId = 36, groupZoneId = 81 }, { groupId = 88, groupZoneId = 80 } },
+    tonberry    = { { groupId = 42, groupZoneId = 2 }, { groupId = 43, groupZoneId = 2 }, { groupId = 20, groupZoneId = 9 } },
+    seaMonk     = { { groupId = 3, groupZoneId = 3 }, { groupId = 10, groupZoneId = 3 }, { groupId = 16, groupZoneId = 4 } },
+    hippogryph  = { { groupId = 3, groupZoneId = 29 }, { groupId = 5, groupZoneId = 29 }, { groupId = 12, groupZoneId = 29 } },
+    roc         = { { groupId = 120, groupZoneId = 77 }, { groupId = 41, groupZoneId = 110 }, { groupId = 6, groupZoneId = 222 } },
+    dhalmel     = { { groupId = 20, groupZoneId = 4 }, { groupId = 33, groupZoneId = 4 }, { groupId = 52, groupZoneId = 38 } },
+    cactuar     = { { groupId = 10, groupZoneId = 125 }, { groupId = 24, groupZoneId = 125 }, { groupId = 52, groupZoneId = 77 } },
+    buffalo     = { { groupId = 5, groupZoneId = 5 }, { groupId = 13, groupZoneId = 5 }, { groupId = 45, groupZoneId = 5 } },
+    antlion     = { { groupId = 1, groupZoneId = 7 }, { groupId = 20, groupZoneId = 7 }, { groupId = 49, groupZoneId = 7 } },
+    dragon      = { { groupId = 93, groupZoneId = 37 }, { groupId = 102, groupZoneId = 40 }, { groupId = 46, groupZoneId = 15 } },
+    automaton   = { { groupId = 15, groupZoneId = 13 }, { groupId = 62, groupZoneId = 48 }, { groupId = 64, groupZoneId = 48 } },
+    evilWeapon  = { { groupId = 35, groupZoneId = 38 }, { groupId = 36, groupZoneId = 38 }, { groupId = 77, groupZoneId = 41 } },
+    ghost       = { { groupId = 18, groupZoneId = 8 }, { groupId = 17, groupZoneId = 5 }, { groupId = 50, groupZoneId = 15 } },
+    ahriman     = { { groupId = 20, groupZoneId = 5 }, { groupId = 31, groupZoneId = 5 }, { groupId = 43, groupZoneId = 15 } },
+    vulture     = { { groupId = 21, groupZoneId = 106 }, { groupId = 2, groupZoneId = 30 }, { groupId = 26, groupZoneId = 25 } },
+    opoOpo      = { { groupId = 12, groupZoneId = 4 }, { groupId = 5, groupZoneId = 38 }, { groupId = 49, groupZoneId = 38 } },
+    hound       = { { groupId = 10, groupZoneId = 109 }, { groupId = 18, groupZoneId = 88 }, { groupId = 30, groupZoneId = 68 } },
+    adamantoise = { { groupId = 23, groupZoneId = 38 }, { groupId = 18, groupZoneId = 45 }, { groupId = 32, groupZoneId = 76 } },
+    morbol      = { { groupId = 41, groupZoneId = 2 }, { groupId = 41, groupZoneId = 25 }, { groupId = 6, groupZoneId = 29 } },
+    wamoura     = { { groupId = 43, groupZoneId = 48 }, { groupId = 47, groupZoneId = 48 }, { groupId = 24, groupZoneId = 61 } },
+    flytrap     = { { groupId = 8, groupZoneId = 1 }, { groupId = 13, groupZoneId = 2 }, { groupId = 20, groupZoneId = 2 } },
+    elemental   = { { groupId = 10, groupZoneId = 1 }, { groupId = 11, groupZoneId = 1 }, { groupId = 6, groupZoneId = 5 }, { groupId = 27, groupZoneId = 7 } },
+    bomb        = { { groupId = 11, groupZoneId = 2 }, { groupId = 20, groupZoneId = 11 }, { groupId = 19, groupZoneId = 15 } },
+    raptor      = { { groupId = 30, groupZoneId = 97 }, { groupId = 20, groupZoneId = 119 }, { groupId = 15, groupZoneId = 113 } },
+    ram         = { { groupId = 30, groupZoneId = 102 }, { groupId = 28, groupZoneId = 108 }, { groupId = 29, groupZoneId = 108 } },
+    manticore   = { { groupId = 32, groupZoneId = 77 }, { groupId = 33, groupZoneId = 114 }, { groupId = 16, groupZoneId = 125 } },
+    eft         = { { groupId = 22, groupZoneId = 4 }, { groupId = 6, groupZoneId = 45 }, { groupId = 29, groupZoneId = 76 } },
+    gargoyle    = { { groupId = 1, groupZoneId = 9 }, { groupId = 47, groupZoneId = 9 }, { groupId = 51, groupZoneId = 9 } },
+    demon       = { { groupId = 21, groupZoneId = 5 }, { groupId = 24, groupZoneId = 5 }, { groupId = 10, groupZoneId = 112 }, { groupId = 2, groupZoneId = 138 } },
+}
+
+local rareVisualOverrides =
+{
+    big_jim =
+    {
+        { groupId = 20, groupZoneId = 100 }, -- Goblin Weaver
+        { groupId = 22, groupZoneId = 101 }, -- Goblin Weaver
+        { groupId = 15, groupZoneId = 106 }, -- Goblin Weaver
+    },
+
+    little_jim =
+    {
+        { groupId = 37, groupZoneId = 103 }, -- Hobgoblin Warrior
+        { groupId = 34, groupZoneId = 111 }, -- Hobgoblin Warrior
+        { groupId = 29, groupZoneId = 113 }, -- Hobgoblin Warrior
+    },
+
+    earthcrawler_ern =
+    {
+        { groupId = 48, groupZoneId = 5 },  -- Mountain Worm NM
+        { groupId = 37, groupZoneId = 81 }, -- Sandworm
+        { groupId = 35, groupZoneId = 84 }, -- Sandworm
+    },
+    earthcrawler_ernest =
+    {
+        { groupId = 48, groupZoneId = 5 },  -- Mountain Worm NM
+        { groupId = 37, groupZoneId = 81 }, -- Sandworm
+        { groupId = 35, groupZoneId = 84 }, -- Sandworm
+    },
+}
+
+local rareFamilyRules =
+{
+    { 'wooly', 'sheep' }, { 'baarbara', 'sheep' }, { 'lambchop', 'sheep' }, { 'shear', 'sheep' },
+    { 'bouncy', 'rabbit' }, { 'cottontail', 'rabbit' }, { 'hopscotch', 'rabbit' }, { 'bunbun', 'rabbit' }, { 'twitchy', 'rabbit' },
+    { 'crushing', 'crab' }, { 'crab', 'crab' }, { 'bay_', 'crab' }, { 'bisque', 'crab' }, { 'dungeness', 'crab' },
+    { 'mushroom', 'funguar' }, { 'chanterelle', 'funguar' }, { 'portobello', 'funguar' }, { 'truffle', 'funguar' },
+    { 'bargain', 'goblin' }, { 'swindler', 'goblin' }, { 'shiny', 'goblin' }, { 'sneaky', 'goblin' }, { 'jim', 'goblin' },
+    { 'whiskers', 'coeurl' }, { 'purring', 'coeurl' }, { 'nine_lives', 'coeurl' },
+    { 'stripey', 'tiger' }, { 'mauler', 'tiger' }, { 'saber', 'tiger' },
+    { 'root_', 'mandragora' }, { 'sprout', 'mandragora' }, { 'mandrake', 'mandragora' }, { 'manic', 'mandragora' },
+    { 'click', 'beetle' }, { 'dung_', 'beetle' }, { 'scarab', 'beetle' }, { 'venerable', 'beetle' },
+    { 'silk', 'crawler' }, { 'cocoon', 'crawler' }, { 'larval', 'crawler' }, { 'spinning', 'crawler' }, { 'metamorphing', 'wamoura' }, { 'melpomene', 'wamoura' },
+    { 'feather', 'bird' }, { 'beaky', 'bird' }, { 'plume', 'bird' }, { 'fledgling_fiorentina', 'roc' }, { 'stormrider', 'roc' }, { 'tempest_lord', 'roc' }, { 'ancient_roc', 'roc' },
+    { 'honey', 'bee' }, { 'buzzard_barry', 'bee' }, { 'queen_quentin', 'bee' }, { 'buzzing', 'bee' }, { 'droning', 'bee' }, { 'plague_bearer', 'bee' }, { 'swarm', 'bee' },
+    { 'wiggles', 'worm' }, { 'squirmy', 'worm' }, { 'earthcrawler', 'worm' },
+    { 'scaly', 'lizard' }, { 'coldblooded', 'lizard' }, { 'basilisk', 'lizard' },
+    { 'grunt', 'orc' }, { 'sergeant', 'orc' }, { 'raging', 'orc' }, { 'overlord', 'orc' },
+    { 'fledgling_fenwick', 'yagudo' }, { 'devout', 'yagudo' }, { 'high_priest', 'yagudo' }, { 'divine', 'yagudo' },
+    { 'copper', 'quadav' }, { 'silver', 'quadav' }, { 'boulder', 'quadav' }, { 'diamond', 'quadav' },
+    { 'flittering', 'bat' }, { 'echo', 'bat' }, { 'vampiric', 'bat' }, { 'ancient_araminta', 'bat' },
+    { 'slithering', 'snake' }, { 'hypnotic', 'snake' }, { 'constrictor', 'snake' }, { 'venom_duchess', 'snake' }, { 'coiling', 'snake' }, { 'charming', 'snake' }, { 'seductive', 'snake' }, { 'serpent', 'snake' },
+    { 'gnawing', 'leech' }, { 'festering', 'leech' }, { 'hunger', 'leech' }, { 'bloodsucking', 'leech' }, { 'gorging', 'leech' }, { 'plasma', 'leech' }, { 'lamprey', 'leech' },
+    { 'rattling', 'skeleton' }, { 'cursed_cavendish', 'skeleton' }, { 'bonewalker', 'skeleton' }, { 'lich', 'skeleton' },
+    { 'deathstalker', 'scorpion' }, { 'snapping_simeon', 'scorpion' }, { 'venomous_vespera', 'scorpion' }, { 'pincer_patriarch', 'scorpion' },
+    { 'weaving', 'spider' }, { 'sticky', 'spider' }, { 'ensnaring', 'spider' }, { 'great_weaver', 'spider' },
+    { 'oozing', 'slime' }, { 'bubbling', 'slime' }, { 'corrosive', 'slime' }, { 'primordial', 'slime' },
+    { 'splashing', 'pugil' }, { 'snapping_sicily', 'pugil' }, { 'torrent', 'pugil' }, { 'deep_king', 'pugil' },
+    { 'lumbering', 'golem' }, { 'thundering', 'golem' }, { 'crasher', 'golem' }, { 'patriarch_percival', 'golem' },
+    { 'clumsy', 'gigas' }, { 'booming', 'gigas' }, { 'crusher_conrad', 'gigas' }, { 'titan', 'gigas' },
+    { 'mossy', 'treant' }, { 'ancient_aldric', 'treant' }, { 'elder_grove', 'treant' }, { 'world_tree', 'treant' },
+    { 'mischief', 'pixie' }, { 'trickster', 'pixie' }, { 'hexing', 'pixie' }, { 'grand_trickster', 'pixie' },
+    { 'tortuga', 'tonberry' }, { 'shuffling', 'tonberry' }, { 'grudge', 'tonberry' }, { 'last_tonberry', 'tonberry' },
+    { 'rippling', 'seaMonk' }, { 'tidecaller', 'seaMonk' }, { 'brine', 'seaMonk' }, { 'deep_sovereign', 'seaMonk' },
+    { 'prancing', 'hippogryph' }, { 'thunderwing', 'hippogryph' }, { 'skydancer', 'hippogryph' }, { 'heavenrider', 'hippogryph' },
+    { 'stumbling', 'dhalmel' }, { 'pirouetting', 'dhalmel' }, { 'spiky', 'cactuar' }, { 'desert_lazaro', 'cactuar' },
+    { 'lowing', 'buffalo' }, { 'thunderhoof', 'buffalo' }, { 'gore_king', 'buffalo' }, { 'primal', 'buffalo' },
+    { 'sand_trap', 'antlion' }, { 'burrowing', 'antlion' }, { 'crusher_crescentia', 'antlion' }, { 'antlion', 'antlion' },
+    { 'winged', 'dragon' }, { 'drake', 'dragon' }, { 'venomfang', 'dragon' }, { 'wyrm', 'dragon' },
+    { 'wind_up', 'automaton' }, { 'clockwork', 'automaton' }, { 'armature', 'automaton' }, { 'puppet', 'automaton' },
+    { 'dancing', 'evilWeapon' }, { 'whirling', 'evilWeapon' }, { 'cursed_blade', 'evilWeapon' }, { 'executioner', 'evilWeapon' },
+    { 'wailing', 'ghost' }, { 'shrieking', 'ghost' }, { 'phantom', 'ghost' }, { 'mourner', 'ghost' },
+    { 'blinking', 'ahriman' }, { 'staring', 'ahriman' }, { 'paralytic', 'ahriman' }, { 'all_seeing', 'ahriman' },
+    { 'scavenging', 'vulture' }, { 'carrion_circling', 'vulture' }, { 'carrion_cornelius', 'vulture' }, { 'bone_picker', 'vulture' }, { 'sky_sovereign', 'vulture' },
+    { 'chittering', 'opoOpo' }, { 'thieving', 'opoOpo' }, { 'banana', 'opoOpo' }, { 'primate', 'opoOpo' },
+    { 'gnashing', 'hound' }, { 'pack_lord', 'hound' }, { 'mauling', 'hound' }, { 'alpha', 'hound' },
+    { 'tortoise', 'adamantoise' }, { 'armored', 'adamantoise' }, { 'elder_shell', 'adamantoise' }, { 'adamantoise', 'adamantoise' },
+    { 'crackling', 'flytrap' }, { 'ferocious', 'flytrap' }, { 'brutal', 'gigas' }, { 'gale', 'bird' }, { 'venomous_valentina', 'morbol' }, { 'deep_dweller', 'slime' },
+    { 'flickering', 'elemental' }, { 'glowing', 'elemental' }, { 'prismatic', 'elemental' },
+    { 'volatile', 'bomb' }, { 'explosive', 'bomb' }, { 'fused', 'bomb' },
+    { 'velociraptor', 'raptor' }, { 'vicious', 'raptor' }, { 'talon', 'raptor' },
+    { 'battering', 'ram' }, { 'tremor', 'ram' }, { 'mountain_king', 'ram' },
+    { 'lesser_manticore', 'manticore' }, { 'greater_manticore', 'manticore' }, { 'desert_manticore', 'manticore' },
+    { 'deft', 'eft' }, { 'nimble', 'eft' }, { 'toxic', 'eft' },
+    { 'stony', 'gargoyle' }, { 'obsidian', 'gargoyle' }, { 'monolithic', 'gargoyle' },
+    { 'dread', 'demon' }, { 'stygian', 'demon' }, { 'abyssal', 'demon' },
+}
+
+local function normalizeRareKey(key)
+    if type(key) ~= 'string' then
+        return nil
+    end
+
+    local normalized = key:lower()
+    normalized = string.gsub(normalized, '[^%w]+', '_')
+    normalized = string.gsub(normalized, '^_+', '')
+    normalized = string.gsub(normalized, '_+$', '')
+
+    return normalized
+end
+
+local function getVisualOverride(config)
+    local groupKey = normalizeRareKey(config.groupRef)
+    if groupKey and rareVisualOverrides[groupKey] then
+        return rareVisualOverrides[groupKey]
+    end
+
+    local nameKey = normalizeRareKey(config.name)
+    if nameKey and rareVisualOverrides[nameKey] then
+        return rareVisualOverrides[nameKey]
+    end
+
+    return nil
+end
+
+local function getFamilyForKey(key)
+    if type(key) ~= 'string' then
+        return nil
+    end
+
+    local normalized = key:lower()
+    for _, rule in ipairs(rareFamilyRules) do
+        if string.find(normalized, rule[1], 1, true) then
+            return rule[2]
+        end
+    end
+
+    return nil
+end
+
 -- Pick a random groupRef from a config entry.
 -- Supports either a single 'groupRef' or a 'groupRefs' array for visual variety.
 local function pickGroupRef(config)
+    local visualRefs = getVisualOverride(config)
+    if visualRefs and #visualRefs > 0 then
+        return visualRefs[math.random(#visualRefs)]
+    end
+
     local refs = config.groupRefs
     if refs and #refs > 0 then
         return refs[math.random(#refs)]
     end
+
+    local family = config.family or getFamilyForKey(config.groupRef) or getFamilyForKey(config.name)
+    local familyRefs = family and familyGroupRefs[family]
+    if familyRefs and #familyRefs > 0 then
+        return familyRefs[math.random(#familyRefs)]
+    end
+
     return config.groupRef
 end
 
@@ -3680,6 +3885,142 @@ nr.db = {
             { itemId = 11664, rate = 500 },
         },
         deathMsg = "Melpomene has been slain! Its rare treasures await...",
+    },
+    ["flickering_flavius"] = {
+        name = "Flickering Flavius",
+        packetName = "FlckrFlavs",
+        groupRef = "flickering_flavius",
+        zones = { xi.zone.ULEGUERAND_RANGE, xi.zone.ATTOHWA_CHASM },
+        level = { 38, 42 },
+        spawnTimer = 10800,
+        spawnWindow = 3600,
+        spawnChance = 750,
+        isAggro = true,
+        loot = {
+            { itemId = 792, rate = 1000 },
+            { itemId = 23977, rate = 700 },
+            { itemId = 11665, rate = 500 },
+        },
+        deathMsg = "Flickering Flavius has been dissipated! Its rare treasures await...",
+    },
+    ["volatile_valerius"] = {
+        name = "Volatile Valerius",
+        packetName = "VltleVlrs",
+        groupRef = "volatile_valerius",
+        zones = { xi.zone.OLDTON_MOVALPOLOS, xi.zone.MINE_SHAFT_2716 },
+        level = { 42, 45 },
+        spawnTimer = 10800,
+        spawnWindow = 3600,
+        spawnChance = 750,
+        isAggro = true,
+        loot = {
+            { itemId = 795, rate = 1000 },
+            { itemId = 23978, rate = 700 },
+            { itemId = 11666, rate = 500 },
+        },
+        deathMsg = "Volatile Valerius has exploded! Its rare treasures await...",
+    },
+    ["vicious_valentinian"] = {
+        name = "Vicious Valentinian",
+        packetName = "VicsVlntn",
+        groupRef = "vicious_valentinian",
+        zones = { xi.zone.BIBIKI_BAY, xi.zone.ULEGUERAND_RANGE },
+        level = { 45, 48 },
+        spawnTimer = 10800,
+        spawnWindow = 3600,
+        spawnChance = 750,
+        isAggro = true,
+        loot = {
+            { itemId = 798, rate = 1000 },
+            { itemId = 23979, rate = 700 },
+            { itemId = 11667, rate = 500 },
+        },
+        deathMsg = "Vicious Valentinian has been slain! Its rare treasures await...",
+    },
+    ["battering_basilius"] = {
+        name = "Battering Basilius",
+        packetName = "BtrngBsls",
+        groupRef = "battering_basilius",
+        zones = { xi.zone.LUFAISE_MEADOWS, xi.zone.MISAREAUX_COAST },
+        level = { 48, 52 },
+        spawnTimer = 10800,
+        spawnWindow = 3600,
+        spawnChance = 750,
+        isAggro = true,
+        loot = {
+            { itemId = 801, rate = 1000 },
+            { itemId = 23980, rate = 700 },
+            { itemId = 11668, rate = 500 },
+        },
+        deathMsg = "Battering Basilius has been toppled! Its rare treasures await...",
+    },
+    ["lesser_manticore_lucilius"] = {
+        name = "Lesser Manticore Lucilius",
+        packetName = "LssrMntcLcl",
+        groupRef = "lesser_manticore_lucilius",
+        zones = { xi.zone.EASTERN_ALTEPA_DESERT, xi.zone.WESTERN_ALTEPA_DESERT },
+        level = { 50, 55 },
+        spawnTimer = 10800,
+        spawnWindow = 3600,
+        spawnChance = 750,
+        isAggro = true,
+        loot = {
+            { itemId = 804, rate = 1000 },
+            { itemId = 23981, rate = 700 },
+            { itemId = 11669, rate = 500 },
+        },
+        deathMsg = "Lesser Manticore Lucilius has been slain! Its rare treasures await...",
+    },
+    ["deft_drusus"] = {
+        name = "Deft Drusus",
+        packetName = "DeftDrusus",
+        groupRef = "deft_drusus",
+        zones = { xi.zone.BIBIKI_BAY, xi.zone.ABYSSEA_KONSCHTAT },
+        level = { 52, 56 },
+        spawnTimer = 10800,
+        spawnWindow = 3600,
+        spawnChance = 750,
+        isAggro = true,
+        loot = {
+            { itemId = 807, rate = 1000 },
+            { itemId = 23982, rate = 700 },
+            { itemId = 11670, rate = 500 },
+        },
+        deathMsg = "Deft Drusus has been slain! Its rare treasures await...",
+    },
+    ["stony_stefanus"] = {
+        name = "Stony Stefanus",
+        packetName = "StnyStfns",
+        groupRef = "stony_stefanus",
+        zones = { xi.zone.PSOXJA },
+        level = { 55, 60 },
+        spawnTimer = 10800,
+        spawnWindow = 3600,
+        spawnChance = 750,
+        isAggro = true,
+        loot = {
+            { itemId = 810, rate = 1000 },
+            { itemId = 23983, rate = 700 },
+            { itemId = 11671, rate = 500 },
+        },
+        deathMsg = "Stony Stefanus has been shattered! Its rare treasures await...",
+    },
+    ["dread_decimus"] = {
+        name = "Dread Decimus",
+        packetName = "DreadDecms",
+        groupRef = "dread_decimus",
+        zones = { xi.zone.ULEGUERAND_RANGE, xi.zone.TEMENOS },
+        level = { 58, 65 },
+        spawnTimer = 10800,
+        spawnWindow = 3600,
+        spawnChance = 750,
+        isAggro = true,
+        loot = {
+            { itemId = 813, rate = 1000 },
+            { itemId = 23984, rate = 700 },
+            { itemId = 11672, rate = 500 },
+        },
+        deathMsg = "Dread Decimus has been banished! Its rare treasures await...",
     },
 }
 
