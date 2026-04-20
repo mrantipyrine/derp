@@ -40,8 +40,8 @@ REPLACE INTO `item_basic` VALUES (6, 0, 'William_Wool', 'william_wool', 1, 59476
 REPLACE INTO `item_basic` VALUES (20, 0, 'William_Woolcap', 'william_woolcap', 1, 59476, 99, 0, 400);
 REPLACE INTO `item_basic` VALUES (79, 0, 'Wllm_Woolmitt', 'wllm_woolmitt', 1, 59476, 99, 0, 600);
 
-REPLACE INTO `item_equipment` VALUES (20, "williams_woolcap", 15, 0, 4194303, 0, 0, 0, 16, 0, 0, 0); -- HEAD
-REPLACE INTO `item_equipment` VALUES (79, "williams_woolmitt", 9, 0, 4194303, 0, 0, 0, 64, 0, 0, 0); -- HANDS
+REPLACE INTO `item_equipment` VALUES (20, "williams_woolcap", 15, 0, 4194303, 388, 0, 0, 16, 0, 0, 0); -- HEAD
+REPLACE INTO `item_equipment` VALUES (79, "williams_woolmitt", 9, 0, 4194303, 56, 0, 0, 64, 0, 0, 0); -- HANDS
 
 REPLACE INTO `item_mods` VALUES (20, 2, 20),(20, 9, 3),(20,10, 3);  -- HP+20 MND+3 CHR+3
 REPLACE INTO `item_mods` VALUES (79, 1,  6),(79, 6, 3),(79, 2,15);  -- DEF+6 VIT+3 HP+15
@@ -73,7 +73,7 @@ REPLACE INTO `item_basic` VALUES (89, 0, 'Sharon_Fleece', 'sharon_fleece', 1, 59
 REPLACE INTO `item_basic` VALUES (90, 0, 'Sharon_Shears', 'sharon_shears', 1, 59476, 99, 0, 8000);
 REPLACE INTO `item_basic` VALUES (94, 0, 'Sharon_Mantle', 'sharon_mantle', 1, 59476, 99, 0, 12000);
 
-REPLACE INTO `item_equipment` VALUES (90, "sharons_shearing_shears", 60, 0, 4194303, 0, 0, 0, 64, 0, 0, 0); -- HANDS
+REPLACE INTO `item_equipment` VALUES (90, "sharons_shearing_shears", 60, 0, 4194303, 56, 0, 0, 64, 0, 0, 0); -- HANDS
 REPLACE INTO `item_equipment` VALUES (94, "sharons_silken_mantle", 34, 0, 4194303, 0, 0, 0, 32768, 0, 0, 0); -- BACK
 
 REPLACE INTO `item_mods` VALUES (90, 4, 8),(90, 5, 8),(90,12,12),(90,11,12);  -- STR+8 DEX+8 ACC+12 ATT+12
@@ -99,8 +99,8 @@ REPLACE INTO `item_basic` VALUES (153, 0, 'Harvey_Foot', 'harvey_foot', 1, 59476
 REPLACE INTO `item_basic` VALUES (155, 0, 'Harvey_Hoppers', 'harvey_hoppers', 1, 59476, 99, 0, 1500);
 REPLACE INTO `item_basic` VALUES (156, 0, 'Harvey_Headband', 'harvey_headband', 1, 59476, 99, 0, 2000);
 
-REPLACE INTO `item_equipment` VALUES (155, "harveys_hoppers", 30, 0, 4194303, 0, 0, 0, 256, 0, 0, 0); -- FEET
-REPLACE INTO `item_equipment` VALUES (156, "harveys_headband", 5, 0, 4194303, 0, 0, 0, 16, 0, 0, 0); -- HEAD
+REPLACE INTO `item_equipment` VALUES (155, "harveys_hoppers", 30, 0, 4194303, 115, 0, 0, 256, 0, 0, 0); -- FEET
+REPLACE INTO `item_equipment` VALUES (156, "harveys_headband", 5, 0, 4194303, 388, 0, 0, 16, 0, 0, 0); -- HEAD
 
 REPLACE INTO `item_mods` VALUES (155, 7, 5),(155,13, 8),(155, 5, 3);  -- AGI+5 EVA+8 DEX+3
 REPLACE INTO `item_mods` VALUES (156, 5, 5),(156, 7, 5),(156, 2,25);  -- DEX+5 AGI+5 HP+25
@@ -110,7 +110,7 @@ REPLACE INTO `item_basic` VALUES (158, 0, 'Benedict_Bonnet', 'benedict_bonnet', 
 REPLACE INTO `item_basic` VALUES (159, 0, 'Bun-bun_Bangle', 'bunbun_bangle', 1, 59476, 99, 0, 4000);
 REPLACE INTO `item_basic` VALUES (160, 0, 'Benedict_Wrap', 'benedict_wrap', 1, 59476, 99, 0, 6000);
 
-REPLACE INTO `item_equipment` VALUES (159, "bunbun_bangle", 44, 0, 4194303, 0, 0, 0, 64, 0, 0, 0); -- HANDS
+REPLACE INTO `item_equipment` VALUES (159, "bunbun_bangle", 44, 0, 4194303, 56, 0, 0, 64, 0, 0, 0); -- HANDS
 REPLACE INTO `item_equipment` VALUES (160, "benedicts_battle_wrap", 45, 0, 4194303, 0, 0, 0, 1024, 0, 0, 0); -- WAIST
 
 REPLACE INTO `item_mods` VALUES (159, 5, 7),(159,13,10),(159,12, 8);  -- DEX+7 EVA+10 ACC+8
@@ -148,7 +148,7 @@ REPLACE INTO `item_basic` VALUES (169, 0, 'Old_Bay_Buckler', 'old_bay_buckler', 
 REPLACE INTO `item_basic` VALUES (170, 0, 'Ollie_Mitts', 'ollie_mitts', 1, 59476, 99, 0, 7000);
 
 REPLACE INTO `item_equipment` VALUES (169, "old_bay_buckler", 29, 0, 4194303, 0, 0, 0, 512, 0, 0, 0); -- NECK
-REPLACE INTO `item_equipment` VALUES (170, "ollies_oven_mitts", 43, 0, 4194303, 0, 0, 0, 64, 0, 0, 0); -- HANDS
+REPLACE INTO `item_equipment` VALUES (170, "ollies_oven_mitts", 43, 0, 4194303, 56, 0, 0, 64, 0, 0, 0); -- HANDS
 
 REPLACE INTO `item_mods` VALUES (169, 1,12),(169, 2,50),(169, 6, 8);  -- DEF+12 HP+50 VIT+8
 REPLACE INTO `item_mods` VALUES (170, 1,10),(170, 4, 8),(170,11,14);  -- DEF+10 STR+8 ATT+14
@@ -185,7 +185,7 @@ REPLACE INTO `item_basic` VALUES (177, 0, 'Chanterelle_Cap', 'chanterelle_cap', 
 REPLACE INTO `item_basic` VALUES (178, 0, 'CpnChntrll_Hat', 'cpnchntrll_hat', 1, 59476, 99, 0, 3500);
 REPLACE INTO `item_basic` VALUES (179, 0, 'Chntrll_Choker', 'chntrll_choker', 1, 59476, 99, 0, 5000);
 
-REPLACE INTO `item_equipment` VALUES (178, "capn_chanterelles_hat", 61, 0, 4194303, 0, 0, 0, 16, 0, 0, 0); -- HEAD
+REPLACE INTO `item_equipment` VALUES (178, "capn_chanterelles_hat", 61, 0, 4194303, 388, 0, 0, 16, 0, 0, 0); -- HEAD
 REPLACE INTO `item_equipment` VALUES (179, "chanterelle_choker", 45, 0, 4194303, 0, 0, 0, 6144, 0, 0, 0); -- NECK
 
 REPLACE INTO `item_mods` VALUES (178, 8, 6),(178, 9, 6),(178, 3,30),(178,14,10);  -- INT+6 MND+6 MP+30 MATK+10
@@ -207,8 +207,8 @@ REPLACE INTO `item_basic` VALUES (183, 0, 'Trevor_Truffle', 'trevor_truffle', 1,
 REPLACE INTO `item_basic` VALUES (184, 0, 'TrfflTrvr_Crown', 'trffltrvr_crown', 1, 59476, 99, 0, 25000);
 REPLACE INTO `item_basic` VALUES (185, 0, 'Trevor_Tricorne', 'trevor_tricorne', 1, 59476, 99, 0, 35000);
 
-REPLACE INTO `item_equipment` VALUES (184, "truffle_trevors_crown", 75, 0, 4194303, 0, 0, 0, 16, 0, 0, 0); -- HEAD
-REPLACE INTO `item_equipment` VALUES (185, "trevors_tricorne", 74, 0, 4194303, 0, 0, 0, 16, 0, 0, 0); -- HEAD (alt)
+REPLACE INTO `item_equipment` VALUES (184, "truffle_trevors_crown", 75, 0, 4194303, 388, 0, 0, 16, 0, 0, 0); -- HEAD
+REPLACE INTO `item_equipment` VALUES (185, "trevors_tricorne", 74, 0, 4194303, 388, 0, 0, 16, 0, 0, 0); -- HEAD (alt)
 
 REPLACE INTO `item_mods` VALUES (184, 8,14),(184, 9,14),(184, 3,60),(184,14,25),(184,15,20),(184,47,10);  -- INT+14 MND+14 MP+60 MATK+25 MACC+20 Haste+10
 REPLACE INTO `item_mods` VALUES (185, 8,12),(185, 9,12),(185,10,10),(185, 2,80),(185,14,20),(185,23,15);  -- INT+12 MND+12 CHR+10 HP+80 MATK+20 MDEF+15
@@ -244,7 +244,7 @@ REPLACE INTO `item_basic` VALUES (195, 0, 'Steve_Shiny', 'steve_shiny', 1, 59476
 REPLACE INTO `item_basic` VALUES (196, 0, 'Shny_Spectacles', 'shny_spectacles', 1, 59476, 99, 0, 20000);
 REPLACE INTO `item_basic` VALUES (201, 0, 'Steve_Earring', 'steve_earring', 1, 59476, 99, 0, 28000);
 
-REPLACE INTO `item_equipment` VALUES (196, "shiny_steves_spectacles", 71, 0, 4194303, 0, 0, 0, 16, 0, 0, 0); -- HEAD
+REPLACE INTO `item_equipment` VALUES (196, "shiny_steves_spectacles", 71, 0, 4194303, 388, 0, 0, 16, 0, 0, 0); -- HEAD
 REPLACE INTO `item_equipment` VALUES (201, "steves_sparkle_earring", 51, 0, 4194303, 0, 0, 0, 6144, 0, 0, 0); -- EAR
 
 REPLACE INTO `item_mods` VALUES (196, 5,12),(196, 7,12),(196,12,20),(196,13,20),(196,47,10);  -- DEX+12 AGI+12 ACC+20 EVA+20 Haste+10
@@ -260,7 +260,7 @@ REPLACE INTO `item_basic` VALUES (207, 0, 'Mina_Collar', 'mina_collar', 1, 59476
 REPLACE INTO `item_basic` VALUES (212, 0, 'Wlhlmn_Wristlet', 'wlhlmn_wristlet', 1, 59476, 99, 0, 9000);
 
 REPLACE INTO `item_equipment` VALUES (207, "minas_collar", 56, 0, 4194303, 0, 0, 0, 6144, 0, 0, 0); -- NECK
-REPLACE INTO `item_equipment` VALUES (212, "wilhelminas_wristlet", 50, 0, 4194303, 0, 0, 0, 64, 0, 0, 0); -- HANDS
+REPLACE INTO `item_equipment` VALUES (212, "wilhelminas_wristlet", 50, 0, 4194303, 56, 0, 0, 64, 0, 0, 0); -- HANDS
 
 REPLACE INTO `item_mods` VALUES (207, 8, 8),(207, 9, 8),(207,10, 8),(207, 2,40);   -- INT+8 MND+8 CHR+8 HP+40
 REPLACE INTO `item_mods` VALUES (212, 4, 8),(212, 5, 8),(212,11,16),(212,12,12);   -- STR+8 DEX+8 ATT+16 ACC+12
@@ -271,7 +271,7 @@ REPLACE INTO `item_basic` VALUES (218, 0, 'PrrngPtrc_Ring', 'prrngptrc_ring', 1,
 REPLACE INTO `item_basic` VALUES (223, 0, 'Patricia_Boots', 'patricia_boots', 1, 59476, 99, 0, 20000);
 
 REPLACE INTO `item_equipment` VALUES (218, "purring_patricias_ring", 53, 0, 4194303, 0, 0, 0, 24576, 0, 0, 0); -- RING
-REPLACE INTO `item_equipment` VALUES (223, "patricias_pounce_boots", 57, 0, 4194303, 0, 0, 0, 256, 0, 0, 0); -- FEET
+REPLACE INTO `item_equipment` VALUES (223, "patricias_pounce_boots", 57, 0, 4194303, 115, 0, 0, 256, 0, 0, 0); -- FEET
 
 REPLACE INTO `item_mods` VALUES (218, 4,10),(218, 5,10),(218,11,18),(218,47, 8),(218, 2,50);  -- STR+10 DEX+10 ATT+18 Haste+8 HP+50
 REPLACE INTO `item_mods` VALUES (223, 5,12),(223, 7,12),(223,13,18),(223,47,10);                -- DEX+12 AGI+12 EVA+18 Haste+10
@@ -307,7 +307,7 @@ REPLACE INTO `item_basic` VALUES (256, 0, 'Maurice_Trophy', 'maurice_trophy', 1,
 REPLACE INTO `item_basic` VALUES (257, 0, 'MlrMrc_Mane', 'mlrmrc_mane', 1, 59476, 99, 0, 15000);
 REPLACE INTO `item_basic` VALUES (258, 0, 'Maurice_Belt', 'maurice_belt', 1, 59476, 99, 0, 22000);
 
-REPLACE INTO `item_equipment` VALUES (257, "mauler_maurices_mane", 63, 0, 4194303, 0, 0, 0, 16, 0, 0, 0); -- HEAD
+REPLACE INTO `item_equipment` VALUES (257, "mauler_maurices_mane", 63, 0, 4194303, 388, 0, 0, 16, 0, 0, 0); -- HEAD
 REPLACE INTO `item_equipment` VALUES (258, "maurices_mauler_belt", 62, 0, 4194303, 0, 0, 0, 1024, 0, 0, 0); -- WAIST
 
 REPLACE INTO `item_mods` VALUES (257, 4,12),(257, 6,10),(257, 2,80),(257,11,20),(257,12,15);  -- STR+12 VIT+10 HP+80 ATT+20 ACC+15
@@ -334,7 +334,7 @@ REPLACE INTO `item_basic` VALUES (263, 0, 'Spencer_Cloak', 'spencer_cloak', 1, 5
 REPLACE INTO `item_basic` VALUES (264, 0, 'Spencer_Crown', 'spencer_crown', 1, 59476, 99, 0, 7500);
 
 REPLACE INTO `item_equipment` VALUES (263, "spencers_leaf_cloak", 65, 0, 4194303, 0, 0, 0, 32768, 0, 0, 0); -- BACK
-REPLACE INTO `item_equipment` VALUES (264, "spencers_seedling_crown", 72, 0, 4194303, 0, 0, 0, 16, 0, 0, 0); -- HEAD
+REPLACE INTO `item_equipment` VALUES (264, "spencers_seedling_crown", 72, 0, 4194303, 388, 0, 0, 16, 0, 0, 0); -- HEAD
 
 REPLACE INTO `item_mods` VALUES (263, 8, 7),(263, 9, 7),(263, 3,40),(263,14,12);  -- INT+7 MND+7 MP+40 MATK+12
 REPLACE INTO `item_mods` VALUES (264, 8, 8),(264, 9, 8),(264,10, 6),(264, 3,50);  -- INT+8 MND+8 CHR+6 MP+50
@@ -344,8 +344,8 @@ REPLACE INTO `item_basic` VALUES (265, 0, 'Max_Root', 'max_root', 1, 59476, 99, 
 REPLACE INTO `item_basic` VALUES (266, 0, 'MndrkMx_Crown', 'mndrkmx_crown', 1, 59476, 99, 0, 16000);
 REPLACE INTO `item_basic` VALUES (267, 0, 'Max_Mittens', 'max_mittens', 1, 59476, 99, 0, 22000);
 
-REPLACE INTO `item_equipment` VALUES (266, "mandrake_maxs_crown", 69, 0, 4194303, 0, 0, 0, 16, 0, 0, 0); -- HEAD
-REPLACE INTO `item_equipment` VALUES (267, "maxs_mystic_mittens", 65, 0, 4194303, 0, 0, 0, 64, 0, 0, 0); -- HANDS
+REPLACE INTO `item_equipment` VALUES (266, "mandrake_maxs_crown", 69, 0, 4194303, 388, 0, 0, 16, 0, 0, 0); -- HEAD
+REPLACE INTO `item_equipment` VALUES (267, "maxs_mystic_mittens", 65, 0, 4194303, 56, 0, 0, 64, 0, 0, 0); -- HANDS
 
 REPLACE INTO `item_mods` VALUES (266, 8,12),(266, 9,12),(266, 3,70),(266,14,22),(266,15,18);  -- INT+12 MND+12 MP+70 MATK+22 MACC+18
 REPLACE INTO `item_mods` VALUES (267, 8,10),(267, 9,10),(267,14,18),(267,15,15),(267,47, 8);   -- INT+10 MND+10 MATK+18 MACC+15 Haste+8
@@ -382,7 +382,7 @@ REPLACE INTO `item_basic` VALUES (276, 0, 'ScrbSbstn_Ring', 'scrbsbstn_ring', 1,
 REPLACE INTO `item_basic` VALUES (282, 0, 'Sebastian_Crown', 'sebastian_crown', 1, 59476, 99, 0, 30000);
 
 REPLACE INTO `item_equipment` VALUES (276, "scarab_sebastians_ring", 64, 0, 4194303, 0, 0, 0, 24576, 0, 0, 0); -- RING
-REPLACE INTO `item_equipment` VALUES (282, "sebastians_shell_crown", 73, 0, 4194303, 0, 0, 0, 16, 0, 0, 0); -- HEAD
+REPLACE INTO `item_equipment` VALUES (282, "sebastians_shell_crown", 73, 0, 4194303, 388, 0, 0, 16, 0, 0, 0); -- HEAD
 
 REPLACE INTO `item_mods` VALUES (276, 4,12),(276, 6,12),(276, 2,80),(276,11,20),(276,47,10);  -- STR+12 VIT+12 HP+80 ATT+20 Haste+10
 REPLACE INTO `item_mods` VALUES (282, 1,18),(282, 6,14),(282, 2,100),(282,11,18),(282,47,10); -- DEF+18 VIT+14 HP+100 ATT+18 Haste+10
@@ -407,7 +407,7 @@ REPLACE INTO `item_basic` VALUES (314, 0, 'Carl_Cocoon', 'carl_cocoon', 1, 59476
 REPLACE INTO `item_basic` VALUES (315, 0, 'CcnCrl_Crown', 'ccncrl_crown', 1, 59476, 99, 0, 24000);
 REPLACE INTO `item_basic` VALUES (316, 0, 'Carl_Cape', 'carl_cape', 1, 59476, 99, 0, 32000);
 
-REPLACE INTO `item_equipment` VALUES (315, "cocoon_carls_crown", 74, 0, 4194303, 0, 0, 0, 16, 0, 0, 0); -- HEAD
+REPLACE INTO `item_equipment` VALUES (315, "cocoon_carls_crown", 74, 0, 4194303, 388, 0, 0, 16, 0, 0, 0); -- HEAD
 REPLACE INTO `item_equipment` VALUES (316, "carls_chrysalis_cape", 73, 0, 4194303, 0, 0, 0, 32768, 0, 0, 0); -- BACK
 
 REPLACE INTO `item_mods` VALUES (315, 8,12),(315, 9,12),(315, 3,80),(315,14,22),(315,15,18),(315,47,10);  -- INT+12 MND+12 MP+80 MATK+22 MACC+18 Haste+10
@@ -422,7 +422,7 @@ REPLACE INTO `item_basic` VALUES (318, 0, 'Fred_Feather', 'fred_feather', 1, 594
 REPLACE INTO `item_basic` VALUES (319, 0, 'FeatherFred_Cap', 'featherfred_cap', 1, 59476, 99, 0, 2000);
 REPLACE INTO `item_basic` VALUES (320, 0, 'Fred_Ring', 'fred_ring', 1, 59476, 99, 0, 3000);
 
-REPLACE INTO `item_equipment` VALUES (319, "feather_freds_cap", 35, 0, 4194303, 0, 0, 0, 16, 0, 0, 0); -- HEAD
+REPLACE INTO `item_equipment` VALUES (319, "feather_freds_cap", 35, 0, 4194303, 388, 0, 0, 16, 0, 0, 0); -- HEAD
 REPLACE INTO `item_equipment` VALUES (320, "freds_flightless_ring", 32, 0, 4194303, 0, 0, 0, 24576, 0, 0, 0); -- RING
 
 REPLACE INTO `item_mods` VALUES (319, 7, 5),(319, 5, 5),(319,13,10),(319, 2,25);  -- AGI+5 DEX+5 EVA+10 HP+25
@@ -433,7 +433,7 @@ REPLACE INTO `item_basic` VALUES (321, 0, 'Beatrice_Beak', 'beatrice_beak', 1, 5
 REPLACE INTO `item_basic` VALUES (322, 0, 'BkyBtrc_Bonnet', 'bkybtrc_bonnet', 1, 59476, 99, 0, 8000);
 REPLACE INTO `item_basic` VALUES (323, 0, 'Beatrice_Ring', 'beatrice_ring', 1, 59476, 99, 0, 11000);
 
-REPLACE INTO `item_equipment` VALUES (322, "beaky_beatrices_bonnet", 54, 0, 4194303, 0, 0, 0, 16, 0, 0, 0); -- HEAD
+REPLACE INTO `item_equipment` VALUES (322, "beaky_beatrices_bonnet", 54, 0, 4194303, 388, 0, 0, 16, 0, 0, 0); -- HEAD
 REPLACE INTO `item_equipment` VALUES (323, "beatrices_talon_ring", 72, 0, 4194303, 0, 0, 0, 24576, 0, 0, 0); -- RING
 
 REPLACE INTO `item_mods` VALUES (322, 7,10),(322, 5,10),(322,13,15),(322,12,12);  -- AGI+10 DEX+10 EVA+15 ACC+12
@@ -481,7 +481,7 @@ REPLACE INTO `item_basic` VALUES (333, 0, 'Quentin_Jelly', 'quentin_jelly', 1, 5
 REPLACE INTO `item_basic` VALUES (334, 0, 'QnQntn_Crown', 'qnqntn_crown', 1, 59476, 99, 0, 50000);
 REPLACE INTO `item_basic` VALUES (335, 0, 'Quentin_Ring', 'quentin_ring', 1, 59476, 99, 0, 70000);
 
-REPLACE INTO `item_equipment` VALUES (334, "queen_quentins_crown", 62, 0, 4194303, 0, 0, 0, 16, 0, 0, 0); -- HEAD
+REPLACE INTO `item_equipment` VALUES (334, "queen_quentins_crown", 62, 0, 4194303, 388, 0, 0, 16, 0, 0, 0); -- HEAD
 REPLACE INTO `item_equipment` VALUES (335, "quentins_stinger_ring", 74, 0, 4194303, 0, 0, 0, 24576, 0, 0, 0); -- RING
 
 REPLACE INTO `item_mods` VALUES (334, 4,16),(334, 5,16),(334, 2,120),(334,11,28),(334,12,24),(334,47,14);  -- STR+16 DEX+16 HP+120 ATT+28 ACC+24 Haste+14
@@ -522,7 +522,7 @@ REPLACE INTO `item_basic` VALUES (4262, 0, 'LttlJm_Trophy', 'lttljm_trophy', 1, 
 REPLACE INTO `item_basic` VALUES (4266, 0, 'LittleJim_Boots', 'littlejim_boots', 1, 59476, 99, 0, 6000);
 REPLACE INTO `item_basic` VALUES (4274, 0, 'Little_Jim_Ring', 'little_jim_ring', 1, 59476, 99, 0, 9000);
 
-REPLACE INTO `item_equipment` VALUES (4266, "little_jim_boots", 43, 0, 4194303, 0, 0, 0, 256, 0, 0, 0); -- FEET
+REPLACE INTO `item_equipment` VALUES (4266, "little_jim_boots", 43, 0, 4194303, 115, 0, 0, 256, 0, 0, 0); -- FEET
 REPLACE INTO `item_equipment` VALUES (4274, "little_jim_ring", 56, 0, 4194303, 0, 0, 0, 24576, 0, 0, 0); -- RING
 
 REPLACE INTO `item_mods` VALUES (4266, 6,10),(4266, 1,14),(4266, 2,60),(4266,47, 8);   -- VIT+10 DEF+14 HP+60 Haste+8
@@ -533,7 +533,7 @@ REPLACE INTO `item_basic` VALUES (4319, 0, 'Big_Jim_Trophy', 'big_jim_trophy', 1
 REPLACE INTO `item_basic` VALUES (4341, 0, 'Big_Jim_Hat', 'big_jim_hat', 1, 59476, 99, 0, 6000);
 REPLACE INTO `item_basic` VALUES (4348, 0, 'Big_Jim_Ring', 'big_jim_ring', 1, 59476, 99, 0, 9000);
 
-REPLACE INTO `item_equipment` VALUES (4341, "big_jim_hat", 71, 0, 4194303, 0, 0, 0, 16, 0, 0, 0); -- HEAD
+REPLACE INTO `item_equipment` VALUES (4341, "big_jim_hat", 71, 0, 4194303, 388, 0, 0, 16, 0, 0, 0); -- HEAD
 REPLACE INTO `item_equipment` VALUES (4348, "big_jim_ring", 63, 0, 4194303, 0, 0, 0, 24576, 0, 0, 0); -- RING
 
 REPLACE INTO `item_mods` VALUES (4341, 5,10),(4341, 7,10),(4341,12,16),(4341,13,14),(4341,47, 8); -- DEX+10 AGI+10 ACC+16 EVA+14 Haste+8
