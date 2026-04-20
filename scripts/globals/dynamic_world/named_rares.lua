@@ -114,7 +114,7 @@ nr.db = {
         loot        =
         {
             { itemId = 6, rate = 1000 },    -- William's Wool (trophy, always)
-            { itemId = 20, rate = 400  },    -- William's Woolcap
+            { itemId = 20, rate = 10479  },    -- William's Woolcap
             { itemId = 79, rate = 150  },    -- William's Woolmitt
         },
         deathMsg = 'Wooly William lets out a final, dramatic baa.',
@@ -134,7 +134,7 @@ nr.db = {
         loot        =
         {
             { itemId = 80, rate = 1000 },    -- Baa-rbara's Bell (trophy)
-            { itemId = 81, rate = 400  },    -- Baa-rbara's Collar
+            { itemId = 81, rate = 10479  },    -- Baa-rbara's Collar
             { itemId = 83, rate = 150  },    -- Baa-rbara's Ribbon
         },
         deathMsg = "Baa-rbara's tinkling bell goes silent.",
@@ -154,7 +154,7 @@ nr.db = {
         loot        =
         {
             { itemId = 84, rate = 1000 },    -- Larry's Lambchop (trophy)
-            { itemId = 85, rate = 400  },    -- Larry's Lucky Fleece
+            { itemId = 85, rate = 10479  },    -- Larry's Lucky Fleece
             { itemId = 86, rate = 150  },    -- Larry's Lanyard
         },
         deathMsg = 'Lambchop Larry falls over. He seems... satisfied.',
@@ -174,7 +174,7 @@ nr.db = {
         loot        =
         {
             { itemId = 89, rate = 1000 },    -- Sharon's Golden Fleece (trophy)
-            { itemId = 90, rate = 400  },    -- Sharon's Shearing Shears
+            { itemId = 90, rate = 10479  },    -- Sharon's Shearing Shears
             { itemId = 94, rate = 150  },    -- Sharon's Silken Mantle
         },
         deathMsg = "Shear Sharon's legendary fleece shimmers as she fades.",
@@ -197,7 +197,7 @@ nr.db = {
         loot        =
         {
             { itemId = 97, rate = 1000 },
-            { itemId = 145, rate = 400  },
+            { itemId = 145, rate = 10479  },
             { itemId = 150, rate = 150  },
         },
         deathMsg = "Cottontail Tommy hops his last hop.",
@@ -217,7 +217,7 @@ nr.db = {
         loot        =
         {
             { itemId = 153, rate = 1000 },
-            { itemId = 155, rate = 400  },
+            { itemId = 155, rate = 10479  },
             { itemId = 156, rate = 150  },
         },
         deathMsg = 'Hopscotch Harvey lands badly on his last jump.',
@@ -237,7 +237,7 @@ nr.db = {
         loot        =
         {
             { itemId = 158, rate = 1000 },
-            { itemId = 159, rate = 400  },
+            { itemId = 159, rate = 10479  },
             { itemId = 160, rate = 150  },
         },
         deathMsg = "Bun-bun Benedict's bonnet drifts to the ground.",
@@ -257,7 +257,7 @@ nr.db = {
         loot        =
         {
             { itemId = 161, rate = 1000 },
-            { itemId = 162, rate = 400  },
+            { itemId = 162, rate = 10479  },
             { itemId = 163, rate = 150  },
         },
         deathMsg = "Twitchy Theodore twitches one final time.",
@@ -280,7 +280,7 @@ nr.db = {
         loot        =
         {
             { itemId = 165, rate = 1000 },
-            { itemId = 166, rate = 400  },
+            { itemId = 166, rate = 10479  },
             { itemId = 167, rate = 150  },
         },
         deathMsg = 'Crab Leg Cameron sidesteps into the afterlife.',
@@ -300,7 +300,7 @@ nr.db = {
         loot        =
         {
             { itemId = 168, rate = 1000 },
-            { itemId = 169, rate = 400  },
+            { itemId = 169, rate = 10479  },
             { itemId = 170, rate = 150  },
         },
         deathMsg = "Old Bay Ollie smells delicious. Rest well.",
@@ -320,7 +320,7 @@ nr.db = {
         loot        =
         {
             { itemId = 171, rate = 1000 },
-            { itemId = 172, rate = 400  },
+            { itemId = 172, rate = 10479  },
             { itemId = 173, rate = 150  },
         },
         deathMsg = 'Bisque Bernard returns to the sea, undefeated in spirit.',
@@ -340,7 +340,7 @@ nr.db = {
         loot        =
         {
             { itemId = 174, rate = 1000 },
-            { itemId = 175, rate = 400  },
+            { itemId = 175, rate = 10479  },
             { itemId = 176, rate = 150  },
         },
         deathMsg = "Dungeness Duncan's claws scrape the ground one last time.",
@@ -363,8 +363,8 @@ nr.db = {
         loot        =
         {
             { itemId = 16402, rate = 1000 },    -- Morris's Sporeling (trophy, always)
-            { itemId = 16384, rate = 400  },    -- Morris's Wide Brim
-            { itemId = 16415, rate = 150  },    -- Mycelium Medal
+            { itemId = 23437, rate = 10479  },    -- Morris's Wide Brim
+            { itemId = 26117, rate = 150  },    -- Mycelium Medal
         },
         deathMsg = 'Mushroom Morris tips his wide brim one last time.',
     },
@@ -383,7 +383,7 @@ nr.db = {
         loot        =
         {
             { itemId = 177, rate = 1000 },
-            { itemId = 178, rate = 400  },
+            { itemId = 178, rate = 10479  },
             { itemId = 179, rate = 150  },
         },
         deathMsg = "Cap'n Chanterelle releases a final puff of spores. Godspeed.",
@@ -403,7 +403,7 @@ nr.db = {
         loot        =
         {
             { itemId = 180, rate = 1000 },
-            { itemId = 181, rate = 400  },
+            { itemId = 181, rate = 10479  },
             { itemId = 182, rate = 150  },
         },
         deathMsg = 'Portobello Pete collapses with quiet dignity.',
@@ -423,7 +423,7 @@ nr.db = {
         loot        =
         {
             { itemId = 183, rate = 1000 },
-            { itemId = 184, rate = 400  },
+            { itemId = 184, rate = 10479  },
             { itemId = 185, rate = 150  },
         },
         deathMsg = "Truffle Trevor was rarer than you knew. Cherish this.",
@@ -446,7 +446,7 @@ nr.db = {
         loot        =
         {
             { itemId = 186, rate = 1000 },
-            { itemId = 187, rate = 400  },
+            { itemId = 187, rate = 10479  },
             { itemId = 188, rate = 150  },
         },
         deathMsg = 'Bargain Bruno drops everything. Everything.',
@@ -466,7 +466,7 @@ nr.db = {
         loot        =
         {
             { itemId = 189, rate = 1000 },
-            { itemId = 190, rate = 400  },
+            { itemId = 190, rate = 10479  },
             { itemId = 191, rate = 150  },
         },
         deathMsg = "Swindler Sam's last con didn't work out.",
@@ -486,7 +486,7 @@ nr.db = {
         loot        =
         {
             { itemId = 195, rate = 1000 },
-            { itemId = 196, rate = 400  },
+            { itemId = 196, rate = 10479  },
             { itemId = 201, rate = 150  },
         },
         deathMsg = "Shiny Steve's collection of shiny things scatters across the ground.",
@@ -509,7 +509,7 @@ nr.db = {
         loot        =
         {
             { itemId = 202, rate = 1000 },
-            { itemId = 207, rate = 400  },
+            { itemId = 207, rate = 10479  },
             { itemId = 212, rate = 150  },
         },
         deathMsg = "Whiskers Wilhelmina lands gracefully. Even in defeat.",
@@ -529,7 +529,7 @@ nr.db = {
         loot        =
         {
             { itemId = 217, rate = 1000 },
-            { itemId = 218, rate = 400  },
+            { itemId = 218, rate = 10479  },
             { itemId = 223, rate = 150  },
         },
         deathMsg = "Purring Patricia's purr fades into silence.",
@@ -549,7 +549,7 @@ nr.db = {
         loot        =
         {
             { itemId = 250, rate = 1000 },
-            { itemId = 251, rate = 400  },
+            { itemId = 251, rate = 10479  },
             { itemId = 252, rate = 150  },
         },
         deathMsg = "Nine Lives Nigel. This was life number nine.",
@@ -572,7 +572,7 @@ nr.db = {
         loot        =
         {
             { itemId = 253, rate = 1000 },
-            { itemId = 254, rate = 400  },
+            { itemId = 254, rate = 10479  },
             { itemId = 255, rate = 150  },
         },
         deathMsg = "Stripey Steve's stripes are forever.",
@@ -592,7 +592,7 @@ nr.db = {
         loot        =
         {
             { itemId = 256, rate = 1000 },
-            { itemId = 257, rate = 400  },
+            { itemId = 257, rate = 10479  },
             { itemId = 258, rate = 150  },
         },
         deathMsg = "Mauler Maurice lived up to his name. Right up until the end.",
@@ -612,8 +612,8 @@ nr.db = {
         loot        =
         {
             { itemId = 16464, rate = 1000 },    -- Sabrina's Saber-Fang (trophy)
-            { itemId = 16474, rate = 400  },    -- Sabrina's Feral Legs
-            { itemId = 16561, rate = 150  },    -- Sabrina's Apex Ring
+            { itemId = 23265, rate = 10479  },    -- Sabrina's Feral Legs
+            { itemId = 11641, rate = 150  },    -- Sabrina's Apex Ring
         },
         deathMsg = "Saber Sabrina's enormous fangs finally still.",
     },
@@ -635,7 +635,7 @@ nr.db = {
         loot        =
         {
             { itemId = 259, rate = 1000 },
-            { itemId = 260, rate = 400  },
+            { itemId = 260, rate = 10479  },
             { itemId = 261, rate = 150  },
         },
         deathMsg = "Root Rita's scream was... actually quite melodic.",
@@ -655,7 +655,7 @@ nr.db = {
         loot        =
         {
             { itemId = 262, rate = 1000 },
-            { itemId = 263, rate = 400  },
+            { itemId = 263, rate = 10479  },
             { itemId = 264, rate = 150  },
         },
         deathMsg = "Sprout Spencer returns to the earth. Literally.",
@@ -675,7 +675,7 @@ nr.db = {
         loot        =
         {
             { itemId = 265, rate = 1000 },
-            { itemId = 266, rate = 400  },
+            { itemId = 266, rate = 10479  },
             { itemId = 267, rate = 150  },
         },
         deathMsg = "Mandrake Max's final scream is heard across three zones.",
@@ -698,7 +698,7 @@ nr.db = {
         loot        =
         {
             { itemId = 268, rate = 1000 },
-            { itemId = 269, rate = 400  },
+            { itemId = 269, rate = 10479  },
             { itemId = 270, rate = 150  },
         },
         deathMsg = "Click Clack Clayton clicks and clacks no more.",
@@ -718,7 +718,7 @@ nr.db = {
         loot        =
         {
             { itemId = 271, rate = 1000 },
-            { itemId = 273, rate = 400  },
+            { itemId = 273, rate = 10479  },
             { itemId = 274, rate = 150  },
         },
         deathMsg = "Dung Douglas's prized dung ball rolls away, unclaimed.",
@@ -738,7 +738,7 @@ nr.db = {
         loot        =
         {
             { itemId = 275, rate = 1000 },
-            { itemId = 276, rate = 400  },
+            { itemId = 276, rate = 10479  },
             { itemId = 282, rate = 150  },
         },
         deathMsg = "Scarab Sebastian's sacred scarab glows faintly as he falls.",
@@ -761,7 +761,7 @@ nr.db = {
         loot        =
         {
             { itemId = 287, rate = 1000 },
-            { itemId = 298, rate = 400  },
+            { itemId = 298, rate = 10479  },
             { itemId = 303, rate = 150  },
         },
         deathMsg = "Silk Simon leaves behind only the finest threads.",
@@ -781,7 +781,7 @@ nr.db = {
         loot        =
         {
             { itemId = 314, rate = 1000 },
-            { itemId = 315, rate = 400  },
+            { itemId = 315, rate = 10479  },
             { itemId = 316, rate = 150  },
         },
         deathMsg = "Cocoon Carl will emerge again. Eventually.",
@@ -804,7 +804,7 @@ nr.db = {
         loot        =
         {
             { itemId = 318, rate = 1000 },
-            { itemId = 319, rate = 400  },
+            { itemId = 319, rate = 10479  },
             { itemId = 320, rate = 150  },
         },
         deathMsg = "Feather Fred sheds his finest feather on the way out.",
@@ -824,7 +824,7 @@ nr.db = {
         loot        =
         {
             { itemId = 321, rate = 1000 },
-            { itemId = 322, rate = 400  },
+            { itemId = 322, rate = 10479  },
             { itemId = 323, rate = 150  },
         },
         deathMsg = "Beaky Beatrice lets out one final, indignant squawk.",
@@ -844,7 +844,7 @@ nr.db = {
         loot        =
         {
             { itemId = 324, rate = 1000 },
-            { itemId = 325, rate = 400  },
+            { itemId = 325, rate = 10479  },
             { itemId = 326, rate = 150  },
         },
         deathMsg = "Plume Patricia's magnificent tail feathers drift to the ground.",
@@ -867,7 +867,7 @@ nr.db = {
         loot        =
         {
             { itemId = 327, rate = 1000 },
-            { itemId = 328, rate = 400  },
+            { itemId = 328, rate = 10479  },
             { itemId = 329, rate = 150  },
         },
         deathMsg = "Honey Harold's buzzzzz fades away.",
@@ -887,7 +887,7 @@ nr.db = {
         loot        =
         {
             { itemId = 330, rate = 1000 },
-            { itemId = 331, rate = 400  },
+            { itemId = 331, rate = 10479  },
             { itemId = 332, rate = 150  },
         },
         deathMsg = "Buzzard Barry's angry buzzing finally stops.",
@@ -907,7 +907,7 @@ nr.db = {
         loot        =
         {
             { itemId = 333, rate = 1000 },
-            { itemId = 334, rate = 400  },
+            { itemId = 334, rate = 10479  },
             { itemId = 335, rate = 150  },
         },
         deathMsg = "Queen Quentin ruled for exactly one day. A good reign.",
@@ -925,12 +925,12 @@ nr.db = {
         level       = { 1, 5 },
         spawnTimer  = 2 * 3600,
         spawnWindow = 1 * 3600,
-        spawnChance = 350,
+        spawnChance = 28624,
         isAggro     = false,
         loot        =
         {
             { itemId = 4133, rate = 1000 },
-            { itemId = 4149, rate = 400  },
+            { itemId = 4149, rate = 10479  },
             { itemId = 4164, rate = 150  },
         },
         deathMsg = "Wiggles Winston wiggles no more.",
@@ -950,7 +950,7 @@ nr.db = {
         loot        =
         {
             { itemId = 4170, rate = 1000 },
-            { itemId = 4207, rate = 400  },
+            { itemId = 4207, rate = 10479  },
             { itemId = 4232, rate = 150  },
         },
         deathMsg = "Squirmy Sherman squirms his last squirm.",
@@ -970,8 +970,8 @@ nr.db = {
         loot        =
         {
             { itemId = 16570, rate = 1000 },    -- Ernest's Earthen Core (trophy)
-            { itemId = 16573, rate = 400  },    -- Ernest's Burrower Vest
-            { itemId = 16574, rate = 150  },    -- Ernest's Tremor Boots
+            { itemId = 25689, rate = 10479  },    -- Ernest's Burrower Vest
+            { itemId = 23750, rate = 150  },    -- Ernest's Tremor Boots
         },
         deathMsg = "Earthcrawler Ernest sinks back into the earth. He was always more comfortable underground.",
     },
@@ -993,8 +993,8 @@ nr.db = {
         loot        =
         {
             { itemId = 16715, rate = 1000 },    -- Sally's Scale Chip (trophy)
-            { itemId = 17055, rate = 400  },    -- Sally's Scale Ring
-            { itemId = 17084, rate = 150  },    -- Sally's Tail Belt
+            { itemId = 11642, rate = 10479  },    -- Sally's Scale Ring
+            { itemId = 28440, rate = 150  },    -- Sally's Tail Belt
         },
         deathMsg = "Scaly Sally's iridescent scales scatter across the ground.",
     },
@@ -1013,8 +1013,8 @@ nr.db = {
         loot        =
         {
             { itemId = 17107, rate = 1000 },    -- Carlos's Cold Scale (trophy)
-            { itemId = 17109, rate = 400  },    -- Carlos's Reptile Vest
-            { itemId = 17168, rate = 150  },    -- Carlos's Venom Earring
+            { itemId = 25690, rate = 10479  },    -- Carlos's Reptile Vest
+            { itemId = 26118, rate = 150  },    -- Carlos's Venom Earring
         },
         deathMsg = "Cold-blooded Carlos stares at you with cold, unblinking eyes. Then he falls over.",
     },
@@ -1033,8 +1033,8 @@ nr.db = {
         loot        =
         {
             { itemId = 17169, rate = 1000 },    -- Boris's Basilisk Eye (trophy)
-            { itemId = 17171, rate = 400  },    -- Boris's Granite Carapace
-            { itemId = 17752, rate = 150  },    -- Boris's Stone Gaze Ring
+            { itemId = 25691, rate = 10479  },    -- Boris's Granite Carapace
+            { itemId = 11643, rate = 150  },    -- Boris's Stone Gaze Ring
         },
         deathMsg = "Basilisk Boris's legendary gaze dims. You'll never be turned to stone again.",
     },
@@ -1068,7 +1068,7 @@ nr.db = {
         loot        =
         {
             { itemId = 4262, rate = 1000 },    -- Little Jim's Big Trophy (trophy)
-            { itemId = 4266, rate = 400  },    -- Little Jim's Big Boots
+            { itemId = 4266, rate = 10479  },    -- Little Jim's Big Boots
             { itemId = 4274, rate = 150  },    -- Little Jim's Big Ring
         },
         deathMsg    = 'Little Jim falls. He was not, in fact, little.',
@@ -1090,7 +1090,7 @@ nr.db = {
         loot        =
         {
             { itemId = 4319, rate = 1000 },    -- Big Jim's Small Trophy (trophy)
-            { itemId = 4341, rate = 400  },    -- Big Jim's Small Hat
+            { itemId = 4341, rate = 10479  },    -- Big Jim's Small Hat
             { itemId = 4348, rate = 150  },    -- Big Jim's Small Ring
         },
         deathMsg    = 'Big Jim falls. He was not, in fact, big.',
@@ -1109,8 +1109,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 336, rate = 1000 },
-            { itemId = 337, rate = 700 },
-            { itemId = 338, rate = 500 },
+            { itemId = 23757, rate = 700 },
+            { itemId = 23536, rate = 500 },
         },
         deathMsg = "Wooly Winifred has been slain! Its rare treasures await...",
     },
@@ -1126,8 +1126,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 339, rate = 1000 },
-            { itemId = 340, rate = 700 },
-            { itemId = 341, rate = 500 },
+            { itemId = 23786, rate = 700 },
+            { itemId = 23260, rate = 500 },
         },
         deathMsg = "Bouncy Beatrice has been slain! Its rare treasures await...",
     },
@@ -1143,8 +1143,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 342, rate = 1000 },
-            { itemId = 343, rate = 700 },
-            { itemId = 344, rate = 500 },
+            { itemId = 23537, rate = 700 },
+            { itemId = 28450, rate = 500 },
         },
         deathMsg = "Crushing Clyde has been slain! Its rare treasures await...",
     },
@@ -1160,8 +1160,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 345, rate = 1000 },
-            { itemId = 346, rate = 700 },
-            { itemId = 347, rate = 500 },
+            { itemId = 23787, rate = 700 },
+            { itemId = 15798, rate = 500 },
         },
         deathMsg = "Sneaky Seraphine has been slain! Its rare treasures await...",
     },
@@ -1177,8 +1177,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 348, rate = 1000 },
-            { itemId = 349, rate = 700 },
-            { itemId = 350, rate = 500 },
+            { itemId = 27536, rate = 700 },
+            { itemId = 28619, rate = 500 },
         },
         deathMsg = "Crackling Cordelia has been slain! Its rare treasures await...",
     },
@@ -1194,8 +1194,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 351, rate = 1000 },
-            { itemId = 352, rate = 700 },
-            { itemId = 353, rate = 500 },
+            { itemId = 28618, rate = 700 },
+            { itemId = 23261, rate = 500 },
         },
         deathMsg = "Ferocious Frederica has been slain! Its rare treasures await...",
     },
@@ -1211,8 +1211,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 354, rate = 1000 },
-            { itemId = 355, rate = 700 },
-            { itemId = 356, rate = 500 },
+            { itemId = 23758, rate = 700 },
+            { itemId = 23538, rate = 500 },
         },
         deathMsg = "Manic Millicent has been slain! Its rare treasures await...",
     },
@@ -1228,8 +1228,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 357, rate = 1000 },
-            { itemId = 358, rate = 700 },
-            { itemId = 359, rate = 500 },
+            { itemId = 25700, rate = 700 },
+            { itemId = 23788, rate = 500 },
         },
         deathMsg = "Brutal Brendan has been slain! Its rare treasures await...",
     },
@@ -1245,8 +1245,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 360, rate = 1000 },
-            { itemId = 361, rate = 700 },
-            { itemId = 362, rate = 500 },
+            { itemId = 28599, rate = 700 },
+            { itemId = 23706, rate = 500 },
         },
         deathMsg = "Gale Gertrude has been slain! Its rare treasures await...",
     },
@@ -1262,8 +1262,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 363, rate = 1000 },
-            { itemId = 364, rate = 700 },
-            { itemId = 365, rate = 500 },
+            { itemId = 23759, rate = 700 },
+            { itemId = 15797, rate = 500 },
         },
         deathMsg = "Venomous Valentina has been slain! Its rare treasures await...",
     },
@@ -1279,8 +1279,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 366, rate = 1000 },
-            { itemId = 367, rate = 700 },
-            { itemId = 368, rate = 500 },
+            { itemId = 24076, rate = 700 },
+            { itemId = 28451, rate = 500 },
         },
         deathMsg = "Deep Dweller Deidre has been slain! Its rare treasures await...",
     },
@@ -1296,8 +1296,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 369, rate = 1000 },
-            { itemId = 370, rate = 700 },
-            { itemId = 371, rate = 500 },
+            { itemId = 23252, rate = 700 },
+            { itemId = 11665, rate = 500 },
         },
         deathMsg = "Venerable Vincenzo has been slain! Its rare treasures await...",
     },
@@ -1313,8 +1313,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 372, rate = 1000 },
-            { itemId = 373, rate = 700 },
-            { itemId = 374, rate = 500 },
+            { itemId = 23511, rate = 700 },
+            { itemId = 28430, rate = 500 },
         },
         deathMsg = "Grunt Gideon has been slain! Its rare treasures await...",
     },
@@ -1330,8 +1330,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 375, rate = 1000 },
-            { itemId = 376, rate = 700 },
-            { itemId = 377, rate = 500 },
+            { itemId = 23418, rate = 700 },
+            { itemId = 28604, rate = 500 },
         },
         deathMsg = "Sergeant Sven has been slain! Its rare treasures await...",
     },
@@ -1347,8 +1347,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 378, rate = 1000 },
-            { itemId = 379, rate = 700 },
-            { itemId = 380, rate = 500 },
+            { itemId = 25701, rate = 700 },
+            { itemId = 24077, rate = 500 },
         },
         deathMsg = "Raging Reginald has been slain! Its rare treasures await...",
     },
@@ -1364,8 +1364,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 381, rate = 1000 },
-            { itemId = 382, rate = 700 },
-            { itemId = 383, rate = 500 },
+            { itemId = 25702, rate = 700 },
+            { itemId = 14631, rate = 500 },
         },
         deathMsg = "Overlord Ophelia has been slain! Its rare treasures await...",
     },
@@ -1381,8 +1381,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 384, rate = 1000 },
-            { itemId = 385, rate = 700 },
-            { itemId = 386, rate = 500 },
+            { itemId = 24075, rate = 700 },
+            { itemId = 28429, rate = 500 },
         },
         deathMsg = "Fledgling Fenwick has been slain! Its rare treasures await...",
     },
@@ -1398,8 +1398,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 387, rate = 1000 },
-            { itemId = 388, rate = 700 },
-            { itemId = 389, rate = 500 },
+            { itemId = 26014, rate = 700 },
+            { itemId = 27537, rate = 500 },
         },
         deathMsg = "Devout Delilah has been slain! Its rare treasures await...",
     },
@@ -1415,8 +1415,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 390, rate = 1000 },
-            { itemId = 391, rate = 700 },
-            { itemId = 392, rate = 500 },
+            { itemId = 23895, rate = 700 },
+            { itemId = 14641, rate = 500 },
         },
         deathMsg = "High Priest Horatio has been slain! Its rare treasures await...",
     },
@@ -1432,8 +1432,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 393, rate = 1000 },
-            { itemId = 394, rate = 700 },
-            { itemId = 395, rate = 500 },
+            { itemId = 25703, rate = 700 },
+            { itemId = 23797, rate = 500 },
         },
         deathMsg = "Divine Diomedea has been slain! Its rare treasures await...",
     },
@@ -1449,8 +1449,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 396, rate = 1000 },
-            { itemId = 397, rate = 700 },
-            { itemId = 398, rate = 500 },
+            { itemId = 23544, rate = 700 },
+            { itemId = 23785, rate = 500 },
         },
         deathMsg = "Copper Cornelius has been slain! Its rare treasures await...",
     },
@@ -1466,8 +1466,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 399, rate = 1000 },
-            { itemId = 400, rate = 700 },
-            { itemId = 401, rate = 500 },
+            { itemId = 23978, rate = 700 },
+            { itemId = 26015, rate = 500 },
         },
         deathMsg = "Silver Sylvester has been slain! Its rare treasures await...",
     },
@@ -1483,8 +1483,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 402, rate = 1000 },
-            { itemId = 403, rate = 700 },
-            { itemId = 404, rate = 500 },
+            { itemId = 23728, rate = 700 },
+            { itemId = 14639, rate = 500 },
         },
         deathMsg = "Boulder Basil has been slain! Its rare treasures await...",
     },
@@ -1500,8 +1500,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 405, rate = 1000 },
-            { itemId = 406, rate = 700 },
-            { itemId = 407, rate = 500 },
+            { itemId = 25705, rate = 700 },
+            { itemId = 23896, rate = 500 },
         },
         deathMsg = "Diamond Desmond has been slain! Its rare treasures await...",
     },
@@ -1517,8 +1517,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 408, rate = 1000 },
-            { itemId = 409, rate = 700 },
-            { itemId = 410, rate = 500 },
+            { itemId = 27538, rate = 700 },
+            { itemId = 23707, rate = 500 },
         },
         deathMsg = "Flittering Fiona has been slain! Its rare treasures await...",
     },
@@ -1534,8 +1534,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 411, rate = 1000 },
-            { itemId = 412, rate = 700 },
-            { itemId = 413, rate = 500 },
+            { itemId = 27539, rate = 700 },
+            { itemId = 23543, rate = 500 },
         },
         deathMsg = "Echo Edgar has been slain! Its rare treasures await...",
     },
@@ -1551,8 +1551,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 414, rate = 1000 },
-            { itemId = 415, rate = 700 },
-            { itemId = 416, rate = 500 },
+            { itemId = 23761, rate = 700 },
+            { itemId = 14637, rate = 500 },
         },
         deathMsg = "Vampiric Valerian has been slain! Its rare treasures await...",
     },
@@ -1568,8 +1568,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 417, rate = 1000 },
-            { itemId = 418, rate = 700 },
-            { itemId = 419, rate = 500 },
+            { itemId = 28620, rate = 700 },
+            { itemId = 23708, rate = 500 },
         },
         deathMsg = "Ancient Araminta has been slain! Its rare treasures await...",
     },
@@ -1585,8 +1585,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 420, rate = 1000 },
-            { itemId = 421, rate = 700 },
-            { itemId = 422, rate = 500 },
+            { itemId = 23729, rate = 700 },
+            { itemId = 28438, rate = 500 },
         },
         deathMsg = "Slithering Silas has been slain! Its rare treasures await...",
     },
@@ -1602,8 +1602,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 423, rate = 1000 },
-            { itemId = 424, rate = 700 },
-            { itemId = 425, rate = 500 },
+            { itemId = 25538, rate = 700 },
+            { itemId = 27535, rate = 500 },
         },
         deathMsg = "Hypnotic Heloise has been slain! Its rare treasures await...",
     },
@@ -1619,8 +1619,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 426, rate = 1000 },
-            { itemId = 427, rate = 700 },
-            { itemId = 428, rate = 500 },
+            { itemId = 23541, rate = 700 },
+            { itemId = 28435, rate = 500 },
         },
         deathMsg = "Constrictor Cressida has been slain! Its rare treasures await...",
     },
@@ -1636,8 +1636,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 429, rate = 1000 },
-            { itemId = 430, rate = 700 },
-            { itemId = 431, rate = 500 },
+            { itemId = 23415, rate = 700 },
+            { itemId = 14645, rate = 500 },
         },
         deathMsg = "Venom Duchess Viviane has been slain! Its rare treasures await...",
     },
@@ -1653,8 +1653,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 432, rate = 1000 },
-            { itemId = 433, rate = 700 },
-            { itemId = 434, rate = 500 },
+            { itemId = 26003, rate = 700 },
+            { itemId = 23709, rate = 500 },
         },
         deathMsg = "Buzzing Barnabas has been slain! Its rare treasures await...",
     },
@@ -1670,8 +1670,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 435, rate = 1000 },
-            { itemId = 436, rate = 700 },
-            { itemId = 437, rate = 500 },
+            { itemId = 25706, rate = 700 },
+            { itemId = 14633, rate = 500 },
         },
         deathMsg = "Droning Dorothea has been slain! Its rare treasures await...",
     },
@@ -1687,8 +1687,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 438, rate = 1000 },
-            { itemId = 439, rate = 700 },
-            { itemId = 440, rate = 500 },
+            { itemId = 23417, rate = 700 },
+            { itemId = 28617, rate = 500 },
         },
         deathMsg = "Plague Bearer Percival has been slain! Its rare treasures await...",
     },
@@ -1704,8 +1704,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 441, rate = 1000 },
-            { itemId = 442, rate = 700 },
-            { itemId = 443, rate = 500 },
+            { itemId = 23416, rate = 700 },
+            { itemId = 23264, rate = 500 },
         },
         deathMsg = "Swarm Queen Sophonias has been slain! Its rare treasures await...",
     },
@@ -1721,8 +1721,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 444, rate = 1000 },
-            { itemId = 445, rate = 700 },
-            { itemId = 446, rate = 500 },
+            { itemId = 23542, rate = 700 },
+            { itemId = 23726, rate = 500 },
         },
         deathMsg = "Gnawing Nathaniel has been slain! Its rare treasures await...",
     },
@@ -1738,8 +1738,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 447, rate = 1000 },
-            { itemId = 448, rate = 700 },
-            { itemId = 449, rate = 500 },
+            { itemId = 27534, rate = 700 },
+            { itemId = 14635, rate = 500 },
         },
         deathMsg = "Festering Francesca has been slain! Its rare treasures await...",
     },
@@ -1755,8 +1755,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 450, rate = 1000 },
-            { itemId = 451, rate = 700 },
-            { itemId = 452, rate = 500 },
+            { itemId = 23979, rate = 700 },
+            { itemId = 23540, rate = 500 },
         },
         deathMsg = "Hunger Ravaged Hortensia has been slain! Its rare treasures await...",
     },
@@ -1772,8 +1772,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 453, rate = 1000 },
-            { itemId = 454, rate = 700 },
-            { itemId = 455, rate = 500 },
+            { itemId = 23980, rate = 700 },
+            { itemId = 11640, rate = 500 },
         },
         deathMsg = "Carrion Cornelius has been slain! Its rare treasures await...",
     },
@@ -1789,8 +1789,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 456, rate = 1000 },
-            { itemId = 457, rate = 700 },
-            { itemId = 458, rate = 500 },
+            { itemId = 26107, rate = 700 },
+            { itemId = 23727, rate = 500 },
         },
         deathMsg = "Rattling Roderick has been slain! Its rare treasures await...",
     },
@@ -1806,8 +1806,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 459, rate = 1000 },
-            { itemId = 460, rate = 700 },
-            { itemId = 461, rate = 500 },
+            { itemId = 25537, rate = 700 },
+            { itemId = 26105, rate = 500 },
         },
         deathMsg = "Cursed Cavendish has been slain! Its rare treasures await...",
     },
@@ -1823,8 +1823,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 462, rate = 1000 },
-            { itemId = 463, rate = 700 },
-            { itemId = 464, rate = 500 },
+            { itemId = 23736, rate = 700 },
+            { itemId = 28434, rate = 500 },
         },
         deathMsg = "Bonewalker Benedict has been slain! Its rare treasures await...",
     },
@@ -1840,8 +1840,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 465, rate = 1000 },
-            { itemId = 466, rate = 700 },
-            { itemId = 467, rate = 500 },
+            { itemId = 23977, rate = 700 },
+            { itemId = 14643, rate = 500 },
         },
         deathMsg = "Lich Lord Leontine has been slain! Its rare treasures await...",
     },
@@ -1857,8 +1857,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 468, rate = 1000 },
-            { itemId = 469, rate = 700 },
-            { itemId = 470, rate = 500 },
+            { itemId = 23510, rate = 700 },
+            { itemId = 26106, rate = 500 },
         },
         deathMsg = "Snapping Simeon has been slain! Its rare treasures await...",
     },
@@ -1874,8 +1874,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 471, rate = 1000 },
-            { itemId = 472, rate = 700 },
-            { itemId = 473, rate = 500 },
+            { itemId = 28598, rate = 700 },
+            { itemId = 28433, rate = 500 },
         },
         deathMsg = "Venomous Vespera has been slain! Its rare treasures await...",
     },
@@ -1891,8 +1891,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 474, rate = 1000 },
-            { itemId = 475, rate = 700 },
-            { itemId = 476, rate = 500 },
+            { itemId = 23263, rate = 700 },
+            { itemId = 15857, rate = 500 },
         },
         deathMsg = "Pincer Patriarch Ptolemy has been slain! Its rare treasures await...",
     },
@@ -1908,8 +1908,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 477, rate = 1000 },
-            { itemId = 478, rate = 700 },
-            { itemId = 479, rate = 500 },
+            { itemId = 25682, rate = 700 },
+            { itemId = 26116, rate = 500 },
         },
         deathMsg = "Deathstalker Dagny has been slain! Its rare treasures await...",
     },
@@ -1925,8 +1925,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 480, rate = 1000 },
-            { itemId = 481, rate = 700 },
-            { itemId = 482, rate = 500 },
+            { itemId = 15856, rate = 700 },
+            { itemId = 23789, rate = 500 },
         },
         deathMsg = "Weaving Wendy has been slain! Its rare treasures await...",
     },
@@ -1942,8 +1942,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 483, rate = 1000 },
-            { itemId = 484, rate = 700 },
-            { itemId = 485, rate = 500 },
+            { itemId = 26002, rate = 700 },
+            { itemId = 27928, rate = 500 },
         },
         deathMsg = "Sticky Stanislava has been slain! Its rare treasures await...",
     },
@@ -1959,8 +1959,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 486, rate = 1000 },
-            { itemId = 487, rate = 700 },
-            { itemId = 488, rate = 500 },
+            { itemId = 25683, rate = 700 },
+            { itemId = 28432, rate = 500 },
         },
         deathMsg = "Ensnaring Eleanor has been slain! Its rare treasures await...",
     },
@@ -1976,8 +1976,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 489, rate = 1000 },
-            { itemId = 490, rate = 700 },
-            { itemId = 491, rate = 500 },
+            { itemId = 23435, rate = 700 },
+            { itemId = 28597, rate = 500 },
         },
         deathMsg = "Great Weaver Gwendolyn has been slain! Its rare treasures await...",
     },
@@ -1993,8 +1993,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 492, rate = 1000 },
-            { itemId = 493, rate = 700 },
-            { itemId = 494, rate = 500 },
+            { itemId = 11062, rate = 700 },
+            { itemId = 28208, rate = 500 },
         },
         deathMsg = "Oozing Oswald has been slain! Its rare treasures await...",
     },
@@ -2010,8 +2010,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 495, rate = 1000 },
-            { itemId = 496, rate = 700 },
-            { itemId = 497, rate = 500 },
+            { itemId = 26001, rate = 700 },
+            { itemId = 26108, rate = 500 },
         },
         deathMsg = "Bubbling Borghild has been slain! Its rare treasures await...",
     },
@@ -2027,8 +2027,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 498, rate = 1000 },
-            { itemId = 499, rate = 700 },
-            { itemId = 500, rate = 500 },
+            { itemId = 27937, rate = 700 },
+            { itemId = 27564, rate = 500 },
         },
         deathMsg = "Corrosive Callista has been slain! Its rare treasures await...",
     },
@@ -2044,8 +2044,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 501, rate = 1000 },
-            { itemId = 502, rate = 700 },
-            { itemId = 503, rate = 500 },
+            { itemId = 25680, rate = 700 },
+            { itemId = 27574, rate = 500 },
         },
         deathMsg = "Primordial Proteus has been slain! Its rare treasures await...",
     },
@@ -2061,8 +2061,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 504, rate = 1000 },
-            { itemId = 505, rate = 700 },
-            { itemId = 506, rate = 500 },
+            { itemId = 26115, rate = 700 },
+            { itemId = 23661, rate = 500 },
         },
         deathMsg = "Splashing Salvatore has been slain! Its rare treasures await...",
     },
@@ -2078,8 +2078,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 507, rate = 1000 },
-            { itemId = 508, rate = 700 },
-            { itemId = 509, rate = 500 },
+            { itemId = 28431, rate = 700 },
+            { itemId = 25681, rate = 500 },
         },
         deathMsg = "Snapping Sicily has been slain! Its rare treasures await...",
     },
@@ -2095,8 +2095,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 510, rate = 1000 },
-            { itemId = 511, rate = 700 },
-            { itemId = 512, rate = 500 },
+            { itemId = 28609, rate = 700 },
+            { itemId = 28575, rate = 500 },
         },
         deathMsg = "Torrent Tiberius has been slain! Its rare treasures await...",
     },
@@ -2112,8 +2112,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 513, rate = 1000 },
-            { itemId = 514, rate = 700 },
-            { itemId = 515, rate = 500 },
+            { itemId = 23434, rate = 700 },
+            { itemId = 27568, rate = 500 },
         },
         deathMsg = "Deep King Delacroix has been slain! Its rare treasures await...",
     },
@@ -2129,8 +2129,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 516, rate = 1000 },
-            { itemId = 517, rate = 700 },
-            { itemId = 518, rate = 500 },
+            { itemId = 25545, rate = 700 },
+            { itemId = 23684, rate = 500 },
         },
         deathMsg = "Lumbering Loretta has been slain! Its rare treasures await...",
     },
@@ -2146,8 +2146,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 519, rate = 1000 },
-            { itemId = 520, rate = 700 },
-            { itemId = 521, rate = 500 },
+            { itemId = 28606, rate = 700 },
+            { itemId = 26349, rate = 500 },
         },
         deathMsg = "Thundering Thaddeus has been slain! Its rare treasures await...",
     },
@@ -2163,8 +2163,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 522, rate = 1000 },
-            { itemId = 523, rate = 700 },
-            { itemId = 524, rate = 500 },
+            { itemId = 23262, rate = 700 },
+            { itemId = 28550, rate = 500 },
         },
         deathMsg = "Crasher Crisanta has been slain! Its rare treasures await...",
     },
@@ -2180,8 +2180,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 525, rate = 1000 },
-            { itemId = 526, rate = 700 },
-            { itemId = 527, rate = 500 },
+            { itemId = 23983, rate = 700 },
+            { itemId = 25544, rate = 500 },
         },
         deathMsg = "Patriarch Percival has been slain! Its rare treasures await...",
     },
@@ -2197,8 +2197,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 528, rate = 1000 },
-            { itemId = 529, rate = 700 },
-            { itemId = 530, rate = 500 },
+            { itemId = 23512, rate = 700 },
+            { itemId = 10789, rate = 500 },
         },
         deathMsg = "Clumsy Clemens has been slain! Its rare treasures await...",
     },
@@ -2214,8 +2214,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 531, rate = 1000 },
-            { itemId = 532, rate = 700 },
-            { itemId = 533, rate = 500 },
+            { itemId = 23419, rate = 700 },
+            { itemId = 26345, rate = 500 },
         },
         deathMsg = "Booming Bartholomew has been slain! Its rare treasures await...",
     },
@@ -2231,8 +2231,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 534, rate = 1000 },
-            { itemId = 535, rate = 700 },
-            { itemId = 536, rate = 500 },
+            { itemId = 23981, rate = 700 },
+            { itemId = 23685, rate = 500 },
         },
         deathMsg = "Crusher Conrad has been slain! Its rare treasures await...",
     },
@@ -2248,8 +2248,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 537, rate = 1000 },
-            { itemId = 538, rate = 700 },
-            { itemId = 539, rate = 500 },
+            { itemId = 23982, rate = 700 },
+            { itemId = 28547, rate = 500 },
         },
         deathMsg = "Titan Theobald has been slain! Its rare treasures await...",
     },
@@ -2265,8 +2265,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 540, rate = 1000 },
-            { itemId = 541, rate = 700 },
-            { itemId = 542, rate = 500 },
+            { itemId = 28534, rate = 700 },
+            { itemId = 23686, rate = 500 },
         },
         deathMsg = "Mossy Mortimer has been slain! Its rare treasures await...",
     },
@@ -2282,8 +2282,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 543, rate = 1000 },
-            { itemId = 544, rate = 700 },
-            { itemId = 545, rate = 500 },
+            { itemId = 28523, rate = 700 },
+            { itemId = 26000, rate = 500 },
         },
         deathMsg = "Ancient Aldric has been slain! Its rare treasures await...",
     },
@@ -2299,8 +2299,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 546, rate = 1000 },
-            { itemId = 547, rate = 700 },
-            { itemId = 548, rate = 500 },
+            { itemId = 28608, rate = 700 },
+            { itemId = 28542, rate = 500 },
         },
         deathMsg = "Elder Grove Elspeth has been slain! Its rare treasures await...",
     },
@@ -2316,8 +2316,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 549, rate = 1000 },
-            { itemId = 550, rate = 700 },
-            { itemId = 551, rate = 500 },
+            { itemId = 25687, rate = 700 },
+            { itemId = 28564, rate = 500 },
         },
         deathMsg = "World Tree Wilhelmina has been slain! Its rare treasures await...",
     },
@@ -2333,8 +2333,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 552, rate = 1000 },
-            { itemId = 553, rate = 700 },
-            { itemId = 554, rate = 500 },
+            { itemId = 26082, rate = 700 },
+            { itemId = 10786, rate = 500 },
         },
         deathMsg = "Mischief Marcelino has been slain! Its rare treasures await...",
     },
@@ -2350,8 +2350,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 555, rate = 1000 },
-            { itemId = 556, rate = 700 },
-            { itemId = 557, rate = 500 },
+            { itemId = 23420, rate = 700 },
+            { itemId = 26000, rate = 500 },
         },
         deathMsg = "Trickster Temperance has been slain! Its rare treasures await...",
     },
@@ -2367,8 +2367,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 558, rate = 1000 },
-            { itemId = 559, rate = 700 },
-            { itemId = 560, rate = 500 },
+            { itemId = 25684, rate = 700 },
+            { itemId = 28553, rate = 500 },
         },
         deathMsg = "Hexing Hieronymus has been slain! Its rare treasures await...",
     },
@@ -2384,8 +2384,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 561, rate = 1000 },
-            { itemId = 562, rate = 700 },
-            { itemId = 563, rate = 500 },
+            { itemId = 28607, rate = 700 },
+            { itemId = 28579, rate = 500 },
         },
         deathMsg = "Grand Trickster Gregoire has been slain! Its rare treasures await...",
     },
@@ -2401,8 +2401,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 564, rate = 1000 },
-            { itemId = 565, rate = 700 },
-            { itemId = 566, rate = 500 },
+            { itemId = 28549, rate = 700 },
+            { itemId = 23687, rate = 500 },
         },
         deathMsg = "Tiny Tortuga has been slain! Its rare treasures await...",
     },
@@ -2418,8 +2418,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 567, rate = 1000 },
-            { itemId = 568, rate = 700 },
-            { itemId = 569, rate = 500 },
+            { itemId = 26006, rate = 700 },
+            { itemId = 25685, rate = 500 },
         },
         deathMsg = "Shuffling Sebastiano has been slain! Its rare treasures await...",
     },
@@ -2435,8 +2435,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 570, rate = 1000 },
-            { itemId = 571, rate = 700 },
-            { itemId = 572, rate = 500 },
+            { itemId = 28605, rate = 700 },
+            { itemId = 11059, rate = 500 },
         },
         deathMsg = "Grudge Bearer Giuliana has been slain! Its rare treasures await...",
     },
@@ -2452,8 +2452,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 573, rate = 1000 },
-            { itemId = 574, rate = 700 },
-            { itemId = 575, rate = 500 },
+            { itemId = 25686, rate = 700 },
+            { itemId = 10785, rate = 500 },
         },
         deathMsg = "The Last Tonberry has been slain! Its rare treasures await...",
     },
@@ -2469,8 +2469,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 576, rate = 1000 },
-            { itemId = 577, rate = 700 },
-            { itemId = 578, rate = 500 },
+            { itemId = 23688, rate = 700 },
+            { itemId = 26083, rate = 500 },
         },
         deathMsg = "Rippling Rocco has been slain! Its rare treasures await...",
     },
@@ -2486,8 +2486,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 579, rate = 1000 },
-            { itemId = 580, rate = 700 },
-            { itemId = 581, rate = 500 },
+            { itemId = 26005, rate = 700 },
+            { itemId = 28601, rate = 500 },
         },
         deathMsg = "Tidecaller Thessaly has been slain! Its rare treasures await...",
     },
@@ -2503,8 +2503,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 582, rate = 1000 },
-            { itemId = 583, rate = 700 },
-            { itemId = 584, rate = 500 },
+            { itemId = 23421, rate = 700 },
+            { itemId = 10783, rate = 500 },
         },
         deathMsg = "Brine Baron Baldassare has been slain! Its rare treasures await...",
     },
@@ -2520,8 +2520,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 585, rate = 1000 },
-            { itemId = 586, rate = 700 },
-            { itemId = 587, rate = 500 },
+            { itemId = 25688, rate = 700 },
+            { itemId = 10787, rate = 500 },
         },
         deathMsg = "Deep Sovereign Desideria has been slain! Its rare treasures await...",
     },
@@ -2537,8 +2537,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 588, rate = 1000 },
-            { itemId = 589, rate = 700 },
-            { itemId = 590, rate = 500 },
+            { itemId = 26089, rate = 700 },
+            { itemId = 28217, rate = 500 },
         },
         deathMsg = "Prancing Persephone has been slain! Its rare treasures await...",
     },
@@ -2554,8 +2554,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 591, rate = 1000 },
-            { itemId = 592, rate = 700 },
-            { itemId = 593, rate = 500 },
+            { itemId = 11007, rate = 700 },
+            { itemId = 10791, rate = 500 },
         },
         deathMsg = "Thunderwing Theron has been slain! Its rare treasures await...",
     },
@@ -2571,8 +2571,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 594, rate = 1000 },
-            { itemId = 595, rate = 700 },
-            { itemId = 596, rate = 500 },
+            { itemId = 23423, rate = 700 },
+            { itemId = 28436, rate = 500 },
         },
         deathMsg = "Skydancer Sabastienne has been slain! Its rare treasures await...",
     },
@@ -2588,8 +2588,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 597, rate = 1000 },
-            { itemId = 598, rate = 700 },
-            { itemId = 599, rate = 500 },
+            { itemId = 23984, rate = 700 },
+            { itemId = 10792, rate = 500 },
         },
         deathMsg = "Heavenrider Hieronyma has been slain! Its rare treasures await...",
     },
@@ -2605,8 +2605,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 600, rate = 1000 },
-            { itemId = 601, rate = 700 },
-            { itemId = 602, rate = 500 },
+            { itemId = 26099, rate = 700 },
+            { itemId = 10794, rate = 500 },
         },
         deathMsg = "Fledgling Fiorentina has been slain! Its rare treasures await...",
     },
@@ -2622,8 +2622,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 603, rate = 1000 },
-            { itemId = 604, rate = 700 },
-            { itemId = 605, rate = 500 },
+            { itemId = 23424, rate = 700 },
+            { itemId = 11000, rate = 500 },
         },
         deathMsg = "Stormrider Sigismund has been slain! Its rare treasures await...",
     },
@@ -2639,8 +2639,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 606, rate = 1000 },
-            { itemId = 607, rate = 700 },
-            { itemId = 608, rate = 500 },
+            { itemId = 25704, rate = 700 },
+            { itemId = 10795, rate = 500 },
         },
         deathMsg = "Tempest Lord Tancred has been slain! Its rare treasures await...",
     },
@@ -2656,8 +2656,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 609, rate = 1000 },
-            { itemId = 610, rate = 700 },
-            { itemId = 611, rate = 500 },
+            { itemId = 23717, rate = 700 },
+            { itemId = 10793, rate = 500 },
         },
         deathMsg = "Ancient Roc Andromeda has been slain! Its rare treasures await...",
     },
@@ -2673,8 +2673,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 612, rate = 1000 },
-            { itemId = 613, rate = 700 },
-            { itemId = 614, rate = 500 },
+            { itemId = 10790, rate = 700 },
+            { itemId = 28339, rate = 500 },
         },
         deathMsg = "Stumbling Sebastiano has been slain! Its rare treasures await...",
     },
@@ -2690,8 +2690,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 615, rate = 1000 },
-            { itemId = 616, rate = 700 },
-            { itemId = 617, rate = 500 },
+            { itemId = 27620, rate = 700 },
+            { itemId = 28410, rate = 500 },
         },
         deathMsg = "Pirouetting Pradinelda has been slain! Its rare treasures await...",
     },
@@ -2707,8 +2707,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 618, rate = 1000 },
-            { itemId = 619, rate = 700 },
-            { itemId = 620, rate = 500 },
+            { itemId = 23425, rate = 700 },
+            { itemId = 10761, rate = 500 },
         },
         deathMsg = "Spiky Serafina has been slain! Its rare treasures await...",
     },
@@ -2724,8 +2724,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 621, rate = 1000 },
-            { itemId = 622, rate = 700 },
-            { itemId = 623, rate = 500 },
+            { itemId = 27797, rate = 700 },
+            { itemId = 10755, rate = 500 },
         },
         deathMsg = "Lord of the Desert Lazaro has been slain! Its rare treasures await...",
     },
@@ -2741,8 +2741,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 624, rate = 1000 },
-            { itemId = 625, rate = 700 },
-            { itemId = 626, rate = 500 },
+            { itemId = 28437, rate = 700 },
+            { itemId = 23697, rate = 500 },
         },
         deathMsg = "Lowing Lorcan has been slain! Its rare treasures await...",
     },
@@ -2758,8 +2758,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 627, rate = 1000 },
-            { itemId = 628, rate = 700 },
-            { itemId = 629, rate = 500 },
+            { itemId = 28602, rate = 700 },
+            { itemId = 26004, rate = 500 },
         },
         deathMsg = "Thunderhoof Theokleia has been slain! Its rare treasures await...",
     },
@@ -2775,8 +2775,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 630, rate = 1000 },
-            { itemId = 631, rate = 700 },
-            { itemId = 632, rate = 500 },
+            { itemId = 23422, rate = 700 },
+            { itemId = 10756, rate = 500 },
         },
         deathMsg = "Gore King Godfrey has been slain! Its rare treasures await...",
     },
@@ -2792,8 +2792,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 633, rate = 1000 },
-            { itemId = 634, rate = 700 },
-            { itemId = 635, rate = 500 },
+            { itemId = 27916, rate = 700 },
+            { itemId = 10759, rate = 500 },
         },
         deathMsg = "Primal Patricia has been slain! Its rare treasures await...",
     },
@@ -2809,8 +2809,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 636, rate = 1000 },
-            { itemId = 637, rate = 700 },
-            { itemId = 638, rate = 500 },
+            { itemId = 23698, rate = 700 },
+            { itemId = 10763, rate = 500 },
         },
         deathMsg = "Sand Trap Sigrid has been slain! Its rare treasures await...",
     },
@@ -2826,8 +2826,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 639, rate = 1000 },
-            { itemId = 640, rate = 700 },
-            { itemId = 641, rate = 500 },
+            { itemId = 23513, rate = 700 },
+            { itemId = 26325, rate = 500 },
         },
         deathMsg = "Burrowing Bellancourt has been slain! Its rare treasures await...",
     },
@@ -2843,8 +2843,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 642, rate = 1000 },
-            { itemId = 643, rate = 700 },
-            { itemId = 644, rate = 500 },
+            { itemId = 10487, rate = 700 },
+            { itemId = 10758, rate = 500 },
         },
         deathMsg = "Crusher Crescentia has been slain! Its rare treasures await...",
     },
@@ -2860,8 +2860,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 645, rate = 1000 },
-            { itemId = 646, rate = 700 },
-            { itemId = 647, rate = 500 },
+            { itemId = 10479, rate = 700 },
+            { itemId = 10760, rate = 500 },
         },
         deathMsg = "Antlion Emperor Adalbert has been slain! Its rare treasures await...",
     },
@@ -2877,8 +2877,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 648, rate = 1000 },
-            { itemId = 649, rate = 700 },
-            { itemId = 650, rate = 500 },
+            { itemId = 10762, rate = 700 },
+            { itemId = 23699, rate = 500 },
         },
         deathMsg = "Winged Wilhelmus has been slain! Its rare treasures await...",
     },
@@ -2894,8 +2894,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 651, rate = 1000 },
-            { itemId = 652, rate = 700 },
-            { itemId = 653, rate = 500 },
+            { itemId = 23436, rate = 700 },
+            { itemId = 28594, rate = 500 },
         },
         deathMsg = "Frost Drake Frederik has been slain! Its rare treasures await...",
     },
@@ -2911,8 +2911,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 654, rate = 1000 },
-            { itemId = 655, rate = 700 },
-            { itemId = 656, rate = 500 },
+            { itemId = 23950, rate = 700 },
+            { itemId = 10754, rate = 500 },
         },
         deathMsg = "Venomfang Valentinus has been slain! Its rare treasures await...",
     },
@@ -2928,8 +2928,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 657, rate = 1000 },
-            { itemId = 658, rate = 700 },
-            { itemId = 659, rate = 500 },
+            { itemId = 23951, rate = 700 },
+            { itemId = 10757, rate = 500 },
         },
         deathMsg = "Ancient Wyrm Agrippa has been slain! Its rare treasures await...",
     },
@@ -2945,8 +2945,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 660, rate = 1000 },
-            { itemId = 661, rate = 700 },
-            { itemId = 662, rate = 500 },
+            { itemId = 10750, rate = 700 },
+            { itemId = 23700, rate = 500 },
         },
         deathMsg = "Wind Up Wilhelmina has been slain! Its rare treasures await...",
     },
@@ -2962,8 +2962,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 663, rate = 1000 },
-            { itemId = 664, rate = 700 },
-            { itemId = 665, rate = 500 },
+            { itemId = 25419, rate = 700 },
+            { itemId = 28414, rate = 500 },
         },
         deathMsg = "Clockwork Calogero has been slain! Its rare treasures await...",
     },
@@ -2979,8 +2979,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 666, rate = 1000 },
-            { itemId = 667, rate = 700 },
-            { itemId = 668, rate = 500 },
+            { itemId = 23952, rate = 700 },
+            { itemId = 10753, rate = 500 },
         },
         deathMsg = "Arcane Armature Agatha has been slain! Its rare treasures await...",
     },
@@ -2996,8 +2996,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 669, rate = 1000 },
-            { itemId = 670, rate = 700 },
-            { itemId = 671, rate = 500 },
+            { itemId = 23953, rate = 700 },
+            { itemId = 10751, rate = 500 },
         },
         deathMsg = "Prime Puppet Ptolemais has been slain! Its rare treasures await...",
     },
@@ -3013,8 +3013,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 672, rate = 1000 },
-            { itemId = 673, rate = 700 },
-            { itemId = 674, rate = 500 },
+            { itemId = 11660, rate = 700 },
+            { itemId = 26339, rate = 500 },
         },
         deathMsg = "Dancing Dervish has been slain! Its rare treasures await...",
     },
@@ -3030,8 +3030,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 675, rate = 1000 },
-            { itemId = 676, rate = 700 },
-            { itemId = 677, rate = 500 },
+            { itemId = 28521, rate = 700 },
+            { itemId = 28595, rate = 500 },
         },
         deathMsg = "Whirling Wenceslas has been slain! Its rare treasures await...",
     },
@@ -3047,8 +3047,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 678, rate = 1000 },
-            { itemId = 679, rate = 700 },
-            { itemId = 680, rate = 500 },
+            { itemId = 23954, rate = 700 },
+            { itemId = 11659, rate = 500 },
         },
         deathMsg = "Cursed Blade Corneline has been slain! Its rare treasures await...",
     },
@@ -3064,8 +3064,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 681, rate = 1000 },
-            { itemId = 682, rate = 700 },
-            { itemId = 683, rate = 500 },
+            { itemId = 23955, rate = 700 },
+            { itemId = 11657, rate = 500 },
         },
         deathMsg = "Eternal Executioner Emerick has been slain! Its rare treasures await...",
     },
@@ -3081,8 +3081,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 684, rate = 1000 },
-            { itemId = 685, rate = 700 },
-            { itemId = 686, rate = 500 },
+            { itemId = 26080, rate = 700 },
+            { itemId = 11658, rate = 500 },
         },
         deathMsg = "Wailing Wilhemina has been slain! Its rare treasures await...",
     },
@@ -3098,8 +3098,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 687, rate = 1000 },
-            { itemId = 688, rate = 700 },
-            { itemId = 689, rate = 500 },
+            { itemId = 25431, rate = 700 },
+            { itemId = 23514, rate = 500 },
         },
         deathMsg = "Shrieking Sigismonda has been slain! Its rare treasures await...",
     },
@@ -3115,8 +3115,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 690, rate = 1000 },
-            { itemId = 691, rate = 700 },
-            { itemId = 692, rate = 500 },
+            { itemId = 23956, rate = 700 },
+            { itemId = 11661, rate = 500 },
         },
         deathMsg = "Phantom Phantasia has been slain! Its rare treasures await...",
     },
@@ -3132,8 +3132,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 693, rate = 1000 },
-            { itemId = 694, rate = 700 },
-            { itemId = 695, rate = 500 },
+            { itemId = 23957, rate = 700 },
+            { itemId = 11662, rate = 500 },
         },
         deathMsg = "Eternal Mourner Euphemia has been slain! Its rare treasures await...",
     },
@@ -3149,8 +3149,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 696, rate = 1000 },
-            { itemId = 697, rate = 700 },
-            { itemId = 698, rate = 500 },
+            { itemId = 26100, rate = 700 },
+            { itemId = 11669, rate = 500 },
         },
         deathMsg = "Blinking Bartholomea has been slain! Its rare treasures await...",
     },
@@ -3166,8 +3166,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 699, rate = 1000 },
-            { itemId = 700, rate = 700 },
-            { itemId = 701, rate = 500 },
+            { itemId = 25526, rate = 700 },
+            { itemId = 23526, rate = 500 },
         },
         deathMsg = "Staring Stanislao has been slain! Its rare treasures await...",
     },
@@ -3183,8 +3183,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 702, rate = 1000 },
-            { itemId = 703, rate = 700 },
-            { itemId = 704, rate = 500 },
+            { itemId = 23760, rate = 700 },
+            { itemId = 11674, rate = 500 },
         },
         deathMsg = "Paralytic Paracelsina has been slain! Its rare treasures await...",
     },
@@ -3200,8 +3200,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 705, rate = 1000 },
-            { itemId = 706, rate = 700 },
-            { itemId = 707, rate = 500 },
+            { itemId = 23958, rate = 700 },
+            { itemId = 11656, rate = 500 },
         },
         deathMsg = "All Seeing Arbogast has been slain! Its rare treasures await...",
     },
@@ -3217,8 +3217,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 708, rate = 1000 },
-            { itemId = 709, rate = 700 },
-            { itemId = 710, rate = 500 },
+            { itemId = 26101, rate = 700 },
+            { itemId = 23701, rate = 500 },
         },
         deathMsg = "Scavenging Svetlana has been slain! Its rare treasures await...",
     },
@@ -3234,8 +3234,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 711, rate = 1000 },
-            { itemId = 712, rate = 700 },
-            { itemId = 713, rate = 500 },
+            { itemId = 28596, rate = 700 },
+            { itemId = 11663, rate = 500 },
         },
         deathMsg = "Carrion Circling Casimira has been slain! Its rare treasures await...",
     },
@@ -3251,8 +3251,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 714, rate = 1000 },
-            { itemId = 715, rate = 700 },
-            { itemId = 716, rate = 500 },
+            { itemId = 23393, rate = 700 },
+            { itemId = 28467, rate = 500 },
         },
         deathMsg = "Bone Picker Bonaventura has been slain! Its rare treasures await...",
     },
@@ -3268,8 +3268,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 717, rate = 1000 },
-            { itemId = 718, rate = 700 },
-            { itemId = 719, rate = 500 },
+            { itemId = 23959, rate = 700 },
+            { itemId = 11651, rate = 500 },
         },
         deathMsg = "Sky Sovereign Seraphinus has been slain! Its rare treasures await...",
     },
@@ -3285,8 +3285,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 720, rate = 1000 },
-            { itemId = 721, rate = 700 },
-            { itemId = 722, rate = 500 },
+            { itemId = 11670, rate = 700 },
+            { itemId = 23702, rate = 500 },
         },
         deathMsg = "Chittering Chichester has been slain! Its rare treasures await...",
     },
@@ -3302,8 +3302,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 723, rate = 1000 },
-            { itemId = 724, rate = 700 },
-            { itemId = 725, rate = 500 },
+            { itemId = 23515, rate = 700 },
+            { itemId = 26102, rate = 500 },
         },
         deathMsg = "Thieving Theodolinda has been slain! Its rare treasures await...",
     },
@@ -3319,8 +3319,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 726, rate = 1000 },
-            { itemId = 727, rate = 700 },
-            { itemId = 728, rate = 500 },
+            { itemId = 23411, rate = 700 },
+            { itemId = 28426, rate = 500 },
         },
         deathMsg = "Banana Baron Balthazar has been slain! Its rare treasures await...",
     },
@@ -3336,8 +3336,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 729, rate = 1000 },
-            { itemId = 730, rate = 700 },
-            { itemId = 731, rate = 500 },
+            { itemId = 23960, rate = 700 },
+            { itemId = 11672, rate = 500 },
         },
         deathMsg = "Primate Prince Pelagius has been slain! Its rare treasures await...",
     },
@@ -3353,8 +3353,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 732, rate = 1000 },
-            { itemId = 733, rate = 700 },
-            { itemId = 734, rate = 500 },
+            { itemId = 23516, rate = 700 },
+            { itemId = 28427, rate = 500 },
         },
         deathMsg = "Gnashing Guildenstern has been slain! Its rare treasures await...",
     },
@@ -3370,8 +3370,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 735, rate = 1000 },
-            { itemId = 736, rate = 700 },
-            { itemId = 737, rate = 500 },
+            { itemId = 23412, rate = 700 },
+            { itemId = 11671, rate = 500 },
         },
         deathMsg = "Pack Lord Petronio has been slain! Its rare treasures await...",
     },
@@ -3387,8 +3387,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 738, rate = 1000 },
-            { itemId = 739, rate = 700 },
-            { itemId = 740, rate = 500 },
+            { itemId = 23961, rate = 700 },
+            { itemId = 11668, rate = 500 },
         },
         deathMsg = "Mauling Malaclypse has been slain! Its rare treasures await...",
     },
@@ -3404,8 +3404,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 741, rate = 1000 },
-            { itemId = 742, rate = 700 },
-            { itemId = 743, rate = 500 },
+            { itemId = 23969, rate = 700 },
+            { itemId = 23413, rate = 500 },
         },
         deathMsg = "Alpha Apollinarius has been slain! Its rare treasures await...",
     },
@@ -3421,8 +3421,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 744, rate = 1000 },
-            { itemId = 745, rate = 700 },
-            { itemId = 746, rate = 500 },
+            { itemId = 11667, rate = 700 },
+            { itemId = 23703, rate = 500 },
         },
         deathMsg = "Tiny Tortoise Tibalt has been slain! Its rare treasures await...",
     },
@@ -3438,8 +3438,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 747, rate = 1000 },
-            { itemId = 748, rate = 700 },
-            { itemId = 749, rate = 500 },
+            { itemId = 25527, rate = 700 },
+            { itemId = 23704, rate = 500 },
         },
         deathMsg = "Armored Archibald has been slain! Its rare treasures await...",
     },
@@ -3455,8 +3455,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 750, rate = 1000 },
-            { itemId = 751, rate = 700 },
-            { itemId = 752, rate = 500 },
+            { itemId = 23970, rate = 700 },
+            { itemId = 11647, rate = 500 },
         },
         deathMsg = "Elder Shell Eleanor has been slain! Its rare treasures await...",
     },
@@ -3472,8 +3472,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 753, rate = 1000 },
-            { itemId = 754, rate = 700 },
-            { itemId = 755, rate = 500 },
+            { itemId = 23971, rate = 700 },
+            { itemId = 11648, rate = 500 },
         },
         deathMsg = "Adamantoise Emperor Alexandros has been slain! Its rare treasures await...",
     },
@@ -3489,8 +3489,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 756, rate = 1000 },
-            { itemId = 757, rate = 700 },
-            { itemId = 758, rate = 500 },
+            { itemId = 26103, rate = 700 },
+            { itemId = 28428, rate = 500 },
         },
         deathMsg = "Coiling Callirhoe has been slain! Its rare treasures await...",
     },
@@ -3506,8 +3506,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 759, rate = 1000 },
-            { itemId = 760, rate = 700 },
-            { itemId = 761, rate = 500 },
+            { itemId = 25531, rate = 700 },
+            { itemId = 11649, rate = 500 },
         },
         deathMsg = "Charming Chrysanthema has been slain! Its rare treasures await...",
     },
@@ -3523,8 +3523,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 762, rate = 1000 },
-            { itemId = 763, rate = 700 },
-            { itemId = 764, rate = 500 },
+            { itemId = 23972, rate = 700 },
+            { itemId = 11650, rate = 500 },
         },
         deathMsg = "Seductive Seraphimia has been slain! Its rare treasures await...",
     },
@@ -3540,8 +3540,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 765, rate = 1000 },
-            { itemId = 766, rate = 700 },
-            { itemId = 767, rate = 500 },
+            { itemId = 23414, rate = 700 },
+            { itemId = 11646, rate = 500 },
         },
         deathMsg = "Serpent Queen Sophronia has been slain! Its rare treasures await...",
     },
@@ -3557,8 +3557,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 768, rate = 1000 },
-            { itemId = 769, rate = 700 },
-            { itemId = 770, rate = 500 },
+            { itemId = 26104, rate = 700 },
+            { itemId = 15858, rate = 500 },
         },
         deathMsg = "Bloodsucking Barnard has been slain! Its rare treasures await...",
     },
@@ -3574,8 +3574,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 771, rate = 1000 },
-            { itemId = 772, rate = 700 },
-            { itemId = 773, rate = 500 },
+            { itemId = 25532, rate = 700 },
+            { itemId = 23520, rate = 500 },
         },
         deathMsg = "Gorging Griselda has been slain! Its rare treasures await...",
     },
@@ -3591,8 +3591,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 774, rate = 1000 },
-            { itemId = 775, rate = 700 },
-            { itemId = 776, rate = 500 },
+            { itemId = 23973, rate = 700 },
+            { itemId = 11637, rate = 500 },
         },
         deathMsg = "Plasma Draining Placida has been slain! Its rare treasures await...",
     },
@@ -3608,8 +3608,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 777, rate = 1000 },
-            { itemId = 778, rate = 700 },
-            { itemId = 779, rate = 500 },
+            { itemId = 23974, rate = 700 },
+            { itemId = 11639, rate = 500 },
         },
         deathMsg = "Ancient Lamprey Augustine has been slain! Its rare treasures await...",
     },
@@ -3625,8 +3625,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 780, rate = 1000 },
-            { itemId = 781, rate = 700 },
-            { itemId = 782, rate = 500 },
+            { itemId = 11644, rate = 700 },
+            { itemId = 23705, rate = 500 },
         },
         deathMsg = "Larval Lavrentiy has been slain! Its rare treasures await...",
     },
@@ -3642,8 +3642,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 783, rate = 1000 },
-            { itemId = 784, rate = 700 },
-            { itemId = 785, rate = 500 },
+            { itemId = 25533, rate = 700 },
+            { itemId = 23528, rate = 500 },
         },
         deathMsg = "Spinning Sebestyen has been slain! Its rare treasures await...",
     },
@@ -3659,8 +3659,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 786, rate = 1000 },
-            { itemId = 787, rate = 700 },
-            { itemId = 788, rate = 500 },
+            { itemId = 23975, rate = 700 },
+            { itemId = 11645, rate = 500 },
         },
         deathMsg = "Metamorphing Melchior has been slain! Its rare treasures await...",
     },
@@ -3676,8 +3676,8 @@ nr.db = {
         isAggro = true,
         loot = {
             { itemId = 789, rate = 1000 },
-            { itemId = 790, rate = 700 },
-            { itemId = 791, rate = 500 },
+            { itemId = 23976, rate = 700 },
+            { itemId = 11664, rate = 500 },
         },
         deathMsg = "Melpomene has been slain! Its rare treasures await...",
     },

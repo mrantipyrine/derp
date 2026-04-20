@@ -29,7 +29,7 @@
 -- Safe to re-run (uses REPLACE INTO everywhere)
 -- =============================================================================
 
-USE xidb;
+USE aoniaxi;
 
 -- =============================================================================
 -- SHEEP  (Wooly William, Baa-rbara, Lambchop Larry, Shear Sharon)
