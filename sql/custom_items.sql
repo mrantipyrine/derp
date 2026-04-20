@@ -49,13 +49,13 @@ REPLACE INTO `item_basic` VALUES
 
 REPLACE INTO `item_equipment` VALUES
     -- itemId  name                    lv  ilv  jobs       MId  shieldSz  scriptType  slot  rslot  rslotlook  su_lv
-    (23437, "morriss_wide_brim",        1,   0,  4194303,    0,        0,         0,    1,     0,         0,     0);
+    (23437, "morriss_wide_brim", 38, 0, 4194303, 0, 0, 0, 1, 0, 0, 0);
     --                                                       ^all jobs              ^HEAD slot
 
 REPLACE INTO `item_mods` VALUES
-    (23437, "2", 38, -- HP +50
+    (23437, 2, 50), -- HP +50
     (23437, 13, 5), -- MND +5   (hes wise in mushroom ways)
-    (23437, 14, 5);   -- CHR +5   (very charming hat)
+    (23437, 14, 5); -- CHR +5   (very charming hat)
 
 
 -- [16402] Morris's Sporeling  (rare key item / curiosity, no equip — just a trophy drop)
