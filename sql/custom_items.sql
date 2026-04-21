@@ -73,10 +73,10 @@ REPLACE INTO `item_basic` VALUES
 
 -- [16415] Mycelium Medal  (neck, all jobs, lv10, rare reward)
 REPLACE INTO `item_basic` VALUES
-    (26117, 0, 'Mycelium_Medal', 'mycelium_medal', 1, 59476, 99, 0, 28197);
+    (26117, 0, 'Fungal_Medal', 'fungal_medal', 1, 59476, 99, 0, 28197);
 
 REPLACE INTO `item_equipment` VALUES
-    (26117, "mycelium_medal", 45, 0, 16924, 0, 0, 0, 6144, 0, 0, 0);
+    (26117, "fungal_medal", 45, 0, 16924, 0, 0, 0, 6144, 0, 0, 0);
     --                                                                                   ^EARS slot
 
 REPLACE INTO `item_mods` VALUES
@@ -138,9 +138,9 @@ REPLACE INTO `item_mods` VALUES
 
 -- [16462] Apex Shard  (ring, all jobs, lv50)
 REPLACE INTO `item_basic` VALUES
-    (11677, 0, 'Apex_Shard', 'apex_shard', 1, 59476, 99, 0, 10000);
+    (11677, 0, 'Apex_Charm', 'apex_charm', 1, 59476, 99, 0, 10000);
 REPLACE INTO `item_equipment` VALUES
-    (11677, "apex_shard", 73, 0, 16924, 0, 0, 0, 24576, 0, 0, 0);
+    (11677, "apex_charm", 73, 0, 16924, 0, 0, 0, 24576, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
     (11677, 5, 60), -- MP +60
     (11677, 12, 12), -- INT +12
