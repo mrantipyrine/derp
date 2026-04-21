@@ -361,6 +361,7 @@ nr.db = {
             { itemId = 18528, rate = 1000 },    -- Baa-rbara's Bell
             { itemId = 26007, rate = 10479  },    -- Baa-rbara's Collar
             { itemId = 28441, rate = 150  },    -- Baa-rbara's Ribbon
+            { itemId = 18831, rate = 240 }, -- Pixie Piccolo
         },
         deathMsg = "Baa-rbara's tinkling bell goes silent.",
     },
@@ -677,6 +678,7 @@ nr.db = {
         {
             { itemId = 25694, rate = 10479  },
             { itemId = 27529, rate = 150  },
+            { itemId = 18976, rate = 220 }, -- Sam Sticker
         },
         deathMsg = "Swindler Sam's last con didn't work out.",
     },
@@ -1251,6 +1253,7 @@ nr.db = {
         {
             { itemId = 23784, rate = 10479  },    -- Little Jim's Big Boots
             { itemId = 15795, rate = 150  },    -- Little Jim's Big Ring
+            { itemId = 18972, rate = 220 }, -- Storm Knucks
         },
         deathMsg    = 'Little Jim falls. He was not, in fact, little.',
     },
@@ -1272,6 +1275,7 @@ nr.db = {
         {
             { itemId = 23756, rate = 10479  },    -- Big Jim's Small Hat
             { itemId = 15796, rate = 150  },    -- Big Jim Cape
+            { itemId = 18971, rate = 220 }, -- Jim Cleaver
         },
         deathMsg    = 'Big Jim falls. He was not, in fact, big.',
     },
@@ -1290,6 +1294,7 @@ nr.db = {
         loot = {
             { itemId = 23757, rate = 700 },
             { itemId = 23536, rate = 500 },
+            { itemId = 18832, rate = 220 }, -- Dirge Flute
         },
         deathMsg = "Wooly Winifred has been slain! Its rare treasures await...",
     },
@@ -1370,6 +1375,7 @@ nr.db = {
         loot = {
             { itemId = 28618, rate = 700 },
             { itemId = 23261, rate = 500 },
+            { itemId = 18979, rate = 180 }, -- Beast Axe
         },
         deathMsg = "Ferocious Frederica has been slain! Its rare treasures await...",
     },
@@ -1530,6 +1536,7 @@ nr.db = {
         loot = {
             { itemId = 25702, rate = 700 },
             { itemId = 14631, rate = 500 },
+            { itemId = 18977, rate = 180 }, -- Guardbreak
         },
         deathMsg = "Overlord Ophelia has been slain! Its rare treasures await...",
     },
@@ -1594,6 +1601,7 @@ nr.db = {
         loot = {
             { itemId = 25703, rate = 700 },
             { itemId = 23797, rate = 500 },
+            { itemId = 18973, rate = 180 }, -- Saintbell
         },
         deathMsg = "Divine Diomedea has been slain! Its rare treasures await...",
     },
@@ -2426,6 +2434,7 @@ nr.db = {
         loot = {
             { itemId = 25687, rate = 700 },
             { itemId = 28564, rate = 500 },
+            { itemId = 18985, rate = 180 }, -- Avatar Spire
         },
         deathMsg = "World Tree Wilhelmina has been slain! Its rare treasures await...",
     },
@@ -2490,6 +2499,7 @@ nr.db = {
         loot = {
             { itemId = 28607, rate = 700 },
             { itemId = 28579, rate = 500 },
+            { itemId = 18883, rate = 180 }, -- Luck Mallet
         },
         deathMsg = "Grand Trickster Gregoire has been slain! Its rare treasures await...",
     },
@@ -2554,6 +2564,7 @@ nr.db = {
         loot = {
             { itemId = 25686, rate = 700 },
             { itemId = 10785, rate = 500 },
+            { itemId = 18983, rate = 170 }, -- Blinksteel
         },
         deathMsg = "The Last Tonberry has been slain! Its rare treasures await...",
     },
@@ -2618,6 +2629,7 @@ nr.db = {
         loot = {
             { itemId = 25688, rate = 700 },
             { itemId = 10787, rate = 500 },
+            { itemId = 18840, rate = 160 }, -- Doom Horn
         },
         deathMsg = "Deep Sovereign Desideria has been slain! Its rare treasures await...",
     },
@@ -2682,6 +2694,7 @@ nr.db = {
         loot = {
             { itemId = 23984, rate = 700 },
             { itemId = 10792, rate = 500 },
+            { itemId = 18937, rate = 170 }, -- Boomstick
         },
         deathMsg = "Heavenrider Hieronyma has been slain! Its rare treasures await...",
     },
@@ -2714,6 +2727,7 @@ nr.db = {
         loot = {
             { itemId = 23424, rate = 700 },
             { itemId = 11000, rate = 500 },
+            { itemId = 18933, rate = 180 }, -- Sky Bow
         },
         deathMsg = "Stormrider Sigismund has been slain! Its rare treasures await...",
     },
@@ -2746,6 +2760,7 @@ nr.db = {
         loot = {
             { itemId = 23717, rate = 700 },
             { itemId = 10793, rate = 500 },
+            { itemId = 18984, rate = 170 }, -- Wyvern Pike
         },
         deathMsg = "Ancient Roc Andromeda has been slain! Its rare treasures await...",
     },
@@ -2986,6 +3001,7 @@ nr.db = {
         loot = {
             { itemId = 23950, rate = 700 },
             { itemId = 10754, rate = 500 },
+            { itemId = 18978, rate = 180 }, -- Grave Scythe
         },
         deathMsg = "Venomfang Valentinus has been slain! Its rare treasures await...",
     },
@@ -3002,6 +3018,7 @@ nr.db = {
         loot = {
             { itemId = 23951, rate = 700 },
             { itemId = 10757, rate = 500 },
+            { itemId = 18982, rate = 170 }, -- Moon Fang
         },
         deathMsg = "Ancient Wyrm Agrippa has been slain! Its rare treasures await...",
     },
@@ -3034,6 +3051,7 @@ nr.db = {
         loot = {
             { itemId = 25419, rate = 700 },
             { itemId = 28414, rate = 500 },
+            { itemId = 18986, rate = 180 }, -- Blue Maw
         },
         deathMsg = "Clockwork Calogero has been slain! Its rare treasures await...",
     },
@@ -3082,6 +3100,7 @@ nr.db = {
         loot = {
             { itemId = 11660, rate = 700 },
             { itemId = 26339, rate = 500 },
+            { itemId = 18980, rate = 200 }, -- Siren Dagger
         },
         deathMsg = "Dancing Dervish has been slain! Its rare treasures await...",
     },
@@ -3130,6 +3149,7 @@ nr.db = {
         loot = {
             { itemId = 23955, rate = 700 },
             { itemId = 11657, rate = 500 },
+            { itemId = 18974, rate = 170 }, -- Ember Staff
         },
         deathMsg = "Eternal Executioner Emerick has been slain! Its rare treasures await...",
     },
@@ -3258,6 +3278,7 @@ nr.db = {
         loot = {
             { itemId = 23958, rate = 700 },
             { itemId = 11656, rate = 500 },
+            { itemId = 18884, rate = 170 }, -- Mana Wand
         },
         deathMsg = "All Seeing Arbogast has been slain! Its rare treasures await...",
     },
@@ -3322,6 +3343,7 @@ nr.db = {
         loot = {
             { itemId = 23959, rate = 700 },
             { itemId = 11651, rate = 500 },
+            { itemId = 18981, rate = 170 }, -- Railgun
         },
         deathMsg = "Sky Sovereign Seraphinus has been slain! Its rare treasures await...",
     },
@@ -3842,6 +3864,7 @@ nr.db = {
             { itemId = 813, rate = 1000 },
             { itemId = 23984, rate = 700 },
             { itemId = 11672, rate = 500 },
+            { itemId = 18886, rate = 150 }, -- Sage Rod
         },
         deathMsg = "Dread Decimus has been banished! Its rare treasures await...",
     },
