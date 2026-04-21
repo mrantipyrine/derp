@@ -373,6 +373,59 @@ loot.pools.high =
 }
 
 -----------------------------------
+-- Progressive chase weapon pools
+-- These custom weapons are intentionally stronger than normal loot and
+-- appear on Wanderer/Nomad/Elite/Apex dynamic mobs by level band.
+-----------------------------------
+loot.chaseWeapons =
+{
+    low =
+    {
+        18844, -- Sprout Wand
+        19101, -- Flick Knife
+        20713, -- Foam Sword
+        19224, -- Tin Popgun
+        16185, -- Bubble Shield
+    },
+
+    mid_low =
+    {
+        19221, -- Firefly Gun
+        18853, -- Spirit Maul
+        19105, -- Bandit Fang
+        19230, -- Spark Arbalest
+    },
+
+    mid =
+    {
+        18847, -- Seveneye Rod
+        19088, -- Alpha Axe
+        16183, -- Nomad Guard
+    },
+
+    mid_high =
+    {
+        18852, -- Hydra Club
+        19226, -- Doom Blunder
+        18995, -- Storm Rapier
+        18997, -- Bloody Rapier
+    },
+
+    high =
+    {
+        18987, -- Death Dealer
+        18988, -- Meteor Fists
+        18990, -- World Staff
+        18991, -- Titan Breaker
+        18994, -- Black Star
+        18996, -- Ghost Knife
+        18999, -- Packlord Axe
+        19005, -- Avatar Rod
+        12408, -- Apex Bulwark
+    },
+}
+
+-----------------------------------
 -- Level Range -> Pool Mapping
 -----------------------------------
 loot.getPoolForLevel = function(zoneLevelRange)
@@ -389,6 +442,37 @@ loot.getPoolForLevel = function(zoneLevelRange)
     else
         return loot.pools.high
     end
+end
+
+loot.getChaseWeaponPoolForLevel = function(zoneLevelRange)
+    local avgLevel = math.floor((zoneLevelRange[1] + zoneLevelRange[2]) / 2)
+    local pool = {}
+
+    local function append(items)
+        for _, itemId in ipairs(items) do
+            table.insert(pool, itemId)
+        end
+    end
+
+    append(loot.chaseWeapons.low)
+
+    if avgLevel > 20 then
+        append(loot.chaseWeapons.mid_low)
+    end
+
+    if avgLevel > 40 then
+        append(loot.chaseWeapons.mid)
+    end
+
+    if avgLevel > 55 then
+        append(loot.chaseWeapons.mid_high)
+    end
+
+    if avgLevel > 70 then
+        append(loot.chaseWeapons.high)
+    end
+
+    return pool
 end
 
 -----------------------------------
@@ -557,6 +641,38 @@ loot.award = function(mob, player, template, tier)
             local added = player:addItem(itemId, 1)
             if added then
                 itemsAwarded = itemsAwarded + 1
+            end
+        end
+    end
+
+    local chasePool = loot.getChaseWeaponPoolForLevel(zoneLevelRange)
+    if chasePool and #chasePool > 0 and tier and tier >= xi.dynamicWorld.tier.WANDERER then
+        local chaseRateByTier =
+        {
+            [xi.dynamicWorld.tier.WANDERER] = 70,
+            [xi.dynamicWorld.tier.NOMAD]    = 120,
+            [xi.dynamicWorld.tier.ELITE]    = 180,
+            [xi.dynamicWorld.tier.APEX]     = 300,
+        }
+
+        local chaseRollsByTier =
+        {
+            [xi.dynamicWorld.tier.WANDERER] = 1,
+            [xi.dynamicWorld.tier.NOMAD]    = 1,
+            [xi.dynamicWorld.tier.ELITE]    = 2,
+            [xi.dynamicWorld.tier.APEX]     = 3,
+        }
+
+        local chaseRate = chaseRateByTier[tier] or 0
+        local chaseRolls = chaseRollsByTier[tier] or 0
+
+        for i = 1, chaseRolls do
+            if math.random(1, 1000) <= chaseRate then
+                local itemId = chasePool[math.random(#chasePool)]
+                local added = player:addItem(itemId, 1)
+                if added then
+                    itemsAwarded = itemsAwarded + 1
+                end
             end
         end
     end
