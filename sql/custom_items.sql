@@ -195,13 +195,8 @@ REPLACE INTO `item_mods` VALUES
     (23539, 25, 5), -- Accuracy +5
     (23539, 421, 2); -- Crit Dmg. +2
 
--- Baa-rbara (lv10-13) — 18528-18530
-REPLACE INTO `item_basic` VALUES
-    (18528, 0, 'Baarbara_Bell', 'baarbara_bell', 1, 59476, 99, 0, 50);
-REPLACE INTO `item_equipment` VALUES
-    (18528, "baarbara_bell", 10, 0, 4194303, 0, 0, 0, 3, 0, 0, 0);
-REPLACE INTO `item_weapon` VALUES
-    (18528, "baarbara_bell", 11, 0, 0, 0, 0, 3, 1, 216, 1, 0);
+-- Baa-rbara (lv10-13)
+-- Baarbara Bell is defined in SECTION 4 with the current weapon DAT mapping.
 
 REPLACE INTO `item_basic` VALUES
     (26007, 0, 'Baarbara_Collar', 'baarbara_collar', 1, 59476, 99, 0, 600);
@@ -5803,15 +5798,92 @@ REPLACE INTO `item_mods` VALUES
     (249, 421, 8); -- Crit Dmg. +8
 
 -- =============================================================================
--- SECTION 4: RARE WEAPON CHASE DROPS
--- Fun, overpowered solo/low-man weapons tied to named rares.
+-- SECTION 4: CUSTOM WEAPON CHASE DROPS
 -- =============================================================================
+-- Generated from weapon.yaml, which is the built weapon DAT source.
+-- Test/retired weapon IDs are cleared from mod tables below.
 
-DELETE FROM `item_mods` WHERE `itemId` IN (18831, 18832, 18840, 18883, 18884, 18886, 18933, 18937, 18971, 18972, 18973, 18974, 18975, 18976, 18977, 18978, 18979, 18980, 18981, 18982, 18983, 18984, 18985, 18986);
+DELETE FROM `item_mods` WHERE `itemId` IN (18528, 18831, 18832, 18840, 18844, 18847, 18852, 18853, 18863, 18868, 18869, 18883, 18884, 18886, 18933, 18937, 18971, 18972, 18973, 18974, 18975, 18976, 18977, 18978, 18979, 18980, 18981, 18982, 18983, 18984, 18985, 18986, 18987, 18988, 18990, 18991, 18994, 18995, 18996, 18997, 18999, 19005, 19088, 19101, 19105, 19188, 19221, 19224, 19226, 19230, 20713);
+DELETE FROM `item_mods_pet` WHERE `itemId` IN (18528, 18831, 18832, 18840, 18844, 18847, 18852, 18853, 18863, 18868, 18869, 18883, 18884, 18886, 18933, 18937, 18971, 18972, 18973, 18974, 18975, 18976, 18977, 18978, 18979, 18980, 18981, 18982, 18983, 18984, 18985, 18986, 18987, 18988, 18990, 18991, 18994, 18995, 18996, 18997, 18999, 19005, 19088, 19101, 19105, 19188, 19221, 19224, 19226, 19230, 20713);
 
--- Pixie Piccolo (lv18)
-REPLACE INTO `item_basic` VALUES (18831, 0, 'pixie_piccolo', 'pixie_piccolo', 1, 59476, 99, 0, 0);
-REPLACE INTO `item_equipment` VALUES (18831, "pixie_piccolo", 18, 0, 512, 81, 0, 0, 4, 0, 0, 0);
+-- Sprout Wand (Lv5)
+REPLACE INTO `item_basic` VALUES (18844, 0, 'Sprout_Wand', 'sprout_wand', 1, 59476, 99, 0, 0);
+REPLACE INTO `item_equipment` VALUES (18844, "sprout_wand", 5, 0, 16924, 18844, 0, 0, 3, 0, 0, 0);
+REPLACE INTO `item_weapon` VALUES (18844, "sprout_wand", 11, 0, 0, 0, 0, 3, 1, 180, 24, 0);
+REPLACE INTO `item_mods` VALUES
+    (18844, 5, 40),
+    (18844, 12, 5),
+    (18844, 13, 5),
+    (18844, 14, 5),
+    (18844, 28, 10),
+    (18844, 30, 10),
+    (18844, 311, 20),
+    (18844, 530, 10),
+    (18844, 369, 1);
+
+-- Flick Knife (Lv5)
+REPLACE INTO `item_basic` VALUES (19101, 0, 'Flick_Knife', 'flick_knife', 1, 59476, 99, 0, 0);
+REPLACE INTO `item_equipment` VALUES (19101, "flick_knife", 5, 0, 267296, 19101, 0, 0, 3, 0, 0, 0);
+REPLACE INTO `item_weapon` VALUES (19101, "flick_knife", 2, 0, 0, 0, 0, 1, 1, 150, 18, 0);
+REPLACE INTO `item_mods` VALUES
+    (19101, 9, 5),
+    (19101, 11, 5),
+    (19101, 23, 10),
+    (19101, 25, 10),
+    (19101, 288, 5),
+    (19101, 289, 10);
+
+-- Tin Popgun (Lv5)
+REPLACE INTO `item_basic` VALUES (19224, 0, 'Tin_Popgun', 'tin_popgun', 1, 59476, 99, 0, 0);
+REPLACE INTO `item_equipment` VALUES (19224, "tin_popgun", 5, 0, 70688, 19224, 0, 0, 4, 0, 0, 0);
+REPLACE INTO `item_weapon` VALUES (19224, "tin_popgun", 26, 1, 0, 0, 0, 1, 1, 360, 30, 0);
+REPLACE INTO `item_mods` VALUES
+    (19224, 11, 5),
+    (19224, 24, 10),
+    (19224, 26, 10),
+    (19224, 365, 8),
+    (19224, 359, 8),
+    (19224, 376, 15);
+
+-- Foam Sword (Lv5)
+REPLACE INTO `item_basic` VALUES (20713, 0, 'Foam_Sword', 'foam_sword', 1, 59476, 99, 0, 0);
+REPLACE INTO `item_equipment` VALUES (20713, "foam_sword", 5, 0, 4194303, 20713, 0, 0, 3, 0, 0, 0);
+REPLACE INTO `item_weapon` VALUES (20713, "foam_sword", 3, 0, 0, 0, 0, 2, 1, 180, 22, 0);
+REPLACE INTO `item_mods` VALUES
+    (20713, 2, 40),
+    (20713, 23, 8),
+    (20713, 25, 8),
+    (20713, 289, 10),
+    (20713, 161, -300),
+    (20713, 370, 1);
+
+-- Baarbara Bell (Lv10)
+REPLACE INTO `item_basic` VALUES (18869, 0, 'Baarbara_Bell', 'baarbara_bell', 1, 59476, 99, 0, 0);
+REPLACE INTO `item_equipment` VALUES (18869, "baarbara_bell", 10, 0, 1622556, 0, 0, 0, 3, 0, 0, 0);
+REPLACE INTO `item_weapon` VALUES (18869, "baarbara_bell", 11, 0, 0, 0, 0, 3, 1, 210, 18, 0);
+REPLACE INTO `item_mods` VALUES
+    (18869, 5, 25),
+    (18869, 12, 4),
+    (18869, 13, 4),
+    (18869, 28, 5),
+    (18869, 369, 1);
+
+-- Firefly Gun (Lv15)
+REPLACE INTO `item_basic` VALUES (19221, 0, 'Firefly_Gun', 'firefly_gun', 1, 59476, 99, 0, 0);
+REPLACE INTO `item_equipment` VALUES (19221, "firefly_gun", 15, 0, 70688, 19221, 0, 0, 4, 0, 0, 0);
+REPLACE INTO `item_weapon` VALUES (19221, "firefly_gun", 26, 1, 0, 0, 0, 1, 1, 360, 55, 0);
+REPLACE INTO `item_mods` VALUES
+    (19221, 11, 8),
+    (19221, 24, 20),
+    (19221, 26, 20),
+    (19221, 365, 10),
+    (19221, 359, 12),
+    (19221, 376, 30),
+    (19221, 479, 10);
+
+-- Pixie Piccolo (Lv18)
+REPLACE INTO `item_basic` VALUES (18831, 0, 'Pixie_Piccolo', 'pixie_piccolo', 1, 59476, 99, 0, 0);
+REPLACE INTO `item_equipment` VALUES (18831, "pixie_piccolo", 18, 0, 512, 0, 0, 0, 4, 0, 0, 0);
 REPLACE INTO `item_weapon` VALUES (18831, "pixie_piccolo", 41, 0, 0, 0, 0, 0, 1, 240, 0, 0);
 REPLACE INTO `item_mods` VALUES
     (18831, 14, 8),
@@ -5821,114 +5893,9 @@ REPLACE INTO `item_mods` VALUES
     (18831, 455, 8),
     (18831, 833, 4);
 
--- Dirge Flute (lv42)
-REPLACE INTO `item_basic` VALUES (18832, 0, 'dirge_flute', 'dirge_flute', 1, 59476, 99, 0, 0);
-REPLACE INTO `item_equipment` VALUES (18832, "dirge_flute", 42, 0, 512, 64, 0, 0, 4, 0, 0, 0);
-REPLACE INTO `item_weapon` VALUES (18832, "dirge_flute", 42, 0, 0, 0, 0, 1, 1, 240, 0, 0);
-REPLACE INTO `item_mods` VALUES
-    (18832, 14, 12),
-    (18832, 30, 15),
-    (18832, 452, 3),
-    (18832, 454, 30),
-    (18832, 455, 10),
-    (18832, 833, 6);
-
--- Doom Horn (lv75)
-REPLACE INTO `item_basic` VALUES (18840, 0, 'doom_horn', 'doom_horn', 1, 59476, 99, 0, 0);
-REPLACE INTO `item_equipment` VALUES (18840, "doom_horn", 75, 0, 512, 105, 0, 0, 4, 0, 0, 0);
-REPLACE INTO `item_weapon` VALUES (18840, "doom_horn", 42, 0, 0, 0, 0, 0, 1, 240, 0, 0);
-REPLACE INTO `item_mods` VALUES
-    (18840, 14, 25),
-    (18840, 30, 35),
-    (18840, 452, 6),
-    (18840, 454, 60),
-    (18840, 455, 20),
-    (18840, 833, 10),
-    (18840, 530, 25);
-
--- Luck Mallet (lv35)
-REPLACE INTO `item_basic` VALUES (18883, 0, 'luck_mallet', 'luck_mallet', 1, 59476, 99, 0, 0);
-REPLACE INTO `item_equipment` VALUES (18883, "luck_mallet", 35, 0, 16916, 360, 0, 0, 3, 0, 0, 0);
-REPLACE INTO `item_weapon` VALUES (18883, "luck_mallet", 11, 0, 0, 0, 0, 3, 1, 180, 80, 0);
-REPLACE INTO `item_mods` VALUES
-    (18883, 12, 8),
-    (18883, 13, 12),
-    (18883, 14, 8),
-    (18883, 28, 15),
-    (18883, 30, 20),
-    (18883, 170, 15),
-    (18883, 311, 60),
-    (18883, 530, 20),
-    (18883, 369, 2);
-
--- Mana Wand (lv55)
-REPLACE INTO `item_basic` VALUES (18884, 0, 'mana_wand', 'mana_wand', 1, 59476, 99, 0, 0);
-REPLACE INTO `item_equipment` VALUES (18884, "mana_wand", 55, 0, 16924, 225, 0, 0, 3, 0, 0, 0);
-REPLACE INTO `item_weapon` VALUES (18884, "mana_wand", 11, 0, 0, 0, 0, 3, 1, 210, 95, 0);
-REPLACE INTO `item_mods` VALUES
-    (18884, 5, 100),
-    (18884, 12, 18),
-    (18884, 13, 18),
-    (18884, 14, 18),
-    (18884, 28, 30),
-    (18884, 30, 30),
-    (18884, 311, 120),
-    (18884, 562, 10),
-    (18884, 563, 25),
-    (18884, 530, 35),
-    (18884, 369, 4);
-
--- Sage Rod (lv75)
-REPLACE INTO `item_basic` VALUES (18886, 0, 'sage_rod', 'sage_rod', 1, 59476, 99, 0, 0);
-REPLACE INTO `item_equipment` VALUES (18886, "sage_rod", 75, 0, 16924, 595, 0, 0, 3, 0, 0, 0);
-REPLACE INTO `item_weapon` VALUES (18886, "sage_rod", 11, 0, 0, 0, 0, 3, 1, 216, 120, 0);
-REPLACE INTO `item_mods` VALUES
-    (18886, 5, 150),
-    (18886, 12, 25),
-    (18886, 13, 25),
-    (18886, 14, 25),
-    (18886, 28, 45),
-    (18886, 30, 45),
-    (18886, 311, 200),
-    (18886, 562, 15),
-    (18886, 563, 35),
-    (18886, 530, 50),
-    (18886, 369, 6);
-
--- Sky Bow (lv45)
-REPLACE INTO `item_basic` VALUES (18933, 0, 'sky_bow', 'sky_bow', 1, 59476, 99, 0, 0);
-REPLACE INTO `item_equipment` VALUES (18933, "sky_bow", 45, 0, 3072, 35, 0, 0, 4, 0, 0, 0);
-REPLACE INTO `item_weapon` VALUES (18933, "sky_bow", 25, 0, 0, 0, 0, 1, 1, 300, 160, 0);
-REPLACE INTO `item_mods` VALUES
-    (18933, 9, 15),
-    (18933, 11, 15),
-    (18933, 24, 45),
-    (18933, 26, 45),
-    (18933, 365, 20),
-    (18933, 359, 25),
-    (18933, 376, 60),
-    (18933, 840, 20),
-    (18933, 949, 15),
-    (18933, 479, 15);
-
--- Boomstick (lv60)
-REPLACE INTO `item_basic` VALUES (18937, 0, 'boomstick', 'boomstick', 1, 59476, 99, 0, 0);
-REPLACE INTO `item_equipment` VALUES (18937, "boomstick", 60, 0, 66560, 57, 0, 0, 4, 0, 0, 0);
-REPLACE INTO `item_weapon` VALUES (18937, "boomstick", 26, 1, 0, 0, 0, 1, 1, 360, 220, 0);
-REPLACE INTO `item_mods` VALUES
-    (18937, 11, 20),
-    (18937, 24, 60),
-    (18937, 26, 60),
-    (18937, 365, 25),
-    (18937, 359, 35),
-    (18937, 376, 100),
-    (18937, 840, 30),
-    (18937, 949, 20),
-    (18937, 479, 25);
-
--- Jim Cleaver (lv25)
-REPLACE INTO `item_basic` VALUES (18971, 0, 'jim_cleaver', 'jim_cleaver', 1, 59476, 99, 0, 0);
-REPLACE INTO `item_equipment` VALUES (18971, "jim_cleaver", 25, 0, 385, 414, 0, 0, 1, 0, 0, 0);
+-- Jim Cleaver (Lv25)
+REPLACE INTO `item_basic` VALUES (18971, 0, 'Jim_Cleaver', 'jim_cleaver', 1, 59476, 99, 0, 0);
+REPLACE INTO `item_equipment` VALUES (18971, "jim_cleaver", 25, 0, 385, 18971, 0, 0, 1, 0, 0, 0);
 REPLACE INTO `item_weapon` VALUES (18971, "jim_cleaver", 6, 0, 0, 0, 0, 2, 1, 360, 120, 0);
 REPLACE INTO `item_mods` VALUES
     (18971, 8, 12),
@@ -5942,75 +5909,23 @@ REPLACE INTO `item_mods` VALUES
     (18971, 175, 20),
     (18971, 73, 8);
 
--- Storm Knucks (lv36)
-REPLACE INTO `item_basic` VALUES (18972, 0, 'storm_knucks', 'storm_knucks', 1, 59476, 99, 0, 0);
-REPLACE INTO `item_equipment` VALUES (18972, "storm_knucks", 36, 0, 6146, 502, 0, 0, 1, 0, 0, 0);
-REPLACE INTO `item_weapon` VALUES (18972, "storm_knucks", 1, 0, 0, 0, 0, 4, 3, 280, 48, 0);
+-- Spirit Maul (Lv30)
+REPLACE INTO `item_basic` VALUES (18853, 0, 'Spirit_Maul', 'spirit_maul', 1, 59476, 99, 0, 0);
+REPLACE INTO `item_equipment` VALUES (18853, "spirit_maul", 30, 0, 16980, 18853, 0, 0, 3, 0, 0, 0);
+REPLACE INTO `item_weapon` VALUES (18853, "spirit_maul", 11, 0, 0, 0, 0, 3, 1, 220, 70, 0);
 REPLACE INTO `item_mods` VALUES
-    (18972, 9, 12),
-    (18972, 11, 8),
-    (18972, 23, 25),
-    (18972, 25, 25),
-    (18972, 73, 12),
-    (18972, 384, 800),
-    (18972, 302, 8),
-    (18972, 430, 3),
-    (18972, 840, 18),
-    (18972, 949, 10);
+    (18853, 5, 80),
+    (18853, 13, 12),
+    (18853, 14, 8),
+    (18853, 28, 20),
+    (18853, 30, 20),
+    (18853, 311, 70),
+    (18853, 530, 20),
+    (18853, 369, 2);
 
--- Saintbell (lv45)
-REPLACE INTO `item_basic` VALUES (18973, 0, 'saintbell', 'saintbell', 1, 59476, 99, 0, 0);
-REPLACE INTO `item_equipment` VALUES (18973, "saintbell", 45, 0, 16916, 415, 0, 0, 3, 0, 0, 0);
-REPLACE INTO `item_weapon` VALUES (18973, "saintbell", 11, 0, 0, 0, 0, 3, 1, 216, 90, 0);
-REPLACE INTO `item_mods` VALUES
-    (18973, 13, 20),
-    (18973, 14, 12),
-    (18973, 28, 20),
-    (18973, 30, 25),
-    (18973, 170, 20),
-    (18973, 311, 100),
-    (18973, 530, 30),
-    (18973, 369, 3),
-    (18973, 452, 2),
-    (18973, 454, 25);
-
--- Ember Staff (lv55)
-REPLACE INTO `item_basic` VALUES (18974, 0, 'ember_staff', 'ember_staff', 1, 59476, 99, 0, 0);
-REPLACE INTO `item_equipment` VALUES (18974, "ember_staff", 55, 0, 16408, 416, 0, 0, 1, 0, 0, 0);
-REPLACE INTO `item_weapon` VALUES (18974, "ember_staff", 12, 0, 0, 0, 0, 3, 1, 300, 130, 0);
-REPLACE INTO `item_mods` VALUES
-    (18974, 12, 25),
-    (18974, 28, 45),
-    (18974, 30, 35),
-    (18974, 311, 220),
-    (18974, 562, 15),
-    (18974, 563, 35),
-    (18974, 530, 40),
-    (18974, 274, 20),
-    (18974, 369, 4);
-
--- Spellblade (lv60)
-REPLACE INTO `item_basic` VALUES (18975, 0, 'spellblade', 'spellblade', 1, 59476, 99, 0, 0);
-REPLACE INTO `item_equipment` VALUES (18975, "spellblade", 60, 0, 32784, 420, 0, 0, 3, 0, 0, 0);
-REPLACE INTO `item_weapon` VALUES (18975, "spellblade", 3, 0, 0, 0, 0, 2, 1, 200, 110, 0);
-REPLACE INTO `item_mods` VALUES
-    (18975, 9, 15),
-    (18975, 12, 18),
-    (18975, 28, 25),
-    (18975, 30, 25),
-    (18975, 170, 15),
-    (18975, 311, 140),
-    (18975, 530, 25),
-    (18975, 341, 7),
-    (18975, 343, 120),
-    (18975, 856, 0),
-    (18975, 840, 20),
-    (18975, 122, 15),
-    (18975, 1147, -20);
-
--- Sam Sticker (lv30)
-REPLACE INTO `item_basic` VALUES (18976, 0, 'sam_sticker', 'sam_sticker', 1, 59476, 99, 0, 0);
-REPLACE INTO `item_equipment` VALUES (18976, "sam_sticker", 30, 0, 263200, 422, 0, 0, 3, 0, 0, 0);
+-- Sam Sticker (Lv30)
+REPLACE INTO `item_basic` VALUES (18976, 0, 'Sam_Sticker', 'sam_sticker', 1, 59476, 99, 0, 0);
+REPLACE INTO `item_equipment` VALUES (18976, "sam_sticker", 30, 0, 263200, 18976, 0, 0, 3, 0, 0, 0);
 REPLACE INTO `item_weapon` VALUES (18976, "sam_sticker", 2, 0, 0, 0, 0, 1, 1, 120, 75, 0);
 REPLACE INTO `item_mods` VALUES
     (18976, 9, 15),
@@ -6026,42 +5941,49 @@ REPLACE INTO `item_mods` VALUES
     (18976, 506, 250),
     (18976, 507, 250);
 
--- Guardbreak (lv40)
-REPLACE INTO `item_basic` VALUES (18977, 0, 'guardbreak', 'guardbreak', 1, 59476, 99, 0, 0);
-REPLACE INTO `item_equipment` VALUES (18977, "guardbreak", 40, 0, 2097217, 426, 0, 0, 3, 0, 0, 0);
-REPLACE INTO `item_weapon` VALUES (18977, "guardbreak", 3, 0, 0, 0, 0, 2, 1, 220, 115, 0);
+-- Bandit Fang (Lv30)
+REPLACE INTO `item_basic` VALUES (19105, 0, 'Bandit_Fang', 'bandit_fang', 1, 59476, 99, 0, 0);
+REPLACE INTO `item_equipment` VALUES (19105, "bandit_fang", 30, 0, 267296, 19105, 0, 0, 3, 0, 0, 0);
+REPLACE INTO `item_weapon` VALUES (19105, "bandit_fang", 2, 0, 0, 0, 0, 1, 1, 160, 65, 0);
 REPLACE INTO `item_mods` VALUES
-    (18977, 2, 120),
-    (18977, 10, 20),
-    (18977, 23, 20),
-    (18977, 25, 25),
-    (18977, 27, 5),
-    (18977, 161, -800),
-    (18977, 160, -500),
-    (18977, 416, 5),
-    (18977, 840, 15),
-    (18977, 949, 10);
+    (19105, 9, 12),
+    (19105, 11, 12),
+    (19105, 23, 25),
+    (19105, 25, 25),
+    (19105, 289, 15),
+    (19105, 302, 10),
+    (19105, 840, 15);
 
--- Grave Scythe (lv50)
-REPLACE INTO `item_basic` VALUES (18978, 0, 'grave_scythe', 'grave_scythe', 1, 59476, 99, 0, 0);
-REPLACE INTO `item_equipment` VALUES (18978, "grave_scythe", 50, 0, 129, 425, 0, 0, 1, 0, 0, 0);
-REPLACE INTO `item_weapon` VALUES (18978, "grave_scythe", 7, 0, 0, 0, 0, 2, 1, 420, 180, 0);
+-- Spark Arbalest (Lv30)
+REPLACE INTO `item_basic` VALUES (19230, 0, 'Spark_Arbalest', 'spark_arbalest', 1, 59476, 99, 0, 0);
+REPLACE INTO `item_equipment` VALUES (19230, "spark_arbalest", 30, 0, 1185, 19230, 0, 0, 4, 0, 0, 0);
+REPLACE INTO `item_weapon` VALUES (19230, "spark_arbalest", 26, 0, 0, 0, 0, 1, 1, 240, 90, 0);
 REPLACE INTO `item_mods` VALUES
-    (18978, 8, 18),
-    (18978, 12, 12),
-    (18978, 23, 40),
-    (18978, 25, 30),
-    (18978, 840, 35),
-    (18978, 841, 25),
-    (18978, 949, 20),
-    (18978, 431, 5),
-    (18978, 500, 150),
-    (18978, 501, 50),
-    (18978, 950, 8);
+    (19230, 24, 30),
+    (19230, 26, 30),
+    (19230, 365, 15),
+    (19230, 359, 15),
+    (19230, 376, 45),
+    (19230, 840, 15);
 
--- Beast Axe (lv35)
-REPLACE INTO `item_basic` VALUES (18979, 0, 'beast_axe', 'beast_axe', 1, 59476, 99, 0, 0);
-REPLACE INTO `item_equipment` VALUES (18979, "beast_axe", 35, 0, 256, 413, 0, 0, 3, 0, 0, 0);
+-- Luckitoo (Lv35)
+REPLACE INTO `item_basic` VALUES (18883, 0, 'Luckitoo', 'luckitoo', 1, 59476, 99, 0, 0);
+REPLACE INTO `item_equipment` VALUES (18883, "luckitoo", 35, 0, 16916, 0, 0, 0, 3, 0, 0, 0);
+REPLACE INTO `item_weapon` VALUES (18883, "luckitoo", 11, 0, 0, 0, 0, 3, 1, 180, 80, 0);
+REPLACE INTO `item_mods` VALUES
+    (18883, 12, 8),
+    (18883, 13, 12),
+    (18883, 14, 8),
+    (18883, 28, 15),
+    (18883, 30, 20),
+    (18883, 170, 15),
+    (18883, 311, 60),
+    (18883, 530, 20),
+    (18883, 369, 2);
+
+-- Beast Axe (Lv35)
+REPLACE INTO `item_basic` VALUES (18979, 0, 'Beast_Axe', 'beast_axe', 1, 59476, 99, 0, 0);
+REPLACE INTO `item_equipment` VALUES (18979, "beast_axe", 35, 0, 256, 18979, 0, 0, 3, 0, 0, 0);
 REPLACE INTO `item_weapon` VALUES (18979, "beast_axe", 5, 0, 0, 0, 0, 2, 1, 240, 105, 0);
 REPLACE INTO `item_mods` VALUES
     (18979, 8, 12),
@@ -6077,75 +5999,100 @@ REPLACE INTO `item_mods` VALUES
     (18979, 1034, 70),
     (18979, 840, 15);
 
--- Siren Dagger (lv55)
-REPLACE INTO `item_basic` VALUES (18980, 0, 'siren_dagger', 'siren_dagger', 1, 59476, 99, 0, 0);
-REPLACE INTO `item_equipment` VALUES (18980, "siren_dagger", 55, 0, 262688, 427, 0, 0, 3, 0, 0, 0);
-REPLACE INTO `item_weapon` VALUES (18980, "siren_dagger", 2, 0, 0, 0, 0, 1, 1, 160, 85, 0);
+-- Storm Knucks (Lv36)
+REPLACE INTO `item_basic` VALUES (18972, 0, 'Storm_Knucks', 'storm_knucks', 1, 59476, 99, 0, 0);
+REPLACE INTO `item_equipment` VALUES (18972, "storm_knucks", 36, 0, 6146, 18972, 0, 0, 1, 0, 0, 0);
+REPLACE INTO `item_weapon` VALUES (18972, "storm_knucks", 1, 0, 0, 0, 0, 4, 3, 280, 48, 0);
 REPLACE INTO `item_mods` VALUES
-    (18980, 9, 15),
-    (18980, 11, 15),
-    (18980, 14, 20),
-    (18980, 25, 30),
-    (18980, 288, 20),
-    (18980, 840, 20),
-    (18980, 452, 4),
-    (18980, 454, 40),
-    (18980, 455, 15),
-    (18980, 833, 8),
-    (18980, 1003, 12);
+    (18972, 9, 12),
+    (18972, 11, 8),
+    (18972, 23, 25),
+    (18972, 25, 25),
+    (18972, 73, 12),
+    (18972, 384, 800),
+    (18972, 302, 8),
+    (18972, 430, 3),
+    (18972, 840, 18),
+    (18972, 949, 10);
 
--- Railgun (lv60)
-REPLACE INTO `item_basic` VALUES (18981, 0, 'railgun', 'railgun', 1, 59476, 99, 0, 0);
-REPLACE INTO `item_equipment` VALUES (18981, "railgun", 60, 0, 66560, 96, 0, 0, 4, 0, 0, 0);
-REPLACE INTO `item_weapon` VALUES (18981, "railgun", 26, 0, 0, 0, 0, 1, 1, 300, 260, 0);
+-- Guardbreak (Lv40)
+REPLACE INTO `item_basic` VALUES (18977, 0, 'Guardbreak', 'guardbreak', 1, 59476, 99, 0, 0);
+REPLACE INTO `item_equipment` VALUES (18977, "guardbreak", 40, 0, 2097217, 18977, 0, 0, 3, 0, 0, 0);
+REPLACE INTO `item_weapon` VALUES (18977, "guardbreak", 3, 0, 0, 0, 0, 2, 1, 220, 115, 0);
 REPLACE INTO `item_mods` VALUES
-    (18981, 11, 25),
-    (18981, 24, 80),
-    (18981, 26, 80),
-    (18981, 365, 35),
-    (18981, 359, 40),
-    (18981, 376, 160),
-    (18981, 840, 40),
-    (18981, 949, 25),
-    (18981, 479, 35),
-    (18981, 506, 300),
-    (18981, 507, 300);
+    (18977, 2, 120),
+    (18977, 10, 20),
+    (18977, 23, 20),
+    (18977, 25, 25),
+    (18977, 27, 5),
+    (18977, 161, -800),
+    (18977, 160, -500),
+    (18977, 416, 5),
+    (18977, 840, 15),
+    (18977, 949, 10);
 
--- Moon Fang (lv65)
-REPLACE INTO `item_basic` VALUES (18982, 0, 'moon_fang', 'moon_fang', 1, 59476, 99, 0, 0);
-REPLACE INTO `item_equipment` VALUES (18982, "moon_fang", 65, 0, 10240, 424, 0, 0, 1, 0, 0, 0);
-REPLACE INTO `item_weapon` VALUES (18982, "moon_fang", 10, 0, 0, 0, 0, 2, 1, 360, 170, 0);
+-- Dirge Flute (Lv42)
+REPLACE INTO `item_basic` VALUES (18832, 0, 'Dirge_Flute', 'dirge_flute', 1, 59476, 99, 0, 0);
+REPLACE INTO `item_equipment` VALUES (18832, "dirge_flute", 42, 0, 512, 0, 0, 0, 4, 0, 0, 0);
+REPLACE INTO `item_weapon` VALUES (18832, "dirge_flute", 42, 0, 0, 0, 0, 1, 1, 240, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (18982, 8, 20),
-    (18982, 9, 20),
-    (18982, 23, 45),
-    (18982, 25, 40),
-    (18982, 73, 20),
-    (18982, 840, 30),
-    (18982, 175, 50),
-    (18982, 174, 25),
-    (18982, 949, 20),
-    (18982, 1144, 128);
+    (18832, 14, 12),
+    (18832, 30, 15),
+    (18832, 452, 3),
+    (18832, 454, 30),
+    (18832, 455, 10),
+    (18832, 833, 6);
 
--- Blinksteel (lv65)
-REPLACE INTO `item_basic` VALUES (18983, 0, 'blinksteel', 'blinksteel', 1, 59476, 99, 0, 0);
-REPLACE INTO `item_equipment` VALUES (18983, "blinksteel", 65, 0, 6146, 421, 0, 0, 3, 0, 0, 0);
-REPLACE INTO `item_weapon` VALUES (18983, "blinksteel", 9, 0, 0, 0, 0, 2, 3, 160, 90, 0);
+-- Seveneye Rod (Lv45)
+REPLACE INTO `item_basic` VALUES (18847, 0, 'Seveneye_Rod', 'seveneye_rod', 1, 59476, 99, 0, 0);
+REPLACE INTO `item_equipment` VALUES (18847, "seveneye_rod", 45, 0, 16924, 18847, 0, 0, 3, 0, 0, 0);
+REPLACE INTO `item_weapon` VALUES (18847, "seveneye_rod", 11, 0, 0, 0, 0, 3, 1, 190, 95, 0);
 REPLACE INTO `item_mods` VALUES
-    (18983, 9, 22),
-    (18983, 11, 18),
-    (18983, 23, 40),
-    (18983, 25, 45),
-    (18983, 73, 18),
-    (18983, 384, 1000),
-    (18983, 302, 12),
-    (18983, 430, 5),
-    (18983, 840, 25),
-    (18983, 949, 20);
+    (18847, 5, 120),
+    (18847, 12, 18),
+    (18847, 13, 18),
+    (18847, 14, 18),
+    (18847, 28, 30),
+    (18847, 30, 35),
+    (18847, 311, 120),
+    (18847, 530, 30),
+    (18847, 369, 3);
 
--- Wyvern Pike (lv45)
-REPLACE INTO `item_basic` VALUES (18984, 0, 'wyvern_pike', 'wyvern_pike', 1, 59476, 99, 0, 0);
-REPLACE INTO `item_equipment` VALUES (18984, "wyvern_pike", 45, 0, 8192, 423, 0, 0, 1, 0, 0, 0);
+-- Sky Bow (Lv45)
+REPLACE INTO `item_basic` VALUES (18933, 0, 'Sky_Bow', 'sky_bow', 1, 59476, 99, 0, 0);
+REPLACE INTO `item_equipment` VALUES (18933, "sky_bow", 45, 0, 3072, 0, 0, 0, 4, 0, 0, 0);
+REPLACE INTO `item_weapon` VALUES (18933, "sky_bow", 25, 0, 0, 0, 0, 1, 1, 300, 160, 0);
+REPLACE INTO `item_mods` VALUES
+    (18933, 9, 15),
+    (18933, 11, 15),
+    (18933, 24, 45),
+    (18933, 26, 45),
+    (18933, 365, 20),
+    (18933, 359, 25),
+    (18933, 376, 60),
+    (18933, 840, 20),
+    (18933, 949, 15),
+    (18933, 479, 15);
+
+-- Saintbell (Lv45)
+REPLACE INTO `item_basic` VALUES (18973, 0, 'Saintbell', 'saintbell', 1, 59476, 99, 0, 0);
+REPLACE INTO `item_equipment` VALUES (18973, "saintbell", 45, 0, 16916, 18973, 0, 0, 3, 0, 0, 0);
+REPLACE INTO `item_weapon` VALUES (18973, "saintbell", 11, 0, 0, 0, 0, 3, 1, 216, 90, 0);
+REPLACE INTO `item_mods` VALUES
+    (18973, 13, 20),
+    (18973, 14, 12),
+    (18973, 28, 20),
+    (18973, 30, 25),
+    (18973, 170, 20),
+    (18973, 311, 100),
+    (18973, 530, 30),
+    (18973, 369, 3),
+    (18973, 452, 2),
+    (18973, 454, 25);
+
+-- Wyvern Pike (Lv45)
+REPLACE INTO `item_basic` VALUES (18984, 0, 'Wyvern_Pike', 'wyvern_pike', 1, 59476, 99, 0, 0);
+REPLACE INTO `item_equipment` VALUES (18984, "wyvern_pike", 45, 0, 8192, 18984, 0, 0, 1, 0, 0, 0);
 REPLACE INTO `item_weapon` VALUES (18984, "wyvern_pike", 8, 0, 0, 0, 0, 1, 1, 360, 190, 0);
 REPLACE INTO `item_mods` VALUES
     (18984, 8, 18),
@@ -6163,9 +6110,47 @@ REPLACE INTO `item_mods` VALUES
     (18984, 1034, 60),
     (18984, 840, 25);
 
--- Avatar Spire (lv50)
-REPLACE INTO `item_basic` VALUES (18985, 0, 'avatar_spire', 'avatar_spire', 1, 59476, 99, 0, 0);
-REPLACE INTO `item_equipment` VALUES (18985, "avatar_spire", 50, 0, 16384, 417, 0, 0, 1, 0, 0, 0);
+-- Alpha Axe (Lv45)
+REPLACE INTO `item_basic` VALUES (19088, 0, 'Alpha_Axe', 'alpha_axe', 1, 59476, 99, 0, 0);
+REPLACE INTO `item_equipment` VALUES (19088, "alpha_axe", 45, 0, 256, 19088, 0, 0, 3, 0, 0, 0);
+REPLACE INTO `item_weapon` VALUES (19088, "alpha_axe", 5, 0, 0, 0, 0, 2, 1, 240, 125, 0);
+REPLACE INTO `item_mods` VALUES
+    (19088, 8, 18),
+    (19088, 23, 35),
+    (19088, 25, 35),
+    (19088, 273, 35),
+    (19088, 1052, 15),
+    (19088, 990, 130),
+    (19088, 991, 100),
+    (19088, 994, 60),
+    (19088, 995, 1500),
+    (19088, 1034, 80);
+REPLACE INTO `item_mods_pet` VALUES
+    (19088, 23, 100, 0),
+    (19088, 25, 100, 0),
+    (19088, 288, 20, 0),
+    (19088, 289, 30, 0);
+
+-- Grave Scythe (Lv50)
+REPLACE INTO `item_basic` VALUES (18978, 0, 'Grave_Scythe', 'grave_scythe', 1, 59476, 99, 0, 0);
+REPLACE INTO `item_equipment` VALUES (18978, "grave_scythe", 50, 0, 129, 18978, 0, 0, 1, 0, 0, 0);
+REPLACE INTO `item_weapon` VALUES (18978, "grave_scythe", 7, 0, 0, 0, 0, 2, 1, 420, 180, 0);
+REPLACE INTO `item_mods` VALUES
+    (18978, 8, 18),
+    (18978, 12, 12),
+    (18978, 23, 40),
+    (18978, 25, 30),
+    (18978, 840, 35),
+    (18978, 841, 25),
+    (18978, 949, 20),
+    (18978, 431, 5),
+    (18978, 500, 150),
+    (18978, 501, 50),
+    (18978, 950, 8);
+
+-- Avatar Spire (Lv50)
+REPLACE INTO `item_basic` VALUES (18985, 0, 'Avatar_Spire', 'avatar_spire', 1, 59476, 99, 0, 0);
+REPLACE INTO `item_equipment` VALUES (18985, "avatar_spire", 50, 0, 16384, 18985, 0, 0, 1, 0, 0, 0);
 REPLACE INTO `item_weapon` VALUES (18985, "avatar_spire", 12, 0, 0, 0, 0, 3, 1, 300, 140, 0);
 REPLACE INTO `item_mods` VALUES
     (18985, 5, 150),
@@ -6186,9 +6171,123 @@ REPLACE INTO `item_mods` VALUES
     (18985, 995, 1200),
     (18985, 369, 5);
 
--- Blue Maw (lv60)
-REPLACE INTO `item_basic` VALUES (18986, 0, 'blue_maw', 'blue_maw', 1, 59476, 99, 0, 0);
-REPLACE INTO `item_equipment` VALUES (18986, "blue_maw", 60, 0, 32848, 419, 0, 0, 3, 0, 0, 0);
+-- Vejovis Wand (Lv55)
+REPLACE INTO `item_basic` VALUES (18884, 0, 'Vejovis_Wand', 'vejovis_wand', 1, 59476, 99, 0, 0);
+REPLACE INTO `item_equipment` VALUES (18884, "vejovis_wand", 55, 0, 16924, 0, 0, 0, 3, 0, 0, 0);
+REPLACE INTO `item_weapon` VALUES (18884, "vejovis_wand", 11, 0, 0, 0, 0, 3, 1, 210, 95, 0);
+REPLACE INTO `item_mods` VALUES
+    (18884, 5, 100),
+    (18884, 12, 18),
+    (18884, 13, 18),
+    (18884, 14, 18),
+    (18884, 28, 30),
+    (18884, 30, 30),
+    (18884, 311, 120),
+    (18884, 562, 10),
+    (18884, 563, 25),
+    (18884, 530, 35),
+    (18884, 369, 4);
+
+-- Ember Staff (Lv55)
+REPLACE INTO `item_basic` VALUES (18974, 0, 'Ember_Staff', 'ember_staff', 1, 59476, 99, 0, 0);
+REPLACE INTO `item_equipment` VALUES (18974, "ember_staff", 55, 0, 16408, 18974, 0, 0, 1, 0, 0, 0);
+REPLACE INTO `item_weapon` VALUES (18974, "ember_staff", 12, 0, 0, 0, 0, 3, 1, 300, 130, 0);
+REPLACE INTO `item_mods` VALUES
+    (18974, 12, 25),
+    (18974, 28, 45),
+    (18974, 30, 35),
+    (18974, 311, 220),
+    (18974, 562, 15),
+    (18974, 563, 35),
+    (18974, 530, 40),
+    (18974, 274, 20),
+    (18974, 369, 4);
+
+-- Siren Dagger (Lv55)
+REPLACE INTO `item_basic` VALUES (18980, 0, 'Siren_Dagger', 'siren_dagger', 1, 59476, 99, 0, 0);
+REPLACE INTO `item_equipment` VALUES (18980, "siren_dagger", 55, 0, 262688, 18980, 0, 0, 3, 0, 0, 0);
+REPLACE INTO `item_weapon` VALUES (18980, "siren_dagger", 2, 0, 0, 0, 0, 1, 1, 160, 85, 0);
+REPLACE INTO `item_mods` VALUES
+    (18980, 9, 15),
+    (18980, 11, 15),
+    (18980, 14, 20),
+    (18980, 25, 30),
+    (18980, 288, 20),
+    (18980, 840, 20),
+    (18980, 452, 4),
+    (18980, 454, 40),
+    (18980, 455, 15),
+    (18980, 833, 8),
+    (18980, 1003, 12);
+
+-- Hydra Club (Lv60)
+REPLACE INTO `item_basic` VALUES (18852, 0, 'Hydra_Club', 'hydra_club', 1, 59476, 99, 0, 0);
+REPLACE INTO `item_equipment` VALUES (18852, "hydra_club", 60, 0, 32767, 18852, 0, 0, 3, 0, 0, 0);
+REPLACE INTO `item_weapon` VALUES (18852, "hydra_club", 11, 0, 0, 0, 0, 3, 1, 220, 45, 0);
+REPLACE INTO `item_mods` VALUES
+    (18852, 9, 15),
+    (18852, 11, 15),
+    (18852, 23, 35),
+    (18852, 25, 35),
+    (18852, 289, 30),
+    (18852, 978, 8),
+    (18852, 840, 20),
+    (18852, 949, 25);
+
+-- Boomstick (Lv60)
+REPLACE INTO `item_basic` VALUES (18937, 0, 'Boomstick', 'boomstick', 1, 59476, 99, 0, 0);
+REPLACE INTO `item_equipment` VALUES (18937, "boomstick", 60, 0, 66560, 0, 0, 0, 4, 0, 0, 0);
+REPLACE INTO `item_weapon` VALUES (18937, "boomstick", 26, 1, 0, 0, 0, 1, 1, 360, 220, 0);
+REPLACE INTO `item_mods` VALUES
+    (18937, 11, 20),
+    (18937, 24, 60),
+    (18937, 26, 60),
+    (18937, 365, 25),
+    (18937, 359, 35),
+    (18937, 376, 100),
+    (18937, 840, 30),
+    (18937, 949, 20),
+    (18937, 479, 25);
+
+-- Spellblade (Lv60)
+REPLACE INTO `item_basic` VALUES (18975, 0, 'Spellblade', 'spellblade', 1, 59476, 99, 0, 0);
+REPLACE INTO `item_equipment` VALUES (18975, "spellblade", 60, 0, 32784, 18975, 0, 0, 3, 0, 0, 0);
+REPLACE INTO `item_weapon` VALUES (18975, "spellblade", 3, 0, 0, 0, 0, 2, 1, 200, 110, 0);
+REPLACE INTO `item_mods` VALUES
+    (18975, 9, 15),
+    (18975, 12, 18),
+    (18975, 28, 25),
+    (18975, 30, 25),
+    (18975, 170, 15),
+    (18975, 311, 140),
+    (18975, 530, 25),
+    (18975, 341, 7),
+    (18975, 343, 120),
+    (18975, 856, 0),
+    (18975, 840, 20),
+    (18975, 122, 15),
+    (18975, 1147, -20);
+
+-- Railgun (Lv60)
+REPLACE INTO `item_basic` VALUES (18981, 0, 'Railgun', 'railgun', 1, 59476, 99, 0, 0);
+REPLACE INTO `item_equipment` VALUES (18981, "railgun", 60, 0, 66560, 18981, 0, 0, 4, 0, 0, 0);
+REPLACE INTO `item_weapon` VALUES (18981, "railgun", 26, 0, 0, 0, 0, 1, 1, 300, 260, 0);
+REPLACE INTO `item_mods` VALUES
+    (18981, 11, 25),
+    (18981, 24, 80),
+    (18981, 26, 80),
+    (18981, 365, 35),
+    (18981, 359, 40),
+    (18981, 376, 160),
+    (18981, 840, 40),
+    (18981, 949, 25),
+    (18981, 479, 35),
+    (18981, 506, 300),
+    (18981, 507, 300);
+
+-- Blue Maw (Lv60)
+REPLACE INTO `item_basic` VALUES (18986, 0, 'Blue_Maw', 'blue_maw', 1, 59476, 99, 0, 0);
+REPLACE INTO `item_equipment` VALUES (18986, "blue_maw", 60, 0, 32848, 18986, 0, 0, 3, 0, 0, 0);
 REPLACE INTO `item_weapon` VALUES (18986, "blue_maw", 3, 0, 0, 0, 0, 2, 1, 220, 125, 0);
 REPLACE INTO `item_mods` VALUES
     (18986, 9, 16),
@@ -6208,170 +6307,9 @@ REPLACE INTO `item_mods` VALUES
     (18986, 343, 100),
     (18986, 856, 0);
 
--- =============================================================================
--- SECTION 5: PROGRESSIVE DYNAMIC WORLD WEAPON LADDER
--- Extra chase weapons for Wanderer/Nomad/Elite/Apex mobs across leveling bands.
--- =============================================================================
-
-DELETE FROM `item_mods` WHERE `itemId` IN (18844, 18847, 18852, 18853, 18987, 18988, 18990, 18991, 18994, 18995, 18996, 18997, 18999, 19005, 19088, 19101, 19105, 19221, 19224, 19226, 19230, 20713);
-DELETE FROM `item_mods_pet` WHERE `itemId` IN (18990, 18999, 19005, 19088);
-
--- Sprout Wand (lv5)
-REPLACE INTO `item_basic` VALUES (18844, 0, 'sprout_wand', 'sprout_wand', 1, 59476, 99, 0, 0);
-REPLACE INTO `item_equipment` VALUES (18844, "sprout_wand", 5, 0, 16924, 373, 0, 0, 3, 0, 0, 0);
-REPLACE INTO `item_weapon` VALUES (18844, "sprout_wand", 11, 0, 0, 0, 0, 3, 1, 180, 24, 0);
-REPLACE INTO `item_mods` VALUES
-    (18844, 5, 40),
-    (18844, 12, 5),
-    (18844, 13, 5),
-    (18844, 14, 5),
-    (18844, 28, 10),
-    (18844, 30, 10),
-    (18844, 311, 20),
-    (18844, 530, 10),
-    (18844, 369, 1);
-
--- Flick Knife (lv5)
-REPLACE INTO `item_basic` VALUES (19101, 0, 'flick_knife', 'flick_knife', 1, 59476, 99, 0, 0);
-REPLACE INTO `item_equipment` VALUES (19101, "flick_knife", 5, 0, 267296, 317, 0, 0, 3, 0, 0, 0);
-REPLACE INTO `item_weapon` VALUES (19101, "flick_knife", 2, 0, 0, 0, 0, 1, 1, 150, 18, 0);
-REPLACE INTO `item_mods` VALUES
-    (19101, 9, 5),
-    (19101, 11, 5),
-    (19101, 23, 10),
-    (19101, 25, 10),
-    (19101, 288, 5),
-    (19101, 289, 10);
-
--- Foam Sword (lv5)
-REPLACE INTO `item_basic` VALUES (20713, 0, 'foam_sword', 'foam_sword', 1, 59476, 99, 0, 0);
-REPLACE INTO `item_equipment` VALUES (20713, "foam_sword", 5, 0, 4194303, 729, 0, 0, 3, 0, 0, 0);
-REPLACE INTO `item_weapon` VALUES (20713, "foam_sword", 3, 0, 0, 0, 0, 2, 1, 180, 22, 0);
-REPLACE INTO `item_mods` VALUES
-    (20713, 2, 40),
-    (20713, 23, 8),
-    (20713, 25, 8),
-    (20713, 289, 10),
-    (20713, 161, -300),
-    (20713, 370, 1);
-
--- Tin Popgun (lv5)
-REPLACE INTO `item_basic` VALUES (19224, 0, 'tin_popgun', 'tin_popgun', 1, 59476, 99, 0, 0);
-REPLACE INTO `item_equipment` VALUES (19224, "tin_popgun", 5, 0, 70688, 59, 0, 0, 4, 0, 0, 0);
-REPLACE INTO `item_weapon` VALUES (19224, "tin_popgun", 26, 1, 0, 0, 0, 1, 1, 360, 30, 0);
-REPLACE INTO `item_mods` VALUES
-    (19224, 11, 5),
-    (19224, 24, 10),
-    (19224, 26, 10),
-    (19224, 365, 8),
-    (19224, 359, 8),
-    (19224, 376, 15);
-
--- Firefly Gun (lv15)
-REPLACE INTO `item_basic` VALUES (19221, 0, 'firefly_gun', 'firefly_gun', 1, 59476, 99, 0, 0);
-REPLACE INTO `item_equipment` VALUES (19221, "firefly_gun", 15, 0, 70688, 59, 0, 0, 4, 0, 0, 0);
-REPLACE INTO `item_weapon` VALUES (19221, "firefly_gun", 26, 1, 0, 0, 0, 1, 1, 360, 55, 0);
-REPLACE INTO `item_mods` VALUES
-    (19221, 11, 8),
-    (19221, 24, 20),
-    (19221, 26, 20),
-    (19221, 365, 10),
-    (19221, 359, 12),
-    (19221, 376, 30),
-    (19221, 479, 10);
-
--- Spirit Maul (lv30)
-REPLACE INTO `item_basic` VALUES (18853, 0, 'spirit_maul', 'spirit_maul', 1, 59476, 99, 0, 0);
-REPLACE INTO `item_equipment` VALUES (18853, "spirit_maul", 30, 0, 16980, 116, 0, 0, 3, 0, 0, 0);
-REPLACE INTO `item_weapon` VALUES (18853, "spirit_maul", 11, 0, 0, 0, 0, 3, 1, 220, 70, 0);
-REPLACE INTO `item_mods` VALUES
-    (18853, 5, 80),
-    (18853, 13, 12),
-    (18853, 14, 8),
-    (18853, 28, 20),
-    (18853, 30, 20),
-    (18853, 311, 70),
-    (18853, 530, 20),
-    (18853, 369, 2);
-
--- Bandit Fang (lv30)
-REPLACE INTO `item_basic` VALUES (19105, 0, 'bandit_fang', 'bandit_fang', 1, 59476, 99, 0, 0);
-REPLACE INTO `item_equipment` VALUES (19105, "bandit_fang", 30, 0, 267296, 379, 0, 0, 3, 0, 0, 0);
-REPLACE INTO `item_weapon` VALUES (19105, "bandit_fang", 2, 0, 0, 0, 0, 1, 1, 160, 65, 0);
-REPLACE INTO `item_mods` VALUES
-    (19105, 9, 12),
-    (19105, 11, 12),
-    (19105, 23, 25),
-    (19105, 25, 25),
-    (19105, 289, 15),
-    (19105, 302, 10),
-    (19105, 840, 15);
-
--- Spark Arbalest (lv30)
-REPLACE INTO `item_basic` VALUES (19230, 0, 'spark_arbalest', 'spark_arbalest', 1, 59476, 99, 0, 0);
-REPLACE INTO `item_equipment` VALUES (19230, "spark_arbalest", 30, 0, 1185, 56, 0, 0, 4, 0, 0, 0);
-REPLACE INTO `item_weapon` VALUES (19230, "spark_arbalest", 26, 0, 0, 0, 0, 1, 1, 240, 90, 0);
-REPLACE INTO `item_mods` VALUES
-    (19230, 24, 30),
-    (19230, 26, 30),
-    (19230, 365, 15),
-    (19230, 359, 15),
-    (19230, 376, 45),
-    (19230, 840, 15);
-
--- Seveneye Rod (lv45)
-REPLACE INTO `item_basic` VALUES (18847, 0, 'seveneye_rod', 'seveneye_rod', 1, 59476, 99, 0, 0);
-REPLACE INTO `item_equipment` VALUES (18847, "seveneye_rod", 45, 0, 16924, 359, 0, 0, 3, 0, 0, 0);
-REPLACE INTO `item_weapon` VALUES (18847, "seveneye_rod", 11, 0, 0, 0, 0, 3, 1, 190, 95, 0);
-REPLACE INTO `item_mods` VALUES
-    (18847, 5, 120),
-    (18847, 12, 18),
-    (18847, 13, 18),
-    (18847, 14, 18),
-    (18847, 28, 30),
-    (18847, 30, 35),
-    (18847, 311, 120),
-    (18847, 530, 30),
-    (18847, 369, 3);
-
--- Alpha Axe (lv45)
-REPLACE INTO `item_basic` VALUES (19088, 0, 'alpha_axe', 'alpha_axe', 1, 59476, 99, 0, 0);
-REPLACE INTO `item_equipment` VALUES (19088, "alpha_axe", 45, 0, 256, 413, 0, 0, 3, 0, 0, 0);
-REPLACE INTO `item_weapon` VALUES (19088, "alpha_axe", 5, 0, 0, 0, 0, 2, 1, 240, 125, 0);
-REPLACE INTO `item_mods` VALUES
-    (19088, 8, 18),
-    (19088, 23, 35),
-    (19088, 25, 35),
-    (19088, 273, 35),
-    (19088, 1052, 15),
-    (19088, 990, 130),
-    (19088, 991, 100),
-    (19088, 994, 60),
-    (19088, 995, 1500),
-    (19088, 1034, 80);
-REPLACE INTO `item_mods_pet` VALUES
-    (19088, 23, 100, 0),
-    (19088, 25, 100, 0),
-    (19088, 288, 20, 0),
-    (19088, 289, 30, 0);
-
--- Hydra Club (lv60)
-REPLACE INTO `item_basic` VALUES (18852, 0, 'hydra_club', 'hydra_club', 1, 59476, 99, 0, 0);
-REPLACE INTO `item_equipment` VALUES (18852, "hydra_club", 60, 0, 32767, 110, 0, 0, 3, 0, 0, 0);
-REPLACE INTO `item_weapon` VALUES (18852, "hydra_club", 11, 0, 0, 0, 0, 3, 1, 220, 45, 0);
-REPLACE INTO `item_mods` VALUES
-    (18852, 9, 15),
-    (18852, 11, 15),
-    (18852, 23, 35),
-    (18852, 25, 35),
-    (18852, 289, 30),
-    (18852, 978, 8),
-    (18852, 840, 20),
-    (18852, 949, 25);
-
--- Doom Blunder (lv60)
-REPLACE INTO `item_basic` VALUES (19226, 0, 'doom_blunder', 'doom_blunder', 1, 59476, 99, 0, 0);
-REPLACE INTO `item_equipment` VALUES (19226, "doom_blunder", 60, 0, 66560, 58, 0, 0, 4, 0, 0, 0);
+-- Doom Blunder (Lv60)
+REPLACE INTO `item_basic` VALUES (19226, 0, 'Doom_Blunder', 'doom_blunder', 1, 59476, 99, 0, 0);
+REPLACE INTO `item_equipment` VALUES (19226, "doom_blunder", 60, 0, 66560, 19226, 0, 0, 4, 0, 0, 0);
 REPLACE INTO `item_weapon` VALUES (19226, "doom_blunder", 26, 1, 0, 0, 0, 1, 1, 360, 260, 0);
 REPLACE INTO `item_mods` VALUES
     (19226, 11, 25),
@@ -6383,9 +6321,41 @@ REPLACE INTO `item_mods` VALUES
     (19226, 479, 30),
     (19226, 840, 35);
 
--- Storm Rapier (lv65)
-REPLACE INTO `item_basic` VALUES (18995, 0, 'storm_rapier', 'storm_rapier', 1, 59476, 99, 0, 0);
-REPLACE INTO `item_equipment` VALUES (18995, "storm_rapier", 65, 0, 16, 420, 0, 0, 3, 0, 0, 0);
+-- Moon Fang (Lv65)
+REPLACE INTO `item_basic` VALUES (18982, 0, 'Moon_Fang', 'moon_fang', 1, 59476, 99, 0, 0);
+REPLACE INTO `item_equipment` VALUES (18982, "moon_fang", 65, 0, 10240, 18982, 0, 0, 1, 0, 0, 0);
+REPLACE INTO `item_weapon` VALUES (18982, "moon_fang", 10, 0, 0, 0, 0, 2, 1, 360, 170, 0);
+REPLACE INTO `item_mods` VALUES
+    (18982, 8, 20),
+    (18982, 9, 20),
+    (18982, 23, 45),
+    (18982, 25, 40),
+    (18982, 73, 20),
+    (18982, 840, 30),
+    (18982, 175, 50),
+    (18982, 174, 25),
+    (18982, 949, 20),
+    (18982, 1144, 128);
+
+-- Blinksteel (Lv65)
+REPLACE INTO `item_basic` VALUES (18983, 0, 'Blinksteel', 'blinksteel', 1, 59476, 99, 0, 0);
+REPLACE INTO `item_equipment` VALUES (18983, "blinksteel", 65, 0, 6146, 18983, 0, 0, 3, 0, 0, 0);
+REPLACE INTO `item_weapon` VALUES (18983, "blinksteel", 9, 0, 0, 0, 0, 2, 3, 160, 90, 0);
+REPLACE INTO `item_mods` VALUES
+    (18983, 9, 22),
+    (18983, 11, 18),
+    (18983, 23, 40),
+    (18983, 25, 45),
+    (18983, 73, 18),
+    (18983, 384, 1000),
+    (18983, 302, 12),
+    (18983, 430, 5),
+    (18983, 840, 25),
+    (18983, 949, 20);
+
+-- Storm Rapier (Lv65)
+REPLACE INTO `item_basic` VALUES (18995, 0, 'Storm_Rapier', 'storm_rapier', 1, 59476, 99, 0, 0);
+REPLACE INTO `item_equipment` VALUES (18995, "storm_rapier", 65, 0, 16, 18995, 0, 0, 3, 0, 0, 0);
 REPLACE INTO `item_weapon` VALUES (18995, "storm_rapier", 3, 0, 0, 0, 0, 2, 1, 180, 140, 0);
 REPLACE INTO `item_mods` VALUES
     (18995, 9, 18),
@@ -6404,10 +6374,10 @@ REPLACE INTO `item_mods` VALUES
     (18995, 501, 100),
     (18995, 950, 6);
 
--- Bloody Rapier (lv65)
-REPLACE INTO `item_basic` VALUES (18997, 0, 'bloody_rapier', 'bloody_rapier', 1, 59476, 99, 0, 0);
-REPLACE INTO `item_equipment` VALUES (18997, "bloody_rapier", 65, 0, 80, 426, 0, 0, 3, 0, 0, 0);
-REPLACE INTO `item_weapon` VALUES (18997, "bloody_rapier", 3, 0, 0, 0, 0, 2, 1, 224, 180, 0);
+-- Bloody Saber (Lv65)
+REPLACE INTO `item_basic` VALUES (18997, 0, 'Bloody_Saber', 'bloody_saber', 1, 59476, 99, 0, 0);
+REPLACE INTO `item_equipment` VALUES (18997, "bloody_saber", 65, 0, 80, 18997, 0, 0, 3, 0, 0, 0);
+REPLACE INTO `item_weapon` VALUES (18997, "bloody_saber", 3, 0, 0, 0, 0, 2, 1, 224, 180, 0);
 REPLACE INTO `item_mods` VALUES
     (18997, 2, 250),
     (18997, 10, 25),
@@ -6425,9 +6395,39 @@ REPLACE INTO `item_mods` VALUES
     (18997, 500, 200),
     (18997, 501, 60);
 
--- Death Dealer (lv75)
-REPLACE INTO `item_basic` VALUES (18987, 0, 'death_dealer', 'death_dealer', 1, 59476, 99, 0, 0);
-REPLACE INTO `item_equipment` VALUES (18987, "death_dealer", 75, 0, 66560, 95, 0, 0, 4, 0, 0, 0);
+-- Doom Horn (Lv75)
+REPLACE INTO `item_basic` VALUES (18840, 0, 'Doom_Horn', 'doom_horn', 1, 59476, 99, 0, 0);
+REPLACE INTO `item_equipment` VALUES (18840, "doom_horn", 75, 0, 512, 18342, 0, 0, 4, 0, 0, 0);
+REPLACE INTO `item_weapon` VALUES (18840, "doom_horn", 42, 0, 0, 0, 0, 0, 1, 240, 0, 0);
+REPLACE INTO `item_mods` VALUES
+    (18840, 14, 25),
+    (18840, 30, 35),
+    (18840, 452, 6),
+    (18840, 454, 60),
+    (18840, 455, 20),
+    (18840, 833, 10),
+    (18840, 530, 25);
+
+-- Sage Rod (Lv75)
+REPLACE INTO `item_basic` VALUES (18886, 0, 'Sage_Rod', 'sage_rod', 1, 59476, 99, 0, 0);
+REPLACE INTO `item_equipment` VALUES (18886, "sage_rod", 75, 0, 16924, 0, 0, 0, 3, 0, 0, 0);
+REPLACE INTO `item_weapon` VALUES (18886, "sage_rod", 11, 0, 0, 0, 0, 3, 1, 216, 120, 0);
+REPLACE INTO `item_mods` VALUES
+    (18886, 5, 150),
+    (18886, 12, 25),
+    (18886, 13, 25),
+    (18886, 14, 25),
+    (18886, 28, 45),
+    (18886, 30, 45),
+    (18886, 311, 200),
+    (18886, 562, 15),
+    (18886, 563, 35),
+    (18886, 530, 50),
+    (18886, 369, 6);
+
+-- Death Dealer (Lv75)
+REPLACE INTO `item_basic` VALUES (18987, 0, 'Death_Dealer', 'death_dealer', 1, 59476, 99, 0, 0);
+REPLACE INTO `item_equipment` VALUES (18987, "death_dealer", 75, 0, 66560, 18987, 0, 0, 4, 0, 0, 0);
 REPLACE INTO `item_weapon` VALUES (18987, "death_dealer", 26, 1, 0, 0, 0, 1, 1, 240, 350, 0);
 REPLACE INTO `item_mods` VALUES
     (18987, 11, 35),
@@ -6440,9 +6440,9 @@ REPLACE INTO `item_mods` VALUES
     (18987, 840, 50),
     (18987, 949, 35);
 
--- Meteor Fists (lv75)
-REPLACE INTO `item_basic` VALUES (18988, 0, 'meteor_fists', 'meteor_fists', 1, 59476, 99, 0, 0);
-REPLACE INTO `item_equipment` VALUES (18988, "meteor_fists", 75, 0, 131074, 503, 0, 0, 1, 0, 0, 0);
+-- Meteor Fists (Lv75)
+REPLACE INTO `item_basic` VALUES (18988, 0, 'Meteor_Fists', 'meteor_fists', 1, 59476, 99, 0, 0);
+REPLACE INTO `item_equipment` VALUES (18988, "meteor_fists", 75, 0, 131074, 18988, 0, 0, 1, 0, 0, 0);
 REPLACE INTO `item_weapon` VALUES (18988, "meteor_fists", 1, 0, 0, 0, 0, 4, 4, 160, 90, 0);
 REPLACE INTO `item_mods` VALUES
     (18988, 8, 30),
@@ -6455,9 +6455,9 @@ REPLACE INTO `item_mods` VALUES
     (18988, 840, 45),
     (18988, 949, 30);
 
--- World Staff (lv75)
-REPLACE INTO `item_basic` VALUES (18990, 0, 'world_staff', 'world_staff', 1, 59476, 99, 0, 0);
-REPLACE INTO `item_equipment` VALUES (18990, "world_staff", 75, 0, 1581228, 429, 0, 0, 1, 0, 0, 0);
+-- World Staff (Lv75)
+REPLACE INTO `item_basic` VALUES (18990, 0, 'World_Staff', 'world_staff', 1, 59476, 99, 0, 0);
+REPLACE INTO `item_equipment` VALUES (18990, "world_staff", 75, 0, 1589788, 18990, 0, 0, 1, 0, 0, 0);
 REPLACE INTO `item_weapon` VALUES (18990, "world_staff", 12, 0, 0, 0, 0, 3, 1, 260, 220, 0);
 REPLACE INTO `item_mods` VALUES
     (18990, 5, 300),
@@ -6481,9 +6481,9 @@ REPLACE INTO `item_mods_pet` VALUES
     (18990, 28, 80, 0),
     (18990, 288, 20, 0);
 
--- Titan Breaker (lv75)
-REPLACE INTO `item_basic` VALUES (18991, 0, 'titan_breaker', 'titan_breaker', 1, 59476, 99, 0, 0);
-REPLACE INTO `item_equipment` VALUES (18991, "titan_breaker", 75, 0, 129, 414, 0, 0, 1, 0, 0, 0);
+-- Titan Breaker (Lv75)
+REPLACE INTO `item_basic` VALUES (18991, 0, 'Titan_Breaker', 'titan_breaker', 1, 59476, 99, 0, 0);
+REPLACE INTO `item_equipment` VALUES (18991, "titan_breaker", 75, 0, 129, 18991, 0, 0, 1, 0, 0, 0);
 REPLACE INTO `item_weapon` VALUES (18991, "titan_breaker", 6, 0, 0, 0, 0, 2, 1, 430, 320, 0);
 REPLACE INTO `item_mods` VALUES
     (18991, 8, 45),
@@ -6499,9 +6499,9 @@ REPLACE INTO `item_mods` VALUES
     (18991, 163, -1000),
     (18991, 949, 40);
 
--- Black Star (lv75)
-REPLACE INTO `item_basic` VALUES (18994, 0, 'black_star', 'black_star', 1, 59476, 99, 0, 0);
-REPLACE INTO `item_equipment` VALUES (18994, "black_star", 75, 0, 16408, 416, 0, 0, 1, 0, 0, 0);
+-- Black Star (Lv75)
+REPLACE INTO `item_basic` VALUES (18994, 0, 'Black_Star', 'black_star', 1, 59476, 99, 0, 0);
+REPLACE INTO `item_equipment` VALUES (18994, "black_star", 75, 0, 16408, 18994, 0, 0, 1, 0, 0, 0);
 REPLACE INTO `item_weapon` VALUES (18994, "black_star", 12, 0, 0, 0, 0, 3, 1, 260, 220, 0);
 REPLACE INTO `item_mods` VALUES
     (18994, 5, 250),
@@ -6514,9 +6514,9 @@ REPLACE INTO `item_mods` VALUES
     (18994, 563, 75),
     (18994, 369, 6);
 
--- Ghost Knife (lv75)
-REPLACE INTO `item_basic` VALUES (18996, 0, 'ghost_knife', 'ghost_knife', 1, 59476, 99, 0, 0);
-REPLACE INTO `item_equipment` VALUES (18996, "ghost_knife", 75, 0, 267296, 422, 0, 0, 3, 0, 0, 0);
+-- Ghost Knife (Lv75)
+REPLACE INTO `item_basic` VALUES (18996, 0, 'Ghost_Knife', 'ghost_knife', 1, 59476, 99, 0, 0);
+REPLACE INTO `item_equipment` VALUES (18996, "ghost_knife", 75, 0, 267296, 18996, 0, 0, 3, 0, 0, 0);
 REPLACE INTO `item_weapon` VALUES (18996, "ghost_knife", 2, 0, 0, 0, 0, 1, 1, 120, 150, 0);
 REPLACE INTO `item_mods` VALUES
     (18996, 9, 35),
@@ -6531,9 +6531,9 @@ REPLACE INTO `item_mods` VALUES
     (18996, 506, 400),
     (18996, 507, 500);
 
--- Packlord Axe (lv75)
-REPLACE INTO `item_basic` VALUES (18999, 0, 'packlord_axe', 'packlord_axe', 1, 59476, 99, 0, 0);
-REPLACE INTO `item_equipment` VALUES (18999, "packlord_axe", 75, 0, 256, 413, 0, 0, 3, 0, 0, 0);
+-- Packlord Axe (Lv75)
+REPLACE INTO `item_basic` VALUES (18999, 0, 'Packlord_Axe', 'packlord_axe', 1, 59476, 99, 0, 0);
+REPLACE INTO `item_equipment` VALUES (18999, "packlord_axe", 75, 0, 256, 18999, 0, 0, 3, 0, 0, 0);
 REPLACE INTO `item_weapon` VALUES (18999, "packlord_axe", 5, 0, 0, 0, 0, 2, 1, 200, 220, 0);
 REPLACE INTO `item_mods` VALUES
     (18999, 8, 35),
@@ -6555,9 +6555,9 @@ REPLACE INTO `item_mods_pet` VALUES
     (18999, 289, 50, 0),
     (18999, 370, 20, 0);
 
--- Avatar Rod (lv75)
-REPLACE INTO `item_basic` VALUES (19005, 0, 'avatar_rod', 'avatar_rod', 1, 59476, 99, 0, 0);
-REPLACE INTO `item_equipment` VALUES (19005, "avatar_rod", 75, 0, 16384, 417, 0, 0, 1, 0, 0, 0);
+-- Avatar Rod (Lv75)
+REPLACE INTO `item_basic` VALUES (19005, 0, 'Avatar_Rod', 'avatar_rod', 1, 59476, 99, 0, 0);
+REPLACE INTO `item_equipment` VALUES (19005, "avatar_rod", 75, 0, 16384, 19005, 0, 0, 1, 0, 0, 0);
 REPLACE INTO `item_weapon` VALUES (19005, "avatar_rod", 12, 0, 0, 0, 0, 3, 1, 260, 220, 0);
 REPLACE INTO `item_mods` VALUES
     (19005, 5, 300),
