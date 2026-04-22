@@ -2,7 +2,7 @@
 -- Dynamic World System
 -----------------------------------
 -- A living world layer that spawns roaming entities across the overworld.
--- Entities are tiered: Wanderer, Nomad, Elite, Apex.
+-- Entities are tiered: Wanderer, Nomad, Elite, Apex, Power King.
 -- Each tier has different behaviors, rewards, and danger levels.
 --
 -- Architecture:
@@ -43,10 +43,11 @@ xi.mobMod.NO_LINK       = xi.mobMod.NO_LINK or 69
 -----------------------------------
 xi.dynamicWorld.tier =
 {
-    WANDERER = 1,   -- Common, zone-bound
-    NOMAD    = 2,   -- Cross-zone roamers
-    ELITE    = 3,   -- Rare, dangerous, great rewards
-    APEX     = 4,   -- Boss-tier, spawns minions, aura buffs
+    WANDERER   = 1, -- Common, zone-bound
+    NOMAD      = 2, -- Cross-zone roamers
+    ELITE      = 3, -- Rare, dangerous, great rewards
+    APEX       = 4, -- Boss-tier, spawns minions, aura buffs
+    POWER_KING = 5, -- Level 100+ dungeon tyrants for overpowered level 75 gear
 }
 
 xi.dynamicWorld.tierName =
@@ -55,6 +56,7 @@ xi.dynamicWorld.tierName =
     [2] = 'Nomad',
     [3] = 'Elite',
     [4] = 'Apex',
+    [5] = 'Power King',
 }
 
 -----------------------------------
@@ -139,6 +141,18 @@ local EXPANSION_ELITE_APEX_ZONES =
     136, 137, 138, 155, 164, 171, 175,
 }
 
+local POWER_KING_ZONES =
+{
+    -- Zilart high-level dungeons
+    153, 154, 159, 160, 176, 177, 178, 205, 208,
+    -- CoP high-level dungeons
+    11, 12, 16, 18, 20, 22, 27, 28, 30, 34, 35,
+    -- ToAU high-level dungeons
+    54, 65, 68, 72, 79,
+    -- WotG high-level dungeons
+    138, 155, 164, 171, 175,
+}
+
 local EXPANSION_SPAWN_INTERVAL = 60
 
 local REGIONS =
@@ -187,6 +201,7 @@ local function buildSet(list)
 end
 
 local EXPANSION_ELITE_APEX_SET = buildSet(EXPANSION_ELITE_APEX_ZONES)
+local POWER_KING_ZONE_SET = buildSet(POWER_KING_ZONES)
 
 -----------------------------------
 -- Initialize
@@ -239,7 +254,9 @@ xi.dynamicWorld.init = function()
             pendingSpawns = 0,
             elitePressure = 0,
             apexPressure  = 0,
+            powerPressure = 0,
             eliteApexOnly = EXPANSION_ELITE_APEX_SET[zoneId] or false,
+            powerKings    = POWER_KING_ZONE_SET[zoneId] or false,
             spawnInterval = zoneSpawnInterval,
         }
     end
@@ -401,7 +418,7 @@ end
 xi.dynamicWorld.getStatus = function()
     local state = xi.dynamicWorld.state
     local zoneCount = 0
-    local entityBreakdown = { 0, 0, 0, 0 }
+    local entityBreakdown = { 0, 0, 0, 0, 0 }
 
     for zoneId, zd in pairs(state.zoneData) do
         if zd.count > 0 then
@@ -420,6 +437,7 @@ xi.dynamicWorld.getStatus = function()
         nomads       = entityBreakdown[2] or 0,
         elites       = entityBreakdown[3] or 0,
         apex         = entityBreakdown[4] or 0,
+        powerKings   = entityBreakdown[5] or 0,
     }
 end
 
@@ -441,6 +459,7 @@ xi.dynamicWorld.forceSpawn = function(zone, tier, count)
         state.zoneData[zoneId] = {
             entities = {}, count = 0, lastTick = 0, lastRoamCheck = 0, pendingSpawns = 0,
             eliteApexOnly = EXPANSION_ELITE_APEX_SET[zoneId] or false,
+            powerKings = POWER_KING_ZONE_SET[zoneId] or false,
             spawnInterval = EXPANSION_ELITE_APEX_SET[zoneId] and math.min(getSetting('SPAWN_CHECK_INTERVAL') or 120, EXPANSION_SPAWN_INTERVAL) or getSetting('SPAWN_CHECK_INTERVAL') or 120,
         }
     end

@@ -604,6 +604,342 @@ behaviorDb.apex_king =
     end,
 }
 
+local function spawnDudeCompanion(parent, target, templateKey, levelPenalty)
+    local zone = parent:getZone()
+    if not zone then
+        return nil
+    end
+
+    local template = xi.dynamicWorld.templates.get(templateKey)
+    if not template then
+        return nil
+    end
+
+    local groupRef = pickGroupRef(template)
+    if not groupRef then
+        return nil
+    end
+
+    local parentLevel = parent:getMainLvl() or 125
+    local levelCap = template.levelCap or parentLevel
+    local level = math.min(levelCap, math.max(100, parentLevel - (levelPenalty or 0)))
+    local offsetX = math.random(-6, 6)
+    local offsetZ = math.random(-6, 6)
+    local behaviorSet = behaviorDb[template.behavior]
+
+    local companion = zone:insertDynamicEntity({
+        objtype = xi.objType.MOB,
+        name = template.name:gsub(' ', '_'),
+        packetName = template.packetName,
+        x = parent:getXPos() + offsetX,
+        y = parent:getYPos(),
+        z = parent:getZPos() + offsetZ,
+        rotation = math.random(0, 255),
+        groupId = groupRef.groupId,
+        groupZoneId = groupRef.groupZoneId,
+        minLevel = level,
+        maxLevel = level,
+        releaseIdOnDisappear = true,
+        specialSpawnAnimation = true,
+        onMobSpawn = function(mob)
+            mob:setLocalVar('DW_TIER', xi.dynamicWorld.tier.POWER_KING)
+            mob:setLocalVar('DW_SPAWN_TIME', os.time())
+            if behaviorSet and behaviorSet.onMobSpawn then
+                behaviorSet.onMobSpawn(mob, template, xi.dynamicWorld.tier.POWER_KING)
+            end
+        end,
+        onMobRoam = function(mob)
+            if behaviorSet and behaviorSet.onMobRoam then
+                behaviorSet.onMobRoam(mob, template, xi.dynamicWorld.tier.POWER_KING)
+            end
+        end,
+        onMobEngaged = function(mob, engagedTarget)
+            if behaviorSet and behaviorSet.onMobEngaged then
+                behaviorSet.onMobEngaged(mob, engagedTarget, template, xi.dynamicWorld.tier.POWER_KING)
+            end
+        end,
+        onMobDeath = function(mob, player, optParams)
+            if behaviorSet and behaviorSet.onMobDeath then
+                behaviorSet.onMobDeath(mob, player, optParams, template, xi.dynamicWorld.tier.POWER_KING)
+            end
+
+            if player and getSetting('LOOT_ENABLED') then
+                xi.dynamicWorld.loot.award(mob, player, template, xi.dynamicWorld.tier.POWER_KING)
+            end
+        end,
+    })
+
+    if companion then
+        companion:setSpawn(parent:getXPos() + offsetX, parent:getYPos(), parent:getZPos() + offsetZ, math.random(0, 255))
+        companion:spawn()
+        if target then
+            companion:updateEnmity(target)
+        end
+    end
+
+    return companion
+end
+
+-----------------------------------
+-- POWER KING BEHAVIORS
+-----------------------------------
+
+behaviorDb.power_king_dragon =
+{
+    onMobSpawn = function(mob, template, tier)
+        mob:setRoamFlags(xi.roamFlag.NONE)
+        mob:setMobMod(xi.mobMod.ROAM_COOL, 18)
+        mob:setMobMod(xi.mobMod.ROAM_DISTANCE, 6)
+        mob:setMobMod(xi.mobMod.SIGHT_RANGE, 35)
+        mob:addMod(xi.mod.ATT, 260)
+        mob:addMod(xi.mod.DEF, 220)
+        mob:addMod(xi.mod.ACC, 160)
+        mob:addMod(xi.mod.EVA, 80)
+        mob:addMod(xi.mod.MATT, 160)
+        mob:addMod(xi.mod.MDEF, 140)
+        mob:addMod(xi.mod.DOUBLE_ATTACK, 35)
+        mob:addMod(xi.mod.HP, 25000)
+        mob:setLocalVar('DW_AURA_LAST_TICK', 0)
+        mob:setLocalVar('DW_POWER_KING_ADDS', 0)
+
+        mob:timer(4000, function(m)
+            if m and m:isAlive() then
+                behaviors.spawnApexMinions(m, nil, template, 5)
+            end
+        end)
+    end,
+
+    onMobRoam = function(mob, template, tier)
+        pulseAura(mob, '[Dynamic World] A Power King bends the dungeon around you! (EXP +25%)', 65)
+    end,
+
+    onMobEngaged = function(mob, target, template, tier)
+        xi.dynamicWorld.announceZone(mob:getZone(),
+            string.format('[Dynamic World] %s wakes up angry. This is a level 100+ Power King!', template.packetName)
+        )
+        behaviors.spawnApexMinions(mob, target, template, 5)
+    end,
+
+    onMobDeath = function(mob, player, optParams, template, tier)
+        xi.dynamicWorld.announceZone(mob:getZone(),
+            string.format('[Dynamic World] %s has been destroyed! The dungeon goes quiet.', template.packetName)
+        )
+    end,
+}
+
+behaviorDb.power_king_demon =
+{
+    onMobSpawn = function(mob, template, tier)
+        mob:setRoamFlags(xi.roamFlag.NONE)
+        mob:setMobMod(xi.mobMod.ROAM_COOL, 10)
+        mob:setMobMod(xi.mobMod.ROAM_DISTANCE, 12)
+        mob:setMobMod(xi.mobMod.SIGHT_RANGE, 30)
+        mob:addMod(xi.mod.ATT, 180)
+        mob:addMod(xi.mod.DEF, 170)
+        mob:addMod(xi.mod.ACC, 140)
+        mob:addMod(xi.mod.MATT, 260)
+        mob:addMod(xi.mod.MDEF, 180)
+        mob:addMod(xi.mod.DOUBLE_ATTACK, 20)
+        mob:addMod(xi.mod.HP, 22000)
+        mob:setLocalVar('DW_AURA_LAST_TICK', 0)
+        mob:setLocalVar('DW_SUMMON_COUNT', 0)
+    end,
+
+    onMobRoam = function(mob, template, tier)
+        local summonCount = mob:getLocalVar('DW_SUMMON_COUNT')
+        if summonCount < 5 then
+            local now = os.time()
+            local lastSummon = mob:getLocalVar('DW_LAST_SUMMON')
+            if now - lastSummon > 90 then
+                mob:setLocalVar('DW_LAST_SUMMON', now)
+                mob:setLocalVar('DW_SUMMON_COUNT', summonCount + 1)
+                behaviors.spawnApexMinions(mob, nil, template, 2)
+            end
+        end
+
+        pulseAura(mob, '[Dynamic World] A Power King floods the dungeon with dark force! (EXP +25%)', 65)
+    end,
+
+    onMobEngaged = function(mob, target, template, tier)
+        xi.dynamicWorld.announceZone(mob:getZone(),
+            string.format('[Dynamic World] %s opens every gate at once. Bring friends.', template.packetName)
+        )
+        behaviors.spawnApexMinions(mob, target, template, 5)
+    end,
+
+    onMobDeath = function(mob, player, optParams, template, tier)
+        xi.dynamicWorld.announceZone(mob:getZone(),
+            string.format('[Dynamic World] %s is sealed. For now.', template.packetName)
+        )
+    end,
+}
+
+behaviorDb.power_king_monarch =
+{
+    onMobSpawn = function(mob, template, tier)
+        mob:setRoamFlags(xi.roamFlag.NONE)
+        mob:setMobMod(xi.mobMod.ROAM_COOL, 25)
+        mob:setMobMod(xi.mobMod.ROAM_DISTANCE, 5)
+        mob:addMod(xi.mod.ATT, 220)
+        mob:addMod(xi.mod.DEF, 300)
+        mob:addMod(xi.mod.ACC, 140)
+        mob:addMod(xi.mod.MDEF, 180)
+        mob:addMod(xi.mod.DOUBLE_ATTACK, 30)
+        mob:addMod(xi.mod.HP, 30000)
+        mob:setLocalVar('DW_AURA_LAST_TICK', 0)
+
+        mob:timer(5000, function(m)
+            if m and m:isAlive() then
+                behaviors.spawnApexMinions(m, nil, template, 5)
+            end
+        end)
+    end,
+
+    onMobRoam = function(mob, template, tier)
+        pulseAura(mob, '[Dynamic World] A Power King claims this dungeon! (EXP +25%)', 65)
+    end,
+
+    onMobEngaged = function(mob, target, template, tier)
+        xi.dynamicWorld.announceZone(mob:getZone(),
+            string.format('[Dynamic World] %s accepts your challenge and calls the court.', template.packetName)
+        )
+        behaviors.spawnApexMinions(mob, target, template, 5)
+    end,
+
+    onMobDeath = function(mob, player, optParams, template, tier)
+        xi.dynamicWorld.announceZone(mob:getZone(),
+            string.format('[Dynamic World] %s falls. The crown is up for grabs.', template.packetName)
+        )
+    end,
+}
+
+behaviorDb.dude_dragon =
+{
+    onMobSpawn = function(mob, template, tier)
+        mob:setRoamFlags(xi.roamFlag.NONE)
+        mob:setMobMod(xi.mobMod.ROAM_COOL, 6)
+        mob:setMobMod(xi.mobMod.ROAM_DISTANCE, 14)
+        mob:setMobMod(xi.mobMod.SIGHT_RANGE, 35)
+        mob:setMobMod(xi.mobMod.CHECK_AS_NM, 1)
+        mob:setMobMod(xi.mobMod.MULTI_HIT, 3)
+        mob:setMobMod(xi.mobMod.TP_USE_CHANCE, 70)
+        mob:setMobMod(xi.mobMod.WEAPON_BONUS, 250)
+        mob:addMod(xi.mod.ATT, 320)
+        mob:addMod(xi.mod.DEF, 220)
+        mob:addMod(xi.mod.ACC, 220)
+        mob:addMod(xi.mod.EVA, 140)
+        mob:addMod(xi.mod.MATT, 220)
+        mob:addMod(xi.mod.MDEF, 200)
+        mob:addMod(xi.mod.DOUBLE_ATTACK, 45)
+        mob:addMod(xi.mod.TRIPLE_ATTACK, 20)
+        mob:addMod(xi.mod.HP, 35000)
+        mob:setLocalVar('DW_AURA_LAST_TICK', 0)
+    end,
+
+    onMobRoam = function(mob, template, tier)
+        pulseAura(mob, '[Dynamic World] Dude is somehow tiny and terrifying. (EXP +25%)', 65)
+    end,
+
+    onMobEngaged = function(mob, target, template, tier)
+        xi.dynamicWorld.announceZone(mob:getZone(), '[Dynamic World] Dude says: sup.')
+    end,
+
+    onMobDeath = function(mob, player, optParams, template, tier)
+        xi.dynamicWorld.announceZone(mob:getZone(), '[Dynamic World] Dude has been humbled.')
+    end,
+}
+
+behaviorDb.dude_bro_dragon =
+{
+    onMobSpawn = function(mob, template, tier)
+        mob:setRoamFlags(xi.roamFlag.NONE)
+        mob:setMobMod(xi.mobMod.ROAM_COOL, 8)
+        mob:setMobMod(xi.mobMod.ROAM_DISTANCE, 12)
+        mob:setMobMod(xi.mobMod.SIGHT_RANGE, 35)
+        mob:setMobMod(xi.mobMod.CHECK_AS_NM, 1)
+        mob:setMobMod(xi.mobMod.MULTI_HIT, 4)
+        mob:setMobMod(xi.mobMod.TP_USE_CHANCE, 80)
+        mob:setMobMod(xi.mobMod.GA_CHANCE, 50)
+        mob:setMobMod(xi.mobMod.MAGIC_COOL, 12)
+        mob:setMobMod(xi.mobMod.WEAPON_BONUS, 300)
+        mob:addMod(xi.mod.ATT, 340)
+        mob:addMod(xi.mod.DEF, 240)
+        mob:addMod(xi.mod.ACC, 220)
+        mob:addMod(xi.mod.MATT, 260)
+        mob:addMod(xi.mod.MDEF, 220)
+        mob:addMod(xi.mod.DOUBLE_ATTACK, 40)
+        mob:addMod(xi.mod.TRIPLE_ATTACK, 25)
+        mob:addMod(xi.mod.HP, 42000)
+        mob:setLocalVar('DW_AURA_LAST_TICK', 0)
+    end,
+
+    onMobRoam = function(mob, template, tier)
+        pulseAura(mob, '[Dynamic World] Dude Bro is making the whole dungeon worse. (EXP +25%)', 65)
+    end,
+
+    onMobEngaged = function(mob, target, template, tier)
+        xi.dynamicWorld.announceZone(mob:getZone(), '[Dynamic World] Dude Bro brought bad ideas.')
+    end,
+
+    onMobDeath = function(mob, player, optParams, template, tier)
+        xi.dynamicWorld.announceZone(mob:getZone(), '[Dynamic World] Dude Bro is no longer broing out.')
+    end,
+}
+
+behaviorDb.sir_dude_dragon =
+{
+    onMobSpawn = function(mob, template, tier)
+        mob:setRoamFlags(xi.roamFlag.NONE)
+        mob:setMobMod(xi.mobMod.ROAM_COOL, 20)
+        mob:setMobMod(xi.mobMod.ROAM_DISTANCE, 4)
+        mob:setMobMod(xi.mobMod.SIGHT_RANGE, 45)
+        mob:setMobMod(xi.mobMod.CHECK_AS_NM, 1)
+        mob:setMobMod(xi.mobMod.MULTI_HIT, 5)
+        mob:setMobMod(xi.mobMod.TP_USE_CHANCE, 95)
+        mob:setMobMod(xi.mobMod.GA_CHANCE, 75)
+        mob:setMobMod(xi.mobMod.SEVERE_SPELL_CHANCE, 35)
+        mob:setMobMod(xi.mobMod.MAGIC_COOL, 8)
+        mob:setMobMod(xi.mobMod.WEAPON_BONUS, 500)
+        mob:addMod(xi.mod.ATT, 500)
+        mob:addMod(xi.mod.DEF, 450)
+        mob:addMod(xi.mod.ACC, 300)
+        mob:addMod(xi.mod.EVA, 180)
+        mob:addMod(xi.mod.MATT, 420)
+        mob:addMod(xi.mod.MDEF, 350)
+        mob:addMod(xi.mod.DOUBLE_ATTACK, 60)
+        mob:addMod(xi.mod.TRIPLE_ATTACK, 35)
+        mob:addMod(xi.mod.HP, 80000)
+        mob:setLocalVar('DW_AURA_LAST_TICK', 0)
+        mob:setLocalVar('DW_DUDES_SPAWNED', 0)
+
+        mob:timer(1000, function(m)
+            if m and m:isAlive() and m:getLocalVar('DW_DUDES_SPAWNED') == 0 then
+                m:setLocalVar('DW_DUDES_SPAWNED', 1)
+                spawnDudeCompanion(m, nil, 'dude', 3)
+                spawnDudeCompanion(m, nil, 'dude_bro', 1)
+                xi.dynamicWorld.announceZone(m:getZone(), '[Dynamic World] Dude, Dude Bro, and Sir Dude have entered the dungeon.')
+            end
+        end)
+    end,
+
+    onMobRoam = function(mob, template, tier)
+        pulseAura(mob, '[Dynamic World] Sir Dude owns this place. (EXP +25%)', 80)
+    end,
+
+    onMobEngaged = function(mob, target, template, tier)
+        xi.dynamicWorld.announceZone(mob:getZone(), '[Dynamic World] Sir Dude has accepted your extremely poor decision.')
+        if mob:getLocalVar('DW_DUDES_SPAWNED') == 0 then
+            mob:setLocalVar('DW_DUDES_SPAWNED', 1)
+            spawnDudeCompanion(mob, target, 'dude', 3)
+            spawnDudeCompanion(mob, target, 'dude_bro', 1)
+        end
+    end,
+
+    onMobDeath = function(mob, player, optParams, template, tier)
+        xi.dynamicWorld.announceZone(mob:getZone(), '[Dynamic World] Sir Dude has fallen. The King of Kings is dead.')
+    end,
+}
+
 -----------------------------------
 -- HELPER: Spawn Apex Minions
 -----------------------------------

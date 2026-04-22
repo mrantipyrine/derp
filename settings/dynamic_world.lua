@@ -32,6 +32,7 @@ xi.settings.dynamicworld =
     TIER_WEIGHT_NOMAD           = 20,       -- Cross-zone roamers within a region
     TIER_WEIGHT_ELITE           = 15,       -- Rare, dangerous, great rewards
     TIER_WEIGHT_APEX            = 10,       -- Boss-tier, spawns minions, aura buffs
+    TIER_WEIGHT_POWER_KING      = 2,        -- Dungeon-only level 100+ tyrants
 
     -----------------------------------------------------------------------
     -- EXP Multipliers (applied on top of base EXP)
@@ -40,6 +41,7 @@ xi.settings.dynamicworld =
     EXP_MULTIPLIER_NOMAD        = 2.0,
     EXP_MULTIPLIER_ELITE        = 3.0,
     EXP_MULTIPLIER_APEX         = 5.0,
+    EXP_MULTIPLIER_POWER_KING   = 8.0,
 
     -----------------------------------------------------------------------
     -- Chain System

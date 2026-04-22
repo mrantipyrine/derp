@@ -21,16 +21,18 @@
 xi = xi or {}
 xi.dynamicWorld = xi.dynamicWorld or {}
 xi.dynamicWorld.tier = xi.dynamicWorld.tier or {
-    WANDERER = 1,
-    NOMAD    = 2,
-    ELITE    = 3,
-    APEX     = 4,
+    WANDERER   = 1,
+    NOMAD      = 2,
+    ELITE      = 3,
+    APEX       = 4,
+    POWER_KING = 5,
 }
 xi.dynamicWorld.tierName = xi.dynamicWorld.tierName or {
     [1] = 'Wanderer',
     [2] = 'Nomad',
     [3] = 'Elite',
     [4] = 'Apex',
+    [5] = 'Power King',
 }
 xi.dynamicWorld.loot = xi.dynamicWorld.loot or {}
 
@@ -570,6 +572,22 @@ loot.tables.apex_king =
     guaranteed  = 2,    -- At least 2 items guaranteed
 }
 
+loot.tables.power_king =
+{
+    gil         = { min = 75000, max = 250000 },
+    rolls       = 7,
+    rate        = 650,
+    guaranteed  = 3,
+}
+
+loot.tables.king_of_kings =
+{
+    gil         = { min = 250000, max = 500000 },
+    rolls       = 10,
+    rate        = 800,
+    guaranteed  = 5,
+}
+
 loot.tables.none =
 {
     gil     = { min = 0, max = 0 },
@@ -653,6 +671,7 @@ loot.award = function(mob, player, template, tier)
             [xi.dynamicWorld.tier.NOMAD]    = 120,
             [xi.dynamicWorld.tier.ELITE]    = 180,
             [xi.dynamicWorld.tier.APEX]     = 300,
+            [xi.dynamicWorld.tier.POWER_KING] = 500,
         }
 
         local chaseRollsByTier =
@@ -661,6 +680,7 @@ loot.award = function(mob, player, template, tier)
             [xi.dynamicWorld.tier.NOMAD]    = 1,
             [xi.dynamicWorld.tier.ELITE]    = 2,
             [xi.dynamicWorld.tier.APEX]     = 3,
+            [xi.dynamicWorld.tier.POWER_KING] = 5,
         }
 
         local chaseRate = chaseRateByTier[tier] or 0

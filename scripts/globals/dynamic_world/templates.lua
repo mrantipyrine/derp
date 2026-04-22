@@ -7,16 +7,18 @@
 xi = xi or {}
 xi.dynamicWorld = xi.dynamicWorld or {}
 xi.dynamicWorld.tier = xi.dynamicWorld.tier or {
-    WANDERER = 1,
-    NOMAD    = 2,
-    ELITE    = 3,
-    APEX     = 4,
+    WANDERER   = 1,
+    NOMAD      = 2,
+    ELITE      = 3,
+    APEX       = 4,
+    POWER_KING = 5,
 }
 xi.dynamicWorld.tierName = xi.dynamicWorld.tierName or {
     [1] = 'Wanderer',
     [2] = 'Nomad',
     [3] = 'Elite',
     [4] = 'Apex',
+    [5] = 'Power King',
 }
 xi.dynamicWorld.templates = xi.dynamicWorld.templates or {}
 
@@ -369,6 +371,138 @@ db.ancient_king =
     expMultiplier = 1.5,
     minionTemplate  = 'rogue_quadav',
     description   = 'An ancient king walking again. Its shell alone could shelter a village.',
+}
+
+-----------------------------------
+-- TIER 5: POWER KINGS
+-----------------------------------
+
+db.void_emperor =
+{
+    name        = 'Void Emperor',
+    packetName  = 'Void Emperor',
+    -- Fafnir/Vrtra silhouettes for true top-end dungeon kings.
+    groupRefs = {
+        { groupId = 162, groupZoneId = 77  },
+        { groupId = 5,   groupZoneId = 154 },
+    },
+    tier          = { xi.dynamicWorld.tier.POWER_KING },
+    levelOffset   = { 28, 35 },
+    levelCap      = 115,
+    regions       = nil,
+    behavior      = 'power_king_dragon',
+    lootTable     = 'power_king',
+    isAggro       = true,
+    expMultiplier = 2.0,
+    minionTemplate = 'void_wyrm',
+    description   = 'A dungeon tyrant awakened by the new weapons adventurers carry.',
+}
+
+db.hellforged_overlord =
+{
+    name        = 'Hellforged Overlord',
+    packetName  = 'Hellforged Overlord',
+    -- Demon/elemental bodies read well in deep dungeon spaces.
+    groupRefs = {
+        { groupId = 9,  groupZoneId = 112 },
+        { groupId = 34, groupZoneId = 79  },
+        { groupId = 16, groupZoneId = 25  },
+    },
+    tier          = { xi.dynamicWorld.tier.POWER_KING },
+    levelOffset   = { 25, 35 },
+    levelCap      = 112,
+    regions       = nil,
+    behavior      = 'power_king_demon',
+    lootTable     = 'power_king',
+    isAggro       = true,
+    expMultiplier = 2.2,
+    minionTemplate = 'abyssal_demon',
+    description   = 'A spell-warped tyrant built to punish careless level 75 gods.',
+}
+
+db.primeval_monarch =
+{
+    name        = 'Primeval Monarch',
+    packetName  = 'Primeval Monarch',
+    -- Adamantoise-style monarchs for king fights that feel heavy.
+    groupRefs = {
+        { groupId = 6,   groupZoneId = 128 },
+        { groupId = 260, groupZoneId = 77  },
+    },
+    tier          = { xi.dynamicWorld.tier.POWER_KING },
+    levelOffset   = { 25, 32 },
+    levelCap      = 110,
+    regions       = nil,
+    behavior      = 'power_king_monarch',
+    lootTable     = 'power_king',
+    isAggro       = true,
+    expMultiplier = 2.5,
+    minionTemplate = 'ancient_king',
+    description   = 'An old-world monarch made relevant again by broken adventurer gear.',
+}
+
+db.dude =
+{
+    name        = 'Dude',
+    packetName  = 'Dude',
+    -- Smaller dragon bodies.
+    groupRefs = {
+        { groupId = 5,  groupZoneId = 112 }, -- Shadow Dragon
+        { groupId = 1,  groupZoneId = 146 }, -- Black Dragon
+        { groupId = 35, groupZoneId = 140 }, -- Carrion Dragon
+    },
+    tier          = {},
+    levelOffset   = { 38, 42 },
+    levelCap      = 122,
+    regions       = nil,
+    behavior      = 'dude_dragon',
+    lootTable     = 'power_king',
+    isAggro       = true,
+    expMultiplier = 2.0,
+    description   = 'A tiny dragon with absolutely unreasonable confidence.',
+}
+
+db.dude_bro =
+{
+    name        = 'Dude Bro',
+    packetName  = 'Dude Bro',
+    -- Mid-sized named dragon bodies.
+    groupRefs = {
+        { groupId = 17, groupZoneId = 30 }, -- Ouryu
+        { groupId = 17, groupZoneId = 29 }, -- Bahamut
+        { groupId = 6,  groupZoneId = 154 }, -- Nidhogg
+    },
+    tier          = {},
+    levelOffset   = { 40, 44 },
+    levelCap      = 124,
+    regions       = nil,
+    behavior      = 'dude_bro_dragon',
+    lootTable     = 'power_king',
+    isAggro       = true,
+    expMultiplier = 2.2,
+    description   = 'The loud one. Somehow worse.',
+}
+
+db.sir_dude =
+{
+    name        = 'Sir Dude',
+    packetName  = 'Sir Dude',
+    -- Biggest available wyrm-style bodies.
+    groupRefs = {
+        { groupId = 37, groupZoneId = 190 }, -- Vrtra
+        { groupId = 46, groupZoneId = 7   }, -- Tiamat
+        { groupId = 40, groupZoneId = 5   }, -- Jormungand
+    },
+    tier          = { xi.dynamicWorld.tier.POWER_KING },
+    levelOffset   = { 45, 50 },
+    levelCap      = 125,
+    regions       = nil,
+    behavior      = 'sir_dude_dragon',
+    lootTable     = 'king_of_kings',
+    isAggro       = true,
+    expMultiplier = 3.0,
+    dudeCompanions = { 'dude', 'dude_bro' },
+    description   = 'King of Kings. Etiquette optional. Survival unlikely.',
 }
 
 -----------------------------------

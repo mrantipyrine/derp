@@ -11,7 +11,7 @@
 --   !dynworld synergies        - List all item synergies
 --   !dynworld chain            - Show your chain info
 --
--- Tier values: 1=Wanderer, 2=Nomad, 3=Elite, 4=Apex
+-- Tier values: 1=Wanderer, 2=Nomad, 3=Elite, 4=Apex, 5=Power King
 -----------------------------------
 require('scripts/globals/dynamic_world')
 -----------------------------------
@@ -31,15 +31,15 @@ end
 
 local function showHelp(player)
     player:printToPlayer('[DynWorld] Commands: status, spawn [tier] [count], clear, start, stop, info, synergies, chain, rares, rare [key]', xi.msg.channel.SYSTEM_3)
-    player:printToPlayer('[DynWorld] Tiers: 1=Wanderer, 2=Nomad, 3=Elite, 4=Apex', xi.msg.channel.SYSTEM_3)
+    player:printToPlayer('[DynWorld] Tiers: 1=Wanderer, 2=Nomad, 3=Elite, 4=Apex, 5=Power King', xi.msg.channel.SYSTEM_3)
 end
 
 local function cmdStatus(player)
     local status = xi.dynamicWorld.getStatus()
     player:printToPlayer(string.format('[DynWorld] Running: %s | Total: %d | Zones: %d',
         tostring(status.running), status.globalCount, status.activeZones), xi.msg.channel.SYSTEM_3)
-    player:printToPlayer(string.format('[DynWorld] Wanderers: %d | Nomads: %d | Elites: %d | Apex: %d',
-        status.wanderers, status.nomads, status.elites, status.apex), xi.msg.channel.SYSTEM_3)
+    player:printToPlayer(string.format('[DynWorld] Wanderers: %d | Nomads: %d | Elites: %d | Apex: %d | Power Kings: %d',
+        status.wanderers, status.nomads, status.elites, status.apex, status.powerKings), xi.msg.channel.SYSTEM_3)
 
     -- Diagnostics
     local state  = xi.dynamicWorld.state
@@ -52,7 +52,7 @@ local function cmdStatus(player)
 end
 
 local function cmdSpawn(player, tier, count)
-    tier = math.max(1, math.min(4, tier))
+    tier = math.max(1, math.min(5, tier))
     count = math.max(1, math.min(20, count))
 
     local zone = player:getZone()

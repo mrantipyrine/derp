@@ -8,16 +8,18 @@
 xi = xi or {}
 xi.dynamicWorld = xi.dynamicWorld or {}
 xi.dynamicWorld.tier = xi.dynamicWorld.tier or {
-    WANDERER = 1,
-    NOMAD    = 2,
-    ELITE    = 3,
-    APEX     = 4,
+    WANDERER   = 1,
+    NOMAD      = 2,
+    ELITE      = 3,
+    APEX       = 4,
+    POWER_KING = 5,
 }
 xi.dynamicWorld.tierName = xi.dynamicWorld.tierName or {
     [1] = 'Wanderer',
     [2] = 'Nomad',
     [3] = 'Elite',
     [4] = 'Apex',
+    [5] = 'Power King',
 }
 xi.dynamicWorld.spawner = xi.dynamicWorld.spawner or {}
 
@@ -112,6 +114,9 @@ spawner.evaluate = function(zone, zd, state)
             -- No spawn this tick — build pressure toward rarer tiers
             zd.elitePressure = math.min((zd.elitePressure or 0) + 1, 30)
             zd.apexPressure  = math.min((zd.apexPressure or 0) + 1, 20)
+            if zd.powerKings then
+                zd.powerPressure = math.min((zd.powerPressure or 0) + 1, 15)
+            end
         end
 
         return
@@ -129,6 +134,9 @@ spawner.evaluate = function(zone, zd, state)
         -- Zone is full — pressure still builds
         zd.elitePressure = math.min((zd.elitePressure or 0) + 1, 30)
         zd.apexPressure  = math.min((zd.apexPressure or 0) + 1, 20)
+        if zd.powerKings then
+            zd.powerPressure = math.min((zd.powerPressure or 0) + 1, 15)
+        end
         return
     end
 
@@ -149,10 +157,17 @@ spawner.updatePressure = function(zd, tier)
     elseif tier == xi.dynamicWorld.tier.APEX then
         zd.elitePressure = math.max(0, (zd.elitePressure or 0) - 5)
         zd.apexPressure  = math.max(0, (zd.apexPressure or 0) - 10)
+    elseif tier == xi.dynamicWorld.tier.POWER_KING then
+        zd.elitePressure = math.max(0, (zd.elitePressure or 0) - 8)
+        zd.apexPressure  = math.max(0, (zd.apexPressure or 0) - 8)
+        zd.powerPressure = math.max(0, (zd.powerPressure or 0) - 15)
     else
         -- Common spawns nudge pressure up slightly
         zd.elitePressure = math.min((zd.elitePressure or 0) + 0.5, 30)
         zd.apexPressure  = math.min((zd.apexPressure or 0) + 0.25, 20)
+        if zd.powerKings then
+            zd.powerPressure = math.min((zd.powerPressure or 0) + 0.1, 15)
+        end
     end
 end
 
@@ -166,9 +181,15 @@ spawner.rollTier = function(zd)
     local nomad    = getSetting('TIER_WEIGHT_NOMAD')    or 20
     local elite    = getSetting('TIER_WEIGHT_ELITE')    or 15
     local apex     = getSetting('TIER_WEIGHT_APEX')     or 10
+    local power    = 0
 
     local elitePressure = zd and zd.elitePressure or 0
     local apexPressure  = zd and zd.apexPressure  or 0
+    local powerPressure = zd and zd.powerPressure or 0
+
+    if zd and zd.powerKings then
+        power = (getSetting('TIER_WEIGHT_POWER_KING') or 2) + powerPressure
+    end
 
     if zd and zd.eliteApexOnly then
         return xi.dynamicWorld.weightedRandom({
@@ -176,6 +197,7 @@ spawner.rollTier = function(zd)
             0,
             70 + elitePressure,
             30 + apexPressure,
+            power,
         })
     end
 
@@ -183,11 +205,11 @@ spawner.rollTier = function(zd)
     apex  = apex  + apexPressure
 
     -- Shave common tiers proportionally so total doesn't inflate forever
-    local pressureTax = elitePressure + apexPressure
+    local pressureTax = elitePressure + apexPressure + powerPressure
     wanderer = math.max(5, wanderer - math.floor(pressureTax * 0.70))
     nomad    = math.max(3, nomad    - math.floor(pressureTax * 0.30))
 
-    local weights = { wanderer, nomad, elite, apex }
+    local weights = { wanderer, nomad, elite, apex, power }
 
     return xi.dynamicWorld.weightedRandom(weights)
 end
@@ -226,9 +248,9 @@ spawner.spawnEntity = function(zone, zd, state, tier)
     local minLevel = math.max(1, levelRange[1] + (template.levelOffset[1] or 0))
     local maxLevel = math.max(minLevel, levelRange[2] + (template.levelOffset[2] or 0))
 
-    -- Cap at 99
-    minLevel = math.min(minLevel, 99)
-    maxLevel = math.min(maxLevel, 99)
+    local levelCap = template.levelCap or 99
+    minLevel = math.min(minLevel, levelCap)
+    maxLevel = math.min(maxLevel, levelCap)
 
     -- Pick a random visual variant for this spawn
     local chosenRef = pickGroupRef(template)
@@ -728,6 +750,7 @@ spawner.onEntityDeath = function(mob, killer, zd, state, template, tier, targid,
         [xi.dynamicWorld.tier.NOMAD]    = getSetting('EXP_MULTIPLIER_NOMAD') or 2.0,
         [xi.dynamicWorld.tier.ELITE]    = getSetting('EXP_MULTIPLIER_ELITE') or 3.0,
         [xi.dynamicWorld.tier.APEX]     = getSetting('EXP_MULTIPLIER_APEX') or 5.0,
+        [xi.dynamicWorld.tier.POWER_KING] = getSetting('EXP_MULTIPLIER_POWER_KING') or 8.0,
     }
 
     local expMult = (tierMultipliers[tier] or 1.0) * (template.expMultiplier or 1.0)
