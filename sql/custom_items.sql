@@ -6155,7 +6155,7 @@ REPLACE INTO `item_mods` VALUES
 
 -- Sams Sticker (Lv30)
 REPLACE INTO `item_basic` VALUES (21572, 0, 'Sams_Sticker', 'sams_sticker', 1, 59476, 99, 0, 0);
-REPLACE INTO `item_equipment` VALUES (21572, "sams_sticker", 30, 0, 4194303, 0, 0, 0, 3, 0, 0, 0);
+REPLACE INTO `item_equipment` VALUES (21572, "sams_sticker", 30, 0, 4194303, 805, 0, 0, 3, 0, 0, 0);
 REPLACE INTO `item_weapon` VALUES (21572, "sams_sticker", 2, 0, 0, 0, 0, 1, 1, 120, 75, 0);
 REPLACE INTO `item_mods` VALUES
     (21572, 9, 15),
