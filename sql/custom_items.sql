@@ -6152,7 +6152,7 @@ REPLACE INTO `item_mods_pet` VALUES
 
 -- Wyvern Pike (Lv45)
 REPLACE INTO `item_basic` VALUES (19073, 0, 'Wyvern_Pike', 'wyvern_pike', 1, 59476, 99, 0, 0);
-REPLACE INTO `item_equipment` VALUES (19073, "wyvern_pike", 45, 0, 8192, 423, 0, 1, 1, 0, 0, 0);
+REPLACE INTO `item_equipment` VALUES (19073, "wyvern_pike", 75, 0, 8192, 423, 0, 1, 1, 0, 0, 0);
 REPLACE INTO `item_weapon` VALUES (19073, "wyvern_pike", 8, 0, 0, 0, 0, 1, 1, 360, 500, 0);
 REPLACE INTO `item_mods` VALUES
     (19073, 8, 30),
