@@ -644,6 +644,7 @@ local function spawnDudeCompanion(parent, target, templateKey, levelPenalty)
         onMobSpawn = function(mob)
             mob:setLocalVar('DW_TIER', xi.dynamicWorld.tier.POWER_KING)
             mob:setLocalVar('DW_SPAWN_TIME', os.time())
+            mob:renameEntity(template.packetName)
             if behaviorSet and behaviorSet.onMobSpawn then
                 behaviorSet.onMobSpawn(mob, template, xi.dynamicWorld.tier.POWER_KING)
             end
@@ -984,6 +985,7 @@ behaviors.spawnApexMinions = function(mob, target, template, count)
             releaseIdOnDisappear = true,
             specialSpawnAnimation = true,
             onMobSpawn = function(addMob)
+                addMob:renameEntity(minionTemplate.packetName)
                 addMob:addMod(xi.mod.ATT, 20)
                 addMob:addMod(xi.mod.DEF, 15)
             end,

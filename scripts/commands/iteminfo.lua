@@ -57,11 +57,13 @@ local MOD_LABELS =
     [29]  = 'Magic Def.',
     [30]  = 'Magic Acc.',
     [68]  = 'Evasion',
+    [161] = 'Physical damage taken',
+    [288] = 'Double Attack',
     [384] = 'Haste',
 }
 
 -- Ordered list so stats always print in a consistent order
-local MOD_ORDER = { 1, 2, 5, 8, 9, 10, 11, 12, 13, 14, 23, 25, 68, 28, 30, 29, 27, 384 }
+local MOD_ORDER = { 1, 2, 5, 8, 9, 10, 11, 12, 13, 14, 23, 25, 68, 28, 30, 29, 27, 161, 288, 384 }
 
 local function printItemStats(player, item, slotLabel)
     if item == nil then
@@ -79,7 +81,11 @@ local function printItemStats(player, item, slotLabel)
         local val = item:getMod(modID)
         if val ~= nil and val ~= 0 then
             local label = MOD_LABELS[modID] or ('Mod#' .. modID)
-            if modID == 384 then
+            if modID == 161 then
+                table.insert(stats, string.format('%s %+.0f%%', label, val / 100))
+            elseif modID == 288 then
+                table.insert(stats, string.format('%s +%d%%', label, val))
+            elseif modID == 384 then
                 -- Haste is stored as tenths of a percent (e.g. 40 = 4%)
                 table.insert(stats, string.format('%s +%d%%', label, val / 10))
             elseif val > 0 then

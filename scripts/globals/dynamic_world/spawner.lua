@@ -285,6 +285,7 @@ spawner.spawnEntity = function(zone, zd, state, tier)
                 mob:setLocalVar('DW_TIER', tier)
                 mob:setLocalVar('DW_TEMPLATE', 0) -- Can't store strings, use numeric hash
                 mob:setLocalVar('DW_SPAWN_TIME', os.time())
+                mob:renameEntity(template.packetName)
 
                 -- If overleveled for the zone, disable aggro
                 -- These mobs are peaceful unless attacked (like high-level NMs wandering through)
@@ -607,6 +608,7 @@ spawner.tryRevengeSpawn = function(mob, killer, zd, state, template, tier, gener
                 revMob:setLocalVar('DW_SPAWN_TIME', os.time())
                 revMob:setLocalVar('DW_REVENGE_GEN', nextGen)
                 revMob:setLocalVar('DW_REVENGE_BASE_NAME_LEN', #baseName)
+                revMob:renameEntity(revengeTemplate.packetName)
 
                 -- Overleveled revenge mobs are also passive
                 if isOverleveled then

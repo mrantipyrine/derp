@@ -385,7 +385,7 @@ loot.chaseWeapons =
     {
         18844, -- Sprout Wand
         19101, -- Flick Knife
-        20713, -- Foam Sword
+        19422, -- Foam Sword
         19224, -- Tin Popgun
         16185, -- Bubble Shield
     },

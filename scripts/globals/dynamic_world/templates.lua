@@ -394,7 +394,7 @@ db.void_emperor =
     lootTable     = 'power_king',
     isAggro       = true,
     expMultiplier = 2.0,
-    minionTemplate = 'void_wyrm',
+    minionTemplate = 'royal_wyrm',
     description   = 'A dungeon tyrant awakened by the new weapons adventurers carry.',
 }
 
@@ -416,7 +416,7 @@ db.hellforged_overlord =
     lootTable     = 'power_king',
     isAggro       = true,
     expMultiplier = 2.2,
-    minionTemplate = 'abyssal_demon',
+    minionTemplate = 'hellguard_drake',
     description   = 'A spell-warped tyrant built to punish careless level 75 gods.',
 }
 
@@ -437,8 +437,66 @@ db.primeval_monarch =
     lootTable     = 'power_king',
     isAggro       = true,
     expMultiplier = 2.5,
-    minionTemplate = 'ancient_king',
+    minionTemplate = 'monarch_guard',
     description   = 'An old-world monarch made relevant again by broken adventurer gear.',
+}
+
+db.royal_wyrm =
+{
+    name        = 'Royal Wyrm',
+    packetName  = 'Royal Wyrm',
+    groupRefs = {
+        { groupId = 162, groupZoneId = 77  },
+        { groupId = 5,   groupZoneId = 154 },
+    },
+    tier          = {},
+    levelOffset   = { 20, 25 },
+    levelCap      = 108,
+    regions       = nil,
+    behavior      = 'apex_dragon',
+    lootTable     = 'power_king',
+    isAggro       = true,
+    expMultiplier = 1.2,
+    description   = 'A lesser wyrm serving a Power King.',
+}
+
+db.hellguard_drake =
+{
+    name        = 'Hellguard Drake',
+    packetName  = 'Hellguard Drake',
+    groupRefs = {
+        { groupId = 5,  groupZoneId = 112 },
+        { groupId = 1,  groupZoneId = 146 },
+        { groupId = 35, groupZoneId = 140 },
+    },
+    tier          = {},
+    levelOffset   = { 20, 25 },
+    levelCap      = 108,
+    regions       = nil,
+    behavior      = 'apex_demon',
+    lootTable     = 'power_king',
+    isAggro       = true,
+    expMultiplier = 1.2,
+    description   = 'A drake bound to a Hellforged Overlord.',
+}
+
+db.monarch_guard =
+{
+    name        = 'Monarch Guard',
+    packetName  = 'Monarch Guard',
+    groupRefs = {
+        { groupId = 6,   groupZoneId = 128 },
+        { groupId = 260, groupZoneId = 77  },
+    },
+    tier          = {},
+    levelOffset   = { 20, 25 },
+    levelCap      = 108,
+    regions       = nil,
+    behavior      = 'apex_king',
+    lootTable     = 'power_king',
+    isAggro       = true,
+    expMultiplier = 1.2,
+    description   = 'A royal guard defending a Primeval Monarch.',
 }
 
 db.dude =
