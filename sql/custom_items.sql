@@ -6085,8 +6085,8 @@ REPLACE INTO `item_equipment` VALUES (20713,'excalipoor',1,0,4194303,729,0,0,3,0
 REPLACE INTO `item_weapon` VALUES (20713,'excalipoor',3,0,0,0,0,2,1,240,1,0);
 
 -- Current custom weapons from weapons.yml.
-DELETE FROM `item_mods` WHERE `itemId` IN (16428, 16498, 16582, 16654, 17110, 17131, 17273, 17801, 17961, 18313, 18511, 18828, 18938, 18939, 19073, 19408, 19422, 20571, 21554, 21572, 22124);
-DELETE FROM `item_mods_pet` WHERE `itemId` IN (16428, 16498, 16582, 16654, 17110, 17131, 17273, 17801, 17961, 18313, 18511, 18828, 18938, 18939, 19073, 19408, 19422, 20571, 21554, 21572, 22124);
+DELETE FROM `item_mods` WHERE `itemId` IN (16428, 16498, 16582, 16654, 17110, 17131, 17273, 17801, 17856, 17961, 18313, 18511, 18775, 18828, 18853, 18863, 18868, 18875, 18883, 18884, 18921, 18938, 18939, 19073, 19188, 19191, 19377, 19402, 19408, 19422, 20571, 21554, 21572, 21602, 21804, 22124);
+DELETE FROM `item_mods_pet` WHERE `itemId` IN (16428, 16498, 16582, 16654, 17110, 17131, 17273, 17801, 17856, 17961, 18313, 18511, 18775, 18828, 18853, 18863, 18868, 18875, 18883, 18884, 18921, 18938, 18939, 19073, 19188, 19191, 19377, 19402, 19408, 19422, 20571, 21554, 21572, 21602, 21804, 22124);
 
 -- Death Dealer (Lv1)
 REPLACE INTO `item_basic` VALUES (22124, 0, 'Death_Dealer', 'death_dealer', 1, 59476, 99, 0, 0);
@@ -6185,6 +6185,15 @@ REPLACE INTO `item_mods` VALUES
     (17801, 73, 6),
     (17801, 840, 30);
 
+-- Pixie Piccolo (Lv18)
+REPLACE INTO `item_basic` VALUES (17856, 0, 'Pixie_Piccolo', 'pixie_piccolo', 1, 59476, 99, 0, 0);
+REPLACE INTO `item_equipment` VALUES (17856, "pixie_piccolo", 18, 0, 512, 65, 0, 0, 4, 0, 0, 0);
+REPLACE INTO `item_weapon` VALUES (17856, "pixie_piccolo", 42, 0, 0, 0, 0, 1, 1, 240, 0, 0);
+REPLACE INTO `item_mods` VALUES
+    (17856, 14, 8),
+    (17856, 452, 2),
+    (17856, 454, 20);
+
 -- Blinksteel (Lv65)
 REPLACE INTO `item_basic` VALUES (18313, 0, 'Blinksteel', 'blinksteel', 1, 59476, 99, 0, 0);
 REPLACE INTO `item_equipment` VALUES (18313, "blinksteel", 65, 0, 4096, 344, 0, 1, 3, 0, 0, 0);
@@ -6239,6 +6248,97 @@ REPLACE INTO `item_mods` VALUES
     (20571, 302, 5),
     (20571, 506, 5),
     (20571, 507, 5);
+
+-- Storm Knuckles (Lv36)
+REPLACE INTO `item_basic` VALUES (18775, 0, 'Storm_Knuckles', 'storm_knuckles', 1, 59476, 99, 0, 0);
+REPLACE INTO `item_equipment` VALUES (18775, "storm_knuckles", 36, 0, 131074, 506, 0, 0, 1, 0, 0, 0);
+REPLACE INTO `item_weapon` VALUES (18775, "storm_knuckles", 1, 0, 0, 0, 0, 4, 1, 287, 48, 0);
+REPLACE INTO `item_mods` VALUES
+    (18775, 289, 10),
+    (18775, 384, 800);
+
+-- Baarbara Bell (Lv1)
+REPLACE INTO `item_basic` VALUES (18863, 0, 'Baarbara_Bell', 'baarbara_bell', 1, 59476, 99, 0, 0);
+REPLACE INTO `item_equipment` VALUES (18863, "baarbara_bell", 1, 0, 4194303, 449, 0, 0, 3, 0, 0, 0);
+REPLACE INTO `item_weapon` VALUES (18863, "baarbara_bell", 11, 0, 0, 0, 0, 3, 1, 210, 18, 0);
+REPLACE INTO `item_mods` VALUES
+    (18863, 5, 25),
+    (18863, 12, 4),
+    (18863, 13, 4),
+    (18863, 28, 5),
+    (18863, 369, 1);
+
+-- Baarbara Bell (Lv1 alternate)
+REPLACE INTO `item_basic` VALUES (18868, 0, 'Baarbara_Bell_Alt', 'baarbara_bell_alt', 1, 59476, 99, 0, 0);
+REPLACE INTO `item_equipment` VALUES (18868, "baarbara_bell", 1, 0, 4194303, 456, 0, 0, 3, 0, 0, 0);
+REPLACE INTO `item_weapon` VALUES (18868, "baarbara_bell", 11, 0, 0, 0, 0, 3, 1, 216, 99, 0);
+
+-- Seveneye Rod (Lv45)
+REPLACE INTO `item_basic` VALUES (18875, 0, 'Seveneye_Rod', 'seveneye_rod', 1, 59476, 99, 0, 0);
+REPLACE INTO `item_equipment` VALUES (18875, "seveneye_rod", 45, 0, 16460, 103, 0, 0, 3, 0, 0, 0);
+REPLACE INTO `item_weapon` VALUES (18875, "seveneye_rod", 11, 0, 0, 0, 0, 3, 1, 190, 95, 0);
+REPLACE INTO `item_mods` VALUES
+    (18875, 170, 30);
+
+-- Ember Staff (Lv55)
+REPLACE INTO `item_basic` VALUES (18921, 0, 'Ember_Staff', 'ember_staff', 1, 59476, 99, 0, 0);
+REPLACE INTO `item_equipment` VALUES (18921, "ember_staff", 55, 0, 540680, 298, 0, 0, 1, 0, 0, 0);
+REPLACE INTO `item_weapon` VALUES (18921, "ember_staff", 12, 0, 0, 0, 0, 3, 1, 402, 79, 0);
+REPLACE INTO `item_mods` VALUES
+    (18921, 28, 45),
+    (18921, 369, 3);
+
+-- Sky Bow (Lv45)
+REPLACE INTO `item_basic` VALUES (19188, 0, 'Sky_Bow', 'sky_bow', 1, 59476, 99, 0, 0);
+REPLACE INTO `item_equipment` VALUES (19188, "sky_bow", 45, 0, 7665, 41, 0, 0, 4, 0, 0, 0);
+REPLACE INTO `item_weapon` VALUES (19188, "sky_bow", 25, 0, 0, 0, 0, 1, 1, 300, 160, 0);
+REPLACE INTO `item_mods` VALUES
+    (19188, 26, 25),
+    (19188, 365, 40);
+
+-- Boomstick (Lv60)
+REPLACE INTO `item_basic` VALUES (19191, 0, 'Boomstick', 'boomstick', 1, 59476, 99, 0, 0);
+REPLACE INTO `item_equipment` VALUES (19191, "boomstick", 60, 0, 66560, 58, 0, 0, 4, 0, 0, 0);
+REPLACE INTO `item_weapon` VALUES (19191, "boomstick", 26, 1, 0, 0, 0, 1, 1, 582, 400, 0);
+REPLACE INTO `item_mods` VALUES
+    (19191, 24, 60),
+    (19191, 26, 40);
+
+-- Luckitoo (Lv35)
+REPLACE INTO `item_basic` VALUES (19377, 0, 'Luckitoo', 'luckitoo', 1, 59476, 99, 0, 0);
+REPLACE INTO `item_equipment` VALUES (19377, "luckitoo", 35, 0, 65, 113, 0, 0, 3, 0, 0, 0);
+REPLACE INTO `item_weapon` VALUES (19377, "luckitoo", 11, 0, 0, 0, 0, 3, 1, 180, 80, 0);
+REPLACE INTO `item_mods` VALUES
+    (19377, 8, 6),
+    (19377, 13, -10),
+    (19377, 384, 300);
+
+-- Jims Cleaver (Lv25)
+REPLACE INTO `item_basic` VALUES (19402, 0, 'Jims_Cleaver', 'jims_cleaver', 1, 59476, 99, 0, 0);
+REPLACE INTO `item_equipment` VALUES (19402, "jims_cleaver", 25, 0, 129, 469, 0, 0, 1, 0, 0, 0);
+REPLACE INTO `item_weapon` VALUES (19402, "jims_cleaver", 6, 0, 0, 0, 0, 2, 1, 350, 120, 0);
+REPLACE INTO `item_mods` VALUES
+    (19402, 8, 20),
+    (19402, 840, 25);
+
+-- Guardbreak (Lv40)
+REPLACE INTO `item_basic` VALUES (21602, 0, 'Guardbreak', 'guardbreak', 1, 59476, 99, 0, 0);
+REPLACE INTO `item_equipment` VALUES (21602, "guardbreak", 40, 0, 4194303, 787, 0, 0, 3, 0, 0, 0);
+REPLACE INTO `item_weapon` VALUES (21602, "guardbreak", 3, 0, 0, 0, 0, 2, 1, 220, 115, 0);
+REPLACE INTO `item_mods` VALUES
+    (21602, 10, 20),
+    (21602, 161, -800);
+
+-- Grave Scythe (Lv49)
+REPLACE INTO `item_basic` VALUES (21804, 0, 'Grave_Scythe', 'grave_scythe', 1, 59476, 99, 0, 0);
+REPLACE INTO `item_equipment` VALUES (21804, "grave_scythe", 49, 0, 128, 393, 0, 0, 1, 0, 0, 0);
+REPLACE INTO `item_weapon` VALUES (21804, "grave_scythe", 7, 0, 0, 0, 0, 2, 1, 420, 180, 0);
+REPLACE INTO `item_mods` VALUES
+    (21804, 8, 22),
+    (21804, 431, 5),
+    (21804, 500, 100),
+    (21804, 501, 40),
+    (21804, 840, 35);
 
 -- Bloody Saber (Lv80)
 REPLACE INTO `item_basic` VALUES (16582, 0, 'Bloody_Saber', 'blood_saber', 1, 59476, 99, 0, 0);

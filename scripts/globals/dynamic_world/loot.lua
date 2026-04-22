@@ -400,7 +400,7 @@ loot.chaseWeapons =
 
     mid =
     {
-        18847, -- Seveneye Rod
+        18875, -- Seveneye Rod
         19088, -- Alpha Axe
         16183, -- Nomad Guard
     },

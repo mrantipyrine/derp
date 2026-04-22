@@ -358,10 +358,10 @@ nr.db = {
         isAggro     = false,
         loot        =
         {
-            { itemId = 18528, rate = 1000 },    -- Baa-rbara's Bell
+            { itemId = 18863, rate = 1000 },    -- Baa-rbara's Bell
             { itemId = 26007, rate = 10479  },    -- Baa-rbara's Collar
             { itemId = 28441, rate = 150  },    -- Baa-rbara's Ribbon
-            { itemId = 18831, rate = 240 }, -- Pixie Piccolo
+            { itemId = 17856, rate = 240 }, -- Pixie Piccolo
         },
         deathMsg = "Baa-rbara's tinkling bell goes silent.",
     },
@@ -1275,7 +1275,7 @@ nr.db = {
         {
             { itemId = 23756, rate = 10479  },    -- Big Jim's Small Hat
             { itemId = 15796, rate = 150  },    -- Big Jim Cape
-            { itemId = 18971, rate = 220 }, -- Jim Cleaver
+            { itemId = 19402, rate = 220 }, -- Jim Cleaver
         },
         deathMsg    = 'Big Jim falls. He was not, in fact, big.',
     },
@@ -1536,7 +1536,7 @@ nr.db = {
         loot = {
             { itemId = 25702, rate = 700 },
             { itemId = 14631, rate = 500 },
-            { itemId = 18977, rate = 180 }, -- Guardbreak
+            { itemId = 21602, rate = 180 }, -- Guardbreak
         },
         deathMsg = "Overlord Ophelia has been slain! Its rare treasures await...",
     },
@@ -2694,7 +2694,7 @@ nr.db = {
         loot = {
             { itemId = 23984, rate = 700 },
             { itemId = 10792, rate = 500 },
-            { itemId = 18937, rate = 170 }, -- Boomstick
+            { itemId = 19191, rate = 170 }, -- Boomstick
         },
         deathMsg = "Heavenrider Hieronyma has been slain! Its rare treasures await...",
     },
@@ -2727,7 +2727,7 @@ nr.db = {
         loot = {
             { itemId = 23424, rate = 700 },
             { itemId = 11000, rate = 500 },
-            { itemId = 18933, rate = 180 }, -- Sky Bow
+            { itemId = 19188, rate = 180 }, -- Sky Bow
         },
         deathMsg = "Stormrider Sigismund has been slain! Its rare treasures await...",
     },
@@ -3001,7 +3001,7 @@ nr.db = {
         loot = {
             { itemId = 23950, rate = 700 },
             { itemId = 10754, rate = 500 },
-            { itemId = 18978, rate = 180 }, -- Grave Scythe
+            { itemId = 21804, rate = 180 }, -- Grave Scythe
         },
         deathMsg = "Venomfang Valentinus has been slain! Its rare treasures await...",
     },
@@ -3149,7 +3149,7 @@ nr.db = {
         loot = {
             { itemId = 23955, rate = 700 },
             { itemId = 11657, rate = 500 },
-            { itemId = 18974, rate = 170 }, -- Ember Staff
+            { itemId = 18921, rate = 170 }, -- Ember Staff
         },
         deathMsg = "Eternal Executioner Emerick has been slain! Its rare treasures await...",
     },
