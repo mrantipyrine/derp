@@ -113,6 +113,7 @@ local function trackSkirmishEntity(zoneId, entity, packetName, faction, minLevel
         maxLevel = maxLevel,
         isSkirmish = true,
         packetName = packetName,
+        faction = faction,
     }
     zd.count = zd.count + 1
     state.globalCount = state.globalCount + 1
@@ -120,6 +121,40 @@ local function trackSkirmishEntity(zoneId, entity, packetName, faction, minLevel
     entity:addListener('DESPAWN', 'DW_SKIRMISH_DESPAWN_' .. targid, function(mob)
         xi.dynamicWorld.spawner.onEntityDespawn(mob, zd, state, targid)
     end)
+end
+
+local function countLiving(pack)
+    local living = 0
+    for _, mob in ipairs(pack) do
+        if mob and mob:isAlive() then
+            living = living + 1
+        end
+    end
+    return living
+end
+
+local function retireSkirmishPack(pack, factionKey)
+    local faction = skirmishFactions[factionKey]
+    for _, mob in ipairs(pack) do
+        if mob and mob:isAlive() then
+            mob:disengage()
+            mob:setMobMod(xi.mobMod.NO_AGGRO, 1)
+            mob:setMobMod(xi.mobMod.NO_LINK, 1)
+            mob:setMobMod(xi.mobMod.ROAM_DISTANCE, 18)
+            mob:setMobMod(xi.mobMod.ROAM_COOL, 5)
+            mob:spawn(12)
+        end
+    end
+
+    local anchor = pack[1]
+    if anchor and anchor:isAlive() then
+        xi.dynamicWorld.announceNearby(
+            anchor:getZone(),
+            anchor,
+            80,
+            string.format('[Dynamic World] %s scatter after the skirmish.', faction and faction.packetName or factionKey)
+        )
+    end
 end
 
 local function spawnSkirmishMob(zone, factionKey, pos, minLevel, maxLevel, allegiance)
@@ -206,6 +241,36 @@ local function reinforceSkirmish(packA, packB, pulsesLeft)
     if anchor and anchor.timer then
         anchor:timer(1500, function()
             reinforceSkirmish(packA, packB, pulsesLeft - 1)
+        end)
+    end
+end
+
+local function monitorSkirmish(packA, packB, factionA, factionB)
+    local livingA = countLiving(packA)
+    local livingB = countLiving(packB)
+
+    if livingA == 0 and livingB == 0 then
+        return
+    end
+
+    if livingA == 0 then
+        if factionB == 'goblin' then
+            retireSkirmishPack(packB, factionB)
+        end
+        return
+    end
+
+    if livingB == 0 then
+        if factionA == 'goblin' then
+            retireSkirmishPack(packA, factionA)
+        end
+        return
+    end
+
+    local anchor = packA[1] or packB[1]
+    if anchor and anchor.timer then
+        anchor:timer(3000, function()
+            monitorSkirmish(packA, packB, factionA, factionB)
         end)
     end
 end
@@ -441,6 +506,9 @@ local function cmdSkirmish(player, leftKey, rightKey, count)
 
     leftPack[1]:timer(1000, function()
         reinforceSkirmish(leftPack, rightPack, 4)
+    end)
+    leftPack[1]:timer(4000, function()
+        monitorSkirmish(leftPack, rightPack, leftKey, rightKey)
     end)
 
     player:printToPlayer(
