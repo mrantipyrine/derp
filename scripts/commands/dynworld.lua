@@ -122,7 +122,7 @@ local function trackSkirmishEntity(zoneId, entity, packetName, faction, minLevel
     end)
 end
 
-local function spawnSkirmishMob(zone, factionKey, pos, minLevel, maxLevel)
+local function spawnSkirmishMob(zone, factionKey, pos, minLevel, maxLevel, allegiance)
     local faction = skirmishFactions[factionKey]
     if not faction then
         return nil
@@ -131,6 +131,7 @@ local function spawnSkirmishMob(zone, factionKey, pos, minLevel, maxLevel)
     local chosenRef = pickGroupRef(faction.groupRefs)
     local entity = zone:insertDynamicEntity({
         objtype = xi.objType.MOB,
+        allegiance = allegiance or xi.allegiance.MOB,
         name = faction.packetName:gsub(' ', '_'),
         packetName = faction.packetName,
         x = pos.x,
@@ -423,8 +424,8 @@ local function cmdSkirmish(player, leftKey, rightKey, count)
             rot = math.random(0, 255),
         }
 
-        local leftMob = spawnSkirmishMob(zone, leftKey, leftPos, minLevel, maxLevel)
-        local rightMob = spawnSkirmishMob(zone, rightKey, rightPos, minLevel, maxLevel)
+        local leftMob = spawnSkirmishMob(zone, leftKey, leftPos, minLevel, maxLevel, xi.allegiance.PLAYER)
+        local rightMob = spawnSkirmishMob(zone, rightKey, rightPos, minLevel, maxLevel, xi.allegiance.MOB)
         if leftMob then
             leftPack[#leftPack + 1] = leftMob
         end
