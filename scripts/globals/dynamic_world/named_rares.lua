@@ -3868,6 +3868,288 @@ nr.db = {
         },
         deathMsg = "Dread Decimus has been banished! Its rare treasures await...",
     },
+
+    -- ================================================================
+    -- NOVELTY TREASURE RARES
+    -- Hand-authored rares that explicitly chase the level 5-75 novelty
+    -- gear and weapons added for solo and small-group progression.
+    -- ================================================================
+    ["sir_shellington"] = {
+        name = "Sir Shellington",
+        packetName = "Shellngtn",
+        family = "crab",
+        groupRef = "sir_shellington",
+        zones = { xi.zone.QUFIM_ISLAND, xi.zone.SEA_SERPENT_GROTTO },
+        level = { 34, 38 },
+        spawnTimer = 7200,
+        spawnWindow = 3600,
+        spawnChance = 750,
+        isAggro = true,
+        loot = {
+            { itemId = 17031, rate = 700 }, -- Shell Scepter
+            { itemId = 28651, rate = 450 }, -- Metal Slime Shield
+        },
+        deathMsg = "Sir Shellington cracks open, revealing polished treasure.",
+    },
+
+    ["gobbie_gavelmeister"] = {
+        name = "Gobbie Gavelmeister",
+        packetName = "Gvlmstr",
+        family = "goblin",
+        groupRef = "gobbie_gavelmeister",
+        zones = { xi.zone.GHELSBA_OUTPOST, xi.zone.DAVOI, xi.zone.OLDTON_MOVALPOLOS },
+        level = { 38, 42 },
+        spawnTimer = 7200,
+        spawnWindow = 3600,
+        spawnChance = 750,
+        isAggro = true,
+        loot = {
+            { itemId = 17032, rate = 700 }, -- Gobbie Gavel
+            { itemId = 27866, rate = 450 }, -- Goblin Suit
+        },
+        deathMsg = "Gobbie Gavelmeister bangs the gavel one last time.",
+    },
+
+    ["maestro_melodia"] = {
+        name = "Maestro Melodia",
+        packetName = "Melodia",
+        family = "bird",
+        groupRef = "maestro_melodia",
+        zones = { xi.zone.SAUROMUGUE_CHAMPAIGN, xi.zone.CAPE_TERIGGAN },
+        level = { 18, 24 },
+        spawnTimer = 7200,
+        spawnWindow = 3600,
+        spawnChance = 750,
+        isAggro = true,
+        loot = {
+            { itemId = 17345, rate = 650 }, -- Flute
+            { itemId = 17353, rate = 650 }, -- Maple Harp
+            { itemId = 22283, rate = 250 }, -- Marvelous Cheer
+        },
+        deathMsg = "Maestro Melodia's final note hangs in the air.",
+    },
+
+    ["chocobo_chuck"] = {
+        name = "Chocobo Chuck",
+        packetName = "ChocoChck",
+        family = "dhalmel",
+        groupRef = "chocobo_chuck",
+        zones = { xi.zone.BUBURIMU_PENINSULA, xi.zone.VALKURM_DUNES },
+        level = { 12, 16 },
+        spawnTimer = 5400,
+        spawnWindow = 2700,
+        spawnChance = 800,
+        isAggro = true,
+        loot = {
+            { itemId = 17074, rate = 700 }, -- Chocobo Wand
+            { itemId = 10251, rate = 450 }, -- Decennial Coat
+        },
+        deathMsg = "Chocobo Chuck drops something cheerful and questionably magical.",
+    },
+
+    ["pitchfork_paul"] = {
+        name = "Pitchfork Paul",
+        packetName = "PitchPaul",
+        family = "dragon",
+        groupRef = "pitchfork_paul",
+        zones = { xi.zone.XARCABARD, xi.zone.CASTLE_ZVAHL_KEEP },
+        level = { 24, 30 },
+        spawnTimer = 7200,
+        spawnWindow = 3600,
+        spawnChance = 750,
+        isAggro = true,
+        loot = {
+            { itemId = 18102, rate = 700 }, -- Pitchfork
+            { itemId = 18103, rate = 300 }, -- Pitchfork +1
+            { itemId = 25756, rate = 250 }, -- Wyrmking Suit
+        },
+        deathMsg = "Pitchfork Paul is skewered by irony.",
+    },
+
+    ["arkshade_kazuo"] = {
+        name = "Arkshade Kazuo",
+        packetName = "ArkKazuo",
+        family = "demon",
+        groupRef = "arkshade_kazuo",
+        zones = { xi.zone.CASTLE_ZVAHL_KEEP, xi.zone.CASTLE_ZVAHL_BAILEYS },
+        level = { 44, 50 },
+        spawnTimer = 10800,
+        spawnWindow = 3600,
+        spawnChance = 700,
+        isAggro = true,
+        loot = {
+            { itemId = 18464, rate = 600 }, -- Ark Tachi
+            { itemId = 18912, rate = 600 }, -- Ark Saber
+            { itemId = 18563, rate = 350 }, -- Ark Scythe
+        },
+        deathMsg = "Arkshade Kazuo dissolves into borrowed light.",
+    },
+
+    ["tabar_tyrant"] = {
+        name = "Tabar Tyrant",
+        packetName = "TabarTyr",
+        family = "orc",
+        groupRef = "tabar_tyrant",
+        zones = { xi.zone.DAVOI, xi.zone.MONASTIC_CAVERN },
+        level = { 44, 50 },
+        spawnTimer = 10800,
+        spawnWindow = 3600,
+        spawnChance = 700,
+        isAggro = true,
+        loot = {
+            { itemId = 18545, rate = 700 }, -- Ark Tabar
+            { itemId = 10847, rate = 450 }, -- Orc Belt
+            { itemId = 21760, rate = 250 }, -- Dispatcher's Axe
+        },
+        deathMsg = "Tabar Tyrant falls with a heavy, satisfying thud.",
+    },
+
+    ["earthfeeler_ernie"] = {
+        name = "Earthfeeler Ernie",
+        packetName = "ErthErnie",
+        family = "worm",
+        groupRef = "earthfeeler_ernie",
+        zones = { xi.zone.MAZE_OF_SHAKHRAMI, xi.zone.CRAWLER_S_NEST, xi.zone.ATTOHWA_CHASM },
+        level = { 14, 18 },
+        spawnTimer = 5400,
+        spawnWindow = 2700,
+        spawnChance = 800,
+        isAggro = true,
+        loot = {
+            { itemId = 20532, rate = 700 }, -- Worm Feelers
+            { itemId = 20533, rate = 300 }, -- Worm Feelers +1
+            { itemId = 27717, rate = 450 }, -- Worm Masque
+        },
+        deathMsg = "Earthfeeler Ernie retreats underground and leaves the good bits behind.",
+    },
+
+    ["malice_miriam"] = {
+        name = "Malice Miriam",
+        packetName = "MlcMiriam",
+        family = "ahriman",
+        groupRef = "malice_miriam",
+        zones = { xi.zone.GARLAIGE_CITADEL, xi.zone.TEMPLE_OF_UGGALEPIH, xi.zone.DEN_OF_RANCOR },
+        level = { 56, 62 },
+        spawnTimer = 10800,
+        spawnWindow = 3600,
+        spawnChance = 700,
+        isAggro = true,
+        loot = {
+            { itemId = 21153, rate = 700 }, -- Malice Masher
+            { itemId = 22069, rate = 350 }, -- Hapy Staff
+        },
+        deathMsg = "Malice Miriam's eye closes, and the air gets lighter.",
+    },
+
+    ["happy_hapy"] = {
+        name = "Happy Hapy",
+        packetName = "HappyHapy",
+        family = "roc",
+        groupRef = "happy_hapy",
+        zones = { xi.zone.CAPE_TERIGGAN, xi.zone.BEHEMOTH_S_DOMINION },
+        level = { 60, 66 },
+        spawnTimer = 10800,
+        spawnWindow = 3600,
+        spawnChance = 650,
+        isAggro = true,
+        loot = {
+            { itemId = 22069, rate = 700 }, -- Hapy Staff
+            { itemId = 22283, rate = 300 }, -- Marvelous Cheer
+            { itemId = 26954, rate = 250 }, -- Behemoth Suit
+        },
+        deathMsg = "Happy Hapy is no longer happy, but the treasure is excellent.",
+    },
+
+    ["slimebert_prime"] = {
+        name = "Slimebert Prime",
+        packetName = "SlmPrime",
+        family = "slime",
+        groupRef = "slimebert_prime",
+        zones = { xi.zone.GUSGEN_MINES, xi.zone.QUFIM_ISLAND, xi.zone.PSOXJA },
+        level = { 22, 28 },
+        spawnTimer = 7200,
+        spawnWindow = 3600,
+        spawnChance = 750,
+        isAggro = true,
+        loot = {
+            { itemId = 10851, rate = 700 }, -- Slime Belt
+            { itemId = 28651, rate = 450 }, -- Metal Slime Shield
+        },
+        deathMsg = "Slimebert Prime becomes a puddle with loot in it.",
+    },
+
+    ["bone_dandy_boris"] = {
+        name = "Bone Dandy Boris",
+        packetName = "BoneBoris",
+        family = "skeleton",
+        groupRef = "bone_dandy_boris",
+        zones = { xi.zone.GUSGEN_MINES, xi.zone.ELDIEME_NECROPOLIS },
+        level = { 18, 24 },
+        spawnTimer = 7200,
+        spawnWindow = 3600,
+        spawnChance = 750,
+        isAggro = true,
+        loot = {
+            { itemId = 11320, rate = 700 }, -- Skeleton Robe
+            { itemId = 16257, rate = 450 }, -- Ghost Cape
+        },
+        deathMsg = "Bone Dandy Boris rattles apart with dramatic flair.",
+    },
+
+    ["snowbun_susie"] = {
+        name = "Snowbun Susie",
+        packetName = "SnowSusie",
+        family = "rabbit",
+        groupRef = "snowbun_susie",
+        zones = { xi.zone.BEAUCEDINE_GLACIER, xi.zone.XARCABARD },
+        level = { 8, 12 },
+        spawnTimer = 5400,
+        spawnWindow = 2700,
+        spawnChance = 850,
+        isAggro = true,
+        loot = {
+            { itemId = 11490, rate = 700 }, -- Snow Bunny Hat
+            { itemId = 15297, rate = 450 }, -- Rabbit Belt
+            { itemId = 25670, rate = 250 }, -- Rarab Cap
+        },
+        deathMsg = "Snowbun Susie leaves tiny footprints and oversized prizes.",
+    },
+
+    ["karakul_karl"] = {
+        name = "Karakul Karl",
+        packetName = "KarakKarl",
+        family = "sheep",
+        groupRef = "karakul_karl",
+        zones = { xi.zone.KONSCHTAT_HIGHLANDS, xi.zone.PASHHOW_MARSHLANDS },
+        level = { 28, 34 },
+        spawnTimer = 7200,
+        spawnWindow = 3600,
+        spawnChance = 750,
+        isAggro = true,
+        loot = {
+            { itemId = 23730, rate = 700 }, -- Karakul Cap
+            { itemId = 10250, rate = 450 }, -- Moogle Suit
+        },
+        deathMsg = "Karakul Karl's wool was apparently full of prizes.",
+    },
+
+    ["dispatcher_duncan"] = {
+        name = "Dispatcher Duncan",
+        packetName = "DispDuncn",
+        family = "gigas",
+        groupRef = "dispatcher_duncan",
+        zones = { xi.zone.BEHEMOTH_S_DOMINION, xi.zone.CAPE_TERIGGAN },
+        level = { 62, 70 },
+        spawnTimer = 14400,
+        spawnWindow = 5400,
+        spawnChance = 650,
+        isAggro = true,
+        loot = {
+            { itemId = 21760, rate = 700 }, -- Dispatcher's Axe
+            { itemId = 26954, rate = 350 }, -- Behemoth Suit
+        },
+        deathMsg = "Dispatcher Duncan clocks out permanently.",
+    },
 }
 
 -----------------------------------
