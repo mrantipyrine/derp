@@ -210,7 +210,7 @@ db.rampaging_goobbue =
     },
     tier          = { xi.dynamicWorld.tier.NOMAD, xi.dynamicWorld.tier.ELITE },
     levelOffset   = { 5, 10 },
-    regions       = { 'midlands', 'sarutabaruta', 'shadowreign' },
+    regions       = { 'midlands', 'sarutabaruta' },
     behavior      = 'nomad_predator',
     lootTable     = 'nomad_predator',
     isAggro       = true,
@@ -235,7 +235,7 @@ db.dread_hunter =
     },
     tier          = { xi.dynamicWorld.tier.ELITE },
     levelOffset   = { 8, 15 },
-    regions       = { 'midlands', 'sarutabaruta', 'aradjiah', 'shadowreign' },
+    regions       = { 'midlands', 'sarutabaruta', 'aradjiah' },
     behavior      = 'elite_hunter',
     lootTable     = 'elite_predator',
     isAggro       = true,
@@ -256,7 +256,7 @@ db.fell_commander =
     },
     tier          = { xi.dynamicWorld.tier.ELITE },
     levelOffset   = { 10, 15 },
-    regions       = { 'gustaberg', 'midlands', 'shadowreign' },
+    regions       = { 'gustaberg', 'midlands' },
     behavior      = 'elite_commander',
     lootTable     = 'elite_beastman',
     isAggro       = true,
@@ -344,7 +344,7 @@ db.abyssal_demon =
     },
     tier          = { xi.dynamicWorld.tier.APEX },
     levelOffset   = { 15, 25 },
-    regions       = { 'midlands', 'shadowreign' },
+    regions       = { 'midlands' },
     behavior      = 'apex_demon',
     lootTable     = 'apex_demon',
     isAggro       = true,
@@ -510,8 +510,8 @@ db.dude =
         { groupId = 35, groupZoneId = 140 }, -- Carrion Dragon
     },
     tier          = {},
-    levelOffset   = { 38, 42 },
-    levelCap      = 122,
+    levelOffset   = { 48, 54 },
+    levelCap      = 130,
     regions       = nil,
     behavior      = 'dude_dragon',
     lootTable     = 'power_king',
@@ -531,8 +531,8 @@ db.dude_bro =
         { groupId = 6,  groupZoneId = 154 }, -- Nidhogg
     },
     tier          = {},
-    levelOffset   = { 40, 44 },
-    levelCap      = 124,
+    levelOffset   = { 52, 58 },
+    levelCap      = 132,
     regions       = nil,
     behavior      = 'dude_bro_dragon',
     lootTable     = 'power_king',
@@ -552,8 +552,8 @@ db.sir_dude =
         { groupId = 40, groupZoneId = 5   }, -- Jormungand
     },
     tier          = { xi.dynamicWorld.tier.POWER_KING },
-    levelOffset   = { 45, 50 },
-    levelCap      = 125,
+    levelOffset   = { 58, 64 },
+    levelCap      = 135,
     regions       = nil,
     behavior      = 'sir_dude_dragon',
     lootTable     = 'king_of_kings',
@@ -561,6 +561,208 @@ db.sir_dude =
     expMultiplier = 3.0,
     dudeCompanions = { 'dude', 'dude_bro' },
     description   = 'King of Kings. Etiquette optional. Survival unlikely.',
+}
+
+-----------------------------------
+-- REGIONAL BLESSING MOBS
+-----------------------------------
+
+db.mandragora_mirth =
+{
+    name          = 'Mandragora Mirth',
+    packetName    = 'Mndrgra Mirth',
+    groupRefs     = {
+        { groupId = 13, groupZoneId = 4  },
+        { groupId = 38, groupZoneId = 38 },
+        { groupId = 1,  groupZoneId = 45 },
+    },
+    tier          = {},
+    levelOffset   = { 0, 2 },
+    levelCap      = 35,
+    regions       = { 'sarutabaruta', 'ronfaure' },
+    behavior      = 'blessing_keeper',
+    lootTable     = 'none',
+    isAggro       = false,
+    expMultiplier = 0,
+    isBlessingMob = true,
+    blessingId    = 1,
+    description   = 'A wandering mandragora whose death blesses nearby adventurers.',
+}
+
+db.carapace_sentinel =
+{
+    name          = 'Carapace Sentinel',
+    packetName    = 'Crapce Sntnel',
+    groupRefs     = {
+        { groupId = 1, groupZoneId = 1  },
+        { groupId = 2, groupZoneId = 2  },
+        { groupId = 1, groupZoneId = 11 },
+    },
+    tier          = {},
+    levelOffset   = { 1, 3 },
+    levelCap      = 55,
+    regions       = { 'ronfaure', 'gustaberg', 'sarutabaruta', 'midlands' },
+    behavior      = 'blessing_keeper',
+    lootTable     = 'none',
+    isAggro       = false,
+    expMultiplier = 0,
+    isBlessingMob = true,
+    blessingId    = 2,
+    description   = 'A crab thick with defensive magic.',
+}
+
+db.hare_herald =
+{
+    name          = 'Hare Herald',
+    packetName    = 'Hare Herald',
+    groupRefs     = {
+        { groupId = 19, groupZoneId = 4 },
+        { groupId = 1,  groupZoneId = 5 },
+        { groupId = 2,  groupZoneId = 6 },
+    },
+    tier          = {},
+    levelOffset   = { 1, 4 },
+    levelCap      = 55,
+    regions       = { 'ronfaure', 'gustaberg', 'sarutabaruta', 'midlands' },
+    behavior      = 'blessing_keeper',
+    lootTable     = 'none',
+    isAggro       = false,
+    expMultiplier = 0,
+    isBlessingMob = true,
+    blessingId    = 3,
+    description   = 'A fleet-footed hare carrying a blessing of momentum.',
+}
+
+db.stinging_evangel =
+{
+    name          = 'Stinging Evangel',
+    packetName    = 'Stng Evangel',
+    groupRefs     = {
+        { groupId = 10, groupZoneId = 2  },
+        { groupId = 30, groupZoneId = 2  },
+        { groupId = 12, groupZoneId = 24 },
+    },
+    tier          = {},
+    levelOffset   = { 0, 3 },
+    levelCap      = 60,
+    regions       = { 'ronfaure', 'gustaberg', 'sarutabaruta', 'midlands', 'tavnazia' },
+    behavior      = 'blessing_keeper',
+    lootTable     = 'none',
+    isAggro       = false,
+    expMultiplier = 0,
+    isBlessingMob = true,
+    blessingId    = 4,
+    description   = 'A furious bee that leaves behind combat zeal.',
+}
+
+db.breezewing_herald =
+{
+    name          = 'Breezewing Herald',
+    packetName    = 'Brzwng Herald',
+    groupRefs     = {
+        { groupId = 14, groupZoneId = 4  },
+        { groupId = 21, groupZoneId = 4  },
+        { groupId = 2,  groupZoneId = 30 },
+    },
+    tier          = {},
+    levelOffset   = { 0, 3 },
+    levelCap      = 70,
+    regions       = { 'sarutabaruta', 'midlands', 'elshimo' },
+    behavior      = 'blessing_keeper',
+    lootTable     = 'none',
+    isAggro       = false,
+    expMultiplier = 0,
+    isBlessingMob = true,
+    blessingId    = 5,
+    description   = 'A bright-feathered courier of speed and grace.',
+}
+
+db.whisper_worm =
+{
+    name          = 'Whisper Worm',
+    packetName    = 'Whisper Worm',
+    groupRefs     = {
+        { groupId = 25, groupZoneId = 7  },
+        { groupId = 21, groupZoneId = 68 },
+        { groupId = 24, groupZoneId = 68 },
+    },
+    tier          = {},
+    levelOffset   = { 0, 4 },
+    levelCap      = 75,
+    regions       = { 'gustaberg', 'sarutabaruta', 'midlands', 'tavnazia', 'aradjiah' },
+    behavior      = 'blessing_keeper',
+    lootTable     = 'none',
+    isAggro       = false,
+    expMultiplier = 0,
+    isBlessingMob = true,
+    blessingId    = 6,
+    description   = 'A strange worm that leaves a trail of lucid mana.',
+}
+
+db.coeurl_stalker =
+{
+    name          = 'Coeurl Stalker',
+    packetName    = 'Coeurl Stalker',
+    groupRefs     = {
+        { groupId = 9,  groupZoneId = 7  },
+        { groupId = 17, groupZoneId = 7  },
+        { groupId = 15, groupZoneId = 45 },
+    },
+    tier          = {},
+    levelOffset   = { 2, 5 },
+    levelCap      = 80,
+    regions       = { 'midlands', 'elshimo', 'tavnazia' },
+    behavior      = 'blessing_keeper',
+    lootTable     = 'none',
+    isAggro       = false,
+    expMultiplier = 0,
+    isBlessingMob = true,
+    blessingId    = 7,
+    description   = 'A prowling coeurl steeped in predatory grace.',
+}
+
+db.treant_ward =
+{
+    name          = 'Treant Ward',
+    packetName    = 'Treant Ward',
+    groupRefs     = {
+        { groupId = 66, groupZoneId = 24 },
+        { groupId = 67, groupZoneId = 24 },
+        { groupId = 39, groupZoneId = 15 },
+    },
+    tier          = {},
+    levelOffset   = { 2, 5 },
+    levelCap      = 85,
+    regions       = { 'midlands', 'elshimo', 'tavnazia' },
+    behavior      = 'blessing_keeper',
+    lootTable     = 'none',
+    isAggro       = false,
+    expMultiplier = 0,
+    isBlessingMob = true,
+    blessingId    = 8,
+    description   = 'An old tree-spirit radiating durable calm.',
+}
+
+db.funguar_oracle =
+{
+    name          = 'Funguar Oracle',
+    packetName    = 'Funguar Oracle',
+    groupRefs     = {
+        { groupId = 7,  groupZoneId = 2  },
+        { groupId = 26, groupZoneId = 2  },
+        { groupId = 16, groupZoneId = 68 },
+    },
+    tier          = {},
+    levelOffset   = { 1, 4 },
+    levelCap      = 80,
+    regions       = { 'midlands', 'elshimo', 'aradjiah', 'tavnazia' },
+    behavior      = 'blessing_keeper',
+    lootTable     = 'none',
+    isAggro       = false,
+    expMultiplier = 0,
+    isBlessingMob = true,
+    blessingId    = 9,
+    description   = 'A funguar spore-caster offering ugly but useful insight.',
 }
 
 -----------------------------------
@@ -579,6 +781,26 @@ xi.dynamicWorld.templates.getForTierAndRegion = function(tier, regionName)
         end
 
         if tierMatch then
+            if template.regions == nil then
+                table.insert(results, { key = key, template = template })
+            elseif regionName then
+                for _, r in ipairs(template.regions) do
+                    if r == regionName then
+                        table.insert(results, { key = key, template = template })
+                        break
+                    end
+                end
+            end
+        end
+    end
+
+    return results
+end
+
+xi.dynamicWorld.templates.getBlessingsForRegion = function(regionName)
+    local results = {}
+    for key, template in pairs(db) do
+        if template.isBlessingMob then
             if template.regions == nil then
                 table.insert(results, { key = key, template = template })
             elseif regionName then

@@ -5,6 +5,7 @@ require('scripts/globals/teleports')
 require('scripts/events/login_campaign')
 require('scripts/globals/solo_modifications')
 require('scripts/globals/solo_synergy')
+require('scripts/globals/dynamic_world/blessings')
 -----------------------------------
 require('scripts/quests/full_speed_ahead')
 -----------------------------------
@@ -192,7 +193,7 @@ xi.player.onGameIn = function(player, firstLogin, zoning)
     -- apply mods from gearsets (scripts/globals/gear_sets.lua)
     xi.gear_sets.checkForGearSet(player)
  
-    xi.solo_modifications.applyBuffs(player)
+    xi.dynamicWorld.blessings.onZoneIn(player)
 
     -- god mode
     if player:getCharVar('GodMode') == 1 then

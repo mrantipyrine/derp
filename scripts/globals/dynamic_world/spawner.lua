@@ -33,6 +33,23 @@ local function getSetting(key)
     return s and s[key]
 end
 
+local function getBlessingTargetPerZone()
+    if getSetting('BLESSING_MOBS_ENABLED') == false then
+        return 0
+    end
+
+    return getSetting('BLESSING_MOBS_PER_ZONE') or 2
+end
+
+local function rollWindow(minKey, maxKey, fallbackMin, fallbackMax)
+    local minValue = getSetting(minKey) or fallbackMin
+    local maxValue = getSetting(maxKey) or fallbackMax
+    if maxValue < minValue then
+        maxValue = minValue
+    end
+    return os.time() + math.random(minValue, maxValue)
+end
+
 -----------------------------------
 -- Pick a random groupRef from a template.
 -- Templates can define a single 'groupRef' or a 'groupRefs' array for
@@ -61,17 +78,22 @@ spawner.evaluate = function(zone, zd, state)
     local minPerZone = getSetting('MIN_ENTITIES_PER_ZONE') or 10
     local globalCap  = getSetting('GLOBAL_ENTITY_CAP') or 500
     local batchSize  = getSetting('MAX_SPAWN_BATCH_SIZE') or 3
+    local blessingReserve = getBlessingTargetPerZone()
+    local maxRegularPerZone = math.max(0, maxPerZone - blessingReserve)
+    local minRegularPerZone = math.max(0, minPerZone - blessingReserve)
+    local regularCount = math.max(0, zd.count - (zd.blessingCount or 0))
 
     -- Cleanup dead entities first
     spawner.cleanup(zone, zd, state)
+    regularCount = math.max(0, zd.count - (zd.blessingCount or 0))
 
     -- Hard global cap — but never let it prevent filling the minimum
-    if state.globalCount >= globalCap and zd.count >= minPerZone then
+    if state.globalCount >= globalCap and regularCount >= minRegularPerZone then
         return
     end
 
     -- Hard per-zone max
-    if zd.count >= maxPerZone then
+    if regularCount >= maxRegularPerZone then
         return
     end
 
@@ -85,26 +107,9 @@ spawner.evaluate = function(zone, zd, state)
     end
 
     if playerCount == 0 then
-        local despawnTime = getSetting('DESPAWN_EMPTY_ZONE_TIME') or 600
-        local now = os.time()
-
-        -- Only despawn entities that are ABOVE the minimum floor and have aged out.
-        -- Never drop below MIN_ENTITIES_PER_ZONE — this keeps every zone pre-populated
-        -- so players don't zone into an empty map.
-        if zd.count > minPerZone then
-            for targid, entData in pairs(zd.entities) do
-                if zd.count <= minPerZone then
-                    break
-                end
-                if now - entData.spawnTime > despawnTime then
-                    spawner.despawnEntity(zone, zd, state, targid)
-                end
-            end
-        end
-
         -- If we're below the minimum, fill up to it even with no players present
-        if zd.count < minPerZone and state.globalCount < globalCap then
-            local toSpawn = math.min(minPerZone - zd.count, batchSize, globalCap - state.globalCount)
+        if regularCount < minRegularPerZone and state.globalCount < globalCap then
+            local toSpawn = math.min(minRegularPerZone - regularCount, batchSize, globalCap - state.globalCount)
             for i = 1, toSpawn do
                 local tier = spawner.rollTier(zd)
                 spawner.spawnEntity(zone, zd, state, tier)
@@ -124,11 +129,11 @@ spawner.evaluate = function(zone, zd, state)
 
     -- Players are present — desired count scales with player count, floored by minimum
     local desiredCount = math.min(
-        math.max(minPerZone, math.floor(minPerZone + playerCount * 1.5)),
-        maxPerZone
+        math.max(minRegularPerZone, math.floor(minRegularPerZone + playerCount * 1.5)),
+        maxRegularPerZone
     )
 
-    local toSpawn = math.min(desiredCount - zd.count, batchSize, globalCap - state.globalCount)
+    local toSpawn = math.min(desiredCount - regularCount, batchSize, globalCap - state.globalCount)
 
     if toSpawn <= 0 then
         -- Zone is full — pressure still builds
@@ -146,6 +151,154 @@ spawner.evaluate = function(zone, zd, state)
         spawner.spawnEntity(zone, zd, state, tier)
         spawner.updatePressure(zd, tier)
     end
+end
+
+-----------------------------------
+-- Blessing mob population
+-----------------------------------
+spawner.evaluateBlessings = function(zone, zd, state)
+    local targetPerZone = getBlessingTargetPerZone()
+    local globalCap = getSetting('GLOBAL_ENTITY_CAP') or 500
+    local maxPerZone = getSetting('MAX_ENTITIES_PER_ZONE') or 15
+    local batchSize = math.min(getSetting('MAX_SPAWN_BATCH_SIZE') or 3, targetPerZone)
+
+    if targetPerZone <= 0 then
+        return
+    end
+
+    spawner.cleanup(zone, zd, state)
+
+    local missing = targetPerZone - (zd.blessingCount or 0)
+    if missing <= 0 then
+        return
+    end
+
+    local availableZoneSlots = math.max(0, maxPerZone - zd.count)
+    local availableGlobalSlots = math.max(0, globalCap - state.globalCount)
+    local toSpawn = math.min(missing, batchSize, availableZoneSlots, availableGlobalSlots)
+
+    for i = 1, toSpawn do
+        spawner.spawnBlessingEntity(zone, zd, state)
+    end
+end
+
+spawner.spawnBlessingEntity = function(zone, zd, state)
+    local zoneId = zone:getID()
+    local regionName = state.zoneToRegion[zoneId]
+    local candidates = xi.dynamicWorld.templates.getBlessingsForRegion(regionName)
+
+    if #candidates == 0 then
+        candidates = xi.dynamicWorld.templates.getBlessingsForRegion(nil)
+    end
+
+    if #candidates == 0 then
+        return nil
+    end
+
+    local chosen = candidates[math.random(#candidates)]
+    local template = chosen.template
+    local templateKey = chosen.key
+    local pos = xi.dynamicWorld.getRandomSpawnPoint(zone)
+    if not pos then
+        return nil
+    end
+
+    local minLevel, maxLevel = xi.dynamicWorld.getDynamicLevelRange(
+        zoneId,
+        xi.dynamicWorld.tier.WANDERER,
+        template.levelOffset,
+        template.levelCap or 75,
+        { keepInsideZone = true }
+    )
+    local chosenRef = pickGroupRef(template)
+
+    local entityTable =
+    {
+        objtype     = xi.objType.MOB,
+        name        = template.name:gsub(' ', '_'),
+        packetName  = template.packetName,
+        x           = pos.x,
+        y           = pos.y,
+        z           = pos.z,
+        rotation    = pos.rot,
+        groupId     = chosenRef.groupId,
+        groupZoneId = chosenRef.groupZoneId,
+        minLevel    = minLevel,
+        maxLevel    = maxLevel,
+        releaseIdOnDisappear = true,
+        specialSpawnAnimation = true,
+    }
+
+    local behaviorSet = xi.dynamicWorld.behaviors.get(template.behavior)
+    if behaviorSet then
+        if behaviorSet.onMobSpawn then
+            entityTable.onMobSpawn = function(mob)
+                mob:setLocalVar('DW_TIER', 0)
+                mob:setLocalVar('DW_SPAWN_TIME', os.time())
+                mob:setLocalVar('DW_IS_BLESSING', 1)
+                mob:renameEntity(template.packetName)
+                behaviorSet.onMobSpawn(mob, template, 0)
+            end
+        end
+
+        if behaviorSet.onMobRoam then
+            entityTable.onMobRoam = function(mob)
+                behaviorSet.onMobRoam(mob, template, 0)
+            end
+        end
+
+        if behaviorSet.onMobEngaged then
+            entityTable.onMobEngaged = function(mob, target)
+                behaviorSet.onMobEngaged(mob, target, template, 0)
+            end
+        end
+
+        if behaviorSet.onMobDeath then
+            entityTable.onMobDeath = function(mob, player, optParams)
+                behaviorSet.onMobDeath(mob, player, optParams, template, 0)
+            end
+        end
+
+        if behaviorSet.onMobDespawn then
+            entityTable.onMobDespawn = function(mob)
+                behaviorSet.onMobDespawn(mob, template, 0)
+            end
+        end
+    end
+
+    local entity = zone:insertDynamicEntity(entityTable)
+    if not entity then
+        return nil
+    end
+
+    entity:setSpawn(pos.x, pos.y, pos.z, pos.rot)
+    entity:spawn()
+
+    local targid = entity:getTargID()
+    zd.entities[targid] =
+    {
+        entity       = entity,
+        templateKey  = templateKey,
+        tier         = 0,
+        spawnTime    = os.time(),
+        zoneId       = zoneId,
+        minLevel     = minLevel,
+        maxLevel     = maxLevel,
+        isBlessing   = true,
+    }
+    zd.count = zd.count + 1
+    zd.blessingCount = (zd.blessingCount or 0) + 1
+    state.globalCount = state.globalCount + 1
+
+    entity:addListener('DEATH', 'DW_DEATH_' .. targid, function(mob, killer)
+        spawner.onEntityDeath(mob, killer, zd, state, template, 0, targid)
+    end)
+
+    entity:addListener('DESPAWN', 'DW_DESPAWN_' .. targid, function(mob)
+        spawner.onEntityDespawn(mob, zd, state, targid)
+    end)
+
+    return entity
 end
 
 -----------------------------------
@@ -177,6 +330,7 @@ end
 -- recently, making rare tiers increasingly likely over time.
 -----------------------------------
 spawner.rollTier = function(zd)
+    local now = os.time()
     local wanderer = getSetting('TIER_WEIGHT_WANDERER') or 55
     local nomad    = getSetting('TIER_WEIGHT_NOMAD')    or 20
     local elite    = getSetting('TIER_WEIGHT_ELITE')    or 15
@@ -191,12 +345,22 @@ spawner.rollTier = function(zd)
         power = (getSetting('TIER_WEIGHT_POWER_KING') or 2) + powerPressure
     end
 
+    if zd and now < (zd.apexReadyAt or 0) then
+        apex = 0
+    end
+
+    if zd and now < (zd.powerReadyAt or 0) then
+        power = 0
+    end
+
     if zd and zd.eliteApexOnly then
+        local eliteOnlyWeight = 70 + elitePressure
+        local apexWeight = (zd and now < (zd.apexReadyAt or 0)) and 0 or (30 + apexPressure)
         return xi.dynamicWorld.weightedRandom({
             0,
             0,
-            70 + elitePressure,
-            30 + apexPressure,
+            eliteOnlyWeight,
+            apexWeight,
             power,
         })
     end
@@ -245,12 +409,12 @@ spawner.spawnEntity = function(zone, zd, state, tier)
 
     -- Calculate level based on zone level range + template offset
     local levelRange = xi.dynamicWorld.getZoneLevelRange(zoneId)
-    local minLevel = math.max(1, levelRange[1] + (template.levelOffset[1] or 0))
-    local maxLevel = math.max(minLevel, levelRange[2] + (template.levelOffset[2] or 0))
-
-    local levelCap = template.levelCap or 99
-    minLevel = math.min(minLevel, levelCap)
-    maxLevel = math.min(maxLevel, levelCap)
+    local minLevel, maxLevel = xi.dynamicWorld.getDynamicLevelRange(
+        zoneId,
+        tier,
+        template.levelOffset,
+        template.levelCap or 99
+    )
 
     -- Pick a random visual variant for this spawn
     local chosenRef = pickGroupRef(template)
@@ -746,6 +910,35 @@ spawner.onEntityDeath = function(mob, killer, zd, state, template, tier, targid,
         return
     end
 
+    if template.isBlessingMob then
+        xi.dynamicWorld.blessings.onBlessingMobDeath(mob, killer, template)
+
+        local minSec = getSetting('BLESSING_RESPAWN_MIN') or 60
+        local maxSec = getSetting('BLESSING_RESPAWN_MAX') or 150
+        local delayMs = math.random(minSec, maxSec) * 1000
+
+        mob:timer(delayMs, function(deadMob)
+            local rZone = deadMob:getZone()
+            if not rZone then
+                return
+            end
+
+            local maxPerZone = getSetting('MAX_ENTITIES_PER_ZONE') or 15
+            local globalCap = getSetting('GLOBAL_ENTITY_CAP') or 500
+            if zd.count < maxPerZone and state.globalCount < globalCap then
+                spawner.spawnBlessingEntity(rZone, zd, state)
+            end
+        end)
+
+        return
+    end
+
+    if tier == xi.dynamicWorld.tier.APEX then
+        zd.apexReadyAt = rollWindow('APEX_SPAWN_WINDOW_MIN', 'APEX_SPAWN_WINDOW_MAX', 2 * 3600, 8 * 3600)
+    elseif tier == xi.dynamicWorld.tier.POWER_KING then
+        zd.powerReadyAt = rollWindow('POWER_KING_WINDOW_MIN', 'POWER_KING_WINDOW_MAX', 2 * 3600, 8 * 3600)
+    end
+
     -- Award bonus EXP
     local tierMultipliers = {
         [xi.dynamicWorld.tier.WANDERER] = getSetting('EXP_MULTIPLIER_WANDERER') or 1.5,
@@ -828,15 +1021,18 @@ spawner.onEntityDeath = function(mob, killer, zd, state, template, tier, targid,
             if playerCount == 0 then return end
 
             local maxPerZone = getSetting('MAX_ENTITIES_PER_ZONE') or 15
-            local minPerZone = getSetting('MIN_ENTITIES_PER_ZONE') or 3
             local globalCap  = getSetting('GLOBAL_ENTITY_CAP') or 500
+            local blessingReserve = getBlessingTargetPerZone()
+            local minPerZone = math.max(0, (getSetting('MIN_ENTITIES_PER_ZONE') or 3) - blessingReserve)
+            local maxRegularPerZone = math.max(0, maxPerZone - blessingReserve)
+            local regularCount = math.max(0, zd.count - (zd.blessingCount or 0))
 
             local desiredCount = math.min(
                 math.max(minPerZone, math.floor(minPerZone + playerCount * 1.5)),
-                maxPerZone
+                maxRegularPerZone
             )
 
-            if zd.count < desiredCount and state.globalCount < globalCap then
+            if regularCount < desiredCount and state.globalCount < globalCap then
                 local respawnTier = spawner.rollTier(zd)
                 spawner.spawnEntity(rZone, zd, state, respawnTier)
                 spawner.updatePressure(zd, respawnTier)
@@ -850,6 +1046,9 @@ end
 -----------------------------------
 spawner.onEntityDespawn = function(mob, zd, state, targid)
     if zd.entities[targid] then
+        if zd.entities[targid].isBlessing then
+            zd.blessingCount = math.max(0, (zd.blessingCount or 0) - 1)
+        end
         zd.entities[targid] = nil
         zd.count = math.max(0, zd.count - 1)
         state.globalCount = math.max(0, state.globalCount - 1)
@@ -884,6 +1083,9 @@ spawner.cleanup = function(zone, zd, state)
 
     for _, targid in ipairs(toRemove) do
         if zd.entities[targid] then
+            if zd.entities[targid].isBlessing then
+                zd.blessingCount = math.max(0, (zd.blessingCount or 0) - 1)
+            end
             zd.entities[targid] = nil
             zd.count = math.max(0, zd.count - 1)
             state.globalCount = math.max(0, state.globalCount - 1)

@@ -83,6 +83,7 @@ xi.dynamicWorld.roaming   = xi.dynamicWorld.roaming or {}
 xi.dynamicWorld.loot      = xi.dynamicWorld.loot or {}
 xi.dynamicWorld.behaviors = xi.dynamicWorld.behaviors or {}
 xi.dynamicWorld.synergies = xi.dynamicWorld.synergies or {}
+xi.dynamicWorld.blessings = xi.dynamicWorld.blessings or {}
 
 require('scripts/globals/dynamic_world/templates')
 require('scripts/globals/dynamic_world/spawner')
@@ -90,6 +91,7 @@ require('scripts/globals/dynamic_world/roaming')
 require('scripts/globals/dynamic_world/loot')
 require('scripts/globals/dynamic_world/behaviors')
 require('scripts/globals/dynamic_world/synergies')
+require('scripts/globals/dynamic_world/blessings')
 require('scripts/globals/dynamic_world/named_rares')
 
 -----------------------------------
@@ -120,12 +122,6 @@ local ELIGIBLE_ZONES =
     2, 4, 5, 7, 9, 11, 12, 16, 18, 20, 22, 24, 25, 27, 28, 29, 30, 33, 34, 35,
     -- ToAU
     51, 52, 54, 61, 62, 65, 68, 72, 79,
-    -- WotG
-    81, 82, 83, 84, 85, 88, 89,
-    90, 91, 92, 95, 96, 97, 98, 99,
-    136, 137, 138, 155, 164, 171, 175,
-    -- SoA
-    260, 261,
 }
 
 local EXPANSION_ELITE_APEX_ZONES =
@@ -136,9 +132,6 @@ local EXPANSION_ELITE_APEX_ZONES =
     2, 4, 5, 7, 9, 11, 12, 16, 18, 20, 22, 24, 25, 27, 28, 29, 30, 33, 34, 35,
     -- ToAU
     51, 52, 54, 61, 62, 65, 68, 72, 79,
-    -- WotG
-    81, 82, 83, 84, 85, 88, 89, 90, 91, 92, 95, 96, 97, 98, 99,
-    136, 137, 138, 155, 164, 171, 175,
 }
 
 local POWER_KING_ZONES =
@@ -149,8 +142,6 @@ local POWER_KING_ZONES =
     11, 12, 16, 18, 20, 22, 27, 28, 30, 34, 35,
     -- ToAU high-level dungeons
     54, 65, 68, 72, 79,
-    -- WotG high-level dungeons
-    138, 155, 164, 171, 175,
 }
 
 local EXPANSION_SPAWN_INTERVAL = 60
@@ -165,7 +156,6 @@ local REGIONS =
     zilart       = { zones = { 130, 153, 154, 159, 160, 176, 177, 178, 205, 208 }, levelRange = { 60, 85 } },
     tavnazia     = { zones = { 2, 4, 5, 7, 9, 11, 12, 16, 18, 20, 22, 24, 25, 27, 28, 29, 30, 33, 34, 35 }, levelRange = { 30, 80 } },
     aradjiah     = { zones = { 51, 52, 54, 61, 62, 65, 68, 72, 79 },        levelRange = { 55, 80 } },
-    shadowreign  = { zones = { 81, 82, 83, 84, 85, 88, 89, 90, 91, 92, 95, 96, 97, 98, 99, 136, 137, 138, 155, 164, 171, 175 }, levelRange = { 50, 80 } },
 }
 
 local ZONE_LEVELS =
@@ -249,7 +239,9 @@ xi.dynamicWorld.init = function()
         state.zoneData[zoneId] = {
             entities      = {},
             count         = 0,
+            blessingCount = 0,
             lastTick      = now - math.random(0, zoneSpawnInterval - 1),
+            lastBlessingTick = now - math.random(0, (getSetting('BLESSING_CHECK_INTERVAL') or 20) - 1),
             lastRoamCheck = now - math.random(0, roamInterval  - 1),
             pendingSpawns = 0,
             elitePressure = 0,
@@ -258,6 +250,8 @@ xi.dynamicWorld.init = function()
             eliteApexOnly = EXPANSION_ELITE_APEX_SET[zoneId] or false,
             powerKings    = POWER_KING_ZONE_SET[zoneId] or false,
             spawnInterval = zoneSpawnInterval,
+            apexReadyAt   = now + math.random(getSetting('APEX_SPAWN_WINDOW_MIN') or (2 * 3600), getSetting('APEX_SPAWN_WINDOW_MAX') or (8 * 3600)),
+            powerReadyAt  = now + math.random(getSetting('POWER_KING_WINDOW_MIN') or (2 * 3600), getSetting('POWER_KING_WINDOW_MAX') or (8 * 3600)),
         }
     end
 
@@ -299,6 +293,12 @@ xi.dynamicWorld.onZoneTick = function(zone)
 
     local now = os.time()
     local spawnInterval = zd.spawnInterval or getSetting('SPAWN_CHECK_INTERVAL') or 120
+    local blessingInterval = getSetting('BLESSING_CHECK_INTERVAL') or 20
+
+    if getSetting('BLESSING_MOBS_ENABLED') ~= false and now - (zd.lastBlessingTick or 0) >= blessingInterval then
+        zd.lastBlessingTick = now
+        xi.dynamicWorld.spawner.evaluateBlessings(zone, zd, state)
+    end
 
     -- Spawn check
     if now - zd.lastTick >= spawnInterval then
@@ -457,10 +457,12 @@ xi.dynamicWorld.forceSpawn = function(zone, tier, count)
 
     if not state.zoneData[zoneId] then
         state.zoneData[zoneId] = {
-            entities = {}, count = 0, lastTick = 0, lastRoamCheck = 0, pendingSpawns = 0,
+            entities = {}, count = 0, blessingCount = 0, lastTick = 0, lastBlessingTick = 0, lastRoamCheck = 0, pendingSpawns = 0,
             eliteApexOnly = EXPANSION_ELITE_APEX_SET[zoneId] or false,
             powerKings = POWER_KING_ZONE_SET[zoneId] or false,
             spawnInterval = EXPANSION_ELITE_APEX_SET[zoneId] and math.min(getSetting('SPAWN_CHECK_INTERVAL') or 120, EXPANSION_SPAWN_INTERVAL) or getSetting('SPAWN_CHECK_INTERVAL') or 120,
+            apexReadyAt = os.time() + math.random(getSetting('APEX_SPAWN_WINDOW_MIN') or (2 * 3600), getSetting('APEX_SPAWN_WINDOW_MAX') or (8 * 3600)),
+            powerReadyAt = os.time() + math.random(getSetting('POWER_KING_WINDOW_MIN') or (2 * 3600), getSetting('POWER_KING_WINDOW_MAX') or (8 * 3600)),
         }
     end
 
@@ -754,6 +756,71 @@ xi.dynamicWorld.getZoneLevelRange = function(zoneId)
 
     -- 3. Last resort default
     return { 20, 40 }
+end
+
+local function clamp(value, minValue, maxValue)
+    if value < minValue then
+        return minValue
+    end
+    if value > maxValue then
+        return maxValue
+    end
+    return value
+end
+
+local function getTierBand(zoneMin, zoneMax, tier, options)
+    local span = math.max(0, zoneMax - zoneMin)
+    options = options or {}
+
+    if options.namedRare then
+        if tier == xi.dynamicWorld.tier.APEX then
+            return zoneMax, zoneMax + math.min(8, math.max(4, math.floor(span * 0.20)))
+        end
+
+        return zoneMin + math.floor(span * 0.70), zoneMax + math.min(4, math.max(2, math.floor(span * 0.10)))
+    end
+
+    if tier == xi.dynamicWorld.tier.WANDERER then
+        return zoneMin, zoneMin + math.max(2, math.floor(span * 0.45))
+    elseif tier == xi.dynamicWorld.tier.NOMAD then
+        return zoneMin + math.floor(span * 0.20), zoneMin + math.max(4, math.floor(span * 0.65))
+    elseif tier == xi.dynamicWorld.tier.ELITE then
+        return zoneMin + math.floor(span * 0.55), zoneMax
+    elseif tier == xi.dynamicWorld.tier.APEX then
+        return zoneMin + math.floor(span * 0.80), zoneMax + math.min(5, math.max(2, math.floor(span * 0.15)))
+    elseif tier == xi.dynamicWorld.tier.POWER_KING then
+        return zoneMax + 8, zoneMax + math.min(22, math.max(12, math.floor(span * 0.45)))
+    end
+
+    return zoneMin, zoneMax
+end
+
+xi.dynamicWorld.getDynamicLevelRange = function(zoneId, tier, levelOffset, levelCap, options)
+    local zoneRange = xi.dynamicWorld.getZoneLevelRange(zoneId)
+    local zoneMin = zoneRange[1] or 1
+    local zoneMax = zoneRange[2] or zoneMin
+    local bandMin, bandMax = getTierBand(zoneMin, zoneMax, tier, options)
+    local cap = levelCap or 99
+    local offsetMin = 0
+    local offsetMax = 0
+
+    if type(levelOffset) == 'table' then
+        offsetMin = levelOffset[1] or 0
+        offsetMax = levelOffset[2] or offsetMin
+    elseif type(levelOffset) == 'number' then
+        offsetMin = levelOffset
+        offsetMax = levelOffset
+    end
+
+    local minLevel = clamp(bandMin + offsetMin, 1, cap)
+    local maxLevel = clamp(bandMax + offsetMax, minLevel, cap)
+
+    if options and options.keepInsideZone then
+        minLevel = clamp(minLevel, 1, math.min(zoneMax, cap))
+        maxLevel = clamp(maxLevel, minLevel, math.min(zoneMax, cap))
+    end
+
+    return minLevel, maxLevel
 end
 
 -- Get all zones in same region as given zone

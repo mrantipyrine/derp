@@ -631,16 +631,55 @@ ss.getCombinedMult = function(player)
 end
 
 -----------------------------------
+-- Goblin Reputation (Favor)
+-----------------------------------
+-- Tracking favor with Goblins. Helping them kill Orcs, Quadav, or Yagudo
+-- builds reputation.
+-- At high favor:
+--   - Goblins become less aggressive (reduced aggro radius)
+--   - Goblins throw "Healing Bombs" at you if you are hurt.
+
+ss.getGoblinFavor = function(player)
+    return player:getCharVar('SS_GOBLIN_FAVOR')
+end
+
+ss.addGoblinFavor = function(player, amount)
+    local cur = ss.getGoblinFavor(player)
+    local new = math.min(cur + (amount or 1), 1000)
+    player:setCharVar('SS_GOBLIN_FAVOR', new)
+    
+    if new >= 500 and cur < 500 then
+        ss.flash(player, 'Goblin Insight! Goblins now recognize you as a "Friend of the Tribe".')
+    elseif new >= 1000 and cur < 1000 then
+        ss.flash(player, 'Goblin Blood-Brother! The tribe respects you above all others.')
+    end
+    
+    return new
+end
+
+-----------------------------------
 -- On-kill hook — call from onMobDeath if wired up, or from WS handlers.
 -- Increments momentum, opens a short combo window.
 -----------------------------------
 ss.onKill = function(player, mob)
     if not player or not player:isPC() then return end
+    
+    -- Momentum and TP
     local new = ss.addMomentum(player, 1)
     ss.flashMomentum(player)
+    
     -- Small TP trickle on kills for solo sustain
     if player:getPartySize() <= 2 then
         player:addTP(math.random(50, 150))
+    end
+    
+    -- Goblin Reputation Logic
+    local family = mob:getFamily()
+    local rivals = { [103] = true, [111] = true, [143] = true } -- Orcs, Quadav, Yagudo (Verify IDs if possible)
+    -- LSB families: ORC = 103, QUADAV = 111, YAGUDO = 143 (usually)
+    
+    if rivals[family] then
+        ss.addGoblinFavor(player, 1)
     end
 end
 
