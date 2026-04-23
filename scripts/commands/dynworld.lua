@@ -175,26 +175,37 @@ local function startSkirmish(packA, packB)
         return
     end
 
-    for i, mob in ipairs(packA) do
-        if mob and mob:isAlive() then
-            local target = packB[((i - 1) % #packB) + 1]
-            if target and target:isAlive() then
-                mob:addEnmity(target, 30, 30)
-                mob:updateEnmity(target)
-                mob:engage(target:getTargID())
+    local function seedBattle(sourcePack, targetPack)
+        for i, mob in ipairs(sourcePack) do
+            if mob and mob:isAlive() then
+                local target = targetPack[((i - 1) % #targetPack) + 1]
+                if target and target:isAlive() then
+                    if mob.addBaseEnmity then
+                        mob:addBaseEnmity(target)
+                    end
+                    mob:addEnmity(target, 60, 60)
+                    mob:updateEnmity(target)
+                end
             end
         end
     end
 
-    for i, mob in ipairs(packB) do
-        if mob and mob:isAlive() then
-            local target = packA[((i - 1) % #packA) + 1]
-            if target and target:isAlive() then
-                mob:addEnmity(target, 30, 30)
-                mob:updateEnmity(target)
-                mob:engage(target:getTargID())
-            end
-        end
+    seedBattle(packA, packB)
+    seedBattle(packB, packA)
+end
+
+local function reinforceSkirmish(packA, packB, pulsesLeft)
+    if pulsesLeft <= 0 then
+        return
+    end
+
+    startSkirmish(packA, packB)
+
+    local anchor = packA[1] or packB[1]
+    if anchor and anchor.timer then
+        anchor:timer(1500, function()
+            reinforceSkirmish(packA, packB, pulsesLeft - 1)
+        end)
     end
 end
 
@@ -428,7 +439,7 @@ local function cmdSkirmish(player, leftKey, rightKey, count)
     end
 
     leftPack[1]:timer(1000, function()
-        startSkirmish(leftPack, rightPack)
+        reinforceSkirmish(leftPack, rightPack, 4)
     end)
 
     player:printToPlayer(
