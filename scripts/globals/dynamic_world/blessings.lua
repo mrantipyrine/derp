@@ -165,6 +165,30 @@ end
 local function resolveRecipients(killer, sourceMob, range)
     local recipients = {}
     local owner = killer
+    local seen = {}
+
+    local function addRecipient(player)
+        if not player or not player.isPC or not player:isPC() then
+            return
+        end
+
+        local playerId = player:getID()
+        if seen[playerId] then
+            return
+        end
+
+        if player:getZoneID() ~= sourceMob:getZoneID() then
+            return
+        end
+
+        local distance = player:checkDistance(sourceMob) or 9999
+        if distance > range then
+            return
+        end
+
+        seen[playerId] = true
+        recipients[#recipients + 1] = player
+    end
 
     if owner and owner.getMaster then
         local master = owner:getMaster()
@@ -177,18 +201,13 @@ local function resolveRecipients(killer, sourceMob, range)
         return recipients
     end
 
+    addRecipient(owner)
+
     local party = owner:getParty()
     if party then
         for _, member in pairs(party) do
-            if member:isPC() and member:getZoneID() == sourceMob:getZoneID() then
-                local distance = member:checkDistance(sourceMob) or 9999
-                if distance <= range then
-                    recipients[#recipients + 1] = member
-                end
-            end
+            addRecipient(member)
         end
-    else
-        recipients[#recipients + 1] = owner
     end
 
     return recipients
