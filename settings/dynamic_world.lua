@@ -24,6 +24,7 @@ xi.settings.dynamicworld =
     SPAWN_CHECK_INTERVAL        = 30,       -- Seconds between spawn evaluation ticks
     STAGGER_DELAY               = 2,        -- Seconds between individual spawns (prevents packet storm)
     DESPAWN_EMPTY_ZONE_TIME     = 600,      -- Seconds before despawning entities ABOVE the minimum in empty zones
+    HUNT_MOBS_DESPAWN_IN_EMPTY_ZONES = false, -- Keep hunt mobs alive even when nobody is in-zone
 
     -----------------------------------------------------------------------
     -- Tier Weights (must total 100)
@@ -111,6 +112,26 @@ xi.settings.dynamicworld =
     RESPAWN_ENABLED             = true,
     RESPAWN_DELAY_MIN           = 45,       -- Min seconds before a killed entity's slot refills
     RESPAWN_DELAY_MAX           = 120,      -- Max seconds before a killed entity's slot refills
+
+    -----------------------------------------------------------------------
+    -- Regional Blessing Mobs
+    -- Dedicated dynamic mobs that grant zone-long buffs until zoning.
+    -----------------------------------------------------------------------
+    BLESSING_MOBS_ENABLED       = true,
+    BLESSING_MOBS_PER_ZONE      = 3,
+    BLESSING_CHECK_INTERVAL     = 15,
+    BLESSING_GRANT_RANGE        = 40,
+    BLESSING_RESPAWN_MIN        = 45,
+    BLESSING_RESPAWN_MAX        = 90,
+
+    -----------------------------------------------------------------------
+    -- Apex / Power King Spawn Gates
+    -- Prevent apex-tier starts immediately after server boot.
+    -----------------------------------------------------------------------
+    APEX_SPAWN_WINDOW_MIN       = 2 * 3600,
+    APEX_SPAWN_WINDOW_MAX       = 8 * 3600,
+    POWER_KING_WINDOW_MIN       = 2 * 3600,
+    POWER_KING_WINDOW_MAX       = 8 * 3600,
 
     -----------------------------------------------------------------------
     -- Performance

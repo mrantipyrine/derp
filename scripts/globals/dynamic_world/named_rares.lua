@@ -38,6 +38,32 @@ local nr = xi.dynamicWorld.namedRares
 -- Track currently alive named rares: key -> mob entity reference
 nr.alive = nr.alive or {}
 
+local function unwrapZoneId(zoneEntry)
+    if type(zoneEntry) == 'table' then
+        return zoneEntry[1]
+    end
+
+    return zoneEntry
+end
+
+local function getEligibleNamedRareZones(config)
+    if not config or type(config.zones) ~= 'table' then
+        return {}
+    end
+
+    local eligibleZones = xi.dynamicWorld and xi.dynamicWorld.state and xi.dynamicWorld.state.eligibleZones or {}
+    local zones = {}
+
+    for _, zoneEntry in ipairs(config.zones) do
+        local zoneId = unwrapZoneId(zoneEntry)
+        if zoneId and eligibleZones[zoneId] then
+            zones[#zones + 1] = zoneId
+        end
+    end
+
+    return zones
+end
+
 -- Reusable visual families for named rares.  Dynamic entities borrow an
 -- existing mob_groups row for model, family, skills, and base behavior, so
 -- these references are deliberately spread across many monster families.
@@ -4223,6 +4249,8 @@ end
 nr.trySpawn = function(key)
     local config = nr.db[key]
     if not config then return false end
+    local eligibleZones = getEligibleNamedRareZones(config)
+    if #eligibleZones == 0 then return false end
 
     -- Already alive
     if nr.alive[key] then
@@ -4249,8 +4277,8 @@ nr.trySpawn = function(key)
     -- Probabilistic roll so they don't always pop the instant timer expires
     if math.random(1000) > config.spawnChance then return false end
 
-    -- Pick a random zone from the rare's list
-    local zoneId = config.zones[math.random(#config.zones)]
+    -- Pick a random zone from the rare's eligible list
+    local zoneId = eligibleZones[math.random(#eligibleZones)]
     local zone   = GetZone(zoneId)
     if not zone then return false end
 
@@ -4399,6 +4427,10 @@ nr.forceSpawn = function(key, player)
     if not config then
         return false, 'Unknown named rare: ' .. tostring(query)
     end
+    local eligibleZones = getEligibleNamedRareZones(config)
+    if #eligibleZones == 0 then
+        return false, string.format('No classic-era dynamic zones are configured for %s', config.name)
+    end
 
     -- Clear alive reference so we don't bail on "already alive"
     nr.alive[key] = nil
@@ -4414,7 +4446,7 @@ nr.forceSpawn = function(key, player)
 
     if player then
         spawnZone = player:getZone()
-        if spawnZone then
+        if spawnZone and xi.dynamicWorld.state.eligibleZones[spawnZone:getID()] then
             local px  = player:getXPos()
             local py  = player:getYPos()
             local pz  = player:getZPos()
@@ -4426,12 +4458,14 @@ nr.forceSpawn = function(key, player)
                 z   = pz + math.sin(ang) * dist,
                 rot = math.random(0, 255),
             }
+        else
+            spawnZone = nil
         end
     end
 
     -- Fallback: pick from config zones and find a mob-based point
     if not spawnZone then
-        local zoneId = config.zones[math.random(#config.zones)]
+        local zoneId = eligibleZones[math.random(#eligibleZones)]
         spawnZone = GetZone(zoneId)
         if not spawnZone then
             return false, string.format('Failed: could not load zone for %s', config.name)

@@ -113,6 +113,37 @@ behaviorDb.wanderer_aggressive =
     end,
 }
 
+-- Blessing keeper: light roaming mob that exists to grant a regional blessing.
+behaviorDb.blessing_keeper =
+{
+    onMobSpawn = function(mob, template, tier)
+        mob:setRoamFlags(xi.roamFlag.NONE)
+        mob:setMobMod(xi.mobMod.ROAM_COOL, 6)
+        mob:setMobMod(xi.mobMod.ROAM_DISTANCE, 18)
+        mob:setMobMod(xi.mobMod.NO_LINK, 1)
+        mob:setMobMod(xi.mobMod.NO_AGGRO, 1)
+        mob:addMod(xi.mod.DEF, 10)
+        mob:addMod(xi.mod.MDEF, 10)
+    end,
+
+    onMobRoam = function(mob, template, tier)
+        pulseAura(mob, string.format('[Dynamic World] %s wanders nearby. Hunt it for a regional blessing.', template.packetName), 35)
+    end,
+
+    onMobEngaged = function(mob, target, template, tier)
+        if target and target:isPC() then
+            target:printToPlayer(
+                string.format('[Dynamic World] %s carries a blessing. Finish it before someone else does.', template.packetName),
+                xi.msg.channel.SYSTEM_3
+            )
+        end
+    end,
+
+    onMobDeath = function(mob, player, optParams, template, tier)
+        notifyKillerOrNearby(mob, player, string.format('[Dynamic World] %s releases a regional blessing.', template.packetName))
+    end,
+}
+
 -----------------------------------
 -- NOMAD BEHAVIORS
 -----------------------------------
@@ -814,6 +845,58 @@ behaviorDb.power_king_monarch =
     end,
 }
 
+local function applyDudeKingMods(mob, stats)
+    mob:setMobMod(xi.mobMod.CHECK_AS_NM, 1)
+    mob:setMobMod(xi.mobMod.NO_DESPAWN, 1)
+    mob:setMobMod(xi.mobMod.ALLI_HATE, stats.allianceHate or 35)
+    mob:setMobMod(xi.mobMod.MULTI_HIT, stats.multiHit)
+    mob:setMobMod(xi.mobMod.TP_USE_CHANCE, stats.tpUse)
+    mob:setMobMod(xi.mobMod.WEAPON_BONUS, stats.weaponBonus)
+
+    mob:addMod(xi.mod.HP, stats.hp)
+    mob:addMod(xi.mod.ATT, stats.attack)
+    mob:addMod(xi.mod.DEF, stats.defense)
+    mob:addMod(xi.mod.ACC, stats.accuracy)
+    mob:addMod(xi.mod.EVA, stats.evasion)
+    mob:addMod(xi.mod.MATT, stats.magicAttack)
+    mob:addMod(xi.mod.MDEF, stats.magicDefense)
+    mob:addMod(xi.mod.DOUBLE_ATTACK, stats.doubleAttack)
+    mob:addMod(xi.mod.TRIPLE_ATTACK, stats.tripleAttack)
+    mob:addMod(xi.mod.DMG, stats.damageTaken)
+    mob:addMod(xi.mod.DMGPHYS, stats.physicalTaken)
+    mob:addMod(xi.mod.DMGMAGIC, stats.magicTaken)
+    mob:addMod(xi.mod.DMGRANGE, stats.rangedTaken)
+    mob:addMod(xi.mod.REGAIN, stats.regain)
+    mob:addMod(xi.mod.REGEN, stats.regen)
+    mob:addMod(xi.mod.STORETP, stats.storeTp)
+    mob:addMod(xi.mod.CRITHITRATE, stats.critRate)
+
+    mob:setLocalVar('DW_AURA_LAST_TICK', 0)
+end
+
+local function triggerDudePhase(mob, template, threshold, minionCount, message)
+    local phaseKey = string.format('DW_DUDE_PHASE_%u', threshold)
+    if mob:getHPP() <= threshold and mob:getLocalVar(phaseKey) == 0 then
+        mob:setLocalVar(phaseKey, 1)
+        xi.dynamicWorld.announceZone(mob:getZone(), message)
+        behaviors.spawnApexMinions(mob, nil, template, minionCount)
+    end
+end
+
+local function startDudePhaseWatcher(mob, template, phases)
+    mob:timer(5000, function(m)
+        if not m or not m:isAlive() then
+            return
+        end
+
+        for _, phase in ipairs(phases) do
+            triggerDudePhase(m, template, phase.threshold, phase.minions, phase.message)
+        end
+
+        startDudePhaseWatcher(m, template, phases)
+    end)
+end
+
 behaviorDb.dude_dragon =
 {
     onMobSpawn = function(mob, template, tier)
@@ -821,24 +904,37 @@ behaviorDb.dude_dragon =
         mob:setMobMod(xi.mobMod.ROAM_COOL, 6)
         mob:setMobMod(xi.mobMod.ROAM_DISTANCE, 14)
         mob:setMobMod(xi.mobMod.SIGHT_RANGE, 35)
-        mob:setMobMod(xi.mobMod.CHECK_AS_NM, 1)
-        mob:setMobMod(xi.mobMod.MULTI_HIT, 3)
-        mob:setMobMod(xi.mobMod.TP_USE_CHANCE, 70)
-        mob:setMobMod(xi.mobMod.WEAPON_BONUS, 250)
-        mob:addMod(xi.mod.ATT, 320)
-        mob:addMod(xi.mod.DEF, 220)
-        mob:addMod(xi.mod.ACC, 220)
-        mob:addMod(xi.mod.EVA, 140)
-        mob:addMod(xi.mod.MATT, 220)
-        mob:addMod(xi.mod.MDEF, 200)
-        mob:addMod(xi.mod.DOUBLE_ATTACK, 45)
-        mob:addMod(xi.mod.TRIPLE_ATTACK, 20)
-        mob:addMod(xi.mod.HP, 35000)
-        mob:setLocalVar('DW_AURA_LAST_TICK', 0)
+        applyDudeKingMods(mob, {
+            hp            = 85000,
+            attack        = 650,
+            defense       = 480,
+            accuracy      = 360,
+            evasion       = 220,
+            magicAttack   = 300,
+            magicDefense  = 320,
+            doubleAttack  = 70,
+            tripleAttack  = 35,
+            damageTaken   = -1500,
+            physicalTaken = -2500,
+            magicTaken    = -1500,
+            rangedTaken   = -1500,
+            regain        = 120,
+            regen         = 150,
+            storeTp       = 50,
+            critRate      = 25,
+            multiHit      = 4,
+            tpUse         = 90,
+            weaponBonus   = 450,
+            allianceHate  = 35,
+        })
+        startDudePhaseWatcher(mob, template, {
+            { threshold = 50, minions = 2, message = '[Dynamic World] Dude calls in a tiny amount of unacceptable help.' },
+        })
     end,
 
     onMobRoam = function(mob, template, tier)
         pulseAura(mob, '[Dynamic World] Dude is somehow tiny and terrifying. (EXP +25%)', 65)
+        triggerDudePhase(mob, template, 50, 2, '[Dynamic World] Dude calls in a tiny amount of unacceptable help.')
     end,
 
     onMobEngaged = function(mob, target, template, tier)
@@ -857,25 +953,42 @@ behaviorDb.dude_bro_dragon =
         mob:setMobMod(xi.mobMod.ROAM_COOL, 8)
         mob:setMobMod(xi.mobMod.ROAM_DISTANCE, 12)
         mob:setMobMod(xi.mobMod.SIGHT_RANGE, 35)
-        mob:setMobMod(xi.mobMod.CHECK_AS_NM, 1)
-        mob:setMobMod(xi.mobMod.MULTI_HIT, 4)
-        mob:setMobMod(xi.mobMod.TP_USE_CHANCE, 80)
         mob:setMobMod(xi.mobMod.GA_CHANCE, 50)
         mob:setMobMod(xi.mobMod.MAGIC_COOL, 12)
-        mob:setMobMod(xi.mobMod.WEAPON_BONUS, 300)
-        mob:addMod(xi.mod.ATT, 340)
-        mob:addMod(xi.mod.DEF, 240)
-        mob:addMod(xi.mod.ACC, 220)
-        mob:addMod(xi.mod.MATT, 260)
-        mob:addMod(xi.mod.MDEF, 220)
-        mob:addMod(xi.mod.DOUBLE_ATTACK, 40)
-        mob:addMod(xi.mod.TRIPLE_ATTACK, 25)
-        mob:addMod(xi.mod.HP, 42000)
-        mob:setLocalVar('DW_AURA_LAST_TICK', 0)
+        mob:setMobMod(xi.mobMod.SEVERE_SPELL_CHANCE, 20)
+        applyDudeKingMods(mob, {
+            hp            = 110000,
+            attack        = 720,
+            defense       = 540,
+            accuracy      = 390,
+            evasion       = 240,
+            magicAttack   = 420,
+            magicDefense  = 380,
+            doubleAttack  = 75,
+            tripleAttack  = 40,
+            damageTaken   = -2000,
+            physicalTaken = -3000,
+            magicTaken    = -2000,
+            rangedTaken   = -2000,
+            regain        = 150,
+            regen         = 220,
+            storeTp       = 65,
+            critRate      = 30,
+            multiHit      = 5,
+            tpUse         = 95,
+            weaponBonus   = 600,
+            allianceHate  = 45,
+        })
+        startDudePhaseWatcher(mob, template, {
+            { threshold = 66, minions = 2, message = '[Dynamic World] Dude Bro makes this everyone else\'s problem.' },
+            { threshold = 33, minions = 3, message = '[Dynamic World] Dude Bro escalates for no defensible reason.' },
+        })
     end,
 
     onMobRoam = function(mob, template, tier)
         pulseAura(mob, '[Dynamic World] Dude Bro is making the whole dungeon worse. (EXP +25%)', 65)
+        triggerDudePhase(mob, template, 66, 2, '[Dynamic World] Dude Bro makes this everyone else\'s problem.')
+        triggerDudePhase(mob, template, 33, 3, '[Dynamic World] Dude Bro escalates for no defensible reason.')
     end,
 
     onMobEngaged = function(mob, target, template, tier)
@@ -894,24 +1007,38 @@ behaviorDb.sir_dude_dragon =
         mob:setMobMod(xi.mobMod.ROAM_COOL, 20)
         mob:setMobMod(xi.mobMod.ROAM_DISTANCE, 4)
         mob:setMobMod(xi.mobMod.SIGHT_RANGE, 45)
-        mob:setMobMod(xi.mobMod.CHECK_AS_NM, 1)
-        mob:setMobMod(xi.mobMod.MULTI_HIT, 5)
-        mob:setMobMod(xi.mobMod.TP_USE_CHANCE, 95)
         mob:setMobMod(xi.mobMod.GA_CHANCE, 75)
-        mob:setMobMod(xi.mobMod.SEVERE_SPELL_CHANCE, 35)
+        mob:setMobMod(xi.mobMod.SEVERE_SPELL_CHANCE, 50)
         mob:setMobMod(xi.mobMod.MAGIC_COOL, 8)
-        mob:setMobMod(xi.mobMod.WEAPON_BONUS, 500)
-        mob:addMod(xi.mod.ATT, 500)
-        mob:addMod(xi.mod.DEF, 450)
-        mob:addMod(xi.mod.ACC, 300)
-        mob:addMod(xi.mod.EVA, 180)
-        mob:addMod(xi.mod.MATT, 420)
-        mob:addMod(xi.mod.MDEF, 350)
-        mob:addMod(xi.mod.DOUBLE_ATTACK, 60)
-        mob:addMod(xi.mod.TRIPLE_ATTACK, 35)
-        mob:addMod(xi.mod.HP, 80000)
-        mob:setLocalVar('DW_AURA_LAST_TICK', 0)
+        applyDudeKingMods(mob, {
+            hp            = 180000,
+            attack        = 950,
+            defense       = 800,
+            accuracy      = 500,
+            evasion       = 300,
+            magicAttack   = 650,
+            magicDefense  = 550,
+            doubleAttack  = 90,
+            tripleAttack  = 55,
+            damageTaken   = -2500,
+            physicalTaken = -3500,
+            magicTaken    = -2500,
+            rangedTaken   = -2500,
+            regain        = 220,
+            regen         = 400,
+            storeTp       = 100,
+            critRate      = 40,
+            multiHit      = 7,
+            tpUse         = 100,
+            weaponBonus   = 900,
+            allianceHate  = 60,
+        })
         mob:setLocalVar('DW_DUDES_SPAWNED', 0)
+        startDudePhaseWatcher(mob, template, {
+            { threshold = 75, minions = 3, message = '[Dynamic World] Sir Dude asks the dungeon to stop holding back.' },
+            { threshold = 50, minions = 4, message = '[Dynamic World] Sir Dude enters the bad half of the fight.' },
+            { threshold = 25, minions = 5, message = '[Dynamic World] Sir Dude is now personally offended.' },
+        })
 
         mob:timer(1000, function(m)
             if m and m:isAlive() and m:getLocalVar('DW_DUDES_SPAWNED') == 0 then
@@ -925,6 +1052,9 @@ behaviorDb.sir_dude_dragon =
 
     onMobRoam = function(mob, template, tier)
         pulseAura(mob, '[Dynamic World] Sir Dude owns this place. (EXP +25%)', 80)
+        triggerDudePhase(mob, template, 75, 3, '[Dynamic World] Sir Dude asks the dungeon to stop holding back.')
+        triggerDudePhase(mob, template, 50, 4, '[Dynamic World] Sir Dude enters the bad half of the fight.')
+        triggerDudePhase(mob, template, 25, 5, '[Dynamic World] Sir Dude is now personally offended.')
     end,
 
     onMobEngaged = function(mob, target, template, tier)
