@@ -29,8 +29,177 @@ local function printErr(player, msg)
     player:printToPlayer(msg, xi.msg.channel.SYSTEM_3)
 end
 
+local skirmishFactions =
+{
+    goblin =
+    {
+        packetName = 'Goblin Raider',
+        groupRefs =
+        {
+            { groupId = 23, groupZoneId = 4 },
+            { groupId = 25, groupZoneId = 4 },
+            { groupId = 27, groupZoneId = 4 },
+        },
+    },
+    orc =
+    {
+        packetName = 'Orc Raider',
+        groupRefs =
+        {
+            { groupId = 14, groupZoneId = 2 },
+            { groupId = 15, groupZoneId = 2 },
+            { groupId = 21, groupZoneId = 2 },
+        },
+    },
+    quadav =
+    {
+        packetName = 'Quadav Raider',
+        groupRefs =
+        {
+            { groupId = 76, groupZoneId = 37 },
+            { groupId = 77, groupZoneId = 37 },
+            { groupId = 78, groupZoneId = 37 },
+        },
+    },
+    yagudo =
+    {
+        packetName = 'Yagudo Raider',
+        groupRefs =
+        {
+            { groupId = 82, groupZoneId = 37 },
+            { groupId = 83, groupZoneId = 37 },
+            { groupId = 84, groupZoneId = 37 },
+        },
+    },
+}
+
+local function pickGroupRef(refs)
+    return refs[math.random(#refs)]
+end
+
+local function buildSkirmishOffsets(count, baseAngle, distance)
+    local offsets = {}
+    local spacing = 2.2
+    local lateralStart = -((count - 1) * spacing) * 0.5
+
+    for i = 1, count do
+        local lateral = lateralStart + ((i - 1) * spacing)
+        offsets[#offsets + 1] =
+        {
+            x = math.cos(baseAngle) * distance + math.cos(baseAngle + math.pi / 2) * lateral,
+            z = math.sin(baseAngle) * distance + math.sin(baseAngle + math.pi / 2) * lateral,
+        }
+    end
+
+    return offsets
+end
+
+local function trackSkirmishEntity(zoneId, entity, packetName, faction, minLevel, maxLevel)
+    local state = xi.dynamicWorld.state
+    local zd = state.zoneData[zoneId]
+    if not zd then
+        return
+    end
+
+    local targid = entity:getTargID()
+    zd.entities[targid] =
+    {
+        entity = entity,
+        templateKey = 'skirmish_' .. faction,
+        tier = 0,
+        spawnTime = os.time(),
+        zoneId = zoneId,
+        minLevel = minLevel,
+        maxLevel = maxLevel,
+        isSkirmish = true,
+        packetName = packetName,
+    }
+    zd.count = zd.count + 1
+    state.globalCount = state.globalCount + 1
+
+    entity:addListener('DESPAWN', 'DW_SKIRMISH_DESPAWN_' .. targid, function(mob)
+        xi.dynamicWorld.spawner.onEntityDespawn(mob, zd, state, targid)
+    end)
+end
+
+local function spawnSkirmishMob(zone, factionKey, pos, minLevel, maxLevel)
+    local faction = skirmishFactions[factionKey]
+    if not faction then
+        return nil
+    end
+
+    local chosenRef = pickGroupRef(faction.groupRefs)
+    local entity = zone:insertDynamicEntity({
+        objtype = xi.objType.MOB,
+        name = faction.packetName:gsub(' ', '_'),
+        packetName = faction.packetName,
+        x = pos.x,
+        y = pos.y,
+        z = pos.z,
+        rotation = pos.rot,
+        groupId = chosenRef.groupId,
+        groupZoneId = chosenRef.groupZoneId,
+        minLevel = minLevel,
+        maxLevel = maxLevel,
+        releaseIdOnDisappear = true,
+        specialSpawnAnimation = true,
+        onMobSpawn = function(mob)
+            mob:renameEntity(faction.packetName)
+            mob:setMobMod(xi.mobMod.NO_DROPS, 1)
+            mob:setMobMod(xi.mobMod.EXP_BONUS, -100)
+            mob:setMobMod(xi.mobMod.GIL_BONUS, -100)
+            mob:setMobMod(xi.mobMod.CLAIM_TYPE, xi.claimType.NON_EXCLUSIVE)
+            mob:setMobMod(xi.mobMod.NO_LINK, 1)
+            mob:setMobMod(xi.mobMod.NO_AGGRO, 1)
+            mob:setMobMod(xi.mobMod.ROAM_DISTANCE, 5)
+            mob:setMobMod(xi.mobMod.ROAM_COOL, 8)
+            mob:addMod(xi.mod.ATT, 10)
+            mob:addMod(xi.mod.DEF, 10)
+            mob:addMod(xi.mod.ACC, 10)
+        end,
+    })
+
+    if not entity then
+        return nil
+    end
+
+    entity:setSpawn(pos.x, pos.y, pos.z, pos.rot)
+    entity:spawn()
+    trackSkirmishEntity(zone:getID(), entity, faction.packetName, factionKey, minLevel, maxLevel)
+
+    return entity
+end
+
+local function startSkirmish(packA, packB)
+    if #packA == 0 or #packB == 0 then
+        return
+    end
+
+    for i, mob in ipairs(packA) do
+        if mob and mob:isAlive() then
+            local target = packB[((i - 1) % #packB) + 1]
+            if target and target:isAlive() then
+                mob:addEnmity(target, 30, 30)
+                mob:updateEnmity(target)
+                mob:engage(target:getTargID())
+            end
+        end
+    end
+
+    for i, mob in ipairs(packB) do
+        if mob and mob:isAlive() then
+            local target = packA[((i - 1) % #packA) + 1]
+            if target and target:isAlive() then
+                mob:addEnmity(target, 30, 30)
+                mob:updateEnmity(target)
+                mob:engage(target:getTargID())
+            end
+        end
+    end
+end
+
 local function showHelp(player)
-    player:printToPlayer('[DynWorld] Commands: status, spawn [tier] [count], clear, start, stop, info, synergies, chain, rares, rare [key]', xi.msg.channel.SYSTEM_3)
+    player:printToPlayer('[DynWorld] Commands: status, spawn [tier] [count], clear, start, stop, info, synergies, chain, rares, rare [key], skirmish [left] [right] [count]', xi.msg.channel.SYSTEM_3)
     player:printToPlayer('[DynWorld] Tiers: 1=Wanderer, 2=Nomad, 3=Elite, 4=Apex, 5=Power King', xi.msg.channel.SYSTEM_3)
 end
 
@@ -172,6 +341,101 @@ local function cmdChain(player)
 
     player:printToPlayer(string.format('[DynWorld] Chain: x%d | Bonus: +%d%% EXP | Time left: %ds',
         chain.count, math.floor(bonus * 100), math.max(0, remaining)), xi.msg.channel.SYSTEM_3)
+end
+
+local function cmdSkirmish(player, leftKey, rightKey, count)
+    local zone = player:getZone()
+    if not zone then
+        printErr(player, '[DynWorld] Error: Could not get zone.')
+        return
+    end
+
+    if not xi.dynamicWorld.state.initialized then
+        xi.dynamicWorld.init()
+    end
+
+    local zoneId = zone:getID()
+    if not xi.dynamicWorld.state.eligibleZones[zoneId] then
+        printErr(player, string.format('[DynWorld] Zone %d is not enabled for dynamic-world skirmishes.', zoneId))
+        return
+    end
+
+    leftKey = string.lower(leftKey or 'goblin')
+    rightKey = string.lower(rightKey or 'orc')
+    count = math.max(1, math.min(6, tonumber(count) or 3))
+
+    if not skirmishFactions[leftKey] then
+        printErr(player, string.format('[DynWorld] Unknown skirmish faction: %s', tostring(leftKey)))
+        return
+    end
+
+    if not skirmishFactions[rightKey] then
+        printErr(player, string.format('[DynWorld] Unknown skirmish faction: %s', tostring(rightKey)))
+        return
+    end
+
+    if leftKey == rightKey then
+        printErr(player, '[DynWorld] Skirmish factions must be different.')
+        return
+    end
+
+    local minLevel, maxLevel = xi.dynamicWorld.getDynamicLevelRange(
+        zoneId,
+        xi.dynamicWorld.tier.ELITE,
+        nil,
+        99,
+        { keepInsideZone = true }
+    )
+
+    local px = player:getXPos()
+    local py = player:getYPos()
+    local pz = player:getZPos()
+    local baseAngle = math.random() * math.pi * 2
+    local leftOffsets = buildSkirmishOffsets(count, baseAngle, 10)
+    local rightOffsets = buildSkirmishOffsets(count, baseAngle + math.pi, 10)
+    local leftPack = {}
+    local rightPack = {}
+
+    for i = 1, count do
+        local leftPos =
+        {
+            x = px + leftOffsets[i].x,
+            y = py,
+            z = pz + leftOffsets[i].z,
+            rot = math.random(0, 255),
+        }
+        local rightPos =
+        {
+            x = px + rightOffsets[i].x,
+            y = py,
+            z = pz + rightOffsets[i].z,
+            rot = math.random(0, 255),
+        }
+
+        local leftMob = spawnSkirmishMob(zone, leftKey, leftPos, minLevel, maxLevel)
+        local rightMob = spawnSkirmishMob(zone, rightKey, rightPos, minLevel, maxLevel)
+        if leftMob then
+            leftPack[#leftPack + 1] = leftMob
+        end
+        if rightMob then
+            rightPack[#rightPack + 1] = rightMob
+        end
+    end
+
+    if #leftPack == 0 or #rightPack == 0 then
+        printErr(player, '[DynWorld] Failed to spawn one or both skirmish packs.')
+        return
+    end
+
+    leftPack[1]:timer(1000, function()
+        startSkirmish(leftPack, rightPack)
+    end)
+
+    player:printToPlayer(
+        string.format('[DynWorld] Skirmish started: %s vs %s (%d per side) at Lv%d-%d.',
+            leftKey, rightKey, math.min(#leftPack, #rightPack), minLevel, maxLevel),
+        xi.msg.channel.SYSTEM_3
+    )
 end
 
 local function cmdTest(player)
@@ -344,6 +608,8 @@ commandObj.onTrigger = function(player, args)
         end
         local ok, msg = xi.dynamicWorld.namedRares.forceSpawn(key, player)
         player:printToPlayer('[DynWorld] ' .. msg, xi.msg.channel.SYSTEM_3)
+    elseif subcommand == 'skirmish' then
+        cmdSkirmish(player, parts[2], parts[3], parts[4])
     else
         showHelp(player)
     end
