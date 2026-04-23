@@ -1,12 +1,13 @@
 xi = xi or {}
 xi.solo_modifications = xi.solo_modifications or {}
 -- Define power values for each level range
+-- Balanced for use with xi.soloSynergy (Momentum/Surge system)
 local levelPowerTable = {
-    { level = 65, protect = 150, shell = 2200, regen = 13, regain = 12, en = 120, refresh = 8, phalanx = 3, stat = 18, lvl75 = { regain = 15, en = 140, refresh = 10, phalanx = 4, stat = 22 } },
-    { level = 50, protect = 120, shell = 1500, regen = 9, regain = 9, en = 80, refresh = 7, phalanx = 3, stat = 14 },
-    { level = 35, protect = 90, shell = 900, regen = 7, regain = 6, en = 60, refresh = 5, phalanx = 2, stat = 10 },
-    { level = 20, protect = 60, shell = 500, regen = 4, regain = 4, en = 40, refresh = 3, phalanx = 2, stat = 6 },
-    { level = 0, protect = 20, shell = 25, regen = 2, regain = 0, en = 20, refresh = 2, phalanx = 1, stat = 3 }
+    { level = 65, protect = 150, shell = 2200, regen = 10, regain = 3, en = 100, refresh = 3, phalanx = 3, stat = 8, lvl75 = { regain = 5, en = 120, refresh = 4, phalanx = 4, stat = 10 } },
+    { level = 50, protect = 120, shell = 1500, regen = 8, regain = 2, en = 80, refresh = 3, phalanx = 3, stat = 7 },
+    { level = 35, protect = 90, shell = 900, regen = 6, regain = 2, en = 60, refresh = 2, phalanx = 2, stat = 5 },
+    { level = 20, protect = 60, shell = 500, regen = 4, regain = 1, en = 40, refresh = 2, phalanx = 2, stat = 3 },
+    { level = 0, protect = 20, shell = 25, regen = 2, regain = 0, en = 20, refresh = 1, phalanx = 1, stat = 2 }
 }
 
 local function addEffect(player, effect, power, tick, duration)
@@ -49,7 +50,7 @@ xi.solo_modifications.applySMN = function(player, refreshPower, statPower)
     addEffect(player, xi.effect.REFRESH, refreshPower)
     addPrimaryStats(player, statPower, { xi.effect.INT_BOOST, xi.effect.MND_BOOST })
     addPetEffect(player, xi.effect.REGEN, math.floor(statPower / 2), 3)
-    addPetEffect(player, xi.effect.HASTE, 50 + statPower * 5)
+    addPetEffect(player, xi.effect.HASTE, 50 + statPower * 2) -- Balanced Pet Haste
 end
 xi.solo_modifications.applyBRD = function(player, refreshPower, statPower)
     addEffect(player, xi.effect.REFRESH, math.max(1, math.floor(refreshPower / 2)))
@@ -58,11 +59,11 @@ end
 xi.solo_modifications.applyBST = function(player, statPower)
     addPrimaryStats(player, statPower, { xi.effect.CHR_BOOST, xi.effect.STR_BOOST })
     addPetEffect(player, xi.effect.REGEN, math.max(2, math.floor(statPower / 2)), 3)
-    addPetEffect(player, xi.effect.HASTE, 50 + statPower * 4)
+    addPetEffect(player, xi.effect.HASTE, 50 + statPower * 2)
 end
 xi.solo_modifications.applyNIN = function(player, statPower)
     addPrimaryStats(player, statPower, { xi.effect.DEX_BOOST, xi.effect.AGI_BOOST })
-    addEffect(player, xi.effect.HASTE, 25 + statPower * 3)
+    addEffect(player, xi.effect.HASTE, 15 + statPower * 1.5) -- Approx 30% Haste at cap
 end
 xi.solo_modifications.applySAM = function(player, statPower)
     addPrimaryStats(player, statPower, { xi.effect.STR_BOOST, xi.effect.DEX_BOOST })
@@ -82,7 +83,7 @@ xi.solo_modifications.applyWAR = function(player, phalanxPower, statPower)
         end
     end
     if isTwoHanded then
-        addEffect(player, xi.effect.HASTE, 25 + statPower * 3)
+        addEffect(player, xi.effect.HASTE, 15 + statPower * 1.5)
     end
     local subID = player:getEquipID(xi.slot.SUB)
     if subID > 0 then
@@ -113,21 +114,21 @@ xi.solo_modifications.applyDRK = function(player, enPower, statPower)
         end
     end
     if isTwoHanded then
-        addEffect(player, xi.effect.HASTE, 25 + statPower * 3)
+        addEffect(player, xi.effect.HASTE, 15 + statPower * 1.5)
     end
 end
 xi.solo_modifications.applyDRG = function(player, statPower)
     addPrimaryStats(player, statPower, { xi.effect.STR_BOOST, xi.effect.DEX_BOOST })
     addPetEffect(player, xi.effect.REGEN, math.max(2, math.floor(statPower / 2)), 3)
-    addPetEffect(player, xi.effect.HASTE, 50 + statPower * 4)
+    addPetEffect(player, xi.effect.HASTE, 50 + statPower * 2)
     local mainSkill = player:getWeaponSkillType(xi.slot.MAIN)
     if mainSkill == xi.skill.POLEARM then
-        addEffect(player, xi.effect.HASTE, 25 + statPower * 3)
+        addEffect(player, xi.effect.HASTE, 15 + statPower * 1.5)
     end
 end
 xi.solo_modifications.applyRNG = function(player, statPower)
     addPrimaryStats(player, statPower, { xi.effect.DEX_BOOST, xi.effect.AGI_BOOST })
-    player:addStatusEffect(xi.effect.DOUBLE_SHOT, 20 + statPower, 0, 0)
+    player:addStatusEffect(xi.effect.DOUBLE_SHOT, 10 + statPower, 0, 0)
 end
 -- Apply buffs for a player
 xi.solo_modifications.applyBuffs = function(player)

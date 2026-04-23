@@ -844,6 +844,26 @@ nr.db = {
         deathMsg = "Root Rita's scream was... actually quite melodic.",
     },
 
+    mallow_mira =
+    {
+        name        = 'Mallow Mira',
+        packetName  = 'MllwMira',
+        groupRef    = { groupId = 6, groupZoneId = 100 },
+        family      = 'mandragora',
+        zones       = { 115, 116 },
+        level       = { 8, 12 },
+        spawnTimer  = 3 * 3600,
+        spawnWindow = 1.5 * 3600,
+        spawnChance = 300,
+        isAggro     = false,
+        loot        =
+        {
+            { itemId = 10807, rate = 10479  },
+            { itemId = 15299, rate = 150  },
+        },
+        deathMsg = "Mallow Mira wilted at last, leaving behind a very suspiciously sturdy leaf shield.",
+    },
+
     sprout_spencer =
     {
         name        = 'Sprout Spencer',
