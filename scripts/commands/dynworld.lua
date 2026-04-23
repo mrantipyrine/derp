@@ -206,6 +206,60 @@ local function spawnSkirmishMob(zone, factionKey, pos, minLevel, maxLevel, alleg
     return entity
 end
 
+local function rescueGoblin(goblin, orc, rescuer)
+    if not goblin or not goblin:isAlive() or not orc or not orc:isAlive() then
+        return
+    end
+
+    if orc:getLocalVar('DW_SKIRMISH_RESCUED') == 1 or goblin:getLocalVar('DW_SKIRMISH_RESCUED') == 1 then
+        return
+    end
+
+    orc:setLocalVar('DW_SKIRMISH_RESCUED', 1)
+    goblin:setLocalVar('DW_SKIRMISH_RESCUED', 1)
+    goblin:setUntargetable(true)
+    goblin:setIsAggroable(false)
+    goblin:setAllegiance(xi.allegiance.PLAYER)
+    goblin:setMobMod(xi.mobMod.NO_AGGRO, 1)
+    goblin:setMobMod(xi.mobMod.NO_LINK, 1)
+    goblin:addMod(xi.mod.ATT, 20)
+    goblin:addMod(xi.mod.ACC, 15)
+
+    if goblin.addBaseEnmity then
+        goblin:addBaseEnmity(orc)
+    end
+    goblin:addEnmity(orc, 120, 120)
+    goblin:updateEnmity(orc)
+    orc:addEnmity(goblin, 120, 120)
+    orc:updateEnmity(goblin)
+
+    local zone = goblin:getZone()
+    if zone then
+        xi.dynamicWorld.announceNearby(
+            zone,
+            goblin,
+            80,
+            string.format('[Dynamic World] %s rallies to %s after your strike!',
+                goblin:getName(), rescuer and rescuer:getName() or 'your side')
+        )
+    end
+end
+
+local function attachRescueHook(orc, goblin)
+    if not orc or not goblin then
+        return
+    end
+
+    local listenerId = 'DW_SKIRMISH_RESCUE_' .. orc:getTargID()
+    orc:addListener('TAKE_DAMAGE', listenerId, function(target, amount, attacker)
+        if amount <= 0 or not attacker or not attacker.isPC or not attacker:isPC() then
+            return
+        end
+
+        rescueGoblin(goblin, target, attacker)
+    end)
+end
+
 local function startSkirmish(packA, packB)
     if #packA == 0 or #packB == 0 then
         return
@@ -496,6 +550,11 @@ local function cmdSkirmish(player, leftKey, rightKey, count)
         end
         if rightMob then
             rightPack[#rightPack + 1] = rightMob
+        end
+        if leftMob and rightMob and leftKey == 'goblin' then
+            attachRescueHook(rightMob, leftMob)
+        elseif leftMob and rightMob and rightKey == 'goblin' then
+            attachRescueHook(leftMob, rightMob)
         end
     end
 
