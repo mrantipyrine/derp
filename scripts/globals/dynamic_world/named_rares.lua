@@ -311,19 +311,13 @@ end
 -- even without the CHECK_AS_NM flag — but we set that flag too.
 -----------------------------------
 local function calcRareLevel(config, tier, zoneId)
-    local zoneRange = xi.dynamicWorld.getZoneLevelRange(zoneId)
-    local zoneMax   = zoneRange[2] or 10
-
-    local minLv, maxLv
-    if tier == RARE_TIER_APEX then
-        -- Apex: zone max + 25–35 (very scary)
-        minLv = math.min(99, zoneMax + 25)
-        maxLv = math.min(99, zoneMax + 35)
-    else
-        -- Elite: zone max + 12–20 (definitely IT)
-        minLv = math.min(99, zoneMax + 12)
-        maxLv = math.min(99, zoneMax + 20)
-    end
+    local minLv, maxLv = xi.dynamicWorld.getDynamicLevelRange(
+        zoneId,
+        tier,
+        nil,
+        99,
+        { namedRare = true }
+    )
 
     -- Never go below the config's own floor (some rares are intentionally high).
     -- Hand-authored rares use { min, max }; generated rares may use a single level.

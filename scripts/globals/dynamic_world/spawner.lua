@@ -203,9 +203,13 @@ spawner.spawnBlessingEntity = function(zone, zd, state)
         return nil
     end
 
-    local levelRange = xi.dynamicWorld.getZoneLevelRange(zoneId)
-    local minLevel = math.max(1, levelRange[1] + (template.levelOffset[1] or 0))
-    local maxLevel = math.max(minLevel, math.min(levelRange[2] + (template.levelOffset[2] or 0), template.levelCap or 75))
+    local minLevel, maxLevel = xi.dynamicWorld.getDynamicLevelRange(
+        zoneId,
+        xi.dynamicWorld.tier.WANDERER,
+        template.levelOffset,
+        template.levelCap or 75,
+        { keepInsideZone = true }
+    )
     local chosenRef = pickGroupRef(template)
 
     local entityTable =
@@ -405,12 +409,12 @@ spawner.spawnEntity = function(zone, zd, state, tier)
 
     -- Calculate level based on zone level range + template offset
     local levelRange = xi.dynamicWorld.getZoneLevelRange(zoneId)
-    local minLevel = math.max(1, levelRange[1] + (template.levelOffset[1] or 0))
-    local maxLevel = math.max(minLevel, levelRange[2] + (template.levelOffset[2] or 0))
-
-    local levelCap = template.levelCap or 99
-    minLevel = math.min(minLevel, levelCap)
-    maxLevel = math.min(maxLevel, levelCap)
+    local minLevel, maxLevel = xi.dynamicWorld.getDynamicLevelRange(
+        zoneId,
+        tier,
+        template.levelOffset,
+        template.levelCap or 99
+    )
 
     -- Pick a random visual variant for this spawn
     local chosenRef = pickGroupRef(template)

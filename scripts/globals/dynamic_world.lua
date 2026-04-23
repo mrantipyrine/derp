@@ -758,6 +758,71 @@ xi.dynamicWorld.getZoneLevelRange = function(zoneId)
     return { 20, 40 }
 end
 
+local function clamp(value, minValue, maxValue)
+    if value < minValue then
+        return minValue
+    end
+    if value > maxValue then
+        return maxValue
+    end
+    return value
+end
+
+local function getTierBand(zoneMin, zoneMax, tier, options)
+    local span = math.max(0, zoneMax - zoneMin)
+    options = options or {}
+
+    if options.namedRare then
+        if tier == xi.dynamicWorld.tier.APEX then
+            return zoneMax, zoneMax + math.min(8, math.max(4, math.floor(span * 0.20)))
+        end
+
+        return zoneMin + math.floor(span * 0.70), zoneMax + math.min(4, math.max(2, math.floor(span * 0.10)))
+    end
+
+    if tier == xi.dynamicWorld.tier.WANDERER then
+        return zoneMin, zoneMin + math.max(2, math.floor(span * 0.45))
+    elseif tier == xi.dynamicWorld.tier.NOMAD then
+        return zoneMin + math.floor(span * 0.20), zoneMin + math.max(4, math.floor(span * 0.65))
+    elseif tier == xi.dynamicWorld.tier.ELITE then
+        return zoneMin + math.floor(span * 0.55), zoneMax
+    elseif tier == xi.dynamicWorld.tier.APEX then
+        return zoneMin + math.floor(span * 0.80), zoneMax + math.min(5, math.max(2, math.floor(span * 0.15)))
+    elseif tier == xi.dynamicWorld.tier.POWER_KING then
+        return zoneMax + 8, zoneMax + math.min(22, math.max(12, math.floor(span * 0.45)))
+    end
+
+    return zoneMin, zoneMax
+end
+
+xi.dynamicWorld.getDynamicLevelRange = function(zoneId, tier, levelOffset, levelCap, options)
+    local zoneRange = xi.dynamicWorld.getZoneLevelRange(zoneId)
+    local zoneMin = zoneRange[1] or 1
+    local zoneMax = zoneRange[2] or zoneMin
+    local bandMin, bandMax = getTierBand(zoneMin, zoneMax, tier, options)
+    local cap = levelCap or 99
+    local offsetMin = 0
+    local offsetMax = 0
+
+    if type(levelOffset) == 'table' then
+        offsetMin = levelOffset[1] or 0
+        offsetMax = levelOffset[2] or offsetMin
+    elseif type(levelOffset) == 'number' then
+        offsetMin = levelOffset
+        offsetMax = levelOffset
+    end
+
+    local minLevel = clamp(bandMin + offsetMin, 1, cap)
+    local maxLevel = clamp(bandMax + offsetMax, minLevel, cap)
+
+    if options and options.keepInsideZone then
+        minLevel = clamp(minLevel, 1, math.min(zoneMax, cap))
+        maxLevel = clamp(maxLevel, minLevel, math.min(zoneMax, cap))
+    end
+
+    return minLevel, maxLevel
+end
+
 -- Get all zones in same region as given zone
 xi.dynamicWorld.getRegionZones = function(zoneId)
     local state = xi.dynamicWorld.state
