@@ -32,7 +32,7 @@ local db = xi.dynamicWorld.templates.db
 db.empowered_crawler =
 {
     name        = 'Empowered Crawler',
-    packetName  = 'Empowered Crawler',
+    packetName  = 'Crawler Prime',
     -- Crawler: zone 115 (W.Sarutabaruta lv3-8), zone 116 (E.Saruta lv3-6)
     groupRefs = {
         { groupId = 10, groupZoneId = 115 },
@@ -183,7 +183,7 @@ db.treasure_goblin =
 db.roaming_merchant =
 {
     name        = 'Pilgrim Merchant',
-    packetName  = 'Pilgrim Merchant',
+    packetName  = 'Pilgrim Trader',
     -- Goobbue zone 109 (Pashhow lv22-25)
     groupRefs = {
         { groupId = 15, groupZoneId = 109 },
@@ -202,7 +202,7 @@ db.roaming_merchant =
 db.rampaging_goobbue =
 {
     name        = 'Rampaging Goobbue',
-    packetName  = 'Rampagng Goobbue',
+    packetName  = 'Raging Goobbue',
     -- Goobbue: zone 109 (lv22-25), zone 90 (lv71-73)
     groupRefs = {
         { groupId = 15, groupZoneId = 109 },
@@ -401,7 +401,7 @@ db.void_emperor =
 db.hellforged_overlord =
 {
     name        = 'Hellforged Overlord',
-    packetName  = 'Hellforged Overlord',
+    packetName  = 'Hellforged Lord',
     -- Demon/elemental bodies read well in deep dungeon spaces.
     groupRefs = {
         { groupId = 9,  groupZoneId = 112 },
@@ -423,7 +423,7 @@ db.hellforged_overlord =
 db.primeval_monarch =
 {
     name        = 'Primeval Monarch',
-    packetName  = 'Primeval Monarch',
+    packetName  = 'Primal Monarch',
     -- Adamantoise-style monarchs for king fights that feel heavy.
     groupRefs = {
         { groupId = 6,   groupZoneId = 128 },
@@ -570,7 +570,7 @@ db.sir_dude =
 db.mandragora_mirth =
 {
     name          = 'Mandragora Mirth',
-    packetName    = 'Mndrgra Mirth',
+    packetName    = 'Mandra Mirth',
     groupRefs     = {
         { groupId = 13, groupZoneId = 4  },
         { groupId = 38, groupZoneId = 38 },
@@ -592,7 +592,7 @@ db.mandragora_mirth =
 db.carapace_sentinel =
 {
     name          = 'Carapace Sentinel',
-    packetName    = 'Crapce Sntnel',
+    packetName    = 'Carapace Ward',
     groupRefs     = {
         { groupId = 1, groupZoneId = 1  },
         { groupId = 2, groupZoneId = 2  },
@@ -636,7 +636,7 @@ db.hare_herald =
 db.stinging_evangel =
 {
     name          = 'Stinging Evangel',
-    packetName    = 'Stng Evangel',
+    packetName    = 'Sting Herald',
     groupRefs     = {
         { groupId = 10, groupZoneId = 2  },
         { groupId = 30, groupZoneId = 2  },
@@ -658,7 +658,7 @@ db.stinging_evangel =
 db.breezewing_herald =
 {
     name          = 'Breezewing Herald',
-    packetName    = 'Brzwng Herald',
+    packetName    = 'Breeze Herald',
     groupRefs     = {
         { groupId = 14, groupZoneId = 4  },
         { groupId = 21, groupZoneId = 4  },

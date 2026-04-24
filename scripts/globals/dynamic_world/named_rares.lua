@@ -1187,7 +1187,7 @@ nr.db = {
     earthcrawler_ernest =
     {
         name        = 'Earthcrawler Ern',
-        packetName  = 'Earthcrawler Ern',
+        packetName  = 'Crawler Ern',
         groupRef    = { groupId = 6, groupZoneId = 100 },
         zones       = { 113, 122, 51 },
         level       = { 40, 48 },
@@ -1228,7 +1228,7 @@ nr.db = {
     coldblooded_carlos =
     {
         name        = 'Coldblooded Carl',
-        packetName  = 'Coldblooded Carl',
+        packetName  = 'Coldblood Carl',
         groupRef    = { groupId = 6, groupZoneId = 100 },
         zones       = { 113, 112, 103 },
         level       = { 30, 36 },
@@ -2143,7 +2143,7 @@ nr.db = {
     },
     ["great_weaver_gwendolyn"] = {
         name = "Great Weaver Gwendolyn",
-        packetName = "GrtwvGwnd",
+        packetName = "Weaver Gwen",
         groupRef = "great_weaver_gwendolyn",
         zones = { {xi.zone.TEMPLE_OF_UGGALEPIH}, {xi.zone.DEN_OF_RANCOR} },
         level = 50,
@@ -2159,7 +2159,7 @@ nr.db = {
     },
     ["oozing_oswald"] = {
         name = "Oozing Oswald",
-        packetName = "OzngOswld",
+        packetName = "Oozing Oswald",
         groupRef = "oozing_oswald",
         zones = { {xi.zone.INNER_HORUTOTO_RUINS}, {xi.zone.OUTER_HORUTOTO_RUINS} },
         level = 8,
@@ -2175,7 +2175,7 @@ nr.db = {
     },
     ["bubbling_borghild"] = {
         name = "Bubbling Borghild",
-        packetName = "BblBrghld",
+        packetName = "Bubble Borgh",
         groupRef = "bubbling_borghild",
         zones = { {xi.zone.GUSGEN_MINES}, {xi.zone.PALBOROUGH_MINES} },
         level = 20,
@@ -2191,7 +2191,7 @@ nr.db = {
     },
     ["corrosive_callista"] = {
         name = "Corrosive Callista",
-        packetName = "CrsvCllst",
+        packetName = "Corrode Callie",
         groupRef = "corrosive_callista",
         zones = { {xi.zone.CRAWLER_S_NEST}, {xi.zone.GARLAIGE_CITADEL} },
         level = 34,
@@ -2207,7 +2207,7 @@ nr.db = {
     },
     ["primordial_proteus"] = {
         name = "Primordial Proteus",
-        packetName = "PrmrdlPrt",
+        packetName = "Prime Proteus",
         groupRef = "primordial_proteus",
         zones = { {xi.zone.TEMPLE_OF_UGGALEPIH}, {xi.zone.DEN_OF_RANCOR} },
         level = 48,
@@ -2223,7 +2223,7 @@ nr.db = {
     },
     ["splashing_salvatore"] = {
         name = "Splashing Salvatore",
-        packetName = "SplshSlvt",
+        packetName = "Splash Sal",
         groupRef = "splashing_salvatore",
         zones = { {xi.zone.VALKURM_DUNES}, {xi.zone.BUBURIMU_PENINSULA} },
         level = 12,
@@ -2239,7 +2239,7 @@ nr.db = {
     },
     ["snapping_sicily"] = {
         name = "Snapping Sicily",
-        packetName = "SnpSclly",
+        packetName = "Snap Sicily",
         groupRef = "snapping_sicily",
         zones = { {xi.zone.QUFIM_ISLAND}, {xi.zone.BATTALIA_DOWNS} },
         level = 24,
@@ -2255,7 +2255,7 @@ nr.db = {
     },
     ["torrent_tiberius"] = {
         name = "Torrent Tiberius",
-        packetName = "TrntTbrs",
+        packetName = "Torrent Tibe",
         groupRef = "torrent_tiberius",
         zones = { {xi.zone.CAPE_TERIGGAN}, {xi.zone.WESTERN_ALTEPA_DESERT} },
         level = 36,
@@ -2271,7 +2271,7 @@ nr.db = {
     },
     ["deep_king_delacroix"] = {
         name = "Deep King Delacroix",
-        packetName = "DpKngDlcx",
+        packetName = "Deep Delacroix",
         groupRef = "deep_king_delacroix",
         zones = { {xi.zone.SEA_SERPENT_GROTTO}, {xi.zone.QUFIM_ISLAND} },
         level = 48,
@@ -2287,7 +2287,7 @@ nr.db = {
     },
     ["lumbering_loretta"] = {
         name = "Lumbering Loretta",
-        packetName = "LmbrLrtta",
+        packetName = "Lumber Loretta",
         groupRef = "lumbering_loretta",
         zones = { {xi.zone.TAHRONGI_CANYON}, {xi.zone.BUBURIMU_PENINSULA} },
         level = 14,
@@ -2303,7 +2303,7 @@ nr.db = {
     },
     ["thundering_thaddeus"] = {
         name = "Thundering Thaddeus",
-        packetName = "ThndrThds",
+        packetName = "Thunder Thad",
         groupRef = "thundering_thaddeus",
         zones = { {xi.zone.ROLANBERRY_FIELDS}, {xi.zone.SAUROMUGUE_CHAMPAIGN} },
         level = 28,
@@ -2319,7 +2319,7 @@ nr.db = {
     },
     ["crasher_crisanta"] = {
         name = "Crasher Crisanta",
-        packetName = "CrshrCrsnt",
+        packetName = "Crusher Cris",
         groupRef = "crasher_crisanta",
         zones = { {xi.zone.CAPE_TERIGGAN}, {xi.zone.EASTERN_ALTEPA_DESERT} },
         level = 40,
@@ -2335,7 +2335,7 @@ nr.db = {
     },
     ["patriarch_percival"] = {
         name = "Patriarch Percival",
-        packetName = "PtrkPrcvl",
+        packetName = "Patriarch Perc",
         groupRef = "patriarch_percival",
         zones = { {xi.zone.BEHEMOTH_S_DOMINION}, {xi.zone.CAPE_TERIGGAN} },
         level = 54,
@@ -2351,7 +2351,7 @@ nr.db = {
     },
     ["clumsy_clemens"] = {
         name = "Clumsy Clemens",
-        packetName = "ClmsyClmns",
+        packetName = "Clumsy Clemens",
         groupRef = "clumsy_clemens",
         zones = { {xi.zone.KONSCHTAT_HIGHLANDS}, {xi.zone.LA_THEINE_PLATEAU} },
         level = 18,
@@ -2480,7 +2480,7 @@ nr.db = {
     },
     ["mischief_marcelino"] = {
         name = "Mischief Marcelino",
-        packetName = "MschfMrcln",
+        packetName = "Mischief Marcel",
         groupRef = "mischief_marcelino",
         zones = { {xi.zone.RANGUEMONT_PASS}, {xi.zone.BEAUCEDINE_GLACIER} },
         level = 20,
@@ -2496,7 +2496,7 @@ nr.db = {
     },
     ["trickster_temperance"] = {
         name = "Trickster Temperance",
-        packetName = "TrkstrTmpr",
+        packetName = "Trickster Temp",
         groupRef = "trickster_temperance",
         zones = { {xi.zone.BEAUCEDINE_GLACIER}, {xi.zone.XARCABARD} },
         level = 32,
@@ -2512,7 +2512,7 @@ nr.db = {
     },
     ["hexing_hieronymus"] = {
         name = "Hexing Hieronymus",
-        packetName = "HxngHrnms",
+        packetName = "Hexing Hiero",
         groupRef = "hexing_hieronymus",
         zones = { {xi.zone.XARCABARD}, {xi.zone.CASTLE_ZVAHL_KEEP} },
         level = 44,
@@ -2528,7 +2528,7 @@ nr.db = {
     },
     ["grand_trickster_gregoire"] = {
         name = "Grand Trickster Gregoire",
-        packetName = "GrndTrkGrg",
+        packetName = "Trickster Greg",
         groupRef = "grand_trickster_gregoire",
         zones = { {xi.zone.CASTLE_ZVAHL_KEEP}, {xi.zone.CASTLE_ZVAHL_BAILEYS} },
         level = 54,
@@ -2545,7 +2545,7 @@ nr.db = {
     },
     ["tiny_tortuga"] = {
         name = "Tiny Tortuga",
-        packetName = "TnyTrtga",
+        packetName = "Tiny Tortuga",
         groupRef = "tiny_tortuga",
         zones = { {xi.zone.TEMPLE_OF_UGGALEPIH} },
         level = 30,
@@ -2561,7 +2561,7 @@ nr.db = {
     },
     ["shuffling_sebastiano"] = {
         name = "Shuffling Sebastiano",
-        packetName = "ShflSbstn",
+        packetName = "Shuffle Sebas",
         groupRef = "shuffling_sebastiano",
         zones = { {xi.zone.TEMPLE_OF_UGGALEPIH} },
         level = 40,
@@ -2577,7 +2577,7 @@ nr.db = {
     },
     ["grudge_bearer_giuliana"] = {
         name = "Grudge Bearer Giuliana",
-        packetName = "GrdgBGlna",
+        packetName = "Grudge Giuliana",
         groupRef = "grudge_bearer_giuliana",
         zones = { {xi.zone.TEMPLE_OF_UGGALEPIH}, {xi.zone.DEN_OF_RANCOR} },
         level = 50,
@@ -2593,7 +2593,7 @@ nr.db = {
     },
     ["the_last_tonberry"] = {
         name = "The Last Tonberry",
-        packetName = "LstTnbry",
+        packetName = "Last Tonberry",
         groupRef = "the_last_tonberry",
         zones = { {xi.zone.TEMPLE_OF_UGGALEPIH} },
         level = 60,
@@ -2610,7 +2610,7 @@ nr.db = {
     },
     ["rippling_rocco"] = {
         name = "Rippling Rocco",
-        packetName = "RpplRcco",
+        packetName = "Rippling Rocco",
         groupRef = "rippling_rocco",
         zones = { {xi.zone.QUFIM_ISLAND}, {xi.zone.VALKURM_DUNES} },
         level = 16,
@@ -2626,7 +2626,7 @@ nr.db = {
     },
     ["tidecaller_thessaly"] = {
         name = "Tidecaller Thessaly",
-        packetName = "TdclThsly",
+        packetName = "Tide Thessaly",
         groupRef = "tidecaller_thessaly",
         zones = { {xi.zone.SEA_SERPENT_GROTTO}, {xi.zone.QUFIM_ISLAND} },
         level = 30,
@@ -2642,7 +2642,7 @@ nr.db = {
     },
     ["brine_baron_baldassare"] = {
         name = "Brine Baron Baldassare",
-        packetName = "BrnBrnBlds",
+        packetName = "Baron Balda",
         groupRef = "brine_baron_baldassare",
         zones = { {xi.zone.SEA_SERPENT_GROTTO} },
         level = 42,
@@ -2658,7 +2658,7 @@ nr.db = {
     },
     ["deep_sovereign_desideria"] = {
         name = "Deep Sovereign Desideria",
-        packetName = "DpSvDesdr",
+        packetName = "Deep Desideria",
         groupRef = "deep_sovereign_desideria",
         zones = { {xi.zone.SEA_SERPENT_GROTTO}, {xi.zone.TEMPLE_OF_UGGALEPIH} },
         level = 54,
@@ -2675,7 +2675,7 @@ nr.db = {
     },
     ["prancing_persephone"] = {
         name = "Prancing Persephone",
-        packetName = "PrncPrsph",
+        packetName = "Prance Perse",
         groupRef = "prancing_persephone",
         zones = { {xi.zone.SAUROMUGUE_CHAMPAIGN}, {xi.zone.BATALLIA_DOWNS} },
         level = 24,
@@ -2691,7 +2691,7 @@ nr.db = {
     },
     ["thunderwing_theron"] = {
         name = "Thunderwing Theron",
-        packetName = "ThndwngThrn",
+        packetName = "Wing Theron",
         groupRef = "thunderwing_theron",
         zones = { {xi.zone.ROLANBERRY_FIELDS}, {xi.zone.SAUROMUGUE_CHAMPAIGN} },
         level = 36,
@@ -2707,7 +2707,7 @@ nr.db = {
     },
     ["skydancer_sabastienne"] = {
         name = "Skydancer Sabastienne",
-        packetName = "SkyDncSbst",
+        packetName = "Skydance Saba",
         groupRef = "skydancer_sabastienne",
         zones = { {xi.zone.CAPE_TERIGGAN}, {xi.zone.ROLANBERRY_FIELDS} },
         level = 46,
@@ -2723,7 +2723,7 @@ nr.db = {
     },
     ["heavenrider_hieronyma"] = {
         name = "Heavenrider Hieronyma",
-        packetName = "HvnRdrHrnym",
+        packetName = "Sky Hieronyma",
         groupRef = "heavenrider_hieronyma",
         zones = { {xi.zone.BEHEMOTH_S_DOMINION}, {xi.zone.CAPE_TERIGGAN} },
         level = 56,
@@ -2740,7 +2740,7 @@ nr.db = {
     },
     ["fledgling_fiorentina"] = {
         name = "Fledgling Fiorentina",
-        packetName = "FldgFrntn",
+        packetName = "Fledge Fiora",
         groupRef = "fledgling_fiorentina",
         zones = { {xi.zone.TAHRONGI_CANYON}, {xi.zone.BUBURIMU_PENINSULA} },
         level = 18,
@@ -2756,7 +2756,7 @@ nr.db = {
     },
     ["stormrider_sigismund"] = {
         name = "Stormrider Sigismund",
-        packetName = "StrmrdrSgsm",
+        packetName = "Storm Sigism",
         groupRef = "stormrider_sigismund",
         zones = { {xi.zone.SAUROMUGUE_CHAMPAIGN}, {xi.zone.ROLANBERRY_FIELDS} },
         level = 32,
@@ -2773,7 +2773,7 @@ nr.db = {
     },
     ["tempest_lord_tancred"] = {
         name = "Tempest Lord Tancred",
-        packetName = "TmpstLrdTnc",
+        packetName = "Lord Tancred",
         groupRef = "tempest_lord_tancred",
         zones = { {xi.zone.CAPE_TERIGGAN}, {xi.zone.BEHEMOTH_S_DOMINION} },
         level = 46,
@@ -2789,7 +2789,7 @@ nr.db = {
     },
     ["ancient_roc_andromeda"] = {
         name = "Ancient Roc Andromeda",
-        packetName = "AncRocAndr",
+        packetName = "Roc Andromeda",
         groupRef = "ancient_roc_andromeda",
         zones = { {xi.zone.BEHEMOTH_S_DOMINION} },
         level = 58,
@@ -2806,7 +2806,7 @@ nr.db = {
     },
     ["stumbling_sebastiano"] = {
         name = "Stumbling Sebastiano",
-        packetName = "StmbSbstn2",
+        packetName = "Stumble Sebas",
         groupRef = "stumbling_sebastiano",
         zones = { {xi.zone.WESTERN_ALTEPA_DESERT}, {xi.zone.EASTERN_ALTEPA_DESERT} },
         level = 22,
@@ -2822,7 +2822,7 @@ nr.db = {
     },
     ["pirouetting_pradinelda"] = {
         name = "Pirouetting Pradinelda",
-        packetName = "PrtPrdnld",
+        packetName = "Dancer Pradi",
         groupRef = "pirouetting_pradinelda",
         zones = { {xi.zone.EASTERN_ALTEPA_DESERT} },
         level = 34,
@@ -2838,7 +2838,7 @@ nr.db = {
     },
     ["spiky_serafina"] = {
         name = "Spiky Serafina",
-        packetName = "SpkySerf",
+        packetName = "Spiky Serafin",
         groupRef = "spiky_serafina",
         zones = { {xi.zone.WESTERN_ALTEPA_DESERT}, {xi.zone.CAPE_TERIGGAN} },
         level = 46,
@@ -2854,7 +2854,7 @@ nr.db = {
     },
     ["lord_of_the_desert_lazaro"] = {
         name = "Lord of the Desert Lazaro",
-        packetName = "LrdDsrtLzr",
+        packetName = "Desert Lazaro",
         groupRef = "lord_of_the_desert_lazaro",
         zones = { {xi.zone.WESTERN_ALTEPA_DESERT} },
         level = 58,
@@ -2870,7 +2870,7 @@ nr.db = {
     },
     ["lowing_lorcan"] = {
         name = "Lowing Lorcan",
-        packetName = "LwngLrcn",
+        packetName = "Lowing Lorcan",
         groupRef = "lowing_lorcan",
         zones = { {xi.zone.CAPE_TERIGGAN}, {xi.zone.EASTERN_ALTEPA_DESERT} },
         level = 20,
@@ -2886,7 +2886,7 @@ nr.db = {
     },
     ["thunderhoof_theokleia"] = {
         name = "Thunderhoof Theokleia",
-        packetName = "ThndrhfThkl",
+        packetName = "Thunder Theo",
         groupRef = "thunderhoof_theokleia",
         zones = { {xi.zone.CAPE_TERIGGAN}, {xi.zone.BEHEMOTH_S_DOMINION} },
         level = 34,
@@ -2902,7 +2902,7 @@ nr.db = {
     },
     ["gore_king_godfrey"] = {
         name = "Gore King Godfrey",
-        packetName = "GorKngGdfr",
+        packetName = "Gore Godfrey",
         groupRef = "gore_king_godfrey",
         zones = { {xi.zone.BEHEMOTH_S_DOMINION}, {xi.zone.CAPE_TERIGGAN} },
         level = 46,
@@ -2918,7 +2918,7 @@ nr.db = {
     },
     ["primal_patricia"] = {
         name = "Primal Patricia",
-        packetName = "PrmlPatrca",
+        packetName = "Primal Patric",
         groupRef = "primal_patricia",
         zones = { {xi.zone.BEHEMOTH_S_DOMINION} },
         level = 56,
@@ -2934,7 +2934,7 @@ nr.db = {
     },
     ["sand_trap_sigrid"] = {
         name = "Sand Trap Sigrid",
-        packetName = "SndTrpSgrd",
+        packetName = "Sandtrap Sig",
         groupRef = "sand_trap_sigrid",
         zones = { {xi.zone.EASTERN_ALTEPA_DESERT}, {xi.zone.WESTERN_ALTEPA_DESERT} },
         level = 18,
@@ -2950,7 +2950,7 @@ nr.db = {
     },
     ["burrowing_bellancourt"] = {
         name = "Burrowing Bellancourt",
-        packetName = "BrrwBllnc",
+        packetName = "Burrow Bella",
         groupRef = "burrowing_bellancourt",
         zones = { {xi.zone.WESTERN_ALTEPA_DESERT}, {xi.zone.CAPE_TERIGGAN} },
         level = 30,
@@ -2966,7 +2966,7 @@ nr.db = {
     },
     ["crusher_crescentia"] = {
         name = "Crusher Crescentia",
-        packetName = "CrshrCrscnt",
+        packetName = "Crusher Cres",
         groupRef = "crusher_crescentia",
         zones = { {xi.zone.CAPE_TERIGGAN}, {xi.zone.BEHEMOTH_S_DOMINION} },
         level = 42,
@@ -2982,7 +2982,7 @@ nr.db = {
     },
     ["antlion_emperor_adalbert"] = {
         name = "Antlion Emperor Adalbert",
-        packetName = "AnlnEmprAdlb",
+        packetName = "Antlion Adalb",
         groupRef = "antlion_emperor_adalbert",
         zones = { {xi.zone.BEHEMOTH_S_DOMINION}, {xi.zone.EASTERN_ALTEPA_DESERT} },
         level = 54,
@@ -2998,7 +2998,7 @@ nr.db = {
     },
     ["winged_wilhelmus"] = {
         name = "Winged Wilhelmus",
-        packetName = "WngdWhlms",
+        packetName = "Wing Wilhelmus",
         groupRef = "winged_wilhelmus",
         zones = { {xi.zone.RANGUEMONT_PASS}, {xi.zone.BEAUCEDINE_GLACIER} },
         level = 26,
@@ -3014,7 +3014,7 @@ nr.db = {
     },
     ["frost_drake_frederik"] = {
         name = "Frost Drake Frederik",
-        packetName = "FrstDrkFrdrk",
+        packetName = "Frost Fredrik",
         groupRef = "frost_drake_frederik",
         zones = { {xi.zone.BEAUCEDINE_GLACIER}, {xi.zone.XARCABARD} },
         level = 38,
@@ -3030,7 +3030,7 @@ nr.db = {
     },
     ["venomfang_valentinus"] = {
         name = "Venomfang Valentinus",
-        packetName = "VnmfngVlntn",
+        packetName = "Venom Valen",
         groupRef = "venomfang_valentinus",
         zones = { {xi.zone.XARCABARD}, {xi.zone.CASTLE_ZVAHL_KEEP} },
         level = 50,
@@ -3047,7 +3047,7 @@ nr.db = {
     },
     ["ancient_wyrm_agrippa"] = {
         name = "Ancient Wyrm Agrippa",
-        packetName = "AncWrmAgrp",
+        packetName = "Ancient Agrip",
         groupRef = "ancient_wyrm_agrippa",
         zones = { {xi.zone.CASTLE_ZVAHL_KEEP}, {xi.zone.CASTLE_ZVAHL_BAILEYS} },
         level = 60,
@@ -3064,7 +3064,7 @@ nr.db = {
     },
     ["wind_up_wilhelmina"] = {
         name = "Wind Up Wilhelmina",
-        packetName = "WndUpWhlm",
+        packetName = "Windup Wilma",
         groupRef = "wind_up_wilhelmina",
         zones = { {xi.zone.GARLAIGE_CITADEL}, {xi.zone.CRAWLER_S_NEST} },
         level = 20,
@@ -3080,7 +3080,7 @@ nr.db = {
     },
     ["clockwork_calogero"] = {
         name = "Clockwork Calogero",
-        packetName = "ClkwrkClgr",
+        packetName = "Clockwork Cal",
         groupRef = "clockwork_calogero",
         zones = { {xi.zone.CRAWLERS_NEST}, {xi.zone.GARLAIGE_CITADEL} },
         level = 32,
@@ -3097,7 +3097,7 @@ nr.db = {
     },
     ["arcane_armature_agatha"] = {
         name = "Arcane Armature Agatha",
-        packetName = "ArcArmAgt",
+        packetName = "Arcane Agatha",
         groupRef = "arcane_armature_agatha",
         zones = { {xi.zone.TEMPLE_OF_UGGALEPIH}, {xi.zone.DEN_OF_RANCOR} },
         level = 44,
@@ -3113,7 +3113,7 @@ nr.db = {
     },
     ["prime_puppet_ptolemais"] = {
         name = "Prime Puppet Ptolemais",
-        packetName = "PrmPptPtlm",
+        packetName = "Puppet Ptole",
         groupRef = "prime_puppet_ptolemais",
         zones = { {xi.zone.CASTLE_ZVAHL_KEEP} },
         level = 56,
@@ -3129,7 +3129,7 @@ nr.db = {
     },
     ["dancing_dervish"] = {
         name = "Dancing Dervish",
-        packetName = "DncngDrvsh",
+        packetName = "Dancing Derv",
         groupRef = "dancing_dervish",
         zones = { {xi.zone.GARLAIGE_CITADEL}, {xi.zone.CRAWLER_S_NEST} },
         level = 24,
@@ -3146,7 +3146,7 @@ nr.db = {
     },
     ["whirling_wenceslas"] = {
         name = "Whirling Wenceslas",
-        packetName = "WhrngWncsl",
+        packetName = "Whirl Wences",
         groupRef = "whirling_wenceslas",
         zones = { {xi.zone.GARLAIGE_CITADEL}, {xi.zone.CASTLE_ZVAHL_KEEP} },
         level = 36,
@@ -3162,7 +3162,7 @@ nr.db = {
     },
     ["cursed_blade_corneline"] = {
         name = "Cursed Blade Corneline",
-        packetName = "CrsdBldCrnl",
+        packetName = "Cursed Corne",
         groupRef = "cursed_blade_corneline",
         zones = { {xi.zone.CASTLE_ZVAHL_KEEP}, {xi.zone.ELDIEME_NECROPOLIS} },
         level = 48,
@@ -3178,7 +3178,7 @@ nr.db = {
     },
     ["eternal_executioner_emerick"] = {
         name = "Eternal Executioner Emerick",
-        packetName = "EtrnlExcEmrk",
+        packetName = "Exec Emerick",
         groupRef = "eternal_executioner_emerick",
         zones = { {xi.zone.CASTLE_ZVAHL_KEEP}, {xi.zone.CASTLE_ZVAHL_BAILEYS} },
         level = 58,
@@ -3195,7 +3195,7 @@ nr.db = {
     },
     ["wailing_wilhemina"] = {
         name = "Wailing Wilhemina",
-        packetName = "WlngWhlmna",
+        packetName = "Wailing Wilma",
         groupRef = "wailing_wilhemina",
         zones = { {xi.zone.GUSGEN_MINES}, {xi.zone.RANGUEMONT_PASS} },
         level = 16,
@@ -3211,7 +3211,7 @@ nr.db = {
     },
     ["shrieking_sigismonda"] = {
         name = "Shrieking Sigismonda",
-        packetName = "ShrknSgsmd",
+        packetName = "Shriek Sigis",
         groupRef = "shrieking_sigismonda",
         zones = { {xi.zone.ELDIEME_NECROPOLIS}, {xi.zone.GUSGEN_MINES} },
         level = 28,
@@ -3227,7 +3227,7 @@ nr.db = {
     },
     ["phantom_phantasia"] = {
         name = "Phantom Phantasia",
-        packetName = "PhntnPhnts",
+        packetName = "Phantom Phan",
         groupRef = "phantom_phantasia",
         zones = { {xi.zone.ELDIEME_NECROPOLIS}, {xi.zone.CASTLE_ZVAHL_KEEP} },
         level = 40,
@@ -3243,7 +3243,7 @@ nr.db = {
     },
     ["eternal_mourner_euphemia"] = {
         name = "Eternal Mourner Euphemia",
-        packetName = "EtrnlMrnEph",
+        packetName = "Mourner Euph",
         groupRef = "eternal_mourner_euphemia",
         zones = { {xi.zone.CASTLE_ZVAHL_KEEP}, {xi.zone.CASTLE_ZVAHL_BAILEYS} },
         level = 52,
@@ -3259,7 +3259,7 @@ nr.db = {
     },
     ["blinking_bartholomea"] = {
         name = "Blinking Bartholomea",
-        packetName = "BlnkBrthlm",
+        packetName = "Blink Bart",
         groupRef = "blinking_bartholomea",
         zones = { {xi.zone.GARLAIGE_CITADEL}, {xi.zone.CRAWLER_S_NEST} },
         level = 20,
@@ -3275,7 +3275,7 @@ nr.db = {
     },
     ["staring_stanislao"] = {
         name = "Staring Stanislao",
-        packetName = "StrnStnslo",
+        packetName = "Stare Stan",
         groupRef = "staring_stanislao",
         zones = { {xi.zone.GARLAIGE_CITADEL}, {xi.zone.TEMPLE_OF_UGGALEPIH} },
         level = 32,
@@ -3291,7 +3291,7 @@ nr.db = {
     },
     ["paralytic_paracelsina"] = {
         name = "Paralytic Paracelsina",
-        packetName = "PrlytPrcls",
+        packetName = "Paralyt Para",
         groupRef = "paralytic_paracelsina",
         zones = { {xi.zone.TEMPLE_OF_UGGALEPIH}, {xi.zone.DEN_OF_RANCOR} },
         level = 44,
@@ -3307,7 +3307,7 @@ nr.db = {
     },
     ["all_seeing_arbogast"] = {
         name = "All Seeing Arbogast",
-        packetName = "AllSeeArb",
+        packetName = "Seeing Arbo",
         groupRef = "all_seeing_arbogast",
         zones = { {xi.zone.TEMPLE_OF_UGGALEPIH} },
         level = 56,
@@ -3324,7 +3324,7 @@ nr.db = {
     },
     ["scavenging_svetlana"] = {
         name = "Scavenging Svetlana",
-        packetName = "ScvngSvtln",
+        packetName = "Scavenge Svet",
         groupRef = "scavenging_svetlana",
         zones = { {xi.zone.EASTERN_ALTEPA_DESERT}, {xi.zone.WESTERN_ALTEPA_DESERT} },
         level = 16,
@@ -3340,7 +3340,7 @@ nr.db = {
     },
     ["carrion_circling_casimira"] = {
         name = "Carrion Circling Casimira",
-        packetName = "CrrnCrcCsm",
+        packetName = "Carrion Casi",
         groupRef = "carrion_circling_casimira",
         zones = { {xi.zone.CAPE_TERIGGAN}, {xi.zone.EASTERN_ALTEPA_DESERT} },
         level = 28,
@@ -3356,7 +3356,7 @@ nr.db = {
     },
     ["bone_picker_bonaventura"] = {
         name = "Bone Picker Bonaventura",
-        packetName = "BnPckrBnvnt",
+        packetName = "Picker Bona",
         groupRef = "bone_picker_bonaventura",
         zones = { {xi.zone.BEHEMOTH_S_DOMINION}, {xi.zone.CAPE_TERIGGAN} },
         level = 40,
@@ -3372,7 +3372,7 @@ nr.db = {
     },
     ["sky_sovereign_seraphinus"] = {
         name = "Sky Sovereign Seraphinus",
-        packetName = "SkySovSrphn",
+        packetName = "Sky Seraphin",
         groupRef = "sky_sovereign_seraphinus",
         zones = { {xi.zone.BEHEMOTH_S_DOMINION} },
         level = 52,
@@ -3389,7 +3389,7 @@ nr.db = {
     },
     ["chittering_chichester"] = {
         name = "Chittering Chichester",
-        packetName = "ChtrChtcst",
+        packetName = "Chitter Chic",
         groupRef = "chittering_chichester",
         zones = { {xi.zone.YUHTUNGA_JUNGLE}, {xi.zone.YHOATOR_JUNGLE} },
         level = 18,
@@ -3405,7 +3405,7 @@ nr.db = {
     },
     ["thieving_theodolinda"] = {
         name = "Thieving Theodolinda",
-        packetName = "ThvngThdln",
+        packetName = "Thief Theodo",
         groupRef = "thieving_theodolinda",
         zones = { {xi.zone.YHOATOR_JUNGLE}, {xi.zone.TEMPLE_OF_UGGALEPIH} },
         level = 30,
@@ -3421,7 +3421,7 @@ nr.db = {
     },
     ["banana_baron_balthazar"] = {
         name = "Banana Baron Balthazar",
-        packetName = "BnnBrnBlth",
+        packetName = "Baron Baltha",
         groupRef = "banana_baron_balthazar",
         zones = { {xi.zone.TEMPLE_OF_UGGALEPIH}, {xi.zone.YHOATOR_JUNGLE} },
         level = 42,
@@ -3437,7 +3437,7 @@ nr.db = {
     },
     ["primate_prince_pelagius"] = {
         name = "Primate Prince Pelagius",
-        packetName = "PrmatPrcPlg",
+        packetName = "Prince Pelag",
         groupRef = "primate_prince_pelagius",
         zones = { {xi.zone.TEMPLE_OF_UGGALEPIH}, {xi.zone.DEN_OF_RANCOR} },
         level = 54,
@@ -3453,7 +3453,7 @@ nr.db = {
     },
     ["gnashing_guildenstern"] = {
         name = "Gnashing Guildenstern",
-        packetName = "GnshGldnstrn",
+        packetName = "Gnash Guild",
         groupRef = "gnashing_guildenstern",
         zones = { {xi.zone.ROLANBERRY_FIELDS}, {xi.zone.BATALLIA_DOWNS} },
         level = 22,
@@ -3469,7 +3469,7 @@ nr.db = {
     },
     ["pack_lord_petronio"] = {
         name = "Pack Lord Petronio",
-        packetName = "PckLrdPtrn",
+        packetName = "Pack Petron",
         groupRef = "pack_lord_petronio",
         zones = { {xi.zone.BATALLIA_DOWNS}, {xi.zone.JUGNER_FOREST} },
         level = 34,
@@ -3485,7 +3485,7 @@ nr.db = {
     },
     ["mauling_malaclypse"] = {
         name = "Mauling Malaclypse",
-        packetName = "MulngMlcly",
+        packetName = "Maul Malacy",
         groupRef = "mauling_malaclypse",
         zones = { {xi.zone.SAUROMUGUE_CHAMPAIGN}, {xi.zone.BATALLIA_DOWNS} },
         level = 44,
@@ -3501,7 +3501,7 @@ nr.db = {
     },
     ["alpha_apollinarius"] = {
         name = "Alpha Apollinarius",
-        packetName = "AlpAplnrs",
+        packetName = "Alpha Apollo",
         groupRef = "alpha_apollinarius",
         zones = { {xi.zone.BEHEMOTH_S_DOMINION}, {xi.zone.SAUROMUGUE_CHAMPAIGN} },
         level = 54,
@@ -3517,7 +3517,7 @@ nr.db = {
     },
     ["tiny_tortoise_tibalt"] = {
         name = "Tiny Tortoise Tibalt",
-        packetName = "TnyTrtTblt",
+        packetName = "Tiny Tibalt",
         groupRef = "tiny_tortoise_tibalt",
         zones = { {xi.zone.EASTERN_ALTEPA_DESERT} },
         level = 26,
@@ -3533,7 +3533,7 @@ nr.db = {
     },
     ["armored_archibald"] = {
         name = "Armored Archibald",
-        packetName = "ArmrdArchbld",
+        packetName = "Armor Archi",
         groupRef = "armored_archibald",
         zones = { {xi.zone.WESTERN_ALTEPA_DESERT}, {xi.zone.EASTERN_ALTEPA_DESERT} },
         level = 40,
@@ -3549,7 +3549,7 @@ nr.db = {
     },
     ["elder_shell_eleanor"] = {
         name = "Elder Shell Eleanor",
-        packetName = "EldrShllElnr",
+        packetName = "Elder Eleanor",
         groupRef = "elder_shell_eleanor",
         zones = { {xi.zone.CAPE_TERIGGAN}, {xi.zone.WESTERN_ALTEPA_DESERT} },
         level = 52,
@@ -3565,7 +3565,7 @@ nr.db = {
     },
     ["adamantoise_emperor_alexandros"] = {
         name = "Adamantoise Emperor Alexandros",
-        packetName = "AdmtEmprAlxnd",
+        packetName = "Emperor Alex",
         groupRef = "adamantoise_emperor_alexandros",
         zones = { {xi.zone.BEHEMOTH_S_DOMINION} },
         level = 60,
@@ -3581,7 +3581,7 @@ nr.db = {
     },
     ["coiling_callirhoe"] = {
         name = "Coiling Callirhoe",
-        packetName = "ClngCllrhe",
+        packetName = "Coil Calli",
         groupRef = "coiling_callirhoe",
         zones = { {xi.zone.SEA_SERPENT_GROTTO}, {xi.zone.QUFIM_ISLAND} },
         level = 22,
@@ -3597,7 +3597,7 @@ nr.db = {
     },
     ["charming_chrysanthema"] = {
         name = "Charming Chrysanthema",
-        packetName = "ChrmChrsnth",
+        packetName = "Charm Chrysa",
         groupRef = "charming_chrysanthema",
         zones = { {xi.zone.SEA_SERPENT_GROTTO} },
         level = 34,
@@ -3613,7 +3613,7 @@ nr.db = {
     },
     ["seductive_seraphimia"] = {
         name = "Seductive Seraphimia",
-        packetName = "SdctvSrphm",
+        packetName = "Seduce Seraph",
         groupRef = "seductive_seraphimia",
         zones = { {xi.zone.SEA_SERPENT_GROTTO}, {xi.zone.TEMPLE_OF_UGGALEPIH} },
         level = 46,
@@ -3629,7 +3629,7 @@ nr.db = {
     },
     ["serpent_queen_sophronia"] = {
         name = "Serpent Queen Sophronia",
-        packetName = "SrpntQnSphr",
+        packetName = "Queen Sophro",
         groupRef = "serpent_queen_sophronia",
         zones = { {xi.zone.SEA_SERPENT_GROTTO} },
         level = 58,
@@ -3645,7 +3645,7 @@ nr.db = {
     },
     ["bloodsucking_barnard"] = {
         name = "Bloodsucking Barnard",
-        packetName = "BldSckBrnd",
+        packetName = "Blood Barnard",
         groupRef = "bloodsucking_barnard",
         zones = { {xi.zone.BUBURIMU_PENINSULA}, {xi.zone.VALKURM_DUNES} },
         level = 12,
@@ -3661,7 +3661,7 @@ nr.db = {
     },
     ["gorging_griselda"] = {
         name = "Gorging Griselda",
-        packetName = "GrngGrslda",
+        packetName = "Gorge Grisel",
         groupRef = "gorging_griselda",
         zones = { {xi.zone.PASHHOW_MARSHLANDS}, {xi.zone.ROLANBERRY_FIELDS} },
         level = 24,
@@ -3677,7 +3677,7 @@ nr.db = {
     },
     ["plasma_draining_placida"] = {
         name = "Plasma Draining Placida",
-        packetName = "PlsmDrnPlcd",
+        packetName = "Plasma Placid",
         groupRef = "plasma_draining_placida",
         zones = { {xi.zone.CRAWLER_S_NEST}, {xi.zone.GARLAIGE_CITADEL} },
         level = 36,
@@ -3693,7 +3693,7 @@ nr.db = {
     },
     ["ancient_lamprey_augustine"] = {
         name = "Ancient Lamprey Augustine",
-        packetName = "AncLmpAgstn",
+        packetName = "Lamprey Augus",
         groupRef = "ancient_lamprey_augustine",
         zones = { {xi.zone.SEA_SERPENT_GROTTO}, {xi.zone.TEMPLE_OF_UGGALEPIH} },
         level = 50,
@@ -3709,7 +3709,7 @@ nr.db = {
     },
     ["larval_lavrentiy"] = {
         name = "Larval Lavrentiy",
-        packetName = "LrvlLvrnt",
+        packetName = "Larval Lavren",
         groupRef = "larval_lavrentiy",
         zones = { {xi.zone.WESTERN_ALTEPA_DESERT} },
         level = 18,
@@ -3725,7 +3725,7 @@ nr.db = {
     },
     ["spinning_sebestyen"] = {
         name = "Spinning Sebestyen",
-        packetName = "SpnnSbstyn",
+        packetName = "Spin Sebesty",
         groupRef = "spinning_sebestyen",
         zones = { {xi.zone.EASTERN_ALTEPA_DESERT}, {xi.zone.WESTERN_ALTEPA_DESERT} },
         level = 30,
@@ -3741,7 +3741,7 @@ nr.db = {
     },
     ["metamorphing_melchior"] = {
         name = "Metamorphing Melchior",
-        packetName = "MetaMlchr",
+        packetName = "Morph Melch",
         groupRef = "metamorphing_melchior",
         zones = { {xi.zone.CAPE_TERIGGAN}, {xi.zone.EASTERN_ALTEPA_DESERT} },
         level = 42,
@@ -3773,7 +3773,7 @@ nr.db = {
     },
     ["flickering_flavius"] = {
         name = "Flickering Flavius",
-        packetName = "FlckrFlavs",
+        packetName = "Flick Flavius",
         groupRef = "flickering_flavius",
         zones = { xi.zone.ULEGUERAND_RANGE, xi.zone.ATTOHWA_CHASM },
         level = { 38, 42 },
@@ -3790,7 +3790,7 @@ nr.db = {
     },
     ["volatile_valerius"] = {
         name = "Volatile Valerius",
-        packetName = "VltleVlrs",
+        packetName = "Volatile Val",
         groupRef = "volatile_valerius",
         zones = { xi.zone.OLDTON_MOVALPOLOS, xi.zone.MINE_SHAFT_2716 },
         level = { 42, 45 },
@@ -3807,7 +3807,7 @@ nr.db = {
     },
     ["vicious_valentinian"] = {
         name = "Vicious Valentinian",
-        packetName = "VicsVlntn",
+        packetName = "Vicious Vale",
         groupRef = "vicious_valentinian",
         zones = { xi.zone.BIBIKI_BAY, xi.zone.ULEGUERAND_RANGE },
         level = { 45, 48 },
@@ -3824,7 +3824,7 @@ nr.db = {
     },
     ["battering_basilius"] = {
         name = "Battering Basilius",
-        packetName = "BtrngBsls",
+        packetName = "Batter Basil",
         groupRef = "battering_basilius",
         zones = { xi.zone.LUFAISE_MEADOWS, xi.zone.MISAREAUX_COAST },
         level = { 48, 52 },
@@ -3841,7 +3841,7 @@ nr.db = {
     },
     ["lesser_manticore_lucilius"] = {
         name = "Lesser Manticore Lucilius",
-        packetName = "LssrMntcLcl",
+        packetName = "Lesser Lucil",
         groupRef = "lesser_manticore_lucilius",
         zones = { xi.zone.EASTERN_ALTEPA_DESERT, xi.zone.WESTERN_ALTEPA_DESERT },
         level = { 50, 55 },
@@ -3875,7 +3875,7 @@ nr.db = {
     },
     ["stony_stefanus"] = {
         name = "Stony Stefanus",
-        packetName = "StnyStfns",
+        packetName = "Stony Stefan",
         groupRef = "stony_stefanus",
         zones = { xi.zone.PSOXJA },
         level = { 55, 60 },
@@ -3892,7 +3892,7 @@ nr.db = {
     },
     ["dread_decimus"] = {
         name = "Dread Decimus",
-        packetName = "DreadDecms",
+        packetName = "Dread Decimus",
         groupRef = "dread_decimus",
         zones = { xi.zone.ULEGUERAND_RANGE, xi.zone.TEMENOS },
         level = { 58, 65 },
