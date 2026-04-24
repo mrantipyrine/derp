@@ -135,6 +135,7 @@ end
 
 local function retireSkirmishPack(pack, factionKey)
     local faction = skirmishFactions[factionKey]
+    local lingerSeconds = 180
     for _, mob in ipairs(pack) do
         if mob and mob:isAlive() then
             mob:disengage()
@@ -142,7 +143,7 @@ local function retireSkirmishPack(pack, factionKey)
             mob:setMobMod(xi.mobMod.NO_LINK, 1)
             mob:setMobMod(xi.mobMod.ROAM_DISTANCE, 18)
             mob:setMobMod(xi.mobMod.ROAM_COOL, 5)
-            mob:spawn(12)
+            mob:spawn(lingerSeconds)
         end
     end
 
@@ -152,7 +153,7 @@ local function retireSkirmishPack(pack, factionKey)
             anchor:getZone(),
             anchor,
             80,
-            string.format('[Dynamic World] %s scatter after the skirmish.', faction and faction.packetName or factionKey)
+            string.format('[Dynamic World] %s scatter after the skirmish and drift away after a while.', faction and faction.packetName or factionKey)
         )
     end
 end
