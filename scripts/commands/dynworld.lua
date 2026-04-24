@@ -268,15 +268,16 @@ local function startSkirmish(packA, packB)
     end
 
     local function seedBattle(sourcePack, targetPack)
-        for i, mob in ipairs(sourcePack) do
+        for _, mob in ipairs(sourcePack) do
             if mob and mob:isAlive() then
-                local target = targetPack[((i - 1) % #targetPack) + 1]
-                if target and target:isAlive() then
-                    if mob.addBaseEnmity then
-                        mob:addBaseEnmity(target)
+                for _, target in ipairs(targetPack) do
+                    if target and target:isAlive() then
+                        if mob.addBaseEnmity then
+                            mob:addBaseEnmity(target)
+                        end
+                        mob:addEnmity(target, 60, 60)
+                        mob:updateEnmity(target)
                     end
-                    mob:addEnmity(target, 60, 60)
-                    mob:updateEnmity(target)
                 end
             end
         end
@@ -322,6 +323,8 @@ local function monitorSkirmish(packA, packB, factionA, factionB)
         end
         return
     end
+
+    startSkirmish(packA, packB)
 
     local anchor = packA[1] or packB[1]
     if anchor and anchor.timer then
