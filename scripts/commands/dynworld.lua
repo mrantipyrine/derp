@@ -145,6 +145,11 @@ local function retireSkirmishPack(pack, factionKey)
             mob:setMobMod(xi.mobMod.ROAM_DISTANCE, 18)
             mob:setMobMod(xi.mobMod.ROAM_COOL, 5)
             mob:spawn(lingerSeconds)
+            mob:timer(lingerSeconds * 1000, function(mobArg)
+                if mobArg and mobArg:isAlive() then
+                    mobArg:setStatus(xi.status.DISAPPEAR)
+                end
+            end)
         end
     end
 
