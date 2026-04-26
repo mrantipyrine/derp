@@ -116,6 +116,46 @@ db.rogue_quadav =
     description   = 'A Quadav warrior separated from its battalion, wandering and hostile.',
 }
 
+db.rogue_orc =
+{
+    name        = 'Rogue Orc',
+    packetName  = 'Rogue Orc',
+    faction     = 'orc',
+    groupRefs = {
+        { groupId = 14, groupZoneId = 2 },
+        { groupId = 15, groupZoneId = 2 },
+        { groupId = 21, groupZoneId = 2 },
+    },
+    tier          = { xi.dynamicWorld.tier.WANDERER, xi.dynamicWorld.tier.NOMAD },
+    levelOffset   = { 3, 7 },
+    regions       = { 'ronfaure', 'midlands' },
+    behavior      = 'wanderer_aggressive',
+    lootTable     = 'wanderer_uncommon',
+    isAggro       = true,
+    expMultiplier = 1.1,
+    description   = 'An Orcish raider prowling close to its old war paths.',
+}
+
+db.war_yagudo =
+{
+    name        = 'War Yagudo',
+    packetName  = 'War Yagudo',
+    faction     = 'yagudo',
+    groupRefs = {
+        { groupId = 82, groupZoneId = 37 },
+        { groupId = 83, groupZoneId = 37 },
+        { groupId = 84, groupZoneId = 37 },
+    },
+    tier          = { xi.dynamicWorld.tier.WANDERER, xi.dynamicWorld.tier.NOMAD },
+    levelOffset   = { 3, 7 },
+    regions       = { 'sarutabaruta', 'midlands' },
+    behavior      = 'wanderer_aggressive',
+    lootTable     = 'wanderer_uncommon',
+    isAggro       = true,
+    expMultiplier = 1.1,
+    description   = 'A Yagudo scout stalking supply lines and easy prey.',
+}
+
 -----------------------------------
 -- TIER 2: NOMADS
 -----------------------------------
@@ -265,6 +305,46 @@ db.fell_commander =
     isAggro       = true,
     expMultiplier = 1.2,
     description   = 'A Quadav war-leader rallying scattered forces across the frontier.',
+}
+
+db.orc_warmarshal =
+{
+    name        = 'Orc Warmarshal',
+    packetName  = 'Orc Marshal',
+    faction     = 'orc',
+    groupRefs = {
+        { groupId = 14, groupZoneId = 2 },
+        { groupId = 15, groupZoneId = 2 },
+        { groupId = 21, groupZoneId = 2 },
+    },
+    tier          = { xi.dynamicWorld.tier.ELITE },
+    levelOffset   = { 10, 15 },
+    regions       = { 'ronfaure', 'midlands' },
+    behavior      = 'elite_commander',
+    lootTable     = 'elite_beastman',
+    isAggro       = true,
+    expMultiplier = 1.2,
+    description   = 'An Orc leader returning to the frontier with a fresh warband.',
+}
+
+db.yagudo_prelate =
+{
+    name        = 'Yagudo Prelate',
+    packetName  = 'Yagudo Prelate',
+    faction     = 'yagudo',
+    groupRefs = {
+        { groupId = 82, groupZoneId = 37 },
+        { groupId = 83, groupZoneId = 37 },
+        { groupId = 84, groupZoneId = 37 },
+    },
+    tier          = { xi.dynamicWorld.tier.ELITE },
+    levelOffset   = { 10, 15 },
+    regions       = { 'sarutabaruta', 'midlands' },
+    behavior      = 'elite_commander',
+    lootTable     = 'elite_beastman',
+    isAggro       = true,
+    expMultiplier = 1.2,
+    description   = 'A Yagudo prelate gathering zealots and pushing into open ground.',
 }
 
 db.storm_elemental =
@@ -772,6 +852,13 @@ db.funguar_oracle =
 -- Template Lookup Helpers
 -----------------------------------
 
+local ZONE_FACTION_BIAS =
+{
+    [100] = 'orc', [101] = 'orc', [102] = 'orc', [104] = 'orc', [105] = 'orc',
+    [106] = 'quadav', [107] = 'quadav', [108] = 'quadav', [109] = 'quadav', [110] = 'quadav',
+    [115] = 'yagudo', [116] = 'yagudo', [117] = 'yagudo', [118] = 'yagudo', [119] = 'yagudo', [120] = 'yagudo',
+}
+
 xi.dynamicWorld.templates.getForTierAndRegion = function(tier, regionName)
     local results = {}
     for key, template in pairs(db) do
@@ -798,6 +885,25 @@ xi.dynamicWorld.templates.getForTierAndRegion = function(tier, regionName)
     end
 
     return results
+end
+
+xi.dynamicWorld.templates.getSpawnWeight = function(template, zoneId, regionName)
+    local weight = template.spawnWeight or 1
+    local favoredFaction = ZONE_FACTION_BIAS[zoneId]
+
+    if favoredFaction and template.faction == favoredFaction then
+        weight = weight * 4
+    elseif regionName and template.faction then
+        if regionName == 'ronfaure' and template.faction == 'orc' then
+            weight = weight * 2
+        elseif regionName == 'gustaberg' and template.faction == 'quadav' then
+            weight = weight * 2
+        elseif regionName == 'sarutabaruta' and template.faction == 'yagudo' then
+            weight = weight * 2
+        end
+    end
+
+    return math.max(1, math.floor(weight))
 end
 
 xi.dynamicWorld.templates.getBlessingsForRegion = function(regionName)

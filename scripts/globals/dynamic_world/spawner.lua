@@ -70,6 +70,16 @@ local function pickGroupRef(template)
     return template.groupRef
 end
 
+local function pickWeightedTemplate(candidates, zoneId, regionName)
+    local weighted = {}
+    for _, candidate in ipairs(candidates) do
+        weighted[#weighted + 1] = xi.dynamicWorld.templates.getSpawnWeight(candidate.template, zoneId, regionName)
+    end
+
+    local index = xi.dynamicWorld.weightedRandom(weighted)
+    return candidates[index]
+end
+
 -----------------------------------
 -- Evaluate: decide whether to spawn new entities in a zone
 -----------------------------------
@@ -403,7 +413,7 @@ spawner.spawnEntity = function(zone, zd, state, tier)
     end
 
     -- Pick random template
-    local chosen = candidates[math.random(#candidates)]
+    local chosen = pickWeightedTemplate(candidates, zoneId, regionName)
     local template = chosen.template
     local templateKey = chosen.key
 
