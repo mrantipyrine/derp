@@ -56,6 +56,13 @@ end
 
 rep.resolvePlayer = resolvePlayer
 
+rep.thresholds =
+{
+    annoyed = 25,
+    hated = 100,
+    blood_enemy = 250,
+}
+
 rep.isTrackedFaction = function(faction)
     faction = normalizeFaction(faction)
     return faction and trackedFactions[faction] or false
@@ -94,6 +101,19 @@ rep.getAllFactionHate = function(player)
         data[faction] = rep.getFactionHate(player, faction)
     end
     return data
+end
+
+rep.getHostilityTier = function(player, faction)
+    local hate = rep.getFactionHate(player, faction)
+    if hate >= rep.thresholds.blood_enemy then
+        return 'blood_enemy', hate
+    elseif hate >= rep.thresholds.hated then
+        return 'hated', hate
+    elseif hate >= rep.thresholds.annoyed then
+        return 'annoyed', hate
+    end
+
+    return 'neutral', hate
 end
 
 rep.inferFactionFromTemplate = function(template)

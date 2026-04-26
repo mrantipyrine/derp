@@ -243,12 +243,18 @@ spawner.spawnBlessingEntity = function(zone, zd, state)
 
         if behaviorSet.onMobRoam then
             entityTable.onMobRoam = function(mob)
+                if xi.dynamicWorld.behaviors.applyFactionRoamAggro then
+                    xi.dynamicWorld.behaviors.applyFactionRoamAggro(mob, template)
+                end
                 behaviorSet.onMobRoam(mob, template, 0)
             end
         end
 
         if behaviorSet.onMobEngaged then
             entityTable.onMobEngaged = function(mob, target)
+                if xi.dynamicWorld.behaviors.applyFactionEngageEffects then
+                    xi.dynamicWorld.behaviors.applyFactionEngageEffects(mob, target, template)
+                end
                 behaviorSet.onMobEngaged(mob, target, template, 0)
             end
         end
@@ -465,12 +471,18 @@ spawner.spawnEntity = function(zone, zd, state, tier)
 
         if behaviorSet.onMobRoam then
             entityTable.onMobRoam = function(mob)
+                if xi.dynamicWorld.behaviors.applyFactionRoamAggro then
+                    xi.dynamicWorld.behaviors.applyFactionRoamAggro(mob, template)
+                end
                 behaviorSet.onMobRoam(mob, template, tier)
             end
         end
 
         if behaviorSet.onMobEngaged then
             entityTable.onMobEngaged = function(mob, target)
+                if xi.dynamicWorld.behaviors.applyFactionEngageEffects then
+                    xi.dynamicWorld.behaviors.applyFactionEngageEffects(mob, target, template)
+                end
                 behaviorSet.onMobEngaged(mob, target, template, tier)
 
                 -- Trigger item synergies on engage
@@ -793,12 +805,18 @@ spawner.tryRevengeSpawn = function(mob, killer, zd, state, template, tier, gener
 
         if behaviorSet.onMobRoam then
             entityTable.onMobRoam = function(revMob)
+                if xi.dynamicWorld.behaviors.applyFactionRoamAggro then
+                    xi.dynamicWorld.behaviors.applyFactionRoamAggro(revMob, revengeTemplate)
+                end
                 behaviorSet.onMobRoam(revMob, revengeTemplate, tier)
             end
         end
 
         if behaviorSet.onMobEngaged then
             entityTable.onMobEngaged = function(revMob, target)
+                if xi.dynamicWorld.behaviors.applyFactionEngageEffects then
+                    xi.dynamicWorld.behaviors.applyFactionEngageEffects(revMob, target, revengeTemplate)
+                end
                 behaviorSet.onMobEngaged(revMob, target, revengeTemplate, tier)
                 if getSetting('SYNERGIES_ENABLED') and target then
                     xi.dynamicWorld.synergies.onDynamicEngage(revMob, target, revengeTemplate, tier)

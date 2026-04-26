@@ -55,12 +55,152 @@ local function notifyKillerOrNearby(mob, player, msg)
     xi.dynamicWorld.announceNearby(mob:getZone(), mob, 50, msg)
 end
 
+local function getTrackedFaction(template)
+    if not xi.dynamicWorld.reputation or not template then
+        return nil
+    end
+
+    local faction = xi.dynamicWorld.reputation.inferFactionFromTemplate(template)
+    if xi.dynamicWorld.reputation.isTrackedFaction(faction) then
+        return faction
+    end
+
+    return nil
+end
+
+local function getFactionTarget(mob, template)
+    local faction = getTrackedFaction(template)
+    if not faction then
+        return nil, nil, nil
+    end
+
+    local zone = mob:getZone()
+    local players = zone and zone:getPlayers()
+    if not players then
+        return faction, nil, nil
+    end
+
+    local bestPlayer = nil
+    local bestTier = 'neutral'
+    local bestHate = 0
+    local bestDist = 9999
+
+    for _, player in pairs(players) do
+        if player and player.isPC and player:isPC() then
+            local tier, hate = xi.dynamicWorld.reputation.getHostilityTier(player, faction)
+            if tier ~= 'neutral' then
+                local dist = xi.dynamicWorld.safeDistance(mob, player) or 9999
+                if hate > bestHate or (hate == bestHate and dist < bestDist) then
+                    bestPlayer = player
+                    bestTier = tier
+                    bestHate = hate
+                    bestDist = dist
+                end
+            end
+        end
+    end
+
+    return faction, bestPlayer, bestTier
+end
+
+local function applyFactionRoamAggro(mob, template)
+    local faction, player, tier = getFactionTarget(mob, template)
+    if not faction or not player or tier == 'neutral' or mob:isEngaged() then
+        return
+    end
+
+    local dist = xi.dynamicWorld.safeDistance(mob, player) or 9999
+    local triggerRange = 0
+    if tier == 'annoyed' then
+        triggerRange = 18
+    elseif tier == 'hated' then
+        triggerRange = 26
+    elseif tier == 'blood_enemy' then
+        triggerRange = 34
+    end
+
+    if dist > triggerRange then
+        return
+    end
+
+    local lastTargetId = mob:getLocalVar('DW_REP_TARGET')
+    if lastTargetId ~= player:getID() then
+        mob:setLocalVar('DW_REP_TARGET', player:getID())
+        if tier == 'blood_enemy' then
+            xi.dynamicWorld.announceNearby(
+                mob:getZone(),
+                mob,
+                40,
+                string.format('[Dynamic World] %s recognizes %s and lunges to settle an old score.',
+                    mob:getName(), player:getName())
+            )
+        end
+    end
+
+    if mob.addBaseEnmity then
+        mob:addBaseEnmity(player)
+    end
+    mob:addEnmity(player, 120, 120)
+    mob:updateEnmity(player)
+end
+
+local function applyFactionEngageEffects(mob, target, template)
+    if not target or not target.isPC or not target:isPC() then
+        return
+    end
+
+    local faction = getTrackedFaction(template)
+    if not faction then
+        return
+    end
+
+    local tier, hate = xi.dynamicWorld.reputation.getHostilityTier(target, faction)
+    if tier == 'neutral' then
+        return
+    end
+
+    local key = string.format('DW_REP_BUFF_%d', target:getID())
+    if mob:getLocalVar(key) == 1 then
+        return
+    end
+    mob:setLocalVar(key, 1)
+
+    if tier == 'annoyed' then
+        mob:addMod(xi.mod.ATT, 10)
+        mob:addMod(xi.mod.ACC, 10)
+        target:printToPlayer(
+            string.format('[Dynamic World] The %s remember your past kills. Their hatred sharpens their blows.', faction),
+            xi.msg.channel.SYSTEM_3
+        )
+    elseif tier == 'hated' then
+        mob:addMod(xi.mod.ATT, 20)
+        mob:addMod(xi.mod.ACC, 15)
+        mob:addMod(xi.mod.DEF, 10)
+        target:printToPlayer(
+            string.format('[Dynamic World] The %s know you well. They close ranks against you. (Hate %d)', faction, hate),
+            xi.msg.channel.SYSTEM_3
+        )
+    elseif tier == 'blood_enemy' then
+        mob:addMod(xi.mod.ATT, 35)
+        mob:addMod(xi.mod.ACC, 25)
+        mob:addMod(xi.mod.DEF, 20)
+        mob:addMod(xi.mod.STORETP, 15)
+        target:printToPlayer(
+            string.format('[Dynamic World] You are a blood enemy of the %s. They fight with murderous intent. (Hate %d)', faction, hate),
+            xi.msg.channel.SYSTEM_3
+        )
+    end
+end
+
 -----------------------------------
 -- Behavior Registry
 -----------------------------------
 behaviors.get = function(name)
     return behaviorDb[name]
 end
+
+behaviors.applyFactionRoamAggro = applyFactionRoamAggro
+behaviors.applyFactionEngageEffects = applyFactionEngageEffects
 
 -----------------------------------
 -- WANDERER BEHAVIORS
