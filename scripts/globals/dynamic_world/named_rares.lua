@@ -4332,6 +4332,7 @@ nr.trySpawn = function(key)
 
             -- Give loot (tier passed so loot system can scale rates)
             if player then
+                xi.dynamicWorld.reputation.onNamedRareKill(player, config, tier)
                 nr.awardLoot(key, mob, player, tier)
             end
         end,
@@ -4512,6 +4513,7 @@ nr.forceSpawn = function(key, player)
                 if z then xi.dynamicWorld.announceZone(z, config.deathMsg) end
             end
             if killer then
+                xi.dynamicWorld.reputation.onNamedRareKill(killer, config, tier)
                 nr.awardLoot(key, mob, killer, tier)
             end
         end,

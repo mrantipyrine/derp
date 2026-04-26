@@ -988,6 +988,9 @@ spawner.onEntityDeath = function(mob, killer, zd, state, template, tier, targid,
     -- Record chain
     xi.dynamicWorld.recordKill(killer, mob, tier)
 
+    -- Persistent faction hostility for tracked dynamic families
+    xi.dynamicWorld.reputation.onDynamicKill(killer, template, tier)
+
     -- Award loot
     if getSetting('LOOT_ENABLED') then
         xi.dynamicWorld.loot.award(mob, killer, template, tier)

@@ -72,6 +72,8 @@ xi.dynamicWorld.state =
     zoneToRegion    = {},               -- [zoneId] = regionName
     regionData      = {},               -- [regionName] = { zones = {}, levelRange = {} }
     playerChains    = {},               -- [charId] = { count = 0, lastKill = 0, tier = 0 }
+    skirmishes      = {},               -- [skirmishId] = runtime skirmish record
+    nextSkirmishId  = 1,
 }
 
 -----------------------------------
@@ -84,6 +86,7 @@ xi.dynamicWorld.loot      = xi.dynamicWorld.loot or {}
 xi.dynamicWorld.behaviors = xi.dynamicWorld.behaviors or {}
 xi.dynamicWorld.synergies = xi.dynamicWorld.synergies or {}
 xi.dynamicWorld.blessings = xi.dynamicWorld.blessings or {}
+xi.dynamicWorld.reputation = xi.dynamicWorld.reputation or {}
 
 require('scripts/globals/dynamic_world/templates')
 require('scripts/globals/dynamic_world/spawner')
@@ -92,6 +95,7 @@ require('scripts/globals/dynamic_world/loot')
 require('scripts/globals/dynamic_world/behaviors')
 require('scripts/globals/dynamic_world/synergies')
 require('scripts/globals/dynamic_world/blessings')
+require('scripts/globals/dynamic_world/reputation')
 require('scripts/globals/dynamic_world/named_rares')
 
 -----------------------------------
@@ -256,6 +260,8 @@ xi.dynamicWorld.init = function()
     end
 
     state.playerChains = {}
+    state.skirmishes = {}
+    state.nextSkirmishId = 1
     state.globalCount = 0
     state.initialized = true
     state.running = true

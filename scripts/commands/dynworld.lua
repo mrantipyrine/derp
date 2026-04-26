@@ -133,6 +133,87 @@ local function countLiving(pack)
     return living
 end
 
+local function getSkirmishState()
+    local state = xi.dynamicWorld.state
+    state.skirmishes = state.skirmishes or {}
+    state.nextSkirmishId = state.nextSkirmishId or 1
+    return state
+end
+
+local function summarizePack(pack)
+    local total = #pack
+    local living = countLiving(pack)
+    return living, total
+end
+
+local function registerSkirmish(zoneId, factionA, factionB, packA, packB, minLevel, maxLevel)
+    local state = getSkirmishState()
+    local skirmishId = state.nextSkirmishId
+    state.nextSkirmishId = skirmishId + 1
+
+    local livingA, totalA = summarizePack(packA)
+    local livingB, totalB = summarizePack(packB)
+    state.skirmishes[skirmishId] =
+    {
+        id = skirmishId,
+        zoneId = zoneId,
+        factionA = factionA,
+        factionB = factionB,
+        startedAt = os.time(),
+        endedAt = 0,
+        minLevel = minLevel,
+        maxLevel = maxLevel,
+        initialA = totalA,
+        initialB = totalB,
+        livingA = livingA,
+        livingB = livingB,
+        status = 'active',
+        winner = nil,
+        loser = nil,
+        survivors = 0,
+    }
+
+    return skirmishId
+end
+
+local function updateSkirmishRecord(skirmishId, livingA, livingB)
+    local state = getSkirmishState()
+    local record = state.skirmishes[skirmishId]
+    if not record then
+        return nil
+    end
+
+    record.livingA = livingA
+    record.livingB = livingB
+    return record
+end
+
+local function finalizeSkirmish(skirmishId, factionA, factionB, livingA, livingB)
+    local record = updateSkirmishRecord(skirmishId, livingA, livingB)
+    if not record or record.status == 'finished' then
+        return record
+    end
+
+    record.status = 'finished'
+    record.endedAt = os.time()
+
+    if livingA == 0 and livingB == 0 then
+        record.winner = 'draw'
+        record.loser = 'draw'
+        record.survivors = 0
+    elseif livingA == 0 then
+        record.winner = factionB
+        record.loser = factionA
+        record.survivors = livingB
+    elseif livingB == 0 then
+        record.winner = factionA
+        record.loser = factionB
+        record.survivors = livingA
+    end
+
+    return record
+end
+
 local function retireSkirmishPack(pack, factionKey)
     local faction = skirmishFactions[factionKey]
     local lingerSeconds = 180
@@ -199,6 +280,9 @@ local function spawnSkirmishMob(zone, factionKey, pos, minLevel, maxLevel, alleg
             mob:addMod(xi.mod.ATT, 10)
             mob:addMod(xi.mod.DEF, 10)
             mob:addMod(xi.mod.ACC, 10)
+        end,
+        onMobDeath = function(mob, player, optParams)
+            xi.dynamicWorld.reputation.onFactionKill(player, factionKey, 2)
         end,
     })
 
@@ -328,15 +412,18 @@ local function reinforceSkirmish(packA, packB, pulsesLeft)
     end
 end
 
-local function monitorSkirmish(packA, packB, factionA, factionB)
+local function monitorSkirmish(packA, packB, factionA, factionB, skirmishId)
     local livingA = countLiving(packA)
     local livingB = countLiving(packB)
+    updateSkirmishRecord(skirmishId, livingA, livingB)
 
     if livingA == 0 and livingB == 0 then
+        finalizeSkirmish(skirmishId, factionA, factionB, livingA, livingB)
         return
     end
 
     if livingA == 0 then
+        finalizeSkirmish(skirmishId, factionA, factionB, livingA, livingB)
         if factionB == 'goblin' then
             retireSkirmishPack(packB, factionB)
         end
@@ -344,6 +431,7 @@ local function monitorSkirmish(packA, packB, factionA, factionB)
     end
 
     if livingB == 0 then
+        finalizeSkirmish(skirmishId, factionA, factionB, livingA, livingB)
         if factionA == 'goblin' then
             retireSkirmishPack(packA, factionA)
         end
@@ -356,13 +444,13 @@ local function monitorSkirmish(packA, packB, factionA, factionB)
     local anchor = packA[1] or packB[1]
     if anchor and anchor.timer then
         anchor:timer(3000, function()
-            monitorSkirmish(packA, packB, factionA, factionB)
+            monitorSkirmish(packA, packB, factionA, factionB, skirmishId)
         end)
     end
 end
 
 local function showHelp(player)
-    player:printToPlayer('[DynWorld] Commands: status, spawn [tier] [count], clear, start, stop, info, synergies, chain, rares, rare [key], skirmish [left] [right] [count]', xi.msg.channel.SYSTEM_3)
+    player:printToPlayer('[DynWorld] Commands: status, spawn [tier] [count], clear, start, stop, info, synergies, chain, rares, rare [key], skirmish [left] [right] [count], skirmishes, skirmishinfo [id], rep', xi.msg.channel.SYSTEM_3)
     player:printToPlayer('[DynWorld] Tiers: 1=Wanderer, 2=Nomad, 3=Elite, 4=Apex, 5=Power King', xi.msg.channel.SYSTEM_3)
 end
 
@@ -595,16 +683,101 @@ local function cmdSkirmish(player, leftKey, rightKey, count)
         return
     end
 
+    local skirmishId = registerSkirmish(zoneId, leftKey, rightKey, leftPack, rightPack, minLevel, maxLevel)
+
     leftPack[1]:timer(1000, function()
         reinforceSkirmish(leftPack, rightPack, 4)
     end)
     leftPack[1]:timer(4000, function()
-        monitorSkirmish(leftPack, rightPack, leftKey, rightKey)
+        monitorSkirmish(leftPack, rightPack, leftKey, rightKey, skirmishId)
     end)
 
     player:printToPlayer(
-        string.format('[DynWorld] Skirmish started: %s vs %s (%d per side) at Lv%d-%d.',
-            leftKey, rightKey, math.min(#leftPack, #rightPack), minLevel, maxLevel),
+        string.format('[DynWorld] Skirmish #%d started: %s vs %s (%d per side) at Lv%d-%d.',
+            skirmishId, leftKey, rightKey, math.min(#leftPack, #rightPack), minLevel, maxLevel),
+        xi.msg.channel.SYSTEM_3
+    )
+end
+
+local function cmdSkirmishes(player)
+    local state = getSkirmishState()
+    local records = {}
+    for _, record in pairs(state.skirmishes) do
+        records[#records + 1] = record
+    end
+
+    if #records == 0 then
+        player:printToPlayer('[DynWorld] No skirmishes recorded since startup.', xi.msg.channel.SYSTEM_3)
+        return
+    end
+
+    table.sort(records, function(a, b) return a.id > b.id end)
+
+    local active = 0
+    for _, record in ipairs(records) do
+        if record.status == 'active' then
+            active = active + 1
+        end
+    end
+
+    player:printToPlayer(string.format('[DynWorld] Skirmishes: %d total, %d active.', #records, active), xi.msg.channel.SYSTEM_3)
+    for i = 1, math.min(10, #records) do
+        local record = records[i]
+        local outcome
+        if record.status == 'active' then
+            outcome = string.format('ACTIVE %s %d - %d %s',
+                record.factionA, record.livingA or 0, record.livingB or 0, record.factionB)
+        elseif record.winner == 'draw' then
+            outcome = 'FINISHED draw'
+        else
+            outcome = string.format('FINISHED %s beat %s (%d left)',
+                tostring(record.winner), tostring(record.loser), tonumber(record.survivors) or 0)
+        end
+
+        player:printToPlayer(
+            string.format('  #%d zone=%d %s vs %s Lv%d-%d [%s]',
+                record.id, record.zoneId, record.factionA, record.factionB, record.minLevel, record.maxLevel, outcome),
+            xi.msg.channel.SYSTEM_3
+        )
+    end
+end
+
+local function cmdSkirmishInfo(player, skirmishId)
+    local state = getSkirmishState()
+    local record = state.skirmishes[tonumber(skirmishId) or -1]
+    if not record then
+        printErr(player, string.format('[DynWorld] Unknown skirmish id: %s', tostring(skirmishId)))
+        return
+    end
+
+    player:printToPlayer(
+        string.format('[DynWorld] Skirmish #%d zone=%d status=%s factions=%s vs %s Lv%d-%d',
+            record.id, record.zoneId, record.status, record.factionA, record.factionB, record.minLevel, record.maxLevel),
+        xi.msg.channel.SYSTEM_3
+    )
+    player:printToPlayer(
+        string.format('[DynWorld] Started=%d Initial=%d/%d Living=%d/%d',
+            record.startedAt, record.initialA, record.initialB, record.livingA or 0, record.livingB or 0),
+        xi.msg.channel.SYSTEM_3
+    )
+
+    if record.status == 'finished' then
+        local outcome = record.winner == 'draw'
+            and 'draw'
+            or string.format('%s defeated %s with %d surviving', tostring(record.winner), tostring(record.loser), tonumber(record.survivors) or 0)
+        player:printToPlayer(
+            string.format('[DynWorld] Ended=%d Outcome=%s', record.endedAt or 0, outcome),
+            xi.msg.channel.SYSTEM_3
+        )
+    end
+end
+
+local function cmdReputation(player)
+    local values = xi.dynamicWorld.reputation.getAllFactionHate(player)
+    player:printToPlayer('[DynWorld] Persistent faction hostility:', xi.msg.channel.SYSTEM_3)
+    player:printToPlayer(
+        string.format('  Goblin: %d | Orc: %d | Quadav: %d | Yagudo: %d',
+            values.goblin or 0, values.orc or 0, values.quadav or 0, values.yagudo or 0),
         xi.msg.channel.SYSTEM_3
     )
 end
@@ -781,6 +954,8 @@ commandObj.onTrigger = function(player, args)
         player:printToPlayer('[DynWorld] ' .. msg, xi.msg.channel.SYSTEM_3)
     elseif subcommand == 'skirmish' then
         cmdSkirmish(player, parts[2], parts[3], parts[4])
+    elseif subcommand == 'rep' then
+        cmdReputation(player)
     else
         showHelp(player)
     end

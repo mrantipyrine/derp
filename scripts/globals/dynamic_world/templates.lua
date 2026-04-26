@@ -97,6 +97,7 @@ db.rogue_quadav =
 {
     name        = 'Rogue Quadav',
     packetName  = 'Rogue Quadav',
+    faction     = 'quadav',
     -- Amber/Amethyst Quadav: zones 106/107/108 lv3-10
     -- Brass Quadav: zones 106/109 lv20-26
     groupRefs = {
@@ -162,6 +163,7 @@ db.treasure_goblin =
 {
     name        = 'Treasure Goblin',
     packetName  = 'Treasure Goblin',
+    faction     = 'goblin',
     -- Grenade/Cluster models for a chubby explosive look
     -- Cluster: zone 24 (Lufaise lv38-40) for the big variant
     groupRefs = {
@@ -247,6 +249,7 @@ db.fell_commander =
 {
     name        = 'Fell Commander',
     packetName  = 'Fell Commander',
+    faction     = 'quadav',
     -- Brass_Quadav: zone 109 lv20-26, zone 106 lv20-25
     -- Bronze_Quadav: zone 110 lv30-36
     groupRefs = {
