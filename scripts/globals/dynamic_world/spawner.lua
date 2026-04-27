@@ -1019,6 +1019,14 @@ spawner.onEntityDeath = function(mob, killer, zd, state, template, tier, targid,
     -- Persistent faction hostility for tracked dynamic families
     xi.dynamicWorld.reputation.onDynamicKill(killer, template, tier)
 
+    -- Seasonal event: player killing faction mobs reduces regional dominance
+    if xi.dynamicWorld.seasons and xi.dynamicWorld.seasons.onPlayerKillFaction then
+        local fid = xi.dynamicWorld.seasons.factionIdFromTemplate(template)
+        if fid and killer and killer.isPC and killer:isPC() then
+            xi.dynamicWorld.seasons.onPlayerKillFaction(killer, fid, tier)
+        end
+    end
+
     -- Award loot
     if getSetting('LOOT_ENABLED') then
         xi.dynamicWorld.loot.award(mob, killer, template, tier)

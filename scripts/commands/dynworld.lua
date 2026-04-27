@@ -211,6 +211,14 @@ local function finalizeSkirmish(skirmishId, factionA, factionB, livingA, livingB
         record.survivors = livingA
     end
 
+    -- Feed outcome into the seasonal event system
+    if record.winner and record.winner ~= 'draw' and xi.dynamicWorld.seasons then
+        local zone = GetZone(record.zoneId)
+        if zone then
+            xi.dynamicWorld.seasons.onSkirmishResult(zone, record.winner, record.loser)
+        end
+    end
+
     return record
 end
 
@@ -956,6 +964,53 @@ commandObj.onTrigger = function(player, args)
         cmdSkirmish(player, parts[2], parts[3], parts[4])
     elseif subcommand == 'rep' then
         cmdReputation(player)
+    elseif subcommand == 'season' then
+        -- Show seasonal event status
+        local s = xi.dynamicWorld.seasons.getStatus()
+        local remainHrs = math.floor(s.seasonRemaining / 3600)
+        local remainMin = math.floor((s.seasonRemaining % 3600) / 60)
+        player:printToPlayer(string.format('[DynWorld] Season: %s  (%dh%02dm remaining)',
+            s.season, remainHrs, remainMin), xi.msg.channel.SYSTEM_3)
+        for regionName, rd in pairs(s.regions) do
+            local extras = ''
+            if rd.commander then extras = extras .. ' [COMMANDER]' end
+            if rd.warlord   then extras = extras .. ' [WARLORD]'   end
+            player:printToPlayer(string.format('  %-14s  %s  dom=%-4d  %s%s',
+                regionName, rd.state, rd.dominance, rd.faction, extras), xi.msg.channel.SYSTEM_3)
+        end
+    elseif subcommand == 'seasonadvance' then
+        -- GM: rotate to next season immediately
+        local nextFid = xi.dynamicWorld.seasons.advanceSeason()
+        player:printToPlayer(string.format('[DynWorld] Season advanced to %s.',
+            xi.dynamicWorld.seasons.FACTION_NAME[nextFid] or '?'), xi.msg.channel.SYSTEM_3)
+    elseif subcommand == 'dominance' then
+        -- GM: set dominance for a region  !dynworld dominance <region> <value>
+        local regionName = parts[2]
+        local value      = tonumber(parts[3])
+        if not regionName or not value then
+            printErr(player, '[DynWorld] Usage: !dynworld dominance <region> <0-1000>')
+            return
+        end
+        local ok, err = xi.dynamicWorld.seasons.setDominance(regionName, value)
+        if ok then
+            player:printToPlayer(string.format('[DynWorld] %s dominance set to %d.', regionName, value), xi.msg.channel.SYSTEM_3)
+        else
+            printErr(player, '[DynWorld] ' .. tostring(err))
+        end
+    elseif subcommand == 'forcestate' then
+        -- GM: force a region into a specific state  !dynworld forcestate <region> <state>
+        local regionName = parts[2]
+        local stateName  = parts[3]
+        if not regionName or not stateName then
+            printErr(player, '[DynWorld] Usage: !dynworld forcestate <region> <calm|skirmish|conflict|invasion|siege|aftermath>')
+            return
+        end
+        local ok, err = xi.dynamicWorld.seasons.forceState(regionName, stateName)
+        if ok then
+            player:printToPlayer(string.format('[DynWorld] %s forced to %s.', regionName, stateName), xi.msg.channel.SYSTEM_3)
+        else
+            printErr(player, '[DynWorld] ' .. tostring(err))
+        end
     else
         showHelp(player)
     end

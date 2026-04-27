@@ -85,8 +85,9 @@ xi.dynamicWorld.roaming   = xi.dynamicWorld.roaming or {}
 xi.dynamicWorld.loot      = xi.dynamicWorld.loot or {}
 xi.dynamicWorld.behaviors = xi.dynamicWorld.behaviors or {}
 xi.dynamicWorld.synergies = xi.dynamicWorld.synergies or {}
-xi.dynamicWorld.blessings = xi.dynamicWorld.blessings or {}
+xi.dynamicWorld.blessings  = xi.dynamicWorld.blessings  or {}
 xi.dynamicWorld.reputation = xi.dynamicWorld.reputation or {}
+xi.dynamicWorld.seasons    = xi.dynamicWorld.seasons    or {}
 
 require('scripts/globals/dynamic_world/templates')
 require('scripts/globals/dynamic_world/spawner')
@@ -96,6 +97,7 @@ require('scripts/globals/dynamic_world/behaviors')
 require('scripts/globals/dynamic_world/synergies')
 require('scripts/globals/dynamic_world/blessings')
 require('scripts/globals/dynamic_world/reputation')
+require('scripts/globals/dynamic_world/seasons')
 require('scripts/globals/dynamic_world/named_rares')
 
 -----------------------------------
@@ -270,6 +272,10 @@ xi.dynamicWorld.init = function()
     state.lastNamedRareTick = now - math.random(0, 299)
 
     xi.dynamicWorld.namedRares.init()
+    xi.dynamicWorld.seasons.init()
+
+    state.lastSeasonTick      = now - math.random(0, 59)  -- stagger first season tick
+    state.lastSeasonDecayTick = now
 
     printf('[DynamicWorld] Initialized. %d eligible zones, %d regions, %d named rares.',
         xi.dynamicWorld.countKeys(state.eligibleZones),
@@ -329,6 +335,9 @@ xi.dynamicWorld.onZoneTick = function(zone)
         state.lastNamedRareTick = now
         xi.dynamicWorld.namedRares.tick()
     end
+
+    -- Seasonal event tick (rate-limited internally to once per minute)
+    xi.dynamicWorld.seasons.tick()
 end
 
 -----------------------------------

@@ -134,6 +134,13 @@ xi.settings.dynamicworld =
     POWER_KING_WINDOW_MAX       = 8 * 3600,
 
     -----------------------------------------------------------------------
+    -- Seasonal Events
+    -- Factions compete for regional dominance through skirmishes and escalate
+    -- through: Skirmish -> Conflict -> Invasion -> Siege -> Aftermath -> Calm
+    -----------------------------------------------------------------------
+    SEASON_DURATION             = 7 * 24 * 3600,  -- Real seconds per season (default: 1 week)
+
+    -----------------------------------------------------------------------
     -- Performance
     -----------------------------------------------------------------------
     MAX_SPAWN_BATCH_SIZE        = 5,        -- Max entities spawned per tick per zone
