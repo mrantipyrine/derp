@@ -132,6 +132,41 @@ local DECAY_TICK_INTERVAL     = 3600             -- apply dominance decay once p
 -----------------------------------
 -- Commander / Warlord data
 -----------------------------------
+-----------------------------------
+-- Faction model IDs for imposing visual variants
+-----------------------------------
+-- modelid values decoded from mob_pools.sql binary blobs (bytes 2-3 LE).
+-- COMMANDER: largest "elite officer" variant for the faction.
+-- WARLORD:   the biggest model in the faction's lineage — visually distinct
+--            and noticeably larger than standard field troops.
+--
+-- Goblin commander  → Goblin_Warlord      (501)  – bulkier than standard goblin
+-- Goblin warlord    → Goblinsavior_Heronox (508) – the heftiest goblin model
+-- Orc commander     → Orcish_Warchief     (635)  – armored chief variant
+-- Orc warlord       → Orcish_Overlord    (1011)  – visually the largest orc model
+-- Quadav commander  → Greater_Quadav      (647)  – bigger shell, more imposing
+-- Quadav warlord    → Greater_Quadav      (647)  – same (largest available)
+-- Yagudo commander  → Yagudo_High_Priest  (606)  – robed elder variant
+-- Yagudo warlord    → Tzee_Xicu_the_Manifest (781) – the Yagudo demigod model
+-----------------------------------
+local FACTION_MODEL =
+{
+    commander =
+    {
+        [FACTION.goblin] = 501,
+        [FACTION.orc]    = 635,
+        [FACTION.quadav]  = 647,
+        [FACTION.yagudo]  = 606,
+    },
+    warlord =
+    {
+        [FACTION.goblin] = 508,
+        [FACTION.orc]    = 1011,
+        [FACTION.quadav]  = 647,
+        [FACTION.yagudo]  = 781,
+    },
+}
+
 local COMMANDER =
 {
     [FACTION.goblin] =
@@ -318,6 +353,8 @@ local function spawnCommander(region, factionId)
 
     local ri = region.index
 
+    local cmdModel = FACTION_MODEL.commander[factionId]
+
     local entity = zone:insertDynamicEntity(
     {
         objtype              = xi.objType.MOB,
@@ -331,6 +368,7 @@ local function spawnCommander(region, factionId)
         groupZoneId          = data.groupZoneId,
         minLevel             = data.levelMin,
         maxLevel             = data.levelMax,
+        look                 = cmdModel,
         releaseIdOnDisappear = true,
         specialSpawnAnimation = true,
 
@@ -401,6 +439,7 @@ local function spawnWarlord(region, factionId)
 
     local ri          = region.index
     local siegeWindow = TIMEOUT[STATE.SIEGE] or (30 * 60)
+    local wlModel     = FACTION_MODEL.warlord[factionId]
 
     local entity = zone:insertDynamicEntity(
     {
@@ -415,6 +454,7 @@ local function spawnWarlord(region, factionId)
         groupZoneId          = data.groupZoneId,
         minLevel             = data.levelMin,
         maxLevel             = data.levelMax,
+        look                 = wlModel,
         releaseIdOnDisappear = true,
         specialSpawnAnimation = true,
 

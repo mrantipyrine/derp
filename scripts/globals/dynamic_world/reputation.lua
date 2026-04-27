@@ -26,6 +26,48 @@ local familyAliases =
     beastmen_orc    = 'orc',
 }
 
+-----------------------------------
+-- Decay configuration
+-----------------------------------
+-- Hate drains at DECAY_PER_HOUR points per real-world hour.
+-- At 5/hr: annoyed (25) clears in ~5h, hated (100) in ~20h,
+--          blood_enemy (250) in ~2 days, max (1000) in ~8 days.
+-- Effectively a rolling weekly reset if you stop hunting a faction.
+-----------------------------------
+local DECAY_PER_HOUR = 5
+local DECAY_VAR      = 'DW_HATE_DECAY_T'  -- char var: unix timestamp of last decay pass
+
+-- Lazy decay: called before any hate read.
+-- Calculates elapsed complete hours since last decay and reduces all factions.
+-- Multiple calls within the same hour are a no-op.
+local function applyDecay(player)
+    if not player then return end
+
+    local now       = os.time()
+    local lastDecay = player:getCharVar(DECAY_VAR)
+
+    if lastDecay == 0 then
+        -- First time we've seen this player — set baseline, no decay yet.
+        player:setCharVar(DECAY_VAR, now)
+        return
+    end
+
+    local elapsedHours = math.floor((now - lastDecay) / 3600)
+    if elapsedHours < 1 then return end
+
+    local decay = elapsedHours * DECAY_PER_HOUR
+
+    for _, varName in pairs(factionVars) do
+        local current = player:getCharVar(varName)
+        if current > 0 then
+            player:setCharVar(varName, math.max(0, current - decay))
+        end
+    end
+
+    -- Advance the timestamp by whole hours applied (keeps sub-hour remainder)
+    player:setCharVar(DECAY_VAR, lastDecay + elapsedHours * 3600)
+end
+
 local function normalizeFaction(faction)
     if not faction then
         return nil
@@ -79,6 +121,7 @@ rep.getFactionHate = function(player, faction)
         return 0
     end
 
+    applyDecay(player)
     return player:getCharVar(varName)
 end
 
@@ -96,9 +139,11 @@ rep.addFactionHate = function(player, faction, amount)
 end
 
 rep.getAllFactionHate = function(player)
+    -- Apply decay once before reading all factions (avoids redundant passes)
+    applyDecay(player)
     local data = {}
-    for faction, _ in pairs(trackedFactions) do
-        data[faction] = rep.getFactionHate(player, faction)
+    for faction, varName in pairs(factionVars) do
+        data[faction] = player:getCharVar(varName)
     end
     return data
 end

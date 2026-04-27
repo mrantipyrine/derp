@@ -51,6 +51,40 @@ local function rollWindow(minKey, maxKey, fallbackMin, fallbackMax)
 end
 
 -----------------------------------
+-- Faction imposing-model table
+-----------------------------------
+-- FFXI has no runtime scale factor; visual size comes from the model ID.
+-- For APEX and POWER_KING tier dynamic-world spawns that belong to a known
+-- beastman faction, we override the look with the largest available variant
+-- of that faction so they feel physically menacing compared to wanderers.
+--
+-- Model IDs decoded from mob_pools.sql binary blobs (bytes 2-3 little-endian):
+--   Goblin  APEX → Goblin_Warlord      (501)
+--   Goblin  KING → Goblinsavior_Heronox (508)
+--   Orc     APEX → Orcish_Warlord      (638)
+--   Orc     KING → Orcish_Overlord    (1011)  ← visually the largest orc model
+--   Quadav  APEX → Greater_Quadav      (647)
+--   Quadav  KING → Greater_Quadav      (647)  (largest available)
+--   Yagudo  APEX → Yagudo_High_Priest  (606)
+--   Yagudo  KING → Tzee_Xicu model     (781)  ← demigod Yagudo
+-----------------------------------
+local FACTION_APEX_MODEL =
+{
+    goblin = 501,
+    orc    = 638,
+    quadav  = 647,
+    yagudo  = 606,
+}
+
+local FACTION_KING_MODEL =
+{
+    goblin = 508,
+    orc    = 1011,
+    quadav  = 647,
+    yagudo  = 781,
+}
+
+-----------------------------------
 -- Pick a random groupRef from a template.
 -- Templates can define a single 'groupRef' or a 'groupRefs' array for
 -- visual variety (different mob_groups rows = different models/sizes).
@@ -435,6 +469,20 @@ spawner.spawnEntity = function(zone, zd, state, tier)
     -- Pick a random visual variant for this spawn
     local chosenRef = pickGroupRef(template)
 
+    -- Resolve imposing model override for APEX / POWER_KING faction mobs.
+    -- Only applied when the template declares a faction and no explicit look
+    -- is already set. This makes high-tier dynamic world spawns visually
+    -- distinct from their wanderer counterparts in the same zone.
+    local apexLook = nil
+    if template.faction then
+        local factionKey = string.lower(tostring(template.faction))
+        if tier == xi.dynamicWorld.tier.POWER_KING then
+            apexLook = FACTION_KING_MODEL[factionKey]
+        elseif tier == xi.dynamicWorld.tier.APEX then
+            apexLook = FACTION_APEX_MODEL[factionKey]
+        end
+    end
+
     -- Build the entity table
     local entityTable = {
         objtype     = xi.objType.MOB,
@@ -448,6 +496,7 @@ spawner.spawnEntity = function(zone, zd, state, tier)
         groupZoneId = chosenRef.groupZoneId,
         minLevel    = minLevel,
         maxLevel    = maxLevel,
+        look                 = apexLook,      -- nil = use model from mob_pools
         releaseIdOnDisappear = true,
         specialSpawnAnimation = true,
     }
