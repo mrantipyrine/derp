@@ -301,8 +301,10 @@ namespace luautils
         lua.set_function("IsMoonFull", &luautils::IsMoonFull);
         lua.set_function("RunElevator", &luautils::StartElevator);
         lua.set_function("GetElevatorState", &luautils::GetElevatorState);
-        lua.set_function("GetServerVariable", &luautils::GetServerVariable);
-        lua.set_function("SetServerVariable", &luautils::SetServerVariable);
+        lua.set_function("SimPostAH",          &luautils::SimPostAH);
+        lua.set_function("SimGetRecentAHSale", &luautils::SimGetRecentAHSale);
+        lua.set_function("GetServerVariable",  &luautils::GetServerVariable);
+        lua.set_function("SetServerVariable",  &luautils::SetServerVariable);
         lua.set_function("GetVolatileServerVariable", &luautils::GetVolatileServerVariable);
         lua.set_function("SetVolatileServerVariable", &luautils::SetVolatileServerVariable);
         lua.set_function("GetCharVar", &luautils::GetCharVar);
@@ -4539,6 +4541,53 @@ namespace luautils
         }
 
         return -1;
+    }
+
+    // -------------------------------------------------------------------------
+    // SimPostAH
+    // Posts an item to the auction house on behalf of a sim player.
+    // Exposed to Lua as: SimPostAH(sellerName, sellerId, itemId, price, isStack)
+    //   sellerName : display name shown in AH seller column (max 15 chars)
+    //   sellerId   : synthetic charid (matches sim_players.fake_charid)
+    //   itemId     : item to post
+    //   price      : asking price in gil
+    //   isStack    : true → list as a stack, false → single unit
+    // -------------------------------------------------------------------------
+    void SimPostAH(std::string const& sellerName, uint32 sellerId,
+                   uint16 itemId, uint32 price, bool isStack)
+    {
+        uint32 now = static_cast<uint32>(earth_time::timestamp());
+        db::preparedStmt(
+            "INSERT INTO auction_house (itemid, stack, seller, seller_name, date, price) "
+            "VALUES (?, ?, ?, ?, ?, ?)",
+            itemId,
+            static_cast<uint8>(isStack ? 1 : 0),
+            sellerId,
+            sellerName,
+            now,
+            price);
+    }
+
+    // -------------------------------------------------------------------------
+    // SimGetRecentAHSale
+    // Returns the most recent sold price for an item (0 if never sold).
+    // Exposed to Lua as: SimGetRecentAHSale(itemId, isStack) -> price
+    // -------------------------------------------------------------------------
+    uint32 SimGetRecentAHSale(uint16 itemId, bool isStack)
+    {
+        const auto rset = db::preparedStmt(
+            "SELECT sale FROM auction_house "
+            "WHERE itemid = ? AND stack = ? AND sale > 0 "
+            "ORDER BY sell_date DESC LIMIT 1",
+            itemId,
+            static_cast<uint8>(isStack ? 1 : 0));
+
+        if (rset && rset->rowsCount() > 0)
+        {
+            rset->nextRow();
+            return rset->get<uint32>(0);
+        }
+        return 0;
     }
 
     int32 GetServerVariable(std::string const& name)

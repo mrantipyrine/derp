@@ -85,9 +85,10 @@ xi.dynamicWorld.roaming   = xi.dynamicWorld.roaming or {}
 xi.dynamicWorld.loot      = xi.dynamicWorld.loot or {}
 xi.dynamicWorld.behaviors = xi.dynamicWorld.behaviors or {}
 xi.dynamicWorld.synergies = xi.dynamicWorld.synergies or {}
-xi.dynamicWorld.blessings  = xi.dynamicWorld.blessings  or {}
-xi.dynamicWorld.reputation = xi.dynamicWorld.reputation or {}
-xi.dynamicWorld.seasons    = xi.dynamicWorld.seasons    or {}
+xi.dynamicWorld.blessings   = xi.dynamicWorld.blessings   or {}
+xi.dynamicWorld.reputation  = xi.dynamicWorld.reputation  or {}
+xi.dynamicWorld.seasons     = xi.dynamicWorld.seasons     or {}
+xi.dynamicWorld.simPlayers  = xi.dynamicWorld.simPlayers  or {}
 
 require('scripts/globals/dynamic_world/templates')
 require('scripts/globals/dynamic_world/spawner')
@@ -99,6 +100,7 @@ require('scripts/globals/dynamic_world/blessings')
 require('scripts/globals/dynamic_world/reputation')
 require('scripts/globals/dynamic_world/seasons')
 require('scripts/globals/dynamic_world/named_rares')
+require('scripts/globals/dynamic_world/sim_players')
 
 -----------------------------------
 -- Utility: Safe settings access
@@ -273,9 +275,11 @@ xi.dynamicWorld.init = function()
 
     xi.dynamicWorld.namedRares.init()
     xi.dynamicWorld.seasons.init()
+    xi.dynamicWorld.simPlayers.init()
 
     state.lastSeasonTick      = now - math.random(0, 59)  -- stagger first season tick
     state.lastSeasonDecayTick = now
+    state.lastSimTick         = now - math.random(0, 59)  -- stagger sim player tick
 
     printf('[DynamicWorld] Initialized. %d eligible zones, %d regions, %d named rares.',
         xi.dynamicWorld.countKeys(state.eligibleZones),
@@ -338,6 +342,14 @@ xi.dynamicWorld.onZoneTick = function(zone)
 
     -- Seasonal event tick (rate-limited internally to once per minute)
     xi.dynamicWorld.seasons.tick()
+
+    -- Sim player tick (rate-limited to once every 60 seconds)
+    local simInterval = 60
+    if not state.lastSimTick then state.lastSimTick = 0 end
+    if now - state.lastSimTick >= simInterval then
+        state.lastSimTick = now
+        xi.dynamicWorld.simPlayers.tick()
+    end
 end
 
 -----------------------------------

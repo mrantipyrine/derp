@@ -1011,6 +1011,110 @@ commandObj.onTrigger = function(player, args)
         else
             printErr(player, '[DynWorld] ' .. tostring(err))
         end
+    -----------------------------------
+    -- Sim Player GM Commands
+    -----------------------------------
+    elseif subcommand == 'simlist' then
+        -- List all sim players with one-line status each
+        local sim = xi.dynamicWorld.simPlayers
+        if not sim or not sim.getRoster then
+            printErr(player, '[DynWorld] Sim player system not loaded.')
+            return
+        end
+        local roster = sim.getRoster()
+        if #roster == 0 then
+            player:printToPlayer('[DynWorld] No sim players defined.', xi.msg.channel.SYSTEM_3)
+            return
+        end
+        player:printToPlayer(string.format('[DynWorld] Sim Players (%d):', #roster), xi.msg.channel.SYSTEM_3)
+        for _, sp in ipairs(roster) do
+            local status = sim.getStatus(sp.name)
+            if status then
+                local deadStr = status.dead
+                    and string.format('DEAD (respawn in %ds)',
+                        math.max(0, 300 - (os.time() - status.deathTime)))
+                    or  string.format('HP %d/%d', status.hp, status.maxHp)
+                player:printToPlayer(
+                    string.format('  %-12s  Lv%-3d  Zone:%-4d  Tier:%d  Gil:%-6d  %s',
+                        status.name, status.level, status.zone,
+                        status.gearTier, status.gil, deadStr),
+                    xi.msg.channel.SYSTEM_3)
+            end
+        end
+
+    elseif subcommand == 'siminfo' then
+        -- Detailed status for one sim player  !dynworld siminfo <name>
+        local targetName = parts[2]
+        if not targetName then
+            printErr(player, '[DynWorld] Usage: !dynworld siminfo <name>')
+            return
+        end
+        local sim    = xi.dynamicWorld.simPlayers
+        local status = sim and sim.getStatus(targetName)
+        if not status then
+            printErr(player, string.format('[DynWorld] Sim player "%s" not found.', targetName))
+            return
+        end
+        player:printToPlayer(string.format('[DynWorld] === %s ===', status.name), xi.msg.channel.SYSTEM_3)
+        player:printToPlayer(string.format('  Level: %d  XP: %d  Zone: %d',
+            status.level, status.xp, status.zone), xi.msg.channel.SYSTEM_3)
+        player:printToPlayer(string.format('  HP: %d/%d  Gil: %d  Gear tier: %d',
+            status.hp, status.maxHp, status.gil, status.gearTier), xi.msg.channel.SYSTEM_3)
+        player:printToPlayer(string.format('  Status: %s',
+            status.dead and 'Dead' or 'Alive'), xi.msg.channel.SYSTEM_3)
+
+        -- Inventory summary
+        local invCount = 0
+        for _ in pairs(status.inventory) do invCount = invCount + 1 end
+        player:printToPlayer(string.format('  Inventory: %d unique item types', invCount),
+            xi.msg.channel.SYSTEM_3)
+
+    elseif subcommand == 'simrespawn' then
+        -- Force immediate respawn  !dynworld simrespawn <name>
+        local targetName = parts[2]
+        if not targetName then
+            printErr(player, '[DynWorld] Usage: !dynworld simrespawn <name>')
+            return
+        end
+        local sim = xi.dynamicWorld.simPlayers
+        if sim and sim.forceRespawn(targetName) then
+            player:printToPlayer(string.format('[DynWorld] %s force-respawned.', targetName),
+                xi.msg.channel.SYSTEM_3)
+        else
+            printErr(player, string.format('[DynWorld] Could not respawn "%s".', targetName))
+        end
+
+    elseif subcommand == 'simkill' then
+        -- Force a sim player to die  !dynworld simkill <name>
+        local targetName = parts[2]
+        if not targetName then
+            printErr(player, '[DynWorld] Usage: !dynworld simkill <name>')
+            return
+        end
+        local sim = xi.dynamicWorld.simPlayers
+        if sim and sim.forceKill(targetName) then
+            player:printToPlayer(string.format('[DynWorld] %s killed.', targetName),
+                xi.msg.channel.SYSTEM_3)
+        else
+            printErr(player, string.format('[DynWorld] Could not kill "%s".', targetName))
+        end
+
+    elseif subcommand == 'simtp' then
+        -- Teleport a sim player to a zone  !dynworld simtp <name> <zoneid>
+        local targetName = parts[2]
+        local zoneId     = tonumber(parts[3])
+        if not targetName or not zoneId then
+            printErr(player, '[DynWorld] Usage: !dynworld simtp <name> <zoneid>')
+            return
+        end
+        local sim = xi.dynamicWorld.simPlayers
+        if sim and sim.teleport(targetName, zoneId) then
+            player:printToPlayer(string.format('[DynWorld] %s teleported to zone %d.',
+                targetName, zoneId), xi.msg.channel.SYSTEM_3)
+        else
+            printErr(player, string.format('[DynWorld] Could not teleport "%s".', targetName))
+        end
+
     else
         showHelp(player)
     end

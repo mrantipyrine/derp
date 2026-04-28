@@ -141,6 +141,12 @@ xi.settings.dynamicworld =
     SEASON_DURATION             = 7 * 24 * 3600,  -- Real seconds per season (default: 1 week)
 
     -----------------------------------------------------------------------
+    -- Sim Players
+    -- Autonomous player-like entities: roam, hunt, gear up, sell on AH.
+    -----------------------------------------------------------------------
+    SIM_PLAYERS_ENABLED         = true,
+
+    -----------------------------------------------------------------------
     -- Performance
     -----------------------------------------------------------------------
     MAX_SPAWN_BATCH_SIZE        = 5,        -- Max entities spawned per tick per zone
