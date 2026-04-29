@@ -19,19 +19,24 @@ zones[xi.zone.CASTLE_ZVAHL_BAILEYS] =
         LOGIN_CAMPAIGN_UNDERWAY       = 7162, -- The [/January/February/March/April/May/June/July/August/September/October/November/December] <number> Login Campaign is currently underway!
         LOGIN_NUMBER                  = 7163, -- In celebration of your most recent login (login no. <number>), we have provided you with <number> points! You currently have a total of <number> points.
         MEMBERS_LEVELS_ARE_RESTRICTED = 7183, -- Your party is unable to participate because certain members' levels are restricted.
-        CHEST_UNLOCKED                = 7242, -- You unlock the chest!
-        COMMON_SENSE_SURVIVAL         = 7617, -- It appears that you have arrived at a new survival guide provided by the Adventurers' Mutual Aid Network. Common sense dictates that you should now be able to teleport here from similar tomes throughout the world.
+        CHEST_UNLOCKED                = 7243, -- You unlock the chest!
+        MOBLIN_EARPLUG_ON_THE_GROUND  = 7569, -- You see a Moblin earplug lying on the ground. Could Zeelozok have met his end here...?
+        MARQUIS_ATTACKS               = 7570, -- Marquis Andrealphus and his minions attack!
+        YOU_FIND_NOTHING              = 7571, -- You find nothing.
+        BEGONE_FROM_THESE_HALLS       = 7572, -- Insolent adventurer! Begone from these halls!
+        COMMON_SENSE_SURVIVAL         = 7618, -- It appears that you have arrived at a new survival guide provided by the Adventurers' Mutual Aid Network. Common sense dictates that you should now be able to teleport here from similar tomes throughout the world.
     },
     mob =
     {
-        MARQUIS_SABNOCK  = GetFirstID('Marquis_Sabnock'),
-        LIKHO            = GetFirstID('Likho'),
-        MARQUIS_ALLOCEN  = GetFirstID('Marquis_Allocen'),
-        MARQUIS_AMON     = GetFirstID('Marquis_Amon'),
-        DUKE_HABORYM     = GetFirstID('Duke_Haborym'),
-        GRAND_DUKE_BATYM = GetFirstID('Grand_Duke_Batym'),
-        DARK_SPARK       = GetFirstID('Dark_Spark'),
-        MIMIC            = GetFirstID('Mimic'),
+        MARQUIS_SABNOCK    = GetFirstID('Marquis_Sabnock'),
+        LIKHO              = GetFirstID('Likho'),
+        MARQUIS_ALLOCEN    = GetFirstID('Marquis_Allocen'),
+        MARQUIS_AMON       = GetFirstID('Marquis_Amon'),
+        DUKE_HABORYM       = GetFirstID('Duke_Haborym'),
+        GRAND_DUKE_BATYM   = GetFirstID('Grand_Duke_Batym'),
+        DARK_SPARK         = GetFirstID('Dark_Spark'),
+        MIMIC              = GetFirstID('Mimic'),
+        MARQUIS_ANDREALPUS = GetFirstID('Marquis_Andrealphus'),
     },
     npc =
     {

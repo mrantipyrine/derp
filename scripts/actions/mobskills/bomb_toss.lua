@@ -1,38 +1,33 @@
 -----------------------------------
 -- Bomb Toss
--- Throws a bomb at an enemy.
+-- Family: Goblins
+-- Description: Throws a bomb at an enemy.
 -----------------------------------
 ---@type TMobSkill
 local mobskillObject = {}
 
 mobskillObject.onMobSkillCheck = function(target, mob, skill)
+    -- TODO: Bomb Toss suicide skill list weighting.
     return 0
 end
 
-mobskillObject.onMobWeaponSkill = function(target, mob, skill)
-    -- Goblin Friend Logic
-    if target:isPC() and xi.soloSynergy then
-        local favor = xi.soloSynergy.getGoblinFavor(target)
-        if favor >= 500 then
-            -- Healing Bomb: If player is hurt, heal instead of damage
-            local hpPct = target:getHP() / target:getMaxHP()
-            if hpPct < 0.75 then
-                local heal = math.floor(target:getMaxHP() * 0.20)
-                target:addHP(heal)
-                xi.soloSynergy.flash(target, 'Goblin Friend! Healing Bomb thrown.')
-                return 0
-            end
-        end
+mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
+    local params = {}
+
+    params.baseDamage     = mob:getMainLvl() + 2
+    params.fTP            = { 3, 3, 3 }
+    params.element        = xi.element.FIRE
+    params.attackType     = xi.attackType.MAGICAL
+    params.damageType     = xi.damageType.FIRE
+    params.shadowBehavior = xi.mobskills.shadowBehavior.IGNORE_SHADOWS
+
+    local info = xi.mobskills.mobMagicalMove(mob, target, skill, action, params)
+
+    if xi.mobskills.processDamage(mob, target, skill, action, info) then
+        target:takeDamage(info.damage, mob, info.attackType, info.damageType)
     end
 
-    local damage = mob:getWeaponDmg() * 3
-
-    damage = xi.mobskills.mobMagicalMove(mob, target, skill, damage, xi.element.FIRE, 1, xi.mobskills.magicalTpBonus.MAB_BONUS, 1)
-    damage = xi.mobskills.mobFinalAdjustments(damage, mob, skill, target, xi.attackType.MAGICAL, xi.damageType.FIRE, xi.mobskills.shadowBehavior.IGNORE_SHADOWS)
-
-    target:takeDamage(damage, mob, xi.attackType.MAGICAL, xi.damageType.FIRE)
-
-    return damage
+    return info.damage
 end
 
 return mobskillObject

@@ -1,7 +1,8 @@
 -----------------------------------
---  Battle Dance
---  Description: Delivers an area attack. Additional effect: DEX Down. Duration of effect varies with TP.
---  Type: Physical (Slashing)
+-- Battle Dance
+-- Family: Orc
+-- Description: Delivers an area attack. Additional Effect: DEX Down
+-- Note: Used by melee orcs
 -----------------------------------
 ---@type TMobSkill
 local mobskillObject = {}
@@ -10,17 +11,25 @@ mobskillObject.onMobSkillCheck = function(target, mob, skill)
     return 0
 end
 
-mobskillObject.onMobWeaponSkill = function(target, mob, skill)
-    local numhits = 1
-    local accmod = 1
-    local ftp    = 2.0
-    local info = xi.mobskills.mobPhysicalMove(mob, target, skill, numhits, accmod, ftp, xi.mobskills.physicalTpBonus.NO_EFFECT)
-    local dmg = xi.mobskills.mobFinalAdjustments(info.dmg, mob, skill, target, xi.attackType.PHYSICAL, xi.damageType.SLASHING, xi.mobskills.shadowBehavior.NUMSHADOWS_3)
-    target:takeDamage(dmg, mob, xi.attackType.PHYSICAL, xi.damageType.SLASHING)
+mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
+    local params = {}
 
-    xi.mobskills.mobPhysicalStatusEffectMove(mob, target, skill, xi.effect.DEX_DOWN, 10, 3, 120)
+    params.baseDamage     = mob:getWeaponDmg()
+    params.numHits        = 1
+    params.fTP            = { 1.0, 1.0, 1.0 } -- TODO: Capture fTP Scalings
+    params.attackType     = xi.attackType.PHYSICAL
+    params.damageType     = xi.damageType.SLASHING
+    params.shadowBehavior = xi.mobskills.shadowBehavior.NUMSHADOWS_4
 
-    return dmg
+    local info = xi.mobskills.mobPhysicalMove(mob, target, skill, action, params)
+
+    if xi.mobskills.processDamage(mob, target, skill, action, info) then
+        target:takeDamage(info.damage, mob, info.attackType, info.damageType)
+
+        xi.mobskills.mobStatusEffectMove(mob, target, xi.effect.DEX_DOWN, 10, 9, 180)
+    end
+
+    return info.damage
 end
 
 return mobskillObject

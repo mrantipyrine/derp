@@ -2,6 +2,7 @@
 -- Puppetmaster Job Utilities
 -----------------------------------
 require('scripts/globals/ability')
+require('scripts/globals/jobpoints')
 -----------------------------------
 xi = xi or {}
 xi.job_utils = xi.job_utils or {}
@@ -56,7 +57,7 @@ end
 
 -- On Ability Use Overdrive
 xi.job_utils.puppetmaster.onAbilityUseOverdrive = function(player, target, ability)
-    player:addStatusEffect(xi.effect.OVERDRIVE, 0, 0, 60)
+    player:addStatusEffect(xi.effect.OVERDRIVE, { duration = 60, origin = player })
 
     return xi.effect.OVERDRIVE
 end
@@ -77,28 +78,51 @@ end
 -- On Ability Use Activate
 xi.job_utils.puppetmaster.onAbilityUseActivate = function(player, target, ability)
     xi.pet.spawnPet(player, xi.petId.AUTOMATON)
+
+    local pet = player:getPet()
+
+    if pet then
+        local jpValue = player:getJobPointLevel(xi.jp.AUTOMATON_HP_MP_BONUS)
+        pet:addMod(xi.mod.HP, jpValue * 10)
+        pet:addMod(xi.mod.MP, jpValue * 5)
+        pet:updateHealth()
+
+        -- ensure it spawns at full hp
+        pet:addHP(pet:getMod(xi.mod.HP))
+        pet:addMP(pet:getMod(xi.mod.MP))
+    end
 end
 
--- On Ability Check Deux Ex Automata
-xi.job_utils.puppetmaster.onAbilityCheckDeuxExAutomata = function(player, target, ability)
+-- On Ability Check Deus Ex Automata
+xi.job_utils.puppetmaster.onAbilityCheckDeusExAutomata = function(player, target, ability)
     if player:getPet() ~= nil then
         return xi.msg.basic.ALREADY_HAS_A_PET, 0
     elseif not player:canUseMisc(xi.zoneMisc.PET) then
         return xi.msg.basic.CANT_BE_USED_IN_AREA, 0
     else
+        local jpValue = player:getJobPointLevel(xi.jp.DEUS_EX_AUTOMATA_RECAST)
+
+        ability:setRecast(ability:getRecast() - jpValue)
+
         return 0, 0
     end
 end
 
--- On Ability Use Deux Ex Automata
-xi.job_utils.puppetmaster.onAbilityUseDeuxExAutomata = function(player, target, ability)
+-- On Ability Use Deus Ex Automata
+xi.job_utils.puppetmaster.onAbilityUseDeusExAutomata = function(player, target, ability)
     xi.pet.spawnPet(player, xi.petId.AUTOMATON)
     local pet = player:getPet()
 
     if pet then
+        local jpValue = player:getJobPointLevel(xi.jp.AUTOMATON_HP_MP_BONUS)
+        pet:addMod(xi.mod.HP, jpValue * 10)
+        pet:addMod(xi.mod.MP, jpValue * 5)
+        pet:updateHealth()
+
+        -- ensure it spawns at specific HPP/MPP based on level
         local percent = math.floor((player:getMainLvl() / 3)) / 100
-        pet:setHP(math.max(pet:getHP() * percent, 1))
-        pet:setMP(pet:getMP() * percent)
+        pet:setHP(math.max(pet:getMaxHP() * percent, 1))
+        pet:setMP(pet:getMaxMP() * percent)
     end
 end
 
@@ -125,6 +149,8 @@ xi.job_utils.puppetmaster.onAbilityCheckRepair = function(player, target, abilit
         return xi.msg.basic.REQUIRES_A_PET, 0
     elseif not pet:isAutomaton() then
         return xi.msg.basic.NO_EFFECT_ON_PET, 0
+    elseif pet:checkDistance(player) > 20.0 + player:getHitboxSize() + pet:getHitboxSize() then
+        return xi.msg.basic.TOO_FAR_AWAY_2, 0
     else
         local id = player:getEquipID(xi.slot.AMMO)
 
@@ -137,11 +163,14 @@ xi.job_utils.puppetmaster.onAbilityCheckRepair = function(player, target, abilit
 end
 
 -- On Ability Use Repair
-xi.job_utils.puppetmaster.onAbilityUseRepair = function(player, target, ability)
+xi.job_utils.puppetmaster.onAbilityUseRepair = function(player, target, ability, action)
     local pet = player:getPet()
     if not pet then
         return
     end
+
+    -- Self-cast ability but reports on pet
+    action:ID(player:getID(), pet:getID())
 
     local petMaxHP            = pet:getMaxHP()
     local numRemovableEffects = player:getMod(xi.mod.REPAIR_EFFECT)
@@ -170,8 +199,8 @@ xi.job_utils.puppetmaster.onAbilityUseRepair = function(player, target, ability)
     pet:wakeUp()
 
     pet:delStatusEffect(xi.effect.REGEN)
-    pet:addStatusEffect(xi.effect.REGEN, regenAmount, 3, regenTime) -- 3 = tick, each 3 seconds.
-    player:removeAmmo()
+    pet:addStatusEffect(xi.effect.REGEN, { power = regenAmount, duration = regenTime, origin = player, tick = 3 }) -- 3 = tick, each 3 seconds.
+    player:removeAmmo(1)
     return totalHealing
 end
 
@@ -208,7 +237,7 @@ xi.job_utils.puppetmaster.onAbilityUseMaintenance = function(player, target, abi
         numRemoved = numRemoved + 1
     until toRemove <= 0
 
-    player:removeAmmo()
+    player:removeAmmo(1)
 
     return numRemoved
 end
@@ -227,7 +256,7 @@ xi.job_utils.puppetmaster.onAbilityCheckRoleReversal = function(player, target, 
 end
 
 -- On Ability Use Role Reversal
-xi.job_utils.puppetmaster.onAbilityUseRole Reversal = function(player, target, ability)
+xi.job_utils.puppetmaster.onAbilityUseRoleReversal = function(player, target, ability)
     local pet = player:getPet()
     if pet then
         local bonus    = 1 + (player:getMerit(xi.merit.ROLE_REVERSAL) - 5) / 100
@@ -302,7 +331,7 @@ end
 
 -- On Ability Use Tactical Switch
 xi.job_utils.puppetmaster.onAbilityUseTacticalSwitch = function(player, target, ability)
-    -- target:addStatusEffect(xi.effect.TACTICAL_SWITCH, 18, 1, 1) -- TODO: implement xi.effect.TACTICAL_SWITCH
+    -- target:addStatusEffect(xi.effect.TACTICAL_SWITCH, { power = 18, duration = 1, origin = player, tick = 1 }) -- TODO: implement xi.effect.TACTICAL_SWITCH
 end
 
 -- On Ability Check Cooldown
@@ -320,7 +349,9 @@ end
 
 -- On Ability Use Cooldown
 xi.job_utils.puppetmaster.onAbilityUseCooldown = function(player, target, ability)
-    player:reduceBurden(50, 0)
+    local jpValue = player:getJobPointLevel(xi.jp.COOLDOWN_EFFECT)
+
+    player:reduceBurden(50, jpValue)
 
     if player:hasStatusEffect(xi.effect.OVERLOAD) then
         player:delStatusEffect(xi.effect.OVERLOAD)
@@ -336,7 +367,7 @@ end
 
 -- On Ability Use Heady Artiface
 xi.job_utils.puppetmaster.onAbilityUseHeadyArtiface = function(player, target, ability)
-    -- target:addStatusEffect(xi.effect.HEADY_ARTIFICE, 18, 1, 1) -- TODO: implement xi.effect.HEADY_ARTIFICE
+    -- target:addStatusEffect(xi.effect.HEADY_ARTIFICE, { power = 18, duration = 1, origin = player, tick = 1 }) -- TODO: implement xi.effect.HEADY_ARTIFICE
 end
 
 -- On Ability Check Deploy

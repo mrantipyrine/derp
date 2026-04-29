@@ -1,6 +1,7 @@
 -----------------------------------
 -- Drenched! It Began with a Raindrop
 -- A Moogle Kupo d'Etat M2
+-----------------------------------
 -- !addmission 10 1
 -- ORCISH_PLATE_ARMOR : !additem 2757
 -- QUADAV_BACKSCALE   : !additem 2758
@@ -21,7 +22,7 @@ mission.sections[1] = -- REMEMBER: Lua is 1-indexed!
 {
     check = function(player, currentMission, missionStatus, vars)
         return currentMission == mission.missionId and
-            xi.moghouse.isInMogHouseInHomeNation(player)
+            xi.moghouse.inMogHouseInHomeNation(player)
     end,
 }
 

@@ -1,6 +1,7 @@
 -----------------------------------
 -- Trust: Lion II
 -----------------------------------
+---@type TSpellTrust
 local spellObject = {}
 
 spellObject.onMagicCastingCheck = function(caster, target, spell)
@@ -19,14 +20,14 @@ spellObject.onMobSpawn = function(mob)
         [xi.magic.spell.ARCIELA_II] = xi.trust.messageOffset.TEAMWORK_5,
     })
 
-    mob:addListener('WEAPONSKILL_USE', 'LION_II_WEAPONSKILL_USE', function(mobArg, target, wsid, tp, action)
-        if wsid == 3493 then -- Powder Keg
+    mob:addListener('WEAPONSKILL_USE', 'LION_II_WEAPONSKILL_USE', function(mobArg, target, skill, tp, action, damage)
+        if skill:getID() == 3493 then -- Powder Keg
             --  I won't sit by and let Vana'diel be engulged!
             xi.trust.message(mobArg, xi.trust.messageOffset.SPECIAL_MOVE_1)
         end
     end)
 
-    mob:addSimpleGambit(ai.t.SELF, ai.c.NOT_STATUS, xi.effect.COPY_IMAGE, ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily.UTSUSEMI)
+    mob:addGambit(ai.t.SELF, { ai.c.NOT_STATUS, xi.effect.COPY_IMAGE }, { ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily.UTSUSEMI })
 
     mob:setTrustTPSkillSettings(ai.tp.CLOSER_UNTIL_TP, ai.s.RANDOM, 3000)
 end

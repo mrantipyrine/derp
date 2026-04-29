@@ -125,7 +125,7 @@ quest.sections =
                     player:confirmTrade()
 
                     quest:setVar(player, 'Prog', 3)
-                    quest:setVar(player, 'Wait', os.time())
+                    quest:setVar(player, 'Wait', GetSystemTime())
                 end,
             },
         },
@@ -143,7 +143,7 @@ quest.sections =
             {
                 onTrigger = function(player, npc)
                     local wait = quest:getVar(player, 'Wait')
-                    if os.time() >= wait + 60 then
+                    if GetSystemTime() >= wait + 60 then
                         return quest:progressEvent(311)
                     else
                         return quest:event(310) -- Please wait
@@ -159,7 +159,11 @@ quest.sections =
                     if player:getFreeSlotsCount() > 0 and not player:hasItem(chosenMannequin) then
                         if quest:complete(player) then
                             player:tradeComplete()
-                            player:addItem({ id = chosenMannequin, exdata = { [18] = race, [19] = 0 } })
+                            local item = player:addItem({ id = chosenMannequin })
+                            if item then
+                                item:setExData({ race = race })
+                            end
+
                             player:messageSpecial(mhauraID.text.ITEM_OBTAINED, chosenMannequin)
                         end
                     else

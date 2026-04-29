@@ -1,0 +1,753 @@
+---
+metadata:
+  purpose: Generated level 5-75 overpowered weapon stat packages applied to safe novelty
+    level 1 weapon candidates.
+  source_updated: weapons.yml
+  count: 42
+  armor_updated: false
+  excluded:
+    fishing_or_bait: 34
+    none_skill_or_ammo: 21
+    blank_item_type_none_placeholders: 1019
+items:
+- id: 17031
+  source: weapons.yml
+  name: Shell Scepter
+  skill_type: Club
+  slots:
+  - Main
+  - Sub
+  old_level: 1
+  new_level: 35
+  old_damage: 1
+  old_delay: 288
+  damage: 113
+  delay: 216
+  dps: 3138
+  description:
+  - DMG:113 Delay:216 INT+18 MND+18 CHR+10
+  - Magic Attack Bonus+43 Fast Cast+5%
+  - 'Refresh+2 Additional effect: Magic damage'
+- id: 17032
+  source: weapons.yml
+  name: Gobbie Gavel
+  skill_type: Club
+  slots:
+  - Main
+  - Sub
+  old_level: 1
+  new_level: 40
+  old_damage: 1
+  old_delay: 288
+  damage: 128
+  delay: 216
+  dps: 3555
+  description:
+  - DMG:128 Delay:216 INT+20 MND+20 CHR+11
+  - Magic Attack Bonus+48 Fast Cast+6%
+  - 'Refresh+2 Additional effect: Magic damage'
+- id: 17074
+  source: weapons.yml
+  name: Chocobo Wand
+  skill_type: Club
+  slots:
+  - Main
+  - Sub
+  old_level: 1
+  new_level: 25
+  old_damage: 3
+  old_delay: 216
+  damage: 83
+  delay: 216
+  dps: 2305
+  description:
+  - DMG:83 Delay:216 INT+14 MND+14 CHR+8
+  - Magic Attack Bonus+33 Fast Cast+4%
+  - 'Refresh+2 Additional effect: Magic damage'
+- id: 17345
+  source: weapons.yml
+  name: Flute
+  skill_type: WindInstrument
+  slots:
+  - Range
+  old_level: 1
+  new_level: 40
+  old_damage: 0
+  old_delay: 240
+  damage: 0
+  delay: 240
+  dps: 0
+  description:
+  - CHR+29 Magic Accuracy+58
+  - Song spell damage +58% Song duration +42%
+  - Refresh+2 Fast Cast+3%
+- id: 17353
+  source: weapons.yml
+  name: Maple Harp
+  skill_type: StringInstrument
+  slots:
+  - Range
+  old_level: 1
+  new_level: 15
+  old_damage: 0
+  old_delay: 240
+  damage: 0
+  delay: 240
+  dps: 0
+  description:
+  - CHR+14 Magic Accuracy+28
+  - Song spell damage +28% Song duration +22%
+  - Refresh+1 Fast Cast+2%
+- id: 17372
+  source: weapons.yml
+  name: Flute +1
+  skill_type: WindInstrument
+  slots:
+  - Range
+  old_level: 1
+  new_level: 30
+  old_damage: 0
+  old_delay: 240
+  damage: 0
+  delay: 240
+  dps: 0
+  description:
+  - CHR+23 Magic Accuracy+46
+  - Song spell damage +46% Song duration +34%
+  - Refresh+2 Fast Cast+3%
+- id: 17373
+  source: weapons.yml
+  name: Maple Harp +1
+  skill_type: StringInstrument
+  slots:
+  - Range
+  old_level: 1
+  new_level: 45
+  old_damage: 0
+  old_delay: 240
+  damage: 0
+  delay: 240
+  dps: 0
+  description:
+  - CHR+32 Magic Accuracy+64
+  - Song spell damage +64% Song duration +46%
+  - Refresh+2 Fast Cast+4%
+- id: 18102
+  source: weapons.yml
+  name: Pitchfork
+  skill_type: PoleArm
+  slots:
+  - Main
+  old_level: 1
+  new_level: 20
+  old_damage: 1
+  old_delay: 396
+  damage: 112
+  delay: 340
+  dps: 1976
+  description:
+  - DMG:112 Delay:340 STR+17 DEX+13
+  - Accuracy+34 "Store TP"+12
+  - Augments jump attacks III Haste+4%
+- id: 18103
+  source: weapons.yml
+  name: Pitchfork +1
+  skill_type: PoleArm
+  slots:
+  - Main
+  old_level: 1
+  new_level: 30
+  old_damage: 2
+  old_delay: 369
+  damage: 162
+  delay: 340
+  dps: 2858
+  description:
+  - DMG:162 Delay:340 STR+23 DEX+17
+  - Accuracy+46 "Store TP"+16
+  - Augments jump attacks III Haste+5%
+- id: 18399
+  source: weapons.yml
+  name: Charm Wand
+  skill_type: Club
+  slots:
+  - Main
+  - Sub
+  old_level: 1
+  new_level: 50
+  old_damage: 2
+  old_delay: 264
+  damage: 158
+  delay: 216
+  dps: 4388
+  description:
+  - DMG:158 Delay:216 INT+24 MND+24 CHR+13
+  - Magic Attack Bonus+58 Fast Cast+7%
+  - 'Refresh+3 Additional effect: Magic damage'
+- id: 18400
+  source: weapons.yml
+  name: Charm Wand +1
+  skill_type: Club
+  slots:
+  - Main
+  - Sub
+  old_level: 1
+  new_level: 60
+  old_damage: 3
+  old_delay: 264
+  damage: 188
+  delay: 180
+  dps: 6266
+  description:
+  - DMG:188 Delay:180 INT+28 MND+28 CHR+15
+  - Magic Attack Bonus+68 Fast Cast+8%
+  - 'Refresh+3 Additional effect: Magic damage'
+- id: 18401
+  source: weapons.yml
+  name: Moogle Rod
+  skill_type: Club
+  slots:
+  - Main
+  - Sub
+  old_level: 1
+  new_level: 60
+  old_damage: 1
+  old_delay: 288
+  damage: 188
+  delay: 180
+  dps: 6266
+  description:
+  - DMG:188 Delay:180 INT+28 MND+28 CHR+15
+  - Magic Attack Bonus+68 Fast Cast+8%
+  - 'Refresh+3 Additional effect: Magic damage'
+- id: 18464
+  source: weapons.yml
+  name: Ark Tachi
+  skill_type: GreatKatana
+  slots:
+  - Main
+  old_level: 1
+  new_level: 40
+  old_damage: 1
+  old_delay: 999
+  damage: 255
+  delay: 360
+  dps: 4250
+  description:
+  - DMG:255 Delay:360 STR+29 DEX+29
+  - '"Store TP"+29 TP Bonus+800'
+  - Weaponskill Damage+42% Haste+6%
+- id: 18545
+  source: weapons.yml
+  name: Ark Tabar
+  skill_type: Axe
+  slots:
+  - Main
+  - Sub
+  old_level: 1
+  new_level: 5
+  old_damage: 1
+  old_delay: 999
+  damage: 37
+  delay: 280
+  dps: 792
+  description:
+  - DMG:37 Delay:280 STR+8 CHR+8
+  - 'Pet: Attack+32 Pet: Accuracy+16'
+  - 'Pet: Haste+2% "Double Attack"+4%'
+- id: 18563
+  source: weapons.yml
+  name: Ark Scythe
+  skill_type: Scythe
+  slots:
+  - Main
+  old_level: 1
+  new_level: 30
+  old_damage: 1
+  old_delay: 999
+  damage: 228
+  delay: 390
+  dps: 3507
+  description:
+  - DMG:228 Delay:390 STR+30 DEX+23
+  - Scythe Skill+58 Critical hit rate +23
+  - 'Weaponskill Damage+40% Additional effect: HP Drain'
+- id: 18842
+  source: weapons.yml
+  name: Nmd. Moogle Rod
+  skill_type: Club
+  slots:
+  - Main
+  - Sub
+  old_level: 1
+  new_level: 15
+  old_damage: 1
+  old_delay: 288
+  damage: 53
+  delay: 216
+  dps: 1472
+  description:
+  - DMG:53 Delay:216 INT+10 MND+10 CHR+6
+  - Magic Attack Bonus+23 Fast Cast+3%
+  - 'Refresh+1 Additional effect: Magic damage'
+- id: 18871
+  source: weapons.yml
+  name: Kitty Rod
+  skill_type: Club
+  slots:
+  - Main
+  - Sub
+  old_level: 1
+  new_level: 10
+  old_damage: 1
+  old_delay: 288
+  damage: 38
+  delay: 216
+  dps: 1055
+  description:
+  - DMG:38 Delay:216 INT+8 MND+8 CHR+5
+  - Magic Attack Bonus+18 Fast Cast+3%
+  - 'Refresh+1 Additional effect: Magic damage'
+- id: 18880
+  source: weapons.yml
+  name: Maestro's Baton
+  skill_type: Club
+  slots:
+  - Main
+  - Sub
+  old_level: 1
+  new_level: 55
+  old_damage: 1
+  old_delay: 288
+  damage: 173
+  delay: 180
+  dps: 5766
+  description:
+  - DMG:173 Delay:180 INT+26 MND+26 CHR+14
+  - Magic Attack Bonus+63 Fast Cast+7%
+  - 'Refresh+3 Additional effect: Magic damage'
+- id: 18881
+  source: weapons.yml
+  name: Melomane Mallet
+  skill_type: Club
+  slots:
+  - Main
+  - Sub
+  old_level: 1
+  new_level: 60
+  old_damage: 1
+  old_delay: 288
+  damage: 188
+  delay: 180
+  dps: 6266
+  description:
+  - DMG:188 Delay:180 INT+28 MND+28 CHR+15
+  - Magic Attack Bonus+68 Fast Cast+8%
+  - 'Refresh+3 Additional effect: Magic damage'
+- id: 18912
+  source: weapons.yml
+  name: Ark Saber
+  skill_type: Sword
+  slots:
+  - Main
+  - Sub
+  old_level: 1
+  new_level: 5
+  old_damage: 1
+  old_delay: 999
+  damage: 30
+  delay: 220
+  dps: 818
+  description:
+  - DMG:30 Delay:220 STR+8 MND+7
+  - Accuracy+16 Magic Accuracy+14
+  - 'Weaponskill Damage+14% Additional effect: HP Drain'
+- id: 18913
+  source: weapons.yml
+  name: Ark Sword
+  skill_type: Sword
+  slots:
+  - Main
+  - Sub
+  old_level: 1
+  new_level: 10
+  old_damage: 1
+  old_delay: 999
+  damage: 50
+  delay: 220
+  dps: 1363
+  description:
+  - DMG:50 Delay:220 STR+11 MND+9
+  - Accuracy+22 Magic Accuracy+18
+  - 'Weaponskill Damage+18% Additional effect: HP Drain'
+- id: 20532
+  source: weapons.yml
+  name: Worm Feelers
+  skill_type: HandToHand
+  slots:
+  - Main
+  old_level: 1
+  new_level: 15
+  old_damage: 4
+  old_delay: 336
+  damage: 34
+  delay: 160
+  dps: 1275
+  description:
+  - DMG:+34 Delay:+160 STR+13 DEX+13
+  - Accuracy+28 Attack+28
+  - '"Triple Attack"+6% Subtle Blow+11'
+- id: 20533
+  source: weapons.yml
+  name: Worm Feelers +1
+  skill_type: HandToHand
+  slots:
+  - Main
+  old_level: 1
+  new_level: 25
+  old_damage: 5
+  old_delay: 331
+  damage: 54
+  delay: 160
+  dps: 2025
+  description:
+  - DMG:+54 Delay:+160 STR+19 DEX+19
+  - Accuracy+40 Attack+40
+  - '"Triple Attack"+8% Subtle Blow+15'
+- id: 21074
+  source: weapons.yml
+  name: Kupo Rod
+  skill_type: Club
+  slots:
+  - Main
+  - Sub
+  old_level: 1
+  new_level: 75
+  old_damage: 1
+  old_delay: 288
+  damage: 233
+  delay: 180
+  dps: 7766
+  description:
+  - DMG:233 Delay:180 INT+34 MND+34 CHR+18
+  - Magic Attack Bonus+83 Fast Cast+9%
+  - 'Refresh+4 Additional effect: Magic damage'
+- id: 21086
+  source: weapons.yml
+  name: Heartstopper
+  skill_type: Club
+  slots:
+  - Main
+  - Sub
+  old_level: 1
+  new_level: 60
+  old_damage: 1
+  old_delay: 288
+  damage: 188
+  delay: 180
+  dps: 6266
+  description:
+  - DMG:188 Delay:180 INT+28 MND+28 CHR+15
+  - Magic Attack Bonus+68 Fast Cast+8%
+  - 'Refresh+3 Additional effect: Magic damage'
+- id: 21087
+  source: weapons.yml
+  name: Heartstopper +1
+  skill_type: Club
+  slots:
+  - Main
+  - Sub
+  old_level: 1
+  new_level: 70
+  old_damage: 2
+  old_delay: 280
+  damage: 218
+  delay: 180
+  dps: 7266
+  description:
+  - DMG:218 Delay:180 INT+32 MND+32 CHR+17
+  - Magic Attack Bonus+78 Fast Cast+9%
+  - 'Refresh+3 Additional effect: Magic damage'
+- id: 21153
+  source: weapons.yml
+  name: Malice Masher
+  skill_type: Staff
+  slots:
+  - Main
+  old_level: 1
+  new_level: 55
+  old_damage: 1
+  old_delay: 366
+  damage: 230
+  delay: 330
+  dps: 4181
+  description:
+  - DMG:230 Delay:330 INT+39 MND+39
+  - Magic Attack Bonus+76 Magic Accuracy+76
+  - Fast Cast+7% Avatar perpetuation cost -3
+- id: 21154
+  source: weapons.yml
+  name: Malice Masher +1
+  skill_type: Staff
+  slots:
+  - Main
+  old_level: 1
+  new_level: 65
+  old_damage: 2
+  old_delay: 356
+  damage: 270
+  delay: 300
+  dps: 5400
+  description:
+  - DMG:270 Delay:300 INT+45 MND+45
+  - Magic Attack Bonus+88 Magic Accuracy+88
+  - Fast Cast+8% Avatar perpetuation cost -4
+- id: 21760
+  source: weapons.yml
+  name: Dispatcher's Axe
+  skill_type: GreatAxe
+  slots:
+  - Main
+  old_level: 1
+  new_level: 25
+  old_damage: 1
+  old_delay: 480
+  damage: 195
+  delay: 420
+  dps: 2785
+  description:
+  - DMG:195 Delay:420 STR+28 VIT+20
+  - Attack+70 "Double Attack"+10%
+  - Weaponskill Damage+40% Physical damage taken -4%
+- id: 22003
+  source: weapons.yml
+  name: Arthro's Scepter
+  skill_type: Club
+  slots:
+  - Main
+  - Sub
+  old_level: 1
+  new_level: 70
+  old_damage: 1
+  old_delay: 288
+  damage: 218
+  delay: 180
+  dps: 7266
+  description:
+  - DMG:218 Delay:180 INT+32 MND+32 CHR+17
+  - Magic Attack Bonus+78 Fast Cast+9%
+  - 'Refresh+3 Additional effect: Magic damage'
+- id: 22004
+  source: weapons.yml
+  name: Soulflayer's Wand
+  skill_type: Club
+  slots:
+  - Main
+  - Sub
+  old_level: 1
+  new_level: 75
+  old_damage: 1
+  old_delay: 264
+  damage: 233
+  delay: 180
+  dps: 7766
+  description:
+  - DMG:233 Delay:180 INT+34 MND+34 CHR+18
+  - Magic Attack Bonus+83 Fast Cast+9%
+  - 'Refresh+4 Additional effect: Magic damage'
+- id: 22005
+  source: weapons.yml
+  name: Burrower's Wand
+  skill_type: Club
+  slots:
+  - Main
+  - Sub
+  old_level: 1
+  new_level: 5
+  old_damage: 1
+  old_delay: 264
+  damage: 23
+  delay: 216
+  dps: 638
+  description:
+  - DMG:23 Delay:216 INT+6 MND+6 CHR+4
+  - Magic Attack Bonus+13 Fast Cast+2%
+  - 'Refresh+1 Additional effect: Magic damage'
+- id: 22019
+  source: weapons.yml
+  name: Jingly Rod
+  skill_type: Club
+  slots:
+  - Main
+  - Sub
+  old_level: 1
+  new_level: 75
+  old_damage: 1
+  old_delay: 216
+  damage: 233
+  delay: 180
+  dps: 7766
+  description:
+  - DMG:233 Delay:180 INT+34 MND+34 CHR+18
+  - Magic Attack Bonus+83 Fast Cast+9%
+  - 'Refresh+4 Additional effect: Magic damage'
+- id: 22020
+  source: weapons.yml
+  name: Jingly Rod +1
+  skill_type: Club
+  slots:
+  - Main
+  - Sub
+  old_level: 1
+  new_level: 10
+  old_damage: 2
+  old_delay: 210
+  damage: 38
+  delay: 216
+  dps: 1055
+  description:
+  - DMG:38 Delay:216 INT+8 MND+8 CHR+5
+  - Magic Attack Bonus+18 Fast Cast+3%
+  - 'Refresh+1 Additional effect: Magic damage'
+- id: 22043
+  source: weapons.yml
+  name: Apkallu Scepter
+  skill_type: Club
+  slots:
+  - Main
+  - Sub
+  old_level: 1
+  new_level: 45
+  old_damage: 1
+  old_delay: 216
+  damage: 143
+  delay: 216
+  dps: 3972
+  description:
+  - DMG:143 Delay:216 INT+22 MND+22 CHR+12
+  - Magic Attack Bonus+53 Fast Cast+6%
+  - 'Refresh+2 Additional effect: Magic damage'
+- id: 22044
+  source: weapons.yml
+  name: Tengu War Fan
+  skill_type: Club
+  slots:
+  - Main
+  - Sub
+  old_level: 1
+  new_level: 50
+  old_damage: 1
+  old_delay: 216
+  damage: 158
+  delay: 216
+  dps: 4388
+  description:
+  - DMG:158 Delay:216 INT+24 MND+24 CHR+13
+  - Magic Attack Bonus+58 Fast Cast+7%
+  - 'Refresh+3 Additional effect: Magic damage'
+- id: 22047
+  source: weapons.yml
+  name: Korrigan Mallet
+  skill_type: Club
+  slots:
+  - Main
+  - Sub
+  old_level: 1
+  new_level: 65
+  old_damage: 1
+  old_delay: 288
+  damage: 203
+  delay: 180
+  dps: 6766
+  description:
+  - DMG:203 Delay:180 INT+30 MND+30 CHR+16
+  - Magic Attack Bonus+73 Fast Cast+8%
+  - 'Refresh+3 Additional effect: Magic damage'
+- id: 22048
+  source: weapons.yml
+  name: Adenium Mallet
+  skill_type: Club
+  slots:
+  - Main
+  - Sub
+  old_level: 1
+  new_level: 70
+  old_damage: 1
+  old_delay: 288
+  damage: 218
+  delay: 180
+  dps: 7266
+  description:
+  - DMG:218 Delay:180 INT+32 MND+32 CHR+17
+  - Magic Attack Bonus+78 Fast Cast+9%
+  - 'Refresh+3 Additional effect: Magic damage'
+- id: 22049
+  source: weapons.yml
+  name: Citrullus Mallet
+  skill_type: Club
+  slots:
+  - Main
+  - Sub
+  old_level: 1
+  new_level: 75
+  old_damage: 1
+  old_delay: 288
+  damage: 233
+  delay: 180
+  dps: 7766
+  description:
+  - DMG:233 Delay:180 INT+34 MND+34 CHR+18
+  - Magic Attack Bonus+83 Fast Cast+9%
+  - 'Refresh+4 Additional effect: Magic damage'
+- id: 22051
+  source: weapons.yml
+  name: Lycopodium Mallet
+  skill_type: Club
+  slots:
+  - Main
+  - Sub
+  old_level: 1
+  new_level: 10
+  old_damage: 1
+  old_delay: 288
+  damage: 38
+  delay: 216
+  dps: 1055
+  description:
+  - DMG:38 Delay:216 INT+8 MND+8 CHR+5
+  - Magic Attack Bonus+18 Fast Cast+3%
+  - 'Refresh+1 Additional effect: Magic damage'
+- id: 22069
+  source: weapons.yml
+  name: Hapy Staff
+  skill_type: Staff
+  slots:
+  - Main
+  old_level: 1
+  new_level: 60
+  old_damage: 1
+  old_delay: 366
+  damage: 250
+  delay: 300
+  dps: 5000
+  description:
+  - DMG:250 Delay:300 INT+42 MND+42
+  - Magic Attack Bonus+82 Magic Accuracy+82
+  - Fast Cast+8% Avatar perpetuation cost -4
+- id: 22283
+  source: weapons.yml
+  name: Marvelous Cheer
+  skill_type: WindInstrument
+  slots:
+  - Range
+  old_level: 1
+  new_level: 55
+  old_damage: 0
+  old_delay: 240
+  damage: 0
+  delay: 240
+  dps: 0
+  description:
+  - CHR+38 Magic Accuracy+76
+  - Song spell damage +76% Song duration +54%
+  - Refresh+3 Fast Cast+4%

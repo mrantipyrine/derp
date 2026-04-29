@@ -9,7 +9,7 @@ mobskillObject.onMobSkillCheck = function(target, mob, skill)
     return 0
 end
 
-mobskillObject.onMobWeaponSkill = function(target, mob, skill)
+mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
     -- list of effects to give in AoE
     local effects = { xi.effect.POISON, xi.effect.PARALYSIS, xi.effect.BLINDNESS, xi.effect.SILENCE,
         xi.effect.WEIGHT, xi.effect.SLOW, xi.effect.ADDLE, xi.effect.DIA, xi.effect.BIO, xi.effect.BURN,
@@ -22,6 +22,7 @@ mobskillObject.onMobWeaponSkill = function(target, mob, skill)
         local currentEffect = mob:getStatusEffect(effect)
 
         if currentEffect then
+            -- TODO: Bio needs subPower copied over as well for the ATTP reduction.
             xi.mobskills.mobStatusEffectMove(mob, target, effect, currentEffect:getPower(), currentEffect:getTick(), currentEffect:getTimeRemaining() / 1000)
             mob:delStatusEffect(effect)
         end

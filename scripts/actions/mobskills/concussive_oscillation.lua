@@ -1,7 +1,7 @@
 -----------------------------------
 -- Concussive Oscillation
--- Smacks around all nearby targets. Additional effect: Knockback + Weight
--- Utsusemi/Blink absorb: 2-3 shadows
+-- Family: Yovra
+-- Description: Deals AoE physical damage to targets in range. Additional effect: Knockback + Weight
 -----------------------------------
 ---@type TMobSkill
 local mobskillObject = {}
@@ -11,17 +11,25 @@ mobskillObject.onMobSkillCheck = function(target, mob, skill)
 end
 
 -- TODO: allegedly damage varies with tp
-mobskillObject.onMobWeaponSkill = function(target, mob, skill)
-    local numhits = 1
-    local accmod = 1
-    local ftp    = 1.5
-    local info = xi.mobskills.mobPhysicalMove(mob, target, skill, numhits, accmod, ftp, xi.mobskills.physicalTpBonus.NO_EFFECT, 0, 0, 0)
-    local dmg = xi.mobskills.mobFinalAdjustments(info.dmg, mob, skill, target, xi.attackType.PHYSICAL, xi.damageType.BLUNT, xi.mobskills.shadowBehavior.NUMSHADOWS_3)
+mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
+    local params = {}
 
-    xi.mobskills.mobPhysicalStatusEffectMove(mob, target, skill, xi.effect.WEIGHT, 75, 0, 300)
+    params.baseDamage     = mob:getWeaponDmg()
+    params.numHits        = 1
+    params.fTP            = { 1.5, 1.5, 1.5 } -- TODO: Capture fTPs
+    params.attackType     = xi.attackType.PHYSICAL
+    params.damageType     = xi.damageType.BLUNT
+    params.shadowBehavior = xi.mobskills.shadowBehavior.NUMSHADOWS_3 -- TODO: Capture shadowBehavior
 
-    target:takeDamage(dmg, mob, xi.attackType.PHYSICAL, xi.damageType.BLUNT)
-    return dmg
+    local info = xi.mobskills.mobPhysicalMove(mob, target, skill, action, params)
+
+    if xi.mobskills.processDamage(mob, target, skill, action, info) then
+        target:takeDamage(info.damage, mob, info.attackType, info.damageType)
+
+        xi.mobskills.mobStatusEffectMove(mob, target, xi.effect.WEIGHT, 75, 0, 120)
+    end
+
+    return info.damage
 end
 
 return mobskillObject

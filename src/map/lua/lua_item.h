@@ -28,14 +28,16 @@
 class CItem;
 class CLuaItem
 {
-    CItem* m_PLuaItem;
+    const CItem* m_readItem;  // observer; always set
+    CItem*       m_writeItem; // null when wrapping a read-only template
 
 public:
     CLuaItem(CItem*);
+    CLuaItem(const CItem*);
 
-    CItem* GetItem() const
+    auto GetItem() const -> const CItem*
     {
-        return m_PLuaItem;
+        return m_readItem;
     }
 
     friend std::ostream& operator<<(std::ostream& out, const CLuaItem& item);
@@ -43,8 +45,8 @@ public:
     uint16 getID();    // get the item's id
     uint16 getSubID(); // get the item's subid
 
-    uint16 getFlag();  // get the item flag
-    uint8  getAHCat(); // get the ah category
+    auto  getFlag() const -> ItemFlag; // get the item flag
+    uint8 getAHCat();                  // get the ah category
 
     uint32 getQuantity(); // get the quantity of item
 
@@ -72,8 +74,10 @@ public:
     auto getAugment(uint8 slot) -> sol::table; // get the augment id and power in slot
     // int32 setAugment(lua_State*);           // set the augment id and power in slot
 
-    uint8  getSkillType();         // get skill type
-    uint16 getWeaponskillPoints(); // get current ws points
+    uint8  getSkillType();                            // get skill type
+    uint16 getWeaponskillPoints();                    // get current ws points
+    void   setWeaponskillPointsNeeded(uint16 points); // set required ws points to unlock (used for Unlocking a Myth era module)
+    uint16 getWeaponskillPointsNeeded();              // confirm required ws points on this item object
 
     bool  isTwoHanded();             // is a two handed weapon
     bool  isHandToHand();            // is a hand to hand weapon (or unarmed H2H)
@@ -90,15 +94,14 @@ public:
 
     bool isInstalled();
 
-    void setSoulPlateData(std::string const& name, uint32 interestData, uint8 zeni, uint16 skillIndex, uint8 fp);
-    auto getSoulPlateData() -> sol::table;
-
-    auto getExData() -> sol::table;            // NOTE: This is 0-indexed, to be in line with the underlying C++ data
-    void setExData(sol::table const& newData); // NOTE: This is 0-indexed, to be in line with the underlying C++ data
+    auto getExData() const -> sol::table;
+    void setExData(const sol::table& data) const;
+    auto getExDataRaw() const -> sol::table;         // NOTE: 0-indexed, to be in line with the underlying C++ data
+    void setExDataRaw(const sol::table& data) const; // NOTE: 0-indexed, to be in line with the underlying C++ data
 
     bool operator==(const CLuaItem& other) const
     {
-        return this->m_PLuaItem == other.m_PLuaItem;
+        return this->m_readItem == other.m_readItem;
     }
 
     static void Register();

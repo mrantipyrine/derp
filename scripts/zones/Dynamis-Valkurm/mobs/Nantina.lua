@@ -6,13 +6,14 @@
 local entity = {}
 
 entity.onMobSpawn = function(mob)
+    xi.dynamis.mobInfo(mob)
     mob:addImmunity(xi.immunity.LIGHT_SLEEP)
     mob:addImmunity(xi.immunity.DARK_SLEEP)
     mob:setMobSkillAttack(2011)
     mob:setLocalVar('nantina_skill_count', 0)
 end
 
-entity.onMobWeaponSkillPrepare = function(mob, target)
+entity.onMobMobskillChoose = function(mob, target, skillId)
     -- Blow x9 > Uppercut x3 > Attractant
     local skillCount = mob:getLocalVar('nantina_skill_count')
 

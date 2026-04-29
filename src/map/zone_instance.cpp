@@ -28,8 +28,8 @@
 #include "utils/charutils.h"
 #include "utils/zoneutils.h"
 
-CZoneInstance::CZoneInstance(ZONEID ZoneID, REGION_TYPE RegionID, CONTINENT_TYPE ContinentID, uint8 levelRestriction)
-: CZone(ZoneID, RegionID, ContinentID, levelRestriction)
+CZoneInstance::CZoneInstance(Scheduler& scheduler, MapConfig config, ZONEID ZoneID, REGION_TYPE RegionID, CONTINENT_TYPE ContinentID, uint8 levelRestriction)
+: CZone(scheduler, config, ZoneID, RegionID, ContinentID, levelRestriction)
 {
     TracyZoneScoped;
 }
@@ -132,12 +132,12 @@ void CZoneInstance::FindPartyForMob(CBaseEntity* PEntity)
     }
 }
 
-void CZoneInstance::TransportDepart(uint16 boundary, uint16 zone)
+void CZoneInstance::TransportDepart(uint16 boundary, uint16 prevZoneId, uint16 transportId)
 {
     TracyZoneScoped;
     for (const auto& PInstance : m_InstanceList)
     {
-        PInstance->TransportDepart(boundary, zone);
+        PInstance->TransportDepart(boundary, prevZoneId, transportId);
     }
 }
 
@@ -198,7 +198,7 @@ void CZoneInstance::IncreaseZoneCounter(CCharEntity* PChar)
 
     if (PChar->PInstance)
     {
-        if (!ZoneTimer)
+        if (!zoneTimerToken_.has_value())
         {
             createZoneTimers();
         }
@@ -229,7 +229,9 @@ void CZoneInstance::IncreaseZoneCounter(CCharEntity* PChar)
     else
     {
         ShowWarning(fmt::format("Failed to place {} in {} ({}). Placing them in that zone's instance exit area.",
-                                PChar->name, this->getName(), this->GetID())
+                                PChar->name,
+                                this->getName(),
+                                this->GetID())
                         .c_str());
 
         // instance no longer exists: put them outside (at exit)
@@ -382,14 +384,14 @@ void CZoneInstance::WideScan(CCharEntity* PChar, uint16 radius)
     }
 }
 
-void CZoneInstance::ZoneServer(timer::time_point tick)
+auto CZoneInstance::ZoneServer(timer::time_point tick) -> Task<void>
 {
     TracyZoneScoped;
 
     std::vector<CInstance*> instancesToRemove;
     for (const auto& PInstance : m_InstanceList)
     {
-        PInstance->ZoneServer(tick);
+        co_await PInstance->ZoneServer(tick);
         PInstance->CheckTime(tick);
 
         if ((PInstance->Failed() || PInstance->Completed()) && PInstance->CharListEmpty())
@@ -402,55 +404,58 @@ void CZoneInstance::ZoneServer(timer::time_point tick)
     {
         ShowDebug("[CZoneInstance] ZoneServer cleaned up Instance %s", PInstance->GetName());
 
-        // clang-format off
-        m_InstanceList.erase(std::find_if(m_InstanceList.begin(), m_InstanceList.end(), [&PInstance](const auto& el)
-        {
-            return el.get() == PInstance;
-        }));
-        // clang-format on
+        m_InstanceList.erase(
+            std::find_if(
+                m_InstanceList.begin(),
+                m_InstanceList.end(),
+                [&PInstance](const auto& el)
+                {
+                    return el.get() == PInstance;
+                }));
     }
 }
 
-void CZoneInstance::CheckTriggerAreas()
+auto CZoneInstance::CheckTriggerAreas() -> Task<void>
 {
     TracyZoneScoped;
 
     for (const auto& PInstance : m_InstanceList)
     {
-        // clang-format off
-        PInstance->ForEachChar([&](CCharEntity* PChar)
-        {
-            // TODO: When we start to use octrees or spatial hashing to split up zones,
-            //     : use them here to make the search domain smaller.
-
-            // Do not enter trigger areas while loading in. Set in xi.player.onGameIn
-            if (PChar->GetLocalVar("ZoningIn") > 0)
+        PInstance->ForEachChar(
+            [&](CCharEntity* PChar)
             {
-                return;
-            }
+                // TODO: When we start to use octrees or spatial hashing to split up zones,
+                //     : use them here to make the search domain smaller.
 
-            for (const auto& triggerArea : m_triggerAreaList)
-            {
-                const auto triggerAreaID = triggerArea->getTriggerAreaID();
-                if (triggerArea->isPointInside(PChar->loc.p))
+                // Do not enter trigger areas while loading in. Set in xi.player.onGameIn
+                if (PChar->GetLocalVar("ZoningIn") > 0)
                 {
-                    if (!PChar->isInTriggerArea(triggerAreaID))
+                    return;
+                }
+
+                for (const auto& triggerArea : m_triggerAreaList)
+                {
+                    const auto triggerAreaID = triggerArea->getTriggerAreaID();
+                    if (triggerArea->isPointInside(PChar->loc.p))
                     {
-                        // Add the TriggerArea to the players cache of current TriggerAreas
-                        PChar->onTriggerAreaEnter(triggerAreaID);
-                        luautils::OnTriggerAreaEnter(PChar, triggerArea);
+                        if (!PChar->isInTriggerArea(triggerAreaID))
+                        {
+                            // Add the TriggerArea to the players cache of current TriggerAreas
+                            PChar->onTriggerAreaEnter(triggerAreaID);
+                            luautils::OnTriggerAreaEnter(PChar, triggerArea);
+                        }
+                    }
+                    else if (PChar->isInTriggerArea(triggerAreaID))
+                    {
+                        // Remove the TriggerArea from the players cache of current TriggerAreas
+                        PChar->onTriggerAreaLeave(triggerAreaID);
+                        luautils::OnTriggerAreaLeave(PChar, triggerArea);
                     }
                 }
-                else if (PChar->isInTriggerArea(triggerAreaID))
-                {
-                    // Remove the TriggerArea from the players cache of current TriggerAreas
-                    PChar->onTriggerAreaLeave(triggerAreaID);
-                    luautils::OnTriggerAreaLeave(PChar, triggerArea);
-                }
-            }
-        });
-        // clang-format on
+            });
     }
+
+    co_return;
 }
 
 void CZoneInstance::ForEachChar(const std::function<void(CCharEntity*)>& func)
@@ -577,6 +582,6 @@ CInstance* CZoneInstance::CreateInstance(uint32 instanceid)
 {
     TracyZoneScoped;
 
-    m_InstanceList.emplace_back(std::make_unique<CInstance>(this, instanceid));
+    m_InstanceList.emplace_back(std::make_unique<CInstance>(scheduler_, config_, this, instanceid));
     return m_InstanceList.back().get();
 }

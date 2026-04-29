@@ -2,16 +2,12 @@
 -- Zone: Western_Altepa_Desert (125)
 -----------------------------------
 local ID = zones[xi.zone.WESTERN_ALTEPA_DESERT]
-require('scripts/quests/i_can_hear_a_rainbow')
 require('scripts/missions/amk/helpers')
 -----------------------------------
 ---@type TZone
 local zoneObject = {}
 
 zoneObject.onInitialize = function(zone)
-    UpdateNMSpawnPoint(ID.mob.KING_VINEGARROON)
-    GetMobByID(ID.mob.KING_VINEGARROON):setRespawnTime(math.random(900, 10800))
-
     xi.beastmenTreasure.updatePeddlestox(xi.zone.YUHTUNGA_JUNGLE, ID.npc.PEDDLESTOX)
 end
 
@@ -30,10 +26,6 @@ zoneObject.onZoneIn = function(player, prevZone)
         player:setPos(-19.901, 13.607, 440.058, 78)
     end
 
-    if quests.rainbow.onZoneIn(player) then
-        cs = 2
-    end
-
     -- AMK06/AMK07
     if xi.settings.main.ENABLE_AMK == 1 then
         xi.amk.helpers.tryRandomlyPlaceDiggingLocation(player)
@@ -50,9 +42,6 @@ zoneObject.onTriggerAreaEnter = function(player, triggerArea)
 end
 
 zoneObject.onEventUpdate = function(player, csid, option, npc)
-    if csid == 2 then
-        quests.rainbow.onEventUpdate(player)
-    end
 end
 
 zoneObject.onEventFinish = function(player, csid, option, npc)
@@ -64,18 +53,16 @@ zoneObject.onZoneWeatherChange = function(weather)
 
     if kvMob then
         if weather == xi.weather.DUST_STORM or weather == xi.weather.SAND_STORM then
-            DisallowRespawn(ID.mob.KING_VINEGARROON, false) -- Allow respawn.
-
             -- Check for respawn.
             if
                 not kvMob:isSpawned() and
                 kvMob:getRespawnTime() == 0
             then
                 if
-                    (weather == xi.weather.DUST_STORM and math.random(1, 100) <= 10) or
+                    (weather == xi.weather.DUST_STORM and math.random(1, 100) <= 50) or
                     weather == xi.weather.SAND_STORM
                 then
-                    SpawnMob(ID.mob.KING_VINEGARROON)
+                    DisallowRespawn(ID.mob.KING_VINEGARROON, false) -- Allow respawn.
                 end
             end
 
@@ -89,22 +76,20 @@ zoneObject.onZoneWeatherChange = function(weather)
 
     if dahu then
         local dahuValidWeather =
-        {
+        set{
             xi.weather.DUST_STORM,
             xi.weather.SAND_STORM,
             xi.weather.HOT_SPELL,
             xi.weather.HEAT_WAVE,
         }
 
-        if utils.contains(weather, dahuValidWeather) then
-            DisallowRespawn(ID.mob.DAHU, false) -- Allow respawn.
-
+        if dahuValidWeather[weather] then
             -- Spawn if respawn is up
             if
                 not dahu:isSpawned() and
                 dahu:getRespawnTime() == 0
             then
-                SpawnMob(ID.mob.DAHU)
+                DisallowRespawn(ID.mob.DAHU, false) -- Allow respawn.
             end
         else
             DisallowRespawn(ID.mob.DAHU, true) -- Disallow respawn.

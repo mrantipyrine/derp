@@ -7,8 +7,15 @@
 -- Has en-slow that overwrites and prevents Haste 2.
 -- When slow is active on the player, the NM moves out to melee at a normal range and stops trying to stand on them until it wears. Aura ceases at this time too.
 -----------------------------------
+local ID = zones[xi.zone.ROLANBERRY_FIELDS_S]
+-----------------------------------
 ---@type TMobEntity
 local entity = {}
+
+entity.phList =
+{
+    [ID.mob.DYINYINGA - 1] = ID.mob.DYINYINGA,
+}
 
 entity.onMobInitialize = function(mob)
     mob:setBaseSpeed(100)
@@ -49,8 +56,8 @@ entity.onMobFight = function(mob, target)
     else
         -- Aura and closes the gap
         mob:setMobMod(xi.mobMod.TARGET_DISTANCE_OFFSET, 50)
-        mob:addStatusEffectEx(xi.effect.COLURE_ACTIVE, xi.effect.COLURE_ACTIVE, 6, 3, 0, xi.effect.AMNESIA, 50, xi.auraTarget.ENEMIES, xi.effectFlag.AURA)
-        mob:addStatusEffectEx(xi.effect.NONE,          xi.effect.NONE,          6, 3, 0, xi.effect.SILENCE, 50, xi.auraTarget.ENEMIES, xi.effectFlag.AURA)
+        mob:addStatusEffect(xi.effect.COLURE_ACTIVE, { power = 6, origin = mob, tick = 3, subType = xi.effect.AMNESIA, subPower = 50, tier = xi.auraTarget.ENEMIES, flag = xi.effectFlag.AURA })
+        mob:addStatusEffect(xi.effect.NONE, { power = 6, origin = mob, tick = 3, subType = xi.effect.SILENCE, subPower = 50, tier = xi.auraTarget.ENEMIES, flag = xi.effectFlag.AURA })
     end
 end
 

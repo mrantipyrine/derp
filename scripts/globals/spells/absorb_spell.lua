@@ -4,7 +4,6 @@
 -----------------------------------
 require('scripts/globals/combat/magic_hit_rate')
 require('scripts/globals/spells/damage_spell')
-require('scripts/globals/utils')
 -----------------------------------
 xi = xi or {}
 xi.spells = xi.spells or {}
@@ -58,13 +57,13 @@ xi.spells.absorb.doAbsorbStatSpell = function(caster, target, spell)
     local finalDuration = math.floor(baseDuration * darkDurationMultiplier * durationGearMultiplier) + caster:getMod(xi.mod.ENHANCES_ABSORB_EFFECTS) -- Assume additive. TODO: Testing needed.
 
     -- Apply debuff and buff if needed. Absorb effects can be overwriten via higher potency.
-    if target:addStatusEffect(enfeeblingEffect, finalPotency, 0, finalDuration) then
+    if target:addStatusEffect(enfeeblingEffect, { power = finalPotency, duration = finalDuration, origin = caster }) then
         -- Set associated message.
         spell:setMsg(absorbStatData[spellId].msg)
 
         -- Force-overwrite associated buff.
         caster:delStatusEffect(enhancingEffect)
-        caster:addStatusEffect(enhancingEffect, finalPotency, 0, finalDuration)
+        caster:addStatusEffect(enhancingEffect, { power = finalPotency, duration = finalDuration, origin = caster })
     else
         spell:setMsg(xi.msg.basic.MAGIC_NO_EFFECT)
     end
@@ -89,23 +88,26 @@ xi.spells.absorb.doDrainingSpell = function(caster, target, spell)
     local finalDamage  = 0
     local spellId      = spell:getID()
     local modAbsorbed  = absorbPointsData[spellId][1]
-    local casterPoints = caster:getHP()
     local targetPoints = target:getHP()
+    local displayCap   = caster:getMaxHP() - caster:getHP()
 
     if modAbsorbed == xi.mod.MP then
-        casterPoints = caster:getMP()
         targetPoints = target:getMP()
-    end
-
-    -- Early return: Target absorbs or nullifies dark.
-    if xi.spells.damage.calculateNukeAbsorbOrNullify(target, xi.element.DARK) ~= 1 then
-        spell:setMsg(xi.msg.basic.MAGIC_RESIST)
-        return finalDamage
+        displayCap   = caster:getMaxMP() - caster:getMP()
     end
 
     -- Early return: Target is undead.
     if target:isUndead() then
         spell:setMsg(xi.msg.basic.MAGIC_NO_EFFECT)
+        return finalDamage
+    end
+
+    -- Early return: Target absorbs or nullifies dark.
+    if
+        xi.spells.damage.calculateAbsorption(target, xi.element.DARK, true) ~= 1 or
+        xi.spells.damage.calculateNullification(target, xi.element.DARK, true, false) ~= 1
+    then
+        spell:setMsg(xi.msg.basic.MAGIC_RESIST)
         return finalDamage
     end
 
@@ -125,11 +127,11 @@ xi.spells.absorb.doDrainingSpell = function(caster, target, spell)
     -- Multipliers.
     local resistTier             = xi.combat.magicHitRate.calculateResistRate(caster, target, xi.magic.spellGroup.BLACK, xi.skill.DARK_MAGIC, 0, xi.element.DARK, xi.mod.INT, 0, 0)
     local additionalResistTier   = xi.spells.damage.calculateAdditionalResistTier(caster, target, xi.element.DARK)
-    local sdt                    = xi.spells.damage.calculateSDT(target, xi.element.DARK)
+    local sdt                    = xi.combat.damage.magicalElementSDT(target, xi.element.DARK)
     local elementalStaffBonus    = xi.spells.damage.calculateElementalStaffBonus(caster, xi.element.DARK)
     local elementalAffinityBonus = xi.spells.damage.calculateElementalAffinityBonus(caster, xi.element.DARK)
     local dayAndWeather          = xi.spells.damage.calculateDayAndWeather(caster, xi.element.DARK, false)
-    local absorbMultiplier       = 1 + caster:getMod(xi.mod.AUGMENTS_ABSORB) / 100
+    local absorbMultiplier       = 1 + caster:getMod(xi.mod.AUGMENTS_ABSORB) / 100 + caster:getMod(xi.mod.ENH_DRAIN_ASPIR) / 100
     local liberatorMultiplier    = 1 + caster:getMod(xi.mod.AUGMENTS_ABSORB_LIBERATOR) / 100
     local netherVoidMultiplier   = 1
     if caster:hasStatusEffect(xi.effect.NETHER_VOID) then
@@ -147,14 +149,12 @@ xi.spells.absorb.doDrainingSpell = function(caster, target, spell)
     finalDamage = math.floor(finalDamage * liberatorMultiplier)
     finalDamage = math.floor(finalDamage * netherVoidMultiplier)
 
-    -- Clamp: We cannot absorb more HP/MP than the target has.
-    finalDamage = utils.clamp(finalDamage, 0, targetPoints)
-
     -- Final operations.
     if modAbsorbed == xi.mod.HP then
-        finalDamage = utils.clamp(finalDamage - target:getMod(xi.mod.PHALANX), 0, 99999)
-        finalDamage = utils.clamp(utils.oneforall(target, finalDamage), 0, 99999)
-        finalDamage = utils.clamp(utils.stoneskin(target, finalDamage), -99999, 99999)
+        finalDamage = utils.clamp(utils.handlePhalanx(target, finalDamage), 0, 99999)
+        finalDamage = utils.clamp(utils.handleOneForAll(target, finalDamage), 0, 99999)
+        finalDamage = utils.clamp(utils.handleStoneskin(target, finalDamage), -99999, 99999)
+        finalDamage = utils.clamp(finalDamage, 0, targetPoints)
         finalDamage = target:checkDamageCap(finalDamage)
 
         -- Handle Bind break and TP?
@@ -165,10 +165,16 @@ xi.spells.absorb.doDrainingSpell = function(caster, target, spell)
 
         -- Handle Enmity.
         target:updateEnmityFromDamage(caster, finalDamage)
+    else
+        finalDamage = utils.clamp(finalDamage, 0, targetPoints)
     end
 
     -- Drain II and Drain III increase max HP via effect.
     if absorbPointsData[spellId][5] then
+        -- Remove cap on damage displayed in log.
+        displayCap = 9999 - caster:getHP()
+
+        -- Calculate overflow.
         local overflow = finalDamage + caster:getHP() - caster:getMaxHP()
         if overflow > 0 then
             -- Check if effect should be applied. Only 1 "Max HP Effect" can be in place at a time.
@@ -189,7 +195,7 @@ xi.spells.absorb.doDrainingSpell = function(caster, target, spell)
             then
                 local duration = 180 + 180 * caster:getMod(xi.mod.DARK_MAGIC_DURATION) / 100
                 caster:delStatusEffect(xi.effect.MAX_HP_BOOST)
-                caster:addStatusEffect(xi.effect.MAX_HP_BOOST, 0, 0, duration, 0, overflow)
+                caster:addStatusEffect(xi.effect.MAX_HP_BOOST, { duration = duration, origin = caster, subPower = overflow })
             end
         end
     end
@@ -203,7 +209,7 @@ xi.spells.absorb.doDrainingSpell = function(caster, target, spell)
     end
 
     -- Displayed damage in log is the amount the player heals by, not the damage actually done.
-    local displayDamage = utils.clamp(finalDamage, 0, casterPoints)
+    local displayDamage = utils.clamp(finalDamage, 0, displayCap)
 
     return displayDamage
 end
@@ -212,7 +218,10 @@ xi.spells.absorb.doAbsorbTPSpell = function(caster, target, spell)
     local finalDamage = 0
 
     -- Early return: Target absorbs or nullifies dark.
-    if xi.spells.damage.calculateNukeAbsorbOrNullify(target, xi.element.DARK) ~= 1 then
+    if
+        xi.spells.damage.calculateAbsorption(target, xi.element.DARK, true) ~= 1 or
+        xi.spells.damage.calculateNullification(target, xi.element.DARK, true, false) ~= 1
+    then
         spell:setMsg(xi.msg.basic.MAGIC_RESIST)
         return finalDamage
     end
@@ -230,7 +239,7 @@ xi.spells.absorb.doAbsorbTPSpell = function(caster, target, spell)
     -- Multipliers.
     local resistTier           = xi.combat.magicHitRate.calculateResistRate(caster, target, xi.magic.spellGroup.BLACK, xi.skill.DARK_MAGIC, 0, xi.element.DARK, xi.mod.INT, 0, 0)
     local additionalResistTier = xi.spells.damage.calculateAdditionalResistTier(caster, target, xi.element.DARK)
-    local sdt                  = xi.spells.damage.calculateSDT(target, xi.element.DARK)
+    local sdt                  = xi.combat.damage.magicalElementSDT(target, xi.element.DARK)
     local elementalStaffBonus  = xi.spells.damage.calculateElementalStaffBonus(caster, xi.element.DARK)
     local dayAndWeather        = xi.spells.damage.calculateDayAndWeather(caster, xi.element.DARK, false)
     local absorbMultiplier     = 1 + caster:getMod(xi.mod.AUGMENTS_ABSORB) / 100

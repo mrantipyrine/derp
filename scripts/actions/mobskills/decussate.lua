@@ -1,32 +1,37 @@
 -----------------------------------
---  Decussate
---
---  Description: Performs a cross attack on nearby targets.
---  Type: Magical
---  Utsusemi/Blink absorb: 2-3 shadows?
---  Range: Less than or equal to 10.0
---  Notes: Only used by Gulool Ja Ja when below 35% health.
+-- Decussate
+-- Family: Mamool Ja (Two Headed Mamool Ja)
+-- Description: Performs a cross attack on nearby targets.
+-- Notes: Unlocked at 20% hp
 -----------------------------------
 ---@type TMobSkill
 local mobskillObject = {}
 
 mobskillObject.onMobSkillCheck = function(target, mob, skill)
-    if mob:getPool() == 1846 and mob:getHP() < mob:getMaxHP() / 100 * 35 then
-        return 0
-    else
+    if mob:getHPP() > 20 then -- TODO: Handle in mob script
         return 1
     end
+
+    return 0
 end
 
-mobskillObject.onMobWeaponSkill = function(target, mob, skill)
-    local damage = mob:getWeaponDmg() * 3
+mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
+    local params = {}
 
-    damage = xi.mobskills.mobMagicalMove(mob, target, skill, damage, xi.element.EARTH, 1.2, xi.mobskills.magicalTpBonus.NO_EFFECT)
-    damage = xi.mobskills.mobFinalAdjustments(damage, mob, skill, target, xi.attackType.MAGICAL, xi.damageType.EARTH, math.random(2, 3))
+    params.baseDamage     = mob:getWeaponDmg()
+    params.numHits        = 1 -- TODO: Capture numHits
+    params.fTP            = { 3.0, 3.0, 3.0 } -- TODO: Capture fTPs
+    params.attackType     = xi.attackType.PHYSICAL
+    params.damageType     = xi.damageType.SLASHING
+    params.shadowBehavior = xi.mobskills.shadowBehavior.NUMSHADOWS_3 -- TODO: Capture shadowBehavior
 
-    target:takeDamage(damage, mob, xi.attackType.MAGICAL, xi.damageType.EARTH)
+    local info = xi.mobskills.mobPhysicalMove(mob, target, skill, action, params)
 
-    return damage
+    if xi.mobskills.processDamage(mob, target, skill, action, info) then
+        target:takeDamage(info.damage, mob, info.attackType, info.damageType)
+    end
+
+    return info.damage
 end
 
 return mobskillObject

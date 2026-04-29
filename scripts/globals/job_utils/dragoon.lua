@@ -3,6 +3,7 @@
 -----------------------------------
 require('scripts/globals/ability')
 require('scripts/globals/combat/magic_hit_rate')
+require('scripts/globals/jobpoints')
 require('scripts/globals/spells/damage_spell')
 require('scripts/globals/weaponskills')
 -----------------------------------
@@ -56,31 +57,21 @@ local function performWSJump(player, target, action, params, abilityID)
     local taChar = player:getTrickAttackChar(target)
     local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doPhysicalWeaponskill(player, target, 0, params, 1000, action, true, taChar)
     local totalHits  = tpHits + extraHits
-    local specEffect = 0x00
 
     if totalHits > 0 then
-        if target:getHP() <= 0 then
-            specEffect = bit.bor(specEffect, 0x01) -- Add in 'killed target' bit
-        end
-
-        if criticalHit then -- set crit bit
-            specEffect = bit.bor(specEffect, 0x02)
-        end
-
         if
             abilityID == xi.jobAbility.SOUL_JUMP or
             abilityID == xi.jobAbility.SPIRIT_JUMP
         then
-            specEffect = bit.bor(specEffect, 0x04) -- Add in Soul/Spirit bit
+            action:info(target:getID(), 4) -- Special info flag for these abilities.
         end
 
         -- TODO: process additional effects such as Delphinius, Pteroslaver Mail +2/3, Hebo's Spear, enspells, other weapon built-in add effects
 
-        action:speceffect(target:getID(), specEffect)
+        action:recordDamage(target, xi.attackType.PHYSICAL, damage, criticalHit)
         action:messageID(target:getID(), xi.msg.basic.USES_JA_TAKE_DAMAGE)
     else
         action:messageID(target:getID(), xi.msg.basic.JA_MISS_2)
-        action:speceffect(target:getID(), specEffect)
     end
 
     -- Jumps add JUMP_TP_BONUS regardless of 0 dmg or miss and is affected by Store TP but not the target's subtle blow
@@ -103,7 +94,7 @@ local function performWSJump(player, target, action, params, abilityID)
     return damage, totalHits
 end
 
-local function cutEmpathyEffectTable(validEffects, i, maxCount)
+xi.job_utils.dragoon.cutEmpathyEffectTable = function(validEffects, i, maxCount)
     local delindex = 1
 
     while maxCount < i do
@@ -213,7 +204,7 @@ xi.job_utils.dragoon.useSpiritSurge = function(player, target, ability)
     target:resetRecast(xi.recast.ABILITY, 159) -- High Jump
     target:resetRecast(xi.recast.ABILITY, 160) -- Super Jump
 
-    target:addStatusEffect(xi.effect.SPIRIT_SURGE, maxHPBoost, 0, duration, 0, strBoost)
+    target:addStatusEffect(xi.effect.SPIRIT_SURGE, { power = maxHPBoost, duration = duration, origin = player, subPower = strBoost })
     target:addHP(petHP) -- Add in wyvern's remaining HP before the wyvern was despawned
 end
 
@@ -223,15 +214,20 @@ end
 
 xi.job_utils.dragoon.useAncientCircle = function(player, target, ability)
     local duration = 180 + player:getMod(xi.mod.ANCIENT_CIRCLE_DURATION)
+    local jpValue  = player:getJobPointLevel(xi.jp.ANCIENT_CIRCLE_EFFECT)
     local power    = 5
 
     if player:getMainJob() == xi.job.DRG then
-        power = 15
+        power = 15 + jpValue
     end
 
     power = power + player:getMod(xi.mod.ANCIENT_CIRCLE_POTENCY)
 
-    target:addStatusEffect(xi.effect.ANCIENT_CIRCLE, power, 0, duration)
+    ability:setMsg(xi.msg.basic.USES_ABILITY_FORTIFIED_DRAGONS)
+
+    target:addStatusEffect(xi.effect.ANCIENT_CIRCLE, { power = power, duration = duration, origin = player })
+
+    return xi.effect.ANCIENT_CIRCLE
 end
 
 xi.job_utils.dragoon.useJump = function(player, target, ability, action)
@@ -250,13 +246,13 @@ xi.job_utils.dragoon.useJump = function(player, target, ability, action)
         player:hasStatusEffect(xi.effect.SPIRIT_SURGE) and
         not target:hasStatusEffect(xi.effect.DEFENSE_DOWN) -- Does this overwrite itself?
     then
-        target:addStatusEffect(xi.effect.DEFENSE_DOWN, 20, 0, 60)
+        target:addStatusEffect(xi.effect.DEFENSE_DOWN, { power = 20, duration = 60, origin = player })
     end
 
     return damage
 end
 
-local function checkForRemovableEffectsOnSpiritLink(player, wyvern)
+xi.job_utils.dragoon.checkForRemovableEffectsOnSpiritLink = function(player, wyvern)
     -- Removes all DoTs, all at once.
     -- Would this be better as an DoT effect flag?
     -- https://www.ffxiah.com/forum/topic/44396/sigurds-descendants-the-art-of-dragon-slaying/108/#3646578
@@ -324,21 +320,14 @@ local function checkForRemovableEffectsOnSpiritLink(player, wyvern)
     end
 end
 
-xi.job_utils.dragoon.useSpiritLink = function(player, target, ability)
-    local wyvern      = player:getPet()
-    local playerHP    = player:getHP()
-    local petTP       = wyvern:getTP()
-    local regenAmount = player:getMainLvl() / 3 -- level/3 tic regen
-
-    checkForRemovableEffectsOnSpiritLink(player, wyvern)
-
-    -- Empathy copying
+xi.job_utils.dragoon.applyEmpathyBonus = function(player, wyvern)
     local empathyTotal = player:getMerit(xi.merit.EMPATHY)
 
     -- Add wyvern levels to the tune of 200 per empathy merit
     xi.job_utils.dragoon.addWyvernExp(player, 200 * empathyTotal)
 
     if empathyTotal > 0 then
+        ---@type CStatusEffect[]
         local validEffects = {}
         local i            = 0
         local effects      = player:getStatusEffects()
@@ -354,7 +343,7 @@ xi.job_utils.dragoon.useSpiritLink = function(player, target, ability)
         if i < empathyTotal then
             empathyTotal = i
         elseif i > empathyTotal then
-            validEffects = cutEmpathyEffectTable(validEffects, i, empathyTotal)
+            validEffects = xi.job_utils.dragoon.cutEmpathyEffectTable(validEffects, i, empathyTotal)
         end
 
         local copyEffect = nil
@@ -364,12 +353,24 @@ xi.job_utils.dragoon.useSpiritLink = function(player, target, ability)
                 wyvern:delStatusEffectSilent(copyEffect:getEffectType())
             end
 
-            wyvern:addStatusEffect(copyEffect:getEffectType(), copyEffect:getPower(), copyEffect:getTick(), math.ceil((copyEffect:getTimeRemaining()) / 1000)) -- id, power, tick, duration(convert ms to s)
+            wyvern:copyStatusEffect(copyEffect)
             copyi = copyi + 1
         end
     end
+end
 
-    wyvern:addStatusEffect(xi.effect.REGEN, regenAmount, 3, 90, 0, 0, 0) -- 90 seconds of regen
+xi.job_utils.dragoon.useSpiritLink = function(player, target, ability, action)
+    local wyvern      = player:getPet()
+    local playerHP    = player:getHP()
+    local petTP       = wyvern:getTP()
+    local regenAmount = player:getMainLvl() / 3 -- level/3 tic regen
+
+    xi.job_utils.dragoon.checkForRemovableEffectsOnSpiritLink(player, wyvern)
+
+    -- Empathy: copy status effects and grant wyvern EXP
+    xi.job_utils.dragoon.applyEmpathyBonus(player, wyvern)
+
+    wyvern:addStatusEffect(xi.effect.REGEN, { power = regenAmount, duration = 90, origin = player, tick = 3 }) -- 90 seconds of regen
     player:addTP(petTP / 2) -- add half wyvern tp to you
     wyvern:delTP(petTP / 2) -- remove half tp from wyvern
 
@@ -379,6 +380,7 @@ xi.job_utils.dragoon.useSpiritLink = function(player, target, ability)
 
     if wyvern:getHP() ~= wyvern:getMaxHP() then
         drainamount = (math.random(25, 35) / 100) * playerHP
+        drainamount = drainamount * (1 - (0.01 * player:getJobPointLevel(xi.jp.SPIRIT_LINK_EFFECT)))
     end
 
     -- Handle Stoneskin.
@@ -408,6 +410,8 @@ xi.job_utils.dragoon.useSpiritLink = function(player, target, ability)
         healPet = healPet + 15
     end
 
+    -- Spirit Link is self target but reports effect on Wyvern.
+    action:ID(player:getID(), wyvern:getID())
     return wyvern:addHP(healPet) -- add the hp to wyvern
 end
 
@@ -460,10 +464,14 @@ xi.job_utils.dragoon.useSuperJump = function(player, target, ability)
         wyvern:getHP() > 0 and
         wyvern:isEngaged()
     then
-        wyvern:useJobAbility(xi.jobAbility.SUPER_CLIMB, wyvern)
+        wyvern:usePetAbility(xi.jobAbility.SUPER_CLIMB, wyvern)
     end
 
-    -- Handle Spirit Surge -50% enmity reduction on super jump to closest party member behind the dragoon
+    -- Handle Spirit Surge enmity reduction on super jump
+    xi.job_utils.dragoon.superJumpSurgeEffect(player, target)
+end
+
+xi.job_utils.dragoon.superJumpSurgeEffect = function(player, target)
     if player:hasStatusEffect(xi.effect.SPIRIT_SURGE) then
         local minDistance = 9999
         local closestPartyMember = nil
@@ -490,7 +498,7 @@ xi.job_utils.dragoon.useSuperJump = function(player, target, ability)
             (player:checkDistance(target) < closestPartyMember:checkDistance(target)) -- Verify dragoon is closer than the party member that we want to reduce the enmity of
         then
             if target:isMob() then
-                target:lowerEnmity(closestPartyMember, 50)
+                target:lowerEnmity(closestPartyMember, 100)
             end
         end
     end
@@ -500,26 +508,28 @@ end
 xi.job_utils.dragoon.useAngon = function(player, target, ability)
     local duration   = 15 + player:getMerit(xi.merit.ANGON) -- This will return 30 sec at one investment because merit power is 15.
 
-    if not target:addStatusEffect(xi.effect.DEFENSE_DOWN, 20, 0, duration) then
+    if not target:addStatusEffect(xi.effect.DEFENSE_DOWN, { power = 20, duration = duration, origin = player }) then
         ability:setMsg(xi.msg.basic.MAGIC_NO_EFFECT)
     end
 
     target:updateClaim(player)
-    player:removeAmmo()
+    player:removeAmmo(1)
 
     return xi.effect.DEFENSE_DOWN
 end
 
-xi.job_utils.dragoon.useDeepBreathing = function(player, target, ability)
+xi.job_utils.dragoon.useDeepBreathing = function(player, target, ability, action)
     local wyvern = getWyvern(player)
 
     if wyvern then
-        wyvern:addStatusEffect(xi.effect.MAGIC_ATK_BOOST, 0, 0, 180) -- Message when effect is lost is 'Magic Attack boost wears off.'
+        wyvern:addStatusEffect(xi.effect.MAGIC_ATK_BOOST, { duration = 180, origin = player }) -- Message when effect is lost is 'Magic Attack boost wears off.'
     end
 end
 
 xi.job_utils.dragoon.useSpiritBond = function(player, target, ability)
-    player:addStatusEffect(xi.effect.SPIRIT_BOND, 0, 0, 180)
+    player:addStatusEffect(xi.effect.SPIRIT_BOND, { duration = 180, origin = player })
+
+    return xi.effect.SPIRIT_BOND
 end
 
 xi.job_utils.dragoon.useSpiritJump = function(player, target, ability, action)
@@ -562,7 +572,7 @@ xi.job_utils.dragoon.useSoulJump = function(player, target, ability, action)
 end
 
 xi.job_utils.dragoon.useDragonBreaker = function(player, target, ability)
-    player:addStatusEffect(xi.effect.DRAGON_BREAKER, 20, 0, 180)
+    target:addStatusEffect(xi.effect.DRAGON_BREAKER, { power = 20, duration = 180, origin = player })
 end
 
 xi.job_utils.dragoon.useFlyHigh = function(player, target, ability)
@@ -573,7 +583,9 @@ xi.job_utils.dragoon.useFlyHigh = function(player, target, ability)
     target:resetRecast(xi.recast.ABILITY, 166) -- Spirit Jump
     target:resetRecast(xi.recast.ABILITY, 167) -- Soul Jump
 
-    player:addStatusEffect(xi.effect.FLY_HIGH, 0, 0, 30)
+    player:addStatusEffect(xi.effect.FLY_HIGH, { duration = 30, origin = player })
+
+    return xi.effect.FLY_HIGH
 end
 
 xi.job_utils.dragoon.useSteadyWing = function(player, target, ability, action)
@@ -583,9 +595,7 @@ xi.job_utils.dragoon.useSteadyWing = function(player, target, ability, action)
     if wyvern then
         local power = wyvern:getMaxHP() * 0.3 + wyvern:getMaxHP() - wyvern:getHP()
 
-        action:reaction(wyvern:getID(), 0x10) -- Observed on retail
-
-        if wyvern:addStatusEffect(xi.effect.STONESKIN, power, 0, 300) then
+        if wyvern:addStatusEffect(xi.effect.STONESKIN, { power = power, duration = 300, origin = player }) then
             local effect = wyvern:getStatusEffect(xi.effect.STONESKIN)
 
             if effect then
@@ -593,7 +603,40 @@ xi.job_utils.dragoon.useSteadyWing = function(player, target, ability, action)
                 effect:setTier(5) -- Empathy doesn't overwrite this stoneskin wih player casted stoneskin
             end
         end
+
+        -- Steady Wing is self target but reports effect on Wyvern.
+        action:ID(player:getID(), wyvern:getID())
     end
+end
+
+xi.job_utils.dragoon.getDeepBreathingBonus = function(wyvern, master, isHealing)
+    local bonus = 0
+    local hadEffect = wyvern:hasStatusEffect(xi.effect.MAGIC_ATK_BOOST)
+
+    if hadEffect then
+        local deepBreathingMerits = master:getMerit(xi.merit.DEEP_BREATHING)
+        local enhanceDB = master:getMod(xi.mod.ENHANCE_DEEP_BREATHING)
+
+        if isHealing then
+            bonus = 37.5 + (12.5 * deepBreathingMerits)
+
+            -- add in augment power, +5 per merit level (including first)
+            if enhanceDB > 0 then
+                bonus = bonus + deepBreathingMerits * 5
+            end
+        else
+            bonus = 0.75 + (0.25 * deepBreathingMerits)
+
+            -- add in augment power, +0.1 per merit level (including first)
+            if enhanceDB > 0 then
+                bonus = bonus + deepBreathingMerits * 0.1
+            end
+        end
+
+        wyvern:delStatusEffect(xi.effect.MAGIC_ATK_BOOST)
+    end
+
+    return bonus
 end
 
 -- Breath Formula: https://www.bg-wiki.com/ffxi/Wyvern_(Dragoon_Pet)#Healing_Breath
@@ -608,20 +651,8 @@ xi.job_utils.dragoon.useHealingBreath = function(wyvern, target, skill, action)
     }
 
     local master              = wyvern:getMaster()
-    local deepBreathingMerits = master:getMerit(xi.merit.DEEP_BREATHING)
-    local deepMult            = 0
-
-    if wyvern:hasStatusEffect(xi.effect.MAGIC_ATK_BOOST) then
-        deepMult = 37.5 + (12.5 * deepBreathingMerits)
-
-        -- add in augment power, +5 per merit level (including first)
-        if master:getMod(xi.mod.ENHANCE_DEEP_BREATHING) > 0 then
-            deepMult = deepMult + deepBreathingMerits * 5
-        end
-
-        wyvern:delStatusEffect(xi.effect.MAGIC_ATK_BOOST)
-    end
-
+    local deepMult            = xi.job_utils.dragoon.getDeepBreathingBonus(wyvern, master, true)
+    local jobPointBonus       = master:getJobPointLevel(xi.jp.WYVERN_BREATH_EFFECT) * 10
     local breathAugmentsBonus = 1 + master:getMod(xi.mod.UNCAPPED_WYVERN_BREATH) / 100
     local gear                = master:getMod(xi.mod.WYVERN_BREATH) -- Master gear that enhances breath
     local base                = healingBreathTable[skill:getID()][1]
@@ -629,11 +660,10 @@ xi.job_utils.dragoon.useHealingBreath = function(wyvern, target, skill, action)
 
     -- gear cap of 64/256 in multiplier
     local multiplier      = (baseMultiplier + math.min(gear, 64) + math.floor(deepMult)) / 256
-    local curePower       = math.floor(wyvern:getMaxHP() * multiplier) + base * breathAugmentsBonus
+    local curePower       = math.floor(wyvern:getMaxHP() * multiplier) + base + jobPointBonus * breathAugmentsBonus
     local totalHPRestored = target:addHP(curePower)
 
     skill:setMsg(xi.msg.basic.JA_RECOVERS_HP_2)
-    action:reaction(target:getID(), 0x18)
 
     -- also cure the Wyvern if Spirit Bond is up
     if master:hasStatusEffect(xi.effect.SPIRIT_BOND) then
@@ -642,7 +672,6 @@ xi.job_utils.dragoon.useHealingBreath = function(wyvern, target, skill, action)
         action:addAdditionalTarget(wyvern:getID())
         action:setAnimation(wyvern:getID(), action:getAnimation(target:getID()))
         action:messageID(wyvern:getID(), xi.msg.basic.SELF_HEAL_SECONDARY)
-        action:reaction(wyvern:getID(), 0x18)
         action:param(wyvern:getID(), totalWyvernHPRestored)
     end
 
@@ -656,27 +685,15 @@ end
 -- https://www.bg-wiki.com/ffxi/Wyvern_(Dragoon_Pet)#Elemental_Breath
 xi.job_utils.dragoon.useDamageBreath = function(wyvern, target, skill, action, damageType)
     local master                  = wyvern:getMaster()
-    local deepBreathingMerits     = master:getMerit(xi.merit.DEEP_BREATHING)
-    local deepBreathingMultiplier = 0
-
-    if wyvern:hasStatusEffect(xi.effect.MAGIC_ATK_BOOST) then
-        deepBreathingMultiplier = 0.75 + (0.25 * deepBreathingMerits)
-
-        -- add in augment power, +0.1 per merit level (including first)
-        if master:getMod(xi.mod.ENHANCE_DEEP_BREATHING) > 0 then
-            deepBreathingMultiplier = deepBreathingMultiplier + deepBreathingMerits * 0.1
-        end
-
-        wyvern:delStatusEffect(xi.effect.MAGIC_ATK_BOOST)
-    end
-
-    local breathAugmentsBonus = master:getMod(xi.mod.UNCAPPED_WYVERN_BREATH) / 100
-    local gearMultiplier      = master:getMod(xi.mod.WYVERN_BREATH) -- Master gear that enhances breath
+    local deepBreathingMultiplier = xi.job_utils.dragoon.getDeepBreathingBonus(wyvern, master, false)
+    local jobPointBonus           = master:getJobPointLevel(xi.jp.WYVERN_BREATH_EFFECT) * 10
+    local breathAugmentsBonus     = master:getMod(xi.mod.UNCAPPED_WYVERN_BREATH) / 100
+    local gearMultiplier          = master:getMod(xi.mod.WYVERN_BREATH) -- Master gear that enhances breath
 
     -- gear cap of 64/256 in multiplier
     gearMultiplier = 1.0 + (math.min(gearMultiplier, 64)) / 256
 
-    local damage = math.floor(wyvern:getHP() / 6 + 15) * gearMultiplier * (1.0 + breathAugmentsBonus + deepBreathingMultiplier)
+    local damage = math.floor(wyvern:getHP() / 6 + 15 + jobPointBonus) * gearMultiplier * (1.0 + breathAugmentsBonus + deepBreathingMultiplier)
 
     -- strafe merits are +10 per merit
     local strafeMeritPower = master:getMerit(xi.merit.STRAFE_EFFECT)
@@ -686,12 +703,13 @@ xi.job_utils.dragoon.useDamageBreath = function(wyvern, target, skill, action, d
 
     local bonusMacc          = strafeMeritPower + master:getMod(xi.mod.WYVERN_BREATH_MACC)
     local element            = damageType - xi.damageType.ELEMENTAL
-    local _, skillchainCount = xi.magicburst.formMagicBurst(element, target)
+    local _, skillchainCount = xi.magicburst.formMagicBurst(target, element)
 
-    -- 'Breath accuracy is directly affected by a wyvern's current HP', but no data exists.
+    -- Breath accuracy is directly affected by a wyvern's current HP, but no data exists.
     local resist              = xi.combat.magicHitRate.calculateResistRate(wyvern, target, 0, 0, 0, element, 0, 0, bonusMacc)
-    local sdt                 = xi.spells.damage.calculateSDT(target, element)
-    local nukeAbsorbOrNullify = xi.spells.damage.calculateNukeAbsorbOrNullify(target, element)
+    local sdt                 = xi.combat.damage.magicalElementSDT(target, element)
+    local absorb              = xi.spells.damage.calculateAbsorption(target, element, true)
+    local nullify             = xi.spells.damage.calculateNullification(target, element, true, true)
     local magicBurst          = 1
 
     if skillchainCount > 0 then
@@ -699,10 +717,11 @@ xi.job_utils.dragoon.useDamageBreath = function(wyvern, target, skill, action, d
     end
 
     -- It appears that MB breaths don't do more damage based on testing.
-    damage = damage * resist * sdt * nukeAbsorbOrNullify
+    damage = damage * resist * sdt * absorb * nullify
 
     if damage >= 0 then
         damage = xi.ability.adjustDamage(damage, wyvern, skill, target, xi.attackType.BREATH, damageType, xi.mobskills.shadowBehavior.IGNORE_SHADOWS)
+        action:recordDamage(target, xi.attackType.BREATH, damage)
         action:messageID(target:getID(), xi.msg.basic.USES_JA_TAKE_DAMAGE)
 
         if magicBurst > 1 then
@@ -773,7 +792,7 @@ xi.job_utils.dragoon.pickAndUseDamageBreath = function(player, target)
         end
     end
 
-    player:getPet():useJobAbility(breathToUse, target)
+    player:getPet():usePetAbility(breathToUse, target)
 end
 
 xi.job_utils.dragoon.useRestoringBreath = function(player, ability, action)
@@ -817,7 +836,7 @@ xi.job_utils.dragoon.useRestoringBreath = function(player, ability, action)
     local jobPointRecastReduction = player:getMod(xi.mod.DRAGOON_BREATH_RECAST)
     action:setRecast(ability:getRecast() - jobPointRecastReduction)
 
-    wyvern:useJobAbility(healingbreath, target)
+    wyvern:usePetAbility(healingbreath, target)
 end
 
 xi.job_utils.dragoon.useSmitingBreath = function(player, target, ability, action)
@@ -842,6 +861,7 @@ xi.job_utils.dragoon.addWyvernExp = function(player, exp)
         numLevelUps = math.floor((prevExp + currentExp) / 200) - math.floor(prevExp / 200)
 
         if numLevelUps ~= 0 then
+            local wyvernAttributeIncreaseEffectJP = player:getJobPointLevel(xi.jp.WYVERN_ATTR_BONUS)
             local wyvernBonusDA = player:getMod(xi.mod.WYVERN_ATTRIBUTE_DA)
 
             wyvern:addMod(xi.mod.ACC, 6 * numLevelUps)
@@ -853,6 +873,8 @@ xi.job_utils.dragoon.addWyvernExp = function(player, exp)
 
             player:messageBasic(xi.msg.basic.STATUS_INCREASED, 0, 0, wyvern)
 
+            player:addMod(xi.mod.ATT, wyvernAttributeIncreaseEffectJP * numLevelUps)
+            player:addMod(xi.mod.DEF, wyvernAttributeIncreaseEffectJP * numLevelUps)
             player:addMod(xi.mod.ATTP, 4 * numLevelUps)
             player:addMod(xi.mod.DEFP, 4 * numLevelUps)
             player:addMod(xi.mod.HASTE_ABILITY, 200 * numLevelUps)
@@ -865,6 +887,8 @@ xi.job_utils.dragoon.addWyvernExp = function(player, exp)
     end
 
     return numLevelUps
+end
+
 end
 
 -- ══════════════════════════════════════════════════════════════

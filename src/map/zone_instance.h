@@ -44,16 +44,17 @@ public:
 
     virtual void WideScan(CCharEntity* PChar, uint16 radius) override;
 
-    virtual void DecreaseZoneCounter(CCharEntity* PChar) override; // add a character to the zone
-    virtual void IncreaseZoneCounter(CCharEntity* PChar) override; // remove a character from the zone
+    virtual void DecreaseZoneCounter(CCharEntity* PChar) override; // Remove a character to the zone
+    virtual void IncreaseZoneCounter(CCharEntity* PChar) override; // Add a character from the zone
 
     virtual void InsertNPC(CBaseEntity* PNpc) override;
     virtual void InsertMOB(CBaseEntity* PMob) override;
     virtual void InsertPET(CBaseEntity* PPet) override;
     virtual void InsertTRUST(CBaseEntity* PTrust) override;
 
-    virtual void FindPartyForMob(CBaseEntity* PEntity) override;         // looking for a party for the monster
-    virtual void TransportDepart(uint16 boundary, uint16 zone) override; // ship/boat is leaving, passengers need to be collected
+    virtual void FindPartyForMob(CBaseEntity* PEntity) override; // looking for a party for the monster
+
+    virtual void TransportDepart(uint16 boundary, uint16 prevZoneId, uint16 transportId) override; // ship/boat is leaving, passengers need to be collected
 
     virtual void TOTDChange(vanadiel_time::TOTD TOTD) override; // process the world's reactions to changing time of day
 
@@ -61,25 +62,25 @@ public:
 
     virtual void UpdateEntityPacket(CBaseEntity* PEntity, ENTITYUPDATE type, uint8 updatemask, bool alwaysInclude = false) override;
 
-    virtual void ZoneServer(timer::time_point tick) override;
-    virtual void CheckTriggerAreas() override;
+    virtual auto ZoneServer(timer::time_point tick) -> Task<void> override;
+    virtual auto CheckTriggerAreas() -> Task<void> override;
 
-    void ForEachChar(std::function<void(CCharEntity*)> const& func) override;
-    void ForEachCharInstance(CBaseEntity* PEntity, std::function<void(CCharEntity*)> const& func) override;
-    void ForEachMob(std::function<void(CMobEntity*)> const& func) override;
-    void ForEachMobInstance(CBaseEntity* PEntity, std::function<void(CMobEntity*)> const& func) override;
-    void ForEachNpc(std::function<void(CNpcEntity*)> const& func) override;
-    void ForEachNpcInstance(CBaseEntity* PEntity, std::function<void(CNpcEntity*)> const& func) override;
-    void ForEachTrust(std::function<void(CTrustEntity*)> const& func) override;
-    void ForEachTrustInstance(CBaseEntity* PEntity, std::function<void(CTrustEntity*)> const& func) override;
-    void ForEachPet(std::function<void(CPetEntity*)> const& func) override;
-    void ForEachPetInstance(CBaseEntity* PEntity, std::function<void(CPetEntity*)> const& func) override;
-    void ForEachAlly(std::function<void(CMobEntity*)> const& func) override;
-    void ForEachAllyInstance(CBaseEntity* PEntity, std::function<void(CMobEntity*)> const& func) override;
+    void ForEachChar(const std::function<void(CCharEntity*)>& func) override;
+    void ForEachCharInstance(CBaseEntity* PEntity, const std::function<void(CCharEntity*)>& func) override;
+    void ForEachMob(const std::function<void(CMobEntity*)>& func) override;
+    void ForEachMobInstance(CBaseEntity* PEntity, const std::function<void(CMobEntity*)>& func) override;
+    void ForEachNpc(const std::function<void(CNpcEntity*)>& func) override;
+    void ForEachNpcInstance(CBaseEntity* PEntity, const std::function<void(CNpcEntity*)>& func) override;
+    void ForEachTrust(const std::function<void(CTrustEntity*)>& func) override;
+    void ForEachTrustInstance(CBaseEntity* PEntity, const std::function<void(CTrustEntity*)>& func) override;
+    void ForEachPet(const std::function<void(CPetEntity*)>& func) override;
+    void ForEachPetInstance(CBaseEntity* PEntity, const std::function<void(CPetEntity*)>& func) override;
+    void ForEachAlly(const std::function<void(CMobEntity*)>& func) override;
+    void ForEachAllyInstance(CBaseEntity* PEntity, const std::function<void(CMobEntity*)>& func) override;
 
     CInstance* CreateInstance(uint32 instanceid);
 
-    CZoneInstance(ZONEID ZoneID, REGION_TYPE RegionID, CONTINENT_TYPE ContinentID, uint8 levelRestriction);
+    CZoneInstance(Scheduler& scheduler, MapConfig config, ZONEID ZoneID, REGION_TYPE RegionID, CONTINENT_TYPE ContinentID, uint8 levelRestriction);
     ~CZoneInstance() override;
 
 private:

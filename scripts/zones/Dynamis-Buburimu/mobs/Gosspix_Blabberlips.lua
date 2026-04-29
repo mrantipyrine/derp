@@ -8,8 +8,24 @@ mixins =
     require('scripts/mixins/job_special')
 }
 -----------------------------------
+local ID = zones[xi.zone.DYNAMIS_BUBURIMU]
+-----------------------------------
 ---@type TMobEntity
 local entity = {}
+
+entity.spawnPoints =
+{
+    { x =  51.715, y = -15.950, z =  87.500 }
+}
+
+entity.phList =
+{
+    [ID.mob.GOSSPIX_BLABBERLIPS - 8] = ID.mob.GOSSPIX_BLABBERLIPS, -- Vanguard_Enchanter
+}
+
+entity.onMobSpawn = function(mob)
+    xi.dynamis.mobInfo(mob)
+end
 
 entity.onMobDeath = function(mob, player, optParams)
 end

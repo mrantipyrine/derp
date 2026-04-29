@@ -22,22 +22,21 @@
 #include "time_server.h"
 
 #include "common/cbasetypes.h"
-#include "common/task_manager.h"
 #include "common/tracy.h"
 #include "common/vana_time.h"
 
 #include "conquest_system.h"
 #include "daily_tally.h"
-#include "world_server.h"
+#include "world_engine.h"
 
-int32 time_server(timer::time_point tick, CTaskManager::CTask* PTask)
+auto time_server(const WorldEngine* worldServer) -> Task<void>
 {
     TracyZoneScoped;
+
+    const auto tick = timer::now();
     // Track elapsed ticks.
     static auto tickNum = 0;
     ++tickNum;
-
-    WorldServer* worldServer = std::any_cast<WorldServer*>(PTask->m_data);
 
     // Earth-based ticks.
     // Uses the JST equivalent of the current timer tick. (steady_clock -> system_clock)
@@ -127,5 +126,5 @@ int32 time_server(timer::time_point tick, CTaskManager::CTask* PTask)
         nextVHourlyUpdate = std::chrono::ceil<xi::vanadiel_clock::hours>(vanaTime);
     }
 
-    return 0;
+    co_return;
 }

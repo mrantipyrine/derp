@@ -5,13 +5,18 @@
 ---@type TMobEntity
 local entity = {}
 
+entity.spawnPoints =
+{
+    { x = -259.770, y =  0.000, z =  743.650 }
+}
+
 entity.onMobInitialize = function(mob)
     mob:setMobMod(xi.mobMod.ADD_EFFECT, 1)
     mob:setMod(xi.mod.DOUBLE_ATTACK, 75) -- "Has a high but not 100% Double Attack rate."
 end
 
 entity.onMobSpawn = function(mob)
-    mob:addStatusEffect(xi.effect.STONESKIN, 100, 0, 300) -- "Spawns with the effect of Stoneskin."
+    mob:addStatusEffect(xi.effect.STONESKIN, { power = 100, duration = 300, origin = mob }) -- "Spawns with the effect of Stoneskin."
 end
 
 entity.onAdditionalEffect = function(mob, target, damage)

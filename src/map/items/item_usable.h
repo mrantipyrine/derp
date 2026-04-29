@@ -24,18 +24,20 @@
 
 #include "common/cbasetypes.h"
 
+#include "enums/action/animation.h"
 #include "item.h"
 
 class CItemUsable : public CItem
 {
 public:
     CItemUsable(uint16);
+    CItemUsable(const CItemUsable& other);
     virtual ~CItemUsable();
 
     timer::duration   getUseDelay() const;
-    uint8             getCurrentCharges();
+    auto              getCurrentCharges() const -> uint8;
     uint8             getMaxCharges() const;
-    uint16            getAnimationID() const;
+    auto              getAnimationID() const -> ActionAnimation;
     timer::duration   getAnimationTime() const;
     timer::duration   getActivationTime() const;
     uint16            getValidTarget() const;

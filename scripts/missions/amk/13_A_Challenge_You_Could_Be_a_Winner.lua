@@ -1,6 +1,7 @@
 -----------------------------------
 -- A Challenge! You Could Be a Winner
 -- A Moogle Kupo d'Etat M13
+-----------------------------------
 -- !addmission 10 12
 -----------------------------------
 -- Puzzle 1 - Beaucedine
@@ -231,7 +232,7 @@ mission.sections =
                         }
 
                         if option == 5 or option == 6 then
-                            player:addStatusEffect(xi.effect.FLEE, 10000, 0, fleeDuration[option])
+                            player:addStatusEffect(xi.effect.FLEE, { power = 10000, duration = fleeDuration[option], origin = player })
                         end
                     end
                 end,
@@ -390,7 +391,7 @@ mission.sections =
 
                     if not player:needToZone() then
                         return mission:progressEvent(101, 4)
-                    elseif mission:getLocalVar(player, '[p3]timeLimit') < os.time() then
+                    elseif mission:getLocalVar(player, '[p3]timeLimit') < GetSystemTime() then
                         return mission:progressEvent(101, 1)
                     else
                         return mission:progressEvent(101, 2)
@@ -404,20 +405,20 @@ mission.sections =
                     if option == 1 then
                         -- Start run
                         player:needToZone(true)
-                        mission:setLocalVar(player, '[p3]timeLimit', os.time() + utils.minutes(8))
-                        player:addStatusEffect(xi.effect.LEVEL_RESTRICTION, 1, 0, 0)
+                        mission:setLocalVar(player, '[p3]timeLimit', GetSystemTime() + utils.minutes(8))
+                        player:addStatusEffect(xi.effect.LEVEL_RESTRICTION, { power = 1, origin = player })
 
                         -- https://www.bg-wiki.com/ffxi/Kupo_Mission_13 : "The effect durations are random. They can be 3-7 minutes long. "
                         local buffDuration = math.floor(utils.minutes(math.random(3, 7)) * xi.settings.main.SNEAK_INVIS_DURATION_MULTIPLIER)
-                        player:addStatusEffect(xi.effect.INVISIBLE, 1, 10, buffDuration)
-                        player:addStatusEffect(xi.effect.DEODORIZE, 1, 10, buffDuration)
-                        player:addStatusEffect(xi.effect.SNEAK, 1, 10, buffDuration)
+                        player:addStatusEffect(xi.effect.INVISIBLE, { power = 1, duration = buffDuration, origin = player, tick = 10 })
+                        player:addStatusEffect(xi.effect.DEODORIZE, { power = 1, duration = buffDuration, origin = player, tick = 10 })
+                        player:addStatusEffect(xi.effect.SNEAK, { power = 1, duration = buffDuration, origin = player, tick = 10 })
                     elseif option == 2 then
                         -- Player came back to refresh buffs
                         local buffDuration = math.floor(utils.minutes(math.random(3, 7)) * xi.settings.main.SNEAK_INVIS_DURATION_MULTIPLIER)
-                        player:addStatusEffect(xi.effect.INVISIBLE, 1, 10, buffDuration)
-                        player:addStatusEffect(xi.effect.DEODORIZE, 1, 10, buffDuration)
-                        player:addStatusEffect(xi.effect.SNEAK, 1, 10, buffDuration)
+                        player:addStatusEffect(xi.effect.INVISIBLE, { power = 1, duration = buffDuration, origin = player, tick = 10 })
+                        player:addStatusEffect(xi.effect.DEODORIZE, { power = 1, duration = buffDuration, origin = player, tick = 10 })
+                        player:addStatusEffect(xi.effect.SNEAK, { power = 1, duration = buffDuration, origin = player, tick = 10 })
                     end
                 end,
 

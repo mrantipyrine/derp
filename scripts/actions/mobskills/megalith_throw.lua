@@ -1,6 +1,7 @@
 -----------------------------------
 -- Megalith Throw
--- Titan delivers a ranged attack that slows target.
+-- Family: Avatar (Titan)
+-- Description: Titan delivers a ranged attack that slows target.
 -----------------------------------
 ---@type TMobSkill
 local mobskillObject = {}
@@ -9,17 +10,28 @@ mobskillObject.onMobSkillCheck = function(target, mob, skill)
     return 0
 end
 
-mobskillObject.onMobWeaponSkill = function(target, mob, skill)
-    local numhits = 1
-    local accmod = 1
-    local dmgmod = 2.5
-    local info = xi.mobskills.mobRangedMove(mob, target, skill, numhits, accmod, dmgmod, xi.mobskills.magicalTpBonus.NO_EFFECT)
-    local dmg = xi.mobskills.mobFinalAdjustments(info.dmg, mob, skill, target, xi.attackType.PHYSICAL, xi.damageType.BLUNT, info.hitslanded)
+mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
+    local params = {}
 
-    xi.mobskills.mobPhysicalStatusEffectMove(mob, target, skill, xi.effect.SLOW, 1000, 0, 120)
-    target:takeDamage(dmg, mob, xi.attackType.PHYSICAL, xi.damageType.BLUNT)
+    params.baseDamage     = mob:getWeaponDmg()
+    params.numHits        = 1
+    params.fTP            = { 2.5, 2.5, 2.5 } -- TODO: Capture fTPs
+    params.attackType     = xi.attackType.PHYSICAL
+    params.damageType     = xi.damageType.SLASHING
+    params.shadowBehavior = xi.mobskills.shadowBehavior.NUMSHADOWS_1
+    params.skipParry      = true
+    params.skipGuard      = true
+    params.skipBlock      = true
 
-    return dmg
+    local info = xi.mobskills.mobRangedMove(mob, target, skill, action, params)
+
+    if xi.mobskills.processDamage(mob, target, skill, action, info) then
+        target:takeDamage(info.damage, mob, info.attackType, info.damageType)
+
+        xi.mobskills.mobStatusEffectMove(mob, target, xi.effect.SLOW, 30, 0, 120)
+    end
+
+    return info.damage
 end
 
 return mobskillObject

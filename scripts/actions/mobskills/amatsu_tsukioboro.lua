@@ -1,37 +1,34 @@
 -----------------------------------
---  Amatsu: Tsukioboro
---  Type: Physical
+-- Amatsu: Tsukioboro
+-- Family: Humanoid (Tenzen)
+-- Description: Deals physical damage to a target. Additional Effect: Silence
 -----------------------------------
 ---@type TMobSkill
 local mobskillObject = {}
 
 mobskillObject.onMobSkillCheck = function(target, mob, skill)
-    if
-        mob:getObjType() == xi.objType.TRUST or
-        mob:getAnimationSub() == 0
-    then
-        return 0
-    else
-        return 1
-    end
+    return 0
 end
 
-mobskillObject.onMobWeaponSkill = function(target, mob, skill)
-    local power    = 1
-    local duration = 60
-    local numhits  = 1
-    local accmod   = 1
-    local ftp      = 4 -- fTP and fTP scaling unknown. TODO: capture ftp
-    local info     = xi.mobskills.mobPhysicalMove(mob, target, skill, numhits, accmod, ftp, xi.mobskills.physicalTpBonus.NO_EFFECT, 0, 0, 0)
-    local dmg      = xi.mobskills.mobFinalAdjustments(info.dmg, mob, skill, target, xi.attackType.PHYSICAL, xi.damageType.SLASHING, info.hitslanded)
+mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
+    local params = {}
 
-    target:takeDamage(dmg, mob, xi.attackType.PHYSICAL, xi.damageType.SLASHING)
+    params.baseDamage     = mob:getWeaponDmg()
+    params.numHits        = 1
+    params.fTP            = { 4.0, 4.0, 4.0 }
+    params.attackType     = xi.attackType.PHYSICAL
+    params.damageType     = xi.damageType.SLASHING
+    params.shadowBehavior = xi.mobskills.shadowBehavior.NUMSHADOWS_1
 
-    if info.hitslanded > 0 then
-        target:addStatusEffect(xi.effect.SILENCE, power, 0, duration)
+    local info = xi.mobskills.mobPhysicalMove(mob, target, skill, action, params)
+
+    if xi.mobskills.processDamage(mob, target, skill, action, info) then
+        target:takeDamage(info.damage, mob, info.attackType, info.damageType)
+
+        xi.mobskills.mobStatusEffectMove(mob, target, xi.effect.SILENCE, 1, 0, 60)
     end
 
-    return dmg
+    return info.damage
 end
 
 return mobskillObject

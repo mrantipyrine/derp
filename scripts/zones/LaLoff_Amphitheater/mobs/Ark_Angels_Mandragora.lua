@@ -5,24 +5,30 @@
 ---@type TMobEntity
 local entity = {}
 
--- TODO: Determine spell list and behavior.  Potentially includes Breakga and Bindga, unless they're TP moves.
--- TODO: Implement shared spawn and victory conditions with Ark Angel's Tiger.
+entity.onMobSpawn = function(mob)
+    mob:setMobMod(xi.mobMod.MAGIC_COOL, 70)
+end
 
 entity.onMobEngage = function(mob, target)
     local mobid = mob:getID()
 
     for member = mobid-3, mobid + 4 do
         local m = GetMobByID(member)
-        if m and m:getCurrentAction() == xi.act.ROAMING then
+        if m and m:getCurrentAction() == xi.action.category.ROAMING then
             m:updateEnmity(target)
         end
     end
 end
 
-entity.onMobFight = function(mob, target)
-end
+entity.onMobSpellChoose = function(mob, target, spellId)
+    local spellList =
+    {
+        [1] = { xi.magic.spell.QUAKE,  target, false, xi.action.type.DAMAGE_TARGET,     nil,            0, 100 },
+        [2] = { xi.magic.spell.SLOW,   target, false, xi.action.type.ENFEEBLING_TARGET, xi.effect.SLOW, 4, 100 },
+        [3] = { xi.magic.spell.BINDGA, target, false, xi.action.type.ENFEEBLING_TARGET, xi.effect.BIND, 0, 100 },
+    }
 
-entity.onMobDeath = function(mob, player, optParams)
+    return xi.combat.behavior.chooseAction(mob, target, nil, spellList)
 end
 
 return entity

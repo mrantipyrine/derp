@@ -1,14 +1,7 @@
 -----------------------------------
 -- Freezebite
--- Great Sword weapon skill
--- Skill Level: 100
--- Delivers an ice elemental attack. Damage varies with TP.
--- Aligned with the Snow Gorget & Breeze Gorget.
--- Aligned with the Snow Belt & Breeze Belt.
--- Element: Ice
--- Modifiers: STR:30%  INT:20%
--- 100%TP    200%TP    300%TP
--- 1.00      1.50      3.00
+-- Family: Humanoid Greatsword Weaponskill
+-- Description: Delivers an ice elemental attack. Damage varies with TP.
 -----------------------------------
 ---@type TMobSkill
 local mobskillObject = {}
@@ -17,15 +10,28 @@ mobskillObject.onMobSkillCheck = function(target, mob, skill)
     return 0
 end
 
-mobskillObject.onMobWeaponSkill = function(target, mob, skill)
+mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
     local params = {}
-    params.numHits = 1
-    params.ftpMod = { 1.0, 1.5, 3.0 }
-    params.str_wsc = 0.3 params.int_wsc = 0.2
-    local damage, _, _, _ = xi.weaponskills.doPhysicalWeaponskill(mob, target, 0, params, 0, nil, true, nil)
 
-    target:takeDamage(damage, mob, xi.attackType.MAGICAL, xi.damageType.ICE)
-    return damage
+    params.baseDamage       = mob:getMainLvl() + 2
+    params.fTP              = { 1.0, 1.5, 3.0 }
+    -- params.str_wSC       = 0.3 -- TODO: Capture if mobskill weaponskills have wSC.
+    -- params.int_wSC       = 0.2 -- TODO: Capture if mobskill weaponskills have wSC.
+    params.element          = xi.element.ICE
+    params.attackType       = xi.attackType.MAGICAL
+    params.damageType       = xi.damageType.ICE
+    params.shadowBehavior   = xi.mobskills.shadowBehavior.WIPE_SHADOWS
+    params.dStatMultiplier  = 1
+    params.dStatAttackerMod = xi.mod.INT
+    params.dStatDefenderMod = xi.mod.INT
+
+    local info = xi.mobskills.mobMagicalMove(mob, target, skill, action, params)
+
+    if xi.mobskills.processDamage(mob, target, skill, action, info) then
+        target:takeDamage(info.damage, mob, info.attackType, info.damageType)
+    end
+
+    return info.damage
 end
 
 return mobskillObject

@@ -2,7 +2,6 @@
 -- Zone: Yuhtunga_Jungle (123)
 -----------------------------------
 local ID = zones[xi.zone.YUHTUNGA_JUNGLE]
-require('scripts/quests/i_can_hear_a_rainbow')
 require('scripts/missions/amk/helpers')
 -----------------------------------
 ---@type TZone
@@ -18,10 +17,6 @@ zoneObject.onInitialize = function(zone)
     xi.helm.initZone(zone, xi.helmType.LOGGING)
 
     xi.beastmenTreasure.updatePeddlestox(xi.zone.YUHTUNGA_JUNGLE, ID.npc.PEDDLESTOX)
-
-    GetMobByID(ID.mob.TURTLERIDER):setRespawnTime(math.random(900, 10800))
-
-    GetMobByID(ID.mob.PYUU_THE_SPATEMAKER):setRespawnTime(math.random(5400, 7200))
 end
 
 zoneObject.onGameDay = function()
@@ -41,10 +36,6 @@ zoneObject.onZoneIn = function(player, prevZone)
         player:getZPos() == 0
     then
         player:setPos(116.825, 6.613, 100, 140)
-    end
-
-    if quests.rainbow.onZoneIn(player) then
-        cs = 11
     end
 
     -- AMK06/AMK07
@@ -68,9 +59,6 @@ zoneObject.onTriggerAreaEnter = function(player, triggerArea)
 end
 
 zoneObject.onEventUpdate = function(player, csid, option, npc)
-    if csid == 11 then
-        quests.rainbow.onEventUpdate(player)
-    end
 end
 
 zoneObject.onEventFinish = function(player, csid, option, npc)
@@ -89,7 +77,7 @@ zoneObject.onZoneWeatherChange = function(weather)
 
             -- Spawn if respawn is up
             if
-                os.time() > bayawak:getLocalVar('respawn') and
+                GetSystemTime() > bayawak:getLocalVar('respawn') and
                 not bayawak:isSpawned()
             then
                 SpawnMob(bayawak:getID())

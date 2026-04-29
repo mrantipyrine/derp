@@ -5,7 +5,7 @@
 ---@type TMobEntity
 local entity = {}
 
-local spawnPoints =
+entity.spawnPoints =
 {
     { x = -246.387, y = -8.815, z = -328.821 },
     { x = -242.669, y = -6.587, z = -325.404 },
@@ -62,16 +62,21 @@ local spawnPoints =
 entity.onMobInitialize = function(mob)
     mob:setMobMod(xi.mobMod.ADD_EFFECT, 1)
 
-    xi.mob.updateNMSpawnPoint(mob, spawnPoints)
+    xi.mob.updateNMSpawnPoint(mob)
     mob:setRespawnTime(math.random(900, 10800)) -- When server restarts, reset timer
 end
 
 entity.onAdditionalEffect = function(mob, target, damage)
-    if math.random(1, 100) <= 50 then
-        return xi.mob.onAddEffect(mob, target, damage, xi.mob.ae.ENAERO, { chance = 50 })
-    else
-        return xi.mob.onAddEffect(mob, target, damage, xi.mob.ae.ENWATER, { chance = 50 })
-    end
+    local pTable =
+    {
+        chance         = 50,
+        attackType     = xi.attackType.MAGICAL,
+        magicalElement = math.random(1, 100) <= 50 and xi.element.WIND or xi.element.WATER,
+        basePower      = math.floor(damage / 2),
+        actorStat      = xi.mod.INT,
+    }
+
+    return xi.combat.action.executeAddEffectDamage(mob, target, pTable)
 end
 
 entity.onMobDeath = function(mob, player, optParams)
@@ -79,7 +84,7 @@ entity.onMobDeath = function(mob, player, optParams)
 end
 
 entity.onMobDespawn = function(mob)
-    xi.mob.updateNMSpawnPoint(mob, spawnPoints)
+    xi.mob.updateNMSpawnPoint(mob)
     mob:setRespawnTime(math.random(3600, 7200)) -- 1 to 2 hours
 end
 

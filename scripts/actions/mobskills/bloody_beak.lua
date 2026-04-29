@@ -1,12 +1,7 @@
 -----------------------------------
---  Bloody Beak
---    Mob Ability: 2428
---  Description: Steals HP from targets within a fan-shaped area.
---  Type: Magical
---  Utsusemi/Blink absorb: Ignores Utsusemi
---  Range: 5'
---  Notes: Seems to be magical-based Drain.
---    Witnessed Paladin taking lower damage from it than Ninja with Shell only.
+-- Bloody Beak
+-- Family: Amphiptere
+-- Description: 3 fold physical attack to targets in front of mob. Additional Effect: HP Drain
 -----------------------------------
 ---@type TMobSkill
 local mobskillObject = {}
@@ -15,15 +10,23 @@ mobskillObject.onMobSkillCheck = function(target, mob, skill)
     return 0
 end
 
-mobskillObject.onMobWeaponSkill = function(target, mob, skill)
-    local damage = mob:getWeaponDmg() * 3
+mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
+    local params = {}
 
-    damage = xi.mobskills.mobMagicalMove(mob, target, skill, damage, xi.element.WIND, 1, xi.mobskills.magicalTpBonus.MAB_BONUS, 1)
-    damage = xi.mobskills.mobFinalAdjustments(damage, mob, skill, target, xi.attackType.MAGICAL, xi.damageType.WIND, xi.mobskills.shadowBehavior.IGNORE_SHADOWS)
+    params.baseDamage     = mob:getWeaponDmg()
+    params.numHits        = 3
+    params.fTP            = { 1.0, 1.0, 1.0 }
+    params.attackType     = xi.attackType.PHYSICAL
+    params.damageType     = xi.damageType.BLUNT
+    params.shadowBehavior = xi.mobskills.shadowBehavior.IGNORE_SHADOWS -- TODO: Capture shadowBehavior
 
-    skill:setMsg(xi.mobskills.mobPhysicalDrainMove(mob, target, skill, xi.mobskills.drainType.HP, damage))
+    local info = xi.mobskills.mobPhysicalMove(mob, target, skill, action, params)
 
-    return damage
+    if xi.mobskills.processDamage(mob, target, skill, action, info) then
+        skill:setMsg(xi.mobskills.mobDrainMove(mob, target, xi.mobskills.drainType.HP, info.damage, info.attackType, info.damageType))
+    end
+
+    return info.damage
 end
 
 return mobskillObject

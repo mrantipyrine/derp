@@ -12,13 +12,17 @@ local ID = zones[xi.zone.DYNAMIS_JEUNO]
 ---@type TMobEntity
 local entity = {}
 
+entity.onMobSpawn = function(mob)
+    xi.dynamis.mobInfo(mob)
+end
+
 entity.onMobDeath = function(mob, player, optParams)
 end
 
 entity.onMobDespawn = function(mob)
-    xi.mob.phOnDespawn(mob, ID.mob.HERMITRIX_TOOTHROT_PH, 10, 1200) -- 10% lottery chance and 20 minute cooldown values ASSUMED same as Dynamis-Beaucedine/Xarcabard, needs final verification
-    xi.mob.phOnDespawn(mob, ID.mob.WYRMWIX_SNAKESPECS_PH, 10, 1200) -- 10% lottery chance and 20 minute cooldown values ASSUMED same as Dynamis-Beaucedine/Xarcabard, needs final verification
-    xi.mob.phOnDespawn(mob, ID.mob.JABBROX_GRANNYGUISE_PH, 10, 1200) -- 10% lottery chance and 20 minute cooldown values ASSUMED same as Dynamis-Beaucedine/Xarcabard, needs final verification
+    xi.mob.phOnDespawn(mob, ID.mob.HERMITRIX_TOOTHROT, 10, 1200) -- 10% lottery chance and 20 minute cooldown values ASSUMED same as Dynamis-Beaucedine/Xarcabard, needs final verification
+    xi.mob.phOnDespawn(mob, ID.mob.WYRMWIX_SNAKESPECS, 10, 1200) -- 10% lottery chance and 20 minute cooldown values ASSUMED same as Dynamis-Beaucedine/Xarcabard, needs final verification
+    xi.mob.phOnDespawn(mob, ID.mob.JABBROX_GRANNYGUISE, 10, 1200) -- 10% lottery chance and 20 minute cooldown values ASSUMED same as Dynamis-Beaucedine/Xarcabard, needs final verification
 end
 
 return entity

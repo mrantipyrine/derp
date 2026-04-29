@@ -27,31 +27,39 @@
 #include "common/timer.h"
 
 #include "map_constants.h"
+#include "packets/s2c/0x00b_logout.h"
 
 #include <array>
 
+enum class GP_GAME_LOGOUT_STATE : uint8_t;
 class CCharEntity;
+class Scheduler;
 
 struct MapSession
 {
-    IPP               client_ipp         = {};
-    uint16            client_packet_id   = 0;       // id of the last packet that came from the client
-    uint16            server_packet_id   = 0;       // id of the last packet sent by the server
-    NetworkBuffer     server_packet_data = {};      // data of the packet, which was previously sent to the client
-    size_t            server_packet_size = 0;       // the size of the packet that was previously sent to the client
-    timer::time_point last_update        = {};      // time of last packet recv
-    blowfish_t        blowfish           = {};      // unique decypher keys, these are the currently expected keys
-    CCharEntity*      PChar              = nullptr; // game char
-    uint8             shuttingDown       = 0;       // prevents double session closing
-    uint32            charID             = 0;
+    // TODO: Don't pass the scheduler around in here!
+    // This is a dirty hack to pipe the scheduler around into the packet handlers.
+    Scheduler* scheduler = nullptr;
+
+    IPP                          client_ipp         = {};
+    uint16                       client_packet_id   = 0;  // id of the last packet that came from the client
+    uint16                       server_packet_id   = 0;  // id of the last packet sent by the server
+    NetworkBuffer                server_packet_data = {}; // data of the packet, which was previously sent to the client
+    size_t                       server_packet_size = 0;  // the size of the packet that was previously sent to the client
+    timer::time_point            last_update        = {}; // time of last packet recv
+    blowfish_t                   blowfish           = {}; // unique decypher keys, these are the currently expected keys
+    std::unique_ptr<CCharEntity> PChar;                   // game char
+    uint8                        shuttingDown = 0;        // prevents double session closing
+    uint32                       charID       = 0;
+    uint32                       accountID    = 0;
 
     // Store old blowfish data, when a player recieves 0x00B their key should increment
     // If it doesn't, and we can still successfully decrypt here, that means we need to resend 0x00B.
     blowfish_t prev_blowfish = {};
 
     // Used to resend 0x00B zoneout packet in case the client needs it
-    uint8 zone_type = 0;
-    IPP   zone_ipp  = {};
+    GP_GAME_LOGOUT_STATE zone_type = GP_GAME_LOGOUT_STATE::NONE;
+    IPP                  zone_ipp  = {};
 
     void incrementBlowfish();
     void initBlowfish();

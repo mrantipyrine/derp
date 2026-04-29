@@ -30,16 +30,18 @@
 
 #include "common/timer.h"
 
-CInstance::CInstance(CZone* zone, uint32 instanceid)
-: CZoneEntities(zone)
+CInstance::CInstance(Scheduler& scheduler, MapConfig config, CZone* zone, uint32 instanceid)
+: CZoneEntities(scheduler, config, zone)
 , m_instanceid(instanceid)
 , m_zone(zone)
+, m_startTime(timer::now())
 {
     TracyZoneScoped;
-    LoadInstance();
 
-    m_startTime = timer::now();
-    m_wipeTimer = m_startTime;
+    m_wipeTimer     = m_startTime;
+    m_lastTimeCheck = m_startTime;
+
+    LoadInstance();
 }
 
 CInstance::~CInstance()
@@ -99,10 +101,10 @@ void CInstance::LoadInstance()
         m_entryloc.y                      = rset->get<float>("start_y");
         m_entryloc.z                      = rset->get<float>("start_z");
         m_entryloc.rotation               = rset->get<uint8>("start_rot");
-        m_zone_music_override.m_songDay   = !rset->isNull("music_day") ? xi::optional(rset->get<uint16>("music_day")) : std::nullopt;
-        m_zone_music_override.m_songNight = !rset->isNull("music_night") ? xi::optional(rset->get<uint16>("music_night")) : std::nullopt;
-        m_zone_music_override.m_bSongS    = !rset->isNull("battlesolo") ? xi::optional(rset->get<uint16>("battlesolo")) : std::nullopt;
-        m_zone_music_override.m_bSongM    = !rset->isNull("battlemulti") ? xi::optional(rset->get<uint16>("battlemulti")) : std::nullopt;
+        m_zone_music_override.m_songDay   = !rset->isNull("music_day") ? Maybe<uint16>(rset->get<uint16>("music_day")) : std::nullopt;
+        m_zone_music_override.m_songNight = !rset->isNull("music_night") ? Maybe<uint16>(rset->get<uint16>("music_night")) : std::nullopt;
+        m_zone_music_override.m_bSongS    = !rset->isNull("battlesolo") ? Maybe<uint16>(rset->get<uint16>("battlesolo")) : std::nullopt;
+        m_zone_music_override.m_bSongM    = !rset->isNull("battlemulti") ? Maybe<uint16>(rset->get<uint16>("battlemulti")) : std::nullopt;
 
         // Add to Lua cache
         // TODO: This will happen more often than needed, but not so often that it's a performance concern
@@ -170,13 +172,14 @@ timer::duration CInstance::GetWipeTime()
 
 timer::duration CInstance::GetElapsedTime(timer::time_point tick)
 {
-    return tick - m_startTime;
+    // no reason to allow returning a negative elapsed time, can happen if map server is delayed and processing a previous tick
+    return std::max(timer::duration(0s), tick - m_startTime);
 }
 
-uint64_t CInstance::GetLocalVar(std::string const& name) const
+uint64_t CInstance::GetLocalVar(const std::string& name) const
 {
-    auto var = m_LocalVars.find(name);
-    return var != m_LocalVars.end() ? var->second : 0;
+    auto var = localVars_.find(name);
+    return var != localVars_.end() ? var->second : 0;
 }
 
 void CInstance::SetLevelCap(uint8 cap)
@@ -213,9 +216,9 @@ void CInstance::SetWipeTime(timer::duration time)
     m_wipeTimer = time + m_startTime;
 }
 
-void CInstance::SetLocalVar(std::string const& name, uint64_t value)
+void CInstance::SetLocalVar(const std::string& name, uint64_t value)
 {
-    m_LocalVars[name] = value;
+    localVars_[name] = value;
 }
 
 /************************************************************************
@@ -226,7 +229,15 @@ void CInstance::SetLocalVar(std::string const& name, uint64_t value)
 
 void CInstance::CheckTime(timer::time_point tick)
 {
-    if (m_lastTimeCheck + 1s <= tick && !Failed())
+    auto checkFrequency = 1s;
+    // Once someone zones in, m_lastTimeCheck will change and checkFrequency will be pinned at 1s for the remainder of the instance
+    if (CharListEmpty() && m_startTime == m_lastTimeCheck)
+    {
+        // give grace period before first instance check to allow time to register instance and zone in
+        // instance.lua lets the client run through the event for a maximum of 35s before forcing zone change with `setPos`
+        checkFrequency = 40s;
+    }
+    if (m_lastTimeCheck + checkFrequency <= tick && !Failed())
     {
         luautils::OnInstanceTimeUpdate(GetZone(), this, static_cast<uint32>(timer::count_milliseconds(GetElapsedTime(tick))));
         m_lastTimeCheck = tick;
@@ -255,27 +266,29 @@ void CInstance::ClearEntities()
         }
     };
 
-    // clang-format off
-    ForEachChar([&](CCharEntity* PChar)
-    {
-        clearStates(PChar);
-    });
+    ForEachChar(
+        [&](CCharEntity* PChar)
+        {
+            clearStates(PChar);
+        });
 
-    ForEachMob([&](CMobEntity* PMob)
-    {
-        clearStates(PMob);
-    });
+    ForEachMob(
+        [&](CMobEntity* PMob)
+        {
+            clearStates(PMob);
+        });
 
-    ForEachPet([&](CPetEntity* PPet)
-    {
-        clearStates(PPet);
-    });
+    ForEachPet(
+        [&](CPetEntity* PPet)
+        {
+            clearStates(PPet);
+        });
 
-    ForEachTrust([&](CTrustEntity* PTrust)
-    {
-        clearStates(PTrust);
-    });
-    // clang-format on
+    ForEachTrust(
+        [&](CTrustEntity* PTrust)
+        {
+            clearStates(PTrust);
+        });
 }
 
 void CInstance::Fail()

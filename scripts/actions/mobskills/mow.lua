@@ -1,11 +1,8 @@
 -----------------------------------
---  Mow
---
---  Description: Deals damage in an area of effect. Additional effect: Poison
---  Type: Physical
---  Utsusemi/Blink absorb: 2-3 shadows
---  Range: Unknown radial
---  Notes: Poison can take around 10HP/tick
+-- Mow
+-- Family: Tauri
+-- Description: Deals damage in an area of effect. Additional Effect: Poison
+-- Notes: Poison can take around 10HP/tick
 -----------------------------------
 ---@type TMobSkill
 local mobskillObject = {}
@@ -14,18 +11,30 @@ mobskillObject.onMobSkillCheck = function(target, mob, skill)
     return 0
 end
 
-mobskillObject.onMobWeaponSkill = function(target, mob, skill)
-    local numhits = math.random(2, 3)
-    local accmod = 1
-    local ftp    = 1
-    local info = xi.mobskills.mobPhysicalMove(mob, target, skill, numhits, accmod, ftp, xi.mobskills.physicalTpBonus.NO_EFFECT)
-    local dmg = xi.mobskills.mobFinalAdjustments(info.dmg, mob, skill, target, xi.attackType.PHYSICAL, xi.damageType.SLASHING, info.hitslanded)
-    local power = mob:getMainLvl() / 4 + 3
+mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
+    local params = {}
 
-    xi.mobskills.mobPhysicalStatusEffectMove(mob, target, skill, xi.effect.POISON, power, 3, 60)
+    params.baseDamage     = mob:getWeaponDmg()
+    params.numHits        = 3
+    params.fTP            = { 0.5, 0.5, 0.5 }
+    params.attackType     = xi.attackType.PHYSICAL
+    params.damageType     = xi.damageType.SLASHING
+    params.shadowBehavior = xi.mobskills.shadowBehavior.NUMSHADOWS_3 -- TODO: Capture shadowBehavior
+    params.canCrit        = true
+    params.criticalChance = { 0.10, 0.20, 0.25 } -- TODO: Capture crit rate
 
-    target:takeDamage(dmg, mob, xi.attackType.PHYSICAL, xi.damageType.SLASHING)
-    return dmg
+    -- Notes: Fairly certain this ia a multi hit. Damage logs show at least 2 hit minimum, also got multiple skill ups of the same type from it.
+    -- 2 seperate Evasion skill ups + 1 parry skill up so likely 2 or 3 hit?
+
+    local info = xi.mobskills.mobPhysicalMove(mob, target, skill, action, params)
+
+    if xi.mobskills.processDamage(mob, target, skill, action, info) then
+        target:takeDamage(info.damage, mob, info.attackType, info.damageType)
+
+        xi.mobskills.mobStatusEffectMove(mob, target, xi.effect.POISON, 25, 3, 30)
+    end
+
+    return info.damage
 end
 
 return mobskillObject

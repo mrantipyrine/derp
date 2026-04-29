@@ -1,5 +1,7 @@
 -----------------------------------
 -- Aeolian Edge
+-- Family: Humanoid Dagger Weaponskill
+-- Description: Delivers an area attack that deals wind elemental damage. Damage varies with TP.
 -----------------------------------
 ---@type TMobSkill
 local mobskillObject = {}
@@ -9,16 +11,28 @@ mobskillObject.onMobSkillCheck = function(target, mob, skill)
     return 0
 end
 
-mobskillObject.onMobWeaponSkill = function(target, mob, skill)
-    local numhits = 3
-    local accmod  = 1
-    local ftp     = 2
-    local info    = xi.mobskills.mobPhysicalMove(mob, target, skill, numhits, accmod, ftp, xi.mobskills.physicalTpBonus.ACC_VARIES, 1, 2, 3)
-    local dmg     = xi.mobskills.mobFinalAdjustments(info.dmg, mob, skill, target, xi.attackType.PHYSICAL, xi.damageType.SLASHING, info.hitslanded)
+mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
+    local params = {}
 
-    target:takeDamage(dmg, mob, xi.attackType.PHYSICAL, xi.damageType.SLASHING)
+    params.baseDamage       = mob:getMainLvl() + 2
+    params.fTP              = { 2.75, 3.5, 4.0 }
+    -- params.dex_wSC       = 0.28 -- TODO: Capture if mobskill weaponskills have wSC.
+    -- params.int_wSC       = 0.28 -- TODO: Capture if mobskill weaponskills have wSC.
+    params.element          = xi.element.WIND
+    params.attackType       = xi.attackType.MAGICAL
+    params.damageType       = xi.damageType.WIND
+    params.shadowBehavior   = xi.mobskills.shadowBehavior.IGNORE_SHADOWS
+    params.dStatMultiplier  = 1
+    params.dStatAttackerMod = xi.mod.INT
+    params.dStatDefenderMod = xi.mod.INT
 
-    return dmg
+    local info = xi.mobskills.mobMagicalMove(mob, target, skill, action, params)
+
+    if xi.mobskills.processDamage(mob, target, skill, action, info) then
+        target:takeDamage(info.damage, mob, info.attackType, info.damageType)
+    end
+
+    return info.damage
 end
 
 return mobskillObject

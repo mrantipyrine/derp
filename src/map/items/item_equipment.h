@@ -22,8 +22,6 @@
 #ifndef _CITEMEQUIPMENT_H
 #define _CITEMEQUIPMENT_H
 
-#include "common/utils.h"
-
 #include <vector>
 
 #include "item_usable.h"
@@ -56,6 +54,7 @@ class CItemEquipment : public CItemUsable
 {
 public:
     CItemEquipment(uint16);
+    CItemEquipment(const CItemEquipment& other);
     virtual ~CItemEquipment();
 
     struct itemLatent
@@ -78,8 +77,8 @@ public:
     uint8  getShieldAbsorption() const;
     int16  getModifier(Mod mod) const;
     uint8  getSlotType() const;
-    uint16 getAugment(uint8 slot);
-    uint16 getTrialNumber();
+    auto   getAugment(uint8 slot) const -> uint16;
+    auto   getTrialNumber() const -> uint16;
     uint8  getSuperiorLevel();
 
     bool IsShield() const;

@@ -9,8 +9,24 @@ mixins =
     require('scripts/mixins/remove_doom')
 }
 -----------------------------------
+local ID = zones[xi.zone.DYNAMIS_BEAUCEDINE]
+-----------------------------------
 ---@type TMobEntity
 local entity = {}
+
+entity.spawnPoints =
+{
+    { x =  204.103, y = -20.079, z =  12.447 }
+}
+
+entity.phList =
+{
+    [ID.mob.XHOO_FUZA_THE_SUBLIME - 1] = ID.mob.XHOO_FUZA_THE_SUBLIME, -- Vanguard_Chanter
+}
+
+entity.onMobSpawn = function(mob)
+    xi.dynamis.mobInfo(mob)
+end
 
 entity.onMobDeath = function(mob, player, optParams)
 end

@@ -1,9 +1,7 @@
 -----------------------------------
---  Impalement
---  Description: Deals damage to a single target reducing their HP to 5%. Resets enmity.
---  Type: Physical
---  Utsusemi/Blink absorb: No
---  Range: Single Target
+-- Impalement
+-- Family: Craver
+-- Description: Deals damage to a single target reducing their HP to 5%. Resets enmity.
 -----------------------------------
 ---@type TMobSkill
 local mobskillObject = {}
@@ -12,20 +10,32 @@ mobskillObject.onMobSkillCheck = function(target, mob, skill)
     return 0
 end
 
-mobskillObject.onMobWeaponSkill = function(target, mob, skill)
-    xi.mobskills.mobStatusEffectMove(mob, target, xi.effect.SLOW, 1250, 0, 120)
+mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
+    local params = {}
 
-    xi.mobskills.mobStatusEffectMove(mob, target, xi.effect.SLOW, 128, 0, 120)
-    local currentHP = target:getHP()
-    -- remove all by 5%
-    local stab = currentHP * .95
+    params.baseDamage     = target:getHP()
+    params.numHits        = 1
+    params.fTP            = { 0.95, 0.95, 0.95 } -- TODO: Capture % of current HP this does.
+    params.attackType     = xi.attackType.PHYSICAL
+    params.damageType     = xi.damageType.PIERCING
+    params.shadowBehavior = xi.mobskills.shadowBehavior.IGNORE_SHADOWS
+    params.skipFSTR       = true
+    params.skipPDIF       = true
+    params.skipParry      = true -- TODO: Confirm this can't be parried, guarded or blocked.
+    params.skipGuard      = true
+    params.skipBlock      = true
 
-    local dmg = xi.mobskills.mobFinalAdjustments(stab, mob, skill, target, xi.attackType.PHYSICAL, xi.damageType.PIERCING, xi.mobskills.shadowBehavior.IGNORE_SHADOWS)
+    local info = xi.mobskills.mobPhysicalMove(mob, target, skill, action, params)
 
-    target:takeDamage(dmg, mob, xi.attackType.PHYSICAL, xi.damageType.PIERCING)
+    if xi.mobskills.processDamage(mob, target, skill, action, info) then
+        target:takeDamage(info.damage, mob, info.attackType, info.damageType)
 
-    mob:resetEnmity(target)
-    return dmg
+        -- TODO: Capture hate reset type (Enmity wipe vs enmity turned off)
+        -- See Antica skill "Sand Trap" for reference
+        mob:resetEnmity(target)
+    end
+
+    return info.damage
 end
 
 return mobskillObject

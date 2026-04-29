@@ -34,6 +34,8 @@
 #include "conquest_system.h"
 #include "enmity_container.h"
 #include "entities/charentity.h"
+#include "enums/loot_recast.h"
+#include "enums/weather.h"
 #include "items.h"
 #include "lua/lua_loot.h"
 #include "lua/luautils.h"
@@ -41,11 +43,12 @@
 #include "mob_spell_container.h"
 #include "mob_spell_list.h"
 #include "mobskill.h"
-#include "packets/action.h"
 #include "packets/entity_update.h"
 #include "packets/pet_sync.h"
+#include "packets/s2c/0x029_battle_message.h"
 #include "recast_container.h"
 #include "roe.h"
+#include "spawn_slot.h"
 #include "status_effect_container.h"
 #include "treasure_pool.h"
 #include "utils/battleutils.h"
@@ -61,7 +64,8 @@
 
 namespace
 {
-    // clang-format off
+
+// clang-format off
     std::map<uint8, uint16> geodeMap = {
         { ELEMENT_FIRE,    FLAME_GEODE   },
         { ELEMENT_ICE,     SNOW_GEODE    },
@@ -83,15 +87,15 @@ namespace
         { ELEMENT_LIGHT,   CARBITE   },
         { ELEMENT_DARK,    FENRITE   }
     };
-    // clang-format on
+// clang-format on
 
-    constexpr int             RECAST_SEAL           = 1;
-    constexpr int             RECAST_GEODE          = 2;
-    constexpr timer::duration SPECIAL_DROP_COOLDOWN = 5min; // 5 minutes between special drops
+constexpr timer::duration SPECIAL_DROP_COOLDOWN = 5min; // 5 minutes between special drops
+
 } // namespace
 
 CMobEntity::CMobEntity()
 : m_AllowRespawn(false)
+, m_CanSpawn(false)
 , m_RespawnTime(5min)
 , m_DropItemTime(0)
 , m_DropID(0)
@@ -133,6 +137,7 @@ CMobEntity::CMobEntity()
 , m_HiPCLvl(0)
 , m_HiPartySize(0)
 , m_THLvl(0)
+, m_GilfinderLevel(0)
 , m_ItemStolen(false)
 , m_ItemDespoiled(false)
 , m_Family(0)
@@ -156,10 +161,10 @@ CMobEntity::CMobEntity()
     PEnmityContainer     = new CEnmityContainer(this);
     SpellContainer       = new CMobSpellContainer(this);
 
-    m_Weapons[SLOT_MAIN]   = new CItemWeapon(0);
-    m_Weapons[SLOT_SUB]    = new CItemWeapon(0);
-    m_Weapons[SLOT_RANGED] = new CItemWeapon(0);
-    m_Weapons[SLOT_AMMO]   = new CItemWeapon(0);
+    m_Weapons[SLOT_MAIN]   = std::make_unique<CItemWeapon>(0).release();
+    m_Weapons[SLOT_SUB]    = std::make_unique<CItemWeapon>(0).release();
+    m_Weapons[SLOT_RANGED] = std::make_unique<CItemWeapon>(0).release();
+    m_Weapons[SLOT_AMMO]   = std::make_unique<CItemWeapon>(0).release();
 
     PAI = std::make_unique<CAIContainer>(this, std::make_unique<CPathFind>(this), std::make_unique<CMobController>(this), std::make_unique<CTargetFind>(this));
 }
@@ -173,6 +178,11 @@ CMobEntity::~CMobEntity()
     destroy(m_Weapons[SLOT_AMMO]);
     destroy(PEnmityContainer);
     destroy(SpellContainer);
+
+    if (spawnSlot)
+    {
+        spawnSlot->RemoveMob(this);
+    }
 
     if (PParty)
     {
@@ -218,6 +228,35 @@ void CMobEntity::SetDespawnTime(timer::duration _duration)
     {
         m_DespawnTimer = timer::time_point::min();
     }
+}
+
+void CMobEntity::SetSpawnSlot(SpawnSlot* sharedSpawn)
+{
+    this->spawnSlot = sharedSpawn;
+}
+
+SpawnSlot* CMobEntity::GetSpawnSlot()
+{
+    return this->spawnSlot;
+}
+
+bool CMobEntity::TrySpawn()
+{
+    if (m_AllowRespawn && !PAI->IsSpawned())
+    {
+        if (spawnSlot)
+        {
+            spawnSlot->TrySpawn();
+            return false;
+        }
+
+        if (m_CanSpawn)
+        {
+            Spawn();
+            return true;
+        }
+    }
+    return false;
 }
 
 uint32 CMobEntity::GetRandomGil()
@@ -389,6 +428,29 @@ bool CMobEntity::CanLink(position_t* pos, int16 superLink)
     return true;
 }
 
+bool CMobEntity::ShouldForceLink()
+{
+    // There are certain cases where mobs should always be able
+    // to link with other mobs, even if their families or sublinks
+    // do not align
+    if (loc.zone->GetTypeMask() & ZONE_TYPE::DYNAMIS)
+    {
+        return true;
+    }
+
+    if (m_Type & MOBTYPE_BATTLEFIELD)
+    {
+        return true;
+    }
+
+    if (getMobMod(MOBMOD_SUPERLINK))
+    {
+        return true;
+    }
+
+    return false;
+}
+
 bool CMobEntity::CanDeaggro() const
 {
     return !(m_Type & MOBTYPE_NOTORIOUS || m_Type & MOBTYPE_BATTLEFIELD);
@@ -404,27 +466,27 @@ bool CMobEntity::CanBeNeutral() const
     return !(m_Type & MOBTYPE_NOTORIOUS);
 }
 
-uint16 CMobEntity::TPUseChance()
+bool CMobEntity::shouldUseTPMove(uint16 tpThreshold)
 {
     const auto& MobSkillList = battleutils::GetMobSkillList(getMobMod(MOBMOD_SKILL_LIST));
 
     if (health.tp < 1000 || MobSkillList.empty() || !static_cast<CMobController*>(PAI->GetController())->IsWeaponSkillEnabled())
     {
-        return 0;
+        return false;
     }
 
-    if (health.tp == 3000 || (GetHPP() <= 25 && health.tp >= 1000))
+    if (health.tp == 3000 || (GetHPP() < 25 && health.tp >= 1000))
     {
-        return 10000;
+        return true;
     }
 
     // mobs use three mob skills in a row under Meikyo Shisui
     if (StatusEffectContainer->HasStatusEffect(EFFECT_MEIKYO_SHISUI) && GetLocalVar("[MeikyoShisui]MobSkillCount") > 0)
     {
-        return 10000;
+        return true;
     }
 
-    return (uint16)getMobMod(MOBMOD_TP_USE_CHANCE);
+    return health.tp >= tpThreshold;
 }
 
 void CMobEntity::setMobMod(uint16 type, int16 value)
@@ -453,11 +515,6 @@ void CMobEntity::defaultMobMod(uint16 type, int16 value)
 void CMobEntity::resetMobMod(uint16 type)
 {
     m_mobModStat[type] = m_mobModStatSave[type];
-}
-
-int32 CMobEntity::getBigMobMod(uint16 type)
-{
-    return getMobMod(type) * 1000;
 }
 
 void CMobEntity::saveMobModifiers()
@@ -574,14 +631,14 @@ bool CMobEntity::ValidTarget(CBattleEntity* PInitiator, uint16 targetFlags)
         return true;
     }
 
-    if ((targetFlags & TARGET_PLAYER) && allegiance == PInitiator->allegiance && !isCharmed)
+    if ((targetFlags & TARGET_PLAYER) && allegiance == PInitiator->allegiance && !(m_Behavior & BEHAVIOR_NO_ASSIST) && !isCharmed)
     {
         return true;
     }
 
     if (targetFlags & TARGET_NPC)
     {
-        if (allegiance == PInitiator->allegiance && !(m_Behavior & BEHAVIOR_NOHELP) && !isCharmed)
+        if (allegiance == PInitiator->allegiance && !(m_Behavior & BEHAVIOR_NO_ASSIST) && !isCharmed)
         {
             return true;
         }
@@ -594,14 +651,15 @@ void CMobEntity::Spawn()
 {
     TracyZoneScoped;
     CBattleEntity::Spawn();
-    m_giveExp       = true;
-    m_HiPCLvl       = 0;
-    m_HiPartySize   = 0;
-    m_THLvl         = 0;
-    m_ItemStolen    = false;
-    m_ItemDespoiled = false;
-    m_DropItemTime  = 1000ms;
-    animationsub    = (uint8)getMobMod(MOBMOD_SPAWN_ANIMATIONSUB);
+    m_giveExp        = true;
+    m_HiPCLvl        = 0;
+    m_HiPartySize    = 0;
+    m_THLvl          = 0;
+    m_GilfinderLevel = 0;
+    m_ItemStolen     = false;
+    m_ItemDespoiled  = false;
+    m_DropItemTime   = 1000ms;
+    animationsub     = (uint8)getMobMod(MOBMOD_SPAWN_ANIMATIONSUB);
     SetCallForHelpFlag(false);
 
     PEnmityContainer->Clear();
@@ -643,6 +701,13 @@ void CMobEntity::Spawn()
 
     m_DespawnTimer = timer::time_point::min();
     luautils::OnMobSpawn(this);
+
+    // Set the despawn time if the mob has a non-zero idle despawn time modifier.
+    // This is used to despawn mobs that are not engaged in combat after a certain time.
+    if (getMobMod(MOBMOD_IDLE_DESPAWN) > 0)
+    {
+        SetDespawnTime(std::chrono::seconds(getMobMod(MOBMOD_IDLE_DESPAWN)));
+    }
 }
 
 void CMobEntity::OnWeaponSkillFinished(CWeaponSkillState& state, action_t& action)
@@ -748,12 +813,17 @@ auto CMobEntity::GetEligibleSeals() -> std::vector<uint16>
 // Rules:
 // - Mob >= 50: Geodes of matching weather/day can drop. Weather takes priority.
 // - Mob >= 80: Avatarites of matching weather/day can also drop. Weather takes priority.
-auto CMobEntity::GetEligibleGeodes() -> std::vector<uint16>
+auto CMobEntity::GetEligibleGeodes() const -> std::vector<uint16>
 {
+    if (!luautils::IsContentEnabled("ABYSSEA"))
+    {
+        return {};
+    }
+
     uint8 element = 0;
 
     // Set element by weather
-    if (const WEATHER weather = loc.zone->GetWeather(); weather >= WEATHER_HOT_SPELL && weather <= WEATHER_DARKNESS)
+    if (const Weather weather = loc.zone->GetWeather(); weather >= Weather::HotSpell && weather <= Weather::Darkness)
     {
         /*
         element = zoneutils::GetWeatherElement(weather);
@@ -762,36 +832,36 @@ auto CMobEntity::GetEligibleGeodes() -> std::vector<uint16>
         */
         switch (weather)
         {
-            case WEATHER_HOT_SPELL:
-            case WEATHER_HEAT_WAVE:
+            case Weather::HotSpell:
+            case Weather::HeatWave:
                 element = ELEMENT_FIRE;
                 break;
-            case WEATHER_RAIN:
-            case WEATHER_SQUALL:
+            case Weather::Rain:
+            case Weather::Squall:
                 element = ELEMENT_WATER;
                 break;
-            case WEATHER_DUST_STORM:
-            case WEATHER_SAND_STORM:
+            case Weather::DustStorm:
+            case Weather::SandStorm:
                 element = ELEMENT_EARTH;
                 break;
-            case WEATHER_WIND:
-            case WEATHER_GALES:
+            case Weather::Wind:
+            case Weather::Gales:
                 element = ELEMENT_WIND;
                 break;
-            case WEATHER_SNOW:
-            case WEATHER_BLIZZARDS:
+            case Weather::Snow:
+            case Weather::Blizzards:
                 element = ELEMENT_ICE;
                 break;
-            case WEATHER_THUNDER:
-            case WEATHER_THUNDERSTORMS:
+            case Weather::Thunder:
+            case Weather::Thunderstorms:
                 element = ELEMENT_THUNDER;
                 break;
-            case WEATHER_AURORAS:
-            case WEATHER_STELLAR_GLARE:
+            case Weather::Auroras:
+            case Weather::StellarGlare:
                 element = ELEMENT_LIGHT;
                 break;
-            case WEATHER_GLOOM:
-            case WEATHER_DARKNESS:
+            case Weather::Gloom:
+            case Weather::Darkness:
                 element = ELEMENT_DARK;
                 break;
             default:
@@ -828,20 +898,20 @@ void CMobEntity::DropItems(CCharEntity* PChar)
     };
 
     // Checks if the party is eligible for adding global drops (seals, geodes, avatarites)
-    auto CanAddSpecial = [PChar](const uint16 id)
+    auto CanAddSpecial = [PChar](LootRecastID id)
     {
         const auto PParty = PChar->PParty;
 
         if (!PParty || !PChar->PTreasurePool)
         {
-            return !PChar->PRecastContainer->Has(RECAST_LOOT, id);
+            return !PChar->PRecastContainer->HasLootRecast(id);
         }
 
         for (const auto& member : PChar->PTreasurePool->getMembers())
         {
             if (member->PParty == PParty)
             {
-                if (member->PRecastContainer->Has(RECAST_LOOT, id))
+                if (member->PRecastContainer->HasLootRecast(id))
                 {
                     return false;
                 }
@@ -857,13 +927,13 @@ void CMobEntity::DropItems(CCharEntity* PChar)
     // Note that the following has been verified to be retail accurate:
     // - Other alliance parties are NOT included in that cooldown.
     // - The cooldown does reset when zoning.
-    auto AddSpecialRecast = [PChar](const uint16 id)
+    auto AddSpecialRecast = [PChar](LootRecastID id)
     {
         const auto PParty = PChar->PParty;
 
         if (!PParty || !PChar->PTreasurePool)
         {
-            PChar->PRecastContainer->Add(RECAST_LOOT, id, SPECIAL_DROP_COOLDOWN);
+            PChar->PRecastContainer->AddLootRecast(id, SPECIAL_DROP_COOLDOWN);
             return;
         }
 
@@ -871,7 +941,7 @@ void CMobEntity::DropItems(CCharEntity* PChar)
         {
             if (member->PParty == PParty)
             {
-                member->PRecastContainer->Add(RECAST_LOOT, id, SPECIAL_DROP_COOLDOWN);
+                member->PRecastContainer->AddLootRecast(id, SPECIAL_DROP_COOLDOWN);
             }
         }
     };
@@ -945,33 +1015,33 @@ void CMobEntity::DropItems(CCharEntity* PChar)
     bool      validZone = !(this->m_Type & MOBTYPE_BATTLEFIELD) && !(zoneType & ZONE_TYPE::DYNAMIS);
 
     // Check if mob can drop seals -- mobmod to disable drops, zone type isnt battlefield/dynamis, mob is stronger than Too Weak, or mobmod for EXP bonus is -100 or lower (-100% exp)
-    if (!getMobMod(MOBMOD_NO_DROPS) && validZone && charutils::CheckMob(m_HiPCLvl, GetMLevel()) > EMobDifficulty::TooWeak && getMobMod(MOBMOD_EXP_BONUS) > -100)
+    if (!getMobMod(MOBMOD_NO_DROPS) && validZone && charutils::CheckMob(m_HiPCLvl, this) > EMobDifficulty::TooWeak && getMobMod(MOBMOD_EXP_BONUS) > -100)
     {
         // Check for seal drops
         // Only one type of seal can drop per mob
-        if (xirand::GetRandomNumber(100) < 20 && CanAddSpecial(RECAST_SEAL))
+        if (xirand::GetRandomNumber(100) < 20 && CanAddSpecial(LootRecastID::Seal))
         {
             const auto seals = GetEligibleSeals();
             AddItemToPool(seals[xirand::GetRandomNumber(seals.size())]);
-            AddSpecialRecast(RECAST_SEAL);
+            AddSpecialRecast(LootRecastID::Seal);
         }
 
         // Check for geode/avatarites drops
         // Only one type of geode can drop per mob
-        if (xirand::GetRandomNumber(100) < 20 && CanAddSpecial(RECAST_GEODE))
+        if (xirand::GetRandomNumber(100) < 20 && CanAddSpecial(LootRecastID::Geode))
         {
             if (const auto geodes = GetEligibleGeodes(); !geodes.empty())
             {
                 AddItemToPool(geodes[xirand::GetRandomNumber(geodes.size())]);
-                AddSpecialRecast(RECAST_GEODE);
+                AddSpecialRecast(LootRecastID::Geode);
             }
         }
 
-        uint8 effect = 0; // Begin Adding Crystals
-
+        // Begin Adding Crystals
         if (m_Element > 0)
         {
-            REGION_TYPE regionID = PChar->loc.zone->GetRegionID();
+            REGION_TYPE regionID       = PChar->loc.zone->GetRegionID();
+            EFFECT      requiredEffect = EFFECT_NONE;
 
             switch (regionID)
             {
@@ -981,7 +1051,7 @@ void CMobEntity::DropItems(CCharEntity* PChar)
                 case REGION_TYPE::HALVUNG:
                 case REGION_TYPE::ARRAPAGO:
                 case REGION_TYPE::ALZADAAL:
-                    effect = 2;
+                    requiredEffect = EFFECT_SANCTION;
                     break;
 
                 // Sigil Regions
@@ -993,69 +1063,66 @@ void CMobEntity::DropItems(CCharEntity* PChar)
                 case REGION_TYPE::ARAGONEAU_FRONT:
                 case REGION_TYPE::FAUREGANDI_FRONT:
                 case REGION_TYPE::VALDEAUNIA_FRONT:
-                    effect = 3;
+                    requiredEffect = EFFECT_SIGIL;
                     break;
 
                 // Ionis Regions
                 case REGION_TYPE::ADOULIN_ISLANDS:
                 case REGION_TYPE::EAST_ULBUKA:
-                    effect = 4;
+                    requiredEffect = EFFECT_IONIS;
                     break;
 
                 // Signet Regions
                 default:
-                    effect = (regionID < REGION_TYPE::TAVNAZIA && conquest::GetRegionOwner(regionID) <= 2) ? 1 : 0;
+                    if (regionID < REGION_TYPE::TAVNAZIA && conquest::GetRegionOwner(regionID) <= 2)
+                    {
+                        requiredEffect = EFFECT_SIGNET;
+                    }
                     break;
             }
-        }
 
-        uint8 crystalRolls = 0;
-        // clang-format off
-        PChar->ForParty([this, &crystalRolls, &effect](CBattleEntity* PMember)
-        {
-            switch (effect)
+            if (requiredEffect == EFFECT_NONE)
             {
-                case 1:
-                    if (PMember->StatusEffectContainer->HasStatusEffect(EFFECT_SIGNET) && PMember->getZone() == getZone() &&
-                        distance(PMember->loc.p, loc.p) < 100)
-                    {
-                        crystalRolls++;
-                    }
-                    break;
-                case 2:
-                    if (PMember->StatusEffectContainer->HasStatusEffect(EFFECT_SANCTION) && PMember->getZone() == getZone() &&
-                        distance(PMember->loc.p, loc.p) < 100)
-                    {
-                        crystalRolls++;
-                    }
-                    break;
-                case 3:
-                    if (PMember->StatusEffectContainer->HasStatusEffect(EFFECT_SIGIL) && PMember->getZone() == getZone() &&
-                        distance(PMember->loc.p, loc.p) < 100)
-                    {
-                        crystalRolls++;
-                    }
-                    break;
-                case 4:
-                    if (PMember->StatusEffectContainer->HasStatusEffect(EFFECT_IONIS) && PMember->getZone() == getZone() &&
-                        distance(PMember->loc.p, loc.p) < 100)
-                    {
-                        crystalRolls++;
-                    }
-                    break;
-                default:
-                    break;
+                return;
             }
-        });
-        // clang-format on
 
-        // Is this really checked last? Would crystals actually kick out non-rare/ex items from the same mob dropping a large pool?
-        for (uint8 i = 0; i < crystalRolls; i++)
-        {
-            // TODO: implement nation aketon crystal bonus (per member?)
-            if (xirand::GetRandomNumber(100) < 20)
+            uint8 playersNearby = 0;
+            // clang-format off
+            PChar->ForParty([this, &playersNearby, requiredEffect](CBattleEntity* PMember)
             {
-                AddItemToPool(4095 + m_Element);
+                if (PMember->StatusEffectContainer->HasStatusEffect(requiredEffect) &&
+                    PMember->getZone() == getZone() &&
+                    distance(PMember->loc.p, loc.p) < 100)
+                {
+                    playersNearby++;
+                }
+            });
+            // clang-format on
+
+            if (playersNearby == 0)
+            {
+                return;
+            }
+
+            // Signet regions: 55% if solo, 45% if in a party
+            // Sanction regions: 30%
+            // Others leave at 20% - TODO: need more info on WOTG+
+            uint8 crystalRate = 20;
+            if (requiredEffect == EFFECT_SIGNET)
+            {
+                crystalRate = (playersNearby == 1) ? 55 : 45;
+            }
+            else if (requiredEffect == EFFECT_SANCTION)
+            {
+                crystalRate = 30;
+            }
+
+            for (uint8 i = 0; i < playersNearby; i++)
+            {
+                if (xirand::GetRandomNumber(100) < crystalRate)
+                {
+                    AddItemToPool(4095 + m_Element);
+                }
             }
         }
     }
@@ -1067,17 +1134,23 @@ bool CMobEntity::CanAttack(CBattleEntity* PTarget, std::unique_ptr<CBasicPacket>
     auto skill_list_id{ getMobMod(MOBMOD_ATTACK_SKILL_LIST) };
     if (skill_list_id)
     {
-        auto attack_range{ GetMeleeRange() };
+        auto attack_range{ GetMeleeRange(PTarget) };
         auto skillList{ battleutils::GetMobSkillList(skill_list_id) };
+
         if (!skillList.empty())
         {
             auto* skill{ battleutils::GetMobSkill(skillList.front()) };
             if (skill)
             {
-                attack_range = (uint8)skill->getDistance();
+                attack_range = modelHitboxSize + skill->getDistance() + PTarget->modelHitboxSize;
             }
         }
-        return !((distance(loc.p, PTarget->loc.p) - PTarget->m_ModelRadius) > attack_range || !PAI->GetController()->IsAutoAttackEnabled());
+
+        bool  autoAttackEnabled  = PAI->GetController()->IsAutoAttackEnabled();
+        float distanceFromTarget = distance(loc.p, PTarget->loc.p);
+        bool  tooFar             = distanceFromTarget > attack_range;
+
+        return !tooFar && autoAttackEnabled;
     }
     else
     {
@@ -1143,9 +1216,8 @@ void CMobEntity::OnDespawn(CDespawnState& /*unused*/)
 {
     TracyZoneScoped;
     FadeOut();
-    PAI->Internal_Respawn(m_RespawnTime);
+
     luautils::OnMobDespawn(this);
-    // #event despawn
     PAI->EventHandler.triggerListener("DESPAWN", this);
 }
 
@@ -1172,18 +1244,20 @@ void CMobEntity::Die()
     {
         if (static_cast<CMobEntity*>(PEntity)->isDead())
         {
-            if (PLastAttacker)
+            if (auto* PLastAttacker = GetEntity(lastAttackerId_.targid); PLastAttacker && PLastAttacker->id == lastAttackerId_.id)
             {
-                loc.zone->PushPacket(this, CHAR_INRANGE, std::make_unique<CMessageBasicPacket>(PLastAttacker, this, 0, 0, MSGBASIC_DEFEATS_TARG));
+                loc.zone->PushPacket(this, CHAR_INRANGE, std::make_unique<GP_SERV_COMMAND_BATTLE_MESSAGE>(PLastAttacker, this, 0, 0, MsgBasic::DefeatsTarget));
             }
             else
             {
-                loc.zone->PushPacket(this, CHAR_INRANGE, std::make_unique<CMessageBasicPacket>(this, this, 0, 0, MSGBASIC_FALLS_TO_GROUND));
+                loc.zone->PushPacket(this, CHAR_INRANGE, std::make_unique<GP_SERV_COMMAND_BATTLE_MESSAGE>(this, this, 0, 0, MsgBasic::FallsToGround));
             }
 
             DistributeRewards();
             m_OwnerID.clean();
-            m_THLvl = 0;
+
+            m_THLvl          = 0;
+            m_GilfinderLevel = 0;
         }
     }));
     // clang-format on
@@ -1228,7 +1302,7 @@ void CMobEntity::OnCastFinished(CMagicState& state, action_t& action)
     TapDeaggroTime();
 }
 
-void CMobEntity::OnCastInterrupted(CMagicState& state, action_t& action, MSGBASIC_ID msg, bool blockedCast)
+void CMobEntity::OnCastInterrupted(CMagicState& state, action_t& action, MsgBasic msg, bool blockedCast)
 {
     TracyZoneScoped;
     CBattleEntity::OnCastInterrupted(state, action, msg, blockedCast);

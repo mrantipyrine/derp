@@ -21,10 +21,9 @@
 
 #include "item_usable.h"
 
-#include "common/utils.h"
 #include "common/vana_time.h"
-
-#include "map_server.h"
+#include "enums/action/animation.h"
+#include "exdata/timer_info.h"
 
 CItemUsable::CItemUsable(uint16 id)
 : CItem(id)
@@ -38,9 +37,24 @@ CItemUsable::CItemUsable(uint16 id)
     m_MaxCharges  = 0;
     m_Animation   = 0;
     m_ValidTarget = 0;
-    m_AssignTime  = timer::time_point::min();
-    m_LastUseTime = timer::time_point::min();
+    m_AssignTime  = timer::time_point{};
+    m_LastUseTime = timer::time_point{};
     m_AoE         = 0;
+}
+
+CItemUsable::CItemUsable(const CItemUsable& other)
+: CItem(other)
+, m_UseDelay(other.m_UseDelay)
+, m_MaxCharges(other.m_MaxCharges)
+, m_Animation(other.m_Animation)
+, m_AnimationTime(other.m_AnimationTime)
+, m_ActivationTime(other.m_ActivationTime)
+, m_ValidTarget(other.m_ValidTarget)
+, m_ReuseDelay(other.m_ReuseDelay)
+, m_AssignTime(other.m_AssignTime)
+, m_LastUseTime(other.m_LastUseTime)
+, m_AoE(other.m_AoE)
+{
 }
 
 CItemUsable::~CItemUsable() = default;
@@ -67,8 +81,8 @@ timer::duration CItemUsable::getReuseDelay() const
 
 void CItemUsable::setLastUseTime(timer::time_point LastUseTime)
 {
-    m_LastUseTime              = LastUseTime;
-    ref<uint32>(m_extra, 0x04) = earth_time::vanadiel_timestamp(timer::to_utc(LastUseTime));
+    m_LastUseTime                                    = LastUseTime;
+    this->exdata<Exdata::ItemTimerInfo>().TimeValue1 = earth_time::vanadiel_timestamp(timer::to_utc(LastUseTime));
 }
 
 timer::time_point CItemUsable::getLastUseTime()
@@ -83,12 +97,12 @@ timer::time_point CItemUsable::getNextUseTime()
 
 void CItemUsable::setCurrentCharges(uint8 CurrCharges)
 {
-    ref<uint8>(m_extra, 0x01) = std::clamp<uint8>(CurrCharges, 0, m_MaxCharges);
+    this->exdata<Exdata::ItemTimerInfo>().RemainingCharges = std::clamp<uint8>(CurrCharges, 0, m_MaxCharges);
 }
 
-uint8 CItemUsable::getCurrentCharges()
+auto CItemUsable::getCurrentCharges() const -> uint8
 {
-    return ref<uint8>(m_extra, 0x01);
+    return this->exdata<Exdata::ItemTimerInfo>().RemainingCharges;
 }
 
 void CItemUsable::setMaxCharges(uint8 MaxCharges)
@@ -106,9 +120,9 @@ void CItemUsable::setAnimationID(uint16 Animation)
     m_Animation = Animation;
 }
 
-uint16 CItemUsable::getAnimationID() const
+auto CItemUsable::getAnimationID() const -> ActionAnimation
 {
-    return m_Animation;
+    return static_cast<ActionAnimation>(m_Animation);
 }
 
 void CItemUsable::setAnimationTime(timer::duration AnimationTime)

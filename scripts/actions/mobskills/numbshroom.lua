@@ -1,33 +1,42 @@
 -----------------------------------
 -- Queasyshroom
--- Additional effect: Fires a mushroom cap, dealing damage to a single target. Additional effect: paralysis.
--- Range is 14.7 yalms.
--- Piercing damage Ranged Attack.
--- Secondary modifiers: INT: 20%.
+-- Family: Funguar
+-- Description: Fires a mushroom cap, dealing damage to a single target. Additional Effect: paralysis.
 -----------------------------------
 ---@type TMobSkill
 local mobskillObject = {}
 
 mobskillObject.onMobSkillCheck = function(target, mob, skill)
-    if mob:getMobMod(xi.mobMod.VAR) == 1 then
+    if mob:getAnimationSub() == 1 then
         return 0
     end
 
     return 1
 end
 
-mobskillObject.onMobWeaponSkill = function(target, mob, skill)
-    mob:setMobMod(xi.mobMod.VAR, 2)
-    local numhits = 1
-    local accmod = 1
-    local ftp    = 1.5
-    local info = xi.mobskills.mobPhysicalMove(mob, target, skill, numhits, accmod, ftp, xi.mobskills.physicalTpBonus.NO_EFFECT, 0, 0, 0)
-    local dmg = xi.mobskills.mobFinalAdjustments(info.dmg, mob, skill, target, xi.attackType.PHYSICAL, xi.damageType.PIERCING, info.hitslanded)
+mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
+    local params = {}
 
-    xi.mobskills.mobPhysicalStatusEffectMove(mob, target, skill, xi.effect.PARALYSIS, 25, 0, 180)
+    params.baseDamage     = mob:getWeaponDmg()
+    params.numHits        = 1
+    params.fTP            = { 1.5, 1.5, 1.5 }
+    params.attackType     = xi.attackType.PHYSICAL
+    params.damageType     = xi.damageType.PIERCING
+    params.shadowBehavior = xi.mobskills.shadowBehavior.NUMSHADOWS_1
+    params.canCrit        = true
+    params.criticalChance = { 0.10, 0.20, 0.25 } -- TODO: Capture crit rate
 
-    target:takeDamage(dmg, mob, xi.attackType.PHYSICAL, xi.damageType.PIERCING)
-    return dmg
+    local info = xi.mobskills.mobPhysicalMove(mob, target, skill, action, params)
+
+    if xi.mobskills.processDamage(mob, target, skill, action, info) then
+        target:takeDamage(info.damage, mob, info.attackType, info.damageType)
+
+        xi.mobskills.mobStatusEffectMove(mob, target, xi.effect.PARALYSIS, 25, 0, 180)
+    end
+
+    skill:setFinalAnimationSub(2)
+
+    return info.damage
 end
 
 return mobskillObject

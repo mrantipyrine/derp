@@ -1,0 +1,3461 @@
+---
+metadata:
+  purpose: Generated level 5-75 overpowered armor stat packages applied to strict
+    novelty level 1 armor candidates.
+  sources_updated:
+  - armor.yml
+  - armor2.yml
+  count: 345
+  weapons_updated: false
+  excluded_normal_starter_items: 70
+items:
+- id: 10250
+  source: armor.yml
+  name: Moogle Suit
+  slot: Body
+  old_level: 1
+  new_level: 40
+  description:
+  - DEF:48 STR+18 DEX+18 INT+18 MND+18
+  - Accuracy+58 Attack+58 Magic Attack Bonus+38
+  - Refresh+3 Haste+5% Damage taken -6%
+- id: 10251
+  source: armor.yml
+  name: Decennial Coat
+  slot: Body
+  old_level: 1
+  new_level: 45
+  description:
+  - DEF:53 STR+20 DEX+20 INT+20 MND+20
+  - Accuracy+64 Attack+64 Magic Attack Bonus+42
+  - Refresh+3 Haste+5% Damage taken -6%
+- id: 10252
+  source: armor.yml
+  name: Decennial Dress
+  slot: Body
+  old_level: 1
+  new_level: 50
+  description:
+  - DEF:58 STR+22 DEX+22 INT+22 MND+22
+  - Accuracy+70 Attack+70 Magic Attack Bonus+46
+  - Refresh+3 Haste+6% Damage taken -7%
+- id: 10253
+  source: armor.yml
+  name: Decennial Coat +1
+  slot: Body
+  old_level: 1
+  new_level: 60
+  description:
+  - DEF:68 STR+26 DEX+26 INT+26 MND+26
+  - Accuracy+82 Attack+82 Magic Attack Bonus+54
+  - Refresh+4 Haste+7% Damage taken -8%
+- id: 10254
+  source: armor.yml
+  name: Decennial Dress +1
+  slot: Body
+  old_level: 1
+  new_level: 65
+  description:
+  - DEF:73 STR+28 DEX+28 INT+28 MND+28
+  - Accuracy+88 Attack+88 Magic Attack Bonus+58
+  - Refresh+4 Haste+7% Damage taken -8%
+- id: 10256
+  source: armor.yml
+  name: Marine Gilet
+  slot: Body
+  old_level: 1
+  new_level: 70
+  description:
+  - DEF:78 STR+30 DEX+30 INT+30 MND+30
+  - Accuracy+94 Attack+94 Magic Attack Bonus+62
+  - Refresh+4 Haste+8% Damage taken -9%
+- id: 10257
+  source: armor.yml
+  name: Marine Top
+  slot: Body
+  old_level: 1
+  new_level: 75
+  description:
+  - DEF:83 STR+32 DEX+32 INT+32 MND+32
+  - Accuracy+100 Attack+100 Magic Attack Bonus+66
+  - Refresh+4 Haste+8% Damage taken -9%
+- id: 10258
+  source: armor.yml
+  name: Woodsy Gilet
+  slot: Body
+  old_level: 1
+  new_level: 5
+  description:
+  - DEF:13 STR+4 DEX+4 INT+4 MND+4
+  - Accuracy+16 Attack+16 Magic Attack Bonus+10
+  - Refresh+1 Haste+1% Damage taken -2%
+- id: 10259
+  source: armor.yml
+  name: Woodsy Top
+  slot: Body
+  old_level: 1
+  new_level: 10
+  description:
+  - DEF:18 STR+6 DEX+6 INT+6 MND+6
+  - Accuracy+22 Attack+22 Magic Attack Bonus+14
+  - Refresh+1 Haste+2% Damage taken -3%
+- id: 10260
+  source: armor.yml
+  name: Creek Maillot
+  slot: Body
+  old_level: 1
+  new_level: 15
+  description:
+  - DEF:23 STR+8 DEX+8 INT+8 MND+8
+  - Accuracy+28 Attack+28 Magic Attack Bonus+18
+  - Refresh+1 Haste+2% Damage taken -3%
+- id: 10261
+  source: armor.yml
+  name: Creek Top
+  slot: Body
+  old_level: 1
+  new_level: 20
+  description:
+  - DEF:28 STR+10 DEX+10 INT+10 MND+10
+  - Accuracy+34 Attack+34 Magic Attack Bonus+22
+  - Refresh+2 Haste+3% Damage taken -4%
+- id: 10262
+  source: armor.yml
+  name: River Top
+  slot: Body
+  old_level: 1
+  new_level: 25
+  description:
+  - DEF:33 STR+12 DEX+12 INT+12 MND+12
+  - Accuracy+40 Attack+40 Magic Attack Bonus+26
+  - Refresh+2 Haste+3% Damage taken -4%
+- id: 10263
+  source: armor.yml
+  name: Dune Gilet
+  slot: Body
+  old_level: 1
+  new_level: 30
+  description:
+  - DEF:38 STR+14 DEX+14 INT+14 MND+14
+  - Accuracy+46 Attack+46 Magic Attack Bonus+30
+  - Refresh+2 Haste+4% Damage taken -5%
+- id: 10264
+  source: armor.yml
+  name: Marine Gilet +1
+  slot: Body
+  old_level: 1
+  new_level: 40
+  description:
+  - DEF:48 STR+18 DEX+18 INT+18 MND+18
+  - Accuracy+58 Attack+58 Magic Attack Bonus+38
+  - Refresh+3 Haste+5% Damage taken -6%
+- id: 10265
+  source: armor.yml
+  name: Marine Top +1
+  slot: Body
+  old_level: 1
+  new_level: 45
+  description:
+  - DEF:53 STR+20 DEX+20 INT+20 MND+20
+  - Accuracy+64 Attack+64 Magic Attack Bonus+42
+  - Refresh+3 Haste+5% Damage taken -6%
+- id: 10266
+  source: armor.yml
+  name: Woodsy Gilet +1
+  slot: Body
+  old_level: 1
+  new_level: 50
+  description:
+  - DEF:58 STR+22 DEX+22 INT+22 MND+22
+  - Accuracy+70 Attack+70 Magic Attack Bonus+46
+  - Refresh+3 Haste+6% Damage taken -7%
+- id: 10267
+  source: armor.yml
+  name: Woodsy Top +1
+  slot: Body
+  old_level: 1
+  new_level: 55
+  description:
+  - DEF:63 STR+24 DEX+24 INT+24 MND+24
+  - Accuracy+76 Attack+76 Magic Attack Bonus+50
+  - Refresh+3 Haste+6% Damage taken -7%
+- id: 10268
+  source: armor.yml
+  name: Creek Maillot +1
+  slot: Body
+  old_level: 1
+  new_level: 60
+  description:
+  - DEF:68 STR+26 DEX+26 INT+26 MND+26
+  - Accuracy+82 Attack+82 Magic Attack Bonus+54
+  - Refresh+4 Haste+7% Damage taken -8%
+- id: 10269
+  source: armor.yml
+  name: Creek Top +1
+  slot: Body
+  old_level: 1
+  new_level: 65
+  description:
+  - DEF:73 STR+28 DEX+28 INT+28 MND+28
+  - Accuracy+88 Attack+88 Magic Attack Bonus+58
+  - Refresh+4 Haste+7% Damage taken -8%
+- id: 10270
+  source: armor.yml
+  name: River Top +1
+  slot: Body
+  old_level: 1
+  new_level: 70
+  description:
+  - DEF:78 STR+30 DEX+30 INT+30 MND+30
+  - Accuracy+94 Attack+94 Magic Attack Bonus+62
+  - Refresh+4 Haste+8% Damage taken -9%
+- id: 10271
+  source: armor.yml
+  name: Dune Gilet +1
+  slot: Body
+  old_level: 1
+  new_level: 75
+  description:
+  - DEF:83 STR+32 DEX+32 INT+32 MND+32
+  - Accuracy+100 Attack+100 Magic Attack Bonus+66
+  - Refresh+4 Haste+8% Damage taken -9%
+- id: 10293
+  source: armor.yml
+  name: Chocobo Shirt
+  slot: Body
+  old_level: 1
+  new_level: 30
+  description:
+  - DEF:38 STR+14 DEX+14 INT+14 MND+14
+  - Accuracy+46 Attack+46 Magic Attack Bonus+30
+  - Refresh+2 Haste+4% Damage taken -5%
+- id: 10330
+  source: armor.yml
+  name: Marine Boxers
+  slot: Legs
+  old_level: 1
+  new_level: 10
+  description:
+  - DEF:13 STR+6 AGI+6
+  - '"Store TP"+7 Fast Cast+2%'
+  - Haste+2% Evasion+18
+- id: 10331
+  source: armor.yml
+  name: Marine Shorts
+  slot: Legs
+  old_level: 1
+  new_level: 15
+  description:
+  - DEF:17 STR+8 AGI+8
+  - '"Store TP"+9 Fast Cast+2%'
+  - Haste+2% Evasion+23
+- id: 10332
+  source: armor.yml
+  name: Woodsy Boxers
+  slot: Legs
+  old_level: 1
+  new_level: 20
+  description:
+  - DEF:21 STR+10 AGI+10
+  - '"Store TP"+11 Fast Cast+3%'
+  - Haste+3% Evasion+28
+- id: 10333
+  source: armor.yml
+  name: Woodsy Shorts
+  slot: Legs
+  old_level: 1
+  new_level: 25
+  description:
+  - DEF:25 STR+12 AGI+12
+  - '"Store TP"+13 Fast Cast+3%'
+  - Haste+3% Evasion+33
+- id: 10334
+  source: armor.yml
+  name: Creek Boxers
+  slot: Legs
+  old_level: 1
+  new_level: 30
+  description:
+  - DEF:29 STR+14 AGI+14
+  - '"Store TP"+15 Fast Cast+4%'
+  - Haste+4% Evasion+38
+- id: 10335
+  source: armor.yml
+  name: Creek Shorts
+  slot: Legs
+  old_level: 1
+  new_level: 35
+  description:
+  - DEF:33 STR+16 AGI+16
+  - '"Store TP"+17 Fast Cast+4%'
+  - Haste+4% Evasion+43
+- id: 10336
+  source: armor.yml
+  name: River Shorts
+  slot: Legs
+  old_level: 1
+  new_level: 40
+  description:
+  - DEF:37 STR+18 AGI+18
+  - '"Store TP"+19 Fast Cast+5%'
+  - Haste+5% Evasion+48
+- id: 10337
+  source: armor.yml
+  name: Dune Boxers
+  slot: Legs
+  old_level: 1
+  new_level: 45
+  description:
+  - DEF:41 STR+20 AGI+20
+  - '"Store TP"+21 Fast Cast+5%'
+  - Haste+5% Evasion+53
+- id: 10382
+  source: armor.yml
+  name: Dream Mittens
+  slot: Hands
+  old_level: 1
+  new_level: 35
+  description:
+  - DEF:24 DEX+17 INT+17
+  - Accuracy+52 Magic Accuracy+52
+  - '"Double Attack"+9% Haste+4%'
+- id: 10383
+  source: armor.yml
+  name: Dream Mittens +1
+  slot: Hands
+  old_level: 1
+  new_level: 45
+  description:
+  - DEF:30 DEX+21 INT+21
+  - Accuracy+64 Magic Accuracy+64
+  - '"Double Attack"+11% Haste+5%'
+- id: 10384
+  source: armor.yml
+  name: Cumulus Masque
+  slot: Head
+  old_level: 1
+  new_level: 25
+  description:
+  - DEF:19 DEX+12 INT+12 MND+12 CHR+12
+  - Accuracy+33 Magic Accuracy+33
+  - Haste+2% Fast Cast+3%
+- id: 10385
+  source: armor.yml
+  name: Cumulus Masque +1
+  slot: Head
+  old_level: 1
+  new_level: 35
+  description:
+  - DEF:25 DEX+16 INT+16 MND+16 CHR+16
+  - Accuracy+43 Magic Accuracy+43
+  - Haste+3% Fast Cast+4%
+- id: 10429
+  source: armor.yml
+  name: Moogle Masque
+  slot: Head
+  old_level: 1
+  new_level: 25
+  description:
+  - DEF:19 DEX+12 INT+12 MND+12 CHR+12
+  - Accuracy+33 Magic Accuracy+33
+  - Haste+2% Fast Cast+3%
+- id: 10430
+  source: armor.yml
+  name: Decennial Crown
+  slot: Head
+  old_level: 1
+  new_level: 30
+  description:
+  - DEF:22 DEX+14 INT+14 MND+14 CHR+14
+  - Accuracy+38 Magic Accuracy+38
+  - Haste+3% Fast Cast+4%
+- id: 10431
+  source: armor.yml
+  name: Decennial Tiara
+  slot: Head
+  old_level: 1
+  new_level: 35
+  description:
+  - DEF:25 DEX+16 INT+16 MND+16 CHR+16
+  - Accuracy+43 Magic Accuracy+43
+  - Haste+3% Fast Cast+4%
+- id: 10432
+  source: armor.yml
+  name: Decennial Crown +1
+  slot: Head
+  old_level: 1
+  new_level: 45
+  description:
+  - DEF:31 DEX+20 INT+20 MND+20 CHR+20
+  - Accuracy+53 Magic Accuracy+53
+  - Haste+4% Fast Cast+5%
+- id: 10433
+  source: armor.yml
+  name: Decennial Tiara +1
+  slot: Head
+  old_level: 1
+  new_level: 50
+  description:
+  - DEF:34 DEX+22 INT+22 MND+22 CHR+22
+  - Accuracy+58 Magic Accuracy+58
+  - Haste+4% Fast Cast+6%
+- id: 10446
+  source: armor.yml
+  name: Ahriman Cap
+  slot: Head
+  old_level: 1
+  new_level: 35
+  description:
+  - DEF:25 DEX+16 INT+16 MND+16 CHR+16
+  - Accuracy+43 Magic Accuracy+43
+  - Haste+3% Fast Cast+4%
+- id: 10593
+  source: armor.yml
+  name: Decennial Tights
+  slot: Legs
+  old_level: 1
+  new_level: 50
+  description:
+  - DEF:45 STR+22 AGI+22
+  - '"Store TP"+23 Fast Cast+6%'
+  - Haste+6% Evasion+58
+- id: 10594
+  source: armor.yml
+  name: Decennial Hose
+  slot: Legs
+  old_level: 1
+  new_level: 55
+  description:
+  - DEF:49 STR+24 AGI+24
+  - '"Store TP"+25 Fast Cast+6%'
+  - Haste+6% Evasion+63
+- id: 10595
+  source: armor.yml
+  name: Decennial Tights +1
+  slot: Legs
+  old_level: 1
+  new_level: 65
+  description:
+  - DEF:57 STR+28 AGI+28
+  - '"Store TP"+29 Fast Cast+7%'
+  - Haste+7% Evasion+73
+- id: 10596
+  source: armor.yml
+  name: Decennial Hose +1
+  slot: Legs
+  old_level: 1
+  new_level: 70
+  description:
+  - DEF:61 STR+30 AGI+30
+  - '"Store TP"+31 Fast Cast+8%'
+  - Haste+7% Evasion+78
+- id: 10808
+  source: armor.yml
+  name: Janus Guard
+  slot: Sub
+  old_level: 1
+  new_level: 15
+  description:
+  - DEF:20 VIT+8 MND+8
+  - Shield skill+20 Damage taken -3%
+  - Refresh+1 Haste+2%
+- id: 10809
+  source: armor.yml
+  name: Moogle Guard
+  slot: Sub
+  old_level: 1
+  new_level: 20
+  description:
+  - DEF:25 VIT+10 MND+10
+  - Shield skill+25 Damage taken -4%
+  - Refresh+1 Haste+2%
+- id: 10810
+  source: armor.yml
+  name: Moogle Guard +1
+  slot: Sub
+  old_level: 1
+  new_level: 30
+  description:
+  - DEF:35 VIT+14 MND+14
+  - Shield skill+35 Damage taken -5%
+  - Refresh+2 Haste+3%
+- id: 10811
+  source: armor.yml
+  name: Chocobo Shield
+  slot: Sub
+  old_level: 1
+  new_level: 30
+  description:
+  - DEF:35 VIT+14 MND+14
+  - Shield skill+35 Damage taken -5%
+  - Refresh+2 Haste+3%
+- id: 10812
+  source: armor.yml
+  name: Choco. Shield +1
+  slot: Sub
+  old_level: 1
+  new_level: 40
+  description:
+  - DEF:45 VIT+18 MND+18
+  - Shield skill+45 Damage taken -6%
+  - Refresh+2 Haste+3%
+- id: 10847
+  source: armor.yml
+  name: Orc Belt
+  slot: Waist
+  old_level: 1
+  new_level: 65
+  description:
+  - STR+28 DEX+28 INT+28 MND+28
+  - Haste+8% "Store TP"+29
+  - Magic Attack Bonus+57
+- id: 10848
+  source: armor.yml
+  name: Quadav Belt
+  slot: Waist
+  old_level: 1
+  new_level: 70
+  description:
+  - STR+30 DEX+30 INT+30 MND+30
+  - Haste+9% "Store TP"+31
+  - Magic Attack Bonus+61
+- id: 10849
+  source: armor.yml
+  name: Yagudo Belt
+  slot: Waist
+  old_level: 1
+  new_level: 75
+  description:
+  - STR+32 DEX+32 INT+32 MND+32
+  - Haste+9% "Store TP"+33
+  - Magic Attack Bonus+65
+- id: 10850
+  source: armor.yml
+  name: Leech Belt
+  slot: Waist
+  old_level: 1
+  new_level: 5
+  description:
+  - STR+4 DEX+4 INT+4 MND+4
+  - Haste+2% "Store TP"+5
+  - Magic Attack Bonus+9
+- id: 10851
+  source: armor.yml
+  name: Slime Belt
+  slot: Waist
+  old_level: 1
+  new_level: 10
+  description:
+  - STR+6 DEX+6 INT+6 MND+6
+  - Haste+3% "Store TP"+7
+  - Magic Attack Bonus+13
+- id: 10852
+  source: armor.yml
+  name: Hecteyes Belt
+  slot: Waist
+  old_level: 1
+  new_level: 15
+  description:
+  - STR+8 DEX+8 INT+8 MND+8
+  - Haste+3% "Store TP"+9
+  - Magic Attack Bonus+17
+- id: 10875
+  source: armor.yml
+  name: Snowman Cap
+  slot: Head
+  old_level: 1
+  new_level: 5
+  description:
+  - DEF:7 DEX+4 INT+4 MND+4 CHR+4
+  - Accuracy+13 Magic Accuracy+13
+  - Haste+1% Fast Cast+1%
+- id: 11002
+  source: armor.yml
+  name: Dragon Tank
+  slot: Back
+  old_level: 1
+  new_level: 25
+  description:
+  - DEF:17 HP+60 MP+60
+  - Attack+38 Magic Attack Bonus+38
+  - Refresh+2 Damage taken -4%
+- id: 11265
+  source: armor.yml
+  name: Custom Gilet
+  slot: Body
+  old_level: 1
+  new_level: 15
+  description:
+  - DEF:23 STR+8 DEX+8 INT+8 MND+8
+  - Accuracy+28 Attack+28 Magic Attack Bonus+18
+  - Refresh+1 Haste+2% Damage taken -3%
+- id: 11266
+  source: armor.yml
+  name: Custom Top
+  slot: Body
+  old_level: 1
+  new_level: 20
+  description:
+  - DEF:28 STR+10 DEX+10 INT+10 MND+10
+  - Accuracy+34 Attack+34 Magic Attack Bonus+22
+  - Refresh+2 Haste+3% Damage taken -4%
+- id: 11267
+  source: armor.yml
+  name: Magna Gilet
+  slot: Body
+  old_level: 1
+  new_level: 25
+  description:
+  - DEF:33 STR+12 DEX+12 INT+12 MND+12
+  - Accuracy+40 Attack+40 Magic Attack Bonus+26
+  - Refresh+2 Haste+3% Damage taken -4%
+- id: 11268
+  source: armor.yml
+  name: Magna Top
+  slot: Body
+  old_level: 1
+  new_level: 30
+  description:
+  - DEF:38 STR+14 DEX+14 INT+14 MND+14
+  - Accuracy+46 Attack+46 Magic Attack Bonus+30
+  - Refresh+2 Haste+4% Damage taken -5%
+- id: 11269
+  source: armor.yml
+  name: Wonder Maillot
+  slot: Body
+  old_level: 1
+  new_level: 35
+  description:
+  - DEF:43 STR+16 DEX+16 INT+16 MND+16
+  - Accuracy+52 Attack+52 Magic Attack Bonus+34
+  - Refresh+2 Haste+4% Damage taken -5%
+- id: 11270
+  source: armor.yml
+  name: Wonder Top
+  slot: Body
+  old_level: 1
+  new_level: 40
+  description:
+  - DEF:48 STR+18 DEX+18 INT+18 MND+18
+  - Accuracy+58 Attack+58 Magic Attack Bonus+38
+  - Refresh+3 Haste+5% Damage taken -6%
+- id: 11271
+  source: armor.yml
+  name: Savage Top
+  slot: Body
+  old_level: 1
+  new_level: 45
+  description:
+  - DEF:53 STR+20 DEX+20 INT+20 MND+20
+  - Accuracy+64 Attack+64 Magic Attack Bonus+42
+  - Refresh+3 Haste+5% Damage taken -6%
+- id: 11272
+  source: armor.yml
+  name: Elder Gilet
+  slot: Body
+  old_level: 1
+  new_level: 50
+  description:
+  - DEF:58 STR+22 DEX+22 INT+22 MND+22
+  - Accuracy+70 Attack+70 Magic Attack Bonus+46
+  - Refresh+3 Haste+6% Damage taken -7%
+- id: 11273
+  source: armor.yml
+  name: Custom Gilet +1
+  slot: Body
+  old_level: 1
+  new_level: 60
+  description:
+  - DEF:68 STR+26 DEX+26 INT+26 MND+26
+  - Accuracy+82 Attack+82 Magic Attack Bonus+54
+  - Refresh+4 Haste+7% Damage taken -8%
+- id: 11274
+  source: armor.yml
+  name: Custom Top +1
+  slot: Body
+  old_level: 1
+  new_level: 65
+  description:
+  - DEF:73 STR+28 DEX+28 INT+28 MND+28
+  - Accuracy+88 Attack+88 Magic Attack Bonus+58
+  - Refresh+4 Haste+7% Damage taken -8%
+- id: 11275
+  source: armor.yml
+  name: Magna Gilet +1
+  slot: Body
+  old_level: 1
+  new_level: 70
+  description:
+  - DEF:78 STR+30 DEX+30 INT+30 MND+30
+  - Accuracy+94 Attack+94 Magic Attack Bonus+62
+  - Refresh+4 Haste+8% Damage taken -9%
+- id: 11276
+  source: armor.yml
+  name: Magna Top +1
+  slot: Body
+  old_level: 1
+  new_level: 75
+  description:
+  - DEF:83 STR+32 DEX+32 INT+32 MND+32
+  - Accuracy+100 Attack+100 Magic Attack Bonus+66
+  - Refresh+4 Haste+8% Damage taken -9%
+- id: 11277
+  source: armor.yml
+  name: Wonder Maillot +1
+  slot: Body
+  old_level: 1
+  new_level: 75
+  description:
+  - DEF:83 STR+32 DEX+32 INT+32 MND+32
+  - Accuracy+100 Attack+100 Magic Attack Bonus+66
+  - Refresh+4 Haste+8% Damage taken -9%
+- id: 11278
+  source: armor.yml
+  name: Wonder Top +1
+  slot: Body
+  old_level: 1
+  new_level: 10
+  description:
+  - DEF:18 STR+6 DEX+6 INT+6 MND+6
+  - Accuracy+22 Attack+22 Magic Attack Bonus+14
+  - Refresh+1 Haste+2% Damage taken -3%
+- id: 11279
+  source: armor.yml
+  name: Savage Top +1
+  slot: Body
+  old_level: 1
+  new_level: 15
+  description:
+  - DEF:23 STR+8 DEX+8 INT+8 MND+8
+  - Accuracy+28 Attack+28 Magic Attack Bonus+18
+  - Refresh+1 Haste+2% Damage taken -3%
+- id: 11280
+  source: armor.yml
+  name: Elder Gilet +1
+  slot: Body
+  old_level: 1
+  new_level: 20
+  description:
+  - DEF:28 STR+10 DEX+10 INT+10 MND+10
+  - Accuracy+34 Attack+34 Magic Attack Bonus+22
+  - Refresh+2 Haste+3% Damage taken -4%
+- id: 11316
+  source: armor.yml
+  name: Otokogusa Yukata
+  slot: Body
+  old_level: 1
+  new_level: 45
+  description:
+  - DEF:53 STR+20 DEX+20 INT+20 MND+20
+  - Accuracy+64 Attack+64 Magic Attack Bonus+42
+  - Refresh+3 Haste+5% Damage taken -6%
+- id: 11317
+  source: armor.yml
+  name: Onnagusa Yukata
+  slot: Body
+  old_level: 1
+  new_level: 50
+  description:
+  - DEF:58 STR+22 DEX+22 INT+22 MND+22
+  - Accuracy+70 Attack+70 Magic Attack Bonus+46
+  - Refresh+3 Haste+6% Damage taken -7%
+- id: 11318
+  source: armor.yml
+  name: Otokoeshi Yukata
+  slot: Body
+  old_level: 1
+  new_level: 55
+  description:
+  - DEF:63 STR+24 DEX+24 INT+24 MND+24
+  - Accuracy+76 Attack+76 Magic Attack Bonus+50
+  - Refresh+3 Haste+6% Damage taken -7%
+- id: 11319
+  source: armor.yml
+  name: Ominaeshi Yukata
+  slot: Body
+  old_level: 1
+  new_level: 60
+  description:
+  - DEF:68 STR+26 DEX+26 INT+26 MND+26
+  - Accuracy+82 Attack+82 Magic Attack Bonus+54
+  - Refresh+4 Haste+7% Damage taken -8%
+- id: 11320
+  source: armor.yml
+  name: Skeleton Robe
+  slot: Body
+  old_level: 1
+  new_level: 65
+  description:
+  - DEF:73 STR+28 DEX+28 INT+28 MND+28
+  - Accuracy+88 Attack+88 Magic Attack Bonus+58
+  - Refresh+4 Haste+7% Damage taken -8%
+- id: 11321
+  source: armor.yml
+  name: Orange Race Silks
+  slot: Body
+  old_level: 1
+  new_level: 70
+  description:
+  - DEF:78 STR+30 DEX+30 INT+30 MND+30
+  - Accuracy+94 Attack+94 Magic Attack Bonus+62
+  - Refresh+4 Haste+8% Damage taken -9%
+- id: 11322
+  source: armor.yml
+  name: Black Race Silks
+  slot: Body
+  old_level: 1
+  new_level: 75
+  description:
+  - DEF:83 STR+32 DEX+32 INT+32 MND+32
+  - Accuracy+100 Attack+100 Magic Attack Bonus+66
+  - Refresh+4 Haste+8% Damage taken -9%
+- id: 11323
+  source: armor.yml
+  name: Purple Race Silks
+  slot: Body
+  old_level: 1
+  new_level: 5
+  description:
+  - DEF:13 STR+4 DEX+4 INT+4 MND+4
+  - Accuracy+16 Attack+16 Magic Attack Bonus+10
+  - Refresh+1 Haste+1% Damage taken -2%
+- id: 11324
+  source: armor.yml
+  name: S. Blue Race Silks
+  slot: Body
+  old_level: 1
+  new_level: 10
+  description:
+  - DEF:18 STR+6 DEX+6 INT+6 MND+6
+  - Accuracy+22 Attack+22 Magic Attack Bonus+14
+  - Refresh+1 Haste+2% Damage taken -3%
+- id: 11325
+  source: armor.yml
+  name: Blue Race Silks
+  slot: Body
+  old_level: 1
+  new_level: 15
+  description:
+  - DEF:23 STR+8 DEX+8 INT+8 MND+8
+  - Accuracy+28 Attack+28 Magic Attack Bonus+18
+  - Refresh+1 Haste+2% Damage taken -3%
+- id: 11326
+  source: armor.yml
+  name: Red Race Silks
+  slot: Body
+  old_level: 1
+  new_level: 20
+  description:
+  - DEF:28 STR+10 DEX+10 INT+10 MND+10
+  - Accuracy+34 Attack+34 Magic Attack Bonus+22
+  - Refresh+2 Haste+3% Damage taken -4%
+- id: 11327
+  source: armor.yml
+  name: White Race Silks
+  slot: Body
+  old_level: 1
+  new_level: 25
+  description:
+  - DEF:33 STR+12 DEX+12 INT+12 MND+12
+  - Accuracy+40 Attack+40 Magic Attack Bonus+26
+  - Refresh+2 Haste+3% Damage taken -4%
+- id: 11328
+  source: armor.yml
+  name: Green Race Silks
+  slot: Body
+  old_level: 1
+  new_level: 30
+  description:
+  - DEF:38 STR+14 DEX+14 INT+14 MND+14
+  - Accuracy+46 Attack+46 Magic Attack Bonus+30
+  - Refresh+2 Haste+4% Damage taken -5%
+- id: 11490
+  source: armor.yml
+  name: Snow Bunny Hat
+  slot: Head
+  old_level: 1
+  new_level: 5
+  description:
+  - DEF:7 DEX+4 INT+4 MND+4 CHR+4
+  - Accuracy+13 Magic Accuracy+13
+  - Haste+1% Fast Cast+1%
+- id: 11491
+  source: armor.yml
+  name: S. Bunny Hat +1
+  slot: Head
+  old_level: 1
+  new_level: 15
+  description:
+  - DEF:13 DEX+8 INT+8 MND+8 CHR+8
+  - Accuracy+23 Magic Accuracy+23
+  - Haste+2% Fast Cast+2%
+- id: 11500
+  source: armor.yml
+  name: Chocobo Beret
+  slot: Head
+  old_level: 1
+  new_level: 55
+  description:
+  - DEF:37 DEX+24 INT+24 MND+24 CHR+24
+  - Accuracy+63 Magic Accuracy+63
+  - Haste+4% Fast Cast+6%
+- id: 11811
+  source: armor.yml
+  name: Destrier Beret
+  slot: Head
+  old_level: 1
+  new_level: 35
+  description:
+  - DEF:25 DEX+16 INT+16 MND+16 CHR+16
+  - Accuracy+43 Magic Accuracy+43
+  - Haste+3% Fast Cast+4%
+- id: 11812
+  source: armor.yml
+  name: Charity Cap
+  slot: Head
+  old_level: 1
+  new_level: 40
+  description:
+  - DEF:28 DEX+18 INT+18 MND+18 CHR+18
+  - Accuracy+48 Magic Accuracy+48
+  - Haste+3% Fast Cast+5%
+- id: 11861
+  source: armor.yml
+  name: Hikogami Yukata
+  slot: Body
+  old_level: 1
+  new_level: 70
+  description:
+  - DEF:78 STR+30 DEX+30 INT+30 MND+30
+  - Accuracy+94 Attack+94 Magic Attack Bonus+62
+  - Refresh+4 Haste+8% Damage taken -9%
+- id: 11862
+  source: armor.yml
+  name: Himegami Yukata
+  slot: Body
+  old_level: 1
+  new_level: 75
+  description:
+  - DEF:83 STR+32 DEX+32 INT+32 MND+32
+  - Accuracy+100 Attack+100 Magic Attack Bonus+66
+  - Refresh+4 Haste+8% Damage taken -9%
+- id: 11965
+  source: armor.yml
+  name: Dream Trousers
+  slot: Legs
+  old_level: 1
+  new_level: 10
+  description:
+  - DEF:13 STR+6 AGI+6
+  - '"Store TP"+7 Fast Cast+2%'
+  - Haste+2% Evasion+18
+- id: 11966
+  source: armor.yml
+  name: Dream Trousers +1
+  slot: Legs
+  old_level: 1
+  new_level: 20
+  description:
+  - DEF:21 STR+10 AGI+10
+  - '"Store TP"+11 Fast Cast+3%'
+  - Haste+3% Evasion+28
+- id: 11967
+  source: armor.yml
+  name: Dream Pants
+  slot: Legs
+  old_level: 1
+  new_level: 20
+  description:
+  - DEF:21 STR+10 AGI+10
+  - '"Store TP"+11 Fast Cast+3%'
+  - Haste+3% Evasion+28
+- id: 11968
+  source: armor.yml
+  name: Dream Pants +1
+  slot: Legs
+  old_level: 1
+  new_level: 30
+  description:
+  - DEF:29 STR+14 AGI+14
+  - '"Store TP"+15 Fast Cast+4%'
+  - Haste+4% Evasion+38
+- id: 12491
+  source: armor.yml
+  name: Onion Cap
+  slot: Head
+  old_level: 1
+  new_level: 60
+  description:
+  - DEF:40 DEX+26 INT+26 MND+26 CHR+26
+  - Accuracy+68 Magic Accuracy+68
+  - Haste+5% Fast Cast+7%
+- id: 12619
+  source: armor.yml
+  name: Onion Harness
+  slot: Body
+  old_level: 1
+  new_level: 35
+  description:
+  - DEF:43 STR+16 DEX+16 INT+16 MND+16
+  - Accuracy+52 Attack+52 Magic Attack Bonus+34
+  - Refresh+2 Haste+4% Damage taken -5%
+- id: 12951
+  source: armor.yml
+  name: Brz. Leggings +1
+  slot: Feet
+  old_level: 1
+  new_level: 75
+  description:
+  - DEF:48 DEX+33 AGI+33
+  - Evasion+100 Movement speed +10%
+  - Haste+7%
+- id: 12960
+  source: armor.yml
+  name: Bronze Leggings
+  slot: Feet
+  old_level: 1
+  new_level: 45
+  description:
+  - DEF:30 DEX+21 AGI+21
+  - Evasion+64 Movement speed +7%
+  - Haste+5%
+- id: 13121
+  source: armor.yml
+  name: Beast Collar
+  slot: Neck
+  old_level: 1
+  new_level: 75
+  description:
+  - STR+32 DEX+32 INT+32 MND+32 CHR+32
+  - Accuracy+83 Magic Accuracy+83
+  - '"Store TP"+17 Fast Cast+6%'
+- id: 13122
+  source: armor.yml
+  name: Miner's Pendant
+  slot: Neck
+  old_level: 1
+  new_level: 5
+  description:
+  - STR+4 DEX+4 INT+4 MND+4 CHR+4
+  - Accuracy+13 Magic Accuracy+13
+  - '"Store TP"+3 Fast Cast+1%'
+- id: 13517
+  source: armor.yml
+  name: Wedding Ring
+  slot: Rings
+  old_level: 1
+  new_level: 50
+  description:
+  - STR+22 DEX+22 INT+22 MND+22
+  - Accuracy+58 Magic Accuracy+58
+  - Refresh+2 Damage taken -4%
+- id: 13682
+  source: armor.yml
+  name: Ether Tank
+  slot: Back
+  old_level: 1
+  new_level: 75
+  description:
+  - DEF:47 HP+160 MP+160
+  - Attack+98 Magic Attack Bonus+98
+  - Refresh+4 Damage taken -9%
+- id: 13683
+  source: armor.yml
+  name: Water Tank
+  slot: Back
+  old_level: 1
+  new_level: 5
+  description:
+  - DEF:5 HP+20 MP+20
+  - Attack+14 Magic Attack Bonus+14
+  - Refresh+1 Damage taken -2%
+- id: 13684
+  source: armor.yml
+  name: Potion Tank
+  slot: Back
+  old_level: 1
+  new_level: 10
+  description:
+  - DEF:8 HP+30 MP+30
+  - Attack+20 Magic Attack Bonus+20
+  - Refresh+1 Damage taken -3%
+- id: 13810
+  source: armor.yml
+  name: Choc. Jack Coat
+  slot: Body
+  old_level: 1
+  new_level: 65
+  description:
+  - DEF:73 STR+28 DEX+28 INT+28 MND+28
+  - Accuracy+88 Attack+88 Magic Attack Bonus+58
+  - Refresh+4 Haste+7% Damage taken -8%
+- id: 13819
+  source: armor.yml
+  name: Onoko Yukata
+  slot: Body
+  old_level: 1
+  new_level: 35
+  description:
+  - DEF:43 STR+16 DEX+16 INT+16 MND+16
+  - Accuracy+52 Attack+52 Magic Attack Bonus+34
+  - Refresh+2 Haste+4% Damage taken -5%
+- id: 13820
+  source: armor.yml
+  name: Omina Yukata
+  slot: Body
+  old_level: 1
+  new_level: 40
+  description:
+  - DEF:48 STR+18 DEX+18 INT+18 MND+18
+  - Accuracy+58 Attack+58 Magic Attack Bonus+38
+  - Refresh+3 Haste+5% Damage taken -6%
+- id: 13821
+  source: armor.yml
+  name: Lord's Yukata
+  slot: Body
+  old_level: 1
+  new_level: 45
+  description:
+  - DEF:53 STR+20 DEX+20 INT+20 MND+20
+  - Accuracy+64 Attack+64 Magic Attack Bonus+42
+  - Refresh+3 Haste+5% Damage taken -6%
+- id: 13822
+  source: armor.yml
+  name: Lady's Yukata
+  slot: Body
+  old_level: 1
+  new_level: 50
+  description:
+  - DEF:58 STR+22 DEX+22 INT+22 MND+22
+  - Accuracy+70 Attack+70 Magic Attack Bonus+46
+  - Refresh+3 Haste+6% Damage taken -7%
+- id: 13842
+  source: armor.yml
+  name: Tavnazian Mask
+  slot: Head
+  old_level: 1
+  new_level: 65
+  description:
+  - DEF:43 DEX+28 INT+28 MND+28 CHR+28
+  - Accuracy+73 Magic Accuracy+73
+  - Haste+5% Fast Cast+7%
+- id: 14070
+  source: armor.yml
+  name: Fsh. Gloves
+  slot: Hands
+  old_level: 1
+  new_level: 25
+  description:
+  - DEF:18 DEX+13 INT+13
+  - Accuracy+40 Magic Accuracy+40
+  - '"Double Attack"+7% Haste+3%'
+- id: 14072
+  source: armor.yml
+  name: Chocobo Gloves
+  slot: Hands
+  old_level: 1
+  new_level: 35
+  description:
+  - DEF:24 DEX+17 INT+17
+  - Accuracy+52 Magic Accuracy+52
+  - '"Double Attack"+9% Haste+4%'
+- id: 14117
+  source: armor.yml
+  name: Rusty Leggings
+  slot: Feet
+  old_level: 1
+  new_level: 55
+  description:
+  - DEF:36 DEX+25 AGI+25
+  - Evasion+76 Movement speed +8%
+  - Haste+6%
+- id: 14171
+  source: armor.yml
+  name: Fisherman's Boots
+  slot: Feet
+  old_level: 1
+  new_level: 25
+  description:
+  - DEF:18 DEX+13 AGI+13
+  - Evasion+40 Movement speed +5%
+  - Haste+3%
+- id: 14173
+  source: armor.yml
+  name: Chocobo Boots
+  slot: Feet
+  old_level: 1
+  new_level: 35
+  description:
+  - DEF:24 DEX+17 AGI+17
+  - Evasion+52 Movement speed +6%
+  - Haste+4%
+- id: 14242
+  source: armor.yml
+  name: Rusty Subligar
+  slot: Legs
+  old_level: 1
+  new_level: 70
+  description:
+  - DEF:61 STR+30 AGI+30
+  - '"Store TP"+31 Fast Cast+8%'
+  - Haste+7% Evasion+78
+- id: 14292
+  source: armor.yml
+  name: Fisherman's Hose
+  slot: Legs
+  old_level: 1
+  new_level: 20
+  description:
+  - DEF:21 STR+10 AGI+10
+  - '"Store TP"+11 Fast Cast+3%'
+  - Haste+3% Evasion+28
+- id: 14294
+  source: armor.yml
+  name: Chocobo Hose
+  slot: Legs
+  old_level: 1
+  new_level: 30
+  description:
+  - DEF:29 STR+14 AGI+14
+  - '"Store TP"+15 Fast Cast+4%'
+  - Haste+4% Evasion+38
+- id: 14519
+  source: armor.yml
+  name: Dream Robe
+  slot: Body
+  old_level: 1
+  new_level: 10
+  description:
+  - DEF:18 STR+6 DEX+6 INT+6 MND+6
+  - Accuracy+22 Attack+22 Magic Attack Bonus+14
+  - Refresh+1 Haste+2% Damage taken -3%
+- id: 14520
+  source: armor.yml
+  name: Dream Robe +1
+  slot: Body
+  old_level: 1
+  new_level: 20
+  description:
+  - DEF:28 STR+10 DEX+10 INT+10 MND+10
+  - Accuracy+34 Attack+34 Magic Attack Bonus+22
+  - Refresh+2 Haste+3% Damage taken -4%
+- id: 14532
+  source: armor.yml
+  name: Otoko Yukata
+  slot: Body
+  old_level: 1
+  new_level: 75
+  description:
+  - DEF:83 STR+32 DEX+32 INT+32 MND+32
+  - Accuracy+100 Attack+100 Magic Attack Bonus+66
+  - Refresh+4 Haste+8% Damage taken -9%
+- id: 14533
+  source: armor.yml
+  name: Onago Yukata
+  slot: Body
+  old_level: 1
+  new_level: 5
+  description:
+  - DEF:13 STR+4 DEX+4 INT+4 MND+4
+  - Accuracy+16 Attack+16 Magic Attack Bonus+10
+  - Refresh+1 Haste+1% Damage taken -2%
+- id: 14534
+  source: armor.yml
+  name: Otokogimi Yukata
+  slot: Body
+  old_level: 1
+  new_level: 10
+  description:
+  - DEF:18 STR+6 DEX+6 INT+6 MND+6
+  - Accuracy+22 Attack+22 Magic Attack Bonus+14
+  - Refresh+1 Haste+2% Damage taken -3%
+- id: 14535
+  source: armor.yml
+  name: Onnagimi Yukata
+  slot: Body
+  old_level: 1
+  new_level: 15
+  description:
+  - DEF:23 STR+8 DEX+8 INT+8 MND+8
+  - Accuracy+28 Attack+28 Magic Attack Bonus+18
+  - Refresh+1 Haste+2% Damage taken -3%
+- id: 14628
+  source: armor.yml
+  name: Castor's Ring
+  slot: Rings
+  old_level: 1
+  new_level: 55
+  description:
+  - STR+24 DEX+24 INT+24 MND+24
+  - Accuracy+63 Magic Accuracy+63
+  - Refresh+2 Damage taken -4%
+- id: 14629
+  source: armor.yml
+  name: Pollux's Ring
+  slot: Rings
+  old_level: 1
+  new_level: 60
+  description:
+  - STR+26 DEX+26 INT+26 MND+26
+  - Accuracy+68 Magic Accuracy+68
+  - Refresh+3 Damage taken -5%
+- id: 14647
+  source: armor.yml
+  name: Castor's Ring
+  slot: Rings
+  old_level: 1
+  new_level: 75
+  description:
+  - STR+32 DEX+32 INT+32 MND+32
+  - Accuracy+83 Magic Accuracy+83
+  - Refresh+3 Damage taken -6%
+- id: 14648
+  source: armor.yml
+  name: Pollux's Ring
+  slot: Rings
+  old_level: 1
+  new_level: 5
+  description:
+  - STR+4 DEX+4 INT+4 MND+4
+  - Accuracy+13 Magic Accuracy+13
+  - Refresh+1 Damage taken -1%
+- id: 15178
+  source: armor.yml
+  name: Dream Hat
+  slot: Head
+  old_level: 1
+  new_level: 70
+  description:
+  - DEF:46 DEX+30 INT+30 MND+30 CHR+30
+  - Accuracy+78 Magic Accuracy+78
+  - Haste+5% Fast Cast+8%
+- id: 15179
+  source: armor.yml
+  name: Dream Hat +1
+  slot: Head
+  old_level: 1
+  new_level: 75
+  description:
+  - DEF:49 DEX+32 INT+32 MND+32 CHR+32
+  - Accuracy+83 Magic Accuracy+83
+  - Haste+6% Fast Cast+8%
+- id: 15204
+  source: armor.yml
+  name: Mandragora Beret
+  slot: Head
+  old_level: 1
+  new_level: 50
+  description:
+  - DEF:34 DEX+22 INT+22 MND+22 CHR+22
+  - Accuracy+58 Magic Accuracy+58
+  - Haste+4% Fast Cast+6%
+- id: 15212
+  source: armor.yml
+  name: Stars Cap
+  slot: Head
+  old_level: 1
+  new_level: 15
+  description:
+  - DEF:13 DEX+8 INT+8 MND+8 CHR+8
+  - Accuracy+23 Magic Accuracy+23
+  - Haste+2% Fast Cast+2%
+- id: 15288
+  source: armor.yml
+  name: Pellet Belt
+  slot: Waist
+  old_level: 1
+  new_level: 70
+  description:
+  - STR+30 DEX+30 INT+30 MND+30
+  - Haste+9% "Store TP"+31
+  - Magic Attack Bonus+61
+- id: 15289
+  source: armor.yml
+  name: Bolt Belt
+  slot: Waist
+  old_level: 1
+  new_level: 75
+  description:
+  - STR+32 DEX+32 INT+32 MND+32
+  - Haste+9% "Store TP"+33
+  - Magic Attack Bonus+65
+- id: 15297
+  source: armor.yml
+  name: Rabbit Belt
+  slot: Waist
+  old_level: 1
+  new_level: 40
+  description:
+  - STR+18 DEX+18 INT+18 MND+18
+  - Haste+6% "Store TP"+19
+  - Magic Attack Bonus+37
+- id: 15298
+  source: armor.yml
+  name: Worm Belt
+  slot: Waist
+  old_level: 1
+  new_level: 45
+  description:
+  - STR+20 DEX+20 INT+20 MND+20
+  - Haste+6% "Store TP"+21
+  - Magic Attack Bonus+41
+- id: 15299
+  source: armor.yml
+  name: Mandragora Belt
+  slot: Waist
+  old_level: 1
+  new_level: 50
+  description:
+  - STR+22 DEX+22 INT+22 MND+22
+  - Haste+7% "Store TP"+23
+  - Magic Attack Bonus+45
+- id: 15444
+  source: armor.yml
+  name: Carpenter's Belt
+  slot: Waist
+  old_level: 1
+  new_level: 25
+  description:
+  - STR+12 DEX+12 INT+12 MND+12
+  - Haste+4% "Store TP"+13
+  - Magic Attack Bonus+25
+- id: 15446
+  source: armor.yml
+  name: Goldsmith's Belt
+  slot: Waist
+  old_level: 1
+  new_level: 35
+  description:
+  - STR+16 DEX+16 INT+16 MND+16
+  - Haste+5% "Store TP"+17
+  - Magic Attack Bonus+33
+- id: 15447
+  source: armor.yml
+  name: Weaver's Belt
+  slot: Waist
+  old_level: 1
+  new_level: 40
+  description:
+  - STR+18 DEX+18 INT+18 MND+18
+  - Haste+6% "Store TP"+19
+  - Magic Attack Bonus+37
+- id: 15448
+  source: armor.yml
+  name: Tanner's Belt
+  slot: Waist
+  old_level: 1
+  new_level: 45
+  description:
+  - STR+20 DEX+20 INT+20 MND+20
+  - Haste+6% "Store TP"+21
+  - Magic Attack Bonus+41
+- id: 15450
+  source: armor.yml
+  name: Alchemist's Belt
+  slot: Waist
+  old_level: 1
+  new_level: 55
+  description:
+  - STR+24 DEX+24 INT+24 MND+24
+  - Haste+7% "Store TP"+25
+  - Magic Attack Bonus+49
+- id: 15451
+  source: armor.yml
+  name: Culinarian's Belt
+  slot: Waist
+  old_level: 1
+  new_level: 60
+  description:
+  - STR+26 DEX+26 INT+26 MND+26
+  - Haste+8% "Store TP"+27
+  - Magic Attack Bonus+53
+- id: 15452
+  source: armor.yml
+  name: Fisherman's Belt
+  slot: Waist
+  old_level: 1
+  new_level: 65
+  description:
+  - STR+28 DEX+28 INT+28 MND+28
+  - Haste+8% "Store TP"+29
+  - Magic Attack Bonus+57
+- id: 15453
+  source: armor.yml
+  name: Lugworm Belt
+  slot: Waist
+  old_level: 1
+  new_level: 70
+  description:
+  - STR+30 DEX+30 INT+30 MND+30
+  - Haste+9% "Store TP"+31
+  - Magic Attack Bonus+61
+- id: 15454
+  source: armor.yml
+  name: Little Worm Belt
+  slot: Waist
+  old_level: 1
+  new_level: 75
+  description:
+  - STR+32 DEX+32 INT+32 MND+32
+  - Haste+9% "Store TP"+33
+  - Magic Attack Bonus+65
+- id: 15752
+  source: armor.yml
+  name: Dream Boots
+  slot: Feet
+  old_level: 1
+  new_level: 55
+  description:
+  - DEF:36 DEX+25 AGI+25
+  - Evasion+76 Movement speed +8%
+  - Haste+6%
+- id: 15753
+  source: armor.yml
+  name: Dream Boots +1
+  slot: Feet
+  old_level: 1
+  new_level: 65
+  description:
+  - DEF:42 DEX+29 AGI+29
+  - Evasion+88 Movement speed +9%
+  - Haste+7%
+- id: 15847
+  source: armor.yml
+  name: Matrimony Ring
+  slot: Rings
+  old_level: 1
+  new_level: 75
+  description:
+  - STR+32 DEX+32 INT+32 MND+32
+  - Accuracy+83 Magic Accuracy+83
+  - Refresh+3 Damage taken -6%
+- id: 15848
+  source: armor.yml
+  name: Matrimony Band
+  slot: Rings
+  old_level: 1
+  new_level: 5
+  description:
+  - STR+4 DEX+4 INT+4 MND+4
+  - Accuracy+13 Magic Accuracy+13
+  - Refresh+1 Damage taken -1%
+- id: 15860
+  source: armor.yml
+  name: Gyokuto Obi
+  slot: Waist
+  old_level: 1
+  new_level: 5
+  description:
+  - STR+4 DEX+4 INT+4 MND+4
+  - Haste+2% "Store TP"+5
+  - Magic Attack Bonus+9
+- id: 15919
+  source: armor.yml
+  name: Drover's Belt
+  slot: Waist
+  old_level: 1
+  new_level: 75
+  description:
+  - STR+32 DEX+32 INT+32 MND+32
+  - Haste+9% "Store TP"+33
+  - Magic Attack Bonus+65
+- id: 15921
+  source: armor.yml
+  name: Detonator Belt
+  slot: Waist
+  old_level: 1
+  new_level: 10
+  description:
+  - STR+6 DEX+6 INT+6 MND+6
+  - Haste+3% "Store TP"+7
+  - Magic Attack Bonus+13
+- id: 15929
+  source: armor.yml
+  name: Goblin Belt
+  slot: Waist
+  old_level: 1
+  new_level: 50
+  description:
+  - STR+22 DEX+22 INT+22 MND+22
+  - Haste+7% "Store TP"+23
+  - Magic Attack Bonus+45
+- id: 15933
+  source: armor.yml
+  name: Stirge Belt
+  slot: Waist
+  old_level: 1
+  new_level: 70
+  description:
+  - STR+30 DEX+30 INT+30 MND+30
+  - Haste+9% "Store TP"+31
+  - Magic Attack Bonus+61
+- id: 16003
+  source: armor.yml
+  name: Raising Earring
+  slot: Ears
+  old_level: 1
+  new_level: 20
+  description:
+  - DEX+10 INT+10 MND+10
+  - Magic Attack Bonus+21
+  - '"Double Attack"+6% Fast Cast+2%'
+- id: 16075
+  source: armor.yml
+  name: Witch Hat
+  slot: Head
+  old_level: 1
+  new_level: 55
+  description:
+  - DEF:37 DEX+24 INT+24 MND+24 CHR+24
+  - Accuracy+63 Magic Accuracy+63
+  - Haste+4% Fast Cast+6%
+- id: 16109
+  source: armor.yml
+  name: Egg Helm
+  slot: Head
+  old_level: 1
+  new_level: 75
+  description:
+  - DEF:49 DEX+32 INT+32 MND+32 CHR+32
+  - Accuracy+83 Magic Accuracy+83
+  - Haste+6% Fast Cast+8%
+- id: 16118
+  source: armor.yml
+  name: Moogle Cap
+  slot: Head
+  old_level: 1
+  new_level: 45
+  description:
+  - DEF:31 DEX+20 INT+20 MND+20 CHR+20
+  - Accuracy+53 Magic Accuracy+53
+  - Haste+4% Fast Cast+5%
+- id: 16119
+  source: armor.yml
+  name: Nomad Cap
+  slot: Head
+  old_level: 1
+  new_level: 50
+  description:
+  - DEF:34 DEX+22 INT+22 MND+22 CHR+22
+  - Accuracy+58 Magic Accuracy+58
+  - Haste+4% Fast Cast+6%
+- id: 16223
+  source: armor.yml
+  name: Orange Tank
+  slot: Back
+  old_level: 1
+  new_level: 30
+  description:
+  - DEF:20 HP+70 MP+70
+  - Attack+44 Magic Attack Bonus+44
+  - Refresh+2 Damage taken -5%
+- id: 16224
+  source: armor.yml
+  name: Apple Tank
+  slot: Back
+  old_level: 1
+  new_level: 35
+  description:
+  - DEF:23 HP+80 MP+80
+  - Attack+50 Magic Attack Bonus+50
+  - Refresh+2 Damage taken -5%
+- id: 16225
+  source: armor.yml
+  name: Pear Tank
+  slot: Back
+  old_level: 1
+  new_level: 40
+  description:
+  - DEF:26 HP+90 MP+90
+  - Attack+56 Magic Attack Bonus+56
+  - Refresh+2 Damage taken -6%
+- id: 16226
+  source: armor.yml
+  name: Pamama Tank
+  slot: Back
+  old_level: 1
+  new_level: 45
+  description:
+  - DEF:29 HP+100 MP+100
+  - Attack+62 Magic Attack Bonus+62
+  - Refresh+2 Damage taken -6%
+- id: 16227
+  source: armor.yml
+  name: Persikos Tank
+  slot: Back
+  old_level: 1
+  new_level: 50
+  description:
+  - DEF:32 HP+110 MP+110
+  - Attack+68 Magic Attack Bonus+68
+  - Refresh+3 Damage taken -7%
+- id: 16243
+  source: armor.yml
+  name: Drover's Mantle
+  slot: Back
+  old_level: 1
+  new_level: 55
+  description:
+  - DEF:35 HP+120 MP+120
+  - Attack+74 Magic Attack Bonus+74
+  - Refresh+3 Damage taken -7%
+- id: 16249
+  source: armor.yml
+  name: Elixir Tank
+  slot: Back
+  old_level: 1
+  new_level: 10
+  description:
+  - DEF:8 HP+30 MP+30
+  - Attack+20 Magic Attack Bonus+20
+  - Refresh+1 Damage taken -3%
+- id: 16257
+  source: armor.yml
+  name: Ghost Cape
+  slot: Back
+  old_level: 1
+  new_level: 50
+  description:
+  - DEF:32 HP+110 MP+110
+  - Attack+68 Magic Attack Bonus+68
+  - Refresh+3 Damage taken -7%
+- id: 16273
+  source: armor.yml
+  name: Pullus Torque
+  slot: Neck
+  old_level: 1
+  new_level: 10
+  description:
+  - STR+6 DEX+6 INT+6 MND+6 CHR+6
+  - Accuracy+18 Magic Accuracy+18
+  - '"Store TP"+4 Fast Cast+1%'
+- id: 16323
+  source: armor.yml
+  name: Magna Trunks
+  slot: Legs
+  old_level: 1
+  new_level: 50
+  description:
+  - DEF:45 STR+22 AGI+22
+  - '"Store TP"+23 Fast Cast+6%'
+  - Haste+6% Evasion+58
+- id: 16324
+  source: armor.yml
+  name: Magna Shorts
+  slot: Legs
+  old_level: 1
+  new_level: 55
+  description:
+  - DEF:49 STR+24 AGI+24
+  - '"Store TP"+25 Fast Cast+6%'
+  - Haste+6% Evasion+63
+- id: 16325
+  source: armor.yml
+  name: Wonder Trunks
+  slot: Legs
+  old_level: 1
+  new_level: 60
+  description:
+  - DEF:53 STR+26 AGI+26
+  - '"Store TP"+27 Fast Cast+7%'
+  - Haste+7% Evasion+68
+- id: 16326
+  source: armor.yml
+  name: Wonder Shorts
+  slot: Legs
+  old_level: 1
+  new_level: 65
+  description:
+  - DEF:57 STR+28 AGI+28
+  - '"Store TP"+29 Fast Cast+7%'
+  - Haste+7% Evasion+73
+- id: 16327
+  source: armor.yml
+  name: Savage Shorts
+  slot: Legs
+  old_level: 1
+  new_level: 70
+  description:
+  - DEF:61 STR+30 AGI+30
+  - '"Store TP"+31 Fast Cast+8%'
+  - Haste+7% Evasion+78
+- id: 16328
+  source: armor.yml
+  name: Elder Trunks
+  slot: Legs
+  old_level: 1
+  new_level: 75
+  description:
+  - DEF:65 STR+32 AGI+32
+  - '"Store TP"+33 Fast Cast+8%'
+  - Haste+7% Evasion+83
+- id: 23730
+  source: armor2.yml
+  name: Karakul Cap
+  slot: Head
+  old_level: 1
+  new_level: 5
+  description:
+  - DEF:7 DEX+4 INT+4 MND+4 CHR+4
+  - Accuracy+13 Magic Accuracy+13
+  - Haste+1% Fast Cast+1%
+- id: 23731
+  source: armor2.yml
+  name: Ryl. Chocobo Beret
+  slot: Head
+  old_level: 1
+  new_level: 10
+  description:
+  - DEF:10 DEX+6 INT+6 MND+6 CHR+6
+  - Accuracy+18 Magic Accuracy+18
+  - Haste+1% Fast Cast+2%
+- id: 23737
+  source: armor2.yml
+  name: Byakko Masque
+  slot: Head
+  old_level: 1
+  new_level: 40
+  description:
+  - DEF:28 DEX+18 INT+18 MND+18 CHR+18
+  - Accuracy+48 Magic Accuracy+48
+  - Haste+3% Fast Cast+5%
+- id: 23790
+  source: armor2.yml
+  name: Adenium Masque
+  slot: Head
+  old_level: 1
+  new_level: 5
+  description:
+  - DEF:7 DEX+4 INT+4 MND+4 CHR+4
+  - Accuracy+13 Magic Accuracy+13
+  - Haste+1% Fast Cast+1%
+- id: 23791
+  source: armor2.yml
+  name: Adenium Suit
+  slot: Body
+  old_level: 1
+  new_level: 20
+  description:
+  - DEF:28 STR+10 DEX+10 INT+10 MND+10
+  - Accuracy+34 Attack+34 Magic Attack Bonus+22
+  - Refresh+2 Haste+3% Damage taken -4%
+- id: 23805
+  source: armor2.yml
+  name: Morbol Apron
+  slot: Body
+  old_level: 1
+  new_level: 15
+  description:
+  - DEF:23 STR+8 DEX+8 INT+8 MND+8
+  - Accuracy+28 Attack+28 Magic Attack Bonus+18
+  - Refresh+1 Haste+2% Damage taken -3%
+- id: 23806
+  source: armor2.yml
+  name: Vaquero Hat
+  slot: Head
+  old_level: 1
+  new_level: 10
+  description:
+  - DEF:10 DEX+6 INT+6 MND+6 CHR+6
+  - Accuracy+18 Magic Accuracy+18
+  - Haste+1% Fast Cast+2%
+- id: 23807
+  source: armor2.yml
+  name: Esthete's Masque
+  slot: Head
+  old_level: 1
+  new_level: 15
+  description:
+  - DEF:13 DEX+8 INT+8 MND+8 CHR+8
+  - Accuracy+23 Magic Accuracy+23
+  - Haste+2% Fast Cast+2%
+- id: 23809
+  source: armor2.yml
+  name: Esthete's Hose
+  slot: Legs
+  old_level: 1
+  new_level: 55
+  description:
+  - DEF:49 STR+24 AGI+24
+  - '"Store TP"+25 Fast Cast+6%'
+  - Haste+6% Evasion+63
+- id: 23810
+  source: armor2.yml
+  name: Knit Cap
+  slot: Head
+  old_level: 1
+  new_level: 30
+  description:
+  - DEF:22 DEX+14 INT+14 MND+14 CHR+14
+  - Accuracy+38 Magic Accuracy+38
+  - Haste+3% Fast Cast+4%
+- id: 23816
+  source: armor2.yml
+  name: Sapphire Leggings
+  slot: Feet
+  old_level: 1
+  new_level: 25
+  description:
+  - DEF:18 DEX+13 AGI+13
+  - Evasion+40 Movement speed +5%
+  - Haste+3%
+- id: 23819
+  source: armor2.yml
+  name: Jadeite Gloves
+  slot: Hands
+  old_level: 1
+  new_level: 20
+  description:
+  - DEF:15 DEX+11 INT+11
+  - Accuracy+34 Magic Accuracy+34
+  - '"Double Attack"+6% Haste+3%'
+- id: 23833
+  source: armor2.yml
+  name: Ruby Robe
+  slot: Body
+  old_level: 1
+  new_level: 5
+  description:
+  - DEF:13 STR+4 DEX+4 INT+4 MND+4
+  - Accuracy+16 Attack+16 Magic Attack Bonus+10
+  - Refresh+1 Haste+1% Damage taken -2%
+- id: 23848
+  source: armor2.yml
+  name: Cowardice Gloves
+  slot: Hands
+  old_level: 1
+  new_level: 15
+  description:
+  - DEF:12 DEX+9 INT+9
+  - Accuracy+28 Magic Accuracy+28
+  - '"Double Attack"+5% Haste+2%'
+- id: 23862
+  source: armor2.yml
+  name: Boudox's Masque
+  slot: Head
+  old_level: 1
+  new_level: 65
+  description:
+  - DEF:43 DEX+28 INT+28 MND+28 CHR+28
+  - Accuracy+73 Magic Accuracy+73
+  - Haste+5% Fast Cast+7%
+- id: 23863
+  source: armor2.yml
+  name: Boudox's Suit
+  slot: Body
+  old_level: 1
+  new_level: 5
+  description:
+  - DEF:13 STR+4 DEX+4 INT+4 MND+4
+  - Accuracy+16 Attack+16 Magic Attack Bonus+10
+  - Refresh+1 Haste+1% Damage taken -2%
+- id: 23864
+  source: armor2.yml
+  name: Magh Bihu's Masque
+  slot: Head
+  old_level: 1
+  new_level: 75
+  description:
+  - DEF:49 DEX+32 INT+32 MND+32 CHR+32
+  - Accuracy+83 Magic Accuracy+83
+  - Haste+6% Fast Cast+8%
+- id: 23865
+  source: armor2.yml
+  name: Magh Bihu's Suit
+  slot: Body
+  old_level: 1
+  new_level: 15
+  description:
+  - DEF:23 STR+8 DEX+8 INT+8 MND+8
+  - Accuracy+28 Attack+28 Magic Attack Bonus+18
+  - Refresh+1 Haste+2% Damage taken -3%
+- id: 23870
+  source: armor2.yml
+  name: Eyre Cap
+  slot: Head
+  old_level: 1
+  new_level: 30
+  description:
+  - DEF:22 DEX+14 INT+14 MND+14 CHR+14
+  - Accuracy+38 Magic Accuracy+38
+  - Haste+3% Fast Cast+4%
+- id: 23871
+  source: armor2.yml
+  name: Hebenus Gilet
+  slot: Body
+  old_level: 1
+  new_level: 45
+  description:
+  - DEF:53 STR+20 DEX+20 INT+20 MND+20
+  - Accuracy+64 Attack+64 Magic Attack Bonus+42
+  - Refresh+3 Haste+5% Damage taken -6%
+- id: 23872
+  source: armor2.yml
+  name: Hebenus Boxers
+  slot: Legs
+  old_level: 1
+  new_level: 70
+  description:
+  - DEF:61 STR+30 AGI+30
+  - '"Store TP"+31 Fast Cast+8%'
+  - Haste+7% Evasion+78
+- id: 23873
+  source: armor2.yml
+  name: Hebenus Top
+  slot: Body
+  old_level: 1
+  new_level: 55
+  description:
+  - DEF:63 STR+24 DEX+24 INT+24 MND+24
+  - Accuracy+76 Attack+76 Magic Attack Bonus+50
+  - Refresh+3 Haste+6% Damage taken -7%
+- id: 23874
+  source: armor2.yml
+  name: Hebenus Shorts
+  slot: Legs
+  old_level: 1
+  new_level: 5
+  description:
+  - DEF:9 STR+4 AGI+4
+  - '"Store TP"+5 Fast Cast+1%'
+  - Haste+1% Evasion+13
+- id: 23893
+  source: armor2.yml
+  name: Dhalmel Trousers
+  slot: Legs
+  old_level: 1
+  new_level: 25
+  description:
+  - DEF:25 STR+12 AGI+12
+  - '"Store TP"+13 Fast Cast+3%'
+  - Haste+3% Evasion+33
+- id: 23894
+  source: armor2.yml
+  name: Prishe's Boots
+  slot: Feet
+  old_level: 1
+  new_level: 40
+  description:
+  - DEF:27 DEX+19 AGI+19
+  - Evasion+58 Movement speed +7%
+  - Haste+5%
+- id: 25585
+  source: armor2.yml
+  name: Bl. Chocobo Cap
+  slot: Head
+  old_level: 1
+  new_level: 55
+  description:
+  - DEF:37 DEX+24 INT+24 MND+24 CHR+24
+  - Accuracy+63 Magic Accuracy+63
+  - Haste+4% Fast Cast+6%
+- id: 25586
+  source: armor2.yml
+  name: Kakai Cap
+  slot: Head
+  old_level: 1
+  new_level: 60
+  description:
+  - DEF:40 DEX+26 INT+26 MND+26 CHR+26
+  - Accuracy+68 Magic Accuracy+68
+  - Haste+5% Fast Cast+7%
+- id: 25587
+  source: armor2.yml
+  name: Kakai Cap +1
+  slot: Head
+  old_level: 1
+  new_level: 70
+  description:
+  - DEF:46 DEX+30 INT+30 MND+30 CHR+30
+  - Accuracy+78 Magic Accuracy+78
+  - Haste+5% Fast Cast+8%
+- id: 25604
+  source: armor2.yml
+  name: Buffalo Cap
+  slot: Head
+  old_level: 1
+  new_level: 75
+  description:
+  - DEF:49 DEX+32 INT+32 MND+32 CHR+32
+  - Accuracy+83 Magic Accuracy+83
+  - Haste+6% Fast Cast+8%
+- id: 25632
+  source: armor2.yml
+  name: Carbie Cap
+  slot: Head
+  old_level: 1
+  new_level: 65
+  description:
+  - DEF:43 DEX+28 INT+28 MND+28 CHR+28
+  - Accuracy+73 Magic Accuracy+73
+  - Haste+5% Fast Cast+7%
+- id: 25638
+  source: armor2.yml
+  name: Pachy. Masque
+  slot: Head
+  old_level: 1
+  new_level: 20
+  description:
+  - DEF:16 DEX+10 INT+10 MND+10 CHR+10
+  - Accuracy+28 Magic Accuracy+28
+  - Haste+2% Fast Cast+3%
+- id: 25639
+  source: armor2.yml
+  name: Korrigan Masque
+  slot: Head
+  old_level: 1
+  new_level: 25
+  description:
+  - DEF:19 DEX+12 INT+12 MND+12 CHR+12
+  - Accuracy+33 Magic Accuracy+33
+  - Haste+2% Fast Cast+3%
+- id: 25645
+  source: armor2.yml
+  name: Kupo Masque
+  slot: Head
+  old_level: 1
+  new_level: 55
+  description:
+  - DEF:37 DEX+24 INT+24 MND+24 CHR+24
+  - Accuracy+63 Magic Accuracy+63
+  - Haste+4% Fast Cast+6%
+- id: 25652
+  source: armor2.yml
+  name: Crab Cap
+  slot: Head
+  old_level: 1
+  new_level: 15
+  description:
+  - DEF:13 DEX+8 INT+8 MND+8 CHR+8
+  - Accuracy+23 Magic Accuracy+23
+  - Haste+2% Fast Cast+2%
+- id: 25657
+  source: armor2.yml
+  name: Wyrmking Masque
+  slot: Head
+  old_level: 1
+  new_level: 40
+  description:
+  - DEF:28 DEX+18 INT+18 MND+18 CHR+18
+  - Accuracy+48 Magic Accuracy+48
+  - Haste+3% Fast Cast+5%
+- id: 25658
+  source: armor2.yml
+  name: Wyrm. Masque +1
+  slot: Head
+  old_level: 1
+  new_level: 50
+  description:
+  - DEF:34 DEX+22 INT+22 MND+22 CHR+22
+  - Accuracy+58 Magic Accuracy+58
+  - Haste+4% Fast Cast+6%
+- id: 25669
+  source: armor2.yml
+  name: Crab Cap +1
+  slot: Head
+  old_level: 1
+  new_level: 30
+  description:
+  - DEF:22 DEX+14 INT+14 MND+14 CHR+14
+  - Accuracy+38 Magic Accuracy+38
+  - Haste+3% Fast Cast+4%
+- id: 25670
+  source: armor2.yml
+  name: Rarab Cap
+  slot: Head
+  old_level: 1
+  new_level: 30
+  description:
+  - DEF:22 DEX+14 INT+14 MND+14 CHR+14
+  - Accuracy+38 Magic Accuracy+38
+  - Haste+3% Fast Cast+4%
+- id: 25671
+  source: armor2.yml
+  name: Rarab Cap +1
+  slot: Head
+  old_level: 1
+  new_level: 40
+  description:
+  - DEF:28 DEX+18 INT+18 MND+18 CHR+18
+  - Accuracy+48 Magic Accuracy+48
+  - Haste+3% Fast Cast+5%
+- id: 25672
+  source: armor2.yml
+  name: Snoll Masque
+  slot: Head
+  old_level: 1
+  new_level: 40
+  description:
+  - DEF:28 DEX+18 INT+18 MND+18 CHR+18
+  - Accuracy+48 Magic Accuracy+48
+  - Haste+3% Fast Cast+5%
+- id: 25673
+  source: armor2.yml
+  name: Snoll Masque +1
+  slot: Head
+  old_level: 1
+  new_level: 50
+  description:
+  - DEF:34 DEX+22 INT+22 MND+22 CHR+22
+  - Accuracy+58 Magic Accuracy+58
+  - Haste+4% Fast Cast+6%
+- id: 25675
+  source: armor2.yml
+  name: Wh. Rarab Cap
+  slot: Head
+  old_level: 1
+  new_level: 55
+  description:
+  - DEF:37 DEX+24 INT+24 MND+24 CHR+24
+  - Accuracy+63 Magic Accuracy+63
+  - Haste+4% Fast Cast+6%
+- id: 25677
+  source: armor2.yml
+  name: Arthro's Cap
+  slot: Head
+  old_level: 1
+  new_level: 65
+  description:
+  - DEF:43 DEX+28 INT+28 MND+28 CHR+28
+  - Accuracy+73 Magic Accuracy+73
+  - Haste+5% Fast Cast+7%
+- id: 25678
+  source: armor2.yml
+  name: Arthro's Cap +1
+  slot: Head
+  old_level: 1
+  new_level: 75
+  description:
+  - DEF:49 DEX+32 INT+32 MND+32 CHR+32
+  - Accuracy+83 Magic Accuracy+83
+  - Haste+6% Fast Cast+8%
+- id: 25679
+  source: armor2.yml
+  name: Wh. Rarab Cap +1
+  slot: Head
+  old_level: 1
+  new_level: 75
+  description:
+  - DEF:49 DEX+32 INT+32 MND+32 CHR+32
+  - Accuracy+83 Magic Accuracy+83
+  - Haste+6% Fast Cast+8%
+- id: 25711
+  source: armor2.yml
+  name: Botulus Suit
+  slot: Body
+  old_level: 1
+  new_level: 20
+  description:
+  - DEF:28 STR+10 DEX+10 INT+10 MND+10
+  - Accuracy+34 Attack+34 Magic Attack Bonus+22
+  - Refresh+2 Haste+3% Damage taken -4%
+- id: 25712
+  source: armor2.yml
+  name: Botulus Suit +1
+  slot: Body
+  old_level: 1
+  new_level: 30
+  description:
+  - DEF:38 STR+14 DEX+14 INT+14 MND+14
+  - Accuracy+46 Attack+46 Magic Attack Bonus+30
+  - Refresh+2 Haste+4% Damage taken -5%
+- id: 25713
+  source: armor2.yml
+  name: Track Shirt
+  slot: Body
+  old_level: 1
+  new_level: 30
+  description:
+  - DEF:38 STR+14 DEX+14 INT+14 MND+14
+  - Accuracy+46 Attack+46 Magic Attack Bonus+30
+  - Refresh+2 Haste+4% Damage taken -5%
+- id: 25715
+  source: armor2.yml
+  name: Korrigan Suit
+  slot: Body
+  old_level: 1
+  new_level: 40
+  description:
+  - DEF:48 STR+18 DEX+18 INT+18 MND+18
+  - Accuracy+58 Attack+58 Magic Attack Bonus+38
+  - Refresh+3 Haste+5% Damage taken -6%
+- id: 25734
+  source: armor2.yml
+  name: Pieuje Unity Shirt
+  slot: Body
+  old_level: 1
+  new_level: 60
+  description:
+  - DEF:68 STR+26 DEX+26 INT+26 MND+26
+  - Accuracy+82 Attack+82 Magic Attack Bonus+54
+  - Refresh+4 Haste+7% Damage taken -8%
+- id: 25735
+  source: armor2.yml
+  name: Ayame Unity Shirt
+  slot: Body
+  old_level: 1
+  new_level: 65
+  description:
+  - DEF:73 STR+28 DEX+28 INT+28 MND+28
+  - Accuracy+88 Attack+88 Magic Attack Bonus+58
+  - Refresh+4 Haste+7% Damage taken -8%
+- id: 25736
+  source: armor2.yml
+  name: I. Shield Unity Shirt
+  slot: Body
+  old_level: 1
+  new_level: 70
+  description:
+  - DEF:78 STR+30 DEX+30 INT+30 MND+30
+  - Accuracy+94 Attack+94 Magic Attack Bonus+62
+  - Refresh+4 Haste+8% Damage taken -9%
+- id: 25737
+  source: armor2.yml
+  name: Apururu Unity Shirt
+  slot: Body
+  old_level: 1
+  new_level: 75
+  description:
+  - DEF:83 STR+32 DEX+32 INT+32 MND+32
+  - Accuracy+100 Attack+100 Magic Attack Bonus+66
+  - Refresh+4 Haste+8% Damage taken -9%
+- id: 25738
+  source: armor2.yml
+  name: Maat Unity Shirt
+  slot: Body
+  old_level: 1
+  new_level: 5
+  description:
+  - DEF:13 STR+4 DEX+4 INT+4 MND+4
+  - Accuracy+16 Attack+16 Magic Attack Bonus+10
+  - Refresh+1 Haste+1% Damage taken -2%
+- id: 25739
+  source: armor2.yml
+  name: Aldo Unity Shirt
+  slot: Body
+  old_level: 1
+  new_level: 10
+  description:
+  - DEF:18 STR+6 DEX+6 INT+6 MND+6
+  - Accuracy+22 Attack+22 Magic Attack Bonus+14
+  - Refresh+1 Haste+2% Damage taken -3%
+- id: 25740
+  source: armor2.yml
+  name: Jakoh Unity Shirt
+  slot: Body
+  old_level: 1
+  new_level: 15
+  description:
+  - DEF:23 STR+8 DEX+8 INT+8 MND+8
+  - Accuracy+28 Attack+28 Magic Attack Bonus+18
+  - Refresh+1 Haste+2% Damage taken -3%
+- id: 25741
+  source: armor2.yml
+  name: Naja Unity Shirt
+  slot: Body
+  old_level: 1
+  new_level: 20
+  description:
+  - DEF:28 STR+10 DEX+10 INT+10 MND+10
+  - Accuracy+34 Attack+34 Magic Attack Bonus+22
+  - Refresh+2 Haste+3% Damage taken -4%
+- id: 25742
+  source: armor2.yml
+  name: Flaviria Unity Shirt
+  slot: Body
+  old_level: 1
+  new_level: 25
+  description:
+  - DEF:33 STR+12 DEX+12 INT+12 MND+12
+  - Accuracy+40 Attack+40 Magic Attack Bonus+26
+  - Refresh+2 Haste+3% Damage taken -4%
+- id: 25743
+  source: armor2.yml
+  name: Yoran Unity Shirt
+  slot: Body
+  old_level: 1
+  new_level: 30
+  description:
+  - DEF:38 STR+14 DEX+14 INT+14 MND+14
+  - Accuracy+46 Attack+46 Magic Attack Bonus+30
+  - Refresh+2 Haste+4% Damage taken -5%
+- id: 25744
+  source: armor2.yml
+  name: Sylvie Unity Shirt
+  slot: Body
+  old_level: 1
+  new_level: 35
+  description:
+  - DEF:43 STR+16 DEX+16 INT+16 MND+16
+  - Accuracy+52 Attack+52 Magic Attack Bonus+34
+  - Refresh+2 Haste+4% Damage taken -5%
+- id: 25755
+  source: armor2.yml
+  name: Crustacean Shirt
+  slot: Body
+  old_level: 1
+  new_level: 15
+  description:
+  - DEF:23 STR+8 DEX+8 INT+8 MND+8
+  - Accuracy+28 Attack+28 Magic Attack Bonus+18
+  - Refresh+1 Haste+2% Damage taken -3%
+- id: 25756
+  source: armor2.yml
+  name: Wyrmking Suit
+  slot: Body
+  old_level: 1
+  new_level: 20
+  description:
+  - DEF:28 STR+10 DEX+10 INT+10 MND+10
+  - Accuracy+34 Attack+34 Magic Attack Bonus+22
+  - Refresh+2 Haste+3% Damage taken -4%
+- id: 25757
+  source: armor2.yml
+  name: Wyrmking Suit +1
+  slot: Body
+  old_level: 1
+  new_level: 30
+  description:
+  - DEF:38 STR+14 DEX+14 INT+14 MND+14
+  - Accuracy+46 Attack+46 Magic Attack Bonus+30
+  - Refresh+2 Haste+4% Damage taken -5%
+- id: 25758
+  source: armor2.yml
+  name: Rhapsody Shirt
+  slot: Body
+  old_level: 1
+  new_level: 30
+  description:
+  - DEF:38 STR+14 DEX+14 INT+14 MND+14
+  - Accuracy+46 Attack+46 Magic Attack Bonus+30
+  - Refresh+2 Haste+4% Damage taken -5%
+- id: 25759
+  source: armor2.yml
+  name: Rhapsody Shirt +1
+  slot: Body
+  old_level: 1
+  new_level: 40
+  description:
+  - DEF:48 STR+18 DEX+18 INT+18 MND+18
+  - Accuracy+58 Attack+58 Magic Attack Bonus+38
+  - Refresh+3 Haste+5% Damage taken -6%
+- id: 25774
+  source: armor2.yml
+  name: Fancy Gilet
+  slot: Body
+  old_level: 1
+  new_level: 35
+  description:
+  - DEF:43 STR+16 DEX+16 INT+16 MND+16
+  - Accuracy+52 Attack+52 Magic Attack Bonus+34
+  - Refresh+2 Haste+4% Damage taken -5%
+- id: 25775
+  source: armor2.yml
+  name: Fancy Top
+  slot: Body
+  old_level: 1
+  new_level: 40
+  description:
+  - DEF:48 STR+18 DEX+18 INT+18 MND+18
+  - Accuracy+58 Attack+58 Magic Attack Bonus+38
+  - Refresh+3 Haste+5% Damage taken -6%
+- id: 25776
+  source: armor2.yml
+  name: Bl. Chocobo Suit
+  slot: Body
+  old_level: 1
+  new_level: 45
+  description:
+  - DEF:53 STR+20 DEX+20 INT+20 MND+20
+  - Accuracy+64 Attack+64 Magic Attack Bonus+42
+  - Refresh+3 Haste+5% Damage taken -6%
+- id: 25838
+  source: armor2.yml
+  name: Fancy Trunks
+  slot: Legs
+  old_level: 1
+  new_level: 75
+  description:
+  - DEF:65 STR+32 AGI+32
+  - '"Store TP"+33 Fast Cast+8%'
+  - Haste+7% Evasion+83
+- id: 25839
+  source: armor2.yml
+  name: Fancy Shorts
+  slot: Legs
+  old_level: 1
+  new_level: 5
+  description:
+  - DEF:9 STR+4 AGI+4
+  - '"Store TP"+5 Fast Cast+1%'
+  - Haste+1% Evasion+13
+- id: 25850
+  source: armor2.yml
+  name: Pink Subligar
+  slot: Legs
+  old_level: 1
+  new_level: 60
+  description:
+  - DEF:53 STR+26 AGI+26
+  - '"Store TP"+27 Fast Cast+7%'
+  - Haste+7% Evasion+68
+- id: 25851
+  source: armor2.yml
+  name: Ashen Subligar
+  slot: Legs
+  old_level: 1
+  new_level: 65
+  description:
+  - DEF:57 STR+28 AGI+28
+  - '"Store TP"+29 Fast Cast+7%'
+  - Haste+7% Evasion+73
+- id: 25864
+  source: armor2.yml
+  name: Stinky Subligar
+  slot: Legs
+  old_level: 1
+  new_level: 55
+  description:
+  - DEF:49 STR+24 AGI+24
+  - '"Store TP"+25 Fast Cast+6%'
+  - Haste+6% Evasion+63
+- id: 25909
+  source: armor2.yml
+  name: Morbol Subligar
+  slot: Legs
+  old_level: 1
+  new_level: 55
+  description:
+  - DEF:49 STR+24 AGI+24
+  - '"Store TP"+25 Fast Cast+6%'
+  - Haste+6% Evasion+63
+- id: 25910
+  source: armor2.yml
+  name: Cait Sith Subligar
+  slot: Legs
+  old_level: 1
+  new_level: 60
+  description:
+  - DEF:53 STR+26 AGI+26
+  - '"Store TP"+27 Fast Cast+7%'
+  - Haste+7% Evasion+68
+- id: 26271
+  source: armor2.yml
+  name: Hi-Elixir Tank
+  slot: Back
+  old_level: 1
+  new_level: 20
+  description:
+  - DEF:14 HP+50 MP+50
+  - Attack+32 Magic Attack Bonus+32
+  - Refresh+1 Damage taken -4%
+- id: 26272
+  source: armor2.yml
+  name: S. Reraiser Tank
+  slot: Back
+  old_level: 1
+  new_level: 25
+  description:
+  - DEF:17 HP+60 MP+60
+  - Attack+38 Magic Attack Bonus+38
+  - Refresh+2 Damage taken -4%
+- id: 26330
+  source: armor2.yml
+  name: Wailing Belt
+  slot: Waist
+  old_level: 1
+  new_level: 5
+  description:
+  - STR+4 DEX+4 INT+4 MND+4
+  - Haste+2% "Store TP"+5
+  - Magic Attack Bonus+9
+- id: 26352
+  source: armor2.yml
+  name: Moogle Sacoche
+  slot: Waist
+  old_level: 1
+  new_level: 40
+  description:
+  - STR+18 DEX+18 INT+18 MND+18
+  - Haste+6% "Store TP"+19
+  - Magic Attack Bonus+37
+- id: 26406
+  source: armor2.yml
+  name: Kupo Shield
+  slot: Sub
+  old_level: 1
+  new_level: 5
+  description:
+  - DEF:10 VIT+4 MND+4
+  - Shield skill+10 Damage taken -2%
+  - Refresh+1 Haste+1%
+- id: 26415
+  source: armor2.yml
+  name: "."
+  slot: Sub
+  old_level: 1
+  new_level: 50
+  description:
+  - DEF:55 VIT+22 MND+22
+  - Shield skill+55 Damage taken -7%
+  - Refresh+3 Haste+4%
+- id: 26416
+  source: armor2.yml
+  name: "."
+  slot: Sub
+  old_level: 1
+  new_level: 55
+  description:
+  - DEF:60 VIT+24 MND+24
+  - Shield skill+60 Damage taken -7%
+  - Refresh+3 Haste+4%
+- id: 26426
+  source: armor2.yml
+  name: Joiner's Shield
+  slot: Sub
+  old_level: 1
+  new_level: 30
+  description:
+  - DEF:35 VIT+14 MND+14
+  - Shield skill+35 Damage taken -5%
+  - Refresh+2 Haste+3%
+- id: 26431
+  source: armor2.yml
+  name: Smythe's Shield
+  slot: Sub
+  old_level: 1
+  new_level: 55
+  description:
+  - DEF:60 VIT+24 MND+24
+  - Shield skill+60 Damage taken -7%
+  - Refresh+3 Haste+4%
+- id: 26436
+  source: armor2.yml
+  name: Toreutic Shield
+  slot: Sub
+  old_level: 1
+  new_level: 5
+  description:
+  - DEF:10 VIT+4 MND+4
+  - Shield skill+10 Damage taken -2%
+  - Refresh+1 Haste+1%
+- id: 26441
+  source: armor2.yml
+  name: Plaiter's Shield
+  slot: Sub
+  old_level: 1
+  new_level: 30
+  description:
+  - DEF:35 VIT+14 MND+14
+  - Shield skill+35 Damage taken -5%
+  - Refresh+2 Haste+3%
+- id: 26446
+  source: armor2.yml
+  name: Beveler's Shield
+  slot: Sub
+  old_level: 1
+  new_level: 55
+  description:
+  - DEF:60 VIT+24 MND+24
+  - Shield skill+60 Damage taken -7%
+  - Refresh+3 Haste+4%
+- id: 26451
+  source: armor2.yml
+  name: Ossifier's Shield
+  slot: Sub
+  old_level: 1
+  new_level: 5
+  description:
+  - DEF:10 VIT+4 MND+4
+  - Shield skill+10 Damage taken -2%
+  - Refresh+1 Haste+1%
+- id: 26456
+  source: armor2.yml
+  name: Brewer's Shield
+  slot: Sub
+  old_level: 1
+  new_level: 30
+  description:
+  - DEF:35 VIT+14 MND+14
+  - Shield skill+35 Damage taken -5%
+  - Refresh+2 Haste+3%
+- id: 26461
+  source: armor2.yml
+  name: Chef's Shield
+  slot: Sub
+  old_level: 1
+  new_level: 55
+  description:
+  - DEF:60 VIT+24 MND+24
+  - Shield skill+60 Damage taken -7%
+  - Refresh+3 Haste+4%
+- id: 26465
+  source: armor2.yml
+  name: Joiner's Shield -1
+  slot: Sub
+  old_level: 1
+  new_level: 75
+  description:
+  - DEF:80 VIT+32 MND+32
+  - Shield skill+80 Damage taken -9%
+  - Refresh+4 Haste+6%
+- id: 26468
+  source: armor2.yml
+  name: Smythe's Shield -1
+  slot: Sub
+  old_level: 1
+  new_level: 15
+  description:
+  - DEF:20 VIT+8 MND+8
+  - Shield skill+20 Damage taken -3%
+  - Refresh+1 Haste+2%
+- id: 26471
+  source: armor2.yml
+  name: Toreutic Shield -1
+  slot: Sub
+  old_level: 1
+  new_level: 30
+  description:
+  - DEF:35 VIT+14 MND+14
+  - Shield skill+35 Damage taken -5%
+  - Refresh+2 Haste+3%
+- id: 26474
+  source: armor2.yml
+  name: Plaiter's Shield -1
+  slot: Sub
+  old_level: 1
+  new_level: 45
+  description:
+  - DEF:50 VIT+20 MND+20
+  - Shield skill+50 Damage taken -6%
+  - Refresh+2 Haste+4%
+- id: 26477
+  source: armor2.yml
+  name: Beveler's Shield -1
+  slot: Sub
+  old_level: 1
+  new_level: 60
+  description:
+  - DEF:65 VIT+26 MND+26
+  - Shield skill+65 Damage taken -8%
+  - Refresh+3 Haste+5%
+- id: 26480
+  source: armor2.yml
+  name: Ossifier's Shield -1
+  slot: Sub
+  old_level: 1
+  new_level: 75
+  description:
+  - DEF:80 VIT+32 MND+32
+  - Shield skill+80 Damage taken -9%
+  - Refresh+4 Haste+6%
+- id: 26483
+  source: armor2.yml
+  name: Brewer's Shield -1
+  slot: Sub
+  old_level: 1
+  new_level: 15
+  description:
+  - DEF:20 VIT+8 MND+8
+  - Shield skill+20 Damage taken -3%
+  - Refresh+1 Haste+2%
+- id: 26486
+  source: armor2.yml
+  name: Chef's Shield -1
+  slot: Sub
+  old_level: 1
+  new_level: 30
+  description:
+  - DEF:35 VIT+14 MND+14
+  - Shield skill+35 Damage taken -5%
+  - Refresh+2 Haste+3%
+- id: 26516
+  source: armor2.yml
+  name: Citrullus Shirt
+  slot: Body
+  old_level: 1
+  new_level: 70
+  description:
+  - DEF:78 STR+30 DEX+30 INT+30 MND+30
+  - Accuracy+94 Attack+94 Magic Attack Bonus+62
+  - Refresh+4 Haste+8% Damage taken -9%
+- id: 26517
+  source: armor2.yml
+  name: Shadow Lord Shirt
+  slot: Body
+  old_level: 1
+  new_level: 75
+  description:
+  - DEF:83 STR+32 DEX+32 INT+32 MND+32
+  - Accuracy+100 Attack+100 Magic Attack Bonus+66
+  - Refresh+4 Haste+8% Damage taken -9%
+- id: 26519
+  source: armor2.yml
+  name: Mandragora Shirt
+  slot: Body
+  old_level: 1
+  new_level: 10
+  description:
+  - DEF:18 STR+6 DEX+6 INT+6 MND+6
+  - Accuracy+22 Attack+22 Magic Attack Bonus+14
+  - Refresh+1 Haste+2% Damage taken -3%
+- id: 26523
+  source: armor2.yml
+  name: Delegate's Garb
+  slot: Body
+  old_level: 1
+  new_level: 30
+  description:
+  - DEF:38 STR+14 DEX+14 INT+14 MND+14
+  - Accuracy+46 Attack+46 Magic Attack Bonus+30
+  - Refresh+2 Haste+4% Damage taken -5%
+- id: 26546
+  source: armor2.yml
+  name: Moogle Shirt
+  slot: Body
+  old_level: 1
+  new_level: 70
+  description:
+  - DEF:78 STR+30 DEX+30 INT+30 MND+30
+  - Accuracy+94 Attack+94 Magic Attack Bonus+62
+  - Refresh+4 Haste+8% Damage taken -9%
+- id: 26693
+  source: armor2.yml
+  name: Morbol Cap
+  slot: Head
+  old_level: 1
+  new_level: 45
+  description:
+  - DEF:31 DEX+20 INT+20 MND+20 CHR+20
+  - Accuracy+53 Magic Accuracy+53
+  - Haste+4% Fast Cast+5%
+- id: 26694
+  source: armor2.yml
+  name: Cassie's Cap
+  slot: Head
+  old_level: 1
+  new_level: 50
+  description:
+  - DEF:34 DEX+22 INT+22 MND+22 CHR+22
+  - Accuracy+58 Magic Accuracy+58
+  - Haste+4% Fast Cast+6%
+- id: 26704
+  source: armor2.yml
+  name: Lyco. Masque +1
+  slot: Head
+  old_level: 1
+  new_level: 30
+  description:
+  - DEF:22 DEX+14 INT+14 MND+14 CHR+14
+  - Accuracy+38 Magic Accuracy+38
+  - Haste+3% Fast Cast+4%
+- id: 26705
+  source: armor2.yml
+  name: Mandra. Masque
+  slot: Head
+  old_level: 1
+  new_level: 30
+  description:
+  - DEF:22 DEX+14 INT+14 MND+14 CHR+14
+  - Accuracy+38 Magic Accuracy+38
+  - Haste+3% Fast Cast+4%
+- id: 26706
+  source: armor2.yml
+  name: Mandra. Masque +1
+  slot: Head
+  old_level: 1
+  new_level: 40
+  description:
+  - DEF:28 DEX+18 INT+18 MND+18 CHR+18
+  - Accuracy+48 Magic Accuracy+48
+  - Haste+3% Fast Cast+5%
+- id: 26708
+  source: armor2.yml
+  name: Flan Masque +1
+  slot: Head
+  old_level: 1
+  new_level: 50
+  description:
+  - DEF:34 DEX+22 INT+22 MND+22 CHR+22
+  - Accuracy+58 Magic Accuracy+58
+  - Haste+4% Fast Cast+6%
+- id: 26717
+  source: armor2.yml
+  name: Cait Sith Cap
+  slot: Head
+  old_level: 1
+  new_level: 15
+  description:
+  - DEF:13 DEX+8 INT+8 MND+8 CHR+8
+  - Accuracy+23 Magic Accuracy+23
+  - Haste+2% Fast Cast+2%
+- id: 26718
+  source: armor2.yml
+  name: Cait Sith Cap +1
+  slot: Head
+  old_level: 1
+  new_level: 25
+  description:
+  - DEF:19 DEX+12 INT+12 MND+12 CHR+12
+  - Accuracy+33 Magic Accuracy+33
+  - Haste+2% Fast Cast+3%
+- id: 26719
+  source: armor2.yml
+  name: Sheep Cap
+  slot: Head
+  old_level: 1
+  new_level: 25
+  description:
+  - DEF:19 DEX+12 INT+12 MND+12 CHR+12
+  - Accuracy+33 Magic Accuracy+33
+  - Haste+2% Fast Cast+3%
+- id: 26720
+  source: armor2.yml
+  name: Sheep Cap +1
+  slot: Head
+  old_level: 1
+  new_level: 35
+  description:
+  - DEF:25 DEX+16 INT+16 MND+16 CHR+16
+  - Accuracy+43 Magic Accuracy+43
+  - Haste+3% Fast Cast+4%
+- id: 26728
+  source: armor2.yml
+  name: Frosty Cap
+  slot: Head
+  old_level: 1
+  new_level: 70
+  description:
+  - DEF:46 DEX+30 INT+30 MND+30 CHR+30
+  - Accuracy+78 Magic Accuracy+78
+  - Haste+5% Fast Cast+8%
+- id: 26730
+  source: armor2.yml
+  name: Celeste Cap
+  slot: Head
+  old_level: 1
+  new_level: 5
+  description:
+  - DEF:7 DEX+4 INT+4 MND+4 CHR+4
+  - Accuracy+13 Magic Accuracy+13
+  - Haste+1% Fast Cast+1%
+- id: 26738
+  source: armor2.yml
+  name: Leafkin Cap
+  slot: Head
+  old_level: 1
+  new_level: 45
+  description:
+  - DEF:31 DEX+20 INT+20 MND+20 CHR+20
+  - Accuracy+53 Magic Accuracy+53
+  - Haste+4% Fast Cast+5%
+- id: 26739
+  source: armor2.yml
+  name: Leafkin Cap +1
+  slot: Head
+  old_level: 1
+  new_level: 55
+  description:
+  - DEF:37 DEX+24 INT+24 MND+24 CHR+24
+  - Accuracy+63 Magic Accuracy+63
+  - Haste+4% Fast Cast+6%
+- id: 26788
+  source: armor2.yml
+  name: Rabbit Cap
+  slot: Head
+  old_level: 1
+  new_level: 70
+  description:
+  - DEF:46 DEX+30 INT+30 MND+30 CHR+30
+  - Accuracy+78 Magic Accuracy+78
+  - Haste+5% Fast Cast+8%
+- id: 26798
+  source: armor2.yml
+  name: Behemoth Masque
+  slot: Head
+  old_level: 1
+  new_level: 45
+  description:
+  - DEF:31 DEX+20 INT+20 MND+20 CHR+20
+  - Accuracy+53 Magic Accuracy+53
+  - Haste+4% Fast Cast+5%
+- id: 26799
+  source: armor2.yml
+  name: Behe. Masque +1
+  slot: Head
+  old_level: 1
+  new_level: 55
+  description:
+  - DEF:37 DEX+24 INT+24 MND+24 CHR+24
+  - Accuracy+63 Magic Accuracy+63
+  - Haste+4% Fast Cast+6%
+- id: 26954
+  source: armor2.yml
+  name: Behemoth Suit
+  slot: Body
+  old_level: 1
+  new_level: 10
+  description:
+  - DEF:18 STR+6 DEX+6 INT+6 MND+6
+  - Accuracy+22 Attack+22 Magic Attack Bonus+14
+  - Refresh+1 Haste+2% Damage taken -3%
+- id: 26955
+  source: armor2.yml
+  name: Behemoth Suit +1
+  slot: Body
+  old_level: 1
+  new_level: 20
+  description:
+  - DEF:28 STR+10 DEX+10 INT+10 MND+10
+  - Accuracy+34 Attack+34 Magic Attack Bonus+22
+  - Refresh+2 Haste+3% Damage taken -4%
+- id: 26966
+  source: armor2.yml
+  name: Ta Moko +1
+  slot: Body
+  old_level: 1
+  new_level: 75
+  description:
+  - DEF:83 STR+32 DEX+32 INT+32 MND+32
+  - Accuracy+100 Attack+100 Magic Attack Bonus+66
+  - Refresh+4 Haste+8% Damage taken -9%
+- id: 26967
+  source: armor2.yml
+  name: Cossie Top
+  slot: Body
+  old_level: 1
+  new_level: 75
+  description:
+  - DEF:83 STR+32 DEX+32 INT+32 MND+32
+  - Accuracy+100 Attack+100 Magic Attack Bonus+66
+  - Refresh+4 Haste+8% Damage taken -9%
+- id: 26968
+  source: armor2.yml
+  name: Cossie Top +1
+  slot: Body
+  old_level: 1
+  new_level: 10
+  description:
+  - DEF:18 STR+6 DEX+6 INT+6 MND+6
+  - Accuracy+22 Attack+22 Magic Attack Bonus+14
+  - Refresh+1 Haste+2% Damage taken -3%
+- id: 27110
+  source: armor2.yml
+  name: Kachina Gloves
+  slot: Hands
+  old_level: 1
+  new_level: 50
+  description:
+  - DEF:33 DEX+23 INT+23
+  - Accuracy+70 Magic Accuracy+70
+  - '"Double Attack"+12% Haste+6%'
+- id: 27293
+  source: armor2.yml
+  name: Cossie Bottom
+  slot: Legs
+  old_level: 1
+  new_level: 75
+  description:
+  - DEF:65 STR+32 AGI+32
+  - '"Store TP"+33 Fast Cast+8%'
+  - Haste+7% Evasion+83
+- id: 27294
+  source: armor2.yml
+  name: Cossie Bottom +1
+  slot: Legs
+  old_level: 1
+  new_level: 10
+  description:
+  - DEF:13 STR+6 AGI+6
+  - '"Store TP"+7 Fast Cast+2%'
+  - Haste+2% Evasion+18
+- id: 27625
+  source: armor2.yml
+  name: Morbol Shield
+  slot: Sub
+  old_level: 1
+  new_level: 25
+  description:
+  - DEF:30 VIT+12 MND+12
+  - Shield skill+30 Damage taken -4%
+  - Refresh+2 Haste+2%
+- id: 27626
+  source: armor2.yml
+  name: Cassie's Shield
+  slot: Sub
+  old_level: 1
+  new_level: 30
+  description:
+  - DEF:35 VIT+14 MND+14
+  - Shield skill+35 Damage taken -5%
+  - Refresh+2 Haste+3%
+- id: 27631
+  source: armor2.yml
+  name: Cait Sith Guard
+  slot: Sub
+  old_level: 1
+  new_level: 55
+  description:
+  - DEF:60 VIT+24 MND+24
+  - Shield skill+60 Damage taken -7%
+  - Refresh+3 Haste+4%
+- id: 27632
+  source: armor2.yml
+  name: Cait Sith Gua. +1
+  slot: Sub
+  old_level: 1
+  new_level: 65
+  description:
+  - DEF:70 VIT+28 MND+28
+  - Shield skill+70 Damage taken -8%
+  - Refresh+3 Haste+5%
+- id: 27715
+  source: armor2.yml
+  name: Goblin Masque
+  slot: Head
+  old_level: 1
+  new_level: 55
+  description:
+  - DEF:37 DEX+24 INT+24 MND+24 CHR+24
+  - Accuracy+63 Magic Accuracy+63
+  - Haste+4% Fast Cast+6%
+- id: 27716
+  source: armor2.yml
+  name: G. Moogle Masque
+  slot: Head
+  old_level: 1
+  new_level: 60
+  description:
+  - DEF:40 DEX+26 INT+26 MND+26 CHR+26
+  - Accuracy+68 Magic Accuracy+68
+  - Haste+5% Fast Cast+7%
+- id: 27717
+  source: armor2.yml
+  name: Worm Masque
+  slot: Head
+  old_level: 1
+  new_level: 65
+  description:
+  - DEF:43 DEX+28 INT+28 MND+28 CHR+28
+  - Accuracy+73 Magic Accuracy+73
+  - Haste+5% Fast Cast+7%
+- id: 27718
+  source: armor2.yml
+  name: Worm Masque +1
+  slot: Head
+  old_level: 1
+  new_level: 75
+  description:
+  - DEF:49 DEX+32 INT+32 MND+32 CHR+32
+  - Accuracy+83 Magic Accuracy+83
+  - Haste+6% Fast Cast+8%
+- id: 27726
+  source: armor2.yml
+  name: She-Slime Hat
+  slot: Head
+  old_level: 1
+  new_level: 35
+  description:
+  - DEF:25 DEX+16 INT+16 MND+16 CHR+16
+  - Accuracy+43 Magic Accuracy+43
+  - Haste+3% Fast Cast+4%
+- id: 27727
+  source: armor2.yml
+  name: Metal Slime Hat
+  slot: Head
+  old_level: 1
+  new_level: 40
+  description:
+  - DEF:28 DEX+18 INT+18 MND+18 CHR+18
+  - Accuracy+48 Magic Accuracy+48
+  - Haste+3% Fast Cast+5%
+- id: 27733
+  source: armor2.yml
+  name: Straw Hat
+  slot: Head
+  old_level: 1
+  new_level: 70
+  description:
+  - DEF:46 DEX+30 INT+30 MND+30 CHR+30
+  - Accuracy+78 Magic Accuracy+78
+  - Haste+5% Fast Cast+8%
+- id: 27734
+  source: armor2.yml
+  name: Straw Hat
+  slot: Head
+  old_level: 1
+  new_level: 75
+  description:
+  - DEF:49 DEX+32 INT+32 MND+32 CHR+32
+  - Accuracy+83 Magic Accuracy+83
+  - Haste+6% Fast Cast+8%
+- id: 27755
+  source: armor2.yml
+  name: "."
+  slot: Head
+  old_level: 1
+  new_level: 30
+  description:
+  - DEF:22 DEX+14 INT+14 MND+14 CHR+14
+  - Accuracy+38 Magic Accuracy+38
+  - Haste+3% Fast Cast+4%
+- id: 27756
+  source: armor2.yml
+  name: Slime Cap
+  slot: Head
+  old_level: 1
+  new_level: 35
+  description:
+  - DEF:25 DEX+16 INT+16 MND+16 CHR+16
+  - Accuracy+43 Magic Accuracy+43
+  - Haste+3% Fast Cast+4%
+- id: 27758
+  source: armor2.yml
+  name: Bomb Masque +1
+  slot: Head
+  old_level: 1
+  new_level: 50
+  description:
+  - DEF:34 DEX+22 INT+22 MND+22 CHR+22
+  - Accuracy+58 Magic Accuracy+58
+  - Haste+4% Fast Cast+6%
+- id: 27759
+  source: armor2.yml
+  name: Korrigan Beret
+  slot: Head
+  old_level: 1
+  new_level: 50
+  description:
+  - DEF:34 DEX+22 INT+22 MND+22 CHR+22
+  - Accuracy+58 Magic Accuracy+58
+  - Haste+4% Fast Cast+6%
+- id: 27760
+  source: armor2.yml
+  name: Chocobo Masque +1
+  slot: Head
+  old_level: 1
+  new_level: 60
+  description:
+  - DEF:40 DEX+26 INT+26 MND+26 CHR+26
+  - Accuracy+68 Magic Accuracy+68
+  - Haste+5% Fast Cast+7%
+- id: 27765
+  source: armor2.yml
+  name: Chocobo Masque
+  slot: Head
+  old_level: 1
+  new_level: 5
+  description:
+  - DEF:7 DEX+4 INT+4 MND+4 CHR+4
+  - Accuracy+13 Magic Accuracy+13
+  - Haste+1% Fast Cast+1%
+- id: 27803
+  source: armor2.yml
+  name: Rustic Maillot
+  slot: Body
+  old_level: 1
+  new_level: 55
+  description:
+  - DEF:63 STR+24 DEX+24 INT+24 MND+24
+  - Accuracy+76 Attack+76 Magic Attack Bonus+50
+  - Refresh+3 Haste+6% Damage taken -7%
+- id: 27804
+  source: armor2.yml
+  name: Shoal Maillot
+  slot: Body
+  old_level: 1
+  new_level: 60
+  description:
+  - DEF:68 STR+26 DEX+26 INT+26 MND+26
+  - Accuracy+82 Attack+82 Magic Attack Bonus+54
+  - Refresh+4 Haste+7% Damage taken -8%
+- id: 27805
+  source: armor2.yml
+  name: Rustic Maillot +1
+  slot: Body
+  old_level: 1
+  new_level: 70
+  description:
+  - DEF:78 STR+30 DEX+30 INT+30 MND+30
+  - Accuracy+94 Attack+94 Magic Attack Bonus+62
+  - Refresh+4 Haste+8% Damage taken -9%
+- id: 27806
+  source: armor2.yml
+  name: Shoal Maillot +1
+  slot: Body
+  old_level: 1
+  new_level: 75
+  description:
+  - DEF:83 STR+32 DEX+32 INT+32 MND+32
+  - Accuracy+100 Attack+100 Magic Attack Bonus+66
+  - Refresh+4 Haste+8% Damage taken -9%
+- id: 27854
+  source: armor2.yml
+  name: Mandra. Suit
+  slot: Body
+  old_level: 1
+  new_level: 10
+  description:
+  - DEF:18 STR+6 DEX+6 INT+6 MND+6
+  - Accuracy+22 Attack+22 Magic Attack Bonus+14
+  - Refresh+1 Haste+2% Damage taken -3%
+- id: 27855
+  source: armor2.yml
+  name: Mandra. Suit +1
+  slot: Body
+  old_level: 1
+  new_level: 20
+  description:
+  - DEF:28 STR+10 DEX+10 INT+10 MND+10
+  - Accuracy+34 Attack+34 Magic Attack Bonus+22
+  - Refresh+2 Haste+3% Damage taken -4%
+- id: 27866
+  source: armor2.yml
+  name: Goblin Suit
+  slot: Body
+  old_level: 1
+  new_level: 70
+  description:
+  - DEF:78 STR+30 DEX+30 INT+30 MND+30
+  - Accuracy+94 Attack+94 Magic Attack Bonus+62
+  - Refresh+4 Haste+8% Damage taken -9%
+- id: 27867
+  source: armor2.yml
+  name: G. Moogle Suit
+  slot: Body
+  old_level: 1
+  new_level: 75
+  description:
+  - DEF:83 STR+32 DEX+32 INT+32 MND+32
+  - Accuracy+100 Attack+100 Magic Attack Bonus+66
+  - Refresh+4 Haste+8% Damage taken -9%
+- id: 27879
+  source: armor2.yml
+  name: Overalls
+  slot: Body
+  old_level: 1
+  new_level: 60
+  description:
+  - DEF:68 STR+26 DEX+26 INT+26 MND+26
+  - Accuracy+82 Attack+82 Magic Attack Bonus+54
+  - Refresh+4 Haste+7% Damage taken -8%
+- id: 27880
+  source: armor2.yml
+  name: Overalls
+  slot: Body
+  old_level: 1
+  new_level: 65
+  description:
+  - DEF:73 STR+28 DEX+28 INT+28 MND+28
+  - Accuracy+88 Attack+88 Magic Attack Bonus+58
+  - Refresh+4 Haste+7% Damage taken -8%
+- id: 27906
+  source: armor2.yml
+  name: Chocobo Suit +1
+  slot: Body
+  old_level: 1
+  new_level: 50
+  description:
+  - DEF:58 STR+22 DEX+22 INT+22 MND+22
+  - Accuracy+70 Attack+70 Magic Attack Bonus+46
+  - Refresh+3 Haste+6% Damage taken -7%
+- id: 27911
+  source: armor2.yml
+  name: Chocobo Suit
+  slot: Body
+  old_level: 1
+  new_level: 70
+  description:
+  - DEF:78 STR+30 DEX+30 INT+30 MND+30
+  - Accuracy+94 Attack+94 Magic Attack Bonus+62
+  - Refresh+4 Haste+8% Damage taken -9%
+- id: 28086
+  source: armor2.yml
+  name: Rustic Trunks
+  slot: Legs
+  old_level: 1
+  new_level: 65
+  description:
+  - DEF:57 STR+28 AGI+28
+  - '"Store TP"+29 Fast Cast+7%'
+  - Haste+7% Evasion+73
+- id: 28087
+  source: armor2.yml
+  name: Shoal Trunks
+  slot: Legs
+  old_level: 1
+  new_level: 70
+  description:
+  - DEF:61 STR+30 AGI+30
+  - '"Store TP"+31 Fast Cast+8%'
+  - Haste+7% Evasion+78
+- id: 28302
+  source: armor2.yml
+  name: Thatch Boots
+  slot: Feet
+  old_level: 1
+  new_level: 30
+  description:
+  - DEF:21 DEX+15 AGI+15
+  - Evasion+46 Movement speed +6%
+  - Haste+4%
+- id: 28303
+  source: armor2.yml
+  name: Thatch Boots
+  slot: Feet
+  old_level: 1
+  new_level: 35
+  description:
+  - DEF:24 DEX+17 AGI+17
+  - Evasion+52 Movement speed +6%
+  - Haste+4%
+- id: 28510
+  source: armor2.yml
+  name: M. Slime Earring
+  slot: Ears
+  old_level: 1
+  new_level: 5
+  description:
+  - DEX+4 INT+4 MND+4
+  - Magic Attack Bonus+9
+  - '"Double Attack"+3% Fast Cast+1%'
+- id: 28651
+  source: armor2.yml
+  name: Metal Slime Shield
+  slot: Sub
+  old_level: 1
+  new_level: 55
+  description:
+  - DEF:60 VIT+24 MND+24
+  - Shield skill+60 Damage taken -7%
+  - Refresh+3 Haste+4%
+- id: 28652
+  source: armor2.yml
+  name: Hatchling Shield
+  slot: Sub
+  old_level: 1
+  new_level: 60
+  description:
+  - DEF:65 VIT+26 MND+26
+  - Shield skill+65 Damage taken -8%
+  - Refresh+3 Haste+5%
+- id: 28653
+  source: armor2.yml
+  name: Mundus Shield
+  slot: Sub
+  old_level: 1
+  new_level: 65
+  description:
+  - DEF:70 VIT+28 MND+28
+  - Shield skill+70 Damage taken -8%
+  - Refresh+3 Haste+5%
+- id: 28670
+  source: armor2.yml
+  name: Leafkin Shield
+  slot: Sub
+  old_level: 1
+  new_level: 75
+  description:
+  - DEF:80 VIT+32 MND+32
+  - Shield skill+80 Damage taken -9%
+  - Refresh+4 Haste+6%

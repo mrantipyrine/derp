@@ -1,9 +1,7 @@
 -----------------------------------
 -- Stasis
--- Description: Paralyzes targets in an area of effect.
--- Type: Enfeebling
--- Utsusemi/Blink absorb: Ignores shadows
--- Range: 10' radial
+-- Family: Scorpion
+-- Description: Deals physical damage to a single target. Additional Effect : Paralysis, Enmity Reset
 -----------------------------------
 ---@type TMobSkill
 local mobskillObject = {}
@@ -12,19 +10,29 @@ mobskillObject.onMobSkillCheck = function(target, mob, skill)
     return 0
 end
 
-mobskillObject.onMobWeaponSkill = function(target, mob, skill)
-    local shadows = xi.mobskills.shadowBehavior.NUMSHADOWS_1
-    -- local dmg = xi.mobskills.mobFinalAdjustments(10, mob, skill, target, xi.attackType.PHYSICAL, xi.damageType.BLUNT, shadows)
+mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
+    local params = {}
 
-    mob:resetEnmity(target)
+    params.baseDamage     = mob:getWeaponDmg()
+    params.numHits        = 1
+    params.fTP            = { 1.5, 1.5, 1.5 }
+    params.attackType     = xi.attackType.PHYSICAL
+    params.damageType     = xi.damageType.SLASHING
+    params.shadowBehavior = xi.mobskills.shadowBehavior.NUMSHADOWS_1
 
-    if xi.mobskills.mobPhysicalHit(skill) then
-        skill:setMsg(xi.mobskills.mobStatusEffectMove(mob, target, xi.effect.PARALYSIS, 40, 0, 60))
+    local info = xi.mobskills.mobPhysicalMove(mob, target, skill, action, params)
 
-        return xi.effect.PARALYSIS
+    if xi.mobskills.processDamage(mob, target, skill, action, info) then
+        target:takeDamage(info.damage, mob, info.attackType, info.damageType)
+
+        xi.mobskills.mobStatusEffectMove(mob, target, xi.effect.PARALYSIS, 20, 0, 20)
+
+        -- TODO: Capture hate reset type (Enmity wipe vs enmity turned off)
+        -- See Antica skill "Sand Trap" for reference
+        target:resetEnmity(mob)
     end
 
-    return shadows
+    return info.damage
 end
 
 return mobskillObject

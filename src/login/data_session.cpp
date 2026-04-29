@@ -22,7 +22,34 @@
 #include "data_session.h"
 
 #include "common/database.h"
+#include "common/ipc.h"
 #include "common/utils.h"
+
+void data_session::deleteCharFromCharInfo(uint32_t ffxi_id)
+{
+    for (auto& charInfo : characterInfoResponse.character_info)
+    {
+        if (ffxi_id == charInfo.ffxi_id)
+        {
+            charInfo.status            = 0x01; // Available
+            charInfo.character_name[0] = 0x20; // space to display empty character slot, NULL displays a hume in a slot.
+            charInfo.character_name[1] = 0x00; // Null terminator so the client thinks the name is actually emptied. Otherwise it will display the deleted character.
+        }
+    }
+}
+
+void data_session::addCharIntoCharInfo(const lpkt_chr_info_sub2& charInfo)
+{
+    // Find the first empty slot and fill it in. The client expects this.
+    for (auto& existingCharInfo : characterInfoResponse.character_info)
+    {
+        if (existingCharInfo.character_name[0] == 0x20) // empty - name is a space
+        {
+            existingCharInfo = charInfo;
+            break;
+        }
+    }
+}
 
 void data_session::read_func()
 {
@@ -41,7 +68,7 @@ void data_session::read_func()
     session_t& session = loginHelpers::get_authenticated_session(ipAddress, sessionHash);
     if (!session.data_session)
     {
-        session.data_session              = std::make_shared<data_session>(std::forward<asio::ssl::stream<asio::ip::tcp::socket>>(socket_));
+        session.data_session              = std::make_shared<data_session>(std::forward<asio::ssl::stream<asio::ip::tcp::socket>>(socket_), zmqDealerWrapper_);
         session.data_session->sessionHash = sessionHash;
     }
 
@@ -95,114 +122,137 @@ void data_session::read_func()
                     return;
                 }
 
-                lpkt_chr_info2 characterInfoResponse = {};
-                characterInfoResponse.terminator     = loginPackets::getTerminator();
-                characterInfoResponse.command        = 0x20;
-                loginPackets::clearIdentifier(characterInfoResponse);
                 // server's name that shows in lobby menu
                 const auto serverName = settings::get<std::string>("main.SERVER_NAME");
 
                 char uList[500] = {};
 
-                int i = 0;
+                uint32_t i = 0;
 
-                // Extract all the necessary information about each character from the database and load up the struct.
-                while (rset1->next())
+                // Generate on first time read from db
+                if (!generatedCharInfo)
                 {
-                    char strCharName[16] = {}; // 15 characters + null terminator
-                    std::memset(strCharName, 0, sizeof(strCharName));
+                    characterInfoResponse            = {};
+                    characterInfoResponse.terminator = loginPackets::getTerminator();
+                    characterInfoResponse.command    = 0x20;
+                    loginPackets::clearIdentifier(characterInfoResponse);
 
-                    std::string dbCharName = rset1->get<std::string>("charname");
-                    std::memcpy(strCharName, dbCharName.c_str(), dbCharName.length());
-
-                    int32 gmlevel = rset1->get<int32>("gmlevel");
-                    if (maintMode == 0 || gmlevel > 0)
+                    // Extract all the necessary information about each character from the database and load up the struct.
+                    while (rset1->next())
                     {
-                        uint8 worldId = 0; // Use when multiple worlds are supported.
+                        char strCharName[16] = {}; // 15 characters + null terminator
+                        std::memset(strCharName, 0, sizeof(strCharName));
 
-                        uint32 charId    = rset1->get<uint32>("charid");
-                        uint32 contentId = charId; // Reusing the character ID as the content ID (which is also the name of character folder within the USER directory) at the moment
+                        std::string dbCharName = rset1->get<std::string>("charname");
+                        std::memcpy(strCharName, dbCharName.c_str(), dbCharName.length());
 
-                        // The character ID is made up of two parts totalling 24 bits:
-                        uint16 charIdMain  = charId & 0xFFFF;
-                        uint8  charIdExtra = (charId >> 16) & 0xFF;
+                        int32 gmlevel = rset1->get<int32>("gmlevel");
+                        if (maintMode == 0 || gmlevel > 0)
+                        {
+                            uint8 worldId = 0; // Use when multiple worlds are supported.
 
-                        auto& characterInfo = characterInfoResponse.character_info[i];
+                            uint32 charId    = rset1->get<uint32>("charid");
+                            uint32 contentId = charId; // Reusing the character ID as the content ID (which is also the name of character folder within the USER directory) at the moment
 
-                        characterInfo.ffxi_id           = contentId;
-                        characterInfo.ffxi_id_world     = charIdMain;
-                        characterInfo.worldid           = worldId;
-                        characterInfo.status            = 1; // 0 = Invalid/Hidden, 1 = Available, 2 = Disabled (unpaid)
-                        characterInfo.race_change       = 0; // 0 = no race change service, 1 = race change service (gold star icon) (NOT YET SUPPORTED!)
-                        characterInfo.renamef           = 0; // 0 = no rename required, 1 = rename required (NOT YET SUPPORTED!)
-                        characterInfo.ffxi_id_world_tbl = charIdExtra;
+                            // The character ID is made up of two parts totalling 24 bits:
+                            uint16 charIdMain  = charId & 0xFFFF;
+                            uint8  charIdExtra = (charId >> 16) & 0xFF;
 
-                        std::memcpy(characterInfo.character_name, &strCharName, 16);
-                        std::memcpy(characterInfo.world_name, serverName.c_str(), std::clamp<size_t>(serverName.length(), 0, 15));
+                            auto& characterInfo = characterInfoResponse.character_info[i];
 
-                        uint16 zone = rset1->get<uint16>("pos_zone");
+                            characterInfo.ffxi_id           = contentId;
+                            characterInfo.ffxi_id_world     = charIdMain;
+                            characterInfo.worldid           = worldId;
+                            characterInfo.status            = 1; // 0 = Invalid/Hidden, 1 = Available, 2 = Disabled (unpaid)
+                            characterInfo.race_change       = 0; // 0 = no race change service, 1 = race change service (gold star icon) (NOT YET SUPPORTED!)
+                            characterInfo.renamef           = 0; // 0 = no rename required, 1 = rename required (NOT YET SUPPORTED!)
+                            characterInfo.ffxi_id_world_tbl = charIdExtra;
 
-                        uint8 MainJob    = rset1->get<uint8>("mjob");
-                        uint8 lvlMainJob = rset1->get<uint8>(13 + MainJob);
+                            std::memcpy(characterInfo.character_name, &strCharName, 16);
+                            std::memcpy(characterInfo.world_name, serverName.c_str(), std::clamp<size_t>(serverName.length(), 0, 15));
 
-                        characterInfo.character_info.mon_no     = rset1->get<uint16>("race");
-                        characterInfo.character_info.mjob_no    = MainJob;
-                        characterInfo.character_info.mjob_level = lvlMainJob;
-                        characterInfo.character_info.sjob_no    = rset1->get<uint16>("sjob");
-                        characterInfo.character_info.face_no    = rset1->get<uint16>("face"); // may not be calculated correctly?
-                        characterInfo.character_info.town_no    = rset1->get<uint8>("nation");
-                        characterInfo.character_info.zone_no    = static_cast<uint8>(zone);
-                        characterInfo.character_info.zone_no2   = static_cast<uint8>((zone >> 8) & 1);
-                        characterInfo.character_info.hair_no    = rset1->get<uint8>("face"); // may not be calculated correctly?
-                        characterInfo.character_info.size       = rset1->get<uint8>("size");
+                            uint16 zone = rset1->get<uint16>("pos_zone");
 
-                        // TODO: add check for DisplayHeadOffFlg
-                        characterInfo.character_info.GrapIDTbl[0] = rset1->get<uint16>("face"); // may not be calculated correctly?
-                        characterInfo.character_info.GrapIDTbl[1] = rset1->get<uint16>("head");
-                        characterInfo.character_info.GrapIDTbl[2] = rset1->get<uint16>("body");
-                        characterInfo.character_info.GrapIDTbl[3] = rset1->get<uint16>("hands");
-                        characterInfo.character_info.GrapIDTbl[4] = rset1->get<uint16>("legs");
-                        characterInfo.character_info.GrapIDTbl[5] = rset1->get<uint16>("feet");
-                        characterInfo.character_info.GrapIDTbl[6] = rset1->get<uint16>("main");
-                        characterInfo.character_info.GrapIDTbl[7] = rset1->get<uint16>("sub");
+                            uint8 MainJob    = rset1->get<uint8>("mjob");
+                            uint8 lvlMainJob = rset1->get<uint8>(13 + MainJob);
 
+                            characterInfo.character_info.mon_no     = rset1->get<uint16>("race");
+                            characterInfo.character_info.mjob_no    = MainJob;
+                            characterInfo.character_info.mjob_level = lvlMainJob;
+                            characterInfo.character_info.sjob_no    = rset1->get<uint16>("sjob");
+                            characterInfo.character_info.face_no    = rset1->get<uint16>("face"); // may not be calculated correctly?
+                            characterInfo.character_info.town_no    = rset1->get<uint8>("nation");
+                            characterInfo.character_info.zone_no    = static_cast<uint8>(zone);
+                            characterInfo.character_info.zone_no2   = static_cast<uint8>((zone >> 8) & 1);
+                            characterInfo.character_info.hair_no    = rset1->get<uint8>("face"); // may not be calculated correctly?
+                            characterInfo.character_info.size       = rset1->get<uint8>("size");
+
+                            // TODO: add check for DisplayHeadOffFlg
+                            characterInfo.character_info.GrapIDTbl[0] = rset1->get<uint16>("face"); // may not be calculated correctly?
+                            characterInfo.character_info.GrapIDTbl[1] = rset1->get<uint16>("head");
+                            characterInfo.character_info.GrapIDTbl[2] = rset1->get<uint16>("body");
+                            characterInfo.character_info.GrapIDTbl[3] = rset1->get<uint16>("hands");
+                            characterInfo.character_info.GrapIDTbl[4] = rset1->get<uint16>("legs");
+                            characterInfo.character_info.GrapIDTbl[5] = rset1->get<uint16>("feet");
+                            characterInfo.character_info.GrapIDTbl[6] = rset1->get<uint16>("main");
+                            characterInfo.character_info.GrapIDTbl[7] = rset1->get<uint16>("sub");
+
+                            // uList is sent through data socket (to xiloader)
+                            uint32 uListOffset = 16 * (i + 1);
+
+                            ref<uint32>(uList, uListOffset)     = contentId;
+                            ref<uint16>(uList, uListOffset + 4) = charIdMain;
+                            ref<uint8>(uList, uListOffset + 6)  = worldId;     // Ignored in xiloader?
+                            ref<uint8>(uList, uListOffset + 7)  = charIdExtra; // Ignored in xiloader?
+
+                            ++i;
+                            characterInfoResponse.characters++;
+                        }
+                    }
+
+                    generatedCharInfo = true;
+
+                    const auto allowCharacterCreation = settings::get<uint8>("login.CHARACTER_CREATION");
+                    if (allowCharacterCreation)
+                    {
+                        // make extra char slots available if no characters are occupying the slots and their max content IDs supports it
+                        while (characterInfoResponse.characters < numContentIds)
+                        {
+                            characterInfoResponse.character_info[characterInfoResponse.characters].status            = 0x01; // Available
+                            characterInfoResponse.character_info[characterInfoResponse.characters].character_name[0] = 0x20; // space to display empty character slot, NULL displays a hume in a slot.
+                            characterInfoResponse.characters++;
+                        }
+                    }
+
+                    // the filtering above removes any non-GM characters so
+                    // at this point we need to make sure stop players with empty lists
+                    // from logging in or creating new characters
+                    if (maintMode > 0 && i == 0)
+                    {
+                        if (auto viewSession = session.view_session.get())
+                        {
+                            loginHelpers::generateErrorMessage(viewSession->buffer_.data(), loginErrors::errorCode::COULD_NOT_CONNECT_TO_LOBBY_SERVER);
+                            viewSession->do_write(0x24);
+                        }
+                        ShowWarning(fmt::format("char:({}) attmpted login during maintenance mode (0xA2). Sending error to client.", session.accountID));
+                        return;
+                    }
+                }
+                else
+                {
+                    loginPackets::clearIdentifier(characterInfoResponse);
+
+                    for (i = 0; i < characterInfoResponse.characters; i++)
+                    {
+                        auto characterInfo = characterInfoResponse.character_info[i];
                         // uList is sent through data socket (to xiloader)
                         uint32 uListOffset = 16 * (i + 1);
 
-                        ref<uint32>(uList, uListOffset)     = contentId;
-                        ref<uint16>(uList, uListOffset + 4) = charIdMain;
-                        ref<uint8>(uList, uListOffset + 6)  = worldId;     // Ignored in xiloader?
-                        ref<uint8>(uList, uListOffset + 7)  = charIdExtra; // Ignored in xiloader?
-
-                        ++i;
-                        characterInfoResponse.characters++;
+                        ref<uint32>(uList, uListOffset)     = characterInfo.ffxi_id;           // contentId
+                        ref<uint16>(uList, uListOffset + 4) = characterInfo.ffxi_id_world;     // charIdMain
+                        ref<uint8>(uList, uListOffset + 6)  = characterInfo.worldid;           // Ignored in xiloader?
+                        ref<uint8>(uList, uListOffset + 7)  = characterInfo.ffxi_id_world_tbl; // charIdExtra // Ignored in xiloader?
                     }
-                }
-
-                const auto allowCharacterCreation = settings::get<uint8>("login.CHARACTER_CREATION");
-                if (allowCharacterCreation)
-                {
-                    // make extra char slots available if no characters are occupying the slots and their max content IDs supports it
-                    while (characterInfoResponse.characters < numContentIds)
-                    {
-                        characterInfoResponse.character_info[characterInfoResponse.characters].status            = 0x01; // Available
-                        characterInfoResponse.character_info[characterInfoResponse.characters].character_name[0] = 0x20; // space to display empty character slot, NULL displays a hume in a slot.
-                        characterInfoResponse.characters++;
-                    }
-                }
-
-                // the filtering above removes any non-GM characters so
-                // at this point we need to make sure stop players with empty lists
-                // from logging in or creating new characters
-                if (maintMode > 0 && i == 0)
-                {
-                    if (auto dataSession = session.view_session.get())
-                    {
-                        loginHelpers::generateErrorMessage(dataSession->buffer_.data(), loginErrors::errorCode::COULD_NOT_CONNECT_TO_LOBBY_SERVER);
-                        dataSession->do_write(0x24);
-                    }
-                    ShowWarning(fmt::format("char:({}) attmpted login during maintenance mode (0xA2). Sending error to client.", session.accountID));
-                    return;
                 }
 
                 if (auto dataSession = session.data_session.get())
@@ -216,7 +266,7 @@ void data_session::read_func()
                     dataSession->do_write(0x148);
                 }
 
-                if (auto dataSession = session.view_session.get())
+                if (auto viewSession = session.view_session.get())
                 {
                     // size of packet + 1 uint32 + the actually set number of characters
                     uint32_t size                     = sizeof(packet_t) + sizeof(uint32_t) + sizeof(lpkt_chr_info_sub2) * characterInfoResponse.characters;
@@ -227,9 +277,9 @@ void data_session::read_func()
 
                     loginPackets::copyHashIntoPacket(characterInfoResponse, hash);
 
-                    std::memset(dataSession->buffer_.data(), 0, dataSession->buffer_.size());
-                    std::memcpy(dataSession->buffer_.data(), &characterInfoResponse, size);
-                    dataSession->do_write(size);
+                    std::memset(viewSession->buffer_.data(), 0, viewSession->buffer_.size());
+                    std::memcpy(viewSession->buffer_.data(), &characterInfoResponse, size);
+                    viewSession->do_write(size);
                 }
             }
         }
@@ -267,10 +317,13 @@ void data_session::read_func()
             uint16 PrevZone = 0;
             uint16 gmlevel  = 0;
 
-            const auto rset = db::preparedStmt("SELECT zoneip, zoneport, zoneid, pos_prevzone, gmlevel, accid, charname "
-                                               "FROM zone_settings, chars "
-                                               "WHERE IF(pos_zone = 0, zoneid = pos_prevzone, zoneid = pos_zone) AND charid = ? AND accid = ?",
-                                               charid, session.accountID);
+            const auto rset = db::preparedStmt(
+                "SELECT zoneip, zoneport, zoneid, pos_prevzone, gmlevel, accid, charname "
+                "FROM zone_settings, chars "
+                "WHERE IF(pos_zone = 0, zoneid = pos_prevzone, zoneid = pos_zone) AND charid = ? AND accid = ?",
+                charid,
+                session.accountID);
+
             if (rset && rset->rowsCount() && rset->next())
             {
                 ZoneID   = rset->get<uint16>("zoneid");
@@ -282,6 +335,9 @@ void data_session::read_func()
                 {
                     key3[16] += 6;
                 }
+
+                // TODO: is this and the above compatible?
+                key3[16] += session.incrementKeyValue;
 
                 ZoneIP   = str2ip(rset->get<std::string>("zoneip"));
                 ZonePort = rset->get<uint16>("zoneport");
@@ -304,7 +360,24 @@ void data_session::read_func()
                 characterSelectionResponse.server_id     = (charid >> 16) & 0xFF; // TODO: Looks wrong? shouldn't this be a server index?
 
                 ShowInfo(fmt::format("data_session: zoneid: {}, zoneipp: {}:{}, searchipp: {}:{}, for charid: {}",
-                                     ZoneID, ip2str(ZoneIP), ZonePort, ip2str(characterSelectionResponse.cache_ip), characterSelectionResponse.cache_port, charid));
+                                     ZoneID,
+                                     ip2str(ZoneIP),
+                                     ZonePort,
+                                     ip2str(characterSelectionResponse.cache_ip),
+                                     characterSelectionResponse.cache_port,
+                                     charid));
+
+                // If client was zoning out but was never seen at the destination past 2 minutes, remove old session
+                const auto rset2 = db::preparedStmt("SELECT * "
+                                                    "FROM accounts_sessions "
+                                                    "WHERE accid = ? AND charid = ? AND client_port = '0' AND last_zoneout_time <= SUBTIME(NOW(), \"00:02:00\")",
+                                                    session.accountID,
+                                                    charid);
+                if (rset2 && rset2->rowsCount() != 0 && rset2->next())
+                {
+                    // KillSession? Seems overkill with current knowledge. client_port of 0 indicates the other map server never saw a packet and decrypted it correctly.
+                    db::preparedStmt("DELETE FROM accounts_sessions WHERE accid = ? AND charid = ?", session.accountID, charid);
+                }
 
                 // Check the number of sessions
                 uint16 sessionCount = 0;
@@ -316,27 +389,6 @@ void data_session::read_func()
                 if (rset0 && rset0->rowsCount() != 0 && rset0->next())
                 {
                     sessionCount = rset0->get<uint16>("COUNT(client_addr)");
-                }
-
-                bool hasActiveSession = false;
-
-                const auto rset1 = db::preparedStmt("SELECT * "
-                                                    "FROM accounts_sessions "
-                                                    "WHERE accid = ? AND client_port != '0'",
-                                                    session.accountID);
-                if (rset1 && rset1->rowsCount() != 0 && rset1->next())
-                {
-                    hasActiveSession = true;
-                }
-
-                // If client was zoning out but was never seen at the destination, wait 30 seconds before allowing login again
-                const auto rset2 = db::preparedStmt("SELECT * "
-                                                    "FROM accounts_sessions "
-                                                    "WHERE accid = ? AND client_port = '0' AND last_zoneout_time >= SUBTIME(NOW(), \"00:00:30\")",
-                                                    session.accountID);
-                if (rset2 && rset2->rowsCount() != 0 && rset2->next())
-                {
-                    hasActiveSession = true;
                 }
 
                 auto exceptionTime = earth_time::time_point::min();
@@ -362,20 +414,6 @@ void data_session::read_func()
                     ShowWarning(fmt::format("data_session: account {} attempting to login when {} already has {} active session(s), limit is {}", session.accountID, ipAddress, sessionCount, loginLimit));
                 }
 
-                // TODO: it seems we may need to increment the key if we send this error? Client doesn't seem to ever recover.
-                if (hasActiveSession)
-                {
-                    ShowWarning(fmt::format("data_session: account {} is already logged in.", session.accountID));
-                    if (auto dataSession = session.view_session.get())
-                    {
-                        // Send error message to the client.
-                        loginHelpers::generateErrorMessage(dataSession->buffer_.data(), loginErrors::errorCode::UNABLE_TO_CONNECT_TO_WORLD_SERVER); // "Unable to connect to world server. Specified operation failed"
-                        dataSession->do_write(0x24);
-
-                        return;
-                    }
-                }
-
                 if ((isNotMaint && loginLimitOK) || isGM)
                 {
                     if (PrevZone == 0)
@@ -386,44 +424,66 @@ void data_session::read_func()
                     characterSelectionResponse.cache_ip   = session.serverIP; // search-server ip
                     characterSelectionResponse.cache_port = settings::get<uint16>("network.SEARCH_PORT");
 
-                    // If the session was not processed by the game server, then it must be deleted.
-                    db::preparedStmt("DELETE FROM accounts_sessions WHERE accid = ? AND client_port = 0", session.accountID);
+                    const auto rset1 = db::preparedStmt("SELECT charid "
+                                                        "FROM accounts_sessions "
+                                                        "WHERE accid = ? LIMIT 1",
+                                                        session.accountID);
 
-                    if (!db::preparedStmt("INSERT INTO accounts_sessions(accid, charid, session_key, server_addr, server_port, client_addr, version_mismatch) "
-                                          "VALUES(?, ?, ?, ?, ?, ?, ?)",
-                                          session.accountID, charid, key3, ZoneIP, ZonePort, accountIP,
-                                          session.versionMismatch ? 1 : 0))
+                    if (rset1 && rset1->rowsCount() != 0 && rset1->next())
                     {
-                        if (auto dataSession = session.view_session.get())
+                        // If character is already logged in (session still exists) kick them out
+                        // TODO: Retail has POL login time so this is more restricted.
+                        uint32 sessionCharid = rset1->get<uint32>("charid");
+
+                        if (sessionCharid == session.requestedCharacterID)
                         {
-                            // Send error message to the client.
-                            loginHelpers::generateErrorMessage(dataSession->buffer_.data(), loginErrors::errorCode::UNABLE_TO_CONNECT_TO_WORLD_SERVER); // "Unable to connect to world server. Specified operation failed"
-                            dataSession->do_write(0x24);
-                            return;
+                            if (auto viewSession = session.view_session.get())
+                            {
+                                session.incrementKeyValue += 1;
+                                loginHelpers::generateErrorMessage(viewSession->buffer_.data(), loginErrors::errorCode::CHARACTER_ALREADY_LOGGED_IN);
+                                viewSession->do_write(0x24);
+                                return;
+                            }
                         }
                     }
 
-                    db::preparedStmt("UPDATE char_flags SET disconnecting = 0 WHERE charid = ?", charid);
-                    db::preparedStmt("UPDATE char_stats SET zoning = 2 WHERE charid = ?", charid);
+                    if (!db::preparedStmt("INSERT INTO accounts_sessions(accid, charid, session_key, server_addr, server_port, client_addr, version_mismatch) "
+                                          "VALUES(?, ?, ?, ?, ?, ?, ?)",
+                                          session.accountID,
+                                          charid,
+                                          key3,
+                                          ZoneIP,
+                                          ZonePort,
+                                          accountIP,
+                                          session.versionMismatch ? 1 : 0))
+                    {
+                        if (auto viewSession = session.view_session.get())
+                        {
+                            // Send error message to the client.
+                            loginHelpers::generateErrorMessage(viewSession->buffer_.data(), loginErrors::errorCode::UNABLE_TO_CONNECT_TO_WORLD_SERVER); // "Unable to connect to world server. Specified operation failed"
+                            viewSession->do_write(0x24);
+                            return;
+                        }
+                    }
                 }
                 else
                 {
-                    if (auto dataSession = session.view_session.get())
+                    if (auto viewSession = session.view_session.get())
                     {
                         // Send error message to the client.
-                        loginHelpers::generateErrorMessage(dataSession->buffer_.data(), loginErrors::errorCode::COULD_NOT_CONNECT_TO_LOBBY_SERVER);
-                        dataSession->do_write(0x24);
+                        loginHelpers::generateErrorMessage(viewSession->buffer_.data(), loginErrors::errorCode::COULD_NOT_CONNECT_TO_LOBBY_SERVER);
+                        viewSession->do_write(0x24);
                         return;
                     }
                 }
             }
             else
             {
-                if (auto dataSession = session.view_session.get())
+                if (auto viewSession = session.view_session.get())
                 {
                     // Send error message to the client.
-                    loginHelpers::generateErrorMessage(dataSession->buffer_.data(), loginErrors::errorCode::UNABLE_TO_CONNECT_TO_WORLD_SERVER); // "Unable to connect to world server. Specified operation failed"
-                    dataSession->do_write(0x24);
+                    loginHelpers::generateErrorMessage(viewSession->buffer_.data(), loginErrors::errorCode::UNABLE_TO_CONNECT_TO_WORLD_SERVER); // "Unable to connect to world server. Specified operation failed"
+                    viewSession->do_write(0x24);
                     return;
                 }
             }
@@ -433,14 +493,26 @@ void data_session::read_func()
 
             loginPackets::copyHashIntoPacket(characterSelectionResponse, Hash);
 
-            if (auto dataSession = session.view_session.get())
+            if (auto viewSession = session.view_session.get())
             {
-                std::memcpy(dataSession->buffer_.data(), &characterSelectionResponse, sizeof(characterSelectionResponse));
-                dataSession->do_write(sizeof(characterSelectionResponse));
+                std::memcpy(viewSession->buffer_.data(), &characterSelectionResponse, sizeof(characterSelectionResponse));
+                viewSession->do_write(sizeof(characterSelectionResponse));
 
-                dataSession->socket_.lowest_layer().shutdown(asio::socket_base::shutdown_both); // Client waits for us to close the socket
-                dataSession->socket_.lowest_layer().close();
+                viewSession->socket_.lowest_layer().shutdown(asio::socket_base::shutdown_both); // Client waits for us to close the socket
+                viewSession->socket_.lowest_layer().close();
                 session.view_session = nullptr;
+
+                session.incrementKeyValue = 0; // Reset incremented key after inserting into db
+
+                const auto payload = ipc::toBytesWithHeader(ipc::CharZone{
+                    .charId            = charid,
+                    .destinationZoneId = ZoneID,
+                });
+
+                db::preparedStmt("UPDATE char_flags SET disconnecting = 0 WHERE charid = ?", charid);
+                db::preparedStmt("UPDATE char_stats SET zoning = 2 WHERE charid = ?", charid);
+
+                zmqDealerWrapper_.outgoingQueue_.enqueue(zmq::message_t(payload.data(), payload.size()));
             }
 
             if (settings::get<bool>("login.LOG_USER_IP"))
@@ -453,7 +525,10 @@ void data_session::read_func()
 
                 if (!db::preparedStmt("INSERT INTO account_ip_record(login_time,accid,charid,client_ip) "
                                       "VALUES (?, ?, ?, ?)",
-                                      timeAndDate, session.accountID, charid, ip2str(accountIP)))
+                                      timeAndDate,
+                                      session.accountID,
+                                      charid,
+                                      ip2str(accountIP)))
                 {
                     ShowError("data_session: Could not write info to account_ip_record.");
                 }
@@ -494,11 +569,11 @@ void data_session::handle_error(std::error_code ec, std::shared_ptr<handler_sess
                 // Remove entry if needs to be
                 map.erase(it);
 
-                // Remove IP from map if it's the last entry
+                // Remove IP from map if no entries remain
                 auto& sessions = loginHelpers::getAuthenticatedSessions();
-                if (sessions[self->ipAddress].size() == 1)
+                if (auto outerIt = sessions.find(self->ipAddress); outerIt != sessions.end() && outerIt->second.empty())
                 {
-                    sessions.erase(sessions.begin());
+                    sessions.erase(outerIt);
                 }
             }
         }

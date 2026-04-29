@@ -1,6 +1,7 @@
 -----------------------------------
 -- Trust: Moogle
 -----------------------------------
+---@type TSpellTrust
 local spellObject = {}
 
 spellObject.onMagicCastingCheck = function(caster, target, spell)
@@ -12,7 +13,9 @@ spellObject.onSpellCast = function(caster, target, spell)
 end
 
 spellObject.onMobSpawn = function(mob)
-    xi.trust.message(mob, xi.trust.messageOffset.SPAWN)
+    xi.trust.teamworkMessage(mob, {
+        [xi.magic.spell.FABLINIX] = xi.trust.messageOffset.TEAMWORK_1,
+    })
 
     local mlvl = mob:getMainLvl()
     local tick_amount
@@ -24,7 +27,7 @@ spellObject.onMobSpawn = function(mob)
         tick_amount = 1
     end
 
-    mob:addStatusEffectEx(xi.effect.COLURE_ACTIVE, xi.effect.COLURE_ACTIVE, 6, 3, 0, xi.effect.GEO_REFRESH, tick_amount, xi.auraTarget.ALLIES, xi.effectFlag.AURA)
+    mob:addStatusEffect(xi.effect.COLURE_ACTIVE, { power = 6, origin = mob, tick = 3, subType = xi.effect.GEO_REFRESH, subPower = tick_amount, tier = xi.auraTarget.ALLIES, flag = xi.effectFlag.AURA })
     mob:setAutoAttackEnabled(false)
 end
 

@@ -11,6 +11,7 @@ entity.onMobInitialize = function(mob)
 end
 
 entity.onMobSpawn = function(mob)
+    xi.dynamis.mobInfo(mob)
     local dynaLord = GetMobByID(ID.mob.DYNAMIS_LORD)
 
     if
@@ -34,8 +35,8 @@ entity.onMobFight = function(mob, target)
 
     if
         yang and
-        yang:getCurrentAction() == xi.act.NONE and
-        os.time() > yangToD + 30
+        yang:getCurrentAction() == xi.action.category.NONE and
+        GetSystemTime() > yangToD + 30
     then
         yang:setSpawn(mob:getXPos(), mob:getYPos(), mob:getZPos())
         yang:spawn()
@@ -52,7 +53,7 @@ entity.onMobDespawn = function(mob)
 
     -- localVars clear on death, so setting it on its partner
     if yang then
-        yang:setLocalVar('YingToD', os.time())
+        yang:setLocalVar('YingToD', GetSystemTime())
     end
 
     if

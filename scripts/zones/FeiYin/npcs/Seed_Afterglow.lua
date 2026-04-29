@@ -28,8 +28,8 @@ entity.onTrigger = function(player, npc)
         player:hasKeyItem(xi.ki.MARK_OF_SEED) or
         player:hasKeyItem(xi.ki.AZURE_KEY) or
         player:hasKeyItem(xi.ki.IVORY_KEY) or
-        os.time() < player:getCharVar('LastAzureKey') or
-        os.time() < player:getCharVar('LastIvoryKey') or
+        GetSystemTime() < player:getCharVar('LastAzureKey') or
+        GetSystemTime() < player:getCharVar('LastIvoryKey') or
         aCrystallineProphecy < xi.mission.id.acp.THOSE_WHO_LURK_IN_SHADOWS_II
     then
         player:messageSpecial(ID.text.SOFTLY_SHIMMERING_LIGHT)
@@ -47,7 +47,7 @@ entity.onTrigger = function(player, npc)
         elseif not needToZone and not player:hasStatusEffect(xi.effect.MARK_OF_SEED) then
             player:setCharVar('SEED_AFTERGLOW_INTENSITY', intensity)
             player:messageSpecial(ID.text.YOU_REACH_OUT_TO_THE_LIGHT, 0)
-            player:addStatusEffectEx(xi.effect.MARK_OF_SEED, 0, 0, 30, 1800)
+            player:addStatusEffect(xi.effect.MARK_OF_SEED, { duration = 1800, origin = player, tick = 30, icon = 0 })
             player:needToZone(true)
             player:messageSpecial(ID.text.THE_LIGHT_DWINDLES, 0)
         else

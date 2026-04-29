@@ -1,11 +1,8 @@
 -----------------------------------
---  Final Retribution
---  Family: Corse
---  Description: Damages enemies in an area of effect. Additional effect: Stun
---  Type: Physical
---  Utsusemi/Blink absorb: 1-3 shadows
---  Range: Radial
---  Notes: Only used by some notorious monsters like Xolotl.
+-- Final Retribution
+-- Family: Corse
+-- Description: Damages enemies in an area of effect. Additional Effect: Stun
+-- Notes: Only used by some notorious monsters like Xolotl.
 -----------------------------------
 ---@type TMobSkill
 local mobskillObject = {}
@@ -14,17 +11,28 @@ mobskillObject.onMobSkillCheck = function(target, mob, skill)
     return 0
 end
 
-mobskillObject.onMobWeaponSkill = function(target, mob, skill)
-    local numhits = 1
-    local accmod = 1
-    local ftp    = 3.2
-    local info = xi.mobskills.mobPhysicalMove(mob, target, skill, numhits, accmod, ftp, xi.mobskills.physicalTpBonus.NO_EFFECT)
-    local dmg = xi.mobskills.mobFinalAdjustments(info.dmg, mob, skill, target, xi.attackType.PHYSICAL, xi.damageType.SLASHING, xi.mobskills.shadowBehavior.NUMSHADOWS_3)
+mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
+    local params = {}
 
-    xi.mobskills.mobPhysicalStatusEffectMove(mob, target, skill, xi.effect.STUN, 1, 0, 4)
+    -- TODO: Jimmayus spreadsheet says this does fire damage but online sources say it can be absorbed by shadows.
+    --       We should probably recapture this skill before changing anything.
 
-    target:takeDamage(dmg, mob, xi.attackType.PHYSICAL, xi.damageType.SLASHING)
-    return dmg
+    params.baseDamage     = mob:getWeaponDmg()
+    params.numHits        = 1
+    params.fTP            = { 3.2, 3.2, 3.2 } -- TODO: Capture fTPs
+    params.attackType     = xi.attackType.PHYSICAL
+    params.damageType     = xi.damageType.SLASHING
+    params.shadowBehavior = xi.mobskills.shadowBehavior.NUMSHADOWS_3 -- TODO: Capture shadowBehavior
+
+    local info = xi.mobskills.mobPhysicalMove(mob, target, skill, action, params)
+
+    if xi.mobskills.processDamage(mob, target, skill, action, info) then
+        target:takeDamage(info.damage, mob, info.attackType, info.damageType)
+
+        xi.mobskills.mobStatusEffectMove(mob, target, xi.effect.STUN, 1, 0, 4) -- TODO: Capture stun duration
+    end
+
+    return info.damage
 end
 
 return mobskillObject

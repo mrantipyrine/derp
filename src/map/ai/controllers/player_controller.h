@@ -35,7 +35,7 @@ public:
     {
     }
 
-    virtual void Tick(timer::time_point) override;
+    virtual auto Tick(timer::time_point tick) -> Task<void> override;
 
     virtual bool Cast(uint16 targid, SpellID spellid) override;
     virtual bool Engage(uint16 targid) override;
@@ -50,13 +50,19 @@ public:
     timer::time_point getLastAttackTime();
     void              setLastAttackTime(timer::time_point);
 
+    timer::time_point getLastSpellFinishedTime();
+    void              setLastSpellFinishedTime(timer::time_point);
+
     void              setLastErrMsgTime(timer::time_point);
     timer::time_point getLastErrMsgTime();
 
     CWeaponSkill* getLastWeaponSkill();
 
+    bool canAct();
+
 protected:
     timer::time_point m_lastAttackTime{ timer::now() };
+    timer::time_point m_spellFinishedTime{ timer::now() };
     timer::time_point m_errMsgTime{ timer::now() };
     CWeaponSkill*     m_lastWeaponSkill{ nullptr };
 };

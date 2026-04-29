@@ -31,13 +31,13 @@ xi.full_speed_ahead.motivation_food_bonus = 15
 xi.full_speed_ahead.pep_growth            = 1
 
 xi.full_speed_ahead.onEffectGain = function(player, effect)
-    player:setLocalVar('FSA_Time', os.time() + xi.full_speed_ahead.duration)
+    player:setLocalVar('FSA_Time', GetSystemTime() + xi.full_speed_ahead.duration)
     player:setLocalVar('FSA_Motivation', 100)
     player:setLocalVar('FSA_Pep', 0)
     player:setLocalVar('FSA_Food', 0xFF)
     player:setLocalVar('FSA_FoodCount', 0)
     -- NOTE: This used to be mount id 1: QUEST_RAPTOR, but it appears to have changed
-    player:addStatusEffect(xi.effect.MOUNTED, xi.mount.RAPTOR, 3, 0)
+    player:addStatusEffect(xi.effect.MOUNTED, { power = xi.mount.RAPTOR, origin = player, tick = 3 })
     player:setCharVar('[QUEST]FullSpeedAhead', 3)
 end
 
@@ -61,7 +61,7 @@ xi.full_speed_ahead.tick = function(player, effect)
     player:setLocalVar('FSA_Motivation', player:getLocalVar('FSA_Motivation') - xi.full_speed_ahead.motivation_decay + effect:getPower())
     player:setLocalVar('FSA_Pep', player:getLocalVar('FSA_Pep') + xi.full_speed_ahead.pep_growth + effect:getPower())
 
-    local timeLeft   = player:getLocalVar('FSA_Time') - os.time()
+    local timeLeft   = player:getLocalVar('FSA_Time') - GetSystemTime()
     local motivation = player:getLocalVar('FSA_Motivation')
     local pep        = player:getLocalVar('FSA_Pep')
     local foodByte   = player:getLocalVar('FSA_Food')
@@ -128,7 +128,7 @@ xi.full_speed_ahead.onTriggerAreaEnter = function(player, index)
 end
 
 xi.full_speed_ahead.onCheer = function(player)
-    local timeLeft   = player:getLocalVar('FSA_Time') - os.time()
+    local timeLeft   = player:getLocalVar('FSA_Time') - GetSystemTime()
     local motivation = player:getLocalVar('FSA_Motivation')
     local pep        = player:getLocalVar('FSA_Pep')
 

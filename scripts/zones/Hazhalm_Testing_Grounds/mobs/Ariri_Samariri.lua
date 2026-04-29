@@ -31,11 +31,6 @@ entity.onMobInitialize = function(mob)
     mob:addImmunity(xi.immunity.SILENCE)
 end
 
-entity.onMobSpawn = function(mob)
-    -- Reset Ariri to the right spell list after Providence
-    mob:setLocalVar('spellListId', 540)
-end
-
 entity.onMobEngage = reset
 
 entity.onMobFight = function(mob)
@@ -44,7 +39,7 @@ entity.onMobFight = function(mob)
     end
 end
 
-entity.onMobWeaponSkill = function(target, mob, skill)
+entity.onMobWeaponSkill = function(mob, target, skill, action)
     if
         skill:getID() == xi.mobSkill.WATER_BOMB and
         math.random(1, 100) <= 25

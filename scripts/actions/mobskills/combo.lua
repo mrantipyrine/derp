@@ -1,7 +1,7 @@
 -----------------------------------
 -- Combo
--- Description: Damage varies with TP.
--- Type: Physical
+-- Family: Humanoid Hand to Hand Weaponskill
+-- Description: Delivers a three-fold attack. Damage varies with TP.
 -----------------------------------
 ---@type TMobSkill
 local mobskillObject = {}
@@ -10,15 +10,25 @@ mobskillObject.onMobSkillCheck = function(target, mob, skill)
     return 0
 end
 
-mobskillObject.onMobWeaponSkill = function(target, mob, skill)
-    local numhits = 3
-    local accmod = 1
-    local ftp    = 1 -- fTP and fTP scaling unknown. TODO: capture ftp
-    local info = xi.mobskills.mobPhysicalMove(mob, target, skill, numhits, accmod, ftp, xi.mobskills.physicalTpBonus.NO_EFFECT, 0, 0, 0)
-    local dmg = xi.mobskills.mobFinalAdjustments(info.dmg, mob, skill, target, xi.attackType.PHYSICAL, xi.damageType.HTH, info.hitslanded)
+mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
+    local params = {}
 
-    target:takeDamage(dmg, mob, xi.attackType.PHYSICAL, xi.damageType.HTH)
-    return dmg
+    params.baseDamage     = mob:getWeaponDmg()
+    params.numHits        = 3
+    params.fTP            = { 1.0, 1.5, 2.0 }
+    --params.str_wSC      = 0.2 -- TODO: Capture if mobskill weaponskills have wSC.
+    --params.dex_wSC      = 0.2 -- TODO: Capture if mobskill weaponskills have wSC.
+    params.attackType     = xi.attackType.PHYSICAL
+    params.damageType     = xi.damageType.HTH
+    params.shadowBehavior = xi.mobskills.shadowBehavior.NUMSHADOWS_3
+
+    local info = xi.mobskills.mobPhysicalMove(mob, target, skill, action, params)
+
+    if xi.mobskills.processDamage(mob, target, skill, action, info) then
+        target:takeDamage(info.damage, mob, info.attackType, info.damageType)
+    end
+
+    return info.damage
 end
 
 return mobskillObject

@@ -1,12 +1,16 @@
 -----------------------------------
 -- xi.effect.BATTLEFIELD
+-- Notes: Effect parameters:
+-- power: Stores battlefield ID.
+-- sourceTypeParam: Stores charIDs
+-- subPower: stores battlefield area (Which "arena" within the battlefield if not an instanced zone)
 -----------------------------------
 ---@type TEffect
 local effectObject = {}
 
 effectObject.onEffectGain = function(target, effect)
     if target:getPet() then
-        target:getPet():addStatusEffect(effect)
+        target:getPet():copyStatusEffect(effect)
     end
 
     if target:getObjType() == xi.objType.PC then

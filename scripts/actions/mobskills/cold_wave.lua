@@ -1,7 +1,7 @@
 -----------------------------------
---  Cold Wave
---  Description: Deals ice damage that lowers Agility and gradually reduces HP of enemies within range.
---  Type: Magical (Ice)
+-- Cold Wave
+-- Family: Bombs (Snolls)
+-- Description: Inflicts Frost effect that lowers Agility and gradually reduces HP of enemies within range.
 -----------------------------------
 ---@type TMobSkill
 local mobskillObject = {}
@@ -10,17 +10,61 @@ mobskillObject.onMobSkillCheck = function(target, mob, skill)
     return 0
 end
 
-mobskillObject.onMobWeaponSkill = function(target, mob, skill)
-    local damage = mob:getWeaponDmg() * 2.8
-    local power  = mob:getMainLvl() / 5 * 0.6 + 6
+mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
+    -- The effect power scaling is not perfectly linear and there are large level range gaps where there are no mobs that use this skill.
+    -- The table below makes sure we get the correct power from retail capture and interpolates the gaps with the known values.
+    -- The interpolated gaps will likely only come into play if someone makes custom content.
+    -- The spreadsheet below shows where the level range gaps are as well as level specific power.
+    -- https://docs.google.com/spreadsheets/d/12O11XhwBp18nA7XEMx-MIYPxxdlwpXkWxMIIBzo1QqU/edit?gid=1354203546#gid=1354203546
 
-    damage = xi.mobskills.mobMagicalMove(mob, target, skill, damage, xi.element.ICE, 1, xi.mobskills.magicalTpBonus.NO_EFFECT)
-    damage = xi.mobskills.mobFinalAdjustments(damage, mob, skill, target, xi.attackType.MAGICAL, xi.damageType.ICE, xi.mobskills.shadowBehavior.IGNORE_SHADOWS)
+    local effectPower =
+    {
+    -- { maxLevel, power }
+        { 5,  1 },
+        { 10, 2 },
+        { 15, 3 },
+        { 19, 4 },
+        { 25, 5 },
+        { 28, 6 },
+        { 31, 7 },
+        { 35, 8 },
+        { 40, 9 },
+        { 44, 10 },
+        { 47, 11 },
+        { 55, 12 },
+        { 57, 13 },
+        { 61, 14 },
+        { 65, 15 },
+        { 70, 16 },
+        { 74, 17 },
+        { 79, 18 },
+        { 80, 19 },
+    }
 
-    target:takeDamage(damage, mob, xi.attackType.MAGICAL, xi.damageType.ICE)
-    xi.mobskills.mobStatusEffectMove(mob, target, xi.effect.FROST, power, 3, 60)
+    local function getMobSkillPower(level)
+        for _, table in ipairs(effectPower) do
+            if level <= table[1] then
+                return table[2]
+            end
+        end
 
-    return damage
+        return 19 -- No data past level 80
+    end
+
+    -- This is the power for regular COP Snolls
+    local power = getMobSkillPower(mob:getMainLvl())
+
+    -- Snoll Tzar
+    if skill:getID() == xi.mobSkill.COLD_WAVE_2 then
+        power = 32
+    end
+
+    local effectTable =
+    {
+        [1] = { effectId = xi.effect.FROST, power = power, tick = 3, duration = 180, tier = 1, },
+    }
+
+    return xi.combat.action.executeMobskillStatusEffect(mob, target, skill, effectTable, {})
 end
 
 return mobskillObject

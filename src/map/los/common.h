@@ -22,10 +22,9 @@
 #ifndef _LOS_COMMON_H
 #define _LOS_COMMON_H
 
-#include "common/cbasetypes.h"
-#include "common/logging.h"
-
-#include <optional>
+#include <common/cbasetypes.h>
+#include <common/logging.h>
+#include <common/types/maybe.h>
 
 enum class Axis : uint8
 {
@@ -60,7 +59,7 @@ struct BoundingBox
         return (getAxisMax(axis) - axisMin) / 2 + axisMin;
     }
 
-    void expandTo(BoundingBox const& other)
+    void expandTo(const BoundingBox& other)
     {
         if (other.coords[0] < coords[0])
         {
@@ -98,12 +97,12 @@ struct Vector3D
     float z;
 
     // Addition
-    Vector3D operator+(Vector3D const& vec)
+    Vector3D operator+(const Vector3D& vec)
     {
         return Vector3D{ x + vec.x, y + vec.y, z + vec.z };
     }
 
-    Vector3D& operator+=(Vector3D const& vec)
+    Vector3D& operator+=(const Vector3D& vec)
     {
         x += vec.x;
         y += vec.y;
@@ -112,12 +111,12 @@ struct Vector3D
     }
 
     // Subtraction
-    Vector3D operator-(Vector3D const& vec)
+    Vector3D operator-(const Vector3D& vec)
     {
         return Vector3D{ x - vec.x, y - vec.y, z - vec.z };
     }
 
-    Vector3D& operator-=(Vector3D const& vec)
+    Vector3D& operator-=(const Vector3D& vec)
     {
         x -= vec.x;
         y -= vec.y;
@@ -154,7 +153,7 @@ struct Vector3D
     }
 
     // Misc other
-    Vector3D crossProduct(Vector3D const& other) const
+    Vector3D crossProduct(const Vector3D& other) const
     {
         float ni = y * other.z - z * other.y;
         float nj = z * other.x - x * other.z;
@@ -162,7 +161,7 @@ struct Vector3D
         return Vector3D{ ni, nj, nk };
     }
 
-    float dotProduct(Vector3D const& other) const
+    float dotProduct(const Vector3D& other) const
     {
         return x * other.x + y * other.y + z * other.z;
     }
@@ -190,7 +189,7 @@ struct Triangle
     }
 
     // Taken from: https://en.wikipedia.org/wiki/M%C3%B6ller%E2%80%93Trumbore_intersection_algorithm#C++_implementation
-    std::optional<Vector3D> doesRayIntersect(Vector3D rayOrigin, Vector3D rayVector)
+    Maybe<Vector3D> doesRayIntersect(Vector3D rayOrigin, Vector3D rayVector)
     {
         constexpr float EPSILON = 0.0000001f;
 

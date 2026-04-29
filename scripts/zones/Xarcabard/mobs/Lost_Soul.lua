@@ -8,10 +8,9 @@ local ID = zones[xi.zone.XARCABARD]
 ---@type TMobEntity
 local entity = {}
 
-local timewornPHTable =
-{
-    [ID.mob.TIMEWORN_WARRIOR - 4] = ID.mob.TIMEWORN_WARRIOR,
-}
+entity.onMobInitialize = function(mob)
+    mob:setMobMod(xi.mobMod.NO_STANDBACK, 1)
+end
 
 entity.onMobDeath = function(mob, player, optParams)
     xi.regime.checkRegime(player, mob, 51, 1, xi.regime.type.FIELDS)
@@ -21,7 +20,7 @@ entity.onMobDeath = function(mob, player, optParams)
 end
 
 entity.onMobDespawn = function(mob)
-    xi.mob.phOnDespawn(mob, timewornPHTable, 5, 5400) -- 90 minutes
+    xi.mob.phOnDespawn(mob, ID.mob.TIMEWORN_WARRIOR, 5, 5400) -- 90 minutes
 end
 
 return entity

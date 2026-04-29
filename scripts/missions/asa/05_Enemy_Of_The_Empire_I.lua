@@ -31,7 +31,7 @@ local mobList =
     { 'Marsh Sahagin',    'MarshSahagin'    },
     { 'Rock Crab',        'RockCrab'        },
     { 'Razorjaw Pugil',   'RazorjawPugil'   },
-    { 'Sahagin Parasite', 'SahaginParasitd' },
+    { 'Sahagin Parasite', 'SahaginParasite' },
     { 'Swamp Sahagin',    'SwampSahagin'    },
     { 'Devil Manta',      'DevilManta'      },
     { 'Dire Bat',         'DireBat'         },
@@ -52,11 +52,11 @@ local function handleTradeEvent(player, trade)
         local mobThree = mission:getVar(player, 'MobThree')
         local platesTraded = mission:getVar(player, 'Plates')
         local item = trade:getItem(0)
-        local plateData = item:getSoulPlateData()
+        local plateData = item:getExData()
 
         -- Check if traded Soulplate is one of the requested mobs
         for value, data in pairs(mobList) do
-            if data[2] == plateData.name then
+            if data[2] == plateData.signature then
                 mission:setVar(player, 'Found', value)
                 mission:setVar(player, 'Plates', platesTraded + 1)
 
@@ -151,7 +151,7 @@ mission.sections =
                     local mobOne = mission:getVar(player, 'MobOne')
                     local mobTwo = mission:getVar(player, 'MobTwo')
                     local mobThree = mission:getVar(player, 'MobThree')
-                    local pickupReady = mission:getVar(player, 'Soulplate') < os.time()
+                    local pickupReady = mission:getVar(player, 'Soulplate') < GetSystemTime()
                     local platesTraded = mission:getVar(player, 'Plates')
 
                     if option == 6 then
@@ -236,7 +236,7 @@ mission.sections =
 
                         npcUtil.giveItem(player, { xi.item.SOULTRAPPER, 12 })
                         mission:setVar(player, 'AndrauseBuy', 0)
-                        mission:setVar(player, 'Soulplate', getMidnight())
+                        mission:setVar(player, 'Soulplate', JstMidnight())
                     elseif mission:getVar(player, 'AndrauseBuy') == 1 and player:getGil() < 800 then
                         mission:setVar(player, 'AndrauseBuy', 0)
                     end
@@ -254,7 +254,7 @@ mission.sections =
                         player:addItem(xi.item.BLANK_SOUL_PLATE, 12)
                         player:messageSpecial(norgID.text.YOU_OBTAIN, xi.item.BLANK_SOUL_PLATE, 12) -- Soul Plates
                         mission:setVar(player, 'AndrauseBuy', 0)
-                        mission:setVar(player, 'Soulplate', getMidnight())
+                        mission:setVar(player, 'Soulplate', JstMidnight())
                     elseif mission:getVar(player, 'AndrauseBuy') == 1 and player:getGil() < 800 then
                         mission:setVar(player, 'AndrauseBuy', 0)
                     end

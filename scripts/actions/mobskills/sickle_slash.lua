@@ -1,18 +1,15 @@
 -----------------------------------
 -- Sickle Slash
--- Deals critical damage. Chance of critical hit varies with TP.
+-- Family: Spider
+-- Description: Deals critical damage. Chance of critical hit varies with TP.
+-- TODO: Split lua for Spiders and Ghrah
 -----------------------------------
 ---@type TMobSkill
 local mobskillObject = {}
 
------------------------------------
--- onMobSkillCheck
--- Check for Grah Family id 122, 123, 124
--- if not in Spider form, then ignore.
------------------------------------
 mobskillObject.onMobSkillCheck = function(target, mob, skill)
     if
-        (mob:getFamily() == 122 or mob:getFamily() == 123 or mob:getFamily() == 124) and
+        mob:getFamily() == 122 and -- TODO: Set proper skill lists for Ghrah.
         mob:getAnimationSub() ~= 2
     then
         return 1
@@ -21,15 +18,26 @@ mobskillObject.onMobSkillCheck = function(target, mob, skill)
     end
 end
 
-mobskillObject.onMobWeaponSkill = function(target, mob, skill)
-    local numhits = 1
-    local accmod = 1
-    local ftp    = math.random(2, 4) + math.random()
-    local info = xi.mobskills.mobPhysicalMove(mob, target, skill, numhits, accmod, ftp, xi.mobskills.physicalTpBonus.CRIT_VARIES, 1, 1.5, 2)
-    local dmg = xi.mobskills.mobFinalAdjustments(info.dmg, mob, skill, target, xi.attackType.PHYSICAL, xi.damageType.SLASHING, info.hitslanded)
+mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
+    local params = {}
 
-    target:takeDamage(dmg, mob, xi.attackType.PHYSICAL, xi.damageType.SLASHING)
-    return dmg
+    params.baseDamage       = mob:getWeaponDmg()
+    params.numHits          = 1
+    params.fTP              = { 2.0, 2.0, 2.0 }
+    params.attackType       = xi.attackType.PHYSICAL
+    params.damageType       = xi.damageType.BLUNT
+    params.shadowBehavior   = xi.mobskills.shadowBehavior.NUMSHADOWS_1
+    params.attackMultiplier = { 1.5, 1.5, 1.5 }
+    params.canCrit          = true
+    params.criticalChance   = { 0.10, 0.20, 0.25 } -- TODO: Capture crit rate
+
+    local info = xi.mobskills.mobPhysicalMove(mob, target, skill, action, params)
+
+    if xi.mobskills.processDamage(mob, target, skill, action, info) then
+        target:takeDamage(info.damage, mob, info.attackType, info.damageType)
+    end
+
+    return info.damage
 end
 
 return mobskillObject

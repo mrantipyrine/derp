@@ -101,7 +101,9 @@ void getMSB(uint32* result, uint32 value)
     _BitScanReverse((unsigned long*)result, value);
 #else
     while (value >>= 1)
+    {
         (*result)++;
+    }
 #endif
 }
 
@@ -127,9 +129,14 @@ uint8 radianToRotation(float radian)
 
 uint8 worldAngle(const position_t& A, const position_t& B)
 {
-    uint8 angle = (uint8)(atanf((B.z - A.z) / (B.x - A.x)) * -(128.0f / M_PI));
+    if (isWithinDistance(A, B, 0.1f, true))
+    {
+        return A.rotation;
+    }
 
-    return isWithinDistance(A, B, 0.1f, true) ? A.rotation : (A.x > B.x ? angle + 128 : angle);
+    float radians  = atan2f(B.z - A.z, B.x - A.x);
+    int16 rawAngle = static_cast<int16>(radians * -(128.0f / M_PI));
+    return static_cast<uint8>((rawAngle % 256 + 256) % 256);
 }
 
 uint8 relativeAngle(uint8 world, int16 diff)
@@ -144,12 +151,16 @@ uint8 relativeAngle(uint8 world, int16 diff)
 
 int16 angleDifference(uint8 worldAngleA, uint8 worldAngleB)
 {
-    int16 degreeDiff   = worldAngleA - worldAngleB;
-    uint8 absoluteDiff = abs(degreeDiff);
-    if (absoluteDiff > 128)
+    int16 degreeDiff = worldAngleA - worldAngleB;
+    if (degreeDiff > 128)
     {
-        degreeDiff = 256 - absoluteDiff;
+        degreeDiff -= 256;
     }
+    else if (degreeDiff < -128)
+    {
+        degreeDiff += 256;
+    }
+
     return degreeDiff;
 }
 
@@ -183,6 +194,20 @@ bool beside(const position_t& A, const position_t& B, uint8 coneAngle)
     uint8 facingDiff = abs(facingAngle(B, A));
     uint8 halfAngle  = static_cast<uint8>(coneAngle / 2);
     return (facingDiff > 64 - halfAngle) && (facingDiff < 64 + halfAngle);
+}
+
+auto toEntitysLeft(const position_t& A, const position_t& B, uint8 coneAngle) -> bool
+{
+    int16 diff      = facingAngle(B, A);
+    uint8 halfAngle = static_cast<uint8>(coneAngle / 2);
+    return (diff < 0) && (abs(diff) > (64 - halfAngle)) && (abs(diff) < (64 + halfAngle));
+}
+
+auto toEntitysRight(const position_t& A, const position_t& B, uint8 coneAngle) -> bool
+{
+    int16 diff      = facingAngle(B, A);
+    uint8 halfAngle = static_cast<uint8>(coneAngle / 2);
+    return (diff > 0) && (abs(diff) > (64 - halfAngle)) && (abs(diff) < (64 + halfAngle));
 }
 
 /**
@@ -597,29 +622,24 @@ void DecodeStringSignature(const std::string& signature, char* target)
 
 // Take a regular string of 8-bit wide chars and packs it down into an
 // array of 7-bit wide chars.
-void PackSoultrapperName(std::string name, uint8 output[])
+void PackSoultrapperName(std::string name, uint8* output)
 {
-    // Before anything else, sanitize the name string
-    // If contains underscore character
-    if (std::find(name.begin(), name.end(), '_') != name.end())
+    // Truncate to entity name limit before removing underscores.
+    // e.g. Goblin_Bounty_Hunter -> Goblin_Bounty_H -> GoblinBountyH
+    //      Thunder_Elemental    -> Thunder_Element  -> ThunderElement
+    if (name.length() > 15)
     {
-        // Remove underscores
-        name.erase(std::remove(name.begin(), name.end(), '_'), name.end());
+        name.resize(15);
     }
 
-    // Add a space at the end to help with name truncation
-    // TODO: Remove the need for this
-    if (name.length() > 7)
-    {
-        name += ' ';
-    }
+    name.erase(std::ranges::remove(name, '_').begin(), name.end());
 
     uint8 current = 0;
     uint8 next    = 0;
     uint8 shift   = 1;
     uint8 loops   = 0;
     uint8 total   = (uint8)name.length();
-    uint8 maxSize = 13; // capped at 13 based on examples like GoblinBountyH
+    uint8 maxSize = 15;
 
     // Pack and shift 8-bit to 7-bit
     for (uint8 i = 0; i <= maxSize; ++i)
@@ -644,7 +664,6 @@ void PackSoultrapperName(std::string name, uint8 output[])
             shift = 1;
             loops++;
             i++;
-            total--;
         }
         else
         {
@@ -653,58 +672,52 @@ void PackSoultrapperName(std::string name, uint8 output[])
     }
 }
 
-std::string UnpackSoultrapperName(uint8 input[])
+// Based on client logic for rendering plates names.
+auto UnpackSoultrapperName(const uint8* input) -> std::string
 {
-    uint8       current   = 0;
-    uint8       remainder = 0;
-    uint8       shift     = 1;
-    uint8       maxSize   = 13; // capped at 13 based on examples like GoblinBountyH
-    char        indexChar = 0;
-    std::string output    = "";
+    constexpr uint8 bufSize = 14; // Retail is 18, but they never use the whole thing. Last 4 bytes repurposed as ZoneId/SuperFamilyId in LSB.
+    std::string     output;
+    uint8           bitsLeft = 0;
+    uint8           byte     = 0;
+    uint8           pos      = 0;
 
-    // Unpack and shift 7-bit to 8-bit
-    for (uint8 i = 0; i <= maxSize; ++i)
+    for (;;)
     {
-        current         = input[i];
-        uint8 tempLeft  = current;
-        uint8 tempRight = current;
-
-        for (int j = 0; j < shift; ++j)
+        char c = 0;
+        for (int bit = 6; bit >= 0; --bit)
         {
-            tempLeft = tempLeft >> 1;
-        }
-
-        indexChar = (char)(tempLeft | remainder);
-        if (indexChar >= '0' && indexChar <= 'z')
-        {
-            output += (char)(tempLeft | remainder);
-        }
-
-        remainder = tempRight << (7 - shift);
-        if (remainder & 128)
-        {
-            remainder = remainder ^ 128;
-        }
-
-        if (shift == 7)
-        {
-            if (char(remainder) >= '0' && char(remainder) <= 'z')
+            if (bitsLeft == 0)
             {
-                output += char(remainder);
+                if (pos >= bufSize)
+                {
+                    return output;
+                }
+
+                byte     = input[pos++];
+                bitsLeft = 8;
             }
-            remainder = 0;
-            shift     = 1;
+
+            if (byte & 0x80)
+            {
+                c |= (1 << bit);
+            }
+
+            byte <<= 1;
+            --bitsLeft;
         }
-        else
+
+        if (c == 0 || c < '0' || c > 'z')
         {
-            shift++;
+            break;
         }
+
+        output += c;
     }
 
     return output;
 }
 
-std::string escape(std::string const& s)
+std::string escape(const std::string& s)
 {
     std::size_t n = s.length();
     std::string escaped;
@@ -720,7 +733,7 @@ std::string escape(std::string const& s)
     return escaped;
 }
 
-std::vector<std::string> split(std::string const& s, std::string const& delimiter)
+std::vector<std::string> split(const std::string& s, const std::string& delimiter)
 {
     std::size_t pos_start = 0;
     std::size_t pos_end   = 0;
@@ -740,34 +753,38 @@ std::vector<std::string> split(std::string const& s, std::string const& delimite
     return res;
 }
 
-std::string to_lower(std::string const& s)
+std::string to_lower(const std::string& s)
 {
-    // clang-format off
     std::string data = s;
-    std::transform(data.begin(), data.end(), data.begin(),
-    [](unsigned char c)
-    {
-        return std::tolower(c);
-    });
-    // clang-format on
+    std::transform(
+        data.begin(),
+        data.end(),
+        data.begin(),
+        [](unsigned char c)
+        {
+            return std::tolower(c);
+        });
+
     return data;
 }
 
-std::string to_upper(std::string const& s)
+std::string to_upper(const std::string& s)
 {
-    // clang-format off
     std::string data = s;
-    std::transform(data.begin(), data.end(), data.begin(),
-    [](unsigned char c)
-    {
-        return std::toupper(c);
-    });
-    // clang-format on
+    std::transform(
+        data.begin(),
+        data.end(),
+        data.begin(),
+        [](unsigned char c)
+        {
+            return std::toupper(c);
+        });
+
     return data;
 }
 
 // https://stackoverflow.com/questions/313970/how-to-convert-an-instance-of-stdstring-to-lower-case
-std::string trim(std::string const& str, std::string const& whitespace)
+std::string trim(const std::string& str, const std::string& whitespace)
 {
     const auto strBegin = str.find_first_not_of(whitespace);
     if (strBegin == std::string::npos)
@@ -784,27 +801,30 @@ std::string trim(std::string const& str, std::string const& whitespace)
 // trim from end (in place)
 void rtrim(std::string& s)
 {
-    // clang-format off
-    s.erase(std::find_if(s.rbegin(), s.rend(),
-    [](unsigned char ch)
-    {
-        return !std::isspace(ch) && ch != '\n';
-    }).base(), s.end());
-    // clang-format on
+    s.erase(
+        std::find_if(
+            s.rbegin(),
+            s.rend(),
+            [](unsigned char ch)
+            {
+                return !std::isspace(ch) && ch != '\n';
+            })
+            .base(),
+        s.end());
 }
 
 // Returns true if the given str matches the given pattern using standard regex
-bool matches(std::string const& target, std::string const& pattern)
+bool matches(const std::string& target, const std::string& pattern)
 {
     return std::regex_match(target, std::regex(pattern));
 }
 
-bool starts_with(std::string const& target, std::string const& pattern)
+bool starts_with(const std::string& target, const std::string& pattern)
 {
     return target.rfind(pattern, 0) != std::string::npos;
 }
 
-std::string replace(std::string const& target, std::string const& search, std::string const& replace)
+std::string replace(const std::string& target, const std::string& search, const std::string& replace)
 {
     try
     {
@@ -907,7 +927,7 @@ void crash()
     *ptr = 0xDEAD;
 }
 
-std::unique_ptr<FILE> utils::openFile(std::string const& path, std::string const& mode)
+std::unique_ptr<FILE> utils::openFile(const std::string& path, const std::string& mode)
 {
     return std::unique_ptr<FILE>(fopen(path.c_str(), mode.c_str()));
 }
@@ -926,12 +946,16 @@ auto utils::isPrintableASCII(unsigned char ch, ASCIIMode mode) -> bool
 
 auto utils::isStringPrintable(const std::string& str, ASCIIMode mode) -> bool
 {
-    // clang-format off
-    return std::all_of(str.begin(), str.end(), [mode](unsigned char ch) { return isPrintableASCII(ch, mode); });
-    // clang-format on
+    return std::all_of(
+        str.begin(),
+        str.end(),
+        [mode](unsigned char ch)
+        {
+            return isPrintableASCII(ch, mode);
+        });
 }
 
-std::string utils::toASCII(std::string const& target, unsigned char replacement)
+std::string utils::toASCII(const std::string& target, unsigned char replacement)
 {
     std::string out;
     out.reserve(target.size());

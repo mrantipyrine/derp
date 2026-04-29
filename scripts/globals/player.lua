@@ -10,6 +10,7 @@ require('scripts/globals/dynamic_world/blessings')
 require('scripts/quests/full_speed_ahead')
 -----------------------------------
 
+
 local startingRaceInfo =
 {
     [xi.race.HUME_M  ] = { gear = { body = xi.item.HUME_TUNIC,        hand = xi.item.HUME_M_GLOVES,     leg = xi.item.HUME_SLACKS,       feet = xi.item.HUME_M_BOOTS       }, homeNation = xi.nation.BASTOK   },
@@ -190,25 +191,34 @@ xi.player.onGameIn = function(player, firstLogin, zoning)
         player:setTraverserEpoch()
     end
 
+    local zoneID    = player:getZoneID()
+    local questVars = player:getCharVarsWithSuffix(']mustZone')
+
+    for tag, value in pairs(questVars) do
+        if value ~= zoneID then
+            player:setCharVar(tag, 0)
+        end
+    end
+
     -- apply mods from gearsets (scripts/globals/gear_sets.lua)
     xi.gear_sets.checkForGearSet(player)
- 
+
     xi.dynamicWorld.blessings.onZoneIn(player)
 
     -- god mode
     if player:getCharVar('GodMode') == 1 then
-        player:addStatusEffect(xi.effect.MAX_HP_BOOST, 1000, 0, 0)
-        player:addStatusEffect(xi.effect.MAX_MP_BOOST, 1000, 0, 0)
-        player:addStatusEffect(xi.effect.MIGHTY_STRIKES, 1, 0, 0)
-        player:addStatusEffect(xi.effect.HUNDRED_FISTS, 1, 0, 0)
-        player:addStatusEffect(xi.effect.CHAINSPELL, 1, 0, 0)
-        player:addStatusEffect(xi.effect.PERFECT_DODGE, 1, 0, 0)
-        player:addStatusEffect(xi.effect.INVINCIBLE, 1, 0, 0)
-        player:addStatusEffect(xi.effect.ELEMENTAL_SFORZO, 1, 0, 0)
-        player:addStatusEffect(xi.effect.MANAFONT, 1, 0, 0)
-        player:addStatusEffect(xi.effect.REGAIN, 300, 0, 0)
-        player:addStatusEffect(xi.effect.REFRESH, 99, 0, 0)
-        player:addStatusEffect(xi.effect.REGEN, 99, 0, 0)
+        player:addStatusEffect(xi.effect.MAX_HP_BOOST, { power = 1000, origin = player })
+        player:addStatusEffect(xi.effect.MAX_MP_BOOST, { power = 1000, origin = player })
+        player:addStatusEffect(xi.effect.MIGHTY_STRIKES, { power = 1, origin = player })
+        player:addStatusEffect(xi.effect.HUNDRED_FISTS, { power = 1, origin = player })
+        player:addStatusEffect(xi.effect.CHAINSPELL, { power = 1, origin = player })
+        player:addStatusEffect(xi.effect.PERFECT_DODGE, { power = 1, origin = player })
+        player:addStatusEffect(xi.effect.INVINCIBLE, { power = 1, origin = player })
+        player:addStatusEffect(xi.effect.ELEMENTAL_SFORZO, { power = 1, origin = player })
+        player:addStatusEffect(xi.effect.MANAFONT, { power = 1, origin = player })
+        player:addStatusEffect(xi.effect.REGAIN, { power = 300, origin = player })
+        player:addStatusEffect(xi.effect.REFRESH, { power = 99, origin = player })
+        player:addStatusEffect(xi.effect.REGEN, { power = 99, origin = player })
         player:addMod(xi.mod.RACC, 2500)
         player:addMod(xi.mod.RATT, 2500)
         player:addMod(xi.mod.ACC, 2500)
@@ -233,7 +243,7 @@ xi.player.onGameIn = function(player, firstLogin, zoning)
     end
 
     -- remember time player zoned in (e.g., to support zone-in delays)
-    player:setLocalVar('ZoneInTime', os.time())
+    player:setLocalVar('ZoneInTime', GetSystemTime())
     player:setLocalVar('ZoningIn', 1)
 
     -- Slight delay to ensure player is fully logged in
@@ -252,7 +262,6 @@ xi.player.onPlayerDeath = function(player)
 end
 
 xi.player.onPlayerLevelUp = function(player)
-    -- give items --
 end
 
 xi.player.onPlayerLevelDown = function(player)

@@ -3,6 +3,7 @@
 -- Consumes 20% of your maximum MP.
 -- Relentless dark damage slowly devours an enemy.
 -----------------------------------
+---@type TSpell
 local spellObject = {}
 
 spellObject.onMagicCastingCheck = function(caster, target, spell)
@@ -22,7 +23,7 @@ spellObject.onSpellCast = function(caster, target, spell)
         local power       = math.floor(damage / 4)
         local duration    = math.floor(3 * (1 + casterSkill / 11))
 
-        target:addStatusEffect(xi.effect.KAUSTRA, power, 3, duration)
+        target:addStatusEffect(xi.effect.KAUSTRA, { power = power, duration = duration, origin = caster, tick = 3 })
     end
 
     return damage

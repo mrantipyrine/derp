@@ -63,20 +63,7 @@ xi.spells.enhancing.calculateNinjutsuPower = function(caster, target, spell, spe
 end
 
 -- Main function for Enhancing Spells.
-local _useEnhancingNinjutsu = xi.spells.enhancing.useEnhancingNinjutsu
 xi.spells.enhancing.useEnhancingNinjutsu = function(caster, target, spell)
-    local result = _useEnhancingNinjutsu(caster, target, spell)
-    
-    -- Solo Synergy: Utsusemi primes the next Weaponskill
-    if caster:isPC() and (spell:getID() == xi.magic.spell.UTSUSEMI_ICHI or spell:getID() == xi.magic.spell.UTSUSEMI_NI) then
-        caster:setLocalVar('SS_SHADOW_BOND', 1)
-        if xi.soloSynergy then
-            xi.soloSynergy.flash(caster, 'SHADOW BOND! Next Weaponskill will refill a shadow.')
-        end
-    end
-    
-    return result
-end
     local spellId = spell:getID()
 
     -- Get Variables from Parameters Table.
@@ -113,7 +100,7 @@ end
     ------------------------------------------------------------
     if alwaysOverwrite then
         target:delStatusEffect(spellEffect)
-        target:addStatusEffect(spellEffect, power, paramThree, duration, 0, subPower)
+        target:addStatusEffect(spellEffect, { power = power, duration = duration, origin = caster, tick = paramThree, subPower = subPower })
 
     -- Utsusemi exception.
     elseif not alwaysOverwrite and spellEffect == xi.effect.COPY_IMAGE then
@@ -127,14 +114,14 @@ end
         paramThree = pTable[spellId][column.EFFECT_POWER] - 2
 
         if targetEffect == nil or targetEffect:getPower() <= paramThree then
-            target:addStatusEffectEx(xi.effect.COPY_IMAGE, subPower, paramThree, duration, 900, 0, power) -- Not a mistake.
+            target:addStatusEffect(xi.effect.COPY_IMAGE, { power = paramThree, duration = 900, origin = caster, tick = duration, icon = subPower, subPower = power }) -- Not a mistake.
             spell:setMsg(xi.msg.basic.MAGIC_GAIN_EFFECT)
         else
             spell:setMsg(xi.msg.basic.MAGIC_NO_EFFECT)
         end
 
     else
-        if target:addStatusEffect(spellEffect, power, paramThree, duration, 0, subPower) then
+        if target:addStatusEffect(spellEffect, { power = power, duration = duration, origin = caster, tick = paramThree, subPower = subPower }) then
             spell:setMsg(xi.msg.basic.MAGIC_GAIN_EFFECT)
         else
             spell:setMsg(xi.msg.basic.MAGIC_NO_EFFECT) -- No effect.

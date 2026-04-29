@@ -1,35 +1,39 @@
 -----------------------------------
---  Hexidiscs
---
---  Description: A sixfold attack damages targets in a fan-shaped area of effect.
---  Type: Physical
---  Utsusemi/Blink absorb: 6 shadows
---  Range: Unknown cone
---  Notes: Only used in "ball" form.
+-- Hexidiscs
+-- Family: Ghrah
+-- Description: A sixfold attack damages targets in a fan-shaped area of effect.
+-- Notes: Only used in "ball" form.
 -----------------------------------
 ---@type TMobSkill
 local mobskillObject = {}
 
------------------------------------
--- onMobSkillCheck
--- if not in Ball form, then ignore.
------------------------------------
 mobskillObject.onMobSkillCheck = function(target, mob, skill)
-    if mob:getAnimationSub() ~= 0 then
+    if mob:getAnimationSub() ~= 0 then -- Only used in ball form
         return 1
     else
         return 0
     end
 end
 
-mobskillObject.onMobWeaponSkill = function(target, mob, skill)
-    local numhits = 6
-    local accmod = 1
-    local ftp    = .7
-    local info = xi.mobskills.mobPhysicalMove(mob, target, skill, numhits, accmod, ftp, xi.mobskills.physicalTpBonus.NO_EFFECT)
-    local dmg = xi.mobskills.mobFinalAdjustments(info.dmg, mob, skill, target, xi.attackType.PHYSICAL, xi.damageType.BLUNT, info.hitslanded)
-    target:takeDamage(dmg, mob, xi.attackType.PHYSICAL, xi.damageType.BLUNT)
-    return dmg
+mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
+    local params = {}
+
+    params.baseDamage       = mob:getWeaponDmg()
+    params.numHits          = 6
+    params.fTP              = { 0.5, 0.5, 0.5 }
+    params.attackType       = xi.attackType.PHYSICAL
+    params.damageType       = xi.damageType.BLUNT -- TODO: Capture damageType
+    params.shadowBehavior   = xi.mobskills.shadowBehavior.NUMSHADOWS_6 -- TODO: Capture shadowBehavior
+    params.attackMultiplier = { 1.25, 1.25, 1.25 }
+    params.accuracyModifier = { -50, -50, -50 } -- TODO: Capture accuracy modifier
+
+    local info = xi.mobskills.mobPhysicalMove(mob, target, skill, action, params)
+
+    if xi.mobskills.processDamage(mob, target, skill, action, info) then
+        target:takeDamage(info.damage, mob, info.attackType, info.damageType)
+    end
+
+    return info.damage
 end
 
 return mobskillObject

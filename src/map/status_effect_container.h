@@ -19,11 +19,9 @@
 ===========================================================================
 */
 
-#ifndef _STATUSEFFECTCONTAINER_H
-#define _STATUSEFFECTCONTAINER_H
+#pragma once
 
 #include "common/cbasetypes.h"
-#include "common/task_manager.h"
 
 #include <set>
 
@@ -57,7 +55,7 @@ public:
     bool DelStatusEffect(EFFECT StatusID, uint16 SubID);
     bool DelStatusEffectBySource(EFFECT StatusID, EffectSourceType EffectSourceType, uint16 SourceTypeParam);
     void DelStatusEffectsByFlag(uint32 flag, EffectNotice notice = EffectNotice::ShowMessage); // Remove all the status effects with the specified type
-    void DelStatusEffectsByIcon(uint16 IconID);                                                // Remove all effects with the specified icon
+    void DelStatusEffectsByIcon(uint16 BuffNo);                                                // Remove all effects with the specified icon
     void DelStatusEffectsByType(uint16 Type);
     bool DelStatusEffectByTier(EFFECT StatusID, uint16 power);
     void KillAllStatusEffect();
@@ -99,7 +97,7 @@ public:
     uint8 GetEffectsCountWithFlag(EFFECTFLAG flag); // We get the number of effects with the specified flag
     uint8 GetLowestFreeSlot();                      // returns the lowest free slot for songs/rolls
 
-    bool ApplyCorsairEffect(CStatusEffect* PStatusEffect, uint8 maxRolls, uint8 bustDuration);
+    auto ApplyCorsairEffect(CStatusEffect* PStatusEffect, uint8 maxRolls, uint8 bustDuration) -> bool;
     bool CheckForElevenRoll();
     bool HasBustEffect(uint16 id);
     bool HasCorsairEffect(uint32 charid);
@@ -141,9 +139,9 @@ private:
     CBattleEntity* m_POwner = nullptr;
 
     // void ReplaceStatusEffect(EFFECT effect); //this needs to be implemented
-    void RemoveStatusEffect(CStatusEffect* PEffect, EffectNotice notice = EffectNotice::ShowMessage); // We remove the effect by its number in the container
+    void RemoveStatusEffect(CStatusEffect* PStatusEffect, EffectNotice notice = EffectNotice::ShowMessage); // We remove the effect by its number in the container
     void DeleteStatusEffects();
-    void SetEffectParams(CStatusEffect* StatusEffect); // We set the effect of the effect
+    auto SetEffectParams(CStatusEffect* StatusEffect) -> void; // We set the effect of the effect
     void HandleAura(CStatusEffect* PStatusEffect);
 
     void OverwriteStatusEffect(CStatusEffect* StatusEffect);
@@ -159,9 +157,9 @@ private:
 
 namespace effects
 {
-    void        LoadEffectsParameters();
-    uint16      GetEffectElement(uint16 effect);
-    std::string GetEffectName(uint16 effect);
-}; // namespace effects
 
-#endif
+void        LoadEffectsParameters();
+uint16      GetEffectElement(uint16 effect);
+std::string GetEffectName(uint16 effect);
+
+}; // namespace effects

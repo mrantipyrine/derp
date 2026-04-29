@@ -1,6 +1,7 @@
 -----------------------------------
 -- A Moogle Kupo d'Etat
 -- A Moogle Kupo d'Etat M1
+-----------------------------------
 -- !addmission 10 0
 -----------------------------------
 
@@ -19,7 +20,7 @@ mission.sections[1] = -- REMEMBER: Lua is 1-indexed!
     check = function(player, currentMission, missionStatus, vars)
         return currentMission == mission.missionId and
             xi.settings.main.ENABLE_AMK == 1 and
-            xi.moghouse.isInMogHouseInHomeNation(player) and
+            xi.moghouse.inMogHouseInHomeNation(player) and
             player:getMainLvl() >= 10 and
             player:getCharVar('HQuest[moghouseExpo]notSeen') == 0
     end,

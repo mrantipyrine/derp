@@ -2,10 +2,12 @@
 -- Area: Gustav Tunnel
 --   NM: Bune
 -----------------------------------
+mixins = { require('scripts/mixins/job_special') }
+-----------------------------------
 ---@type TMobEntity
 local entity = {}
 
-local spawnPoints =
+entity.spawnPoints =
 {
     { x = -72.000, y = -10.000, z = -170.000 },
     { x = -67.566, y = -9.052,  z = -158.554 },
@@ -60,18 +62,37 @@ local spawnPoints =
 }
 
 entity.onMobInitialize = function(mob)
-    xi.mob.updateNMSpawnPoint(mob, spawnPoints)
+    xi.mob.updateNMSpawnPoint(mob)
     mob:setRespawnTime(math.random(900, 10800))
-end
-
-entity.onMobSpawn = function(mob)
     mob:addImmunity(xi.immunity.DARK_SLEEP)
     mob:addImmunity(xi.immunity.LIGHT_SLEEP)
     mob:addImmunity(xi.immunity.TERROR)
+    mob:addImmunity(xi.immunity.SILENCE)
+end
+
+entity.onMobSpawn = function(mob)
+    mob:setMobMod(xi.mobMod.BASE_DAMAGE_MULTIPLIER, 200)
+    mob:setMod(xi.mod.ATT, 600)
+    mob:setMaxMP(0)
+end
+
+entity.onMobFight = function(mob, target)
+    local drawInTable =
+    {
+        conditions =
+        {
+            target:checkDistance(mob) > mob:getMeleeRange(target),
+        },
+        position = mob:getPos(),
+        offset = 3,
+        degrees = 90,
+        wait = 10,
+    }
+    utils.drawIn(target, drawInTable)
 end
 
 entity.onMobDespawn = function(mob)
-    xi.mob.updateNMSpawnPoint(mob, spawnPoints)
+    xi.mob.updateNMSpawnPoint(mob)
     mob:setRespawnTime(math.random(75600, 86400)) -- 21-24 hours
 end
 

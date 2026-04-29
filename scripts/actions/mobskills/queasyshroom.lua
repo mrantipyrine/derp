@@ -1,38 +1,43 @@
 -----------------------------------
 -- Queasyshroom
--- Additional effect: Poison. Duration of effect varies with TP.
--- Range is 13.5 yalms.
--- Piercing damage Ranged Attack.
--- Secondary modifiers: INT: 20%.
--- Additional Effect: Poison is based on level
--- Poison effect may resist
--- Removes all Shadow Images on the target.
+-- Family: Funguar
+-- Description: Deals physical damage to a single target. Additional Effect: Poison
 -----------------------------------
 ---@type TMobSkill
 local mobskillObject = {}
 
 mobskillObject.onMobSkillCheck = function(target, mob, skill)
-    if mob:getMobMod(xi.mobMod.VAR) == 0 then
+    if mob:getAnimationSub() == 0 then
         return 0
     end
 
     return 1
 end
 
--- TODO: can crit
-mobskillObject.onMobWeaponSkill = function(target, mob, skill)
-    mob:setMobMod(xi.mobMod.VAR, 1)
-    local numhits = 1
-    local accmod = 1
-    local ftp    = 1.5
-    local info = xi.mobskills.mobPhysicalMove(mob, target, skill, numhits, accmod, ftp, xi.mobskills.physicalTpBonus.NO_EFFECT, 0, 0, 0)
-    local dmg = xi.mobskills.mobFinalAdjustments(info.dmg, mob, skill, target, xi.attackType.PHYSICAL, xi.damageType.PIERCING, xi.mobskills.shadowBehavior.WIPE_SHADOWS)
-    local power = mob:getMainLvl() / 10 + 1
+mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
+    local params = {}
 
-    xi.mobskills.mobPhysicalStatusEffectMove(mob, target, skill, xi.effect.POISON, power, 3, 60)
+    params.baseDamage     = mob:getWeaponDmg()
+    params.numHits        = 1
+    params.fTP            = { 1.5, 1.5, 1.5 }
+    params.attackType     = xi.attackType.PHYSICAL
+    params.damageType     = xi.damageType.PIERCING
+    params.shadowBehavior = xi.mobskills.shadowBehavior.NUMSHADOWS_1
+    params.canCrit        = true
+    params.criticalChance = { 0.10, 0.20, 0.25 } -- TODO: Capture crit rate
 
-    target:takeDamage(dmg, mob, xi.attackType.PHYSICAL, xi.damageType.PIERCING)
-    return dmg
+    local info = xi.mobskills.mobPhysicalMove(mob, target, skill, action, params)
+
+    if xi.mobskills.processDamage(mob, target, skill, action, info) then
+        target:takeDamage(info.damage, mob, info.attackType, info.damageType)
+
+        local power = mob:getMainLvl() / 10 + 1
+        xi.mobskills.mobStatusEffectMove(mob, target, xi.effect.POISON, power, 3, 60)
+    end
+
+    skill:setFinalAnimationSub(1)
+
+    return info.damage
 end
 
 return mobskillObject

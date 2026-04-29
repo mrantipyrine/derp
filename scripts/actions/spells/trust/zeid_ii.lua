@@ -1,6 +1,7 @@
 -----------------------------------
 -- Trust: Zeid II
 -----------------------------------
+---@type TSpellTrust
 local spellObject = {}
 
 spellObject.onMagicCastingCheck = function(caster, target, spell)
@@ -16,32 +17,26 @@ spellObject.onMobSpawn = function(mob)
         [xi.magic.spell.LION_II] = xi.trust.messageOffset.TEAMWORK_1,
     })
 
-    mob:addListener('WEAPONSKILL_USE', 'ZEID_II_WEAPONSKILL_USE', function(mobArg, target, wsid, tp, action)
-        if wsid == 56 then -- Ground Strike
+    mob:addListener('WEAPONSKILL_USE', 'ZEID_II_WEAPONSKILL_USE', function(mobArg, target, skill, tp, action, damage)
+        if skill:getID() == 56 then -- Ground Strike
             -- Never again will I lose sight of who I am
             xi.trust.message(mobArg, xi.trust.messageOffset.SPECIAL_MOVE_1)
         end
     end)
 
     -- Stun all the things!
-    mob:addSimpleGambit(ai.t.TARGET, ai.c.READYING_WS, 0,
-                        ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.STUN)
+    mob:addGambit(ai.t.TARGET, { ai.c.READYING_WS, 0 }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.STUN })
 
-    mob:addSimpleGambit(ai.t.TARGET, ai.c.READYING_MS, 0,
-                        ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.STUN)
+    mob:addGambit(ai.t.TARGET, { ai.c.READYING_MS, 0 }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.STUN })
 
-    mob:addSimpleGambit(ai.t.TARGET, ai.c.READYING_JA, 0,
-                        ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.STUN)
+    mob:addGambit(ai.t.TARGET, { ai.c.READYING_JA, 0 }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.STUN })
 
-    mob:addSimpleGambit(ai.t.TARGET, ai.c.CASTING_MA, 0,
-                        ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.STUN)
+    mob:addGambit(ai.t.TARGET, { ai.c.CASTING_MA, 0 }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.STUN })
 
     -- Non-stun things
-    mob:addSimpleGambit(ai.t.SELF, ai.c.ALWAYS, 0,
-                        ai.r.JA, ai.s.SPECIFIC, xi.ja.SOULEATER)
+    mob:addGambit(ai.t.SELF, { ai.c.ALWAYS, 0 }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.SOULEATER })
 
-    mob:addSimpleGambit(ai.t.SELF, ai.c.ALWAYS, 0,
-                        ai.r.JA, ai.s.SPECIFIC, xi.ja.LAST_RESORT)
+    mob:addGambit(ai.t.SELF, { ai.c.ALWAYS, 0 }, { ai.r.JA, ai.s.SPECIFIC, xi.ja.LAST_RESORT })
 
     mob:setTrustTPSkillSettings(ai.tp.CLOSER_UNTIL_TP, ai.s.RANDOM, 3000)
 end

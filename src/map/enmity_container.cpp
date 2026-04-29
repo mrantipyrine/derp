@@ -98,7 +98,14 @@ void CEnmityContainer::LogoutReset(uint32 EntityID)
     if (const auto& enmity_obj = m_EnmityList.find(EntityID); enmity_obj != m_EnmityList.end())
     {
         enmity_obj->second.PEnmityOwner = nullptr;
-        enmity_obj->second.active       = false;
+    }
+}
+
+void CEnmityContainer::SetActive(uint32 EntityID, bool active)
+{
+    if (const auto& enmity_obj = m_EnmityList.find(EntityID); enmity_obj != m_EnmityList.end())
+    {
+        enmity_obj->second.active = active;
     }
 }
 
@@ -115,7 +122,7 @@ void CEnmityContainer::AddBaseEnmity(CBattleEntity* PChar)
     {
         return;
     }
-    m_EnmityList.emplace(PChar->id, EnmityObject_t{ PChar, 0, 0, false });
+    m_EnmityList.emplace(PChar->id, EnmityObject_t{ PChar, 0, 0, true });
     PChar->PNotorietyContainer->add(m_EnmityHolder);
 }
 
@@ -140,7 +147,7 @@ float CEnmityContainer::CalculateEnmityBonus(CBattleEntity* PEntity)
         }
     }
 
-    float bonus = (100.f + std::clamp(enmityBonus, -50, 100)) / 100.f;
+    float bonus = (100.0f + std::clamp(enmityBonus, -50, 100)) / 100.0f;
 
     return bonus;
 }
@@ -171,6 +178,7 @@ void CEnmityContainer::UpdateEnmity(CBattleEntity* PEntity, int32 CE, int32 VE, 
     if (directAction)
     {
         int16 THlevel = std::min<int16>(8, PEntity->getMod(Mod::TREASURE_HUNTER));
+        int16 GFlevel = PEntity->getMod(Mod::GILFINDER); // Is there a cap? Theoretical GF level cap could be GF 8 for 128/256 + 8*16 = 256/256
 
         // Enforce TH8 as max for THF main and TH4 as non-THF main
         if (PEntity->GetMJob() != JOB_THF)
@@ -181,6 +189,11 @@ void CEnmityContainer::UpdateEnmity(CBattleEntity* PEntity, int32 CE, int32 VE, 
         if (m_EnmityHolder->m_THLvl < THlevel)
         {
             m_EnmityHolder->m_THLvl = THlevel;
+        }
+
+        if (m_EnmityHolder->m_GilfinderLevel < GFlevel)
+        {
+            m_EnmityHolder->m_GilfinderLevel = GFlevel;
         }
     }
 
@@ -198,9 +211,13 @@ void CEnmityContainer::UpdateEnmity(CBattleEntity* PEntity, int32 CE, int32 VE, 
         int32 newVE = (int32)(enmity_obj->second.VE + (VE > 0 ? VE * bonus : VE));
 
         // Check for cap limit
-        enmity_obj->second.CE     = std::clamp(newCE, 0, EnmityCap);
-        enmity_obj->second.VE     = std::clamp(newVE, 0, EnmityCap);
-        enmity_obj->second.active = true;
+        enmity_obj->second.CE = std::clamp(newCE, 0, EnmityCap);
+        enmity_obj->second.VE = std::clamp(newVE, 0, EnmityCap);
+
+        if (CE >= 0 && VE >= 0)
+        {
+            enmity_obj->second.active = true;
+        }
     }
     else if (CE >= 0 && VE >= 0)
     {
@@ -246,12 +263,13 @@ void CEnmityContainer::UpdateEnmity(CBattleEntity* PEntity, int32 CE, int32 VE, 
 
 bool CEnmityContainer::HasID(uint32 TargetID)
 {
-    // clang-format off
-    auto maybeID = std::find_if(m_EnmityList.begin(), m_EnmityList.end(), [TargetID](auto elem)
-    {
-        return elem.first == TargetID && elem.second.active;
-    });
-    // clang-format on
+    auto maybeID = std::find_if(
+        m_EnmityList.begin(),
+        m_EnmityList.end(),
+        [TargetID](auto elem)
+        {
+            return elem.first == TargetID;
+        });
 
     return maybeID != m_EnmityList.end();
 }
@@ -273,7 +291,7 @@ void CEnmityContainer::UpdateEnmityFromCure(CBattleEntity* PEntity, uint8 level,
     int32 CE                     = 0;
     int32 VE                     = 0;
     float bonus                  = CalculateEnmityBonus(PEntity);
-    float tranquilHeartReduction = 1.f - battleutils::HandleTranquilHeart(PEntity);
+    float tranquilHeartReduction = 1.0f - battleutils::HandleTranquilHeart(PEntity);
 
     if (fixedCE > 0 || fixedVE > 0)
     {
@@ -284,8 +302,8 @@ void CEnmityContainer::UpdateEnmityFromCure(CBattleEntity* PEntity, uint8 level,
     {
         CureAmount = (CureAmount < 1 ? 1 : CureAmount);
 
-        CE = (int32)(40.f / battleutils::GetEnmityModCure(level) * CureAmount * bonus * tranquilHeartReduction);
-        VE = (int32)(240.f / battleutils::GetEnmityModCure(level) * CureAmount * bonus * tranquilHeartReduction);
+        CE = (int32)(40.0f / battleutils::GetEnmityModCure(level) * CureAmount * bonus * tranquilHeartReduction);
+        VE = (int32)(240.0f / battleutils::GetEnmityModCure(level) * CureAmount * bonus * tranquilHeartReduction);
     }
 
     auto enmity_obj = m_EnmityList.find(PEntity->id);
@@ -405,8 +423,8 @@ void CEnmityContainer::UpdateEnmityFromDamage(CBattleEntity* PEntity, int32 Dama
         Damage          = (Damage < 1 ? 1 : Damage);
         int16 damageMod = battleutils::GetEnmityModDamage(m_EnmityHolder->GetMLevel());
 
-        int32 CE = (int32)(80.f / damageMod * Damage);
-        int32 VE = (int32)(240.f / damageMod * Damage);
+        int32 CE = (int32)(80.0f / damageMod * Damage);
+        int32 VE = (int32)(240.0f / damageMod * Damage);
 
         UpdateEnmity(PEntity, CE, VE);
 
@@ -428,8 +446,8 @@ void CEnmityContainer::UpdateEnmityFromAttack(CBattleEntity* PEntity, int32 Dama
     TracyZoneScoped;
     if (auto enmity_obj = m_EnmityList.find(PEntity->id); enmity_obj != m_EnmityList.end())
     {
-        float reduction = (100.f - std::min<int16>(PEntity->getMod(Mod::ENMITY_LOSS_REDUCTION), 100)) / 100.f;
-        int32 CE        = (int32)(-1800.f * Damage / PEntity->GetMaxHP() * reduction);
+        float reduction = (100.0f - std::min<int16>(PEntity->getMod(Mod::ENMITY_LOSS_REDUCTION), 100)) / 100.0f;
+        int32 CE        = (int32)(-1800.0f * Damage / PEntity->GetMaxHP() * reduction);
 
         enmity_obj->second.CE = std::clamp(enmity_obj->second.CE + CE, 0, EnmityCap);
     }
@@ -450,14 +468,13 @@ CBattleEntity* CEnmityContainer::GetHighestEnmity()
     }
     uint32 HighestEnmity = 0;
     auto   highest       = m_EnmityList.end();
-    bool   active        = false;
 
     for (auto it = m_EnmityList.begin(); it != m_EnmityList.end(); ++it)
     {
         const EnmityObject_t& PEnmityObject = it->second;
         uint32                Enmity        = PEnmityObject.CE + PEnmityObject.VE;
 
-        if (Enmity >= HighestEnmity && ((PEnmityObject.active == active) || (PEnmityObject.active && !active)))
+        if (Enmity >= HighestEnmity && PEnmityObject.active)
         {
             auto* POwner = PEnmityObject.PEnmityOwner;
             if (!POwner || (POwner->allegiance != m_EnmityHolder->allegiance))
@@ -470,12 +487,13 @@ CBattleEntity* CEnmityContainer::GetHighestEnmity()
                 {
                     continue;
                 }
-                active        = PEnmityObject.active;
+
                 HighestEnmity = Enmity;
                 highest       = it;
             }
         }
     }
+
     CBattleEntity* PEntity = nullptr;
     if (highest != m_EnmityList.end())
     {
@@ -485,7 +503,9 @@ CBattleEntity* CEnmityContainer::GetHighestEnmity()
             PEntity = zoneutils::GetChar(highest->first);
         }
 
-        if (!PEntity || PEntity->getZone() != m_EnmityHolder->getZone() || PEntity->PInstance != m_EnmityHolder->PInstance)
+        // TODO: Kaeko's blog indicates talking to NPCs/being in a CS also will reset hate here?
+        // Is this still true?
+        if (!PEntity || PEntity->getZone() != m_EnmityHolder->getZone() || PEntity->PInstance != m_EnmityHolder->PInstance || PEntity->isDead())
         {
             m_EnmityList.erase(highest);
             PEntity = GetHighestEnmity();

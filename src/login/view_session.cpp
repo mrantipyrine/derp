@@ -21,6 +21,8 @@
 
 #include "view_session.h"
 
+#include "data_session.h"
+
 #include <common/lua.h>
 #include <common/settings.h>
 #include <common/utils.h>
@@ -41,7 +43,7 @@ void view_session::read_func()
     session_t& session = loginHelpers::get_authenticated_session(ipAddress, sessionHash);
     if (!session.view_session)
     {
-        session.view_session = std::make_shared<view_session>(std::forward<asio::ssl::stream<asio::ip::tcp::socket>>(socket_));
+        session.view_session = std::make_shared<view_session>(std::forward<asio::ssl::stream<asio::ip::tcp::socket>>(socket_), zmqDealerWrapper_);
     }
     session.view_session->sessionHash = sessionHash;
 
@@ -58,7 +60,8 @@ void view_session::read_func()
             uint32 accountID = 0;
 
             const auto rset = db::preparedStmt("SELECT accid FROM chars WHERE charid = ? AND charname = ? LIMIT 1",
-                                               requestedCharacterID, requestedCharacter);
+                                               requestedCharacterID,
+                                               requestedCharacter);
             if (rset && rset->rowsCount() != 0 && rset->next())
             {
                 accountID                    = rset->get<uint32>("accid");
@@ -95,6 +98,9 @@ void view_session::read_func()
                 return;
             }
 
+            lpkt_deletechr deleteCharPacket = {};
+            std::memcpy(&deleteCharPacket, buffer_.data(), sizeof(lpkt_deletechr));
+
             std::memset(buffer_.data(), 0, 0x20);
             buffer_.data()[0] = 0x20; // size
 
@@ -112,10 +118,11 @@ void view_session::read_func()
 
             do_write(0x20);
 
-            uint32 charID = ref<uint32>(buffer_.data(), 0x20);
+            uint32 charID = deleteCharPacket.ffxi_id;
 
             ShowInfo(fmt::format("attempt to delete char:<{}> from ip:<{}>",
-                                 charID, ipAddress));
+                                 charID,
+                                 ipAddress));
 
             uint32 accountID = 0;
 
@@ -127,9 +134,14 @@ void view_session::read_func()
 
             if (accountID != session.accountID)
             {
-                ShowError(fmt::format("Account ID {} tried to delete character not in their account. (Note: there is a known issue that the client does not send the whole ID for characters above ID 65535 and this may not be their fault.)", session.accountID));
+                ShowError(fmt::format("Account ID {} tried to delete character not in their account.", session.accountID));
                 socket_.lowest_layer().close();
                 return;
+            }
+
+            if (auto data = dynamic_cast<data_session*>(session.data_session.get()))
+            {
+                data->deleteCharFromCharInfo(charID);
             }
 
             // Perform character deletion.
@@ -137,16 +149,27 @@ void view_session::read_func()
             // This allows character recovery.
 
             db::preparedStmt("UPDATE chars SET accid = 0, original_accid = ? WHERE charid = ? AND accid = ?",
-                             session.accountID, charID, session.accountID);
+                             session.accountID,
+                             charID,
+                             session.accountID);
+
+            // Increment key after delete
+            session.incrementKeyValue += 4;
         }
         break;
         case 0x21: // 33: Registering character name onto the lobby server
         {
+            lpkt_chr_info_sub2 charInfo = {};
             // creating new char
-            if (loginHelpers::createCharacter(session, buffer_.data()) == -1)
+            if (loginHelpers::createCharacter(session, buffer_.data(), charInfo) == -1)
             {
                 socket_.lowest_layer().close();
                 return;
+            }
+
+            if (auto data = dynamic_cast<data_session*>(session.data_session.get()))
+            {
+                data->addCharIntoCharInfo(charInfo);
             }
 
             session.justCreatedNewChar = true;
@@ -188,7 +211,7 @@ void view_session::read_func()
                 char CharName[PacketNameLength] = {};
                 std::memcpy(CharName, buffer_.data() + 32, PacketNameLength - 1);
 
-                std::optional<std::string> invalidNameReason = std::nullopt;
+                Maybe<std::string> invalidNameReason = std::nullopt;
 
                 // Sanitize name & check for invalid characters
                 std::string nameStr = CharName;
@@ -249,7 +272,7 @@ void view_session::read_func()
                 if (auto badWordsList = loginSettingsTable.get_or<sol::table>("BANNED_WORDS_LIST", sol::lua_nil); badWordsList.valid())
                 {
                     const auto potentialName = to_upper(nameStr);
-                    for (auto const& entry : badWordsList)
+                    for (const auto& entry : badWordsList)
                     {
                         const auto badWord = to_upper(entry.second.as<std::string>());
                         if (potentialName.find(badWord) != std::string::npos)
@@ -348,34 +371,43 @@ void view_session::read_func()
                 }
             }
 
-            std::array<uint8, 0x28> packet = {};
+            // https://github.com/atom0s/XiPackets/blob/main/lobby/S2C_0x0005_ResponseKey.md
+            struct lpkt_key
+            {
+                uint32_t packet_size;    // PS2: packet_size
+                uint32_t terminator;     // PS2: terminator
+                uint32_t command;        // PS2: command
+                uint8_t  identifer[16];  // PS2: identifer
+                uint32_t key;            // PS2: key
+                uint32_t excode_server;  // PS2: excode_server
+                uint32_t excode_server2; // PS2: (New; did not exist.)
+            };
 
-            packet[0] = 0x28; // size
+            lpkt_key packet = {};
 
-            packet[4] = 0x49; // I
-            packet[5] = 0x58; // X
-            packet[6] = 0x46; // F
-            packet[7] = 0x46; // F
-
-            packet[8] = 0x05; // result
-
-            // Magic
-            packet[28] = 0x4F;
-            packet[29] = 0xE0;
-            packet[30] = 0x5D;
-            packet[31] = 0xAD;
-
-            ref<uint16>(packet.data(), 32) = loginHelpers::generateExpansionBitmask();
-            ref<uint16>(packet.data(), 36) = loginHelpers::generateFeatureBitmask();
-
+            // Zero buffers
             std::memset(buffer_.data(), 0, 0x28);
-            std::memcpy(buffer_.data(), packet.data(), 0x28);
+            std::memset(&packet, 0, sizeof(lpkt_key));
+
+            packet.packet_size    = 0x28;       // NOT the size of lpkt_key
+            packet.terminator     = 0x46465849; // F F X I (in memory as I X F F)
+            packet.command        = 0x05;
+            packet.key            = 0xAD5DE04F; // old magic key. May be able to replace with a randomized key some day...
+            packet.excode_server  = loginHelpers::generateExpansionBitmask();
+            packet.excode_server2 = loginHelpers::generateFeatureBitmask();
+
+            std::memcpy(buffer_.data(), &packet, sizeof(lpkt_key));
 
             // Hash the packet data and then write the value of the hash into the packet.
             unsigned char hash[16];
             md5(reinterpret_cast<uint8*>(buffer_.data()), hash, 0x28);
-            std::memcpy(buffer_.data() + 12, hash, 16);
 
+            for (int i = 0; i < 16; i++)
+            {
+                packet.identifer[i] = hash[i];
+            }
+
+            std::memcpy(buffer_.data(), &packet, sizeof(lpkt_key));
             DebugSockets("view_session: Sending version and expansions info to account %d", session.accountID);
 
             if (auto data = session.view_session.get())
@@ -455,11 +487,11 @@ void view_session::handle_error(std::error_code ec, std::shared_ptr<handler_sess
                 // Remove entry if needs to be
                 map.erase(it);
 
-                // Remove IP from map if it's the last entry
+                // Remove IP from map if no entries remain
                 auto& sessions = loginHelpers::getAuthenticatedSessions();
-                if (sessions[self->ipAddress].size() == 1)
+                if (auto outerIt = sessions.find(self->ipAddress); outerIt != sessions.end() && outerIt->second.empty())
                 {
-                    sessions.erase(sessions.begin());
+                    sessions.erase(outerIt);
                 }
             }
         }

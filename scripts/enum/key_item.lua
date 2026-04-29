@@ -6,6 +6,7 @@ xi = xi or {}
 ---@enum xi.keyItem
 xi.keyItem =
 {
+    NONE                                     = 0,
     ZERUHN_REPORT                            = 1,
     PALBOROUGH_MINES_LOGS                    = 2,
     BLUE_ACIDITY_TESTER                      = 3,
@@ -3007,7 +3008,8 @@ xi.keyItem =
     BYAKKO_COMPANION                         = 3104,
     NOBLE_CHOCOBO_COMPANION                  = 3105,
     IXION_COMPANION                          = 3106,
-
+    PHUABO_COMPANION                         = 3107,
+    CRAKLAW_COMPANION                        = 3108,
     SHEET_OF_SHADOW_LORD_TUNES               = 3136,
     MYSTICAL_CANTEEN                         = 3137,
     YGNASS_INSIGNIA                          = 3138,
@@ -3233,6 +3235,7 @@ xi.keyItem =
     -- NULL ENTRY                            = 3358,
     -- NULL ENTRY                            = 3359,
     SHEET_OF_DIVINE_TUNES                    = 3360,
+    CIPHER_BRACELET                          = 3361,
 }
 
 ---@alias xi.ki xi.keyItem

@@ -5,9 +5,16 @@
 ---@type TMobEntity
 local entity = {}
 
+entity.spawnPoints =
+{
+    { x =  169.270, y =   8.028, z = -110.580 },
+    { x =  155.792, y =   8.334, z = -124.494 },
+    { x =  169.525, y =  11.964, z = -128.288 }
+}
+
 entity.onMobSpawn = function(mob)
     mob:setMobMod(xi.mobMod.AUTO_SPIKES, 1)
-    mob:addStatusEffect(xi.effect.ICE_SPIKES, 50, 0, 0)
+    mob:addStatusEffect(xi.effect.ICE_SPIKES, { power = 50, origin = mob })
     mob:getStatusEffect(xi.effect.ICE_SPIKES):setEffectFlags(xi.effectFlag.DEATH)
     mob:setMobMod(xi.mobMod.ADD_EFFECT, 1)
     mob:setMod(xi.mod.ICE_MEVA, 100)
@@ -22,7 +29,8 @@ entity.onSpikesDamage = function(mob, target, damage)
     params.includemab = false
     dmg = addBonusesAbility(mob, xi.element.ICE, target, dmg, params)
     dmg = dmg * applyResistanceAddEffect(mob, target, xi.element.ICE, 0)
-    dmg = dmg * xi.spells.damage.calculateNukeAbsorbOrNullify(target, xi.element.ICE)
+    dmg = math.floor(dmg * xi.spells.damage.calculateAbsorption(target, xi.element.ICE, true))
+    dmg = math.floor(dmg * xi.spells.damage.calculateNullification(target, xi.element.ICE, true, false))
     dmg = finalMagicNonSpellAdjustments(mob, target, xi.element.ICE, dmg)
 
     if dmg < 0 then
@@ -33,7 +41,16 @@ entity.onSpikesDamage = function(mob, target, damage)
 end
 
 entity.onAdditionalEffect = function(mob, target, damage)
-    return xi.mob.onAddEffect(mob, target, damage, xi.mob.ae.ENBLIZZARD)
+    local pTable =
+    {
+        chance         = 100,
+        attackType     = xi.attackType.MAGICAL,
+        magicalElement = xi.element.ICE,
+        basePower      = math.floor(damage / 2),
+        actorStat      = xi.mod.INT,
+    }
+
+    return xi.combat.action.executeAddEffectDamage(mob, target, pTable)
 end
 
 entity.onMobFight = function(mob, target)

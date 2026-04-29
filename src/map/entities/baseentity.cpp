@@ -28,7 +28,6 @@
 #include "battlefield.h"
 #include "instance.h"
 #include "los/zone_los.h"
-#include "map_server.h"
 #include "navmesh.h"
 #include "zone.h"
 
@@ -75,7 +74,6 @@ void CBaseEntity::Spawn()
     updatemask |= UPDATE_HP;
     ResetLocalVars();
     PAI->Reset();
-    PAI->EventHandler.triggerListener("SPAWN", this);
 }
 
 void CBaseEntity::FadeOut()
@@ -84,7 +82,7 @@ void CBaseEntity::FadeOut()
     updatemask |= UPDATE_HP;
 }
 
-const std::string& CBaseEntity::getName()
+const std::string& CBaseEntity::getName() const
 {
     return name;
 }
@@ -215,22 +213,22 @@ void CBaseEntity::SendZoneUpdate()
 
 void CBaseEntity::ResetLocalVars()
 {
-    m_localVars.clear();
+    localVars_.clear();
 }
 
 uint32 CBaseEntity::GetLocalVar(const std::string& var)
 {
-    return m_localVars[var];
+    return localVars_[var];
 }
 
 std::map<std::string, uint32>& CBaseEntity::GetLocalVars()
 {
-    return m_localVars;
+    return localVars_;
 }
 
 void CBaseEntity::SetLocalVar(const std::string& var, uint32 val)
 {
-    m_localVars[var] = val;
+    localVars_[var] = val;
 }
 
 void CBaseEntity::SetModelId(uint16 modelid)

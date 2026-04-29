@@ -68,9 +68,9 @@ quest.sections =
                     if progress == 0 then
                         return quest:event(7, xi.ki.ANCIENT_TABLET_FRAGMENT) -- Reminder to get KI
                     elseif progress == 1 then
-                        return quest:progressEvent(8, xi.ki.ANCIENT_TABLET_FRAGMENT) -- Player has returned with KI
+                        return quest:progressEvent(8, xi.ki.ANCIENT_TABLET_FRAGMENT, xi.ki.TABLET_OF_ANCIENT_MAGIC, xi.ki.LETTER_FROM_ALFESAR) -- Player has returned with KI
                     elseif progress == 2 then
-                        return quest:event(9, 0, xi.ki.ANCIENT_TABLET_FRAGMENT) -- Reminder to go to Sandy
+                        return quest:event(9, 0, xi.ki.TABLET_OF_ANCIENT_MAGIC) -- Reminder to go to Sandy
                     end
                 end,
             },
@@ -113,12 +113,12 @@ quest.sections =
                         return quest:progressEvent(703) -- Player has turned in the KIs from Alfesar
                     elseif
                         progress == 3 and
-                        os.time() < quest:getVar(player, 'Wait')
+                        GetSystemTime() < quest:getVar(player, 'Wait')
                     then
                         return quest:event(704) -- Player has not waited a game day
                     elseif
                         progress == 3 and
-                        os.time() >= quest:getVar(player, 'Wait')
+                        GetSystemTime() >= quest:getVar(player, 'Wait')
                     then
                         return quest:progressEvent(705) -- Player has waited a game day. Quest Finished
                     end
@@ -128,7 +128,7 @@ quest.sections =
             onEventFinish =
             {
                 [703] = function(player, csid, option, npc)
-                    quest:setVar(player, 'Wait', os.time() + 60)
+                    quest:setVar(player, 'Wait', GetSystemTime() + 60)
                     player:addTitle(xi.title.ACQUIRER_OF_ANCIENT_ARCANUM)
                     player:delKeyItem(xi.ki.TABLET_OF_ANCIENT_MAGIC)
                     player:delKeyItem(xi.ki.LETTER_FROM_ALFESAR)

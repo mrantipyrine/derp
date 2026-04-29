@@ -1,10 +1,7 @@
 -----------------------------------
---  Trembling
---
---  Description: Deals physical damage to enemies within an area of effect. Additional effect: Dispel
---  Type: Physical
---  Utsusemi/Blink absorb: Absorbed by 3 shadows.
---  Range: 10' radial
+-- Trembling
+-- Family: Hydra
+-- Description: Deals physical damage to enemies within an area of effect. Additional Effect: Dispel
 -----------------------------------
 ---@type TMobSkill
 local mobskillObject = {}
@@ -13,24 +10,25 @@ mobskillObject.onMobSkillCheck = function(target, mob, skill)
     return 0
 end
 
-mobskillObject.onMobWeaponSkill = function(target, mob, skill)
-    local numhits = 1
-    local accmod = 1
-    local ftp    = 4 -- fTP and fTP scaling unknown. TODO: capture ftp
-    local info = xi.mobskills.mobPhysicalMove(mob, target, skill, numhits, accmod, ftp, xi.mobskills.physicalTpBonus.NO_EFFECT, 0, 0, 0)
-    local dmg = xi.mobskills.mobFinalAdjustments(info.dmg, mob, skill, target, xi.attackType.PHYSICAL, xi.damageType.BLUNT, xi.mobskills.shadowBehavior.NUMSHADOWS_3)
-    local dispelled = math.random(2, 3)
+mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
+    local params = {}
 
-    if info.hitslanded ~= 0 then
-        for i = 1, dispelled do
-            target:dispelStatusEffect()
-        end
+    params.baseDamage     = mob:getWeaponDmg()
+    params.numHits        = 1
+    params.fTP            = { 4.0, 4.0, 4.0 } -- TODO: Capture fTPs
+    params.attackType     = xi.attackType.PHYSICAL
+    params.damageType     = xi.damageType.BLUNT
+    params.shadowBehavior = xi.mobskills.shadowBehavior.NUMSHADOWS_3 -- TODO: Capture shadowBehavior
+
+    local info = xi.mobskills.mobPhysicalMove(mob, target, skill, action, params)
+
+    if xi.mobskills.processDamage(mob, target, skill, action, info) then
+        target:takeDamage(info.damage, mob, info.attackType, info.damageType)
+
+        target:dispelStatusEffect()
     end
 
-    -- TODO: Dispelled messages.  No examples of damage+dispel working to crib notes from.
-
-    target:takeDamage(dmg, mob, xi.attackType.PHYSICAL, xi.damageType.BLUNT)
-    return dmg
+    return info.damage
 end
 
 return mobskillObject

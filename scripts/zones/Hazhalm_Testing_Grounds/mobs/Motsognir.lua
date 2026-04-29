@@ -54,7 +54,7 @@ entity.onMobInitialize = function(mob)
 end
 
 entity.onMobFight = function(mob, target)
-    if mob:getLocalVar('nextTpMove') <= os.time() then
+    if mob:getLocalVar('nextTpMove') <= GetSystemTime() then
         mob:setMobAbilityEnabled(true)
         mob:setTP(3000)
     else
@@ -90,33 +90,34 @@ entity.onMobFight = function(mob, target)
     end
 end
 
-entity.onMobWeaponSkillPrepare = function(mob)
+entity.onMobMobskillChoose = function(mob, target, skillId)
     -- Motsognir gains access to more TP moves as its HP goes down
-    local mobHPP = mob:getHPP()
-    local skills =
+    local mobskillList =
     {
         xi.mobSkill.HELLSNAP,
         xi.mobSkill.HELLCLAP,
         xi.mobSkill.CACKLE,
     }
 
+    local mobHPP = mob:getHPP()
+
     if mobHPP <= 75 then
-        table.insert(skills, xi.mobSkill.NECROBANE)
-        table.insert(skills, xi.mobSkill.NECROPURGE)
+        table.insert(mobskillList, xi.mobSkill.NECROBANE)
+        table.insert(mobskillList, xi.mobSkill.NECROPURGE)
     end
 
     if mobHPP <= 50 then
-        table.insert(skills, xi.mobSkill.BILGESTORM)
+        table.insert(mobskillList, xi.mobSkill.BILGESTORM)
     end
 
     if mobHPP <= 25 then
-        table.insert(skills, xi.mobSkill.THUNDRIS_SHRIEK)
+        table.insert(mobskillList, xi.mobSkill.THUNDRIS_SHRIEK)
     end
 
-    return utils.randomEntry(skills)
+    return mobskillList[math.random(1, #mobskillList)]
 end
 
-entity.onMobWeaponSkill = function(target, mob, skill)
+entity.onMobWeaponSkill = function(mob, target, skill, action)
     -- Wake all demons on Hellsnap, no known range limit
     if skill:getID() == xi.mobSkill.HELLSNAP then
         for i = ID.mob.HERVARTH, ID.mob.HADDING_THE_YOUNGER do
@@ -127,12 +128,12 @@ entity.onMobWeaponSkill = function(target, mob, skill)
         end
     end
 
-    mob:setLocalVar('nextTpMove', os.time() + 16)
+    mob:setLocalVar('nextTpMove', GetSystemTime() + 16)
 end
 
 entity.onMobEngage = function(mob)
     -- First TP move about 5 seconds in, then every 16 seconds
-    mob:setLocalVar('nextTpMove', os.time() + 5)
+    mob:setLocalVar('nextTpMove', GetSystemTime() + 5)
 end
 
 entity.onMobSpawn = function(mob)

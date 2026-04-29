@@ -16,7 +16,7 @@ endif()
 
 option(ENABLE_IPO "Enable Interprocedural Optimization, aka Link Time Optimization (LTO)" ON)
 set(CMAKE_INTERPROCEDURAL_OPTIMIZATION OFF)
-if(ENABLE_IPO AND NOT CMAKE_BUILD_TYPE STREQUAL Debug)
+if(ENABLE_IPO AND NOT CMAKE_BUILD_TYPE STREQUAL Debug AND NOT CMAKE_BUILD_TYPE STREQUAL ASAN AND NOT CMAKE_BUILD_TYPE STREQUAL UBSAN AND NOT CMAKE_BUILD_TYPE STREQUAL TSAN AND NOT CMAKE_BUILD_TYPE STREQUAL MSAN AND NOT CMAKE_BUILD_TYPE STREQUAL LSAN)
   include(CheckIPOSupported)
   check_ipo_supported(
     RESULT
@@ -38,6 +38,7 @@ if(ENABLE_FAST_MATH)
     message(STATUS "ENABLE_FAST_MATH: ON")
     if((CMAKE_CXX_COMPILER_ID MATCHES "Clang") OR (CMAKE_CXX_COMPILER_ID MATCHES "GNU"))
         add_compile_options(-ffast-math)
+        add_compile_options(-fno-finite-math-only) # only GCC needs this, /fp:fast on VC++ doesnt force finite math only
     elseif(CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
         add_compile_options(/fp:fast)
     endif()
@@ -67,7 +68,6 @@ if(MSVC)
         # /EDITANDCONTINUE isn't supported, it messes with Tracy
         set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /INCREMENTAL /SAFESEH:NO")
         list(APPEND FLAGS_AND_DEFINES
-            /Zi # The /Zi option produces a separate PDB file that contains all the symbolic debugging information for use with the debugger.
             /GR # Enable RTTI
         )
     else()
@@ -106,6 +106,11 @@ function(set_target_output_directory target)
         RUNTIME_OUTPUT_DIRECTORY_RELEASE "${CMAKE_SOURCE_DIR}"
         RUNTIME_OUTPUT_DIRECTORY_RELWITHDEBINFO "${CMAKE_SOURCE_DIR}"
         RUNTIME_OUTPUT_DIRECTORY_MINSIZEREL "${CMAKE_SOURCE_DIR}"
+        RUNTIME_OUTPUT_DIRECTORY_ASAN "${CMAKE_SOURCE_DIR}"
+        RUNTIME_OUTPUT_DIRECTORY_UBSAN "${CMAKE_SOURCE_DIR}"
+        RUNTIME_OUTPUT_DIRECTORY_TSAN "${CMAKE_SOURCE_DIR}"
+        RUNTIME_OUTPUT_DIRECTORY_MSAN "${CMAKE_SOURCE_DIR}"
+        RUNTIME_OUTPUT_DIRECTORY_LSAN "${CMAKE_SOURCE_DIR}"
     )
 endfunction()
 

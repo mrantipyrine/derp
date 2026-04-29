@@ -1,7 +1,8 @@
 -----------------------------------
 -- Flurry of Rage
--- Deals multiple hits to a single target.
--- Only used by Eldritch Edge, Malefic Fencer, and Nightmare Weapon.
+-- Family: Evil Weapon
+-- Description: Deals multiple hits to a single target.
+-- Notes: Used by Eldritch Edge, Malefic Fencer, Gladiatorial Weapon and Nightmare Weapon.
 -----------------------------------
 ---@type TMobSkill
 local mobskillObject = {}
@@ -10,15 +11,24 @@ mobskillObject.onMobSkillCheck = function(target, mob, skill)
     return 0
 end
 
-mobskillObject.onMobWeaponSkill = function(target, mob, skill)
-    local numhits = 2
-    local accmod = 1
-    local info = xi.mobskills.mobPhysicalMove(mob, target, skill, numhits, accmod, 1, xi.mobskills.physicalTpBonus.ACC_VARIES, 2, 2.5, 3)
-    local dmg = xi.mobskills.mobFinalAdjustments(info.dmg, mob, skill, target, xi.attackType.PHYSICAL, xi.damageType.SLASHING, info.hitslanded)
+mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
+    local params = {}
 
-    target:takeDamage(dmg, mob, xi.attackType.PHYSICAL, xi.damageType.SLASHING)
+    params.baseDamage     = mob:getWeaponDmg()
+    params.numHits        = 2
+    params.fTP            = { 1.0, 1.0, 1.0 }
+    params.attackType     = xi.attackType.PHYSICAL
+    params.damageType     = xi.damageType.SLASHING
+    params.shadowBehavior = xi.mobskills.shadowBehavior.NUMSHADOWS_2 -- TODO: Capture shadowBehavior
+    -- TODO: Possible accuracy modifier
 
-    return dmg
+    local info = xi.mobskills.mobPhysicalMove(mob, target, skill, action, params)
+
+    if xi.mobskills.processDamage(mob, target, skill, action, info) then
+        target:takeDamage(info.damage, mob, info.attackType, info.damageType)
+    end
+
+    return info.damage
 end
 
 return mobskillObject

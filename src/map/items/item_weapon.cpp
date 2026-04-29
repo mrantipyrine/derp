@@ -37,7 +37,7 @@ CItemWeapon::CItemWeapon(uint16 id)
     setType(ITEM_WEAPON);
 
     m_skillType      = SKILL_NONE;
-    m_subSkillType   = SUBSKILL_XBO;
+    m_subSkillType   = SUBSKILL_XBOW_SHORTBOW;
     m_iLvlSkill      = 0;
     m_iLvlParry      = 0;
     m_iLvlMacc       = 0;
@@ -51,6 +51,26 @@ CItemWeapon::CItemWeapon(uint16 id)
     m_ranged         = false;
     m_twoHanded      = false;
     m_wsunlockpoints = 0;
+}
+
+CItemWeapon::CItemWeapon(const CItemWeapon& other)
+: CItemEquipment(other)
+, m_skillType(other.m_skillType)
+, m_subSkillType(other.m_subSkillType)
+, m_iLvlSkill(other.m_iLvlSkill)
+, m_iLvlParry(other.m_iLvlParry)
+, m_iLvlMacc(other.m_iLvlMacc)
+, m_damage(other.m_damage)
+, m_delay(other.m_delay)
+, m_baseDelay(other.m_baseDelay)
+, m_dmgType(other.m_dmgType)
+, m_effect(other.m_effect)
+, m_maxHit(other.m_maxHit)
+, m_DPS(other.m_DPS)
+, m_wsunlockpoints(other.m_wsunlockpoints)
+, m_ranged(other.m_ranged)
+, m_twoHanded(other.m_twoHanded)
+{
 }
 
 CItemWeapon::~CItemWeapon() = default;
@@ -317,7 +337,7 @@ void CItemWeapon::setDelay(uint16 delay)
  *                                                                      *
  ************************************************************************/
 
-int16 CItemWeapon::getDelay() const
+uint16 CItemWeapon::getDelay() const
 {
     return m_delay;
 }
@@ -342,7 +362,7 @@ void CItemWeapon::setBaseDelay(uint16 delay)
  *                                                                       *
  ************************************************************************/
 
-int16 CItemWeapon::getBaseDelay() const
+uint16 CItemWeapon::getBaseDelay() const
 {
     return m_baseDelay;
 }
@@ -364,9 +384,9 @@ uint16 CItemWeapon::getTotalUnlockPointsNeeded() const
  *                                                                       *
  ************************************************************************/
 
-uint16 CItemWeapon::getCurrentUnlockPoints()
+auto CItemWeapon::getCurrentUnlockPoints() const -> uint16
 {
-    return ref<uint16>(m_extra, 0);
+    return this->exdata<Exdata::WeaponUnlock>().UnlockPoints;
 }
 
 /************************************************************************
@@ -465,9 +485,10 @@ void CItemWeapon::setTotalUnlockPointsNeeded(uint16 points)
  *                                                                       *
  ************************************************************************/
 
-void CItemWeapon::setCurrentUnlockPoints(uint16 points)
+void CItemWeapon::setCurrentUnlockPoints(const uint16 points)
 {
-    ref<uint16>(m_extra, 0) = points;
+    this->exdata<Exdata::WeaponUnlock>().UnlockPoints = points;
+    setDirty(true);
 }
 
 /************************************************************************

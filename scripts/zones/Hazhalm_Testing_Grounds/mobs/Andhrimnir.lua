@@ -52,11 +52,11 @@ end
 
 entity.onMobFight = function(mob, target)
     -- Don't process if the mob is busy
-    if mob:getCurrentAction() ~= xi.act.ATTACK then
+    if mob:getCurrentAction() ~= xi.action.category.BASIC_ATTACK then
         return
     end
 
-    if mob:getLocalVar('nextCharm') <= os.time() then
+    if mob:getLocalVar('nextCharm') <= GetSystemTime() then
         local victim = utils.randomEntry(utils.filter(mob:getEnmityList(), function(k, v)
             return v.entity and v.entity:isAlive() and v.entity:isPC()
         end))
@@ -69,7 +69,7 @@ entity.onMobFight = function(mob, target)
         end
 
         vanish(mob)
-        mob:setLocalVar('nextCharm', os.time() + math.random(60, 70))
+        mob:setLocalVar('nextCharm', GetSystemTime() + math.random(60, 70))
 
         -- After 5 seconds, reappear next to victim and use Danse Macabre
         mob:timer(5000, function(mobArg)
@@ -90,7 +90,7 @@ end
 entity.onMobDisengage = reset
 
 entity.onMobEngage = function(mob, target)
-    mob:setLocalVar('nextCharm', os.time() + math.random(60, 70))
+    mob:setLocalVar('nextCharm', GetSystemTime() + math.random(60, 70))
 end
 
 return entity

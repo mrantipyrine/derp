@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
 
   Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -28,6 +28,7 @@
 #include "ai/states/inactive_state.h"
 #include "ai/states/magic_state.h"
 #include "ai/states/weaponskill_state.h"
+#include "battlefield.h"
 #include "common/utils.h"
 #include "enmity_container.h"
 #include "entities/mobentity.h"
@@ -35,9 +36,12 @@
 #include "mob_spell_container.h"
 #include "mobskill.h"
 #include "party.h"
+#include "recast_container.h"
+#include "spawn_handler.h"
 #include "status_effect_container.h"
 #include "utils/battleutils.h"
 #include "utils/petutils.h"
+#include "zone.h"
 
 CMobController::CMobController(CMobEntity* PEntity)
 : CController(PEntity)
@@ -45,7 +49,22 @@ CMobController::CMobController(CMobEntity* PEntity)
 {
 }
 
-void CMobController::Tick(timer::time_point tick)
+auto CMobController::Ability(uint16 targid, uint16 abilityid) -> bool
+{
+    if (PMob->PRecastContainer->HasRecast(RECAST_ABILITY, static_cast<Recast>(abilityid), 0s))
+    {
+        return false;
+    }
+
+    if (POwner->PAI->CanChangeState())
+    {
+        return POwner->PAI->Internal_Ability(targid, abilityid);
+    }
+
+    return false;
+}
+
+auto CMobController::Tick(const timer::time_point tick) -> Task<void>
 {
     TracyZoneScoped;
     TracyZoneString(PMob->getName());
@@ -56,16 +75,18 @@ void CMobController::Tick(timer::time_point tick)
     {
         if (PMob->PAI->IsEngaged())
         {
-            DoCombatTick(tick);
+            co_await DoCombatTick(tick);
         }
         else if (!PMob->isDead())
         {
-            DoRoamTick(tick);
+            co_await DoRoamTick(tick);
         }
     }
+
+    co_return;
 }
 
-bool CMobController::TryDeaggro()
+auto CMobController::TryDeaggro() -> bool
 {
     TracyZoneScoped;
     if (PTarget == nullptr && (PMob->PEnmityContainer != nullptr && PMob->PEnmityContainer->GetHighestEnmity() == nullptr))
@@ -101,7 +122,7 @@ bool CMobController::TryDeaggro()
     return false;
 }
 
-bool CMobController::CanPursueTarget(CBattleEntity* PTarget)
+auto CMobController::CanPursueTarget(const CBattleEntity* PTarget) const -> bool
 {
     TracyZoneScoped;
     if (PMob->getMobMod(MOBMOD_DETECTION) & DETECT_SCENT)
@@ -116,7 +137,7 @@ bool CMobController::CanPursueTarget(CBattleEntity* PTarget)
     return false;
 }
 
-bool CMobController::CheckHide(CBattleEntity* PTarget)
+auto CMobController::CheckHide(const CBattleEntity* PTarget) const -> bool
 {
     TracyZoneScoped;
     if (PTarget && PTarget->GetMJob() == JOB_THF && PTarget->StatusEffectContainer->HasStatusEffect(EFFECT_HIDE))
@@ -126,24 +147,28 @@ bool CMobController::CheckHide(CBattleEntity* PTarget)
     return false;
 }
 
-bool CMobController::CheckLock(CBattleEntity* PTarget)
+auto CMobController::CheckLock(CBattleEntity* PTarget) const -> bool
 {
     TracyZoneScoped;
     if (PTarget)
     {
         if (PTarget->objtype == TYPE_PC)
         {
-            CCharEntity* PChar = dynamic_cast<CCharEntity*>(PTarget);
-            if (PChar->m_Locked)
+            const auto* PChar = dynamic_cast<CCharEntity*>(PTarget);
+            if (PChar && PChar->m_Locked)
             {
                 return !CanPursueTarget(PTarget);
             }
         }
         else if (PTarget->objtype == TYPE_PET)
         {
-            CPetEntity*  PPet  = dynamic_cast<CPetEntity*>(PTarget);
-            CCharEntity* PChar = dynamic_cast<CCharEntity*>(PPet->PMaster);
+            const auto* PPet = dynamic_cast<CPetEntity*>(PTarget);
+            if (!PPet)
+            {
+                return false;
+            }
 
+            const auto* PChar = dynamic_cast<CCharEntity*>(PPet->PMaster);
             if (PChar == nullptr)
             {
                 return false;
@@ -158,7 +183,7 @@ bool CMobController::CheckLock(CBattleEntity* PTarget)
     return false;
 }
 
-bool CMobController::CheckDetection(CBattleEntity* PTarget)
+auto CMobController::CheckDetection(CBattleEntity* PTarget) -> bool
 {
     TracyZoneScoped;
     if (CanPursueTarget(PTarget) || CanDetectTarget(PTarget) ||
@@ -167,7 +192,7 @@ bool CMobController::CheckDetection(CBattleEntity* PTarget)
         TapDeaggroTime();
     }
 
-    auto additionalDeaggroTime = std::chrono::seconds(settings::get<uint32>("map.MOB_ADDITIONAL_TIME_TO_DEAGGRO"));
+    const auto additionalDeaggroTime = PMob->m_roamFlags & ROAMFLAG_WORM ? std::chrono::seconds(0) : std::chrono::seconds(settings::get<uint32>("map.MOB_ADDITIONAL_TIME_TO_DEAGGRO"));
     return PMob->CanDeaggro() && (m_Tick >= m_DeaggroTime + 25s + additionalDeaggroTime);
 }
 
@@ -181,21 +206,29 @@ void CMobController::TryLink()
 
     // handle pet behavior on the targets behalf (faster than in ai_pet_dummy)
     // Avatars defend masters by attacking mobs if the avatar isn't attacking anything currently (bodyguard behavior)
+    // Alexander, Odin and Atomos are passive and do not protect the master.
     if (PTarget->PPet != nullptr && PTarget->PPet->GetBattleTargetID() == 0)
     {
-        if (PTarget->PPet->objtype == TYPE_PET && ((CPetEntity*)PTarget->PPet)->getPetType() == PET_TYPE::AVATAR)
+        if (PTarget->PPet->objtype == TYPE_PET)
         {
-            if (PTarget->objtype == TYPE_PC)
+            const auto PPetEntity = static_cast<CPetEntity*>(PTarget->PPet);
+            if (PPetEntity->getPetType() == PET_TYPE::AVATAR &&
+                PPetEntity->m_PetID != PETID_ALEXANDER &&
+                PPetEntity->m_PetID != PETID_ODIN &&
+                PPetEntity->m_PetID != PETID_ATOMOS)
             {
-                auto* PChar = dynamic_cast<CCharEntity*>(PTarget);
-                if (PChar && PChar->IsMobOwner(PMob))
+                if (PTarget->objtype == TYPE_PC)
+                {
+                    auto* PChar = dynamic_cast<CCharEntity*>(PTarget);
+                    if (PChar && PChar->IsMobOwner(PMob))
+                    {
+                        petutils::AttackTarget(PTarget, PMob);
+                    }
+                }
+                else
                 {
                     petutils::AttackTarget(PTarget, PMob);
                 }
-            }
-            else
-            {
-                petutils::AttackTarget(PTarget, PMob);
             }
         }
     }
@@ -211,10 +244,18 @@ void CMobController::TryLink()
     {
         for (auto& member : PMob->PParty->members)
         {
-            CMobEntity* PPartyMember = dynamic_cast<CMobEntity*>(member);
+            auto* PPartyMember = dynamic_cast<CMobEntity*>(member);
             // Note if the mob to link with this one is a pet then do not link
             // Pets only link with their masters
-            if (!PPartyMember || (PPartyMember && PPartyMember->PMaster))
+            if (!PPartyMember || PPartyMember->PMaster || PPartyMember->isDead())
+            {
+                continue;
+            }
+
+            // Handle the case where a mob doesn't link with its own family but has a sublink
+            // This is needed because the sublink will cause like family members to be in the same
+            // party so that they are linked with sublinked families.
+            if (!PMob->ShouldForceLink() && !PMob->m_Link && PMob->m_Family == PPartyMember->m_Family)
             {
                 continue;
             }
@@ -229,7 +270,7 @@ void CMobController::TryLink()
     // ask my master for help
     if (PMob->PMaster != nullptr && PMob->PMaster->PAI->IsRoaming())
     {
-        CMobEntity* PMaster = (CMobEntity*)PMob->PMaster;
+        auto* PMaster = static_cast<CMobEntity*>(PMob->PMaster);
 
         if (PMaster->PAI->IsRoaming() && PMaster->CanLink(&PMob->loc.p, PMob->getMobMod(MOBMOD_SUPERLINK)))
         {
@@ -242,7 +283,7 @@ void CMobController::TryLink()
  * Checks if the mob can detect the target using it's detection (sight, sound, etc)
  * This is used to aggro and deaggro (Mobs start to deaggro after failing to detect target).
  **/
-bool CMobController::CanDetectTarget(CBattleEntity* PTarget, bool forceSight)
+auto CMobController::CanDetectTarget(CBattleEntity* PTarget, const bool forceSight) const -> bool
 {
     TracyZoneScoped;
     if (!PTarget || PTarget->isDead() || PTarget->isMounted())
@@ -250,12 +291,12 @@ bool CMobController::CanDetectTarget(CBattleEntity* PTarget, bool forceSight)
         return false;
     }
 
-    auto detects         = PMob->getMobMod(MOBMOD_DETECTION);
-    auto currentDistance = distance(PTarget->loc.p, PMob->loc.p) + PTarget->getMod(Mod::STEALTH);
+    const auto detects         = PMob->getMobMod(MOBMOD_DETECTION);
+    const auto currentDistance = distance(PTarget->loc.p, PMob->loc.p) + PTarget->getMod(Mod::STEALTH);
 
-    bool detectSight  = (detects & DETECT_SIGHT) || forceSight;
-    bool hasInvisible = false;
-    bool hasSneak     = false;
+    const bool detectSight  = (detects & DETECT_SIGHT) || forceSight;
+    bool       hasInvisible = false;
+    bool       hasSneak     = false;
 
     if (!PMob->m_TrueDetection)
     {
@@ -275,7 +316,7 @@ bool CMobController::CanDetectTarget(CBattleEntity* PTarget, bool forceSight)
         }
     }
 
-    bool isTargetAndInRange = PMob->GetBattleTargetID() == PTarget->targid && currentDistance <= PMob->GetMeleeRange();
+    const bool isTargetAndInRange = PMob->GetBattleTargetID() == PTarget->targid && currentDistance <= PMob->GetMeleeRange(PTarget);
 
     if (detectSight && !hasInvisible && currentDistance < PMob->getMobMod(MOBMOD_SIGHT_RANGE) && facing(PMob->loc.p, PTarget->loc.p, 64))
     {
@@ -322,78 +363,82 @@ bool CMobController::CanDetectTarget(CBattleEntity* PTarget, bool forceSight)
     return false;
 }
 
-bool CMobController::MobSkill(int wsList)
+auto CMobController::MobSkill(int listId) -> bool
 {
     TracyZoneScoped;
 
-    if (PTarget)
+    if (!PTarget)
     {
-        /* #TODO: mob 2 hours, etc */
-        if (!wsList)
+        return false;
+    }
+
+    // Fetch skill list from mobmod if not set in database.
+    if (!listId)
+    {
+        listId = PMob->getMobMod(MOBMOD_SKILL_LIST);
+    }
+
+    auto skillList{ battleutils::GetMobSkillList(listId) };
+    if (skillList.empty())
+    {
+        return false;
+    }
+
+    std::shuffle(skillList.begin(), skillList.end(), xirand::rng());
+    CBattleEntity* PActionTarget{ nullptr };
+
+    uint16 chosenSkillId = 0;
+    for (const auto skillId : skillList)
+    {
+        auto* PMobSkill{ battleutils::GetMobSkill(skillId) };
+        if (!PMobSkill)
         {
-            wsList = PMob->getMobMod(MOBMOD_SKILL_LIST);
+            ShowError("CMobController::MobSkill -> Mobskill with ID (%i) [called from skill-list ID (%i)] isn't properly defined in mob_skills.sql", skillId, listId);
+            continue;
         }
 
-        auto skillList{ battleutils::GetMobSkillList(wsList) };
+        chosenSkillId = skillId;
+        break;
+    }
 
-        if (auto overrideSkill = luautils::OnMobWeaponSkillPrepare(PMob, PTarget); overrideSkill > 0)
+    if (auto overrideSkill = luautils::OnMobMobskillChoose(PMob, PTarget, chosenSkillId); overrideSkill > 0)
+    {
+        chosenSkillId = overrideSkill;
+    }
+
+    auto* PMobSkill{ battleutils::GetMobSkill(chosenSkillId) };
+
+    if (PMobSkill->getValidTargets() & TARGET_ENEMY) // enemy
+    {
+        PActionTarget = PTarget;
+    }
+    else if (PMobSkill->getValidTargets() & TARGET_SELF) // self
+    {
+        PActionTarget = PMob;
+    }
+
+    PActionTarget = luautils::OnMobSkillTarget(PActionTarget, PMob, PMobSkill);
+
+    Maybe<timer::duration> mobSkillReadyTime = luautils::OnMobSkillReadyTime(PActionTarget, PMob, PMobSkill);
+
+    if (PActionTarget && !PMobSkill->isAstralFlow() && luautils::OnMobSkillCheck(PActionTarget, PMob, PMobSkill) == 0) // A script says that the move in question is valid
+    {
+        const float currentDistance = distance(PMob->loc.p, PActionTarget->loc.p);
+        if (currentDistance <= PMobSkill->getDistance())
         {
-            skillList = { overrideSkill };
-        }
-
-        if (skillList.empty())
-        {
-            return false;
-        }
-
-        std::shuffle(skillList.begin(), skillList.end(), xirand::rng());
-        CBattleEntity* PActionTarget{ nullptr };
-
-        for (auto skillid : skillList)
-        {
-            auto* PMobSkill{ battleutils::GetMobSkill(skillid) };
-            if (!PMobSkill)
-            {
-                continue;
-            }
-
-            if (PMobSkill->getValidTargets() == TARGET_ENEMY) // enemy
-            {
-                PActionTarget = PTarget;
-            }
-            else if (PMobSkill->getValidTargets() == TARGET_SELF) // self
-            {
-                PActionTarget = PMob;
-            }
-            else
-            {
-                continue;
-            }
-
-            PActionTarget = luautils::OnMobSkillTarget(PActionTarget, PMob, PMobSkill);
-
-            if (PActionTarget && !PMobSkill->isAstralFlow() && luautils::OnMobSkillCheck(PActionTarget, PMob, PMobSkill) == 0) // A script says that the move in question is valid
-            {
-                float currentDistance = distance(PMob->loc.p, PActionTarget->loc.p);
-
-                if (currentDistance <= PMobSkill->getDistance())
-                {
-                    return MobSkill(PActionTarget->targid, PMobSkill->getID());
-                }
-            }
+            return MobSkill(PActionTarget->targid, PMobSkill->getID(), mobSkillReadyTime);
         }
     }
 
     return false;
 }
 
-bool CMobController::TrySpecialSkill()
+auto CMobController::TrySpecialSkill() -> bool
 {
     TracyZoneScoped;
     // get my special skill
     CMobSkill*     PSpecialSkill  = battleutils::GetMobSkill(PMob->getMobMod(MOBMOD_SPECIAL_SKILL));
     CBattleEntity* PAbilityTarget = nullptr;
-    m_LastSpecialTime             = m_Tick;
 
     if (PSpecialSkill == nullptr)
     {
@@ -436,25 +481,41 @@ bool CMobController::TrySpecialSkill()
 
     if (luautils::OnMobSkillCheck(PAbilityTarget, PMob, PSpecialSkill) == 0)
     {
-        return MobSkill(PAbilityTarget->targid, PSpecialSkill->getID());
+        if (MobSkill(PAbilityTarget->targid, PSpecialSkill->getID(), std::nullopt))
+        {
+            m_LastSpecialTime = m_Tick;
+            return true;
+        }
     }
 
     return false;
 }
 
-bool CMobController::TryCastSpell()
+auto CMobController::TryCastSpell() -> bool
 {
     TracyZoneScoped;
-    if (!CanCastSpells())
+    if (!CanCastSpells(IgnoreRecastsAndCosts::No))
     {
-        return false;
+        return false; // Can't cast spells.
     }
 
     // Find random spell from list
-    std::optional<SpellID> chosenSpellId;
-    if (m_firstSpell)
+    Maybe<SpellID> chosenSpellId;
+    if (!PMob->PAI->IsEngaged())
     {
-        // mobs first spell, should be aggro spell
+        if (PMob->SpellContainer->HasBuffSpells())
+        {
+            chosenSpellId = PMob->SpellContainer->GetBuffSpell();
+        }
+        else
+        {
+            // is this even possible to have a valid target?
+            chosenSpellId = PMob->SpellContainer->GetSpell();
+        }
+    }
+    else if (m_firstSpell)
+    {
+        // mobs first combat spell, should be aggro spell
         chosenSpellId = PMob->SpellContainer->GetAggroSpell();
         m_firstSpell  = false;
     }
@@ -464,23 +525,71 @@ bool CMobController::TryCastSpell()
     }
 
     // Try to get an override spell from the script (if available)
+    // OnMobSpellChoose can also change PSpellTarget
     auto PSpellTarget            = PTarget ? PTarget : PMob;
-    auto possibleOverriddenSpell = luautils::OnMobMagicPrepare(PMob, PSpellTarget, chosenSpellId);
-    if (possibleOverriddenSpell.has_value())
+    auto possibleOverriddenSpell = luautils::OnMobSpellChoose(PMob, PSpellTarget, chosenSpellId);
+
+    Maybe<SpellID>        maybeSpellOverride  = std::get<0>(possibleOverriddenSpell);
+    Maybe<CBattleEntity*> maybeTargetOverride = std::get<1>(possibleOverriddenSpell);
+
+    if (maybeSpellOverride.has_value())
     {
-        chosenSpellId = possibleOverriddenSpell;
+        chosenSpellId = maybeSpellOverride.value();
     }
 
-    if (chosenSpellId.has_value())
+    if (!chosenSpellId.has_value())
     {
-        CastSpell(chosenSpellId.value());
-        return true;
+        return false; // No spell Id.
     }
 
-    return false;
+    // Check if spell exists.
+    CSpell* PSpell = spell::GetSpell(chosenSpellId.value());
+    if (!PSpell)
+    {
+        return false; // No spell object.
+    }
+
+    // Check spell cooldown.
+    if (PMob->PRecastContainer->Has(RECAST_MAGIC, static_cast<Recast>(chosenSpellId.value())))
+    {
+        return false; // Spell is on cooldown.
+    }
+
+    // Check if mob can afford to cast this spell
+    if (!battleutils::CanAffordSpell(PMob, PSpell, PSpell->getFlag()))
+    {
+        return false; // Not enough MP.
+    }
+
+    // Target logic.
+    CBattleEntity* PCastTarget = nullptr;
+
+    if (PSpell->getValidTarget() & TARGET_SELF)
+    {
+        PCastTarget = PMob;
+    }
+    else
+    {
+        PCastTarget = PTarget;
+    }
+
+    if (maybeTargetOverride.has_value())
+    {
+        PCastTarget = maybeTargetOverride.value();
+    }
+
+    // Check if target is in range before attempting to cast
+    if (PCastTarget && distance(PMob->loc.p, PCastTarget->loc.p) > PSpell->getRange() + PMob->modelHitboxSize + PCastTarget->modelHitboxSize)
+    {
+        return false; // Target out of range.
+    }
+
+    // Perform cast.
+    CastSpell(chosenSpellId.value());
+    return true;
 }
 
-bool CMobController::CanCastSpells()
+auto CMobController::CanCastSpells(IgnoreRecastsAndCosts ignoreRecastsAndCosts) -> bool
 {
     TracyZoneScoped;
     if (!PMob->SpellContainer->HasSpells())
@@ -503,13 +612,23 @@ bool CMobController::CanCastSpells()
         }
     }
 
-    return IsMagicCastingEnabled();
+    if (!IsMagicCastingEnabled())
+    {
+        return false;
+    }
+
+    if (!ignoreRecastsAndCosts && !PMob->SpellContainer->IsAnySpellAvailable())
+    {
+        return false;
+    }
+
+    return true;
 }
 
 void CMobController::CastSpell(SpellID spellid)
 {
     TracyZoneScoped;
-    CSpell* PSpell = spell::GetSpell(spellid);
+    const CSpell* PSpell = spell::GetSpell(spellid);
     if (PSpell == nullptr)
     {
         ShowWarning("ai_mob_dummy::CastSpell: SpellId <%i> is not found", static_cast<uint16>(spellid));
@@ -542,8 +661,9 @@ void CMobController::CastSpell(SpellID spellid)
                         // randomly select a target
                         PCastTarget = PMob->PAI->TargetFind->m_targets[xirand::GetRandomNumber(PMob->PAI->TargetFind->m_targets.size())];
 
-                        // only target if are on same action
-                        if (PMob->PAI->IsEngaged() == PCastTarget->PAI->IsEngaged())
+                        // revert target to self if not on same action
+                        // TODO can engaged mobs buff idle mobs?
+                        if (PMob->PAI->IsEngaged() != PCastTarget->PAI->IsEngaged())
                         {
                             PCastTarget = PMob;
                         }
@@ -563,15 +683,20 @@ void CMobController::CastSpell(SpellID spellid)
     }
 }
 
-void CMobController::DoCombatTick(timer::time_point tick)
+auto CMobController::DoCombatTick(timer::time_point tick) -> Task<void>
 {
     TracyZoneScopedC(0xFF0000);
-    if (PMob->m_OwnerID.targid != 0 && static_cast<CCharEntity*>(PMob->GetEntity(PMob->m_OwnerID.targid))->PClaimedMob != static_cast<CBattleEntity*>(PMob))
+
+    if (PMob->m_OwnerID.targid != 0)
     {
-        if (m_Tick >= m_DeclaimTime + 3s)
+        auto* POwner = dynamic_cast<CCharEntity*>(PMob->GetEntity(PMob->m_OwnerID.targid));
+        if (POwner && POwner->PClaimedMob != static_cast<CBattleEntity*>(PMob))
         {
-            PMob->m_OwnerID.clean();
-            PMob->updatemask |= UPDATE_STATUS;
+            if (m_Tick >= m_DeclaimTime + 3s)
+            {
+                PMob->m_OwnerID.clean();
+                PMob->updatemask |= UPDATE_STATUS;
+            }
         }
     }
 
@@ -581,7 +706,7 @@ void CMobController::DoCombatTick(timer::time_point tick)
     if (TryDeaggro())
     {
         Disengage();
-        return;
+        co_return;
     }
 
     TryLink();
@@ -591,7 +716,7 @@ void CMobController::DoCombatTick(timer::time_point tick)
 
     if (PMob->PAI->IsCurrentState<CInactiveState>() || !PMob->PAI->CanChangeState())
     {
-        return;
+        co_return;
     }
 
     if (PFollowTarget != nullptr && m_followType == FollowType::RunAway)
@@ -599,7 +724,9 @@ void CMobController::DoCombatTick(timer::time_point tick)
         if (distance(PMob->loc.p, PFollowTarget->loc.p) > FollowRunAwayDistance)
         {
             if (!PMob->PAI->PathFind->IsFollowingPath())
+            {
                 PMob->PAI->PathFind->PathTo(PFollowTarget->loc.p);
+            }
             PMob->PAI->PathFind->FollowPath(m_Tick);
         }
         else
@@ -607,44 +734,44 @@ void CMobController::DoCombatTick(timer::time_point tick)
             PMob->PAI->EventHandler.triggerListener("RUN_AWAY", PMob, PFollowTarget);
             ClearFollowTarget();
         }
-        return;
+        co_return;
     }
 
     if (PTarget)
     {
-        float currentDistance = distance(PMob->loc.p, PTarget->loc.p);
+        const float currentDistance = distance(PMob->loc.p, PTarget->loc.p);
 
         if (IsSpecialSkillReady(currentDistance) && TrySpecialSkill())
         {
-            return;
+            co_return;
         }
 
         if (IsSpellReady(currentDistance) && TryCastSpell()) // Try to spellcast (this is done first so things like Chainspell spam is prioritised over TP moves etc.
         {
-            return;
+            co_return;
         }
 
-        if (m_Tick >= m_LastMobSkillTime && (1 + xirand::GetRandomNumber(10000)) <= PMob->TPUseChance() && MobSkill())
+        if (m_Tick >= m_LastMobSkillTime && PMob->shouldUseTPMove(m_tpThreshold) && MobSkill())
         {
-            return;
+            m_tpThreshold = xirand::GetRandomNumber(1000, 3000);
+            co_return;
         }
     }
 
     Move();
 }
 
-void CMobController::FaceTarget(uint16 targid)
+void CMobController::FaceTarget(const uint16 targid) const
 {
     TracyZoneScoped;
-    CBaseEntity* targ = PTarget;
-    if (targid != 0 && ((targ && targid != targ->targid) || !targ))
+
+    const uint16 resolvedTargid = targid != 0 ? targid : PMob->GetBattleTargetID();
+    const auto*  maybeTarget    = PMob->GetEntity(resolvedTargid);
+    if (!(PMob->m_Behavior & BEHAVIOR_NO_TURN) && maybeTarget)
     {
-        targ = PMob->GetEntity(targid);
+        PMob->PAI->PathFind->LookAt(maybeTarget->loc.p);
     }
-    if (!(PMob->m_Behavior & BEHAVIOR_NO_TURN) && targ)
-    {
-        PMob->PAI->PathFind->LookAt(targ->loc.p);
-    }
+
     PMob->UpdateSpeed();
 }
 
@@ -661,26 +788,11 @@ void CMobController::Move()
         return;
     }
 
-    // attempt to teleport
-    if (PMob->getMobMod(MOBMOD_TELEPORT_TYPE) == 1)
-    {
-        if (m_Tick >= m_LastSpecialTime + std::chrono::milliseconds(PMob->getBigMobMod(MOBMOD_TELEPORT_CD)))
-        {
-            CMobSkill* teleportBegin = battleutils::GetMobSkill(PMob->getMobMod(MOBMOD_TELEPORT_START));
-
-            if (teleportBegin)
-            {
-                m_LastSpecialTime = m_Tick;
-                MobSkill(PMob->targid, teleportBegin->getID());
-            }
-        }
-    }
-
-    bool  move          = PMob->PAI->PathFind->IsFollowingPath();
-    float attack_range  = PMob->GetMeleeRange();
-    int16 offsetMod     = PMob->getMobMod(MOBMOD_TARGET_DISTANCE_OFFSET);
-    float offset        = static_cast<float>(offsetMod) / 10.0f;
-    float closeDistance = attack_range - (offsetMod == 0 ? 0.2f : offset);
+    const bool  move          = PMob->PAI->PathFind->IsFollowingPath();
+    float       attack_range  = PMob->GetMeleeRange(PTarget);
+    const int16 offsetMod     = PMob->getMobMod(MOBMOD_TARGET_DISTANCE_OFFSET);
+    const float offset        = static_cast<float>(offsetMod) / 10.0f;
+    float       closeDistance = attack_range - (offsetMod == 0 ? 0.4f : offset);
 
     // No going negative on the final value.
     if (closeDistance < 0.0f)
@@ -690,11 +802,11 @@ void CMobController::Move()
 
     if (PMob->getMobMod(MOBMOD_ATTACK_SKILL_LIST) > 0)
     {
-        auto skillList{ battleutils::GetMobSkillList(PMob->getMobMod(MOBMOD_ATTACK_SKILL_LIST)) };
+        const auto skillList{ battleutils::GetMobSkillList(PMob->getMobMod(MOBMOD_ATTACK_SKILL_LIST)) };
 
         if (!skillList.empty())
         {
-            auto* skill{ battleutils::GetMobSkill(skillList.front()) };
+            const auto* skill{ battleutils::GetMobSkill(skillList.front()) };
             if (skill)
             {
                 attack_range = skill->getDistance();
@@ -704,7 +816,7 @@ void CMobController::Move()
 
     if (PMob->getMobMod(MOBMOD_SHARE_POS) > 0)
     {
-        CMobEntity* posShare = (CMobEntity*)PMob->GetEntity(PMob->getMobMod(MOBMOD_SHARE_POS) + PMob->targid, TYPE_MOB);
+        const auto* posShare = static_cast<CMobEntity*>(PMob->GetEntity(PMob->getMobMod(MOBMOD_SHARE_POS) + PMob->targid, TYPE_MOB));
         if (posShare)
         {
             PMob->loc = posShare->loc;
@@ -718,7 +830,20 @@ void CMobController::Move()
     {
         float currentDistance = distance(PMob->loc.p, PTarget->loc.p);
 
-        if (((currentDistance > closeDistance) || move) && PMob->PAI->CanFollowPath())
+        // attempt to teleport (type 1) if target is out of melee range but within 30 distance
+        if (PMob->getMobMod(MOBMOD_TELEPORT_TYPE) == 1 && currentDistance > attack_range && currentDistance <= 30.0f)
+        {
+            if (m_Tick >= m_LastSpecialTime + std::chrono::seconds(PMob->getMobMod(MOBMOD_TELEPORT_CD)))
+            {
+                if (const CMobSkill* teleportBegin = battleutils::GetMobSkill(PMob->getMobMod(MOBMOD_TELEPORT_START)))
+                {
+                    m_LastSpecialTime = m_Tick;
+                    MobSkill(PMob->targid, teleportBegin->getID(), std::nullopt);
+                }
+            }
+        }
+
+        if (((currentDistance > attack_range) || move) && PMob->PAI->CanFollowPath())
         {
             if (PMob->GetSpeed() != 0 && PMob->getMobMod(MOBMOD_NO_MOVE) == 0 && m_Tick >= m_LastSpecialTime)
             {
@@ -729,7 +854,7 @@ void CMobController::Move()
 
                     if (teleportBegin && currentDistance <= teleportBegin->getDistance())
                     {
-                        MobSkill(PMob->targid, teleportBegin->getID());
+                        MobSkill(PMob->targid, teleportBegin->getID(), std::nullopt);
                         m_LastSpecialTime = m_Tick;
                         return;
                     }
@@ -739,16 +864,20 @@ void CMobController::Move()
                     if (!PMob->PAI->PathFind->IsFollowingPath())
                     {
                         // out of melee range, try to path towards
-                        if (currentDistance > (offsetMod == 0 ? PMob->GetMeleeRange() : closeDistance))
+                        if (currentDistance > attack_range)
                         {
+                            auto projectedPosition = nearPosition(PTarget->loc.p, 0, rotationToRadian(worldAngle(PMob->loc.p, PTarget->loc.p)));
+
                             // try to find path towards target
-                            PMob->PAI->PathFind->PathInRange(PTarget->loc.p, closeDistance, PATHFLAG_WALLHACK | PATHFLAG_RUN);
+                            PMob->PAI->PathFind->PathInRange(projectedPosition, closeDistance, PATHFLAG_WALLHACK | PATHFLAG_RUN);
                         }
                     }
-                    else if (!isWithinDistance(PMob->PAI->PathFind->GetDestination(), PTarget->loc.p, 2.5f))
+                    else if (!isWithinDistance(PMob->PAI->PathFind->GetDestination(), PTarget->loc.p, 0.1)) // This checks against the previous frames distance, and can false positive for where we want to be _now_
                     {
+                        auto projectedPosition = nearPosition(PTarget->loc.p, 0, rotationToRadian(worldAngle(PMob->loc.p, PTarget->loc.p)));
+
                         // try to find path towards target
-                        PMob->PAI->PathFind->PathInRange(PTarget->loc.p, closeDistance, PATHFLAG_WALLHACK | PATHFLAG_RUN);
+                        PMob->PAI->PathFind->PathInRange(projectedPosition, closeDistance, PATHFLAG_WALLHACK | PATHFLAG_RUN);
                     }
 
                     PMob->PAI->PathFind->FollowPath(m_Tick);
@@ -763,20 +892,17 @@ void CMobController::Move()
                             for (auto PSpawnedMob : static_cast<CCharEntity*>(PTarget)->SpawnMOBList)
                             {
                                 if (PSpawnedMob.second != PMob && !PSpawnedMob.second->PAI->PathFind->IsFollowingPath() &&
-                                    distance(PSpawnedMob.second->loc.p, PMob->loc.p) < 1.f)
+                                    distance(PSpawnedMob.second->loc.p, PMob->loc.p) < 1.0f)
                                 {
                                     auto angle = worldAngle(PMob->loc.p, PTarget->loc.p) + 64;
 
-                                    // clang-format off
-                                position_t new_pos
-                                {
-                                    PMob->loc.p.x - (cosf(rotationToRadian(angle)) * 1.5f),
-                                    PTarget->loc.p.y,
-                                    PMob->loc.p.z + (sinf(rotationToRadian(angle)) * 1.5f),
-                                    0,
-                                    0
-                                };
-                                    // clang-format on
+                                    position_t new_pos{
+                                        PMob->loc.p.x - (cosf(rotationToRadian(angle)) * 1.5f),
+                                        PTarget->loc.p.y,
+                                        PMob->loc.p.z + (sinf(rotationToRadian(angle)) * 1.5f),
+                                        0,
+                                        0,
+                                    };
 
                                     if (PMob->PAI->PathFind->ValidPosition(new_pos))
                                     {
@@ -886,32 +1012,32 @@ void CMobController::HandleEnmity()
     }
 }
 
-void CMobController::DoRoamTick(timer::time_point tick)
+auto CMobController::DoRoamTick(timer::time_point tick) -> Task<void>
 {
     TracyZoneScopedC(0x00FF00);
     // If there's someone on our enmity list, go from roaming -> engaging
     if (PMob->PEnmityContainer->GetHighestEnmity() != nullptr && !(PMob->m_roamFlags & ROAMFLAG_IGNORE))
     {
         Engage(PMob->PEnmityContainer->GetHighestEnmity()->targid);
-        return;
+        co_return;
     }
     else if (PMob->m_OwnerID.id != 0 && !(PMob->m_roamFlags & ROAMFLAG_IGNORE))
     {
         // i'm claimed by someone and want to be fighting them
-        PTarget = (CBattleEntity*)PMob->GetEntity(PMob->m_OwnerID.targid, TYPE_PC | TYPE_MOB | TYPE_PET | TYPE_TRUST);
+        PTarget = static_cast<CBattleEntity*>(PMob->GetEntity(PMob->m_OwnerID.targid, TYPE_PC | TYPE_MOB | TYPE_PET | TYPE_TRUST));
 
         if (PTarget != nullptr)
         {
             Engage(PTarget->targid);
         }
 
-        return;
+        co_return;
     }
     // TODO
     else if (PMob->GetDespawnTime() > timer::time_point::min() && PMob->GetDespawnTime() < m_Tick)
     {
         Despawn();
-        return;
+        co_return;
     }
 
     if (PMob->m_roamFlags & ROAMFLAG_IGNORE)
@@ -920,10 +1046,19 @@ void CMobController::DoRoamTick(timer::time_point tick)
         PMob->m_OwnerID.clean();
     }
 
-    if (PFollowTarget != nullptr && m_followType == FollowType::Roam && distance(PMob->loc.p, PFollowTarget->loc.p) > FollowRoamDistance)
+    if (PFollowTarget != nullptr && m_followType == FollowType::Roam)
     {
-        PMob->PAI->PathFind->PathAround(PFollowTarget->loc.p, 2.0f, PATHFLAG_RUN | PATHFLAG_WALLHACK);
-        PMob->PAI->PathFind->FollowPath(m_Tick);
+        // Only path to leader if they're moving
+        if (distance(PMob->loc.p, PFollowTarget->loc.p) > FollowRoamDistance &&
+            PFollowTarget->PAI->PathFind->IsFollowingPath())
+        {
+            PMob->PAI->PathFind->PathAround(PFollowTarget->loc.p, 2.0f, PATHFLAG_RUN | PATHFLAG_WALLHACK);
+        }
+
+        if (!PMob->PAI->PathFind->IsFollowingPath())
+        {
+            co_return;
+        }
     }
 
     if (m_Tick >= m_mobHealTime + 10s && PMob->getMobMod(MOBMOD_NO_REST) == 0 && PMob->CanRest())
@@ -961,7 +1096,7 @@ void CMobController::DoRoamTick(timer::time_point tick)
             PMob->PAI->PathFind->ResumePatrol();
             FollowRoamPath();
         }
-        else if (m_Tick >= m_LastActionTime + std::chrono::milliseconds(PMob->getBigMobMod(MOBMOD_ROAM_COOL)))
+        else if (m_Tick >= m_LastActionTime + std::chrono::seconds(PMob->getMobMod(MOBMOD_ROAM_COOL)))
         {
             // lets buff up or move around
             if (PMob->GetCallForHelpFlag())
@@ -989,39 +1124,44 @@ void CMobController::DoRoamTick(timer::time_point tick)
                     FollowRoamPath();
 
                     // move back every 5 seconds
-                    m_LastActionTime = m_Tick - (std::chrono::milliseconds(PMob->getBigMobMod(MOBMOD_ROAM_COOL)) + 10s);
+                    m_LastActionTime = m_Tick - (std::chrono::seconds(PMob->getMobMod(MOBMOD_ROAM_COOL)) + 10s);
                 }
                 else if (!(PMob->getMobMod(MOBMOD_NO_DESPAWN) != 0) && !settings::get<bool>("map.MOB_NO_DESPAWN"))
                 {
                     PMob->PAI->Despawn();
-                    return;
+                    // Override respawn timer set by CDespawnState for deaggro (60s instead of default)
+                    PMob->loc.zone->spawnHandler()->registerForRespawn(PMob, 60s);
+                    co_return;
                 }
             }
             else
             {
+                if (!(PMob->getMobMod(MOBMOD_NO_DESPAWN) != 0) && PMob->PMaster != nullptr && !PMob->PMaster->isAlive())
+                {
+                    // despawn pets if they are disengaged and master is dead
+                    PMob->PAI->Despawn();
+                    co_return;
+                }
+
                 // No longer including conditional for ROAMFLAG_AMBUSH now that using mixin to handle mob hiding
-                if (PMob->getMobMod(MOBMOD_SPECIAL_SKILL) != 0 &&
-                    m_Tick >= m_LastSpecialTime + std::chrono::milliseconds(PMob->getBigMobMod(MOBMOD_SPECIAL_COOL)) && TrySpecialSkill())
+                if (IsSpecialSkillReady(0) && TrySpecialSkill())
                 {
                     // I spawned a pet
                 }
-                else if (PMob->GetMJob() == JOB_SMN && CanCastSpells() && PMob->SpellContainer->HasBuffSpells() && m_Tick >= m_nextMagicTime)
+                else if (
+                    (!PMob->PBattlefield || PMob->PBattlefield->GetStatus() != BATTLEFIELD_STATUS_OPEN) &&
+                    PMob->GetMJob() == JOB_SMN && CanCastSpells(IgnoreRecastsAndCosts::No) &&
+                    PMob->SpellContainer->HasBuffSpells() && m_Tick >= m_nextMagicTime)
                 {
                     // summon pet
-                    auto spellID = PMob->SpellContainer->GetBuffSpell();
-                    if (spellID)
-                    {
-                        CastSpell(spellID.value());
-                    }
+                    // - initial summoner-mob pets in battlefields will happen via battlefield.lua, so the first player sees the action
+                    // - Once battlefield is locked, behavior is back to normal with no rng added to pet summoning
+                    TryCastSpell();
                 }
-                else if (CanCastSpells() && xirand::GetRandomNumber(10) < 3 && PMob->SpellContainer->HasBuffSpells())
+                else if (CanCastSpells(IgnoreRecastsAndCosts::No) && xirand::GetRandomNumber(10) < 3 && PMob->SpellContainer->HasBuffSpells())
                 {
                     // cast buff
-                    auto spellID = PMob->SpellContainer->GetBuffSpell();
-                    if (spellID)
-                    {
-                        CastSpell(spellID.value());
-                    }
+                    TryCastSpell();
                 }
                 else if (PMob->m_roamFlags & ROAMFLAG_SCRIPTED)
                 {
@@ -1030,30 +1170,50 @@ void CMobController::DoRoamTick(timer::time_point tick)
                     luautils::OnMobRoamAction(PMob);
                     m_LastActionTime = m_Tick;
                 }
-                else if (PMob->CanRoam() && PMob->PAI->PathFind->RoamAround(PMob->m_SpawnPoint, PMob->GetRoamDistance(), (uint8)PMob->getMobMod(MOBMOD_ROAM_TURNS), PMob->m_roamFlags))
+                else if (PMob->CanRoam())
                 {
                     // TODO: #AIToScript (event probably)
-                    if (PMob->m_roamFlags & ROAMFLAG_WORM && !PMob->PAI->IsCurrentState<CMagicState>())
+                    if (PMob->m_roamFlags & ROAMFLAG_WORM && !PMob->IsNameHidden())
                     {
-                        // move down
-                        PMob->animationsub = 1;
-                        PMob->HideName(true);
-                        PMob->SetUntargetable(true);
+                        // don't reset m_LastActionTime until the roaming commences
+                        if (!PMob->PAI->IsCurrentState<CMagicState>())
+                        {
+                            // move down
+                            PMob->animationsub = 1;
+                            PMob->HideName(true);
+                            PMob->SetUntargetable(true);
 
-                        // don't move around until i'm fully in the ground
-                        Wait(2s);
+                            // don't move around until i'm fully in the ground
+                            // Transition underground takes 2s, allow extra time for any magic effect to finish
+                            Wait(3s);
+                            PMob->PAI->QueueAction(
+                                queueAction_t(
+                                    3s,
+                                    false,
+                                    [](CBaseEntity* MobEntity)
+                                    {
+                                        MobEntity->status = STATUS_TYPE::INVISIBLE;
+                                    }));
+                        }
                     }
-                    else if ((PMob->m_roamFlags & ROAMFLAG_STEALTH))
+                    else if (PMob->PAI->PathFind->RoamAround(PMob->m_SpawnPoint, PMob->GetRoamDistance(), static_cast<uint8>(PMob->getMobMod(MOBMOD_ROAM_TURNS)), PMob->m_roamFlags))
                     {
-                        // hidden name
-                        PMob->HideName(true);
-                        PMob->SetUntargetable(true);
+                        if ((PMob->m_roamFlags & ROAMFLAG_STEALTH))
+                        {
+                            // hidden name
+                            PMob->HideName(true);
+                            PMob->SetUntargetable(true);
 
-                        PMob->updatemask |= UPDATE_HP;
+                            PMob->updatemask |= UPDATE_HP;
+                        }
+                        else
+                        {
+                            FollowRoamPath();
+                        }
                     }
                     else
                     {
-                        FollowRoamPath();
+                        m_LastActionTime = m_Tick;
                     }
                 }
                 else
@@ -1063,12 +1223,15 @@ void CMobController::DoRoamTick(timer::time_point tick)
             }
         }
     }
+
     if (m_Tick >= m_LastRoamScript + 3s)
     {
         PMob->PAI->EventHandler.triggerListener("ROAM_TICK", PMob);
         luautils::OnMobRoam(PMob);
         m_LastRoamScript = m_Tick;
     }
+
+    co_return;
 }
 
 void CMobController::Wait(timer::duration _duration)
@@ -1102,15 +1265,28 @@ void CMobController::FollowRoamPath()
         // if I just finished reset my last action time
         if (!PMob->PAI->PathFind->IsFollowingPath())
         {
-            uint16 roamRandomness = (uint16)(PMob->getBigMobMod(MOBMOD_ROAM_COOL) / PMob->GetRoamRate());
-            m_LastActionTime      = m_Tick - std::chrono::milliseconds(xirand::GetRandomNumber(roamRandomness));
+            const uint32 roamRandomness = std::clamp<uint32>(static_cast<uint16>(PMob->getMobMod(MOBMOD_ROAM_COOL) * 1000 / PMob->GetRoamRate()), 0, 120 * 1000);
+            m_LastActionTime            = m_Tick - std::chrono::milliseconds(xirand::GetRandomNumber(roamRandomness));
 
             // i'm a worm pop back up
-            if (PMob->m_roamFlags & ROAMFLAG_WORM)
+            if (PMob->m_roamFlags & ROAMFLAG_WORM && PMob->PAI->IsUntargetable())
             {
-                PMob->animationsub = 0;
-                PMob->HideName(false);
+                // send a final position update before coming out of the ground to avoid a slight movement as it emerges
+                PMob->loc.zone->UpdateEntityPacket(PMob, ENTITY_UPDATE, UPDATE_POS);
+
+                // don't re-enter this block, but don't roam until emerging
+                PMob->status = STATUS_TYPE::UPDATE;
                 PMob->SetUntargetable(false);
+                Wait(2s);
+                PMob->PAI->QueueAction(
+                    queueAction_t(
+                        2s,
+                        false,
+                        [](CBaseEntity* MobEntity)
+                        {
+                            MobEntity->animationsub = 0;
+                            MobEntity->HideName(false);
+                        }));
             }
 
             // face spawn rotation if I just moved back to spawn
@@ -1142,7 +1318,7 @@ void CMobController::Reset()
 {
     TracyZoneScoped;
     // Wait a little before roaming / casting spell / spawning pet
-    m_LastActionTime = m_Tick - std::chrono::milliseconds(xirand::GetRandomNumber(PMob->getBigMobMod(MOBMOD_ROAM_COOL)));
+    m_LastActionTime = m_Tick - std::chrono::seconds(xirand::GetRandomNumber(PMob->getMobMod(MOBMOD_ROAM_COOL)));
 
     // Don't attack player right off of spawn
     PMob->m_neutral = true;
@@ -1152,24 +1328,24 @@ void CMobController::Reset()
     ClearFollowTarget();
 }
 
-bool CMobController::MobSkill(uint16 targid, uint16 wsid)
+auto CMobController::MobSkill(const uint16 targid, uint16 wsid, Maybe<timer::duration> castTimeOverride) -> bool
 {
     TracyZoneScoped;
     if (POwner)
     {
         FaceTarget(targid);
         PMob->PAI->EventHandler.triggerListener("WEAPONSKILL_BEFORE_USE", PMob, wsid);
-        return POwner->PAI->Internal_MobSkill(targid, wsid);
+        return POwner->PAI->Internal_MobSkill(targid, wsid, castTimeOverride);
     }
 
     return false;
 }
 
-bool CMobController::Disengage()
+auto CMobController::Disengage() -> bool
 {
     TracyZoneScoped;
     // this will let me decide to walk home or despawn
-    m_LastActionTime = m_Tick - std::chrono::milliseconds(PMob->getBigMobMod(MOBMOD_ROAM_COOL)) + 10s;
+    m_LastActionTime = m_Tick - std::chrono::seconds(PMob->getMobMod(MOBMOD_ROAM_COOL)) + 10s;
     PMob->m_neutral  = true;
     m_NeutralTime    = m_Tick;
 
@@ -1186,12 +1362,13 @@ bool CMobController::Disengage()
     PMob->SetCallForHelpFlag(false);
     PMob->animation = ANIMATION_NONE;
     // https://www.bluegartr.com/threads/108198-Random-Facts-Thread-Traits-and-Stats-(Player-and-Monster)?p=5670209&viewfull=1#post5670209
-    PMob->m_THLvl = 0;
-    m_mobHealTime = m_Tick;
+    PMob->m_THLvl          = 0;
+    PMob->m_GilfinderLevel = 0; // Assumed to work like TH
+    m_mobHealTime          = m_Tick;
     return CController::Disengage();
 }
 
-bool CMobController::Engage(uint16 targid)
+auto CMobController::Engage(const uint16 targid) -> bool
 {
     TracyZoneScoped;
     auto ret = CController::Engage(targid);
@@ -1205,17 +1382,19 @@ bool CMobController::Engage(uint16 targid)
         }
 
         // Don't cast magic or use special ability right away
-        if (PMob->getBigMobMod(MOBMOD_MAGIC_DELAY) != 0)
+        if (PMob->getMobMod(MOBMOD_MAGIC_DELAY) != 0)
         {
             m_nextMagicTime =
-                m_Tick + std::chrono::milliseconds(PMob->getBigMobMod(MOBMOD_MAGIC_COOL) + xirand::GetRandomNumber(PMob->getBigMobMod(MOBMOD_MAGIC_DELAY)));
+                m_Tick + std::chrono::seconds(PMob->getMobMod(MOBMOD_MAGIC_COOL) + xirand::GetRandomNumber(PMob->getMobMod(MOBMOD_MAGIC_DELAY)));
         }
 
-        if (PMob->getBigMobMod(MOBMOD_SPECIAL_DELAY) != 0)
+        if (PMob->getMobMod(MOBMOD_SPECIAL_DELAY) != 0)
         {
-            m_LastSpecialTime = m_Tick - std::chrono::milliseconds(PMob->getBigMobMod(MOBMOD_SPECIAL_COOL) +
-                                                                   xirand::GetRandomNumber(PMob->getBigMobMod(MOBMOD_SPECIAL_DELAY)));
+            m_LastSpecialTime = m_Tick - std::chrono::seconds(PMob->getMobMod(MOBMOD_SPECIAL_COOL) +
+                                                              xirand::GetRandomNumber(PMob->getMobMod(MOBMOD_SPECIAL_DELAY)));
         }
+
+        m_tpThreshold = xirand::GetRandomNumber(1000, 3000);
 
         // Pet should also fight the target if they can
         if (PMob->PPet && !PMob->PPet->PAI->IsEngaged())
@@ -1226,12 +1405,12 @@ bool CMobController::Engage(uint16 targid)
     return ret;
 }
 
-bool CMobController::CanFollowTarget(CBattleEntity* PTarget)
+auto CMobController::CanFollowTarget(CBattleEntity* PTarget) const -> bool
 {
     return !PMob->m_neutral && (PMob->m_roamFlags & ROAMFLAG_FOLLOW) && PFollowTarget == nullptr && m_followType == FollowType::None && CanAggroTarget(PTarget);
 }
 
-bool CMobController::CanAggroTarget(CBattleEntity* PTarget)
+auto CMobController::CanAggroTarget(CBattleEntity* PTarget) const -> bool
 {
     TracyZoneScoped;
     TracyZoneString(PMob->getName());
@@ -1294,14 +1473,14 @@ void CMobController::TapDeclaimTime()
     m_DeclaimTime = m_Tick;
 }
 
-bool CMobController::Cast(uint16 targid, SpellID spellid)
+auto CMobController::Cast(const uint16 targid, const SpellID spellid) -> bool
 {
     TracyZoneScoped;
     FaceTarget(targid);
     return CController::Cast(targid, spellid);
 }
 
-void CMobController::SetFollowTarget(CBaseEntity* PTarget, FollowType followType)
+void CMobController::SetFollowTarget(CBaseEntity* PTarget, const FollowType followType)
 {
     if (PFollowTarget == PTarget && m_followType == followType)
     {
@@ -1328,7 +1507,7 @@ void CMobController::SetFollowTarget(CBaseEntity* PTarget, FollowType followType
     m_followType  = followType;
 }
 
-bool CMobController::HasFollowTarget()
+auto CMobController::HasFollowTarget() const -> bool
 {
     if (PFollowTarget && m_followType != FollowType::None)
     {
@@ -1346,11 +1525,11 @@ void CMobController::ClearFollowTarget()
 
 void CMobController::OnCastStopped(CMagicState& state, action_t& action)
 {
-    int32 magicCool = PMob->getBigMobMod(MOBMOD_MAGIC_COOL);
-    m_nextMagicTime = m_Tick + std::chrono::milliseconds(xirand::GetRandomNumber(magicCool / 2, magicCool));
+    int32 magicCool = PMob->getMobMod(MOBMOD_MAGIC_COOL);
+    m_nextMagicTime = m_Tick + std::chrono::seconds(xirand::GetRandomNumber(magicCool / 2, magicCool));
 }
 
-bool CMobController::CanMoveForward(float currentDistance)
+auto CMobController::CanMoveForward(const float currentDistance) -> bool
 {
     TracyZoneScoped;
 
@@ -1374,7 +1553,7 @@ bool CMobController::CanMoveForward(float currentDistance)
         (PMob->GetMaxMP() == 0 || PMob->GetMPP() >= standbackThreshold))
     {
         // Excluding Nins, mobs should not standback if can't cast magic
-        return PMob->GetMJob() != JOB_NIN && PMob->SpellContainer->HasSpells() && !CanCastSpells();
+        return PMob->GetMJob() != JOB_NIN && PMob->SpellContainer->HasSpells() && !CanCastSpells(IgnoreRecastsAndCosts::Yes);
     }
 
     if (PTarget && !PMob->CanSeeTarget(PTarget))
@@ -1390,7 +1569,7 @@ bool CMobController::CanMoveForward(float currentDistance)
     return true;
 }
 
-bool CMobController::IsSpecialSkillReady(float currentDistance)
+auto CMobController::IsSpecialSkillReady(const float currentDistance) const -> bool
 {
     TracyZoneScoped;
     if (PMob->getMobMod(MOBMOD_SPECIAL_SKILL) == 0)
@@ -1407,13 +1586,13 @@ bool CMobController::IsSpecialSkillReady(float currentDistance)
     if (currentDistance > 5)
     {
         // Mobs use ranged attacks quicker when standing back
-        bonusTime = PMob->getBigMobMod(MOBMOD_STANDBACK_COOL);
+        bonusTime = PMob->getMobMod(MOBMOD_STANDBACK_COOL);
     }
 
-    return m_Tick >= m_LastSpecialTime + std::chrono::milliseconds(PMob->getBigMobMod(MOBMOD_SPECIAL_COOL) - bonusTime);
+    return m_Tick >= m_LastSpecialTime + std::chrono::seconds(PMob->getMobMod(MOBMOD_SPECIAL_COOL) - bonusTime);
 }
 
-bool CMobController::IsSpellReady(float currentDistance)
+auto CMobController::IsSpellReady(const float currentDistance) const -> bool
 {
     TracyZoneScoped;
 
@@ -1425,7 +1604,7 @@ bool CMobController::IsSpellReady(float currentDistance)
     if (currentDistance > 5)
     {
         // Mobs use magic quicker when standing back
-        return m_Tick >= (m_nextMagicTime - std::chrono::milliseconds(PMob->getBigMobMod(MOBMOD_STANDBACK_COOL)));
+        return m_Tick >= (m_nextMagicTime - std::chrono::seconds(PMob->getMobMod(MOBMOD_STANDBACK_COOL)));
     }
 
     return m_Tick >= m_nextMagicTime;

@@ -1,50 +1,62 @@
 -----------------------------------
 -- Vorpal Blade
---
+-- Family: Humanoid Sword Weaponskill
 -- Description: Delivers a four-hit attack. Chance of critical varies with TP.
--- Type: Physical
--- Utsusemi/Blink absorb: Shadow per hit
--- Range: Melee
 -----------------------------------
 ---@type TMobSkill
 local mobskillObject = {}
 
 mobskillObject.onMobSkillCheck = function(target, mob, skill)
-    -- Check for Grah Family id 122, 123, 124
-    -- if not in Paladin form, then ignore.
+    -- TODO: Split this into a file for each mob family
+
+    -- Handle Ghrah family humanoid form.
+    -- If not in Paladin form, then ignore.
     if
-        (mob:getFamily() == 122 or mob:getFamily() == 123 or mob:getFamily() == 124) and
+        mob:getFamily() == 122 and
         mob:getAnimationSub() ~= 1
     then
         return 1
     elseif mob:getFamily() == 176 then
         -- Handle Mamool Ja BLU
-        if mob:getAnimationSub() == 0 and mob:getMainJob() == xi.job.BLU then
+        if
+            mob:getAnimationSub() == 0 and
+            mob:getMainJob() == xi.job.BLU
+        then
             return 0
         else
             return 1
         end
-    elseif mob:getPool() ~= 4249 then
+    elseif mob:getPool() ~= xi.mobPool.THRONE_ROOM_VOLKER then
         mob:messageBasic(xi.msg.basic.READIES_WS, 0, 40)
     end
 
     return 0
 end
 
-mobskillObject.onMobWeaponSkill = function(target, mob, skill)
-    if mob:getPool() == 4249 then -- Volker@Throne_Room only
+mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
+    local params = {}
+
+    params.baseDamage     = mob:getWeaponDmg()
+    params.numHits        = 4
+    params.fTP            = { 1.0, 1.0, 1.0 }
+    -- params.str_wSC        = 0.3 -- TODO: Capture if mobskill weaponskills have wSC.
+    params.canCrit        = true
+    params.criticalChance = { 0.1, 0.3, 0.5 }
+    params.attackType     = xi.attackType.PHYSICAL
+    params.damageType     = xi.damageType.SLASHING
+    params.shadowBehavior = xi.mobskills.shadowBehavior.NUMSHADOWS_4
+
+    local info = xi.mobskills.mobPhysicalMove(mob, target, skill, action, params)
+
+    if xi.mobskills.processDamage(mob, target, skill, action, info) then
+        target:takeDamage(info.damage, mob, info.attackType, info.damageType)
+    end
+
+    if mob:getPool() == xi.mobPool.THRONE_ROOM_VOLKER then -- Volker@Throne_Room only
         target:showText(mob, zones[xi.zone.THRONE_ROOM].text.BLADE_ANSWER)
     end
 
-    local numhits = 4
-    local accmod = 1
-    local ftp    = 1.25
-    local info = xi.mobskills.mobPhysicalMove(mob, target, skill, numhits, accmod, ftp, xi.mobskills.physicalTpBonus.CRIT_VARIES, 1.1, 1.2, 1.3)
-    local dmg = xi.mobskills.mobFinalAdjustments(info.dmg, mob, skill, target, xi.attackType.PHYSICAL, xi.damageType.SLASHING, info.hitslanded)
-
-    -- AA EV: Approx 900 damage to 75 DRG/35 THF.  400 to a NIN/WAR in Arhat, but took shadows.
-    target:takeDamage(dmg, mob, xi.attackType.PHYSICAL, xi.damageType.SLASHING)
-    return dmg
+    return info.damage
 end
 
 return mobskillObject

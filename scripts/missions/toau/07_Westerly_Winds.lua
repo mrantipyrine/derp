@@ -27,7 +27,7 @@ mission.sections =
             {
                 onTrigger = function(player, npc)
                     if player:getMissionStatus(mission.areaId) == 1 then
-                        return mission:progressEvent(3028, { text_table = 0 })
+                        return mission:progressEvent(3028, xi.besieged.getMercenaryRank(player), 1, 0, 0, 0, 0, 0, 0, 0)
                     end
                 end,
             },
@@ -38,6 +38,14 @@ mission.sections =
                     if player:getMissionStatus(mission.areaId) == 0 then
                         return mission:progressEvent(3027, { text_table = 0 })
                     end
+                end,
+            },
+
+            onEventUpdate =
+            {
+                [3028] = function(player, csid, option, npc)
+                    local param1 = option == 2 and 0 or 2 -- Hides "It's a prince" option after selecting it.
+                    player:updateEvent(param1, 1, 0, 0, 0, 0, 0, 0, 0)
                 end,
             },
 

@@ -12,6 +12,7 @@
 -- Magic Bursts on: Liquefaction, Fusion, Light
 -- Combos: Magic Attack Bonus
 -----------------------------------
+---@type TSpell
 local spellObject = {}
 
 spellObject.onMagicCastingCheck = function(caster, target, spell)
@@ -20,18 +21,16 @@ end
 
 spellObject.onSpellCast = function(caster, target, spell)
     local params = {}
-    params.ecosystem = xi.ecosystem.BEAST
+    params.ecosystem  = xi.ecosystem.BEAST
     params.attackType = xi.attackType.BREATH
     params.damageType = xi.damageType.FIRE
-    params.diff = 0 -- no stat increases magic accuracy
-    params.skillType = xi.skill.BLUE_MAGIC
-    params.hpMod = 2
-    params.lvlMod = 0
+    params.diff       = 0 -- no stat increases magic accuracy
+    params.skillType  = xi.skill.BLUE_MAGIC
+    params.hpMod      = 2
+    params.lvlMod     = 0
+    params.isConal    = true
 
-    local results = xi.spells.blue.useBreathSpell(caster, target, spell, params, true)
-    local damage = results[1]
-
-    return damage
+    return xi.spells.blue.useBreathSpell(caster, target, spell, params)
 end
 
 return spellObject

@@ -7,6 +7,10 @@
 ---@type TMobEntity
 local entity = {}
 
+entity.onMobInitialize = function(mob)
+    mob:addImmunity(xi.immunity.TERROR)
+end
+
 entity.onMobDeath = function(mob, player, optParams)
     if optParams.isKiller then
         local mobId = mob:getID()
@@ -17,7 +21,7 @@ entity.onMobDeath = function(mob, player, optParams)
 
         if
             hq and
-            os.time() > hq:getLocalVar('pop')
+            GetSystemTime() > hq:getLocalVar('pop')
         then
             SpawnMob(mobId + 2):updateClaim(player)
             hq:setPos(mob:getXPos(), mob:getYPos(), mob:getZPos(), 0)

@@ -1,30 +1,36 @@
 -----------------------------------
 -- Vulcan Shot
---
--- Description: Fires an explosive bullet at targets in an area of effect.
--- Type: Magical
--- Can be dispelled: N/A
--- Utsusemi/Blink absorb: Wipes shadows?
--- Range: 14' radial
+-- Family: Fomor
+-- Description: Fires an explosive bullet at targets in an area of effect. Applies Defense Down.
+-- Notes: Used by Ashu Talif Captain, possibly others.
 -----------------------------------
 ---@type TMobSkill
 local mobskillObject = {}
 
 mobskillObject.onMobSkillCheck = function(target, mob, skill)
-    mob:messageBasic(xi.msg.basic.READIES_WS, 0, 254)
-
     return 0
 end
 
-mobskillObject.onMobWeaponSkill = function(target, mob, skill)
-    local damage = mob:getWeaponDmg() * 4
+mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
+    local params = {}
 
-    damage = xi.mobskills.mobMagicalMove(mob, target, skill, damage, xi.element.FIRE, 8, xi.mobskills.magicalTpBonus.MAB_BONUS, 1)
-    damage = xi.mobskills.mobFinalAdjustments(damage, mob, skill, target, xi.attackType.MAGICAL, xi.damageType.FIRE, xi.mobskills.shadowBehavior.WIPE_SHADOWS)
+    params.baseDamage      = mob:getMainLvl() + 2
+    params.fTP             = { 9, 9, 9 }
+    params.element         = xi.element.DARK
+    params.attackType      = xi.attackType.MAGICAL
+    params.damageType      = xi.damageType.DARK
+    params.shadowBehavior  = xi.mobskills.shadowBehavior.IGNORE_SHADOWS
+    params.dStatMultiplier = 1
 
-    target:takeDamage(damage, mob, xi.attackType.MAGICAL, xi.damageType.FIRE)
+    local info = xi.mobskills.mobMagicalMove(mob, target, skill, action, params)
 
-    return damage
+    if xi.mobskills.processDamage(mob, target, skill, action, info) then
+        target:takeDamage(info.damage, mob, info.attackType, info.damageType)
+    end
+
+    xi.mobskills.mobStatusEffectMove(mob, target, xi.effect.DEFENSE_DOWN, 50, 0, 80)
+
+    return info.damage
 end
 
 return mobskillObject

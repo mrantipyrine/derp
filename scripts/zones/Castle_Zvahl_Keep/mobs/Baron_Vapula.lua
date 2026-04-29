@@ -4,10 +4,17 @@
 -----------------------------------
 mixins = { require('scripts/mixins/job_special') }
 -----------------------------------
+local ID = zones[xi.zone.CASTLE_ZVAHL_KEEP]
+-----------------------------------
 ---@type TMobEntity
 local entity = {}
 
-entity.onMobSpawn = function(mob)
+entity.phList =
+{
+    [ID.mob.BARON_VAPULA - 1] = ID.mob.BARON_VAPULA, -- Confirmed on retail
+}
+
+entity.onMobInitialize = function(mob)
     mob:addImmunity(xi.immunity.DARK_SLEEP)
     mob:addImmunity(xi.immunity.LIGHT_SLEEP)
     mob:addImmunity(xi.immunity.SILENCE)
@@ -15,8 +22,10 @@ entity.onMobSpawn = function(mob)
 end
 
 entity.onMobDeath = function(mob, player, optParams)
-    xi.hunts.checkHunt(mob, player, 354)
-    player:addTitle(xi.title.HELLSBANE)
+    if player then
+        player:addTitle(xi.title.HELLSBANE)
+        xi.hunts.checkHunt(mob, player, 354)
+    end
 end
 
 return entity

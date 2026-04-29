@@ -6,16 +6,29 @@
 ---@type TMobEntity
 local entity = {}
 
+entity.spawnPoints =
+{
+    { x = -242.500, y =  0.000, z = -400.400 },
+    { x = -275.045, y =  0.069, z = -441.843 },
+    { x = -278.034, y =  0.000, z = -359.746 },
+    { x = -201.329, y =  0.057, z = -444.798 }
+}
+
 entity.onMobInitialize = function(mob)
     mob:setMobMod(xi.mobMod.ADD_EFFECT, 1)
-end
 
-entity.onMobSpawn = function(mob)
     mob:addImmunity(xi.immunity.LIGHT_SLEEP)
     mob:addImmunity(xi.immunity.DARK_SLEEP)
     mob:addImmunity(xi.immunity.GRAVITY)
     mob:addImmunity(xi.immunity.BIND)
+    mob:addImmunity(xi.immunity.TERROR)
+end
+
+entity.onMobSpawn = function(mob)
+    mob:setMobMod(xi.mobMod.BASE_DAMAGE_MULTIPLIER, 150)
     mob:setMod(xi.mod.STORETP, 65)
+    mob:setMod(xi.mod.DOUBLE_ATTACK, 10)
+    mob:setMod(xi.mod.TRIPLE_ATTACK, 30)
 end
 
 entity.onAdditionalEffect = function(mob, target, damage)
@@ -27,7 +40,7 @@ entity.onMobDeath = function(mob, player, optParams)
 end
 
 entity.onMobDespawn = function(mob)
-    UpdateNMSpawnPoint(mob:getID())
+    xi.mob.updateNMSpawnPoint(mob)
 end
 
 return entity

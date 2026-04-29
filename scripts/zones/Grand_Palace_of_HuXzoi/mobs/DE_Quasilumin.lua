@@ -196,7 +196,7 @@ entity.closeDoor = function(mob)
 end
 
 entity.onMobInitialize = function(mob)
-    -- mob:addStatusEffect(xi.effect.NO_REST, 1, 0, 0)
+    -- mob:addStatusEffect(xi.effect.NO_REST, { power = 1, origin = mob })
     mob:setMobMod(xi.mobMod.NO_MOVE, 1)
     mob:setMobMod(xi.mobMod.NO_DESPAWN, 1)
     mob:setAutoAttackEnabled(false)
@@ -213,7 +213,7 @@ entity.onMobRoam = function(mob)
         mob:pathThrough(escort.path[point], xi.path.flag.WALK)
     end
 
-    local now = os.time()
+    local now = GetSystemTime()
     local expire = mob:getLocalVar('expire')
     if expire ~= 0 and expire <= now then
         if progress ~= escortProgress.COMPLETE then
@@ -262,7 +262,7 @@ entity.onPath = function(mob)
         if point == #data.path then
             mob:showText(mob, ID.text.PATROL_COMPLETED)
             mob:setLocalVar('progress', escortProgress.COMPLETE)
-            mob:setLocalVar('expire', os.time() + 60)
+            mob:setLocalVar('expire', GetSystemTime() + 60)
         elseif progress ~= escortProgress.COMPLETE then
             point = point + 1
             mob:setLocalVar('point', point)

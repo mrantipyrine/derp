@@ -5,6 +5,11 @@
 ---@type TMobEntity
 local entity = {}
 
+entity.spawnPoints =
+{
+    { x = -531.255, y = -9.756, z =  42.421 }
+}
+
 entity.onMobInitialize = function(mob)
     mob:setMod(xi.mod.DOUBLE_ATTACK, 50)
     mob:setMod(xi.mod.MOVE_SPEED_STACKABLE, 12)
@@ -15,7 +20,7 @@ entity.onMobSpawn = function(mob)
     -- https://www.youtube.com/watch?v=CyTY32jS9pU
     -- https://ffxiclopedia.fandom.com/wiki/Gharial
 
-    mob:addListener('WEAPONSKILL_STATE_EXIT', 'USE_BOILING_BLOOD', function(mobArg, skillId)
+    mob:addListener('WEAPONSKILL_STATE_EXIT', 'USE_BOILING_BLOOD', function(mobArg, skillId, wasExecuted)
         local roarAbility  = 2101
         local boilingBlood = 2102
 

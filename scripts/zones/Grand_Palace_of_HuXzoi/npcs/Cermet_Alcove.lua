@@ -54,6 +54,8 @@ entity.onTrigger = function(player, npc)
         name = 'Quasilumin',
         groupId = 27,
         groupZoneId = 34,
+        minLevel = 65,
+        maxLevel = 65,
         x = data.spawn.x,
         y = data.spawn.y,
         z = data.spawn.z,
@@ -77,7 +79,7 @@ entity.onTrigger = function(player, npc)
     player:messageSpecial(ID.text.TIME_RESTRICTION, data.limit)
     quasilumin:setLocalVar('escort', npc:getID())
     quasilumin:setLocalVar('progress', 0)
-    quasilumin:setLocalVar('expire', os.time() + utils.minutes(data.limit))
+    quasilumin:setLocalVar('expire', GetSystemTime() + utils.minutes(data.limit))
     quasilumin:showText(quasilumin, ID.text.REQUEST_CONFIRMED)
 end
 

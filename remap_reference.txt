@@ -1,0 +1,403 @@
+  Old ID    New ID      Slot  Custom Name                               Replacement Item
+------------------------------------------------------------------------------------------
+     493     11062     Rings  Oswald's Slick Ring                       Crisanta\
+     494     28208      Feet  Oswald's Slime Sandals                    Beatrice\
+     500     27564     Rings  Callista's Caustic Ring                   Andromeda\
+     503     27574     Rings  Proteus's Shifting Ring                   Lazaro\
+     506     23661      Feet  Salvatore's Wader Boots                   Maxixi Toe Shoes +3
+     512     28575     Rings  Tiberius's Rushing Ring                   Patricia\
+     515     27568     Rings  Delacroix's Abyssal Ring                  Crescentia\
+     518     23684      Feet  Loretta's Stomper Boots                   Ernest's Tremor Boots
+     521     26349     Waist  Thaddeus's Trample Belt                   Bonaventura\
+     524     28550     Rings  Crisanta's Charge Ring                    Adalbert\
+     530     10789     Rings  Clemens's Stumbler Ring                   Valentinus\
+     533     26345     Waist  Bartholomew's Stone Belt                  Balthazar\
+     536     23685      Feet  Conrad's Earthshaker Boots                Tom's Hop Boots
+     539     28547     Rings  Theobald's Worldbreaker Ring              Agrippa\
+     541     28534     Rings  Mortimer's Bark Ring                      Oswald\
+     542     23686      Feet  Mortimer's Root Sandals                   Theodore's Dash Greaves
+     544     28523      Ears  Aldric's Heartwood Earring                Edgar\
+     548     28542     Rings  Elspeth's Nature's Ring                   Mortimer\
+     551     28564     Rings  Wilhelmina's Canopy Ring                  Tortuga\
+     553     26082      Ears  Marcelino's Prankster Earring             Rocco\
+     554     10786     Rings  Marcelino's Trick Ring                    Sigrid\
+     560     28553     Rings  Hieronymus's Imp Ring                     Wilhelmus\
+     563     28579     Rings  Gregoire's Mayhem Ring                    Tancred\
+     565     28549     Rings  Tortuga's Lantern Ring                    Marcelino\
+     566     23687      Feet  Tortuga's Grudge Boots                    Douglas's Roller Boots
+     572     11059     Rings  Giuliana's Karma Ring                     Fiorentina\
+     575     10785     Rings  Last Tonberry's Legend Ring               Theron\
+     577     23688      Feet  Rocco's River Boots                       Little Jim's Big Boots
+     578     26083      Ears  Rocco's Current Earring                   Persephone\
+     581     28601      Back  Thessaly's Reef Mantle                    Frederica\
+     584     10783     Rings  Baldassare's Deep Ring                    Agatha\
+     587     10787     Rings  Desideria's Trident Ring                  Ptolemais\
+     589     26089      Ears  Persephone's Featherlight Earring         Svetlana\
+     590     28217      Feet  Persephone's Gallop Shoes                 Brendan\
+     592     11007      Back  Theron's Storm Mantle                     Sven\
+     593     10791     Rings  Theron's Gale Ring                        Corneline\
+     596     28436     Waist  Sabastienne's Wing Belt                   Clyde\
+     599     10792     Rings  Hieronyma's Ascent Ring                   Emerick\
+     601     26099      Ears  Fiorentina's Downy Earring                Mycelium Medal
+     602     10794     Rings  Fiorentina's Talon Ring                   Phantasia\
+     605     11000      Back  Sigismund's Gale Mantle                   Gertrude\
+     608     10795     Rings  Tancred's Thunderstrike Ring              Euphemia\
+     610     23717      Body  Andromeda's Skyshatter Plate              Apollinarius\
+     611     10793     Rings  Andromeda's Legend Ring                   Wilhemina\
+     613     10790     Rings  Sebastiano's Prickly Ring                 Dervish\
+     614     28339      Feet  Sebastiano's Sand Boots                   Reginald\
+     616     27620      Back  Pradinelda's Desert Mantle                Wenceslas\
+     617     28410     Waist  Pradinelda's Spine Belt                   Lorcan\
+     620     10761     Rings  Serafina's Oasis Ring                     Petronio\
+     622     27797      Body  Lazaro's Cacti King Plate                 Diomedea\
+     623     10755     Rings  Lazaro's Mirage Ring                      Paracelsina\
+     625     28437     Waist  Lorcan's Stampede Belt                    Deidre\
+     626     23697      Feet  Lorcan's Hide Boots                       Fili Cothurnes +3
+     628     28602      Back  Theokleia's Charge Mantle                 Cordelia\
+     632     10756     Rings  Godfrey's Gorger Ring                     Arbogast\
+     634     27916      Body  Patricia's Titanplate Hauberk             Desmond\
+     635     10759     Rings  Patricia's Ancient Ring                   Chichester\
+     637     23698      Feet  Sigrid's Pit Sandals                      Amini Bottillons +3
+     638     10763     Rings  Sigrid's Trap Ring                        Tibalt\
+     641     26325     Waist  Bellancourt's Sand Belt                   Calogero\
+     643     10487      Body  Crescentia's Armored Hauberk              Hortensia\
+     644     10758     Rings  Crescentia's Exo Ring                     Seraphinus\
+     646     10479      Body  Adalbert's Titan Carapace                 Sylvester\
+     647     10760     Rings  Adalbert's Sovereign Ring                 Pelagius\
+     649     10762     Rings  Wilhelmus's Wing Ring                     Malaclypse\
+     650     23699      Feet  Wilhelmus's Claw Boots                    Kas. Sune-Ate +3
+     653     28594      Back  Frederik's Blizzard Mantle                Elite's Resolve
+     655     23950      Body  Valentinus's Wyvern Hauberk               Ernest's Burrower Vest
+     656     10754     Rings  Valentinus's Fang Ring                    Bartholomea\
+     658     23951      Body  Agrippa's Ancient Drake Plate             Carlos's Reptile Vest
+     659     10757     Rings  Agrippa's Dominion Ring                   Casimira\
+     661     10750     Rings  Wilhelmina's Gear Ring                    Alexandros\
+     662     23700      Feet  Wilhelmina's Mechanical Boots             Hattori Kyahan +3
+     664     25419      Neck  Calogero's Automaton Collar               Archibald\
+     665     28414     Waist  Calogero's Gear Belt                      Callirhoe\
+     667     23952      Body  Agatha's Arcane Hauberk                   Boris's Granite Carapace
+     668     10753     Rings  Agatha's Mystic Ring                      Seraphimia\
+     670     23953      Body  Ptolemais's Perfect Body                  Bernard's Tidal Mail
+     671     10751     Rings  Ptolemais's Overseer Ring                 Chrysanthema\
+     673     11660     Rings  Dervish's Blade Ring                      Sophronia\
+     674     26339     Waist  Dervish's Dance Belt                      Dervish
+     676     28521      Ears  Wenceslas's Vortex Earring                Delilah\
+     677     28595      Back  Wenceslas's Animated Mantle               Larry's Lucky Fleece
+     679     23954      Body  Corneline's Haunted Hauberk               Pete's Fungal Robe
+     680     11659     Rings  Corneline's Phantom Ring                  Lavrentiy\
+     682     23955      Body  Emerick's Executioner Plate               Sam's Swindler Vest
+     683     11657     Rings  Emerick's Death Ring                      Placida\
+     685     26080      Ears  Wilhemina's Banshee Earring               Aldric\
+     686     11658     Rings  Wilhemina's Spirit Ring                   Augustine\
+     688     25431      Neck  Sigismonda's Banshee Collar               Calogero
+     691     23956      Body  Phantasia's Specter Robe                  Steve's Glittering Mail
+     692     11661     Rings  Phantasia's Wraith Ring                   Melchior\
+     694     23957      Body  Euphemia's Mourning Robe                  Nigel's Feral Cuirass
+     695     11662     Rings  Euphemia's Lament Ring                    Melpomene\
+     697     26100      Ears  Bartholomea's Eye Earring                 Carlos's Venom Earring
+     698     11669     Rings  Bartholomea's Gaze Ring                   Ophelia\
+     700     25526      Neck  Stanislao's Watcher's Collar              Baarbara's Collar
+     704     11674     Rings  Paracelsina's Petri Ring                  Dorothea\
+     706     23958      Body  Arbogast's Seer's Robe                    Maxixi Casaque +4
+     707     11656     Rings  Arbogast's Oracle Ring                    Barnard\
+     709     26101      Ears  Svetlana's Buzzard Earring                Harvey's Spring Earring
+     710     23701      Feet  Svetlana's Scavenger Boots                Pelt. Schyn. +3
+     712     28596      Back  Casimira's Death Glide Mantle             Sharon's Silken Mantle
+     713     11663     Rings  Casimira's Gyre Ring                      Vincenzo\
+     715     23393      Head  Bonaventura's Gyre Helm                   Maxixi Tiara +3
+     716     28467     Waist  Bonaventura's Carrion Belt                Pradinelda\
+     718     23959      Body  Seraphinus's Skyking Plate                Carl's Chrysalis Mail
+     719     11651     Rings  Seraphinus's Dominion Ring                Francesca\
+     721     11670     Rings  Chichester's Chatter Ring                 Valerian\
+     722     23702      Feet  Chichester's Nimble Boots                 Beck. Pigaches +3
+     725     26102      Ears  Theodolinda's Swift Earring               Theodore's Panic Earring
+     727     23411      Head  Balthazar's Jungle Crown                  Morris's Wide Brim
+     728     28426     Waist  Balthazar's Treetop Belt                  Nomad's Cord
+     730     23960      Body  Pelagius's Jungle King Robe               Fred's Down Vest
+     731     11672     Rings  Pelagius's Alpha Ring                     Horatio\
+     734     28427     Waist  Guildenstern's Howl Belt                  Sally's Tail Belt
+     736     23412      Head  Petronio's Packmaster Helm                William's Woolcap
+     737     11671     Rings  Petronio's Den Ring                       Basil\
+     739     23961      Body  Malaclypse's Savager Hauberk              Patricia's Zephyr Vest
+     740     11668     Rings  Malaclypse's Pack Ring                    Apex Shard
+     742     23969      Body  Apollinarius's Alpha Plate                Cab. Surcoat +4
+     743     23413      Head  Apollinarius's Pack Crown                 Benedict's Fur Cap
+     745     11667     Rings  Tibalt's Shell Ring                       Wanderer's Token
+     746     23703      Feet  Tibalt's Plated Sandals                   Hashi. Basmak +3
+     748     25527      Neck  Archibald's Fortress Collar               Larry's Lanyard
+     749     23704      Feet  Archibald's Rampart Boots                 Chass. Bottes +3
+     751     23970      Body  Eleanor's Ancient Carapace                Fall. Cuirass +4
+     752     11647     Rings  Eleanor's Stone Ring                      Sally's Scale Ring
+     754     23971      Body  Alexandros's Titan Fortress               An. Jackcoat +4
+     755     11648     Rings  Alexandros's Bastion Ring                 Sabrina's Apex Ring
+     757     26103      Ears  Callirhoe's Serpentine Earring            Bernard's Brine Earring
+     758     28428     Waist  Callirhoe's Scale Sash                    Baarbara's Ribbon
+     760     25531      Neck  Chrysanthema's Enchanting Collar          Pete's Spore Necklace
+     761     11649     Rings  Chrysanthema's Lure Ring                  Boris's Stone Gaze Ring
+     763     23972      Body  Seraphimia's Siren Robe                   Bihu Just. +4
+     764     11650     Rings  Seraphimia's Temptress Ring               Tom's Lucky Foot
+     766     23414      Head  Sophronia's Sea Queen Tiara               Duncan's Abyssal Helm
+     767     11646     Rings  Sophronia's Sovereign Ring                Harvey's Hop Ring
+     769     26104      Ears  Barnard's Crimson Earring                 Sam's Grift Earring
+     770     15858     Rings  Barnard's Drain Ring                      Valentina\
+     772     25532      Neck  Griselda's Blood Collar                   Wilhelmina's Fang Neck
+     775     23973      Body  Placida's Marrow Hauberk                  Arc. Jerkin +4
+     776     11637     Rings  Placida's Siphon Ring                     Cameron's Coral Ring
+     778     23974      Body  Augustine's Life Drain Robe               Sakonji Do. +4
+     779     11639     Rings  Augustine's Vital Ring                    Duncan's Deepwater Ring
+     781     11644     Rings  Lavrentiy's Chrysalis Ring                Trevor's Decay Ring
+     782     23705      Feet  Lavrentiy's Wriggle Boots                 Karagoz Scarpe +3
+     784     25533      Neck  Sebestyen's Web Collar                    Steve's Tiger Fangs
+     787     23975      Body  Melchior's Transform Robe                 Mochi. Chainmail +4
+     788     11645     Rings  Melchior's Emergence Ring                 Steve's Magpie Ring
+     790     23976      Body  Melpomene's Ascendant Robe                Ptero. Mail +4
+     791     11664     Rings  Melpomene's Chrysalis Ring                Nigel's Cateye Ring
+   10453     23977      Body  Leontine's Necromancer's Robe             Glyphic Doublet +4
+   10479     23978      Body  Sylvester's Polished Cuirass              Luhlaza Jubbah +4
+   10487     23979      Body  Hortensia's Maw Guard                     Lanun Frac +4
+   10488     23980      Body  Cornelius's Death Shroud                  Pitre Tobe +4
+   10500     27928     Hands  Stanislava's Spinner's Mitts              Winifred\
+   10501     27937     Hands  Callista's Dissolving Mitts               Millicent\
+   10503     23510     Hands  Simeon's Chitin Wristlets                 Sharon's Shears
+   10528     23511     Hands  Gideon's Studded Armband                  Cameron's Shell Shield
+   10559     23252      Legs  Vincenzo's Scaled Cuisses                 Wilhelmina's Grace Legs
+   10581     23253      Legs  Wilhelmina's Grace Legs                   Clayton's Chitin Legs
+   10625     23706      Feet  Gertrude's Windrunner Shoes               Macu. Toe Sh. +3
+   10750     11665     Rings  Vincenzo's Tough Tail Ring                Spencer's Bloom Ring
+   10752     14631     Rings  Ophelia's Conquest Ring                   Clayton's Clack Ring
+   10815     28429     Waist  Fenwick's Novice Sash                     Benedict's Burrow Belt
+   10828     28430     Waist  Gideon's Grunt Belt                       Ollie's Seasoned Belt
+   10878     23415      Head  Viviane's Toxic Tiara                     Chanterelle's Spore Hat
+   10879     23416      Head  Sophonias's Hivemind Helm                 Trevor's Myconid Crown
+   10881     23417      Head  Percival's Pestilent Mask                 Bruno's Discount Helm
+   10906     23418      Head  Sven's Warchief Helm                      Maurice's Savage Helm
+   10931     25537      Neck  Cavendish's Hex Collar                    Douglas's Carapace Neck
+   10938     25538      Neck  Heloise's Charmer's Collar                Barry's Swarm Necklace
+   10980     28597      Back  Gwendolyn's Silk Mantle                   Patricia's Predator Cape
+   10991     28598      Back  Vespera's Toxic Mantle                    Steve's Pelt Mantle
+   11000     28599      Back  Gertrude's Galeforce Mantle               Simon's Webbed Cape
+   11007     28604      Back  Sven's Battle Mantle                      Mubvum. Mantle
+   11064     23419      Head  Bartholomew's Boulderfist Helm            Spencer's Verdant Hat
+   11065     23420      Head  Temperance's Jester Hat                   Max's Shriek Mask
+   11067     23421      Head  Baldassare's Leviathan Helm               Sebastian's Sacred Helm
+   11085     23981      Body  Conrad's Mountain Hauberk                 Horos Casaque +4
+   11087     23982      Body  Theobald's Colossus Plate                 Peda. Gown +4
+   11089     23983      Body  Percival's Behemoth Plate                 Bagua Tunic +4
+   11105     23512     Hands  Clemens's Brutish Armguard                Ollie's Brine Gauntlets
+   11106     23513     Hands  Bellancourt's Chitin Mitts                Patricia's Claw Gauntlets
+   11107     23514     Hands  Sigismonda's Haunting Mitts               Rita's Petal Wrist
+   11145     23707      Feet  Fiona's Night Sandals                     Arbatel Loafers +3
+   11147     23708      Feet  Araminta's Haste Anklet                   Azimuth Gaiters +3
+   11281     23984      Body  Hieronyma's Celestial Plate               Futhark Coat +4
+   11362     25680      Body  Proteus's Primal Robe                     Cohort Cloak
+   11413     23709      Feet  Barnabas's Buzzer Boots                   Erilaz Greaves +3
+   11414     23726      Feet  Nathaniel's Grave Sandals                 Volte Gaiters
+   11415     23727      Feet  Roderick's Rattling Greaves               Volte Spats
+   11431     23728      Feet  Basil's Fortress Greaves                  Volte Sollerets
+   11488     23422      Head  Godfrey's Warlord Helm                    Beatrice's Plume Hat
+   11503     23423      Head  Sabastienne's Aerial Helm                 Quentin's Royal Crown
+   11504     23424      Head  Sigismund's Cloudpiercer Helm             Sherman's Subterran Helm
+   11505     23425      Head  Serafina's Desert Crown                   Big Jim's Small Hat
+   11591     25544      Neck  Percival's Titan's Collar                 Futhark Torque +1
+   11603     25545      Neck  Loretta's Padded Neckguard                Futhark Torque +2
+   11605     26000      Neck  Temperance's Chaos Collar                 Consumm. Torque
+   11620     26001      Neck  Borghild's Viscous Collar                 Loricate Torque
+   11622     26002      Neck  Stanislava's Gossamer Collar              Loricate Torque +1
+   11627     26003      Neck  Barnabas's Wing Brooch                    Baetyl Pendant
+   11629     14633     Rings  Dorothea's Hum Ring                       Sebastian's Jeweled Ring
+   11633     14635     Rings  Francesca's Moaning Ring                  Carl's Metamorph Ring
+   11648     14637     Rings  Valerian's Vampire Ring                   Fred's Talon Ring
+   11651     14639     Rings  Basil's Rampart Ring                      Patricia's Gale Ring
+   11660     14641     Rings  Horatio's Faith Ring                      Harold's Stinger Ring
+   11697     26105      Ears  Cavendish's Marrow Earring                Rita's Leaf Earring
+   11698     26106      Ears  Simeon's Stinger Earring                  Beatrice's Wind Earring
+   11703     26107      Ears  Roderick's Bone Earring                   Harold's Honey Earring
+   11729     28431     Waist  Sicily's River Belt                       Chanterelle's Mycelia
+   11731     28432     Waist  Eleanor's Silkweave Belt                  Bruno's Lucky Pouch
+   11736     28433     Waist  Vespera's Chitin Belt                     Maurice's Mauler Belt
+   11751     28434     Waist  Benedict's Undying Belt                   Max's Earthscream Belt
+   11771     28435     Waist  Cressida's Binding Belt                   Winston's Earthen Belt
+   11799     23434      Head  Delacroix's Maelstrom Helm                Beckoner's Horn +3
+   11856     25681      Body  Sicily's Scale Mail                       Cohort Cloak +1
+   11866     25682      Body  Dagny's Reaper's Carapace                 Emicho Haubert
+   11867     25683      Body  Eleanor's Arachnid Vest                   Emicho Haubert +1
+   11868     23435      Head  Gwendolyn's Silken Tiara                  Hashishin Kavuk +3
+   11970     23259      Legs  Clayton's Chitin Legs                     Maxixi Tights +2
+   12745     23515     Hands  Theodolinda's Pickpocket Mitts            Simon's Silk Gloves
+   12746     23516     Hands  Guildenstern's Gnole Bracers              Barry's Venom Gauntlets
+   12747     23520     Hands  Griselda's Gorge Mitts                    William's Woolmitt
+   12997     23729      Feet  Silas's Snakeskin Sandals                 Volte Boots
+   13086     26004      Neck  Theokleia's Bull Collar                   Lissome Necklace
+   13759     25684      Body  Hieronymus's Spelltwist Robe              Ryuo Domaru
+   13760     25685      Body  Sebastiano's Green Apron                  Ryuo Domaru +1
+   13778     25686      Body  Last Tonberry's Final Robe                Adhemar Jacket
+   14337     25687      Body  Wilhelmina's Ancient Robe                 Adhemar Jacket +1
+   14570     25688      Body  Desideria's Abyssal Robe                  Amalric Doublet
+   14644     14643     Rings  Leontine's Soul Drinker Ring              Quentin's Hivemind Ring
+   14804     26108      Ears  Borghild's Acid Earring                   Sherman's Tunnel Earring
+   15020     23526     Hands  Stanislao's All-Seeing Mitts              Foire Dastanas +3
+   15021     23528     Hands  Sebestyen's Spinner Mitts                 Maxixi Bangles +3
+   15323     23736      Feet  Benedict's Deathmarch Boots               Malignance Boots
+   15477     28605      Back  Giuliana's Revenge Mantle                 Samanisi Cape
+   15523     26005      Neck  Thessaly's Wavecrest Collar               Carnal Torque
+   15548     14645     Rings  Viviane's Serpent Ring                    Winston's Dirt Ring
+   15827     15856     Rings  Wendy's Web Ring                          Little Jim's Big Ring
+   15828     15857     Rings  Ptolemy's Exoskeleton Ring                Big Jim's Small Ring
+   15859     11640     Rings  Cornelius's Grave Ring                    Seraphine\
+   15959     28438     Waist  Silas's Coil Sash                         Chiner's Belt +1
+   16007     26115      Ears  Salvatore's Gill Earring                  Balder Earring +1
+   16057     26116      Ears  Dagny's Fatal Earring                     Schere Earring
+   16151     23436      Head  Frederik's Ice Drake Helm                 Chass. Tricorne +3
+   16203     28606      Back  Thaddeus's Stampede Mantle                Aput Mantle
+   16206     28607      Back  Gregoire's Chaos Mantle                   Aput Mantle +1
+   16208     28608      Back  Elspeth's Grove Mantle                    Earthcry Mantle
+   16260     28609      Back  Tiberius's Current Mantle                 Savior Mantle
+   16307     26006      Neck  Sebastiano's Culinary Collar              Decimus Torque
+   16384     23437      Head  Morris's Wide Brim                        Kara. Cappello +3
+   16415     26117      Ears  Mycelium Medal                            Crep. Earring
+   16424     11638     Rings  Wanderer's Token                          Adler Ring
+   16435     28439     Waist  Nomad's Cord                              Prosilio Belt +1
+   16436     28610      Back  Elite's Resolve                           Ik Cape
+   16462     11677     Rings  Apex Shard                                Prouesse Ring
+   16561     11641     Rings  Sabrina's Apex Ring                       Metanoia Ring
+   16573     25689      Body  Ernest's Burrower Vest                    Amalric Doublet +1
+   16574     23750      Feet  Ernest's Tremor Boots                     Hervor Sollerets
+   17055     11642     Rings  Sally's Scale Ring                        Hoard Ring
+   17084     28440     Waist  Sally's Tail Belt                         Windbuffet Belt +1
+   17109     25690      Body  Carlos's Reptile Vest                     Kaykaus Bliaut
+   17168     26118      Ears  Carlos's Venom Earring                    Sroda Earring
+   17171     25691      Body  Boris's Granite Carapace                  Kaykaus Bliaut +1
+   17752     11643     Rings  Boris's Stone Gaze Ring                   Odium Ring
+   18526     23438      Head  William's Woolcap                         Maculele Tiara +3
+   18529     26007      Neck  Baarbara's Collar                         Bilious Torque
+   18530     28441     Waist  Baarbara's Ribbon                         Ponente Sash
+   18549     28611      Back  Larry's Lucky Fleece                      Tuilha Cape
+   18550     26008      Neck  Larry's Lanyard                           Agelast Torque
+   18568     23529     Hands  Sharon's Shears                           Acad. Bracers +3
+   18569     28612      Back  Sharon's Silken Mantle                    Buquwik Cape
+   18636     15548     Rings  Tom's Lucky Foot                          Viviane\
+   18795     23751      Feet  Tom's Hop Boots                           Heidrek Boots
+   18797     15859     Rings  Harvey's Hop Ring                         Cornelius\
+   18798     27526      Ears  Harvey's Spring Earring                   Barkaro. Earring
+   18800     23439      Head  Benedict's Fur Cap                        Arbatel Bonnet +3
+   18835     28442     Waist  Benedict's Burrow Belt                    Olseni Belt
+   18837     23752      Feet  Theodore's Dash Greaves                   Angantyr Boots
+   18838     27527      Ears  Theodore's Panic Earring                  Hija Earring
+   18890     23530     Hands  Cameron's Shell Shield                    Geo. Mitaines +3
+   18917     28529     Rings  Cameron's Coral Ring                      Setae Ring
+   18919     23531     Hands  Ollie's Brine Gauntlets                   Runeist Mitons +3
+   18920     28443     Waist  Ollie's Seasoned Belt                     Yamabuki-no-Obi
+   19411     25692      Body  Bernard's Tidal Mail                      Vexed Haubert
+   19745     27528      Ears  Bernard's Brine Earring                   Gelos Earring
+   19968     23440      Head  Duncan's Abyssal Helm                     Azimuth Hood +3
+   19969     28567     Rings  Duncan's Deepwater Ring                   Nesanica Ring
+   19971     23441      Head  Chanterelle's Spore Hat                   Erilaz Galea +3
+   19972     28445     Waist  Chanterelle's Mycelia                     Shetal Stone
+   19974     25693      Body  Pete's Fungal Robe                        Jinxed Haubert
+   19975     26009      Neck  Pete's Spore Necklace                     Yarak Torque
+   19977     23710      Head  Trevor's Myconid Crown                    Volte Beret
+   19978     11628     Rings  Trevor's Decay Ring                       Strigoi Ring
+   19980     23711      Head  Bruno's Discount Helm                     Volte Tiara
+   19981     28446     Waist  Bruno's Lucky Pouch                       Sweordfaetels
+   19983     25694      Body  Sam's Swindler Vest                       Vexed Domaru
+   19984     27529      Ears  Sam's Grift Earring                       Anastasi Earring
+   19986     25695      Body  Steve's Glittering Mail                   Jinxed Domaru
+   19987     11630     Rings  Steve's Magpie Ring                       Corneus Ring
+   19989     26010      Neck  Wilhelmina's Fang Neck                    Acantha Torque
+   19992     23532     Hands  Patricia's Claw Gauntlets                 Agoge Mufflers +3
+   19993     28614      Back  Patricia's Predator Cape                  Iximulew Cape
+   19995     25696      Body  Nigel's Feral Cuirass                     Vexed Jacket
+   19996     11631     Rings  Nigel's Cateye Ring                       Blobnag Ring
+   19998     26011      Neck  Steve's Tiger Fangs                       Maskirova Torque
+   19999     28615      Back  Steve's Pelt Mantle                       Toro Cape
+   20001     23712      Head  Maurice's Savage Helm                     Volte Salade
+   20002     28447     Waist  Maurice's Mauler Belt                     Sweordfaetels +1
+   20004     27530      Ears  Rita's Leaf Earring                       Burana Earring
+   20005     23533     Hands  Rita's Petal Wrist                        Hes. Gloves +3
+   20007     23713      Head  Spencer's Verdant Hat                     Volte Cap
+   20008     11632     Rings  Spencer's Bloom Ring                      Karka Ring
+   20010     23732      Head  Max's Shriek Mask                         Malignance Chapeau
+   20011     28448     Waist  Max's Earthscream Belt                    Tengu-no-Obi
+   20014     11634     Rings  Clayton's Clack Ring                      Veela Ring
+   20016     23783      Feet  Douglas's Roller Boots                    Ikenga's Clogs
+   20017     26012      Neck  Douglas's Carapace Neck                   Melic Torque
+   20019     23738      Head  Sebastian's Sacred Helm                   Hervor Galea
+   20020     11635     Rings  Sebastian's Jeweled Ring                  Alert Ring
+   20022     23534     Hands  Simon's Silk Gloves                       Piety Mitts +3
+   20023     28616      Back  Simon's Webbed Cape                       Fravashi Mantle
+   20025     25697      Body  Carl's Chrysalis Mail                     Jinxed Jacket
+   20026     14646     Rings  Carl's Metamorph Ring                     Shadow Ring
+   20028     25698      Body  Fred's Down Vest                          Vexed Doublet
+   20029     15549     Rings  Fred's Talon Ring                         Bellona's Ring
+   20031     23739      Head  Beatrice's Plume Hat                      Heidrek Mask
+   20032     27531      Ears  Beatrice's Wind Earring                   Darkside Earring
+   20034     25699      Body  Patricia's Zephyr Vest                    Jinxed Doublet
+   20035     15550     Rings  Patricia's Gale Ring                      Minerva's Ring
+   20037     27532      Ears  Harold's Honey Earring                    Zwazo Earring
+   20038     15780     Rings  Harold's Stinger Ring                     Cerberus Ring
+   20040     23535     Hands  Barry's Venom Gauntlets                   Arch. Gloves +3
+   20041     26013      Neck  Barry's Swarm Necklace                    Henic Torque
+   20043     23740      Head  Quentin's Royal Crown                     Angantyr Beret
+   20044     15781     Rings  Quentin's Hivemind Ring                   Cerberus Ring +1
+   20046     15794     Rings  Winston's Dirt Ring                       Omicron Ring
+   20047     28449     Waist  Winston's Earthen Belt                    Metalsinger Belt
+   20049     23755      Head  Sherman's Subterran Helm                  Ikenga's Hat
+   20050     27533      Ears  Sherman's Tunnel Earring                  Zwazo Earring +1
+   20052     23784      Feet  Little Jim's Big Boots                    Gleti's Boots
+   20053     15795     Rings  Little Jim's Big Ring                     Tau Ring
+   20055     23756      Head  Big Jim's Small Hat                       Gleti's Mask
+   20056     15796     Rings  Big Jim's Small Ring                      Psi Ring
+   27407     23785      Feet  Cornelius's Miner's Anklet                Sakpata's Leggings
+   27600     28617      Back  Percival's Blight Mantle                  Mauler's Mantle
+   27648     23757      Head  Winifred's Wool Cap                       Sakpata's Helm
+   27653     23758      Head  Millicent's Bloom Headband                Mpaca's Cap
+   27657     23759      Head  Valentina's Hexed Hairpin                 Agwu's Cap
+   27658     23760      Head  Paracelsina's Stone Visor                 Bunzi's Hat
+   27766     23761      Head  Valerian's Night Cowl                     Nyame Helm
+   27770     23797      Head  Diomedea's Halo Headband                  Crepuscular Helm
+   27772     23895      Head  Horatio's Zealot's Mitre                  Pumm. Mask +4
+   27773     23896      Head  Desmond's Warden's Visor                  Anchor. Crown +4
+   27788     25700      Body  Brendan's Armored Breastplate             Vexed Bliaut
+   27789     25701      Body  Reginald's Warbound Hauberk               Jinxed Bliaut
+   27794     25702      Body  Ophelia's Dominion Plate                  Reiki Osode
+   27797     25703      Body  Diomedea's Ascension Robe                 Uac Jerkin
+   27798     25704      Body  Tancred's Cyclone Plate                   Abnoba Kaftan
+   27916     25705      Body  Desmond's Ironclad Hauberk                Witching Robe
+   27918     25706      Body  Dorothea's Carapace Vest                  Shango Robe
+   27928     23536     Hands  Winifred's Wool Mittens                   Viti. Gloves +3
+   27933     23537     Hands  Clyde's Carapace Gauntlets                Plun. Armlets +3
+   27937     23538     Hands  Millicent's Garden Gloves                 Cab. Gauntlets +3
+   27938     23539     Hands  William's Woolmitt                        Fall. Fin. Gaunt. +3
+   28028     23540     Hands  Hortensia's Gnash Gauntlets               Ankusa Gloves +3
+   28050     23541     Hands  Cressida's Squeeze Gloves                 Bihu Cuffs +3
+   28053     23542     Hands  Nathaniel's Rotting Armband               Arc. Bracers +3
+   28054     23543     Hands  Edgar's Shadow Mitts                      Sakonji Kote +3
+   28055     23544     Hands  Cornelius's Shell Shield Shard            Mochizuki Tekko +3
+   28071     23260      Legs  Beatrice's Hopping Hakama                 Sabrina's Feral Legs
+   28076     23261      Legs  Frederica's Hunting Hose                  Acad. Pants +2
+   28166     23262      Legs  Crisanta's Ivory Cuisses                  Geomancy Pants +2
+   28195     23263      Legs  Ptolemy's Armored Cuisses                 Rune. Trousers +2
+   28196     23264      Legs  Sophonias's Drone Tassets                 Agoge Cuisses +2
+   28197     23265      Legs  Sabrina's Feral Legs                      Hes. Hose +2
+   28208     23786      Feet  Beatrice's Sprinting Shoes                Mpaca's Boots
+   28213     23787      Feet  Seraphine's Sneak Boots                   Agwu's Pigaches
+   28217     23788      Feet  Brendan's Iron Greaves                    Bunzi's Sabots
+   28218     23789      Feet  Wendy's Spinner Sandals                   Nyame Sollerets
+   28334     24075      Feet  Fenwick's Initiate Sandals                Pumm. Calligae +4
+   28336     24076      Feet  Deidre's Burrower's Boots                 Anch. Gaiters +4
+   28339     24077      Feet  Reginald's Crusher Greaves                Theo. Duckbills +4
+   28401     26014      Neck  Delilah's Chanter's Collar                Deceiver's Torque
+   28402     26015      Neck  Sylvester's Guard Collar                  Combatant's Torque
+   28460     28450     Waist  Clyde's Pincer Belt                       Chaac Belt
+   28467     28451     Waist  Deidre's Mudskin Belt                     Isa Belt
+   28489     27534      Ears  Francesca's Blight Earring                Evans Earring
+   28507     27535      Ears  Heloise's Luring Earring                  Halasz Earring
+   28520     27536      Ears  Cordelia's Static Earring                 Assuage Earring
+   28521     27537      Ears  Delilah's Sacred Earring                  Ishvara Earring
+   28522     27538      Ears  Fiona's Wing Earring                      Lempo Earring
+   28523     27539      Ears  Edgar's Echolocation Earring              Genmei Earring
+   28534     15797     Rings  Valentina's Venom Ring                    Pi Ring
+   28581     15798     Rings  Seraphine's Rogue Ring                    Epsilon Ring
+   28613     28618      Back  Frederica's Predator Cloak                Anchoret's Mantle
+   28624     28619      Back  Cordelia's Shock Mantle                   Mending Cape
+   28641     28620      Back  Araminta's Dusk Mantle                    Bane Cape

@@ -5,7 +5,7 @@
 ---@type TMobEntity
 local entity = {}
 
-local spawnPoints =
+entity.spawnPoints =
 {
     { x = -509.612, y = -7.883,  z = -57.162 },
     { x = -511.114, y = -8.854,  z = -61.300 },
@@ -61,16 +61,17 @@ local spawnPoints =
 
 local function enterFlight(mob)
     mob:setAnimationSub(1) -- Change to flight.
-    mob:addStatusEffectEx(xi.effect.ALL_MISS, 0, 1, 0, 0)
+    mob:addStatusEffect(xi.effect.ALL_MISS, { power = 1, origin = mob, icon = 0 })
     mob:setMobSkillAttack(730)
-    mob:setLocalVar('flightTime', os.time() + 120)
+    mob:setLocalVar('flightTime', GetSystemTime() + 120)
     mob:setLocalVar('changeHP', mob:getHP() - 10000)
 end
 
 entity.onMobInitialize = function(mob)
     mob:setCarefulPathing(true) -- Used for drawin
+    mob:setMobMod(xi.mobMod.AOE_HIT_ALL, 1)
 
-    xi.mob.updateNMSpawnPoint(mob, spawnPoints)
+    xi.mob.updateNMSpawnPoint(mob)
     mob:setRespawnTime(math.random(144, 240) * 1800) -- 3 to 5 days in 30 minute windows
 end
 
@@ -117,13 +118,13 @@ entity.onMobEngage = function(mob, target)
 
     -- Set flight time to two min if fresh spawn
     if flightTime == 0 then
-        mob:setLocalVar('flightTime', os.time() + 120)
+        mob:setLocalVar('flightTime', GetSystemTime() + 120)
     -- Otherwise, set how many seconds left to fly from last pull
     else
-        mob:setLocalVar('flightTime', os.time() + flightTime)
+        mob:setLocalVar('flightTime', GetSystemTime() + flightTime)
     end
 
-    mob:setLocalVar('twohourTime', os.time() + 210)
+    mob:setLocalVar('twohourTime', GetSystemTime() + 210)
     mob:setLocalVar('changeHP', mob:getHP() - 10000)
 end
 
@@ -157,23 +158,23 @@ entity.onMobFight = function(mob, target)
         hpp <= 25 and
         not mob:hasStatusEffect(xi.effect.ATTACK_BOOST)
     then
-        mob:addStatusEffect(xi.effect.ATTACK_BOOST, 75, 0, 0)
+        mob:addStatusEffect(xi.effect.ATTACK_BOOST, { power = 75, origin = mob })
         mob:getStatusEffect(xi.effect.ATTACK_BOOST):addEffectFlag(xi.effectFlag.DEATH)
     end
 
     -- Gains a delay reduction (from 210 to 160) when health is under 10%
     if hpp <= 10 and mob:getLocalVar('appliedDelayReduction') == 0 then
-        mob:addMod(xi.mod.DELAY, 833)
+        mob:addMod(xi.mod.DELAY, -833)
         mob:setLocalVar('appliedDelayReduction', 1)
     elseif hpp > 10 and mob:getLocalVar('appliedDelayReduction') == 1 then
-        mob:delMod(xi.mod.DELAY, 833)
+        mob:delMod(xi.mod.DELAY, -833)
         mob:setLocalVar('appliedDelayReduction', 0)
     end
 
     -- Animation (Ground or flight mode) logic.
     if
         not mob:hasStatusEffect(xi.effect.MIGHTY_STRIKES) and
-        mob:actionQueueEmpty()
+        not xi.combat.behavior.isEntityBusy(mob)
     then
         local flightTime  = mob:getLocalVar('flightTime')
         local twohourTime = mob:getLocalVar('twohourTime')
@@ -183,30 +184,29 @@ entity.onMobFight = function(mob, target)
         -- Initial grounded mode.
         if
             animation == 0 and
-            (os.time() > flightTime and mob:getHP() < changeHP)
+            (GetSystemTime() > flightTime and mob:getHP() < changeHP)
         then
             enterFlight(mob)
 
         -- Flight mode.
         elseif
             animation == 1 and
-            (os.time() > flightTime and mob:getHP() < changeHP) and
-            mob:checkDistance(target) <= 6 -- This 2 checks are a hack until we can handle skills targeting a position and not an entity.
+            (GetSystemTime() > flightTime and mob:getHP() < changeHP)
         then
             mob:useMobAbility(1282) -- This ability also handles animation change to 2.
             mob:setBehavior(bit.bor(mob:getBehavior(), xi.behavior.NO_TURN))
-            mob:setLocalVar('flightTime', os.time() + 120)
+            mob:setLocalVar('flightTime', GetSystemTime() + 120)
             mob:setLocalVar('changeHP', mob:getHP() - 10000)
 
         -- Subsequent grounded mode.
         elseif animation == 2 then
              -- 2-Hour logic.
-            if os.time() > twohourTime then
+            if GetSystemTime() > twohourTime then
                 mob:useMobAbility(688) -- Mighty Strikes
-                mob:setLocalVar('twohourTime', os.time() + 210)
+                mob:setLocalVar('twohourTime', GetSystemTime() + 210)
 
             elseif
-                os.time() > flightTime or
+                GetSystemTime() > flightTime or
                 mob:getHP() < changeHP
             then
                 enterFlight(mob)
@@ -225,13 +225,13 @@ entity.onMobFight = function(mob, target)
     end
 end
 
-entity.onMobWeaponSkillPrepare = function(mob, target)
+entity.onMobMobskillChoose = function(mob, target, skillId)
     if mob:getAnimationSub() == 1 then
         mob:setLocalVar('skill_tp', mob:getTP())
     end
 end
 
-entity.onMobWeaponSkill = function(target, mob, skill)
+entity.onMobWeaponSkill = function(mob, target, skill, action)
     -- Don't lose TP from autos during flight
     if skill:getID() == 1278 then
         mob:addTP(64) -- Needs to gain TP from flight auto attacks
@@ -243,14 +243,23 @@ entity.onMobWeaponSkill = function(target, mob, skill)
 end
 
 entity.onAdditionalEffect = function(mob, target, damage)
-    return xi.mob.onAddEffect(mob, target, damage, xi.mob.ae.ENFIRE, { chance = 20, power = 100 })
+    local pTable =
+    {
+        chance         = 20,
+        attackType     = xi.attackType.MAGICAL,
+        magicalElement = xi.element.FIRE,
+        basePower      = math.floor(damage / 2),
+        actorStat      = xi.mod.INT,
+    }
+
+    return xi.combat.action.executeAddEffectDamage(mob, target, pTable)
 end
 
 entity.onMobDisengage = function(mob)
     -- Reset Tiamat back to the ground on wipe
     if mob:getAnimationSub() == 1 then
         local flightTime = mob:getLocalVar('flightTime')
-        mob:setLocalVar('flightTime', flightTime - os.time()) -- Get seconds left to fly for next pull
+        mob:setLocalVar('flightTime', flightTime - GetSystemTime()) -- Get seconds left to fly for next pull
         mob:setAnimationSub(0)
         mob:delStatusEffect(xi.effect.ALL_MISS)
         mob:setBehavior(bit.bor(mob:getBehavior(), xi.behavior.NO_TURN))
@@ -260,11 +269,13 @@ entity.onMobDisengage = function(mob)
 end
 
 entity.onMobDeath = function(mob, player, optParams)
-    player:addTitle(xi.title.TIAMAT_TROUNCER)
+    if player then
+        player:addTitle(xi.title.TIAMAT_TROUNCER)
+    end
 end
 
 entity.onMobDespawn = function(mob)
-    xi.mob.updateNMSpawnPoint(mob, spawnPoints)
+    xi.mob.updateNMSpawnPoint(mob)
     mob:setRespawnTime(math.random(144, 240) * 1800) -- 3 to 5 days in 30 minute windows
 end
 

@@ -6,9 +6,15 @@
 ---@type TMobEntity
 local entity = {}
 
+entity.onMobSpawn = function(mob)
+    xi.dynamis.mobInfo(mob)
+end
+
 entity.onMobDeath = function(mob, player, optParams)
-    xi.dynamis.megaBossOnDeath(mob, player, optParams)
-    player:addTitle(xi.title.NIGHTMARE_AWAKENER)
+    if player then
+        player:addTitle(xi.title.NIGHTMARE_AWAKENER)
+        xi.dynamis.megaBossOnDeath(mob, player, optParams)
+    end
 end
 
 return entity

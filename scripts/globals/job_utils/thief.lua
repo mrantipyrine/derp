@@ -2,7 +2,6 @@
 -- Thief Job Utilities
 -----------------------------------
 require('scripts/globals/quests')
-require('scripts/globals/utils')
 -----------------------------------
 xi = xi or {}
 xi.job_utils = xi.job_utils or {}
@@ -123,6 +122,11 @@ xi.job_utils.thief.checkSteal = function(player, target, ability)
     if player:getFreeSlotsCount() == 0 then
         return xi.msg.basic.FULL_INVENTORY, 0
     else
+        -- JP Recast Reduction
+        local jpValue = player:getJobPointLevel(xi.jp.STEAL_RECAST)
+
+        ability:setRecast(ability:getRecast() - 2 * jpValue)
+
         return 0, 0
     end
 end
@@ -134,7 +138,7 @@ xi.job_utils.thief.useAccomplice = function(player, target, ability)
     target:transferEnmity(player, 50 + player:getMod(xi.mod.ACC_COLLAB_EFFECT), 20.6)
 end
 
-xi.job_utils.thief.useAssassinsCharge = function(player, target, ability)
+xi.job_utils.thief.useAssassinsCharge = function(player, target, ability, action)
     local merits = player:getMerit(xi.merit.ASSASSINS_CHARGE)
     local crit   = 0
 
@@ -142,11 +146,15 @@ xi.job_utils.thief.useAssassinsCharge = function(player, target, ability)
         crit = merits / 5
     end
 
-    player:addStatusEffect(xi.effect.ASSASSINS_CHARGE, merits - 5, 0, 60, 0, crit)
+    player:addStatusEffect(xi.effect.ASSASSINS_CHARGE, { power = merits - 5, duration = 60, origin = player, subPower = crit })
+
+    return xi.effect.ASSASSINS_CHARGE
 end
 
 xi.job_utils.thief.useBully = function(player, target, ability)
-    target:addStatusEffectEx(xi.effect.DOUBT, xi.effect.INTIMIDATE, 15, 0, 30)
+    local jpValue = player:getJobPointLevel(xi.jp.BULLY_EFFECT)
+
+    target:addStatusEffect(xi.effect.DOUBT, { power = 15 + jpValue, duration = 30, origin = player, icon = xi.effect.INTIMIDATE })
 
     return xi.effect.INTIMIDATE
 end
@@ -183,13 +191,30 @@ xi.job_utils.thief.useConspirator = function(player, target, ability)
         end
     end
 
-    target:addStatusEffect(xi.effect.CONSPIRATOR, subtleBlow * scale, 0, 60, 0, accuracy * scale)
+    target:addStatusEffect(xi.effect.CONSPIRATOR, { power = subtleBlow * scale, duration = 60, origin = player, subPower = accuracy * scale })
+
+    return xi.effect.CONSPIRATOR
 end
 
 xi.job_utils.thief.useDespoil = function(player, target, ability, action)
     local level         = utils.getActiveJobLevel(player, xi.job.THF)
     local despoilMod    = player:getMod(xi.mod.DESPOIL)
     local despoilChance = 50 + despoilMod * 2 + level - target:getMainLvl() -- Same math as Steal
+
+    -- TODO: Need to verify if there's a message associated with this
+    local jpValue = player:getJobPointLevel(xi.jp.DESPOIL_EFFECT)
+
+    if jpValue > 0 and player:getMainJob() == xi.job.THF then
+        local tpSteal = jpValue * 0.02
+        local mobTP = target:getTP()
+
+        if tpSteal > mobTP then
+            tpSteal = mobTP
+        end
+
+        target:addTP(-tpSteal)
+        player:addTP(tpSteal)
+    end
 
     local despoiled = target:getDespoilItem()
 
@@ -216,7 +241,7 @@ xi.job_utils.thief.useDespoil = function(player, target, ability, action)
 
         local power = processDebuff(player, target, ability, debuff) -- Also sets ability message
 
-        target:addStatusEffect(debuff, power, 0, 90)
+        target:addStatusEffect(debuff, { power = power, duration = 90, origin = player })
     else
         action:setAnimation(target:getID(), 182)
         ability:setMsg(xi.msg.basic.STEAL_FAIL) -- Failed
@@ -225,11 +250,11 @@ xi.job_utils.thief.useDespoil = function(player, target, ability, action)
     return despoiled
 end
 
-xi.job_utils.thief.useFeint = function(player, target, ability)
+xi.job_utils.thief.useFeint = function(player, target, ability, action)
     local bonus = player:getMod(xi.mod.AUGMENTS_FEINT) * player:getMerit(xi.merit.FEINT) / 25 -- Divide by the merit value (feint is 25) to get the number of merit points
 
     -- Subpower is the proc rate bonus for TH procs
-    player:addStatusEffect(xi.effect.FEINT, 150 + bonus, 0, 60, 0, player:getMerit(xi.merit.FEINT) - 25) -- -150 Evasion base, 0% base TREASURE_HUNTER_PROC, every merit past 1 gives 25%
+    player:addStatusEffect(xi.effect.FEINT, { power = 150 + bonus, duration = 60, origin = player, subPower = player:getMerit(xi.merit.FEINT) - 25 }) -- -150 Evasion base, 0% base TREASURE_HUNTER_PROC, every merit past 1 gives 25%
 end
 
 xi.job_utils.thief.useFlee = function(player, target, ability)
@@ -240,7 +265,9 @@ xi.job_utils.thief.useFlee = function(player, target, ability)
         player:delStatusEffect(xi.effect.WEIGHT)
     end
 
-    player:addStatusEffect(xi.effect.FLEE, 10000, 0, duration)
+    player:addStatusEffect(xi.effect.FLEE, { power = 10000, duration = duration, origin = player })
+
+    return xi.effect.FLEE
 end
 
 xi.job_utils.thief.useHide = function(player, target, ability)
@@ -248,12 +275,15 @@ xi.job_utils.thief.useHide = function(player, target, ability)
 
     duration = duration * (1 + player:getMod(xi.mod.HIDE_DURATION) / 100)
 
-    player:addStatusEffect(xi.effect.HIDE, 1, 0, math.floor(duration * xi.settings.main.SNEAK_INVIS_DURATION_MULTIPLIER))
+    player:addStatusEffect(xi.effect.HIDE, { power = 1, duration = math.floor(duration * xi.settings.main.SNEAK_INVIS_DURATION_MULTIPLIER), origin = player })
+
+    return xi.effect.HIDE
 end
 
 xi.job_utils.thief.useLarceny = function(player, target, ability, action)
     local effectStolen
     local effectID = 0
+    local jpValue  = player:getJobPointLevel(xi.jp.LARCENY_EFFECT)
 
     -- SP Abilities have priority, check if one is present first
     for i = 1, #stealableSPEffects do
@@ -266,19 +296,25 @@ xi.job_utils.thief.useLarceny = function(player, target, ability, action)
     -- Default is no SP Ability found
     if effectStolen == nil then
         effectID = player:stealStatusEffect(target)
+
+        local newStatus = player:getStatusEffect(effectID)
+
+        if newStatus then
+            newStatus:setDuration(newStatus:getDuration() + jpValue * 1000)
+        end
     -- Copy an SP Ability if found
     else
         local newID       = effectStolen:getEffectType()
         local newIcon     = effectStolen:getIcon()
         local newPower    = effectStolen:getPower()
         local newTick     = effectStolen:getTick()
-        local newDuration = effectStolen:getDuration()
+        local newDuration = effectStolen:getDuration() + jpValue
         local newSubType  = effectStolen:getSubType()
         local newSubPower = effectStolen:getSubPower()
         local newTier     = effectStolen:getTier()
         local newFlags    = effectStolen:getEffectFlags()
 
-        player:addStatusEffectEx(newID, newIcon, newPower, newTick, newDuration, newSubType, newSubPower, newTier, newFlags)
+        player:addStatusEffect(newID, { power = newPower, duration = newDuration, origin = player, tick = newTick, icon = newIcon, subType = newSubType, subPower = newSubPower, tier = newTier, flag = newFlags })
         target:delStatusEffect(newID)
 
         effectID = newID
@@ -297,6 +333,20 @@ end
 xi.job_utils.thief.useMug = function(player, target, ability, action)
     local thfLevel = utils.getActiveJobLevel(player, xi.job.THF)
     local gil      = 0
+    -- TODO: Need to verify if there's a message associated with this
+    local jpValue = player:getJobPointLevel(xi.jp.MUG_EFFECT)
+
+    if jpValue > 0 and player:getMainJob() == xi.job.THF then
+        local hpSteal = ((player:getStat(xi.mod.AGI) + player:getStat(xi.mod.DEX)) * jpValue) * 0.05
+        local mobHP = target:getHP()
+
+        if hpSteal > mobHP then
+            hpSteal = mobHP
+        end
+
+        target:addHP(-hpSteal)
+        player:addHP(hpSteal)
+    end
 
     local mugChance = 90 + thfLevel - target:getMainLvl()
 
@@ -342,11 +392,15 @@ end
 xi.job_utils.thief.usePerfectDodge = function(player, target, ability)
     local duration = 30 + player:getMod(xi.mod.PERFECT_DODGE)
 
-    player:addStatusEffect(xi.effect.PERFECT_DODGE, 1, 0, duration)
+    player:addStatusEffect(xi.effect.PERFECT_DODGE, { power = 1, duration = duration, origin = player })
+
+    return xi.effect.PERFECT_DODGE
 end
 
 xi.job_utils.thief.useSneakAttack = function(player, target, ability)
-    player:addStatusEffect(xi.effect.SNEAK_ATTACK, 1, 0, 60)
+    player:addStatusEffect(xi.effect.SNEAK_ATTACK, { power = 1, duration = 60, origin = player })
+
+    return xi.effect.SNEAK_ATTACK
 end
 
 xi.job_utils.thief.useSteal = function(player, target, ability, action)
@@ -374,9 +428,9 @@ xi.job_utils.thief.useSteal = function(player, target, ability, action)
     -- Attempt Aura steal
     -- local effect = xi.effect.NONE
     if player:hasTrait(xi.trait.AURA_STEAL) then
-        local resist = applyResistanceAbility(player, target, xi.element.NONE, 0, 0)
+        local resist = xi.combat.magicHitRate.calculateResistRate(player, target, 0, 0, 0, xi.element.NONE, xi.mod.INT, 0, 0)
         -- local effectStealSuccess = false
-        if resist > 0.0625 then
+        if resist >= 0.25 then
             local auraStealChance = math.min(player:getMerit(xi.merit.AURA_STEAL), 95)
             if math.random(1, 100) <= auraStealChance then
                 local targetShadows = target:getMod(xi.mod.UTSUSEMI)
@@ -418,7 +472,11 @@ xi.job_utils.thief.useSteal = function(player, target, ability, action)
 end
 
 xi.job_utils.thief.useTrickAttack = function(player, target, ability)
-    player:addStatusEffect(xi.effect.TRICK_ATTACK, 1, 0, 60)
+    player:addStatusEffect(xi.effect.TRICK_ATTACK, { power = 1, duration = 60, origin = player })
+
+    return xi.effect.TRICK_ATTACK
+end
+
 end
 
 -- ══════════════════════════════════════════════════════════════

@@ -5,11 +5,8 @@
 ---@type TMobEntity
 local entity = {}
 
-entity.onMobRoam = function(mob)
-    local totd = VanadielTOTD()
-    if totd ~= xi.time.NIGHT and totd ~= xi.time.MIDNIGHT then
-        DespawnMob(mob:getID())
-    end
+entity.onMobInitialize = function(mob)
+    mob:setMobMod(xi.mobMod.NO_STANDBACK, 1)
 end
 
 return entity

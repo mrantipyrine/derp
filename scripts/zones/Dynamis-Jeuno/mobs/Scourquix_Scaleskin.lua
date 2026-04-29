@@ -11,6 +11,14 @@ mixins =
 ---@type TMobEntity
 local entity = {}
 
+entity.onMobInitialize = function(mob)
+    xi.pet.setMobPet(mob, 1, 'Scourquixs_Wyvern')
+end
+
+entity.onMobSpawn = function(mob)
+    xi.dynamis.mobInfo(mob)
+end
+
 entity.onMobDeath = function(mob, player, optParams)
 end
 

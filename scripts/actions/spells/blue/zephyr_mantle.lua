@@ -13,6 +13,7 @@
 -----------------------------------
 -- Combos: Conserve MP
 -----------------------------------
+---@type TSpell
 local spellObject = {}
 
 spellObject.onMagicCastingCheck = function(caster, target, spell)
@@ -24,7 +25,7 @@ spellObject.onSpellCast = function(caster, target, spell)
     local tick = 0
     local duration = xi.spells.blue.calculateDurationWithDiffusion(caster, 300)
 
-    if not target:addStatusEffect(xi.effect.BLINK, power, tick, duration) then
+    if not target:addStatusEffect(xi.effect.BLINK, { power = power, duration = duration, origin = caster, tick = tick }) then
         spell:setMsg(xi.msg.basic.MAGIC_NO_EFFECT)
     end
 

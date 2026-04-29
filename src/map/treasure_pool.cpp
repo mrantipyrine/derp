@@ -23,8 +23,8 @@
 #include "common/timer.h"
 #include "roe.h"
 
-#include "packets/treasure_find_item.h"
-#include "packets/treasure_lot_item.h"
+#include "packets/s2c/0x0d2_trophy_list.h"
+#include "packets/s2c/0x0d3_trophy_solution.h"
 
 #include "item_container.h"
 #include "recast_container.h"
@@ -168,15 +168,17 @@ uint8 CTreasurePool::addItem(uint16 ItemID, CBaseEntity* PEntity)
     uint8             SlotID     = 0;
     uint8             FreeSlotID = -1;
     timer::time_point oldest     = timer::time_point::max();
-    CItem*            PNewItem   = itemutils::GetItemPointer(ItemID);
+    const CItem*      PNewItem   = xi::items::lookup(ItemID);
 
     if (!PNewItem)
     {
         return m_count; // no change
     }
 
-    // Check if everyone in the treasure pool already has this tiem
-    if (PNewItem->getFlag() & ITEM_FLAG_RARE)
+    // Check if everyone in the treasure pool already has this item
+    // Some items do not honor this check and will be added to the party pool regardless
+    const bool skipRareCheck = m_TreasurePoolType != TreasurePoolType::Solo && PNewItem->hasFlag(ItemFlag::NoRareCheck);
+    if (PNewItem->hasFlag(ItemFlag::Rare) && !skipRareCheck)
     {
         bool doesNotHaveRareItem = false;
 
@@ -211,8 +213,8 @@ uint8 CTreasurePool::addItem(uint16 ItemID, CBaseEntity* PEntity)
         // find the oldest non-rare and non-ex item
         for (SlotID = 0; SlotID < 10; ++SlotID)
         {
-            CItem* PItem = itemutils::GetItemPointer(m_PoolItems[SlotID].ID);
-            if (PItem != nullptr && !(PItem->getFlag() & (ITEM_FLAG_RARE | ITEM_FLAG_EX)) && m_PoolItems[SlotID].TimeStamp < oldest)
+            const CItem* PItem = xi::items::lookup(m_PoolItems[SlotID].ID);
+            if (PItem != nullptr && !PItem->hasFlag(ItemFlag::Rare | ItemFlag::Exclusive) && m_PoolItems[SlotID].TimeStamp < oldest)
             {
                 FreeSlotID = SlotID;
                 oldest     = m_PoolItems[SlotID].TimeStamp;
@@ -223,8 +225,8 @@ uint8 CTreasurePool::addItem(uint16 ItemID, CBaseEntity* PEntity)
             // find the oldest non-ex item
             for (SlotID = 0; SlotID < 10; ++SlotID)
             {
-                CItem* PItem = itemutils::GetItemPointer(m_PoolItems[SlotID].ID);
-                if (PItem != nullptr && !(PItem->getFlag() & (ITEM_FLAG_EX)) && m_PoolItems[SlotID].TimeStamp < oldest)
+                const CItem* PItem = xi::items::lookup(m_PoolItems[SlotID].ID);
+                if (PItem != nullptr && !PItem->hasFlag(ItemFlag::Exclusive) && m_PoolItems[SlotID].TimeStamp < oldest)
                 {
                     FreeSlotID = SlotID;
                     oldest     = m_PoolItems[SlotID].TimeStamp;
@@ -264,7 +266,9 @@ uint8 CTreasurePool::addItem(uint16 ItemID, CBaseEntity* PEntity)
 
     for (const auto& member : m_Members)
     {
-        member->pushPacket<CTreasureFindItemPacket>(&m_PoolItems[FreeSlotID], PEntity, false);
+        // Issue RoE event for loot item and issue treasure pool packet
+        roeutils::event(ROE_EVENT::ROE_LOOTITEM, member, RoeDatagram("itemid", m_PoolItems[FreeSlotID].ID));
+        member->pushPacket<GP_SERV_COMMAND_TROPHY_LIST>(&m_PoolItems[FreeSlotID], PEntity, false);
     }
 
     if (memberCount() == 1)
@@ -287,7 +291,7 @@ void CTreasurePool::updatePool(CCharEntity* PChar)
     {
         for (auto& m_PoolItem : m_PoolItems)
         {
-            PChar->pushPacket<CTreasureFindItemPacket>(&m_PoolItem, nullptr, true);
+            PChar->pushPacket<GP_SERV_COMMAND_TROPHY_LIST>(&m_PoolItem, nullptr, true);
         }
     }
 }
@@ -324,7 +328,7 @@ void CTreasurePool::lotItem(CCharEntity* PChar, uint8 SlotID, uint16 Lot)
         return;
     }
 
-    CItem* PItem = itemutils::GetItem(m_PoolItems[SlotID].ID);
+    const CItem* PItem = xi::items::lookup(m_PoolItems[SlotID].ID);
     if (PItem == nullptr)
     {
         ShowWarning(fmt::format("Player {} is trying to lot on an item that doesn't exist (PItem was nullptr) (Packet injection?)!", PChar->getName()).c_str());
@@ -339,7 +343,7 @@ void CTreasurePool::lotItem(CCharEntity* PChar, uint8 SlotID, uint16 Lot)
     }
 
     // Cannot lot if item is RARE and player already has it
-    if ((PItem->getFlag() & ITEM_FLAG_RARE) && charutils::HasItem(PChar, m_PoolItems[SlotID].ID))
+    if (PItem->hasFlag(ItemFlag::Rare) && charutils::HasItem(PChar, m_PoolItems[SlotID].ID))
     {
         ShowError(fmt::format("Player {} is trying to lot on item {} (Rare) while already holding one (Packet injection)! ", PChar->getName(), m_PoolItems[SlotID].ID));
         return;
@@ -366,7 +370,7 @@ void CTreasurePool::lotItem(CCharEntity* PChar, uint8 SlotID, uint16 Lot)
     // Player lots Item for XXX message
     for (const auto& member : m_Members)
     {
-        member->pushPacket<CTreasureLotItemPacket>(highestLotter, highestLot, PChar, SlotID, Lot);
+        member->pushPacket<GP_SERV_COMMAND_TROPHY_SOLUTION>(highestLotter, highestLot, PChar, SlotID, Lot);
     }
 
     // if all lotters have lotted, evaluate immediately.
@@ -426,7 +430,7 @@ void CTreasurePool::passItem(CCharEntity* PChar, uint8 SlotID)
     // Player lots Item for XXX message
     for (const auto& member : m_Members)
     {
-        member->pushPacket<CTreasureLotItemPacket>(highestLotter, highestLot, PChar, SlotID, PassedLot);
+        member->pushPacket<GP_SERV_COMMAND_TROPHY_SOLUTION>(highestLotter, highestLot, PChar, SlotID, PassedLot);
     }
 
     // if all lotters have lotted, evaluate immediately.
@@ -536,7 +540,7 @@ void CTreasurePool::checkTreasureItem(timer::time_point tick, uint8 SlotID)
             std::vector<CCharEntity*> candidates;
             for (auto& member : m_Members)
             {
-                if (charutils::HasItem(member, m_PoolItems[SlotID].ID) && itemutils::GetItem(m_PoolItems[SlotID].ID)->getFlag() & ITEM_FLAG_RARE)
+                if (charutils::HasItem(member, m_PoolItems[SlotID].ID) && xi::items::lookup(m_PoolItems[SlotID].ID)->hasFlag(ItemFlag::Rare))
                 {
                     continue;
                 }
@@ -578,11 +582,9 @@ void CTreasurePool::treasureWon(CCharEntity* winner, uint8 SlotID)
 
     m_PoolItems[SlotID].TimeStamp = timer::start_time;
 
-    roeutils::event(ROE_EVENT::ROE_LOOTITEM, winner, RoeDatagram("itemid", m_PoolItems[SlotID].ID));
-
     for (const auto& member : m_Members)
     {
-        member->pushPacket<CTreasureLotItemPacket>(winner, SlotID, 0, ITEMLOT_WIN);
+        member->pushPacket<GP_SERV_COMMAND_TROPHY_SOLUTION>(winner, SlotID, 0, GP_TROPHY_SOLUTION_STATE::Win);
     }
     m_count--;
 
@@ -602,7 +604,7 @@ void CTreasurePool::treasureError(CCharEntity* winner, uint8 SlotID)
 
     for (const auto& member : m_Members)
     {
-        member->pushPacket<CTreasureLotItemPacket>(winner, SlotID, -1, ITEMLOT_WINERROR);
+        member->pushPacket<GP_SERV_COMMAND_TROPHY_SOLUTION>(winner, SlotID, -1, GP_TROPHY_SOLUTION_STATE::WinError);
     }
     m_count--;
 
@@ -622,7 +624,7 @@ void CTreasurePool::treasureLost(uint8 SlotID)
 
     for (const auto& member : m_Members)
     {
-        member->pushPacket<CTreasureLotItemPacket>(SlotID, ITEMLOT_WINERROR);
+        member->pushPacket<GP_SERV_COMMAND_TROPHY_SOLUTION>(SlotID, GP_TROPHY_SOLUTION_STATE::WinError);
     }
     m_count--;
 

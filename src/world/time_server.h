@@ -21,7 +21,8 @@
 
 #pragma once
 
-#include "common/cbasetypes.h"
-#include "common/task_manager.h"
+#include <common/scheduler.h>
 
-int32 time_server(timer::time_point tick, CTaskManager::CTask* PTask);
+class WorldEngine;
+
+auto time_server(const WorldEngine* worldServer) -> Task<void>;

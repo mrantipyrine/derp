@@ -29,139 +29,139 @@
 
 #include "utils/serverutils.h"
 
-#include "map_server.h"
+#include "common/database.h"
 
 namespace serverutils
 {
-    std::unordered_map<std::string, std::pair<int32, uint32>> serverVarCache;
-    std::unordered_set<std::string>                           serverVarChanges;
 
-    uint32 GetServerVar(std::string const& name)
+std::unordered_map<std::string, std::pair<int32, uint32>> serverVarCache;
+std::unordered_set<std::string>                           serverVarChanges;
+
+uint32 GetServerVar(const std::string& name)
+{
+    const auto rset = db::preparedStmt("SELECT value, expiry FROM server_variables WHERE name = ? LIMIT 1", name);
+
+    int32  value  = 0;
+    uint32 expiry = 0;
+    if (rset && rset->rowsCount() > 0 && rset->next())
     {
-        const auto rset = db::preparedStmt("SELECT value, expiry FROM server_variables WHERE name = ? LIMIT 1", name);
+        value  = rset->get<int32>("value");
+        expiry = rset->get<uint32>("expiry");
 
-        int32  value  = 0;
-        uint32 expiry = 0;
-        if (rset && rset->rowsCount() > 0 && rset->next())
+        if (expiry > 0 && expiry <= earth_time::timestamp())
         {
-            value  = rset->get<int32>("value");
-            expiry = rset->get<uint32>("expiry");
+            value = 0;
+            db::preparedStmt("DELETE FROM server_variables WHERE name = ? LIMIT 1", name);
+        }
+    }
 
-            if (expiry > 0 && expiry <= earth_time::timestamp())
-            {
-                value = 0;
-                db::preparedStmt("DELETE FROM server_variables WHERE name = ? LIMIT 1", name);
-            }
+    serverVarCache[name] = { value, expiry };
+    return value;
+}
+
+void SetServerVar(const std::string& name, int32 value, uint32 expiry /* = 0 */)
+{
+    PersistServerVar(name, value, expiry);
+}
+
+void SetVolatileServerVar(const std::string& name, int32 value, uint32 expiry /* = 0 */)
+{
+    serverVarCache[name] = { value, expiry };
+    serverVarChanges.insert(name);
+}
+
+int32 GetVolatileServerVar(const std::string& name)
+{
+    if (auto var = serverVarCache.find(name); var != serverVarCache.end())
+    {
+        std::pair cachedVarData = var->second;
+
+        // If the cached variable is not expired, return it.  Else, fall through so that the
+        // database can be cleaned up.
+        if (cachedVarData.second == 0 || cachedVarData.second > earth_time::timestamp())
+        {
+            return cachedVarData.first;
+        }
+    }
+
+    return GetServerVar(name);
+}
+
+void PersistVolatileServerVars()
+{
+    if (serverVarChanges.empty())
+    {
+        return;
+    }
+
+    for (const auto& name : serverVarChanges)
+    {
+        auto   cachedServerVar = serverVarCache[name];
+        int32  value           = cachedServerVar.first;
+        uint32 varTimestamp    = cachedServerVar.second;
+
+        if (value == 0)
+        {
+            db::preparedStmt("DELETE FROM server_variables WHERE name = ? LIMIT 1", name);
+        }
+        else
+        {
+            db::preparedStmt("INSERT INTO server_variables VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE value = ?, expiry = ?", name, value, varTimestamp, value, varTimestamp);
+        }
+    }
+
+    serverVarChanges.clear();
+}
+
+void PersistServerVar(const std::string& name, int32 value, uint32 expiry /* = 0 */)
+{
+    int32 tries  = 0;
+    int32 verify = INT_MIN;
+
+    const auto setVarMaxRetry = settings::get<uint8>("map.SETVAR_RETRY_MAX");
+
+    do
+    {
+        tries++;
+        verify = INT_MIN;
+
+        if (value == 0)
+        {
+            db::preparedStmt("DELETE FROM server_variables WHERE name = ? LIMIT 1", name);
+        }
+        else
+        {
+            db::preparedStmt("INSERT INTO server_variables VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE value = ?, expiry = ?", name, value, expiry, value, expiry);
         }
 
-        serverVarCache[name] = { value, expiry };
-        return value;
-    }
-
-    void SetServerVar(std::string const& name, int32 value, uint32 expiry /* = 0 */)
-    {
-        PersistServerVar(name, value, expiry);
-    }
-
-    void SetVolatileServerVar(std::string const& name, int32 value, uint32 expiry /* = 0 */)
-    {
-        serverVarCache[name] = { value, expiry };
-        serverVarChanges.insert(name);
-    }
-
-    int32 GetVolatileServerVar(std::string const& name)
-    {
-        if (auto var = serverVarCache.find(name); var != serverVarCache.end())
+        if (setVarMaxRetry > 0)
         {
-            std::pair cachedVarData = var->second;
-
-            // If the cached variable is not expired, return it.  Else, fall through so that the
-            // database can be cleaned up.
-            if (cachedVarData.second == 0 || cachedVarData.second > earth_time::timestamp())
+            const auto rset = db::preparedStmt("SELECT value FROM server_variables WHERE name = ? LIMIT 1", name);
+            if (rset)
             {
-                return cachedVarData.first;
-            }
-        }
-
-        return GetServerVar(name);
-    }
-
-    int32 PersistVolatileServerVars(timer::time_point tick, CTaskManager::CTask* PTask)
-    {
-        if (serverVarChanges.empty())
-        {
-            return 0;
-        }
-
-        for (const auto& name : serverVarChanges)
-        {
-            auto   cachedServerVar = serverVarCache[name];
-            int32  value           = cachedServerVar.first;
-            uint32 varTimestamp    = cachedServerVar.second;
-
-            if (value == 0)
-            {
-                db::preparedStmt("DELETE FROM server_variables WHERE name = ? LIMIT 1", name);
-            }
-            else
-            {
-                db::preparedStmt("INSERT INTO server_variables VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE value = ?, expiry = ?", name, value, varTimestamp, value, varTimestamp);
-            }
-        }
-
-        serverVarChanges.clear();
-
-        return 0;
-    }
-
-    void PersistServerVar(std::string const& name, int32 value, uint32 expiry /* = 0 */)
-    {
-        int32 tries  = 0;
-        int32 verify = INT_MIN;
-
-        const auto setVarMaxRetry = settings::get<uint8>("map.SETVAR_RETRY_MAX");
-
-        do
-        {
-            tries++;
-            verify = INT_MIN;
-
-            if (value == 0)
-            {
-                db::preparedStmt("DELETE FROM server_variables WHERE name = ? LIMIT 1", name);
-            }
-            else
-            {
-                db::preparedStmt("INSERT INTO server_variables VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE value = ?, expiry = ?", name, value, expiry, value, expiry);
-            }
-
-            if (setVarMaxRetry > 0)
-            {
-                const auto rset = db::preparedStmt("SELECT value FROM server_variables WHERE name = ? LIMIT 1", name);
-                if (rset)
+                if (rset->rowsCount() > 0)
                 {
-                    if (rset->rowsCount() > 0)
+                    // Can get it, so let's make sure it matches.
+                    if (rset->next())
                     {
-                        // Can get it, so let's make sure it matches.
-                        if (rset->next())
-                        {
-                            verify = rset->get<int32>("value");
-                        }
+                        verify = rset->get<int32>("value");
                     }
-                    else
+                }
+                else
+                {
+                    // Can't get it, but if it were 0, that's what we want.
+                    if (value == 0)
                     {
-                        // Can't get it, but if it were 0, that's what we want.
-                        if (value == 0)
-                        {
-                            verify = value;
-                        }
+                        verify = value;
                     }
                 }
             }
-            else
-            {
-                break;
-            }
-        } while (verify != value && tries < setVarMaxRetry);
-    }
+        }
+        else
+        {
+            break;
+        }
+    } while (verify != value && tries < setVarMaxRetry);
+}
+
 } // namespace serverutils

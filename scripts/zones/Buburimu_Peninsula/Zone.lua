@@ -2,19 +2,12 @@
 -- Zone: Buburimu_Peninsula (118)
 -----------------------------------
 local ID = zones[xi.zone.BUBURIMU_PENINSULA]
-require('scripts/quests/i_can_hear_a_rainbow')
 require('scripts/missions/amk/helpers')
 -----------------------------------
 ---@type TZone
 local zoneObject = {}
 
 zoneObject.onInitialize = function(zone)
-    local hour = VanadielHour()
-
-    if hour >= 6 and hour < 16 then
-        GetMobByID(ID.mob.BACKOO):setRespawnTime(1)
-    end
-
     xi.conquest.setRegionalConquestOverseers(zone:getRegionID())
 
     xi.helm.initZone(zone, xi.helmType.LOGGING)
@@ -29,10 +22,6 @@ zoneObject.onZoneIn = function(player, prevZone)
         player:getZPos() == 0
     then
         player:setPos(-276.529, 16.403, -324.519, 14)
-    end
-
-    if quests.rainbow.onZoneIn(player) then
-        cs = 3
     end
 
     -- AMK06/AMK07
@@ -74,9 +63,6 @@ zoneObject.onGameHour = function(zone)
 end
 
 zoneObject.onEventUpdate = function(player, csid, option, npc)
-    if csid == 3 then
-        quests.rainbow.onEventUpdate(player)
-    end
 end
 
 zoneObject.onEventFinish = function(player, csid, option, npc)

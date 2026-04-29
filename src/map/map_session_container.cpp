@@ -22,11 +22,11 @@
 #include "map_session_container.h"
 
 #include "map_networking.h"
-#include "map_server.h"
 #include "map_session.h"
 #include "status_effect_container.h"
 
 #include "common/database.h"
+#include "common/xi.h"
 
 #include "entities/charentity.h"
 
@@ -42,7 +42,7 @@ auto MapSessionContainer::createSession(IPP ipp) -> MapSession*
     const auto rset = db::preparedStmt("SELECT charid FROM accounts_sessions WHERE client_addr = ? LIMIT 1", ipp.getIP());
     if (!rset)
     {
-        ShowError("SQL query failed in mapsession_createsession!");
+        ShowError("SQL query failed in MapSessionContainer::createSession!");
         return nullptr;
     }
 
@@ -61,6 +61,29 @@ auto MapSessionContainer::createSession(IPP ipp) -> MapSession*
     sessions_[ipp] = std::move(map_session_data);
 
     return sessions_[ipp].get();
+}
+
+auto MapSessionContainer::createPendingSession(uint32 charId) -> MapSession*
+{
+    TracyZoneScoped;
+
+    ShowDebugFmt("Creating pending session for character id {}", charId);
+
+    const auto rset = db::preparedStmt("SELECT charid FROM accounts_sessions WHERE charid = ? LIMIT 1", charId);
+    if (!rset)
+    {
+        ShowError("SQL query failed in MapSessionContainer::createPendingSession");
+        return nullptr;
+    }
+
+    auto map_session_data = std::make_unique<MapSession>();
+
+    map_session_data->last_update = timer::now(); // This may need adjustment if sessions feel like they take too long to free
+    map_session_data->charID      = charId;
+
+    pending_sessions_[charId] = std::move(map_session_data);
+
+    return pending_sessions_[charId].get();
 }
 
 auto MapSessionContainer::getSessionByIPP(IPP ipp) -> MapSession*
@@ -124,6 +147,33 @@ auto MapSessionContainer::getSessionByCharId(uint32 charId) -> MapSession*
     return nullptr;
 }
 
+auto MapSessionContainer::getPendingSessionByCharId(uint32 charId) -> MapSession*
+{
+    TracyZoneScoped;
+
+    if (pending_sessions_.contains(charId))
+    {
+        return pending_sessions_[charId].get();
+    }
+
+    return nullptr;
+}
+
+auto MapSessionContainer::getSessionByAccountId(uint32 accountId) -> MapSession*
+{
+    TracyZoneScoped;
+
+    for (const auto& [_, session] : sessions_)
+    {
+        if (session->accountID == accountId)
+        {
+            return session.get();
+        }
+    }
+
+    return nullptr;
+}
+
 auto MapSessionContainer::getSessionByCharName(const std::string& name) -> MapSession*
 {
     TracyZoneScoped;
@@ -143,13 +193,15 @@ void MapSessionContainer::cleanupSessions(IPP mapIPP)
 {
     TracyZoneScoped;
 
+    auto timeoutSetting = settings::get<uint16>("map.MAX_TIME_LASTUPDATE");
+
     auto it = sessions_.begin();
     while (it != sessions_.end())
     {
         auto& map_session_data = it->second;
 
-        CCharEntity* PChar = map_session_data->PChar;
-        auto         now   = timer::now();
+        auto* PChar = map_session_data->PChar.get();
+        auto  now   = timer::now();
 
         if (now > map_session_data->last_update + 5s)
         {
@@ -167,7 +219,6 @@ void MapSessionContainer::cleanupSessions(IPP mapIPP)
                 }
             }
 
-            auto timeoutSetting = settings::get<uint16>("map.MAX_TIME_LASTUPDATE");
             if (now > map_session_data->last_update + std::chrono::seconds(timeoutSetting))
             {
                 bool otherMap = false;
@@ -189,7 +240,7 @@ void MapSessionContainer::cleanupSessions(IPP mapIPP)
 
                 if (PChar != nullptr)
                 {
-                    ShowDebug(fmt::format("Clearing map server session for player: '{}' in zone: '{}' (On other map server = {})", PChar->name, PChar->loc.zone ? PChar->loc.zone->getName() : "None", otherMap ? "Yes" : "No"));
+                    ShowDebugFmt("Clearing map server session for player: '{}' in zone: '{}' (On other map server = {})", PChar->name, PChar->loc.zone ? PChar->loc.zone->getName() : "None", otherMap ? "Yes" : "No");
 
                     // Player session is attached to this map process and has stopped responding.
                     if (!otherMap)
@@ -214,7 +265,7 @@ void MapSessionContainer::cleanupSessions(IPP mapIPP)
 
                     charutils::removeCharFromZone(PChar);
 
-                    destroy(map_session_data->PChar);
+                    map_session_data->PChar.reset();
 
                     sessions_.erase(it++);
                 }
@@ -247,6 +298,26 @@ void MapSessionContainer::cleanupSessions(IPP mapIPP)
         }
         ++it;
     }
+
+    xi::eraseIf(
+        pending_sessions_,
+        [&](auto& pair)
+        {
+            auto& map_session_data = pair.second;
+
+            auto now = timer::now();
+
+            if (now > map_session_data->last_update + std::chrono::seconds(timeoutSetting))
+            {
+                ShowDebugFmt("Clearing map server pending session for pending char ID: '{}'", map_session_data->charID);
+
+                db::preparedStmt("DELETE FROM accounts_sessions WHERE charid = ?", map_session_data->charID);
+
+                return true; // Erase
+            }
+
+            return false; // Keep
+        });
 }
 
 void MapSessionContainer::destroySession(IPP ipp)
@@ -282,10 +353,36 @@ void MapSessionContainer::destroySession(MapSession* map_session_data)
         if (PZone)
         {
             // This should already be done in removeCharFromZone, but just to be safe...
-            PZone->DecreaseZoneCounter(map_session_data->PChar);
+            PZone->DecreaseZoneCounter(map_session_data->PChar.get());
         }
-        destroy(map_session_data->PChar);
+        map_session_data->PChar.reset();
     }
 
     sessions_.erase(map_session_data->client_ipp);
+}
+
+void MapSessionContainer::destroyPendingSession(MapSession* map_session_data)
+{
+    TracyZoneScoped;
+
+    if (map_session_data == nullptr)
+    {
+        return;
+    }
+
+    ShowDebugFmt("Closing pending session for character id {}", map_session_data->charID);
+
+    pending_sessions_.erase(map_session_data->charID);
+}
+
+void MapSessionContainer::destroyPendingSession(uint32 charId)
+{
+    TracyZoneScoped;
+
+    if (auto map_session_data = getPendingSessionByCharId(charId))
+    {
+        ShowDebugFmt("Closing pending session for character id {}", map_session_data->charID);
+
+        pending_sessions_.erase(charId);
+    }
 }

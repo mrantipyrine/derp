@@ -5,8 +5,20 @@
 -- Only uses Impale, and does it in threes
 -- TODO allow deaggro based on distance (core CMobEntity::CanDeaggro() forces NM and Battlefield mobs to never stop chasing)
 -----------------------------------
+local ID = zones[xi.zone.ROLANBERRY_FIELDS_S]
+-----------------------------------
 ---@type TMobEntity
 local entity = {}
+
+entity.spawnPoints =
+{
+    { x = -515.400, y = -23.780, z = -453.510 }
+}
+
+entity.phList =
+{
+    [ID.mob.DELICIEUSE_DELPHINE - 1] = ID.mob.DELICIEUSE_DELPHINE, -- -484.535 -23.756 -467.462
+}
 
 entity.onMobInitialize = function(mob)
     mob:setMod(xi.mod.DOUBLE_ATTACK, 5)
@@ -15,13 +27,13 @@ entity.onMobInitialize = function(mob)
     mob:setMobMod(xi.mobMod.ADD_EFFECT, 1)
 end
 
-entity.onMobWeaponSkillPrepare = function(mob, target)
+entity.onMobMobskillChoose = function(mob, target, skillId)
     mob:setLocalVar('impaleCount', 2)
 
     return 316 -- Impale
 end
 
-entity.onMobWeaponSkill = function(target, mob, skill, action)
+entity.onMobWeaponSkill = function(mob, target, skill, action)
     if mob:getLocalVar('impaleCount') > 0 then
         mob:setLocalVar('impaleCount', mob:getLocalVar('impaleCount') - 1)
         mob:useMobAbility(skill:getID())
@@ -29,7 +41,15 @@ entity.onMobWeaponSkill = function(target, mob, skill, action)
 end
 
 entity.onAdditionalEffect = function(mob, target, damage)
-    return xi.mob.onAddEffect(mob, target, damage, xi.mob.ae.PARALYZE, { chance = 50, duration = math.random(5, 30) })
+    local pTable =
+    {
+        chance   = 50,
+        effectId = xi.effect.PARALYSIS,
+        power    = 20,
+        duration = 30,
+    }
+
+    return xi.combat.action.executeAddEffectEnfeeblement(mob, target, pTable)
 end
 
 entity.onMobDeath = function(mob, player, optParams)
