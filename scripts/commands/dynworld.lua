@@ -1,0 +1,1201 @@
+-----------------------------------
+-- GM Command: !dynworld
+-----------------------------------
+-- Usage:
+--   !dynworld status           - Show system status
+--   !dynworld spawn [tier] [n] - Force spawn N entities of tier in current zone
+--   !dynworld clear            - Despawn all dynamic entities in current zone
+--   !dynworld start            - Start the system
+--   !dynworld stop             - Stop the system (no new spawns)
+--   !dynworld info             - Show entities in current zone
+--   !dynworld synergies        - List all item synergies
+--   !dynworld chain            - Show your chain info
+--   !dynworld modelprobe [id]  - Spawn a plain test mob with a forced model ID
+--
+-- Tier values: 1=Wanderer, 2=Nomad, 3=Elite, 4=Apex, 5=Power King
+-----------------------------------
+require('scripts/globals/dynamic_world')
+-----------------------------------
+
+---@type TCommand
+local commandObj = {}
+
+commandObj.cmdprops =
+{
+    permission = 3,
+    parameters = 's',
+}
+
+local function printErr(player, msg)
+    player:printToPlayer(msg, xi.msg.channel.SYSTEM_3)
+end
+
+local skirmishFactions =
+{
+    goblin =
+    {
+        packetName = 'Goblin Raider',
+        groupRefs =
+        {
+            { groupId = 23, groupZoneId = 4 },
+            { groupId = 25, groupZoneId = 4 },
+            { groupId = 27, groupZoneId = 4 },
+        },
+    },
+    orc =
+    {
+        packetName = 'Orc Raider',
+        groupRefs =
+        {
+            { groupId = 14, groupZoneId = 2 },
+            { groupId = 15, groupZoneId = 2 },
+            { groupId = 21, groupZoneId = 2 },
+        },
+    },
+    quadav =
+    {
+        packetName = 'Quadav Raider',
+        groupRefs =
+        {
+            { groupId = 76, groupZoneId = 37 },
+            { groupId = 77, groupZoneId = 37 },
+            { groupId = 78, groupZoneId = 37 },
+        },
+    },
+    yagudo =
+    {
+        packetName = 'Yagudo Raider',
+        groupRefs =
+        {
+            { groupId = 82, groupZoneId = 37 },
+            { groupId = 83, groupZoneId = 37 },
+            { groupId = 84, groupZoneId = 37 },
+        },
+    },
+}
+
+local function pickGroupRef(refs)
+    return refs[math.random(#refs)]
+end
+
+local function buildSkirmishOffsets(count, baseAngle, distance)
+    local offsets = {}
+    local spacing = 2.2
+    local lateralStart = -((count - 1) * spacing) * 0.5
+
+    for i = 1, count do
+        local lateral = lateralStart + ((i - 1) * spacing)
+        offsets[#offsets + 1] =
+        {
+            x = math.cos(baseAngle) * distance + math.cos(baseAngle + math.pi / 2) * lateral,
+            z = math.sin(baseAngle) * distance + math.sin(baseAngle + math.pi / 2) * lateral,
+        }
+    end
+
+    return offsets
+end
+
+local function trackSkirmishEntity(zoneId, entity, packetName, faction, minLevel, maxLevel)
+    local state = xi.dynamicWorld.state
+    local zd = state.zoneData[zoneId]
+    if not zd then
+        return
+    end
+
+    local targid = entity:getTargID()
+    zd.entities[targid] =
+    {
+        entity = entity,
+        templateKey = 'skirmish_' .. faction,
+        tier = 0,
+        spawnTime = os.time(),
+        zoneId = zoneId,
+        minLevel = minLevel,
+        maxLevel = maxLevel,
+        isSkirmish = true,
+        packetName = packetName,
+        faction = faction,
+    }
+    zd.count = zd.count + 1
+    state.globalCount = state.globalCount + 1
+
+    entity:addListener('DESPAWN', 'DW_SKIRMISH_DESPAWN_' .. targid, function(mob)
+        xi.dynamicWorld.spawner.onEntityDespawn(mob, zd, state, targid)
+    end)
+end
+
+local function countLiving(pack)
+    local living = 0
+    for _, mob in ipairs(pack) do
+        if mob and mob:isAlive() then
+            living = living + 1
+        end
+    end
+    return living
+end
+
+local function getSkirmishState()
+    local state = xi.dynamicWorld.state
+    state.skirmishes = state.skirmishes or {}
+    state.nextSkirmishId = state.nextSkirmishId or 1
+    return state
+end
+
+local function summarizePack(pack)
+    local total = #pack
+    local living = countLiving(pack)
+    return living, total
+end
+
+local function registerSkirmish(zoneId, factionA, factionB, packA, packB, minLevel, maxLevel)
+    local state = getSkirmishState()
+    local skirmishId = state.nextSkirmishId
+    state.nextSkirmishId = skirmishId + 1
+
+    local livingA, totalA = summarizePack(packA)
+    local livingB, totalB = summarizePack(packB)
+    state.skirmishes[skirmishId] =
+    {
+        id = skirmishId,
+        zoneId = zoneId,
+        factionA = factionA,
+        factionB = factionB,
+        startedAt = os.time(),
+        endedAt = 0,
+        minLevel = minLevel,
+        maxLevel = maxLevel,
+        initialA = totalA,
+        initialB = totalB,
+        livingA = livingA,
+        livingB = livingB,
+        status = 'active',
+        winner = nil,
+        loser = nil,
+        survivors = 0,
+    }
+
+    return skirmishId
+end
+
+local function updateSkirmishRecord(skirmishId, livingA, livingB)
+    local state = getSkirmishState()
+    local record = state.skirmishes[skirmishId]
+    if not record then
+        return nil
+    end
+
+    record.livingA = livingA
+    record.livingB = livingB
+    return record
+end
+
+local function finalizeSkirmish(skirmishId, factionA, factionB, livingA, livingB)
+    local record = updateSkirmishRecord(skirmishId, livingA, livingB)
+    if not record or record.status == 'finished' then
+        return record
+    end
+
+    record.status = 'finished'
+    record.endedAt = os.time()
+
+    if livingA == 0 and livingB == 0 then
+        record.winner = 'draw'
+        record.loser = 'draw'
+        record.survivors = 0
+    elseif livingA == 0 then
+        record.winner = factionB
+        record.loser = factionA
+        record.survivors = livingB
+    elseif livingB == 0 then
+        record.winner = factionA
+        record.loser = factionB
+        record.survivors = livingA
+    end
+
+    -- Feed outcome into the seasonal event system
+    if record.winner and record.winner ~= 'draw' and xi.dynamicWorld.seasons then
+        local zone = GetZone(record.zoneId)
+        if zone then
+            xi.dynamicWorld.seasons.onSkirmishResult(zone, record.winner, record.loser)
+        end
+    end
+
+    return record
+end
+
+local function retireSkirmishPack(pack, factionKey)
+    local faction = skirmishFactions[factionKey]
+    local lingerSeconds = 180
+    for _, mob in ipairs(pack) do
+        if mob and mob:isAlive() then
+            mob:disengage()
+            mob:setMobMod(xi.mobMod.NO_AGGRO, 1)
+            mob:setMobMod(xi.mobMod.NO_LINK, 1)
+            mob:setMobMod(xi.mobMod.IDLE_DESPAWN, lingerSeconds)
+            mob:setMobMod(xi.mobMod.ROAM_DISTANCE, 18)
+            mob:setMobMod(xi.mobMod.ROAM_COOL, 5)
+            mob:spawn(lingerSeconds)
+            mob:timer(lingerSeconds * 1000, function(mobArg)
+                if mobArg and mobArg:isAlive() then
+                    mobArg:setStatus(xi.status.DISAPPEAR)
+                end
+            end)
+        end
+    end
+
+    local anchor = pack[1]
+    if anchor and anchor:isAlive() then
+        xi.dynamicWorld.announceNearby(
+            anchor:getZone(),
+            anchor,
+            80,
+            string.format('[Dynamic World] %s scatter after the skirmish and drift away after a while.', faction and faction.packetName or factionKey)
+        )
+    end
+end
+
+local function spawnSkirmishMob(zone, factionKey, pos, minLevel, maxLevel, allegiance)
+    local faction = skirmishFactions[factionKey]
+    if not faction then
+        return nil
+    end
+
+    local chosenRef = pickGroupRef(faction.groupRefs)
+    local entity = zone:insertDynamicEntity({
+        objtype = xi.objType.MOB,
+        allegiance = allegiance or xi.allegiance.MOB,
+        name = faction.packetName:gsub(' ', '_'),
+        packetName = faction.packetName,
+        x = pos.x,
+        y = pos.y,
+        z = pos.z,
+        rotation = pos.rot,
+        groupId = chosenRef.groupId,
+        groupZoneId = chosenRef.groupZoneId,
+        minLevel = minLevel,
+        maxLevel = maxLevel,
+        releaseIdOnDisappear = true,
+        specialSpawnAnimation = true,
+        onMobSpawn = function(mob)
+            mob:renameEntity(faction.packetName)
+            mob:setMobMod(xi.mobMod.NO_DROPS, 1)
+            mob:setMobMod(xi.mobMod.EXP_BONUS, -100)
+            mob:setMobMod(xi.mobMod.GIL_BONUS, -100)
+            mob:setMobMod(xi.mobMod.CLAIM_TYPE, xi.claimType.NON_EXCLUSIVE)
+            mob:setMobMod(xi.mobMod.NO_LINK, 1)
+            mob:setMobMod(xi.mobMod.NO_AGGRO, 1)
+            mob:setMobMod(xi.mobMod.ROAM_DISTANCE, 5)
+            mob:setMobMod(xi.mobMod.ROAM_COOL, 8)
+            mob:addMod(xi.mod.ATT, 10)
+            mob:addMod(xi.mod.DEF, 10)
+            mob:addMod(xi.mod.ACC, 10)
+        end,
+        onMobDeath = function(mob, player, optParams)
+            xi.dynamicWorld.reputation.onFactionKill(player, factionKey, 2)
+        end,
+    })
+
+    if not entity then
+        return nil
+    end
+
+    entity:setSpawn(pos.x, pos.y, pos.z, pos.rot)
+    entity:spawn()
+    trackSkirmishEntity(zone:getID(), entity, faction.packetName, factionKey, minLevel, maxLevel)
+
+    return entity
+end
+
+local function spawnModelProbe(player, modelId)
+    local zone = player:getZone()
+    if not zone then
+        printErr(player, '[DynWorld] Could not resolve current zone.')
+        return
+    end
+
+    local x = player:getXPos() + 3.0
+    local y = player:getYPos()
+    local z = player:getZPos() + 3.0
+    local rot = player:getRotPos()
+
+    local entity = zone:insertDynamicEntity({
+        objtype = xi.objType.MOB,
+        name = 'Model_Probe',
+        packetName = 'Model Probe',
+        x = x,
+        y = y,
+        z = z,
+        rotation = rot,
+        groupId = 25,
+        groupZoneId = 7,
+        minLevel = 75,
+        maxLevel = 75,
+        releaseIdOnDisappear = true,
+        specialSpawnAnimation = true,
+        onMobSpawn = function(mob)
+            mob:renameEntity('Model Probe')
+            mob:setModelId(modelId)
+            mob:setMobMod(xi.mobMod.NO_DROPS, 1)
+            mob:setMobMod(xi.mobMod.EXP_BONUS, -100)
+            mob:setMobMod(xi.mobMod.GIL_BONUS, -100)
+        end,
+    })
+
+    if not entity then
+        printErr(player, string.format('[DynWorld] Failed to create model probe for modelId %d.', modelId))
+        return
+    end
+
+    entity:setSpawn(x, y, z, rot)
+    entity:spawn()
+    player:printToPlayer(string.format('[DynWorld] Spawned model probe with modelId %d.', modelId), xi.msg.channel.SYSTEM_3)
+end
+
+local function rescueGoblin(goblin, orc, rescuer)
+    if not goblin or not goblin:isAlive() or not orc or not orc:isAlive() then
+        return
+    end
+
+    if orc:getLocalVar('DW_SKIRMISH_RESCUED') == 1 or goblin:getLocalVar('DW_SKIRMISH_RESCUED') == 1 then
+        return
+    end
+
+    orc:setLocalVar('DW_SKIRMISH_RESCUED', 1)
+    goblin:setLocalVar('DW_SKIRMISH_RESCUED', 1)
+    goblin:setUntargetable(true)
+    goblin:setIsAggroable(false)
+    goblin:setAllegiance(xi.allegiance.PLAYER)
+    goblin:setMobMod(xi.mobMod.NO_AGGRO, 1)
+    goblin:setMobMod(xi.mobMod.NO_LINK, 1)
+    goblin:addMod(xi.mod.ATT, 20)
+    goblin:addMod(xi.mod.ACC, 15)
+
+    if goblin.addBaseEnmity then
+        goblin:addBaseEnmity(orc)
+    end
+    goblin:addEnmity(orc, 120, 120)
+    goblin:updateEnmity(orc)
+    orc:addEnmity(goblin, 120, 120)
+    orc:updateEnmity(goblin)
+
+    local zone = goblin:getZone()
+    if zone then
+        xi.dynamicWorld.announceNearby(
+            zone,
+            goblin,
+            80,
+            string.format('[Dynamic World] %s rallies to %s after your strike!',
+                goblin:getName(), rescuer and rescuer:getName() or 'your side')
+        )
+    end
+end
+
+local function attachRescueHook(orc, goblin)
+    if not orc or not goblin then
+        return
+    end
+
+    local listenerId = 'DW_SKIRMISH_RESCUE_' .. orc:getTargID()
+    orc:addListener('TAKE_DAMAGE', listenerId, function(target, amount, attacker)
+        if amount <= 0 or not attacker or not attacker.isPC or not attacker:isPC() then
+            return
+        end
+
+        rescueGoblin(goblin, target, attacker)
+    end)
+end
+
+local function startSkirmish(packA, packB)
+    if #packA == 0 or #packB == 0 then
+        return
+    end
+
+    local function seedBattle(sourcePack, targetPack)
+        for _, mob in ipairs(sourcePack) do
+            if mob and mob:isAlive() then
+                for _, target in ipairs(targetPack) do
+                    if target and target:isAlive() then
+                        if mob.addBaseEnmity then
+                            mob:addBaseEnmity(target)
+                        end
+                        mob:addEnmity(target, 60, 60)
+                        mob:updateEnmity(target)
+                    end
+                end
+            end
+        end
+    end
+
+    seedBattle(packA, packB)
+    seedBattle(packB, packA)
+end
+
+local function retargetSkirmishPack(sourcePack, targetPack)
+    for _, mob in ipairs(sourcePack) do
+        if mob and mob:isAlive() then
+            local currentTarget = mob:getTarget()
+            if not currentTarget or not currentTarget:isAlive() then
+                for _, target in ipairs(targetPack) do
+                    if target and target:isAlive() then
+                        if mob.addBaseEnmity then
+                            mob:addBaseEnmity(target)
+                        end
+                        mob:addEnmity(target, 90, 90)
+                        mob:updateTarget()
+                        break
+                    end
+                end
+            end
+        end
+    end
+end
+
+local function reinforceSkirmish(packA, packB, pulsesLeft)
+    if pulsesLeft <= 0 then
+        return
+    end
+
+    retargetSkirmishPack(packA, packB)
+    retargetSkirmishPack(packB, packA)
+
+    local anchor = packA[1] or packB[1]
+    if anchor and anchor.timer then
+        anchor:timer(1500, function()
+            reinforceSkirmish(packA, packB, pulsesLeft - 1)
+        end)
+    end
+end
+
+local function monitorSkirmish(packA, packB, factionA, factionB, skirmishId)
+    local livingA = countLiving(packA)
+    local livingB = countLiving(packB)
+    updateSkirmishRecord(skirmishId, livingA, livingB)
+
+    if livingA == 0 and livingB == 0 then
+        finalizeSkirmish(skirmishId, factionA, factionB, livingA, livingB)
+        return
+    end
+
+    if livingA == 0 then
+        finalizeSkirmish(skirmishId, factionA, factionB, livingA, livingB)
+        if factionB == 'goblin' then
+            retireSkirmishPack(packB, factionB)
+        end
+        return
+    end
+
+    if livingB == 0 then
+        finalizeSkirmish(skirmishId, factionA, factionB, livingA, livingB)
+        if factionA == 'goblin' then
+            retireSkirmishPack(packA, factionA)
+        end
+        return
+    end
+
+    retargetSkirmishPack(packA, packB)
+    retargetSkirmishPack(packB, packA)
+
+    local anchor = packA[1] or packB[1]
+    if anchor and anchor.timer then
+        anchor:timer(3000, function()
+            monitorSkirmish(packA, packB, factionA, factionB, skirmishId)
+        end)
+    end
+end
+
+local function showHelp(player)
+    player:printToPlayer('[DynWorld] Commands: status, spawn [tier] [count], clear, start, stop, info, synergies, chain, modelprobe [id], rares, rare [key], worldbosses, worldboss [key], skirmish [left] [right] [count], skirmishes, skirmishinfo [id], rep', xi.msg.channel.SYSTEM_3)
+    player:printToPlayer('[DynWorld] Tiers: 1=Wanderer, 2=Nomad, 3=Elite, 4=Apex, 5=Power King', xi.msg.channel.SYSTEM_3)
+end
+
+local function cmdStatus(player)
+    local status = xi.dynamicWorld.getStatus()
+    player:printToPlayer(string.format('[DynWorld] Running: %s | Total: %d | Zones: %d',
+        tostring(status.running), status.globalCount, status.activeZones), xi.msg.channel.SYSTEM_3)
+    player:printToPlayer(string.format('[DynWorld] Wanderers: %d | Nomads: %d | Elites: %d | Apex: %d | Power Kings: %d',
+        status.wanderers, status.nomads, status.elites, status.apex, status.powerKings), xi.msg.channel.SYSTEM_3)
+
+    -- Diagnostics
+    local state  = xi.dynamicWorld.state
+    local cfg    = xi.settings.dynamicworld
+    player:printToPlayer(string.format('[DynWorld] Diag: initialized=%s | eligibleZones=%d | settings=%s | ENABLED=%s',
+        tostring(state and state.initialized),
+        state and xi.dynamicWorld.countKeys(state.eligibleZones) or 0,
+        tostring(cfg ~= nil),
+        tostring(cfg and cfg.ENABLED)), xi.msg.channel.SYSTEM_3)
+end
+
+local function cmdSpawn(player, tier, count)
+    tier = math.max(1, math.min(5, tier))
+    count = math.max(1, math.min(20, count))
+
+    local zone = player:getZone()
+    if not zone then
+        printErr(player, '[DynWorld] Error: Could not get zone.')
+        return
+    end
+
+    if not xi.dynamicWorld.state.initialized then
+        xi.dynamicWorld.init()
+    end
+
+    local spawned = xi.dynamicWorld.forceSpawn(zone, tier, count)
+    local tierName = xi.dynamicWorld.tierName[tier] or 'Unknown'
+    player:printToPlayer(string.format('[DynWorld] Spawned %d/%d %s entities in zone %d.',
+        spawned, count, tierName, zone:getID()), xi.msg.channel.SYSTEM_3)
+end
+
+local function cmdClear(player)
+    local zone = player:getZone()
+    if not zone then
+        printErr(player, '[DynWorld] Error: Could not get zone.')
+        return
+    end
+
+    local cleared = xi.dynamicWorld.clearZone(zone)
+    player:printToPlayer(string.format('[DynWorld] Cleared %d dynamic world entities from zone %d.',
+        cleared, zone:getID()), xi.msg.channel.SYSTEM_3)
+end
+
+local function cmdStart(player)
+    xi.dynamicWorld.start()
+    player:printToPlayer('[DynWorld] System started.', xi.msg.channel.SYSTEM_3)
+end
+
+local function cmdStop(player)
+    xi.dynamicWorld.stop()
+    player:printToPlayer('[DynWorld] System stopped. Existing entities remain.', xi.msg.channel.SYSTEM_3)
+end
+
+local function cmdInfo(player)
+    local zone = player:getZone()
+    if not zone then
+        return
+    end
+
+    local zoneId = zone:getID()
+    local state = xi.dynamicWorld.state
+    local zd = state.zoneData[zoneId]
+
+    if not zd or zd.count == 0 then
+        player:printToPlayer(string.format('[DynWorld] No dynamic world entities in zone %d.', zoneId),
+            xi.msg.channel.SYSTEM_3)
+        return
+    end
+
+    player:printToPlayer(string.format('[DynWorld] Zone %d: %d entities', zoneId, zd.count),
+        xi.msg.channel.SYSTEM_3)
+
+    local count = 0
+    for targid, entData in pairs(zd.entities) do
+        if count >= 10 then
+            player:printToPlayer('[DynWorld] ... (showing first 10)', xi.msg.channel.SYSTEM_3)
+            break
+        end
+
+        local template = xi.dynamicWorld.templates.get(entData.templateKey)
+        local name = template and template.packetName or 'Unknown'
+        local tierName = xi.dynamicWorld.tierName[entData.tier] or '?'
+        local alive = (entData.entity and entData.entity:isAlive()) and 'Alive' or 'Dead'
+
+        -- Get current position if entity is alive
+        local posStr = ''
+        if entData.entity and entData.entity:isAlive() then
+            local x = entData.entity:getXPos()
+            local y = entData.entity:getYPos()
+            local z = entData.entity:getZPos()
+            if x and y and z then
+                local grid = xi.dynamicWorld.posToGrid(x, z, zoneId)
+                posStr = string.format(' @ %s (%.1f, %.1f, %.1f)', grid, x, y, z)
+            end
+        end
+
+        player:printToPlayer(string.format('  [%s] %s (Lv%d-%d) [%s]%s',
+            tierName, name, entData.minLevel or 0, entData.maxLevel or 0, alive, posStr),
+            xi.msg.channel.SYSTEM_3)
+        count = count + 1
+    end
+end
+
+local function cmdSynergies(player)
+    local synergyList = xi.dynamicWorld.synergies.list()
+    player:printToPlayer(string.format('[DynWorld] %d synergies registered:', #synergyList),
+        xi.msg.channel.SYSTEM_3)
+    for _, s in ipairs(synergyList) do
+        local comboStr = s.isCombo and ' [COMBO]' or ''
+        player:printToPlayer(string.format('  %s (%s)%s - %s',
+            s.name, s.type, comboStr, s.description), xi.msg.channel.SYSTEM_3)
+    end
+end
+
+local function cmdChain(player)
+    local charId = player:getID()
+    local chain = xi.dynamicWorld.state.playerChains[charId]
+    if not chain then
+        player:printToPlayer('[DynWorld] No active hunt chain.', xi.msg.channel.SYSTEM_3)
+        return
+    end
+
+    local elapsed = os.time() - chain.lastKill
+    local window = (xi.settings.dynamicworld and xi.settings.dynamicworld.CHAIN_WINDOW) or 180
+    local remaining = window - elapsed
+    local bonus = math.min(
+        chain.count * ((xi.settings.dynamicworld and xi.settings.dynamicworld.CHAIN_BONUS_PER_KILL) or 0.15),
+        (xi.settings.dynamicworld and xi.settings.dynamicworld.CHAIN_BONUS_MAX) or 2.0
+    )
+
+    player:printToPlayer(string.format('[DynWorld] Chain: x%d | Bonus: +%d%% EXP | Time left: %ds',
+        chain.count, math.floor(bonus * 100), math.max(0, remaining)), xi.msg.channel.SYSTEM_3)
+end
+
+local function cmdSkirmish(player, leftKey, rightKey, count)
+    local zone = player:getZone()
+    if not zone then
+        printErr(player, '[DynWorld] Error: Could not get zone.')
+        return
+    end
+
+    if not xi.dynamicWorld.state.initialized then
+        xi.dynamicWorld.init()
+    end
+
+    local zoneId = zone:getID()
+    if not xi.dynamicWorld.state.eligibleZones[zoneId] then
+        printErr(player, string.format('[DynWorld] Zone %d is not enabled for dynamic-world skirmishes.', zoneId))
+        return
+    end
+
+    leftKey = string.lower(leftKey or 'goblin')
+    rightKey = string.lower(rightKey or 'orc')
+    count = math.max(1, math.min(6, tonumber(count) or 3))
+
+    if not skirmishFactions[leftKey] then
+        printErr(player, string.format('[DynWorld] Unknown skirmish faction: %s', tostring(leftKey)))
+        return
+    end
+
+    if not skirmishFactions[rightKey] then
+        printErr(player, string.format('[DynWorld] Unknown skirmish faction: %s', tostring(rightKey)))
+        return
+    end
+
+    if leftKey == rightKey then
+        printErr(player, '[DynWorld] Skirmish factions must be different.')
+        return
+    end
+
+    local minLevel, maxLevel = xi.dynamicWorld.getDynamicLevelRange(
+        zoneId,
+        xi.dynamicWorld.tier.ELITE,
+        nil,
+        99,
+        { keepInsideZone = true }
+    )
+
+    local px = player:getXPos()
+    local py = player:getYPos()
+    local pz = player:getZPos()
+    local baseAngle = math.random() * math.pi * 2
+    local leftOffsets = buildSkirmishOffsets(count, baseAngle, 10)
+    local rightOffsets = buildSkirmishOffsets(count, baseAngle + math.pi, 10)
+    local leftPack = {}
+    local rightPack = {}
+
+    for i = 1, count do
+        local leftPos =
+        {
+            x = px + leftOffsets[i].x,
+            y = py,
+            z = pz + leftOffsets[i].z,
+            rot = math.random(0, 255),
+        }
+        local rightPos =
+        {
+            x = px + rightOffsets[i].x,
+            y = py,
+            z = pz + rightOffsets[i].z,
+            rot = math.random(0, 255),
+        }
+
+        local leftMob = spawnSkirmishMob(zone, leftKey, leftPos, minLevel, maxLevel, xi.allegiance.PLAYER)
+        local rightMob = spawnSkirmishMob(zone, rightKey, rightPos, minLevel, maxLevel, xi.allegiance.MOB)
+        if leftMob then
+            leftPack[#leftPack + 1] = leftMob
+        end
+        if rightMob then
+            rightPack[#rightPack + 1] = rightMob
+        end
+        if leftMob and rightMob and leftKey == 'goblin' then
+            attachRescueHook(rightMob, leftMob)
+        elseif leftMob and rightMob and rightKey == 'goblin' then
+            attachRescueHook(leftMob, rightMob)
+        end
+    end
+
+    if #leftPack == 0 or #rightPack == 0 then
+        printErr(player, '[DynWorld] Failed to spawn one or both skirmish packs.')
+        return
+    end
+
+    local skirmishId = registerSkirmish(zoneId, leftKey, rightKey, leftPack, rightPack, minLevel, maxLevel)
+
+    leftPack[1]:timer(1000, function()
+        reinforceSkirmish(leftPack, rightPack, 4)
+    end)
+    leftPack[1]:timer(4000, function()
+        monitorSkirmish(leftPack, rightPack, leftKey, rightKey, skirmishId)
+    end)
+
+    player:printToPlayer(
+        string.format('[DynWorld] Skirmish #%d started: %s vs %s (%d per side) at Lv%d-%d.',
+            skirmishId, leftKey, rightKey, math.min(#leftPack, #rightPack), minLevel, maxLevel),
+        xi.msg.channel.SYSTEM_3
+    )
+end
+
+local function cmdSkirmishes(player)
+    local state = getSkirmishState()
+    local records = {}
+    for _, record in pairs(state.skirmishes) do
+        records[#records + 1] = record
+    end
+
+    if #records == 0 then
+        player:printToPlayer('[DynWorld] No skirmishes recorded since startup.', xi.msg.channel.SYSTEM_3)
+        return
+    end
+
+    table.sort(records, function(a, b) return a.id > b.id end)
+
+    local active = 0
+    for _, record in ipairs(records) do
+        if record.status == 'active' then
+            active = active + 1
+        end
+    end
+
+    player:printToPlayer(string.format('[DynWorld] Skirmishes: %d total, %d active.', #records, active), xi.msg.channel.SYSTEM_3)
+    for i = 1, math.min(10, #records) do
+        local record = records[i]
+        local outcome
+        if record.status == 'active' then
+            outcome = string.format('ACTIVE %s %d - %d %s',
+                record.factionA, record.livingA or 0, record.livingB or 0, record.factionB)
+        elseif record.winner == 'draw' then
+            outcome = 'FINISHED draw'
+        else
+            outcome = string.format('FINISHED %s beat %s (%d left)',
+                tostring(record.winner), tostring(record.loser), tonumber(record.survivors) or 0)
+        end
+
+        player:printToPlayer(
+            string.format('  #%d zone=%d %s vs %s Lv%d-%d [%s]',
+                record.id, record.zoneId, record.factionA, record.factionB, record.minLevel, record.maxLevel, outcome),
+            xi.msg.channel.SYSTEM_3
+        )
+    end
+end
+
+local function cmdSkirmishInfo(player, skirmishId)
+    local state = getSkirmishState()
+    local record = state.skirmishes[tonumber(skirmishId) or -1]
+    if not record then
+        printErr(player, string.format('[DynWorld] Unknown skirmish id: %s', tostring(skirmishId)))
+        return
+    end
+
+    player:printToPlayer(
+        string.format('[DynWorld] Skirmish #%d zone=%d status=%s factions=%s vs %s Lv%d-%d',
+            record.id, record.zoneId, record.status, record.factionA, record.factionB, record.minLevel, record.maxLevel),
+        xi.msg.channel.SYSTEM_3
+    )
+    player:printToPlayer(
+        string.format('[DynWorld] Started=%d Initial=%d/%d Living=%d/%d',
+            record.startedAt, record.initialA, record.initialB, record.livingA or 0, record.livingB or 0),
+        xi.msg.channel.SYSTEM_3
+    )
+
+    if record.status == 'finished' then
+        local outcome = record.winner == 'draw'
+            and 'draw'
+            or string.format('%s defeated %s with %d surviving', tostring(record.winner), tostring(record.loser), tonumber(record.survivors) or 0)
+        player:printToPlayer(
+            string.format('[DynWorld] Ended=%d Outcome=%s', record.endedAt or 0, outcome),
+            xi.msg.channel.SYSTEM_3
+        )
+    end
+end
+
+local function cmdReputation(player)
+    local values = xi.dynamicWorld.reputation.getAllFactionHate(player)
+    player:printToPlayer('[DynWorld] Persistent faction hostility:', xi.msg.channel.SYSTEM_3)
+    player:printToPlayer(
+        string.format('  Goblin: %d | Orc: %d | Quadav: %d | Yagudo: %d',
+            values.goblin or 0, values.orc or 0, values.quadav or 0, values.yagudo or 0),
+        xi.msg.channel.SYSTEM_3
+    )
+end
+
+local function cmdTest(player)
+    local p = function(msg) player:printToPlayer('[DWTest] ' .. msg, xi.msg.channel.SYSTEM_3) end
+    local zone   = player:getZone()
+    local zoneId = zone:getID()
+    local state  = xi.dynamicWorld.state
+
+    p(string.format('Zone: %d | initialized: %s | running: %s',
+        zoneId, tostring(state.initialized), tostring(state.running)))
+
+    -- Step 1: ensure init
+    if not state.initialized then
+        xi.dynamicWorld.init()
+        p('Called init(). initialized now: ' .. tostring(state.initialized))
+    end
+
+    -- Step 2: region lookup
+    local region = state.zoneToRegion[zoneId]
+    p('Region: ' .. tostring(region))
+
+    -- Step 3: template candidates for tier 1
+    local candidates = xi.dynamicWorld.templates.getForTierAndRegion(1, region)
+    p(string.format('Tier-1 candidates for region "%s": %d', tostring(region), #candidates))
+    if #candidates == 0 then
+        candidates = xi.dynamicWorld.templates.getForTierAndRegion(1, nil)
+        p('Fallback (no region): ' .. #candidates .. ' candidates')
+    end
+    if #candidates == 0 then
+        p('FAIL: no templates available at all for tier 1')
+        return
+    end
+
+    local chosen   = candidates[1]
+    local template = chosen.template
+    p('Template: ' .. template.name)
+
+    -- Step 4: spawn point
+    local pos = xi.dynamicWorld.getRandomSpawnPoint(zone, player)
+    if not pos then
+        p('FAIL: getRandomSpawnPoint returned nil')
+        return
+    end
+    p(string.format('SpawnPoint: %.1f, %.1f, %.1f', pos.x, pos.y, pos.z))
+
+    -- Step 5: groupRef
+    local refs = template.groupRefs
+    local ref  = refs and refs[1] or template.groupRef
+    if not ref then
+        p('FAIL: no groupRef on template')
+        return
+    end
+    p(string.format('GroupRef: groupId=%d groupZoneId=%d', ref.groupId, ref.groupZoneId))
+
+    -- Step 6: level range
+    local lr  = xi.dynamicWorld.getZoneLevelRange(zoneId)
+    local min = math.max(1, lr[1] + (template.levelOffset[1] or 0))
+    local max = math.max(min, lr[2] + (template.levelOffset[2] or 0))
+    p(string.format('Levels: %d-%d', min, max))
+
+    -- Step 7: insertDynamicEntity
+    local entityTable = {
+        objtype     = xi.objType.MOB,
+        name        = template.name:gsub(' ', '_') .. '_TEST',
+        packetName  = template.packetName,
+        x           = pos.x,
+        y           = pos.y,
+        z           = pos.z,
+        rotation    = pos.rot,
+        groupId     = ref.groupId,
+        groupZoneId = ref.groupZoneId,
+        minLevel    = min,
+        maxLevel    = max,
+        releaseIdOnDisappear  = true,
+        specialSpawnAnimation = true,
+    }
+
+    local ok, entity = pcall(function() return zone:insertDynamicEntity(entityTable) end)
+    if not ok then
+        p('FAIL: insertDynamicEntity threw error: ' .. tostring(entity))
+        return
+    end
+    if not entity then
+        p('FAIL: insertDynamicEntity returned nil')
+        return
+    end
+    p('insertDynamicEntity OK. targID: ' .. tostring(entity:getTargID()))
+
+    -- Step 8: setSpawn + spawn
+    local ok2, err2 = pcall(function()
+        entity:setSpawn(pos.x, pos.y, pos.z, pos.rot)
+        entity:spawn()
+    end)
+    if not ok2 then
+        p('FAIL: spawn() threw error: ' .. tostring(err2))
+        return
+    end
+    p('spawn() OK. isSpawned: ' .. tostring(entity:isSpawned()))
+    p('SUCCESS - check your surroundings for ' .. template.packetName)
+end
+
+commandObj.onTrigger = function(player, args)
+    if not args or args == '' then
+        showHelp(player)
+        return
+    end
+
+    local parts = {}
+    for word in args:gmatch('%S+') do
+        table.insert(parts, word)
+    end
+
+    local subcommand = parts[1]:lower()
+
+    if subcommand == 'status' then
+        cmdStatus(player)
+    elseif subcommand == 'spawn' then
+        local tier = tonumber(parts[2]) or 1
+        local count = tonumber(parts[3]) or 1
+        cmdSpawn(player, tier, count)
+    elseif subcommand == 'clear' then
+        cmdClear(player)
+    elseif subcommand == 'start' then
+        cmdStart(player)
+    elseif subcommand == 'stop' then
+        cmdStop(player)
+    elseif subcommand == 'info' then
+        cmdInfo(player)
+    elseif subcommand == 'init' then
+        local p = function(msg) player:printToPlayer('[DWInit] ' .. msg, xi.msg.channel.SYSTEM_3) end
+        local s = xi.settings.dynamicworld
+        p('settings=' .. tostring(s ~= nil) .. ' ENABLED=' .. tostring(s and s.ENABLED))
+        local ok, err = pcall(xi.dynamicWorld.init)
+        if ok then
+            local st = xi.dynamicWorld.state
+            p('OK | initialized=' .. tostring(st.initialized) .. ' zones=' .. xi.dynamicWorld.countKeys(st.eligibleZones))
+        else
+            p('ERROR: ' .. tostring(err))
+        end
+    elseif subcommand == 'test' then
+        cmdTest(player)
+    elseif subcommand == 'synergies' then
+        cmdSynergies(player)
+    elseif subcommand == 'chain' then
+        cmdChain(player)
+    elseif subcommand == 'rares' then
+        -- List all named rares and their status
+        local list = xi.dynamicWorld.namedRares.getStatus()
+        player:printToPlayer(string.format('[DynWorld] Named Rares (%d total):', #list), xi.msg.channel.SYSTEM_3)
+        for _, entry in ipairs(list) do
+            local stateStr
+            if entry.alive then
+                stateStr = 'ALIVE'
+            elseif entry.ready then
+                stateStr = 'READY TO SPAWN'
+            else
+                local mins = math.floor(entry.timeLeft / 60)
+                local hrs  = math.floor(mins / 60)
+                mins = mins % 60
+                stateStr = string.format('%dh%02dm', hrs, mins)
+            end
+            player:printToPlayer(string.format('  %-25s key=%s [%s]', entry.name, entry.key, stateStr), xi.msg.channel.SYSTEM_3)
+        end
+    elseif subcommand == 'rare' then
+        -- Force-spawn a specific named rare by key
+        local key = table.concat(parts, ' ', 2)
+        if not key or key == '' then
+            printErr(player, '[DynWorld] Usage: !dynworld rare <key>  (use !dynworld rares to see keys)')
+            return
+        end
+        local ok, msg = xi.dynamicWorld.namedRares.forceSpawn(key, player)
+        player:printToPlayer('[DynWorld] ' .. msg, xi.msg.channel.SYSTEM_3)
+    elseif subcommand == 'worldbosses' then
+        local list = xi.dynamicWorld.worldBosses.getStatus()
+        player:printToPlayer(string.format('[DynWorld] World Bosses (%d total):', #list), xi.msg.channel.SYSTEM_3)
+        for _, entry in ipairs(list) do
+            local stateStr
+            if entry.alive then
+                stateStr = 'ACTIVE'
+            elseif entry.ready then
+                stateStr = 'READY'
+            else
+                local mins = math.floor(entry.timeLeft / 60)
+                local hrs = math.floor(mins / 60)
+                mins = mins % 60
+                stateStr = string.format('%dh%02dm', hrs, mins)
+            end
+            player:printToPlayer(string.format('  %-20s key=%s [%s]', entry.name, entry.key, stateStr), xi.msg.channel.SYSTEM_3)
+        end
+    elseif subcommand == 'worldboss' then
+        local key = table.concat(parts, ' ', 2)
+        if not key or key == '' then
+            printErr(player, '[DynWorld] Usage: !dynworld worldboss <key>  (use !dynworld worldbosses to see keys)')
+            return
+        end
+        local ok, msg = xi.dynamicWorld.worldBosses.forceSpawn(key, player)
+        player:printToPlayer('[DynWorld] ' .. tostring(msg), xi.msg.channel.SYSTEM_3)
+    elseif subcommand == 'modelprobe' then
+        local modelId = tonumber(parts[2] or '')
+        if not modelId or modelId < 1 then
+            printErr(player, '[DynWorld] Usage: !dynworld modelprobe <modelId>')
+            return
+        end
+        spawnModelProbe(player, math.floor(modelId))
+    elseif subcommand == 'skirmish' then
+        cmdSkirmish(player, parts[2], parts[3], parts[4])
+    elseif subcommand == 'rep' then
+        cmdReputation(player)
+    elseif subcommand == 'season' then
+        -- Show seasonal event status
+        local s = xi.dynamicWorld.seasons.getStatus()
+        local remainHrs = math.floor(s.seasonRemaining / 3600)
+        local remainMin = math.floor((s.seasonRemaining % 3600) / 60)
+        player:printToPlayer(string.format('[DynWorld] Season: %s  (%dh%02dm remaining)',
+            s.season, remainHrs, remainMin), xi.msg.channel.SYSTEM_3)
+        for regionName, rd in pairs(s.regions) do
+            local extras = ''
+            if rd.commander then extras = extras .. ' [COMMANDER]' end
+            if rd.warlord   then extras = extras .. ' [WARLORD]'   end
+            player:printToPlayer(string.format('  %-14s  %s  dom=%-4d  %s%s',
+                regionName, rd.state, rd.dominance, rd.faction, extras), xi.msg.channel.SYSTEM_3)
+        end
+    elseif subcommand == 'seasonadvance' then
+        -- GM: rotate to next season immediately
+        local nextFid = xi.dynamicWorld.seasons.advanceSeason()
+        player:printToPlayer(string.format('[DynWorld] Season advanced to %s.',
+            xi.dynamicWorld.seasons.FACTION_NAME[nextFid] or '?'), xi.msg.channel.SYSTEM_3)
+    elseif subcommand == 'dominance' then
+        -- GM: set dominance for a region  !dynworld dominance <region> <value>
+        local regionName = parts[2]
+        local value      = tonumber(parts[3])
+        if not regionName or not value then
+            printErr(player, '[DynWorld] Usage: !dynworld dominance <region> <0-1000>')
+            return
+        end
+        local ok, err = xi.dynamicWorld.seasons.setDominance(regionName, value)
+        if ok then
+            player:printToPlayer(string.format('[DynWorld] %s dominance set to %d.', regionName, value), xi.msg.channel.SYSTEM_3)
+        else
+            printErr(player, '[DynWorld] ' .. tostring(err))
+        end
+    elseif subcommand == 'forcestate' then
+        -- GM: force a region into a specific state  !dynworld forcestate <region> <state>
+        local regionName = parts[2]
+        local stateName  = parts[3]
+        if not regionName or not stateName then
+            printErr(player, '[DynWorld] Usage: !dynworld forcestate <region> <calm|skirmish|conflict|invasion|siege|aftermath>')
+            return
+        end
+        local ok, err = xi.dynamicWorld.seasons.forceState(regionName, stateName)
+        if ok then
+            player:printToPlayer(string.format('[DynWorld] %s forced to %s.', regionName, stateName), xi.msg.channel.SYSTEM_3)
+        else
+            printErr(player, '[DynWorld] ' .. tostring(err))
+        end
+    -----------------------------------
+    -- Sim Player GM Commands
+    -----------------------------------
+    elseif subcommand == 'simlist' then
+        -- List all sim players with one-line status each
+        local sim = xi.dynamicWorld.simPlayers
+        if not sim or not sim.getRoster then
+            printErr(player, '[DynWorld] Sim player system not loaded.')
+            return
+        end
+        local roster = sim.getRoster()
+        if #roster == 0 then
+            player:printToPlayer('[DynWorld] No sim players defined.', xi.msg.channel.SYSTEM_3)
+            return
+        end
+        player:printToPlayer(string.format('[DynWorld] Sim Players (%d):', #roster), xi.msg.channel.SYSTEM_3)
+        for _, sp in ipairs(roster) do
+            local status = sim.getStatus(sp.name)
+            if status then
+                local deadStr = status.dead
+                    and string.format('DEAD (respawn in %ds)',
+                        math.max(0, 300 - (os.time() - status.deathTime)))
+                    or  string.format('HP %d/%d', status.hp, status.maxHp)
+                player:printToPlayer(
+                    string.format('  %-12s  Lv%-3d  Zone:%-4d  Tier:%d  Gil:%-6d  %s',
+                        status.name, status.level, status.zone,
+                        status.gearTier, status.gil, deadStr),
+                    xi.msg.channel.SYSTEM_3)
+            end
+        end
+
+    elseif subcommand == 'siminfo' then
+        -- Detailed status for one sim player  !dynworld siminfo <name>
+        local targetName = parts[2]
+        if not targetName then
+            printErr(player, '[DynWorld] Usage: !dynworld siminfo <name>')
+            return
+        end
+        local sim    = xi.dynamicWorld.simPlayers
+        local status = sim and sim.getStatus(targetName)
+        if not status then
+            printErr(player, string.format('[DynWorld] Sim player "%s" not found.', targetName))
+            return
+        end
+        player:printToPlayer(string.format('[DynWorld] === %s ===', status.name), xi.msg.channel.SYSTEM_3)
+        player:printToPlayer(string.format('  Level: %d  XP: %d  Zone: %d',
+            status.level, status.xp, status.zone), xi.msg.channel.SYSTEM_3)
+        player:printToPlayer(string.format('  HP: %d/%d  Gil: %d  Gear tier: %d',
+            status.hp, status.maxHp, status.gil, status.gearTier), xi.msg.channel.SYSTEM_3)
+        player:printToPlayer(string.format('  Status: %s',
+            status.dead and 'Dead' or 'Alive'), xi.msg.channel.SYSTEM_3)
+
+        -- Inventory summary
+        local invCount = 0
+        for _ in pairs(status.inventory) do invCount = invCount + 1 end
+        player:printToPlayer(string.format('  Inventory: %d unique item types', invCount),
+            xi.msg.channel.SYSTEM_3)
+
+    elseif subcommand == 'simrespawn' then
+        -- Force immediate respawn  !dynworld simrespawn <name>
+        local targetName = parts[2]
+        if not targetName then
+            printErr(player, '[DynWorld] Usage: !dynworld simrespawn <name>')
+            return
+        end
+        local sim = xi.dynamicWorld.simPlayers
+        if sim and sim.forceRespawn(targetName) then
+            player:printToPlayer(string.format('[DynWorld] %s force-respawned.', targetName),
+                xi.msg.channel.SYSTEM_3)
+        else
+            printErr(player, string.format('[DynWorld] Could not respawn "%s".', targetName))
+        end
+
+    elseif subcommand == 'simkill' then
+        -- Force a sim player to die  !dynworld simkill <name>
+        local targetName = parts[2]
+        if not targetName then
+            printErr(player, '[DynWorld] Usage: !dynworld simkill <name>')
+            return
+        end
+        local sim = xi.dynamicWorld.simPlayers
+        if sim and sim.forceKill(targetName) then
+            player:printToPlayer(string.format('[DynWorld] %s killed.', targetName),
+                xi.msg.channel.SYSTEM_3)
+        else
+            printErr(player, string.format('[DynWorld] Could not kill "%s".', targetName))
+        end
+
+    elseif subcommand == 'simtp' then
+        -- Teleport a sim player to a zone  !dynworld simtp <name> <zoneid>
+        local targetName = parts[2]
+        local zoneId     = tonumber(parts[3])
+        if not targetName or not zoneId then
+            printErr(player, '[DynWorld] Usage: !dynworld simtp <name> <zoneid>')
+            return
+        end
+        local sim = xi.dynamicWorld.simPlayers
+        if sim and sim.teleport(targetName, zoneId) then
+            player:printToPlayer(string.format('[DynWorld] %s teleported to zone %d.',
+                targetName, zoneId), xi.msg.channel.SYSTEM_3)
+        else
+            printErr(player, string.format('[DynWorld] Could not teleport "%s".', targetName))
+        end
+
+    else
+        showHelp(player)
+    end
+end
+
+return commandObj

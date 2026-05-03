@@ -1,8 +1,6 @@
 -----------------------------------
 -- Blizzard IV
--- Family: Shiva (Player Pet)
 -----------------------------------
----@type TAbilityPet
 local abilityObject = {}
 
 abilityObject.onAbilityCheck = function(player, target, ability)
@@ -10,28 +8,21 @@ abilityObject.onAbilityCheck = function(player, target, ability)
 end
 
 abilityObject.onPetAbility = function(target, pet, petskill, summoner, action)
+    local dINT = math.floor(pet:getStat(xi.mod.INT) - target:getStat(xi.mod.INT))
+    local tp   = pet:getTP()
+
     xi.job_utils.summoner.onUseBloodPact(target, petskill, summoner, action)
 
-    local params = {}
+    local damage = math.floor(325 + 0.025 * tp)
+    damage = damage + (dINT * 1.5)
+    damage = xi.mobskills.mobMagicalMove(pet, target, petskill, damage, xi.element.ICE, 1, xi.mobskills.magicalTpBonus.NO_EFFECT, 0)
+    damage = xi.mobskills.mobAddBonuses(pet, target, damage.dmg, xi.element.ICE, petskill)
+    damage = xi.summon.avatarFinalAdjustments(damage, pet, petskill, target, xi.attackType.MAGICAL, xi.damageType.ICE, 1)
 
-    params.baseDamage      = pet:getMainLvl() + 2
-    params.fTP             = { 3.6250, 5.3125, 6.1250 }
-    params.int_wSC         = 0.30
-    params.element         = xi.element.ICE
-    params.attackType      = xi.attackType.MAGICAL
-    params.damageType      = xi.damageType.ICE
-    params.shadowBehavior  = xi.mobskills.shadowBehavior.IGNORE_SHADOWS
-    params.dStatMultiplier = 1.5
-    params.canMagicBurst   = true
-    params.primaryMessage  = xi.msg.basic.USES_JA_TAKE_DAMAGE
+    target:takeDamage(damage, pet, xi.attackType.MAGICAL, xi.damageType.ICE)
+    target:updateEnmityFromDamage(pet, damage)
 
-    local info = xi.mobskills.mobMagicalMove(pet, target, petskill, action, params)
-
-    if xi.mobskills.processDamage(pet, target, petskill, action, info) then
-        target:takeDamage(info.damage, pet, info.attackType, info.damageType)
-    end
-
-    return info.damage
+    return damage
 end
 
 return abilityObject

@@ -5,15 +5,26 @@
 -- Cast Time: Instant
 -- Recast Time: 00:03:00
 -----------------------------------
----@type TAbility
 local abilityObject = {}
 
 abilityObject.onAbilityCheck = function(player, target, ability)
     return xi.job_utils.dark_knight.checkWeaponBash(player, target, ability)
 end
 
-abilityObject.onUseAbility = function(player, target, ability, action)
-    return xi.job_utils.dark_knight.useWeaponBash(player, target, ability, action)
+abilityObject.onUseAbility = function(player, target, ability)
+    -- Solo bonus
+    local isWAR = player:getMainJob() == xi.job.WAR
+    local lvl = player:getMainLvl()
+    local strBonus = isWAR and math.floor(lvl * 0.22) or math.floor(lvl * 0.11)
+    local attBonus = isWAR and math.floor(lvl * 0.18) or math.floor(lvl * 0.09)
+    player:addMod(xi.mod.STR, strBonus)
+    player:addMod(xi.mod.ATT, attBonus)
+    player:timer(30000, function(p) p:delMod(xi.mod.STR, strBonus) p:delMod(xi.mod.ATT, attBonus) end)
+    if xi.soloSynergy then
+        xi.soloSynergy.flashBuff(player, 'Weapon Bash', string.format('STR +%d  ATT +%d', strBonus, attBonus))
+    end
+
+    return xi.job_utils.dark_knight.useWeaponBash(player, target, ability)
 end
 
 return abilityObject

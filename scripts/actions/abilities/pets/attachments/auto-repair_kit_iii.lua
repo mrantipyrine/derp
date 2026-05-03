@@ -1,7 +1,6 @@
 -----------------------------------
 -- Attachment: Auto-repair Kit III
 -----------------------------------
----@type TAttachment
 local attachmentObject = {}
 
 attachmentObject.onEquip = function(pet, attachment)

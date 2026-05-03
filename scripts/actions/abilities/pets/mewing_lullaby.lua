@@ -2,44 +2,39 @@
 -- Mewing Lullaby
 -- aoe light based sleep and lowers mob TP to zero
 -----------------------------------
----@type TAbilityPet
 local abilityObject = {}
 
 abilityObject.onAbilityCheck = function(player, target, ability)
-    return xi.job_utils.summoner.canUseBloodPact(player, player:getPet(), target, ability)
+    return 0, 0
 end
 
-abilityObject.onPetAbility = function(target, pet, petskill, summoner, action)
-    xi.job_utils.summoner.onUseBloodPact(target, petskill, summoner, action)
+abilityObject.onPetAbility = function(target, pet, skill, master, action)
+    local duration = 90
+    local dINT = pet:getStat(xi.mod.CHR) - target:getStat(xi.mod.CHR)
+    local bonus = xi.summon.getSummoningSkillOverCap(pet)
+    local resm = xi.mobskills.applyPlayerResistance(pet, -1, target, dINT, bonus, xi.element.LIGHT)
+    target:setTP(0) -- "The TP lowering seems to be a total reset of TP on the mob, and even if the sleep misses, the TP reset cannot miss."
+    if resm < 0.5 then
+        skill:setMsg(xi.msg.basic.JA_MISS_2) -- resist message
+        return xi.effect.SLEEP_I
+    end
 
-    -- Apply TP reset on target. (Secondary effect. Cannot miss.)
-    target:setTP(0)
-
-    -- Check nullification.
+    duration = duration * resm
     if
-        xi.data.statusEffect.isTargetImmune(target, xi.effect.SLEEP_I, xi.element.LIGHT) or
-        xi.data.statusEffect.isTargetResistant(pet, target, xi.effect.SLEEP_I) or
-        xi.data.statusEffect.isEffectNullified(target, xi.effect.SLEEP_I, 0) or
-        target:hasStatusEffect(xi.effect.SLEEP_I)
+        target:hasImmunity(1) or
+        target:hasStatusEffect(xi.effect.SLEEP_I) or
+        target:hasStatusEffect(xi.effect.SLEEP_II) or
+        target:hasStatusEffect(xi.effect.LULLABY)
     then
-        petskill:setMsg(xi.msg.basic.JA_NO_EFFECT_2)
-        return xi.effect.SLEEP_I
+        --No effect
+        skill:setMsg(xi.msg.basic.JA_NO_EFFECT_2)
+    else
+        skill:setMsg(xi.msg.basic.JA_GAIN_EFFECT)
+
+        target:addStatusEffect(xi.effect.SLEEP_I, 1, 0, duration)
     end
 
-    -- Check resistance.
-    local bonusMacc  = xi.summon.getSummoningSkillOverCap(pet)
-    local resistRate = xi.combat.magicHitRate.calculateResistRate(pet, target, 0, 0, 0, xi.element.LIGHT, xi.mod.CHR, xi.effect.SLEEP_I, bonusMacc)
-    if resistRate < 0.5 then
-        petskill:setMsg(xi.msg.basic.JA_MISS_2) -- resist message
-        return xi.effect.SLEEP_I
-    end
-
-    local duration = math.floor(90 * resistRate)
-
-    petskill:setMsg(xi.msg.basic.JA_GAIN_EFFECT)
-    target:addStatusEffect(xi.effect.SLEEP_I, { power = 1, duration = duration, origin = pet })
-
-    return xi.effect.SLEEP_I
+    return xi.effect.LULLABY
 end
 
 return abilityObject

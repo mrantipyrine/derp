@@ -1,7 +1,6 @@
 -----------------------------------
 -- Slowga
 -----------------------------------
----@type TAbilityPet
 local abilityObject = {}
 
 abilityObject.onAbilityCheck = function(player, target, ability)
@@ -16,10 +15,10 @@ abilityObject.onPetAbility = function(target, pet, petskill, summoner, action)
 
     xi.job_utils.summoner.onUseBloodPact(target, petskill, summoner, action)
 
-    if target:addStatusEffect(xi.effect.SLOW, { power = 3000, duration = duration, origin = pet, tier = 3 }) then
-        petskill:setMsg(xi.msg.basic.JA_RECEIVES_EFFECT_2)
+    if target:addStatusEffect(xi.effect.SLOW, 3000, 0, duration) then
+        petskill:setMsg(xi.msg.basic.SKILL_ENFEEB_IS)
     else
-        petskill:setMsg(xi.msg.basic.JA_NO_EFFECT_2)
+        petskill:setMsg(xi.msg.basic.SKILL_NO_EFFECT)
     end
 
     -- TODO: Verify enmity gain total

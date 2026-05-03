@@ -1,7 +1,6 @@
 -----------------------------------
 -- Attachment: Hammermill
 -----------------------------------
----@type TAttachment
 local attachmentObject = {}
 
 attachmentObject.onEquip = function(pet, attachment)

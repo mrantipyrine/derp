@@ -1,15 +1,10 @@
 -----------------------------------
 -- Daze
 -----------------------------------
----@type TAbilityAutomaton
 local abilityObject = {}
 
 abilityObject.onAutomatonAbilityCheck = function(target, automaton, skill)
     local master = automaton:getMaster()
-    if not master then
-        return
-    end
-
     return master:countEffect(xi.effect.THUNDER_MANEUVER)
 end
 
@@ -35,7 +30,7 @@ abilityObject.onAutomatonAbility = function(target, automaton, skill, master, ac
             not target:hasStatusEffect(xi.effect.STUN) and
             chance >= math.random() * 100
         then
-            target:addStatusEffect(xi.effect.STUN, { power = 1, duration = 4, origin = automaton })
+            target:addStatusEffect(xi.effect.STUN, 1, 0, 4)
         end
     end
 

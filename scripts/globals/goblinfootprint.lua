@@ -3,6 +3,7 @@
 -----------------------------------
 require('scripts/globals/quests')
 require('scripts/globals/missions')
+require('scripts/globals/utils')
 -----------------------------------
 xi = xi or {}
 xi.goblinfootprint = xi.goblinfootprint or {}

@@ -14,7 +14,7 @@ xi.roe = xi.roe or {}
 
 local checks =
 {
-    mobID = function(self, player, params) -- Mob ID check
+    mobID = function(self, player, params)    -- Mob ID check
         return (params.mob and self.reqs.mobID[params.mob:getID()]) and true or false
     end,
 
@@ -22,55 +22,51 @@ local checks =
         return (params.mob and self.reqs.mobName[params.mob:getName()]) and true or false
     end,
 
-    mobXP = function(self, player, params) -- Mob yields xp
+    mobXP = function(self, player, params)    -- Mob yields xp
         return (params.mob and player:checkKillCredit(params.mob)) and true or false
     end,
 
-    mobFamily = function(self, player, params) -- Mob family in set
+    mobFamily = function(self, player, params)   -- Mob family in set
         return (params.mob and self.reqs.mobFamily[params.mob:getFamily()]) and true or false
     end,
 
-    mobSuperFamily = function(self, player, params) -- Mob super family in set
-        return (params.mob and self.reqs.mobSuperFamily[params.mob:getSuperFamily()]) and true or false
-    end,
-
-    mobSystem = function(self, player, params) -- Mob system in set
+    mobSystem = function(self, player, params)   -- Mob system in set
         return (params.mob and self.reqs.mobSystem[params.mob:getEcosystem()]) and true or false
     end,
 
-    dmgMin = function(self, player, params) -- Minimum Dmg Dealt/Taken
+    dmgMin = function(self, player, params)  -- Minimum Dmg Dealt/Taken
         return (params.dmg and params.dmg >= self.reqs.dmgMin) and true or false
     end,
 
-    dmgMax = function(self, player, params) -- Maximum Dmg Dealt/Taken
+    dmgMax = function(self, player, params)  -- Maximum Dmg Dealt/Taken
         return (params.dmg and params.dmg <= self.reqs.dmgMax) and true or false
     end,
 
-    atkType = function(self, player, params) -- Dmg Type is
+    atkType = function(self, player, params)  -- Dmg Type is
         return (params.atkType == self.reqs.atkType) and true or false
     end,
 
-    healMin = function(self, player, params) -- Minimum Amount healed
+    healMin = function(self, player, params)  -- Minimum Amount healed
         return (params.heal and params.heal >= self.reqs.healMin) and true or false
     end,
 
-    zone = function(self, player, params) -- Player in Zone
+    zone = function(self, player, params)  -- Player in Zone
         return (self.reqs.zone[player:getZoneID()]) and true or false
     end,
 
-    zoneNot = function(self, player, params) -- Player not in Zone
+    zoneNot = function(self, player, params)  -- Player not in Zone
         return (not self.reqs.zoneNot[player:getZoneID()]) and true or false
     end,
 
-    itemID = function(self, player, params) -- itemid in set
+    itemID = function(self, player, params)  -- itemid in set
         return (params.itemid and self.reqs.itemID[params.itemid]) and true or false
     end,
 
-    levelSync = function(self, player, params) -- Player is Level Sync'd
-        return self.reqs.levelSync and player:hasStatusEffect(xi.effect.LEVEL_SYNC) and true or false
+    levelSync = function(self, player, params)  -- Player is Level Sync'd
+        return self.reqs.levelSync and player:isLevelSync() and true or false
     end,
 
-    jobLvl = function(self, player, params) -- Player has job at minimum level X
+    jobLvl = function(self, player, params)  -- Player has job at minimum level X
         return player:getJobLevel(self.reqs.jobLvl[1]) >= self.reqs.jobLvl[2] and true or false
     end,
 
@@ -163,29 +159,6 @@ end
 
 xi.roe.initialize()
 
-local function isRepeatItemRewardException(items)
-    local itemExceptionsMap =
-    {
-        [xi.item.SILT_POUCH] = true, -- Escha Bead/Silt rewards are always rewarded
-        [xi.item.BEAD_POUCH] = true, -- Escha Bead/Silt rewards are always rewarded
-    }
-
-    -- clone of npcUtil.giveItem logic
-    if type(items) == 'table' then
-        for _, v in pairs(items) do
-            if type(v) == 'number' then
-                if itemExceptionsMap[v] == nil then
-                    return false -- if any item in the rewards list doesn't match, bail out
-                end
-            end
-        end
-    elseif type(items) == 'number' then
-        return itemExceptionsMap[items] ~= nil -- If the input is only an integer, then just check the map
-    end
-
-    return true
-end
-
 --[[ --------------------------------------------------------------------------
     Complete a record of eminence. This is for internal roe use only.
     For external calls use onRecordTrigger below. (see healing.lua for example)
@@ -205,12 +178,11 @@ end
     })
 --------------------------------------------------------------------------- --]]
 local function completeRecord(player, record)
-    local recordEntry   = xi.roe.records[record]
-    local recordFlags   = recordEntry.flags
-    local rewards       = recordEntry.reward
-    local canRewardItem = rewards['item'] and (not player:getEminenceCompleted(record) or isRepeatItemRewardException(rewards['item']))
+    local recordEntry = xi.roe.records[record]
+    local recordFlags = recordEntry.flags
+    local rewards = recordEntry.reward
 
-    if canRewardItem then
+    if not player:getEminenceCompleted(record) and rewards['item'] then
         if not npcUtil.giveItem(player, rewards['item'], { silent = true }) then
             player:messageBasic(xi.msg.basic.ROE_UNABLE_BONUS_ITEM)
             return false
@@ -241,7 +213,7 @@ local function completeRecord(player, record)
 
     -- NOTE: To preserve retail order, messaging is here, but item is given if able at the beginning of this
     -- function, since if it fails, it will need to bail out.
-    if canRewardItem then
+    if rewards['item'] then
         local itemQty   = type(rewards['item'][1]) == 'table' and rewards['item'][1][2] or 1
         local itemId    = type(rewards['item'][1]) == 'table' and rewards['item'][1][1] or rewards['item'][1]
         local messageId = itemQty > 1 and xi.msg.basic.ROE_BONUS_ITEM_PLURAL or xi.msg.basic.ROE_BONUS_ITEM

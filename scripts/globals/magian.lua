@@ -1,6 +1,7 @@
 -----------------------------------
 -- Magian Trial Global
 -----------------------------------
+require('scripts/globals/combat/element_tables')
 require('scripts/globals/magian_data')
 require('scripts/globals/npc_util')
 -----------------------------------
@@ -266,7 +267,7 @@ end
 -- since onItemEquip/unEquip functions only exist for two items.
 -- NOTE: This function isn't the most efficient, but is only executed on server
 -- start, or magian reload.
-xi.magian.registerTrialListeners = function()
+local function registerTrialListeners()
     xi.items = xi.items or {}
 
     for trialId, magianData in pairs(xi.magian.trials) do
@@ -309,25 +310,16 @@ end
 -----------------------------------
 
 local function giveMagianItem(player, itemData, inscribeTrialId)
-    local exdata =
-    {
-        augmentKind    = xi.augment.kind.HAS_AUGMENTS,
-        augmentSubKind = xi.augment.subKind.STANDARD,
-    }
+    local itemParameters = { itemData.itemId, 1, 0, 0, 0, 0, 0, 0, 0, 0, inscribeTrialId and inscribeTrialId or 0 }
 
     if itemData.itemAugments then
-        exdata.augments = {}
-        for _, augData in pairs(itemData.itemAugments) do
-            table.insert(exdata.augments, { id = augData[1], value = augData[2] })
+        for augIndex, augData in pairs(itemData.itemAugments) do
+            itemParameters[augIndex * 2 + 1] = augData[1]
+            itemParameters[augIndex * 2 + 2] = augData[2]
         end
     end
 
-    if inscribeTrialId and inscribeTrialId ~= 0 then
-        exdata.augmentSubKind = exdata.augmentSubKind + xi.augment.subKind.TRIAL
-        exdata.trial = { id = inscribeTrialId, completed = false }
-    end
-
-    player:addItem({ id = itemData.itemId, exdata = exdata })
+    player:addItem(unpack(itemParameters))
 end
 
 xi.magian.giveRequiredItem = function(player, trialId, inscribeTrialId)
@@ -683,14 +675,13 @@ end
 
 xi.magian.deliveryCrateOnTrade = function(player, npc, trade)
     local trialId    = 0
-    local trialSlotId = nil
     local tradeItems = {}
 
-    -- Find the trial item in any slot and set trialId
     for tradeSlot = 0, 7 do
         local itemObj = trade:getItem(tradeSlot)
 
         if itemObj then
+            local itemId      = itemObj:getID()
             local itemTrialId = itemObj:getTrialNumber()
 
             if
@@ -701,33 +692,8 @@ xi.magian.deliveryCrateOnTrade = function(player, npc, trade)
             then
                 -- NOTE: First in Wins, and we ignore any other item with a trial
                 trialId = itemTrialId
-                trialSlotId = tradeSlot
-            end
-        end
-    end
-
-    -- With trialId known sum only the required trade item across all other slots
-    if trialId ~= 0 then
-        local requiredItemId = xi.magian.trials[trialId].tradeItem
-
-        for tradeSlot = 0, 7 do
-            -- Skip the slot that contained the trial weapon/armor
-            if tradeSlot ~= trialSlotId then
-                local itemObj = trade:getItem(tradeSlot)
-
-                if itemObj then
-                    local itemId      = itemObj:getID()
-                    local itemTrialId = itemObj:getTrialNumber()
-
-                    -- Only sum the required trade items never count items with a trial number
-                    if itemTrialId == 0 and itemId == requiredItemId then
-                        local qty = trade:getSlotQty(tradeSlot)
-
-                        if qty > 0 then
-                            tradeItems[requiredItemId] = (tradeItems[requiredItemId] or 0) + qty
-                        end
-                    end
-                end
+            elseif not tradeItems[itemId] then
+                tradeItems[itemId] = trade:getItemQty(itemId)
             end
         end
     end
@@ -751,6 +717,7 @@ xi.magian.deliveryCrateOnTrade = function(player, npc, trade)
         player:setLocalVar('tradedItemId', trialInfo.tradeItem)
         player:setLocalVar('tradedItemQty', numItemsTraded)
 
+        player:confirmTrade()
         player:startEvent(10134, trialInfo.tradeItem, numItemsTraded, numRelevantTrials, trialId, 0, 0, 0, 0)
     end
 end
@@ -795,13 +762,8 @@ xi.magian.deliveryCrateOnEventFinish = function(player, csid, option, npc)
 
     if csid == 10134 then
         if optionMod == 0 then
-            if tradedItemQty > 1 then
-                player:messageSpecial(ruludeID.text.RETURN_ITEMS, tradedItemId, tradedItemQty)
-            else
-                player:messageSpecial(ruludeID.text.RETURN_ITEM, tradedItemId)
-            end
+            player:messageSpecial(ruludeID.text.RETURN_ITEM, tradedItemId)
         elseif optionMod == 102 then
-            player:confirmTrade()
             progressPlayerTrial(player, trialId, tradedItemQty)
         end
 
@@ -870,12 +832,12 @@ local trialConditions =
             -- For each element in that table (may not be all elements)
             for _, elementId in ipairs(dayWeatherTable) do
                 -- Check current day element against element checked.
-                if xi.data.element.getDayElement(currentDay) == elementId then
+                if xi.combat.element.getDayElement(currentDay) == elementId then
                     dayWeatherResult = dayWeatherResult + 1
                 end
 
                 -- Check current weather element against element checked.
-                if xi.data.element.getWeatherElement(currentWeather) == elementId then
+                if xi.combat.element.getWeatherElement(currentWeather) == elementId then
                     dayWeatherResult = dayWeatherResult + 5
                 end
             end
@@ -972,9 +934,9 @@ xi.magian.onItemEquip = function(player, itemObj)
         end)
 
     elseif trialData.useWeaponskill then
-        player:addListener('WEAPONSKILL_USE', 'TRIAL_' .. itemTrialId, function(playerObj, mobObj, skill, tp, action, damage)
+        player:addListener('WEAPONSKILL_USE', 'TRIAL_' .. itemTrialId, function(playerObj, mobObj, weaponskillId, tpSpent, action, damage)
             if not playerObj:isDead() and playerObj:checkKillCredit(mobObj) then
-                local conditionResult = checkConditions(trialData, playerObj, mobObj, { weaponskillUsed = skill:getID(), weaponskillDamage = damage })
+                local conditionResult = checkConditions(trialData, playerObj, mobObj, { weaponskillUsed = weaponskillId, weaponskillDamage = damage })
 
                 if conditionResult then
                     progressPlayerTrial(playerObj, itemTrialId, conditionResult)
@@ -1026,3 +988,6 @@ xi.magian.onMobDeath = function(mob, player, optParams, trialTable)
         progressPlayerTrial(player, trialId, 1)
     end
 end
+
+-- Once everything else is setup, register listeners with the appropriate items
+registerTrialListeners()

@@ -2,7 +2,6 @@
 -- Spell: Curaga IV
 -- Restores HP of all party members within area of effect.
 -----------------------------------
----@type TSpell
 local spellObject = {}
 
 spellObject.onMagicCastingCheck = function(caster, target, spell)
@@ -36,6 +35,11 @@ spellObject.onSpellCast = function(caster, target, spell)
     end
 
     target:addHP(final)
+
+    -- Solo Synergy: Divine Shield
+    if xi.soloSynergy then
+        xi.soloSynergy.applyCureSynergy(caster, target, final)
+    end
 
     target:wakeUp()
     caster:updateEnmityFromCure(target, final)

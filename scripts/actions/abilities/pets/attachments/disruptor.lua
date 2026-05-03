@@ -1,7 +1,6 @@
 -----------------------------------
 -- Attachment: Disruptor
 -----------------------------------
----@type TAttachment
 local attachmentObject = {}
 
 attachmentObject.onEquip = function(pet)
@@ -12,7 +11,7 @@ attachmentObject.onEquip = function(pet)
             master:countEffect(xi.effect.DARK_MANEUVER) > 0 and
             automaton:getLocalVar('dispel') < VanadielTime() and
             target:hasStatusEffectByFlag(xi.effectFlag.DISPELABLE) and
-            automaton:checkDistance(target) < (7 + target:getHitboxSize() + automaton:getHitboxSize()) -- needs verification
+            (automaton:checkDistance(target) - target:getModelSize()) < 7
         then
             automaton:useMobAbility(xi.automaton.abilities.DISRUPTOR)
         end

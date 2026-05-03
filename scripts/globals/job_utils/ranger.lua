@@ -381,3 +381,23 @@ xi.job_utils.ranger.useOverkill = function(player, target, ability, action)
 
     return xi.effect.OVERKILL
 end
+
+end
+
+-- ══════════════════════════════════════════════════════════════
+-- Solo Synergy — Ranger (75 Era Strict)
+-- ══════════════════════════════════════════════════════════════
+require('scripts/globals/solo_synergy')
+
+do
+    local ss = xi.soloSynergy
+    local _RNG = xi.job_utils.ranger
+
+    local _ss = _RNG.useSharpshot
+    _RNG.useSharpshot = function(player, target, ability)
+        ss.onAbilityUse(player, target, ability)
+        _ss(player, target, ability)
+        player:setLocalVar('SS_DEADEYE', 1)
+        ss.flash(player, 'DEADEYE primed: massive Ranged WS bonus.')
+    end
+end

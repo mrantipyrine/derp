@@ -1,7 +1,4 @@
------------------------------------
--- Spell: Aeroga
------------------------------------
----@type TSpell
+-- Aeroga
 local spellObject = {}
 
 spellObject.onMagicCastingCheck = function(caster, target, spell)

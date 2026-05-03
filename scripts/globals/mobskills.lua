@@ -1460,6 +1460,9 @@ end
 
 xi.mobskills.calculateSkillTPReturn = function(damage, mob, skill, target, attackType, hitsLanded)
     -- Calculate TP return of the mob skill.
+    if type(damage) ~= 'number' then
+        damage = tonumber(damage) or 0
+    end
     if
         hitsLanded > 0 and
         damage > 0
@@ -1469,16 +1472,16 @@ xi.mobskills.calculateSkillTPReturn = function(damage, mob, skill, target, attac
 
         if attackType == xi.attackType.PHYSICAL then
             mobTPReturn    = xi.combat.tp.getSingleMeleeHitTPReturn(mob, false)
-            targetTPReturn = xi.combat.tp.calculateTPGainOnPhysicalDamage(mob, target, damage, mob:getBaseDelay())
+            targetTPReturn = xi.combat.tp.calculateTPGainOnPhysicalDamage(damage, mob:getBaseDelay(), mob, target)
         elseif attackType == xi.attackType.RANGED then
             mobTPReturn    = xi.combat.tp.getSingleRangedHitTPReturn(mob)
-            targetTPReturn = xi.combat.tp.calculateTPGainOnPhysicalDamage(mob, target, damage, mob:getBaseRangedDelay())
+            targetTPReturn = xi.combat.tp.calculateTPGainOnPhysicalDamage(damage, mob:getBaseRangedDelay(), mob, target)
         elseif
             attackType == xi.attackType.BREATH or
             attackType == xi.attackType.MAGICAL
         then
             mobTPReturn    = xi.combat.tp.getSingleMeleeHitTPReturn(mob, false)
-            targetTPReturn = xi.combat.tp.calculateTPGainOnPhysicalDamage(mob, target, damage, mob:getBaseDelay())
+            targetTPReturn = xi.combat.tp.calculateTPGainOnPhysicalDamage(damage, mob:getBaseDelay(), mob, target)
         end
 
         -- Handle additional hit TP return for mob.

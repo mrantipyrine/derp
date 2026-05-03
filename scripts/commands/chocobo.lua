@@ -22,40 +22,39 @@ local chocobo = {}
 
 chocobo.color =
 {
-    yellow = xi.chocobo.color.YELLOW,
-    black  = xi.chocobo.color.BLACK,
-    blue   = xi.chocobo.color.BLUE,
-    red    = xi.chocobo.color.RED,
-    green  = xi.chocobo.color.GREEN,
+    yellow = 0x0000,
+    black  = 0x0200,
+    blue   = 0x0400,
+    red    = 0x0600,
+    green  = 0x0800,
+}
+
+chocobo.look =
+{
+    head = 0x0001, -- enlarged beak and crest (discernment)
+    feet = 0x0008, -- bigger feet and talons  (strength)
+    tail = 0x0040, -- extra tail feathers     (endurance)
 }
 
 commandObj.onTrigger = function(player, arg, arg2, arg3, arg4)
-    local color = chocobo.color[arg] or xi.chocobo.color.YELLOW
-    local traits =
-    {
-        largeBeak   = false,
-        fullTail    = false,
-        largeTalons = false,
-    }
+    local look = tonumber(arg) or chocobo.color[arg] or 0
 
-    local traitArgs = { arg2, arg3, arg4 }
-
-    for _, traitArg in ipairs(traitArgs) do
-        if traitArg then
-            if traitArg == 'head' then
-                traits.largeBeak = true
-            elseif traitArg == 'tail' then
-                traits.fullTail = true
-            elseif traitArg == 'feet' then
-                traits.largeTalons = true
-            end
-        end
+    if chocobo.look[arg2] then
+        look = look + chocobo.look[arg2]
     end
 
-    player:registerChocobo(color, traits)
+    if chocobo.look[arg3] then
+        look = look + chocobo.look[arg3]
+    end
+
+    if chocobo.look[arg4] then
+        look = look + chocobo.look[arg4]
+    end
+
+    player:registerChocobo(look)
 
     player:delStatusEffectSilent(xi.effect.MOUNTED)
-    player:addStatusEffect(xi.effect.MOUNTED, { power = xi.mount.CHOCOBO, duration = 1800, origin = player, subPower = 64, silent = true })
+    player:addStatusEffectEx(xi.effect.MOUNTED, xi.effect.MOUNTED, xi.mount.CHOCOBO, 0, 1800, 0, 64, true)
 end
 
 return commandObj

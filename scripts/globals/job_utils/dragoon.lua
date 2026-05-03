@@ -888,3 +888,23 @@ xi.job_utils.dragoon.addWyvernExp = function(player, exp)
 
     return numLevelUps
 end
+
+end
+
+-- ══════════════════════════════════════════════════════════════
+-- Solo Synergy — Dragoon (75 Era Strict)
+-- ══════════════════════════════════════════════════════════════
+require('scripts/globals/solo_synergy')
+
+do
+    local ss = xi.soloSynergy
+    local _DRG = xi.job_utils.dragoon
+
+    local _jump = _DRG.useJump
+    _DRG.useJump = function(player, target, ability)
+        ss.onAbilityUse(player, target, ability)
+        _jump(player, target, ability)
+        player:addStatusEffect(xi.effect.HASTE, 150, 0, 15) -- Dragon Force
+        ss.flash(player, 'Dragon Force! Attack speed surged.')
+    end
+end

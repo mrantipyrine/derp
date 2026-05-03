@@ -1,7 +1,6 @@
 -----------------------------------
 -- Attachment: Pattern Reader
 -----------------------------------
----@type TAttachment
 local attachmentObject = {}
 
 attachmentObject.onEquip = function(automaton)

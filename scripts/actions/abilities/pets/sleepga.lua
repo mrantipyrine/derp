@@ -1,7 +1,6 @@
 -----------------------------------
 -- Sleepga
 -----------------------------------
----@type TAbilityPet
 local abilityObject = {}
 
 abilityObject.onAbilityCheck = function(player, target, ability)
@@ -11,38 +10,36 @@ end
 abilityObject.onPetAbility = function(target, pet, petskill, summoner, action)
     xi.job_utils.summoner.onUseBloodPact(target, petskill, summoner, action)
 
-    -- Check nullification.
+    local duration = 90
+    local dINT = pet:getStat(xi.mod.INT) - target:getStat(xi.mod.INT)
+    local bonus = xi.summon.getSummoningSkillOverCap(pet)
+    local resm = xi.mobskills.applyPlayerResistance(pet, -1, target, dINT, bonus, xi.element.ICE)
+
+    if resm < 0.5 then
+        petskill:setMsg(xi.msg.basic.JA_MISS_2) -- resist message
+        return xi.effect.SLEEP_I
+    end
+
+    duration = duration * resm
+
     if
-        xi.data.statusEffect.isTargetImmune(target, xi.effect.SLEEP_I, xi.element.DARK) or
-        xi.data.statusEffect.isTargetResistant(pet, target, xi.effect.SLEEP_I) or
-        xi.data.statusEffect.isEffectNullified(target, xi.effect.SLEEP_I, 0) or
-        target:hasStatusEffect(xi.effect.SLEEP_I)
+        target:hasImmunity(1) or
+        target:hasStatusEffect(xi.effect.SLEEP_I) or
+        target:hasStatusEffect(xi.effect.SLEEP_II) or
+        target:hasStatusEffect(xi.effect.LULLABY)
     then
         if target:getID() == action:getPrimaryTargetID() then
             petskill:setMsg(xi.msg.basic.JA_NO_EFFECT_2)
         else
             petskill:setMsg(xi.msg.basic.NO_EFFECT)
         end
-
-        return xi.effect.SLEEP_I
-    end
-
-    -- Check resist.
-    local bonus    = xi.summon.getSummoningSkillOverCap(pet)
-    local resist   = xi.combat.magicHitRate.calculateResistRate(pet, target, 0, 0, 0, xi.element.DARK, xi.mod.INT, xi.effect.SLEEP_I, bonus)
-    if resist < 0.5 then
-        petskill:setMsg(xi.msg.basic.JA_MISS_2) -- resist message
-        return xi.effect.SLEEP_I
-    end
-
-    -- Apply.
-    local duration = math.floor(90 * resist)
-
-    target:addStatusEffect(xi.effect.SLEEP_I, { power = 1, duration = duration, origin = pet })
-    if target:getID() == action:getPrimaryTargetID() then
-        petskill:setMsg(xi.msg.basic.JA_RECEIVES_EFFECT_2)
     else
-        petskill:setMsg(xi.msg.basic.JA_RECEIVES_EFFECT)
+        target:addStatusEffect(xi.effect.SLEEP_I, 1, 0, duration)
+        if target:getID() == action:getPrimaryTargetID() then
+            petskill:setMsg(xi.msg.basic.JA_RECEIVES_EFFECT_2)
+        else
+            petskill:setMsg(xi.msg.basic.JA_RECEIVES_EFFECT)
+        end
     end
 
     target:updateEnmity(pet)

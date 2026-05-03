@@ -6,7 +6,6 @@
 --
 -- see mobskills/nightmare.lua for full explanation
 -----------------------------------
----@type TAbilityPet
 local abilityObject = {}
 
 abilityObject.onAbilityCheck = function(player, target, ability)
@@ -15,36 +14,28 @@ end
 
 abilityObject.onPetAbility = function(target, pet, petskill, summoner, action)
     xi.job_utils.summoner.onUseBloodPact(target, petskill, summoner, action)
-
-    -- Check nullification.
-    if
-        xi.data.statusEffect.isTargetImmune(target, xi.effect.SLEEP_I, xi.element.DARK) or
-        xi.data.statusEffect.isTargetResistant(pet, target, xi.effect.SLEEP_I) or
-        xi.data.statusEffect.isEffectNullified(target, xi.effect.SLEEP_I, 0) or
-        target:hasStatusEffect(xi.effect.SLEEP_I)
-    then
-        petskill:setMsg(xi.msg.basic.JA_NO_EFFECT_2)
-        return xi.effect.SLEEP_I
-    end
-
-    -- Check resistance.
-    local bonusMacc  = xi.summon.getSummoningSkillOverCap(pet)
-    local resistRate = xi.combat.magicHitRate.calculateResistRate(pet, target, 0, 0, 0, xi.element.DARK, xi.mod.INT, xi.effect.SLEEP_I, bonusMacc)
-    if resistRate < 0.5 then
+    local duration = 90
+    local dotdamage = 2
+    local sleepTier = 1
+    local dINT = pet:getStat(xi.mod.INT) - target:getStat(xi.mod.INT)
+    local bonus = xi.summon.getSummoningSkillOverCap(pet)
+    local resm = xi.mobskills.applyPlayerResistance(pet, -1, target, dINT, bonus, xi.element.DARK)
+    if resm < 0.5 then
         petskill:setMsg(xi.msg.basic.JA_MISS_2) -- resist message
         return xi.effect.SLEEP_I
     end
 
-    local duration = math.floor(90 * resistRate)
-
-    -- Apply sleep and bio
-    if target:addStatusEffect(xi.effect.SLEEP_I, { power = 1, duration = duration, origin = pet, subPower = 2, tier = 4 }) then
+    duration = duration * resm
+    if
+        target:hasImmunity(1) or
+        target:hasStatusEffect(xi.effect.SLEEP_I) or
+        target:hasStatusEffect(xi.effect.SLEEP_II) or
+        target:hasStatusEffect(xi.effect.LULLABY)
+    then
+        --No effect
+        petskill:setMsg(xi.msg.basic.JA_NO_EFFECT_2)
+    elseif target:addStatusEffect(xi.effect.SLEEP_I, 1, 0, duration, 0, dotdamage, sleepTier) then
         petskill:setMsg(xi.msg.basic.JA_GAIN_EFFECT)
-        target:delStatusEffectSilent(xi.effect.DIA)
-        target:delStatusEffectSilent(xi.effect.BIO)
-        target:addStatusEffect(xi.effect.BIO, { power = 2, duration = duration, origin = pet, tick = 3, subPower = 10, tier = 11 })
-
-    -- Miss
     else
         petskill:setMsg(xi.msg.basic.JA_MISS_2)
     end

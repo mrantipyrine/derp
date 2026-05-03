@@ -1,8 +1,6 @@
 -----------------------------------
 -- Somnolence
--- Family: Diabolos
 -----------------------------------
----@type TAbilityPet
 local abilityObject = {}
 
 abilityObject.onAbilityCheck = function(player, target, ability)
@@ -11,27 +9,25 @@ end
 
 abilityObject.onPetAbility = function(target, pet, petskill, summoner, action)
     xi.job_utils.summoner.onUseBloodPact(target, petskill, summoner, action)
+    local dmg = 10 + pet:getMainLvl() * 2
+    local resist = xi.mobskills.applyPlayerResistance(pet, -1, target, 0, xi.skill.ELEMENTAL_MAGIC, xi.element.DARK)
+    local duration = 120
 
-    local params = {}
+    dmg = dmg * resist
+    dmg = xi.mobskills.mobAddBonuses(pet, target, dmg, xi.element.DARK, petskill)
+    dmg = xi.summon.avatarFinalAdjustments(dmg, pet, petskill, target, xi.attackType.MAGICAL, xi.damageType.DARK, 1)
 
-    params.baseDamage     = pet:getMainLvl() + 2
-    params.fTP            = { 2.0, 2.0, 2.0 }
-    params.element        = xi.element.DARK
-    params.attackType     = xi.attackType.MAGICAL
-    params.damageType     = xi.damageType.DARK
-    params.shadowBehavior = xi.mobskills.shadowBehavior.NUMSHADOWS_1 -- TODO: Capture shadowBehavior
-    params.canMagicBurst  = true
-    params.primaryMessage = xi.msg.basic.USES_JA_TAKE_DAMAGE
-
-    local info = xi.mobskills.mobMagicalMove(pet, target, petskill, action, params)
-
-    if xi.mobskills.processDamage(pet, target, petskill, action, info) then
-        target:takeDamage(info.damage, pet, info.attackType, info.damageType)
-
-        xi.mobskills.mobStatusEffectMove(pet, target, xi.effect.WEIGHT, 50, 0, 120)
+    if resist < 0.15 then  --the gravity effect from this ability is more likely to land than Tail Whip
+        resist = 0
     end
 
-    return info.damage
+    duration = duration * resist
+
+    if duration > 0 and not target:hasStatusEffect(xi.effect.WEIGHT) then
+        target:addStatusEffect(xi.effect.WEIGHT, 50, 0, duration)
+    end
+
+    return dmg
 end
 
 return abilityObject

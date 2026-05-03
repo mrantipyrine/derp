@@ -1,6 +1,8 @@
 -----------------------------------
 -- Synergy
 -----------------------------------
+require('scripts/globals/utils')
+-----------------------------------
 xi = xi or {}
 xi.synergy = xi.synergy or {}
 

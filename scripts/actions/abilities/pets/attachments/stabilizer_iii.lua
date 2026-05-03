@@ -1,7 +1,6 @@
 -----------------------------------
 -- Attachment: Stabilizer III
 -----------------------------------
----@type TAttachment
 local attachmentObject = {}
 
 attachmentObject.onEquip = function(pet, attachment)

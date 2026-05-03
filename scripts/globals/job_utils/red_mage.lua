@@ -70,3 +70,23 @@ xi.job_utils.red_mage.useStymie = function(player, target, ability)
 
     return xi.effect.STYMIE
 end
+
+end
+
+-- ══════════════════════════════════════════════════════════════
+-- Solo Synergy — Red Mage (75 Era Strict)
+-- ══════════════════════════════════════════════════════════════
+require('scripts/globals/solo_synergy')
+
+do
+    local ss = xi.soloSynergy
+    local _RDM = xi.job_utils.red_mage
+
+    local _convert = _RDM.useConvert
+    _RDM.useConvert = function(player, target, ability)
+        ss.onAbilityUse(player, target, ability)
+        _convert(player, target, ability)
+        player:setLocalVar('SS_SPELLBLADE', 1)
+        ss.flash(player, 'SPELLBLADE primed: +25% WS damage.')
+    end
+end

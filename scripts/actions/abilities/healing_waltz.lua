@@ -5,7 +5,6 @@
 -- TP Required: 20%
 -- Recast Time: 00:15
 -----------------------------------
----@type TAbility
 local abilityObject = {}
 
 abilityObject.onAbilityCheck = function(player, target, ability)
@@ -36,9 +35,6 @@ abilityObject.onAbilityCheck = function(player, target, ability)
             end
         end
 
-        -- Inform core we want to cleanup Contradance if it's active after the ability is done
-        ability:setPostActionCleanupEffect(xi.effect.CONTRADANCE)
-
         return 0, 0
     end
 end
@@ -56,6 +52,16 @@ abilityObject.onUseAbility = function(player, target, ability)
         ability:setMsg(xi.msg.basic.NO_EFFECT) -- no effect
     else
         ability:setMsg(xi.msg.basic.JA_REMOVE_EFFECT)
+    end
+
+    -- Solo bonus
+    local isDNC = player:getMainJob() == xi.job.DNC
+    local lvl = player:getMainLvl()
+    local mndBonus = isDNC and math.floor(lvl * 0.22) or math.floor(lvl * 0.11)
+    player:addMod(xi.mod.MND, mndBonus)
+    player:timer(30000, function(p) p:delMod(xi.mod.MND, mndBonus) end)
+    if xi.soloSynergy then
+        xi.soloSynergy.flashBuff(player, 'Healing Waltz', string.format('MND +%d', mndBonus))
     end
 
     return effect

@@ -1,7 +1,6 @@
 -----------------------------------
 -- Glittering Ruby
 -----------------------------------
----@type TAbilityPet
 local abilityObject = {}
 
 abilityObject.onAbilityCheck = function(player, target, ability)
@@ -10,23 +9,26 @@ end
 
 abilityObject.onPetAbility = function(target, pet, petskill, summoner, action)
     --randomly give str/dex/vit/agi/int/mnd/chr (+12)
-    local effects =
-    {
-        xi.effect.STR_BOOST,
-        xi.effect.DEX_BOOST,
-        xi.effect.VIT_BOOST,
-        xi.effect.AGI_BOOST,
-        xi.effect.INT_BOOST,
-        xi.effect.MND_BOOST,
-        xi.effect.CHR_BOOST,
-    }
-
-    local effectId    = utils.randomEntry(effects)
-    local effectPower = 3 + math.floor(pet:getMainLvl() / 5)
+    local effect = math.random()
+    local effectid = xi.effect.CHR_BOOST
 
     xi.job_utils.summoner.onUseBloodPact(target, petskill, summoner, action)
 
-    target:addStatusEffect(effectId, { power = effectPower, duration = 90, origin = pet })
+    if effect <= 0.14 then --STR
+        effectid = xi.effect.STR_BOOST
+    elseif effect <= 0.28 then --DEX
+        effectid = xi.effect.DEX_BOOST
+    elseif effect <= 0.42 then --VIT
+        effectid = xi.effect.VIT_BOOST
+    elseif effect <= 0.56 then --AGI
+        effectid = xi.effect.AGI_BOOST
+    elseif effect <= 0.7 then --INT
+        effectid = xi.effect.INT_BOOST
+    elseif effect <= 0.84 then --MND
+        effectid = xi.effect.MND_BOOST
+    end
+
+    target:addStatusEffect(effectid, math.random(12, 14), 0, 90)
 
     if target:getID() == action:getPrimaryTargetID() then
         petskill:setMsg(xi.msg.basic.SKILL_GAIN_EFFECT_2)
@@ -34,7 +36,7 @@ abilityObject.onPetAbility = function(target, pet, petskill, summoner, action)
         petskill:setMsg(xi.msg.basic.JA_GAIN_EFFECT)
     end
 
-    return effectId
+    return effectid
 end
 
 return abilityObject

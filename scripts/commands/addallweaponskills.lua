@@ -30,8 +30,8 @@ commandObj.onTrigger = function(player, target)
     end
 
     -- add all learned weaponskills
-    for _, wsUnlockId in pairs(xi.wsUnlock) do
-        targ:addLearnedWeaponskill(wsUnlockId)
+    for i = 1, 49 do
+        targ:addLearnedWeaponskill(i)
     end
 
     player:printToPlayer(string.format('%s now has all learned weaponskills.', targ:getName()))

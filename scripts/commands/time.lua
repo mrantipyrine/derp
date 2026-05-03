@@ -70,29 +70,32 @@ commandObj.onTrigger = function(player)
     local minute = VanadielMinute()
     local totd = totdName[VanadielTOTD()] or 'None'
     player:printToPlayer(fmt('It has been {} Vana\'diel days ({} seconds) since the Vana\'diel epoch.', VanadielUniqueDay(), VanadielTime()), channel)
-    player:printToPlayer(fmt('The next Vana\'diel day is in {} seconds.', getVanaMidnight() - GetSystemTime()), channel)
+    player:printToPlayer(fmt('The next Vana\'diel day is in {} seconds.', getVanaMidnight() - os.time()), channel)
     player:printToPlayer(fmt('Vana\'diel: {}/{}/{}, {}, {}:{:02} ({}, {} days into the year)', year, month, day, dayElement, hour, minute, totd, VanadielDayOfTheYear()), channel)
 
     -- Moon
+    local moonDirection = VanadielMoonDirection()
     local moonPhase = VanadielMoonPhase()
-    local moonCycle = getVanadielMoonCycle()
-
-    local moonNames = {
-        [xi.moonCycle.NEW_MOON]                = 'New Moon',
-        [xi.moonCycle.LESSER_WAXING_CRESCENT]  = 'Waxing Crescent',
-        [xi.moonCycle.GREATER_WAXING_CRESCENT] = 'Waxing Crescent',
-        [xi.moonCycle.FIRST_QUARTER]           = 'First Quarter',
-        [xi.moonCycle.LESSER_WAXING_GIBBOUS]   = 'Waxing Gibbous',
-        [xi.moonCycle.GREATER_WAXING_GIBBOUS]  = 'Waxing Gibbous',
-        [xi.moonCycle.FULL_MOON]               = 'Full Moon',
-        [xi.moonCycle.GREATER_WANING_GIBBOUS]  = 'Waning Gibbous',
-        [xi.moonCycle.LESSER_WANING_GIBBOUS]   = 'Waning Gibbous',
-        [xi.moonCycle.THIRD_QUARTER]           = 'Last Quarter',
-        [xi.moonCycle.GREATER_WANING_CRESCENT] = 'Waning Crescent',
-        [xi.moonCycle.LESSER_WANING_CRESCENT]  = 'Waning Crescent',
-    }
-
-    local moonType = moonNames[moonCycle]
+    local moonType = IsMoonFull() and 'Full Moon' or IsMoonNew() and 'New Moon'
+    if not moonType then
+        if moonDirection == 1 then
+            if moonPhase <= 93 and moonPhase >= 62 then
+                moonType = 'Waning Gibbous'
+            elseif moonPhase <= 60 and moonPhase >= 43 then
+                moonType = 'Last Quarter'
+            elseif moonPhase <= 40 and moonPhase >= 12 then
+                moonType = 'Waning Crescent'
+            end
+        elseif moonDirection == 2 then
+            if moonPhase >= 7 and moonPhase <= 38 then
+                moonType = 'Waxing Crescent'
+            elseif moonPhase >= 40 and moonPhase <= 55 then
+                moonType = 'First Quarter'
+            elseif moonPhase >= 57 and moonPhase <= 88 then
+                moonType = 'Waxing Gibbous'
+            end
+        end
+    end
 
     player:printToPlayer(fmt('              {} ({}%)', moonType, moonPhase), channel)
 
@@ -107,7 +110,7 @@ commandObj.onTrigger = function(player)
     local jstMinutes = 59 - minutesToMidnight
     local jstSeconds = 59 - secondsToMidnight
     local weeklyResetDays = math.floor((NextJstWeek() - utcTimestamp) / (24 * 60 * 60))
-    player:printToPlayer(fmt('Japan: {}, {}:{:02}:{:02} (weekly reset in {} days)', earthDayName[JstDayOfTheWeek() + 1], jstHours, jstMinutes, jstSeconds, weeklyResetDays), channel)
+    player:printToPlayer(fmt('Japan: {}, {}:{:02}:{:02} (weekly reset in {} days)', earthDayName[JstWeekday() + 1], jstHours, jstMinutes, jstSeconds, weeklyResetDays), channel)
 
     -- RSE
     local rseRace = raceName[VanadielRSERace()]

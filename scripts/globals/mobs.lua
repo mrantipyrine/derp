@@ -3,6 +3,7 @@
 -----------------------------------
 require('scripts/globals/magic')
 require('scripts/globals/missions')
+require('scripts/globals/utils')
 require('scripts/globals/quests')
 -----------------------------------
 xi = xi or {}
@@ -10,6 +11,10 @@ xi.mob = xi.mob or {}
 
 -- onMobDeathEx is called from the core
 xi.mob.onMobDeathEx = function(mob, player, isKiller, isWeaponSkillKill)
+    -- Solo Synergy: award momentum + TP trickle to the killing player
+    if isKiller and player and player:isPC() and xi.soloSynergy then
+        xi.soloSynergy.onKill(player, mob)
+    end
 end
 
 -----------------------------------

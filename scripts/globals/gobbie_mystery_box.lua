@@ -1,3 +1,6 @@
+-----------------------------------
+require('scripts/globals/utils')
+-----------------------------------
 xi = xi or {}
 xi.gobbieMysteryBox = xi.gobbieMysteryBox or {}
 
@@ -222,7 +225,7 @@ end
 
 xi.gobbieMysteryBox.onTrigger = function(player, npc, events)
     local event = events
-    local playerAgeDays = (GetSystemTime() - player:getTimeCreated()) / 86400
+    local playerAgeDays = (os.time() - player:getTimeCreated()) / 86400
     local dailyTallyPoints = player:getCurrency('daily_tally')
     local firstVisit = dailyTallyPoints == -1
     local gobbieBoxUsed = player:getCharVar('gobbieBoxUsed')

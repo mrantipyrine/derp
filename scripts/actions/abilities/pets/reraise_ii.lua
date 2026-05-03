@@ -1,26 +1,26 @@
 -----------------------------------
 -- Reraise II
 -----------------------------------
----@type TAbilityPet
 local abilityObject = {}
 
 abilityObject.onAbilityCheck = function(player, target, ability)
-    return xi.job_utils.summoner.canUseBloodPact(player, player:getPet(), target, ability)
+    if not target:isAlive() then
+        return xi.msg.basic.UNABLE_TO_USE_JA, 0
+    end
+
+    return 0, 0
 end
 
-abilityObject.onPetAbility = function(target, pet, petskill, summoner, action)
-    xi.job_utils.summoner.onUseBloodPact(target, petskill, summoner, action)
-
+abilityObject.onPetAbility = function(target, pet, skill, master, action)
     if
         not target:isPC() or
-        not target:addStatusEffect(xi.effect.RERAISE, { power = 2, duration = 3600, origin = pet })
+        not target:addStatusEffect(xi.effect.RERAISE, 2, 0, 3600)
     then
-        petskill:setMsg(xi.msg.basic.NO_EFFECT)
+        skill:setMsg(xi.msg.basic.NO_EFFECT)
         return 0
     end
 
-    petskill:setMsg(xi.msg.basic.SKILL_GAIN_EFFECT_2)
-
+    skill:setMsg(xi.msg.basic.JA_GAIN_EFFECT)
     return xi.effect.RERAISE
 end
 

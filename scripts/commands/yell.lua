@@ -27,21 +27,15 @@ commandObj.onTrigger = function(player, value, target, days)
     end
 
     -- validate target
-    local targ
+    target = GetPlayerByName(target)
     if target == nil then
-        error(player, 'You must enter a target player name.')
+        error(player, 'Invalid target specified')
         return
-    else
-        targ = GetPlayerByName(target)
-        if targ == nil then
-            error(player, string.format('Player named "%s" not found!', target))
-            return
-        end
     end
 
     if value == 'unban' then
-        targ:setCharVar('[YELL]Banned', 0)
-        player:printToPlayer(string.format('%s has been unbanned from using the /yell command.', targ:getName()))
+        target:setCharVar('[YELL]Banned', 0)
+        player:printToPlayer(string.format('%s has been unbanned from using the /yell command.', target:getName()))
     elseif value == 'ban' then
         -- validate duration
         if
@@ -53,8 +47,8 @@ commandObj.onTrigger = function(player, value, target, days)
             days = 0
         end
 
-        targ:setCharVar('[YELL]Banned', 1, GetSystemTime() + utils.days(days))
-        player:printToPlayer(string.format('%s has been banned from using the /yell command.', targ:getName()))
+        target:setCharVar('[YELL]Banned', 1, os.time() + utils.days(days))
+        player:printToPlayer(string.format('%s has been banned from using the /yell command.', target:getName()))
     end
 end
 

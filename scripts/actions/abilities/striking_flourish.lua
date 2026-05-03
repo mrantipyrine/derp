@@ -6,7 +6,6 @@
 -- Duration: 00:01:00
 -- Cost: 2 Finishing Move charges
 -----------------------------------
----@type TAbility
 local abilityObject = {}
 
 abilityObject.onAbilityCheck = function(player, target, ability)
@@ -25,19 +24,30 @@ end
 abilityObject.onUseAbility = function(player, target, ability)
     if player:hasStatusEffect(xi.effect.FINISHING_MOVE_2) then
         player:delStatusEffect(xi.effect.FINISHING_MOVE_2)
-        player:addStatusEffect(xi.effect.STRIKING_FLOURISH, { power = 2, duration = 60, origin = player })
+        player:addStatusEffect(xi.effect.STRIKING_FLOURISH, 2, 0, 60, 0, player:getMerit(xi.merit.STRIKING_FLOURISH_EFFECT))
     elseif player:hasStatusEffect(xi.effect.FINISHING_MOVE_3) then
         player:delStatusEffect(xi.effect.FINISHING_MOVE_3)
-        player:addStatusEffect(xi.effect.FINISHING_MOVE_1, { power = 1, duration = 7200, origin = player })
-        player:addStatusEffect(xi.effect.STRIKING_FLOURISH, { power = 3, duration = 60, origin = player })
+        player:addStatusEffect(xi.effect.FINISHING_MOVE_1, 1, 0, 7200)
+        player:addStatusEffect(xi.effect.STRIKING_FLOURISH, 3, 0, 60, 0, player:getMerit(xi.merit.STRIKING_FLOURISH_EFFECT))
     elseif player:hasStatusEffect(xi.effect.FINISHING_MOVE_4) then
         player:delStatusEffect(xi.effect.FINISHING_MOVE_4)
-        player:addStatusEffect(xi.effect.FINISHING_MOVE_2, { power = 1, duration = 7200, origin = player })
-        player:addStatusEffect(xi.effect.STRIKING_FLOURISH, { power = 3, duration = 60, origin = player })
+        player:addStatusEffect(xi.effect.FINISHING_MOVE_2, 1, 0, 7200)
+        player:addStatusEffect(xi.effect.STRIKING_FLOURISH, 3, 0, 60, 0, player:getMerit(xi.merit.STRIKING_FLOURISH_EFFECT))
     elseif player:hasStatusEffect(xi.effect.FINISHING_MOVE_5) then
         player:delStatusEffect(xi.effect.FINISHING_MOVE_5)
-        player:addStatusEffect(xi.effect.FINISHING_MOVE_3, { power = 1, duration = 7200, origin = player })
-        player:addStatusEffect(xi.effect.STRIKING_FLOURISH, { power = 3, duration = 60, origin = player })
+        player:addStatusEffect(xi.effect.FINISHING_MOVE_3, 1, 0, 7200)
+        player:addStatusEffect(xi.effect.STRIKING_FLOURISH, 3, 0, 60, 0, player:getMerit(xi.merit.STRIKING_FLOURISH_EFFECT))
+    end
+    -- Solo bonus
+    local isDNC = player:getMainJob() == xi.job.DNC
+    local lvl = player:getMainLvl()
+    local agiBonus = isDNC and math.floor(lvl * 0.22) or math.floor(lvl * 0.11)
+    local tpGain  = isDNC and math.random(200, 400) or math.random(80, 160)
+    player:addMod(xi.mod.AGI, agiBonus)
+    player:addTP(tpGain)
+    player:timer(30000, function(p) p:delMod(xi.mod.AGI, agiBonus) end)
+    if xi.soloSynergy then
+        xi.soloSynergy.flashBuff(player, 'Striking Flourish', string.format('AGI +%d  TP +%d', agiBonus, tpGain))
     end
 end
 

@@ -1,10 +1,13 @@
 -----------------------------------
 -- Garrison
 -----------------------------------
+require('scripts/globals/common')
+require('scripts/globals/npc_util')
 require('scripts/globals/garrison_data')
 require('scripts/globals/mobs')
 require('scripts/globals/npc_util')
 require('scripts/globals/pathfind')
+require('scripts/globals/utils')
 -----------------------------------
 xi = xi or {}
 xi.garrison = xi.garrison or {}
@@ -92,7 +95,7 @@ xi.garrison.addLevelCap = function(entity, definedCap)
     end
 
     -- Note the level restriction does not wear on death.
-    entity:addStatusEffect(xi.effect.LEVEL_RESTRICTION, { power = cap, origin = entity, flag = xi.effectFlag.ON_ZONE + xi.effectFlag.CONFRONTATION })
+    entity:addStatusEffectEx(xi.effect.LEVEL_RESTRICTION, xi.effect.LEVEL_RESTRICTION, cap, 0, 0, 0, 0, 0, xi.effectFlag.ON_ZONE + xi.effectFlag.CONFRONTATION)
 end
 
 -----------------------------------
@@ -103,15 +106,12 @@ xi.garrison.getAllyInfo = function(zoneID, zoneData, nationID)
     -- Get zone garrison data
     local allyName    = xi.garrison.allyNames[zoneData.levelCap][nationID]
     local allyLooks   = xi.garrison.allyLooks[zoneData.levelCap][nationID]
-    local allyGroupId = xi.garrison.allyGroupInfo[zoneData.levelCap][1] -- Defaulted to 1 inside GM_HOME
-    local allyMinLvl  = xi.garrison.allyGroupInfo[zoneData.levelCap][2]
-    local allyMaxLvl  = xi.garrison.allyGroupInfo[zoneData.levelCap][3]
+    local allyGroupId = xi.garrison.allyGroupIds[zoneData.levelCap]
     local pos         = xi.garrison.zoneData[zoneID].pos
 
     if
         allyName == nil or
-        allyMinLvl == nil or
-        allyMaxLvl == nil or
+        allyGroupId == nil or
         allyLooks == nil or
         #allyLooks == 0 or
         pos == nil
@@ -122,12 +122,10 @@ xi.garrison.getAllyInfo = function(zoneID, zoneData, nationID)
     end
 
     return {
-        name     = allyName,
-        looks    = allyLooks,
-        groupId  = allyGroupId, -- Defaults to groupID 1. This group ID is defaulted inside GM_HOME
-        minLevel = allyMinLvl,
-        maxLevel = allyMaxLvl,
-        pos      = pos,
+        name    = allyName,
+        looks   = allyLooks,
+        groupId = allyGroupId,
+        pos     = pos,
     }
 end
 
@@ -165,7 +163,7 @@ xi.garrison.rollNPCs = function(zone, allyInfo, quantity)
 end
 
 -- Spawns and npc for the given zone and with the given name, look, pose. Uses dynamic entities
-xi.garrison.spawnNPC = function(zone, zoneData, pos, name, groupId, look, minLevel, maxLevel)
+xi.garrison.spawnNPC = function(zone, zoneData, pos, name, groupId, look)
     local mob = zone:insertDynamicEntity({
         objtype               = xi.objType.MOB,
         allegiance            = xi.allegiance.PLAYER,
@@ -176,8 +174,6 @@ xi.garrison.spawnNPC = function(zone, zoneData, pos, name, groupId, look, minLev
         rotation              = pos[4],
         look                  = look,
         groupId               = groupId,
-        minLevel              = minLevel,
-        maxLevel              = maxLevel,
         groupZoneId           = xi.zone.GM_HOME,
         releaseIdOnDisappear  = true,
         specialSpawnAnimation = true,
@@ -234,7 +230,7 @@ xi.garrison.spawnNPCs = function(zone, zoneData)
     end
 
     for _, npcData in pairs(npcs) do
-        local mob = xi.garrison.spawnNPC(zone, zoneData, npcData.pos, npcData.name, allyInfo.groupId, npcData.look, allyInfo.minLevel, allyInfo.maxLevel)
+        local mob = xi.garrison.spawnNPC(zone, zoneData, npcData.pos, npcData.name, allyInfo.groupId, npcData.look)
         -- Note: This does change the mob level because ally npcs are of type mob, and
         -- level_restriction is only applied to PCs. However, we need the status to validate that the
         -- npcs are part of the garrison.
@@ -329,16 +325,31 @@ end
 
 -- Distributes loot amongst all players
 xi.garrison.handleLootRolls = function(levelCap, players)
-    local lootGroup = xi.garrison.loot[levelCap]
-    local firstPlayer = players[1]
+    local lootTable = xi.garrison.loot[levelCap]
+    local max       = 0
 
-    -- completion of garrison gives a random item from the pool per player
-    lootGroup.quantity = #players
-    local lootTable = { lootGroup }
-    local selectedLoot = utils.selectFromLootGroups(firstPlayer, lootTable)
-    for _, entry in ipairs(selectedLoot) do
-        -- garrison completion loot has no gil
-        firstPlayer:addTreasure(entry.itemId) -- nil npc parameter for addTreasure gives no message, on purpose
+    for _, entry in ipairs(lootTable) do
+        max = max + entry.droprate
+    end
+
+    local roll = math.random(max)
+
+    for _, entry in pairs(lootTable) do
+        max = max - entry.droprate
+
+        if roll > max then
+            if entry.itemid ~= 0 then
+                for _, player in ipairs(players) do
+                    if player ~= nil then
+                        player:addTreasure(entry.itemid)
+
+                        return
+                    end
+                end
+            end
+
+            break
+        end
     end
 end
 
@@ -398,7 +409,7 @@ xi.garrison.tick = function(npc)
     {
         [xi.garrison.state.SPAWN_NPCS] = function()
             debugLog('State: Spawn NPCs')
-            zoneData.stateTime = GetSystemTime()
+            zoneData.stateTime = os.time()
 
             if xi.garrison.spawnNPCs(zone, zoneData) then
                 zoneData.state = xi.garrison.state.BATTLE
@@ -437,7 +448,7 @@ xi.garrison.tick = function(npc)
             end
 
             -- Case 2: More mobs to spawn in this wave, and past next spawn time. Spawn Mobs.
-            local shouldSpawnMobs = GetSystemTime() >= zoneData.nextSpawnTime
+            local shouldSpawnMobs = os.time() >= zoneData.nextSpawnTime
             local numGroups       = #zoneData.spawnSchedule[zoneData.waveIndex]
             local isLastGroup     = zoneData.groupIndex > numGroups
 
@@ -481,7 +492,7 @@ xi.garrison.tick = function(npc)
             end
 
             -- Case 6: Timeout
-            if GetSystemTime() > zoneData.endTime then
+            if os.time() > zoneData.endTime then
                 -- You fought hard, and you proved yourself worthy...
                 debugPrintToPlayers(players, 'Mission failed by timeout')
                 messagePlayers(npc, players, ID.text.GARRISON_BASE + 39)
@@ -518,7 +529,7 @@ xi.garrison.tick = function(npc)
 
             zoneData.waveIndex = zoneData.waveIndex + 1
             zoneData.groupIndex = 1
-            zoneData.nextSpawnTime = GetSystemTime() + xi.garrison.waves.delayBetweenGroups
+            zoneData.nextSpawnTime = os.time() + xi.garrison.waves.delayBetweenGroups
             zoneData.state = xi.garrison.state.BATTLE
             zoneData.mobs = {}
 
@@ -561,7 +572,7 @@ xi.garrison.tick = function(npc)
 
             debugPrintToPlayers(players, 'Spawn: ' .. #zoneData.mobs .. '/' .. poolSize .. '. Wave: ' .. zoneData.waveIndex)
 
-            zoneData.nextSpawnTime = GetSystemTime() + xi.garrison.waves.delayBetweenGroups
+            zoneData.nextSpawnTime = os.time() + xi.garrison.waves.delayBetweenGroups
             zoneData.state = xi.garrison.state.BATTLE
             zoneData.groupIndex = zoneData.groupIndex + 1
         end,
@@ -585,7 +596,7 @@ xi.garrison.tick = function(npc)
     }
 
     -- Updates last tick so watchdog knows we are ok
-    zoneData.lastTick = GetSystemTime()
+    zoneData.lastTick = os.time()
 
     -- Keep running tick until done
     if zoneData.isRunning then
@@ -629,8 +640,8 @@ end
 local function isZoneOnLockout(zone)
     local nextValidAttemptTime = GetServerVariable('[Garrison]NextEntryTime_' .. zone:getID())
 
-    if GetSystemTime() < nextValidAttemptTime then
-        debugLogf('Zone lockout time remaining: %d', nextValidAttemptTime - GetSystemTime())
+    if os.time() < nextValidAttemptTime then
+        debugLogf('Zone lockout time remaining: %d', nextValidAttemptTime - os.time())
 
         return true
     end
@@ -647,7 +658,7 @@ end
 
 -- Stores the next valid entry time for the given zone, based on lockout.
 local function saveZoneLockout(zone)
-    local nextEntryTime = GetSystemTime() + xi.settings.main.GARRISON_LOCKOUT
+    local nextEntryTime = os.time() + xi.settings.main.GARRISON_LOCKOUT
 
     SetServerVariable('[Garrison]NextEntryTime_' .. zone:getID(), nextEntryTime)
 end
@@ -689,7 +700,7 @@ xi.garrison.validateEntry = function(zoneData, player, npc, guardNation)
     end
 
     local membersLevelRestricted = utils.any(membersInZone, function(_, v)
-        return v:hasStatusEffect(xi.effect.LEVEL_RESTRICTION) or v:hasStatusEffect(xi.effect.LEVEL_SYNC)
+        return v:isLevelSync()
     end)
 
     if membersLevelRestricted then
@@ -815,7 +826,7 @@ local function garrisonWatchdog(npc)
 
         if
             zoneData.isRunning and
-            GetSystemTime() - zoneData.lastTick > tickInterval
+            os.time() - zoneData.lastTick > tickInterval
         then
             local zone = npcArg:getZone()
             debugLogf('[error] Invalid garrison state detected for zone: %s. Stopping it now.', zone:getName())
@@ -837,17 +848,17 @@ xi.garrison.start = function(player, npc)
     zoneData.mobs          = {}
     zoneData.state         = xi.garrison.state.SPAWN_NPCS
     zoneData.isRunning     = true
-    zoneData.stateTime     = GetSystemTime()
+    zoneData.stateTime     = os.time()
     zoneData.waveIndex     = 1
     zoneData.groupIndex    = 1
     zoneData.bossSpawned   = false
     -- First mob spawn takes xi.garrison.waves.delayBetweenGroups to start
-    zoneData.nextSpawnTime     = GetSystemTime() + xi.garrison.waves.delayBetweenGroups
-    zoneData.endTime           = GetSystemTime() + xi.settings.main.GARRISON_TIME_LIMIT
+    zoneData.nextSpawnTime     = os.time() + xi.garrison.waves.delayBetweenGroups
+    zoneData.endTime           = os.time() + xi.settings.main.GARRISON_TIME_LIMIT
     zoneData.deadNPCCount      = 0
     zoneData.deadMobCount      = 0
     zoneData.despawnedMobCount = 0
-    zoneData.lastTick          = GetSystemTime()
+    zoneData.lastTick          = os.time()
 
     -- Register lockout for the player
     -- Only the trading player is locked out per tally
@@ -858,8 +869,9 @@ xi.garrison.start = function(player, npc)
     -- Adds level cap / registers lockout for the player / zone
     for _, member in pairs(player:getAlliance()) do
         if member:getZoneID() == player:getZoneID() then
-            table.insert(zoneData.players, member:getID())
             xi.garrison.addLevelCap(member, zoneData.levelCap)
+
+            table.insert(zoneData.players, member:getID())
         end
     end
 
@@ -878,10 +890,7 @@ xi.garrison.stop = function(zone)
     -- Save lockout based off of garrison end time.
     saveZoneLockout(zone)
 
-    local playerIDs  = { unpack(zoneData.players) } -- make a copy
-    zoneData.players = {} -- players table must be empty before level restriction status wears off for latent effects
-
-    for _, entityId in pairs(playerIDs or {}) do
+    for _, entityId in pairs(zoneData.players or {}) do
         local entity = GetPlayerByID(entityId)
 
         if entity ~= nil then
@@ -897,6 +906,7 @@ xi.garrison.stop = function(zone)
         DespawnMob(entityId, zone)
     end
 
+    zoneData.players       = {}
     zoneData.spawnSchedule = {}
     zoneData.npcs          = {}
     zoneData.mobs          = {}
@@ -906,19 +916,4 @@ end
 xi.garrison.win = function(zone)
     local zoneData = xi.garrison.zoneData[zone:getID()]
     zoneData.state = xi.garrison.state.GRANT_LOOT
-end
-
-xi.garrison.isInGarrison = function(player)
-    local zoneID = player:getZoneID()
-    if not zoneID then
-        return false
-    end
-
-    local zoneData = xi.garrison.zoneData[zoneID]
-    if not zoneData then
-        return false
-    end
-
-    local players = zoneData.players or {}
-    return utils.contains(player:getID(), players)
 end

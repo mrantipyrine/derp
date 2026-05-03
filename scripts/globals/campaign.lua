@@ -237,14 +237,23 @@ local function getSigilTimeStamp(player)
     return sigilTimestamp
 end
 
-local function getSigilRank(player)
-    for keyItemId = xi.ki.MEDAL_OF_ALTANA, xi.ki.BRONZE_RIBBON_OF_SERVICE, -1 do
+local function getSigilRankMask(player)
+    local rankMask = 0
+
+    -- Rank Category is separated into five groups, each with four KIs and represented as bits 0..4 in
+    -- the mask.
+    for keyItemId = xi.ki.BRONZE_RIBBON_OF_SERVICE, xi.ki.MEDAL_OF_ALTANA do
         if player:hasKeyItem(keyItemId) then
-            return 1 + keyItemId - xi.ki.BRONZE_RIBBON_OF_SERVICE
+            utils.mask.setBit(rankMask, math.floor(keyItemId - xi.ki.BRONZE_RIBBON_OF_SERVICE) / 4, true)
+        else
+            break
         end
     end
 
-    return 0
+    -- TODO: If the nation in question (based on zone) controls Throne Room (S), then set bit 5 to allow
+    -- for purchase of Allied Ring.
+
+    return rankMask
 end
 
 local function getSigilMenuOptions(player)
@@ -287,6 +296,7 @@ xi.campaign.sigilOnTrigger = function(player, npc)
 
     -- TODO: Update freelanceMask on implementation.  Bit 0 is required
     -- to be true to allow for Reduced XP Loss
+
     if xi.campaign.getMedalRank(player) == 0 then
         player:startEvent(baseEvent + 1)
     else
@@ -295,7 +305,7 @@ xi.campaign.sigilOnTrigger = function(player, npc)
             player:getCurrency('allied_notes'),
             freelanceMask,
             getSigilMenuOptions(player),
-            getSigilRank(player),
+            getSigilRankMask(player),
             0,
             getSigilTimeStamp(player),
             0
@@ -365,7 +375,7 @@ xi.campaign.sigilOnEventFinish = function(player, csid, option, npc)
             -- 3: EXP Loss Reduction
 
             player:delStatusEffectsByFlag(xi.effectFlag.INFLUENCE, true)
-            player:addStatusEffect(xi.effect.SIGIL, { power = selectedEffects, duration = duration, origin = player, subPower = subPower })
+            player:addStatusEffect(xi.effect.SIGIL, selectedEffects, 0, duration, 0, subPower, 0)
             player:messageSpecial(zones[zoneId].text.ALLIED_SIGIL)
 
             if bonusCost > 0 then
@@ -376,20 +386,17 @@ xi.campaign.sigilOnEventFinish = function(player, csid, option, npc)
             local itemPage     = bit.band(bit.rshift(option, 4), 0xF)
             local selectedItem = bit.rshift(option, 8)
             local itemInfo     = noteRewardItems[zoneId][itemPage][selectedItem]
-            local itemPrice    = itemInfo[2]
-
-            if
-                itemInfo[3] and
-                player:getCampaignAllegiance() ~= sigilNpcInfo[zoneId][2]
-            then
-                itemPrice = itemPrice * 1.5
-            end
-
-            if player:getCurrency('allied_notes') < itemPrice then
-                return
-            end
 
             if npcUtil.giveItem(player, itemInfo[1]) then
+                local itemPrice = itemInfo[2]
+
+                if
+                    itemInfo[3] and
+                    player:getCampaignAllegiance() ~= sigilNpcInfo[zoneId][2]
+                then
+                    itemPrice = itemPrice * 1.5
+                end
+
                 player:delCurrency('allied_notes', itemPrice)
             end
         end

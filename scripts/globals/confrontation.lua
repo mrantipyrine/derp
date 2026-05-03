@@ -37,58 +37,6 @@ xi.confrontation.despawnMobs = function(mobs)
     end
 end
 
-local msgIfExists = function(player, msgID, offset)
-    if
-        not player or
-        not msgID
-    then
-        return
-    end
-
-    player:messageSpecial(msgID + (offset or 0))
-end
-
--- will early exit with false return if confrontation doesn't define a distanceLimit
--- will default to warn 5 times before failing confrontation
--- messages are in the zone's IDs.lua text table offset from CONFRONTATION_DISENGAGED:
--- -1: warning you have left the area
--- +1: returned to area
---  0: confrontation has ended
-local confrontationDistCheck = function(player, npc, distanceLimit, distanceWarnLimit)
-    if
-        not (player and
-        npc and
-        distanceLimit and
-        distanceLimit > 0)
-    then
-        return false
-    end
-
-    local endMsg = zones[player:getZoneID()].text.CONFRONTATION_DISENGAGED
-    local prevOutOfRange = player:getLocalVar('Confrontation_Dist')
-    if player:checkDistance(npc) < distanceLimit then
-        player:setLocalVar('Confrontation_Dist', 0)
-        if prevOutOfRange > 0 then
-            -- you have returned to the area
-            msgIfExists(player, endMsg, 1)
-        end
-    else
-        -- running out of range
-        player:setLocalVar('Confrontation_Dist', prevOutOfRange + 1)
-        if prevOutOfRange >= (distanceWarnLimit or 5) then
-            -- the confrontation has ended
-            msgIfExists(player, endMsg)
-
-            return true
-        else
-            -- you have ventured too far
-            msgIfExists(player, endMsg, -1)
-        end
-    end
-
-    return false
-end
-
 ---@param lookupKey integer
 ---@param setupTimer boolean
 ---@return nil
@@ -127,11 +75,6 @@ xi.confrontation.check = function(lookupKey, setupTimer)
             member:getStatusEffect(xi.effect.CONFRONTATION):getPower() == lookupKey
         then
             validPlayerCount = validPlayerCount + 1
-
-            -- send out-of-range messages multiple times in a row then fail the confrontation if any member stays out of range long enough
-            if confrontationDistCheck(member, lookup.npc, lookup.distanceLimit, lookup.distanceWarnLimit) then
-                didLose = true
-            end
         end
     end
 
@@ -140,7 +83,7 @@ xi.confrontation.check = function(lookupKey, setupTimer)
     end
 
     if lookup.timeLimit then
-        if GetSystemTime() > lookup.timeLimit then
+        if os.time() > lookup.timeLimit then
             didLose = true
         end
     end
@@ -180,11 +123,6 @@ xi.confrontation.check = function(lookupKey, setupTimer)
             xi.confrontation.despawnMobs(mobs)
         end
 
-        -- Reset mobs/npcs/variables that may not be handled by win/lose
-        if lookup.cleanUp then
-            lookup.cleanUp()
-        end
-
         xi.confrontation.lookup[lookupKey] = nil
     else -- Check again soon
         if setupTimer then
@@ -221,18 +159,12 @@ xi.confrontation.start = function(player, npc, mobIds, params)
     mobIds = mobs
 
     -- Tag alliance members with the confrontation effect
-    local alliance = {}
-    if type(params.playerList) == 'table' then
-        alliance = params.playerList
-    else
-        alliance = player:getAlliance()
-    end
-
+    local alliance = player:getAlliance()
     local registeredPlayerIds = {}
 
     for _, member in ipairs(alliance) do
         -- Using the pop npc's ID as the 'key'
-        member:addStatusEffect(xi.effect.CONFRONTATION, { power = lookupKey, origin = member })
+        member:addStatusEffect(xi.effect.CONFRONTATION, lookupKey, 0, 0)
         table.insert(registeredPlayerIds, member:getID())
     end
 
@@ -241,7 +173,7 @@ xi.confrontation.start = function(player, npc, mobIds, params)
         local mob = GetMobByID(mobId)
 
         if mob then
-            mob:addStatusEffect(xi.effect.CONFRONTATION, { power = lookupKey, origin = mob })
+            mob:addStatusEffect(xi.effect.CONFRONTATION, lookupKey, 0, 0)
             mob:addListener('DEATH', 'CONFRONTATION_DEATH', function(mobArg)
                 mobArg:removeListener('CONFRONTATION_DEATH')
                 xi.confrontation.check(lookupKey, false)
@@ -252,17 +184,14 @@ xi.confrontation.start = function(player, npc, mobIds, params)
     -- Cache the lists into the global lookup
     local lookup = {}
 
-    lookup.npc                 = npc
+    lookup.npc = npc
     lookup.registeredPlayerIds = registeredPlayerIds
-    lookup.mobIds              = mobIds
-    lookup.onWin               = params.onWin
-    lookup.onLose              = params.onLose
-    lookup.cleanUp             = params.cleanUp
-    lookup.distanceLimit       = params.distanceLimit
-    lookup.distanceWarnLimit   = params.distanceWarnLimit
+    lookup.mobIds = mobIds
+    lookup.onWin = params.winFunc
+    lookup.onLose = params.loseFunc
 
     if params.timeLimit then
-        lookup.timeLimit = GetSystemTime() + params.timeLimit
+        lookup.timeLimit = os.time() + params.timeLimit
     end
 
     xi.confrontation.lookup[lookupKey] = lookup

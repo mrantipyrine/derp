@@ -1,8 +1,6 @@
 -----------------------------------
 -- Thunderstorm
--- Family: Ramuh (Player Pet)
 -----------------------------------
----@type TAbilityPet
 local abilityObject = {}
 
 abilityObject.onAbilityCheck = function(player, target, ability)
@@ -12,34 +10,30 @@ end
 abilityObject.onPetAbility = function(target, pet, petskill, summoner, action)
     xi.job_utils.summoner.onUseBloodPact(target, petskill, summoner, action)
 
-    -- Merit TP bonus.
+    local dINT   = math.floor(pet:getStat(xi.mod.INT) - target:getStat(xi.mod.INT))
+    local tp     = pet:getTP() / 10
     local merits = 0
 
-    if summoner and summoner:isPC() then
-        merits = utils.clamp(summoner:getMerit(xi.merit.THUNDERSTORM) - 400, 0, 3000)
+    if summoner ~= nil and summoner:isPC() then
+        merits = summoner:getMerit(xi.merit.THUNDERSTORM)
     end
 
-    local params = {}
-
-    params.baseDamage      = pet:getMainLvl() + 2
-    params.fTP             = { 5.3570, 8.0273, 10.7031 }
-    params.fTPBonus        = merits
-    params.int_wSC         = 0.30
-    params.element         = xi.element.THUNDER
-    params.attackType      = xi.attackType.MAGICAL
-    params.damageType      = xi.damageType.THUNDER
-    params.shadowBehavior  = xi.mobskills.shadowBehavior.NUMSHADOWS_1 -- TODO: Capture shadowBehavior
-    params.dStatMultiplier = 1.5
-    params.canMagicBurst   = true
-    params.primaryMessage  = xi.msg.basic.USES_JA_TAKE_DAMAGE
-
-    local info = xi.mobskills.mobMagicalMove(pet, target, petskill, action, params)
-
-    if xi.mobskills.processDamage(pet, target, petskill, action, info) then
-        target:takeDamage(info.damage, pet, info.attackType, info.damageType)
+    tp = tp + (merits - 40)
+    if tp > 300 then
+        tp = 300
     end
 
-    return info.damage
+    --note: this formula is only accurate for level 75 - 76+ may have a different intercept and/or slope
+    local damage = math.floor(512 + 1.72 * (tp + 1))
+    damage = damage + (dINT * 1.5)
+    damage = xi.mobskills.mobMagicalMove(pet, target, petskill, damage, xi.element.THUNDER, 1, xi.mobskills.magicalTpBonus.NO_EFFECT, 0)
+    damage = xi.mobskills.mobAddBonuses(pet, target, damage.dmg, xi.element.THUNDER, petskill)
+    damage = xi.summon.avatarFinalAdjustments(damage, pet, petskill, target, xi.attackType.MAGICAL, xi.damageType.THUNDER, 1)
+
+    target:takeDamage(damage, pet, xi.attackType.MAGICAL, xi.damageType.THUNDER)
+    target:updateEnmityFromDamage(pet, damage)
+
+    return damage
 end
 
 return abilityObject

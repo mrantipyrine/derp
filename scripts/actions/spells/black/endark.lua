@@ -1,7 +1,6 @@
 -----------------------------------
 -- Spell: Endark
 -----------------------------------
----@type TSpell
 local spellObject = {}
 
 spellObject.onMagicCastingCheck = function(caster, target, spell)
@@ -13,8 +12,11 @@ spellObject.onSpellCast = function(caster, target, spell)
     local magicskill = target:getSkillLevel(xi.skill.DARK_MAGIC)
     local potency = (magicskill / 8) + 12.5
 
-    if target:addStatusEffect(effect, { power = potency, duration = 180, origin = caster }) then
+    if target:addStatusEffect(effect, potency, 0, 180) then
         spell:setMsg(xi.msg.basic.MAGIC_GAIN_EFFECT)
+        if xi.soloSynergy then
+            xi.soloSynergy.applyBlackSelfBuffSynergy(caster, target, spell, effect)
+        end
     else
         spell:setMsg(xi.msg.basic.MAGIC_NO_EFFECT)
     end

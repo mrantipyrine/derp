@@ -1,19 +1,28 @@
 -----------------------------------
 -- Ability: Deep Breathing
--- Enhances the effect of next breath used by wyvern.
--- Obtained: Dragoon Level 75
--- Recast Time: 5 minutes
--- Duration: 0:03:00 or until the next breath is executed
+-- Job: Dragoon
+-- Enhances next wyvern breath.
+-- Solo bonus: Regen to player — rider steadies their own breath too.
 -----------------------------------
----@type TAbility
 local abilityObject = {}
 
 abilityObject.onAbilityCheck = function(player, target, ability)
     return xi.job_utils.dragoon.abilityCheckDeepBreathing(player, target, ability)
 end
 
-abilityObject.onUseAbility = function(player, target, ability, action)
-    return xi.job_utils.dragoon.useDeepBreathing(player, target, ability, action)
+abilityObject.onUseAbility = function(player, target, ability)
+    xi.job_utils.dragoon.useDeepBreathing(player, target, ability)
+
+    local lvl   = player:getMainLvl()
+    local isDRG = player:getMainJob() == xi.job.DRG
+
+    local regen = isDRG and math.max(3, math.floor(lvl / 12)) or math.max(1, math.floor(lvl / 22))
+
+    player:addStatusEffect(xi.effect.REGEN, regen, 3, 180)
+
+    if xi.soloSynergy then
+        xi.soloSynergy.flashBuff(player, 'Deep Breathing', string.format('Regen +%d (rider)', regen))
+    end
 end
 
 return abilityObject

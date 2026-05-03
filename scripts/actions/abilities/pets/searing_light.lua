@@ -1,9 +1,6 @@
 -----------------------------------
 -- Searing Light
--- Family: Carbuncle (Player Pet)
--- Note: Carbuncle's Astral Flow
 -----------------------------------
----@type TAbilityPet
 local abilityObject = {}
 
 abilityObject.onAbilityCheck = function(player, target, ability)
@@ -11,31 +8,22 @@ abilityObject.onAbilityCheck = function(player, target, ability)
 end
 
 abilityObject.onPetAbility = function(target, pet, petskill, summoner, action)
+    local dINT = math.floor(pet:getStat(xi.mod.INT) - target:getStat(xi.mod.INT))
+    local level = pet:getMainLvl()
+    local damage = 26 + (level * 6)
+
     xi.job_utils.summoner.onUseBloodPact(target, petskill, summoner, action)
 
-    local params = {}
+    damage = damage + (dINT * 1.5)
+    damage = xi.mobskills.mobMagicalMove(pet, target, petskill, damage, xi.element.LIGHT, 1, xi.mobskills.magicalTpBonus.NO_EFFECT, 0)
+    damage = xi.mobskills.mobAddBonuses(pet, target, damage.dmg, xi.element.LIGHT, petskill)
+    damage = xi.summon.avatarFinalAdjustments(damage, pet, petskill, target, xi.attackType.MAGICAL, xi.damageType.LIGHT, 1)
 
-    params.baseDamage      = pet:getMainLvl() + 2
-    params.fTP             = { 7.9765, 7.9765, 7.9765 }
-    params.int_wSC         = 0.30
-    params.element         = xi.element.LIGHT
-    params.attackType      = xi.attackType.MAGICAL
-    params.damageType      = xi.damageType.LIGHT
-    params.shadowBehavior  = xi.mobskills.shadowBehavior.NUMSHADOWS_1 -- TODO: Capture shadowBehavior
-    params.dStatMultiplier = 1.5
-    params.canMagicBurst   = true
-    params.primaryMessage  = xi.msg.basic.USES_JA_TAKE_DAMAGE
-    -- TODO: Should not consume TP
-
-    local info = xi.mobskills.mobMagicalMove(pet, target, petskill, action, params)
-
-    if xi.mobskills.processDamage(pet, target, petskill, action, info) then
-        target:takeDamage(info.damage, pet, info.attackType, info.damageType)
-    end
-
+    target:takeDamage(damage, pet, xi.attackType.MAGICAL, xi.damageType.LIGHT)
+    target:updateEnmityFromDamage(pet, damage)
     summoner:setMP(0)
 
-    return info.damage
+    return damage
 end
 
 return abilityObject

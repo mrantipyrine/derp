@@ -5,14 +5,13 @@
 -- Obtained: Dragoon Level 50
 -- Duration: Instant
 -----------------------------------
----@type TAbilityPet
 local abilityObject = {}
 
 abilityObject.onAbilityCheck = function(player, target, ability)
     return 0, 0
 end
 
-abilityObject.onPetAbility = function(target, pet, petskill, owner, action)
+abilityObject.onUseAbility = function(pet, target, ability)
     pet:queue(0, function(petArg)
         petArg:untargetableAndUnactionable(5000)
     end)

@@ -1,7 +1,6 @@
 -----------------------------------
 -- Attachment: Heat Seeker
 -----------------------------------
----@type TAttachment
 local attachmentObject = {}
 
 attachmentObject.onEquip = function(automaton)

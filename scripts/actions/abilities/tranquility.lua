@@ -13,7 +13,6 @@
 -- 70      |4       |1:00 minute
 -- 90      |5       |48 seconds
 -----------------------------------
----@type TAbility
 local abilityObject = {}
 
 abilityObject.onAbilityCheck = function(player, target, ability)
@@ -25,7 +24,19 @@ abilityObject.onAbilityCheck = function(player, target, ability)
 end
 
 abilityObject.onUseAbility = function(player, target, ability)
-    player:addStatusEffect(xi.effect.TRANQUILITY, { power = player:getMerit(xi.merit.TRANQUILITY), duration = 60, origin = player })
+    player:addStatusEffect(xi.effect.TRANQUILITY, player:getMerit(xi.merit.TRANQUILITY), 0, 60)
+
+    -- Solo bonus
+    local isSCH = player:getMainJob() == xi.job.SCH
+    local lvl = player:getMainLvl()
+    local intBonus = isSCH and math.floor(lvl * 0.20) or math.floor(lvl * 0.10)
+    local mndBonus = isSCH and math.floor(lvl * 0.16) or math.floor(lvl * 0.08)
+    player:addMod(xi.mod.INT, intBonus)
+    player:addMod(xi.mod.MND, mndBonus)
+    player:timer(60000, function(p) p:delMod(xi.mod.INT, intBonus) p:delMod(xi.mod.MND, mndBonus) end)
+    if xi.soloSynergy then
+        xi.soloSynergy.flashBuff(player, 'Tranquility', string.format('INT +%d  MND +%d', intBonus, mndBonus))
+    end
 
     return xi.effect.TRANQUILITY
 end

@@ -5,7 +5,6 @@
 -- Recast Time: 1:00
 -- Duration: 2:00:00
 -----------------------------------
----@type TAbility
 local abilityObject = {}
 
 abilityObject.onAbilityCheck = function(player, target, ability)
@@ -36,7 +35,19 @@ abilityObject.onUseAbility = function(player, target, ability)
         helixbonus = math.floor(player:getMainLvl() / 4)
     end
 
-    player:addStatusEffect(xi.effect.DARK_ARTS, { power = 1, duration = 7200, origin = player, subPower = helixbonus })
+    player:addStatusEffect(xi.effect.DARK_ARTS, 1, 0, 7200, 0, helixbonus)
+
+    -- Solo bonus
+    local isSCH = player:getMainJob() == xi.job.SCH
+    local lvl = player:getMainLvl()
+    local intBonus = isSCH and math.floor(lvl * 0.20) or math.floor(lvl * 0.10)
+    local mndBonus = isSCH and math.floor(lvl * 0.16) or math.floor(lvl * 0.08)
+    player:addMod(xi.mod.INT, intBonus)
+    player:addMod(xi.mod.MND, mndBonus)
+    player:timer(60000, function(p) p:delMod(xi.mod.INT, intBonus) p:delMod(xi.mod.MND, mndBonus) end)
+    if xi.soloSynergy then
+        xi.soloSynergy.flashBuff(player, 'Dark Arts', string.format('INT +%d  MND +%d', intBonus, mndBonus))
+    end
 
     return xi.effect.DARK_ARTS
 end

@@ -1,6 +1,7 @@
 -----------------------------------
 -- Mog Garden Global
 -----------------------------------
+require('scripts/globals/utils')
 local ID = zones[xi.zone.MOG_GARDEN]
 -----------------------------------
 xi = xi or {}

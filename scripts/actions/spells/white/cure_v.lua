@@ -3,7 +3,6 @@
 -- Restores target's HP.
 -- Shamelessly stolen from http://members.shaw.ca/pizza_steve/cure/Cure_Calculator.html
 -----------------------------------
----@type TSpell
 local spellObject = {}
 
 spellObject.onMagicCastingCheck = function(caster, target, spell)
@@ -87,7 +86,7 @@ spellObject.onSpellCast = function(caster, target, spell)
 
             solaceStoneskin = solaceStoneskin * (1 + caster:getMerit(xi.merit.ANIMUS_SOLACE) / 100)
 
-            target:addStatusEffect(xi.effect.STONESKIN, { power = solaceStoneskin, duration = 25, origin = caster, tier = 1 })
+            target:addStatusEffect(xi.effect.STONESKIN, solaceStoneskin, 0, 25, 0, 0, 1)
         end
 
         final = final + (final * (target:getMod(xi.mod.CURE_POTENCY_RCVD) / 100))
@@ -101,6 +100,11 @@ spellObject.onSpellCast = function(caster, target, spell)
         end
 
         target:addHP(final)
+
+        -- Solo Synergy: Divine Shield
+        if xi.soloSynergy then
+            xi.soloSynergy.applyCureSynergy(caster, target, final)
+        end
 
         target:wakeUp()
 

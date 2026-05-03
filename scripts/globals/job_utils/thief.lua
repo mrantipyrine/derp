@@ -476,3 +476,30 @@ xi.job_utils.thief.useTrickAttack = function(player, target, ability)
 
     return xi.effect.TRICK_ATTACK
 end
+
+end
+
+-- ══════════════════════════════════════════════════════════════
+-- Solo Synergy — Thief (75 Era Strict)
+-- ══════════════════════════════════════════════════════════════
+require('scripts/globals/solo_synergy')
+
+do
+    local ss = xi.soloSynergy
+    local _THF = xi.job_utils.thief
+
+    local _sa = _THF.useSneakAttack
+    _THF.useSneakAttack = function(player, target, ability)
+        ss.onAbilityUse(player, target, ability)
+        _sa(player, target, ability)
+        player:setLocalVar('SS_LARCENY', 1)
+        ss.flash(player, 'LARCENY primed: next WS steals 250 TP.')
+    end
+
+    local _ta = _THF.useTrickAttack
+    _THF.useTrickAttack = function(player, target, ability)
+        ss.onAbilityUse(player, target, ability)
+        _ta(player, target, ability)
+        player:setLocalVar('SS_LARCENY', 1)
+    end
+end

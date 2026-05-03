@@ -224,9 +224,9 @@ xi.magian.trials =
             itemId = xi.item.ATHAME,
         },
 
-        textOffset     = 69,
-        mobSuperFamily = set{ xi.mobSuperFamily.HIPPOGRYPH },
-        numRequired    = 300,
+        textOffset  = 69,
+        mobFamily   = set{ 140, 141 },
+        numRequired = 300,
 
         rewardItem =
         {
@@ -511,7 +511,7 @@ xi.magian.trials =
         textOffset     = 99,
         dayWeather     = xi.magianElement.ANY,
         defeatMob      = true,
-        mobSuperFamily = set{ xi.mobSuperFamily.SKELETON },
+        mobSuperFamily = set{ 56 },
         numRequired    = 50,
 
         rewardItem =
@@ -10469,7 +10469,7 @@ xi.magian.trials =
         previousTrial = 0,
         requiredItem  =
         {
-            itemId = xi.item.ORISON_BLIAUT,
+            itemId = xi.item.ORISON_BLIAUD,
         },
 
         textOffset  = 1051,
@@ -10478,7 +10478,7 @@ xi.magian.trials =
 
         rewardItem =
         {
-            itemId = xi.item.ORISON_BLIAUT_P1,
+            itemId = xi.item.ORISON_BLIAUD_P1,
         },
     },
 
@@ -11189,7 +11189,7 @@ xi.magian.trials =
         previousTrial = 4338,
         requiredItem  =
         {
-            itemId = xi.item.ORISON_BLIAUT_P1,
+            itemId = xi.item.ORISON_BLIAUD_P1,
         },
 
         textOffset  = 1052,
@@ -11198,7 +11198,7 @@ xi.magian.trials =
 
         rewardItem =
         {
-            itemId = xi.item.ORISON_BLIAUT_P2,
+            itemId = xi.item.ORISON_BLIAUD_P2,
         },
     },
 

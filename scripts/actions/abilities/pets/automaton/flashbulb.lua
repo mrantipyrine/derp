@@ -1,7 +1,6 @@
 -----------------------------------
 -- Flashbulb
 -----------------------------------
----@type TAbilityAutomaton
 local abilityObject = {}
 
 abilityObject.onAutomatonAbilityCheck = function(target, automaton, skill)
@@ -10,23 +9,22 @@ end
 
 abilityObject.onAutomatonAbility = function(target, automaton, skill, master, action)
     automaton:addRecast(xi.recast.ABILITY, skill:getID(), 45)
-    local highest        = automaton:getSkillLevel(xi.skill.AUTOMATON_MELEE)
-    local highestSkillId = xi.skill.AUTOMATON_MELEE
-
+    local highest = automaton:getSkillLevel(xi.skill.AUTOMATON_MELEE)
+    local highestskill = 22
     if automaton:getSkillLevel(xi.skill.AUTOMATON_RANGED) > highest then
-        highest        = automaton:getSkillLevel(xi.skill.AUTOMATON_RANGED)
-        highestSkillId = xi.skill.AUTOMATON_RANGED
+        highestskill = 23
+        highest = automaton:getSkillLevel(xi.skill.AUTOMATON_RANGED)
     end
 
     if automaton:getSkillLevel(xi.skill.AUTOMATON_MAGIC) > highest then
-        highestSkillId = xi.skill.AUTOMATON_MAGIC
+        highestskill = 24
     end
 
-    local resist   = xi.combat.magicHitRate.calculateResistRate(automaton, target, 0, highestSkillId, 0, xi.element.LIGHT, 0, 0, 150)
+    local resist = applyResistanceAbility(automaton, target, 7, highestskill, 150)
     local duration = 12 * resist
 
     if resist > 0.0625 then
-        if target:addStatusEffect(xi.effect.FLASH, { duration = duration, origin = automaton }) then -- power handled in hit rate calculations
+        if target:addStatusEffect(xi.effect.FLASH, 200, 0, duration) then
             skill:setMsg(xi.msg.basic.SKILL_ENFEEB)
         else
             skill:setMsg(xi.msg.basic.SKILL_NO_EFFECT)

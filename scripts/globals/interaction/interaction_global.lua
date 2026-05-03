@@ -1,6 +1,5 @@
------------------------------------
+require('scripts/globals/utils')
 require('scripts/globals/interaction/interaction_lookup')
------------------------------------
 
 -- Used by core to call into the loaded interaction handlers
 InteractionGlobal = InteractionGlobal or {}
@@ -8,15 +7,19 @@ InteractionGlobal.lookup = InteractionGlobal.lookup or InteractionLookup:new()
 InteractionGlobal.zones = InteractionGlobal.zones or {}
 
 -----------------------------------
--- Called during server and test init:
+-- Called during server init:
 -- [C++] do_init()
+-- [C++] zoneutils::LoadZoneList()
 -- [C++] luautils::InitInteractionGlobal()
--- [Lua] InteractionGlobal.initZones(zoneMapping)
+-- [Lua] InteractionGlobal.initZones(zoneIds)
 -----------------------------------
-function InteractionGlobal.initZones(zoneMapping)
+function InteractionGlobal.initZones(zoneIds)
     -- Add the given zones to the zones table
-    for zoneId, zoneName in pairs(zoneMapping) do
-        InteractionGlobal.zones[zoneId] = zoneName
+    for i = 1, #zoneIds do
+        local zone = GetZone(zoneIds[i])
+        if zone then
+            InteractionGlobal.zones[zoneIds[i]] = zone:getName()
+        end
     end
 
     InteractionGlobal.loadDefaultActions(false)
@@ -90,6 +93,7 @@ function InteractionGlobal.reload(shouldReloadData)
         InteractionGlobal.lookup = InteractionLookup:new()
         InteractionGlobal.loadDefaultActions(true)
         InteractionGlobal.loadContainers(true)
+
     else
         InteractionGlobal.lookup = InteractionLookup:new(InteractionGlobal.lookup)
     end

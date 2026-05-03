@@ -11,7 +11,7 @@ zoneObject.onInitialize = function(zone)
 end
 
 zoneObject.onGameHour = function(zone)
-    xi.darkixion.zoneOnGameHour(zone)
+    if xi.darkixion and xi.darkixion.zoneOnGameHour then xi.darkixion.zoneOnGameHour(zone) end
 end
 
 zoneObject.onZoneIn = function(player, prevZone)

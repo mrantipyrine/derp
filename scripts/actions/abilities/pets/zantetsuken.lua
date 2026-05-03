@@ -1,63 +1,39 @@
 -----------------------------------
 -- Zantetsuken
--- Family: Odin (Player Pet)
--- Notes: Requires Astral Flow to be active.
--- TODO: Ability Needs captures/audit.
--- https://wiki.ffo.jp/html/17522.html
-
--- Wanna bet this is made up?
 -----------------------------------
----@type TAbilityPet
 local abilityObject = {}
 
 abilityObject.onAbilityCheck = function(player, target, ability)
-    return xi.job_utils.summoner.canUseBloodPact(player, player:getPet(), target, ability)
+    return 0, 0
 end
 
-abilityObject.onPetAbility = function(target, pet, petskill, summoner, action)
-    local returnParam = 0
-    local power       = summoner:getMP() / utils.clamp(summoner:getMaxMP(), 1, 9999)
+abilityObject.onPetAbility = function(target, pet, skill, master)
+    local power = master:getMP() / master:getMaxMP()
+    master:setMP(0)
 
     if target:isNM() then
-        local params = {}
-
-        params.baseDamage      = power
-        params.element         = xi.element.DARK
-        params.attackType      = xi.attackType.MAGICAL
-        params.damageType      = xi.damageType.DARK
-        params.shadowBehavior  = xi.mobskills.shadowBehavior.IGNORE_SHADOWS
-        params.canMagicBurst   = true
-        params.primaryMessage  = xi.msg.basic.USES_JA_TAKE_DAMAGE
-
-        local info = xi.mobskills.mobMagicalMove(pet, target, petskill, action, params)
-
-        if xi.mobskills.processDamage(pet, target, petskill, action, info) then
-            target:takeDamage(info.damage, pet, info.attackType, info.damageType)
+        local dmg = 0.1 * target:getHP() + 0.1 * target:getHP() * power
+        if dmg > 9999 then
+            dmg = 9999
         end
 
-        returnParam = info.damage
+        dmg = xi.mobskills.mobMagicalMove(pet, target, skill, dmg, xi.element.DARK, 1, xi.mobskills.magicalTpBonus.NO_EFFECT, 0)
+        dmg = xi.mobskills.mobAddBonuses(pet, target, dmg.dmg, xi.element.DARK, skill)
+        dmg = xi.summon.avatarFinalAdjustments(dmg, pet, skill, target, xi.attackType.MAGICAL, xi.damageType.DARK, 1)
+        target:takeDamage(dmg, pet, xi.attackType.MAGICAL, xi.damageType.DARK)
+        target:updateEnmityFromDamage(pet, dmg)
+        return dmg
     else
-        -- Insta-kill: Highly innacurate against regular monsters.
-        local chance = 50 * power / utils.clamp(petskill:getTotalTargets(), 1, 50)
-
-        if
-            math.random(1, 100) <= chance and
-            target:getAnimation() ~= 33
-        then
-            petskill:setMsg(xi.msg.basic.SKILL_ENFEEB_IS)
+        local chance = (100 * power) / skill:getTotalTargets()
+        if math.random(0, 99) < chance and target:getAnimation() ~= 33 then
+            skill:setMsg(xi.msg.basic.SKILL_ENFEEB_IS)
             target:takeDamage(target:getHP(), pet, xi.attackType.MAGICAL, xi.damageType.DARK)
-
-            returnParam = xi.effect.KO
+            return xi.effect.KO
         else
-            petskill:setMsg(xi.msg.basic.EVADES)
-
-            returnParam = 0
+            skill:setMsg(xi.msg.basic.EVADES)
+            return 0
         end
     end
-
-    summoner:setMP(0)
-
-    return returnParam
 end
 
 return abilityObject

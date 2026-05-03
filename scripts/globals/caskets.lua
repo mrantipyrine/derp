@@ -48,6 +48,14 @@ local casketInfo =
         UNABLE_TO_GET_HINT       = 19, -- You were unable to glean anything from your examination of the lock.
         MONSTER_CONCEALED_CHEST  = 21, -- The monster was concealing a treasure chest!
     },
+    casketZones =
+    {
+        100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111,
+        112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123,
+        124, 125, 126, 127, 128, 130, 153, 157, 158, 159, 160, 166,
+        167, 169, 172, 173, 174, 176, 177, 178, 184, 190, 191, 192,
+        193, 194, 195, 196, 197, 198, 204, 205, 207, 208, 212, 213
+    },
     splitZones = set{
         xi.zone.ZERUHN_MINES,
         xi.zone.KORROLOKA_TUNNEL,
@@ -58,19 +66,6 @@ local casketInfo =
         xi.zone.GUSGEN_MINES,
         xi.zone.MAZE_OF_SHAKHRAMI
     },
-
-    -- Due to storing itemId for chosen casket items as a localvar, simpler than coding quantity as another localvar
-    -- These itemIds give 33 instead of a single
-    multipleItems = set{
-        xi.item.HANDFUL_OF_STONE_ARROWHEADS,
-        xi.item.HANDFUL_OF_BONE_ARROWHEADS,
-        xi.item.HANDFUL_OF_BRONZE_BOLT_HEADS,
-        xi.item.HANDFUL_OF_MYTHRIL_BOLT_HEADS,
-        xi.item.HANDFUL_OF_DARKSTEEL_BOLT_HEADS,
-        xi.item.HANDFUL_OF_SILVER_ARROWHEADS,
-        xi.item.BAG_OF_YAGUDO_FLETCHINGS,
-        xi.item.HANDFUL_OF_PLATINUM_ARROWHEADS,
-    },
     cs =
     {
         [0]  = 1000, [1]  = 1003, [2]  = 1006, [3]  = 1009, [4]  = 1012, [5]  = 1015,
@@ -79,9 +74,9 @@ local casketInfo =
     },
     dropTypes =
     {
-        TEMP    = 1,
-        ITEM    = 2,
-        EVOLITH = 3, -- NOTE: not implemented! item id: 2783
+        [1]  = 'tempItems',
+        [2]  = 'items',
+        [3]  = 'evolith' -- NOTE: not implemented! item id: 2783
     },
     evolithAugs =
     {
@@ -95,10 +90,10 @@ local casketInfo =
 -----------------------------------
 local function convertTime(rawTime)
     local rawSeconds = tonumber(rawTime)
-    local timeTable  = { '', '', '' }
+    local timeTable = { '', '', '' }
 
     timeTable[1] = string.format('%02.f', math.floor(rawSeconds / 3600))
-    timeTable[2] = string.format('%02.f', math.floor(rawSeconds / 60 - timeTable[1] * 60))
+    timeTable[2] = string.format('%02.f', math.floor(rawSeconds / 60 - (timeTable[1] * 60)))
     timeTable[3] = string.format('%02.f', math.floor(rawSeconds - timeTable[1] * 3600 - timeTable[2] * 60))
 
     return timeTable
@@ -109,8 +104,8 @@ end
 -- NOTE: will NOT allow a spawn if time since last spanwed is under 5 mins.
 -----------------------------------
 local function timeElapsedCheck(npc)
-    local spawnTime = GetSystemTime() + 360000 -- Default time in case no var set.
-    local timeTable = { 0, 0, 0 }              -- Hours, Minutes, Seconds.
+    local spawnTime   = os.time() + 360000 -- defualt time in case no var set.
+    local timeTable   = { 0, 0, 0 }        -- HOURS, MINUTES, SECONDS.
 
     if npc == nil then
         return false
@@ -120,7 +115,7 @@ local function timeElapsedCheck(npc)
         spawnTime = npc:getLocalVar('[caskets]SPAWNTIME')
     end
 
-    local lastSpawned = GetSystemTime() - spawnTime
+    local lastSpawned = os.time() - spawnTime
 
     timeTable = convertTime(lastSpawned)
 
@@ -231,59 +226,77 @@ end
 -- Desc: Sets all the base localVar's, type of chest and if locked, sets the random number.
 -----------------------------------
 local function setCasketData(player, x, y, z, r, npc, partyID, mobLvl)
-    -- Early return.
-    if npc == nil then
-        return
-    end
+    -----------------------------------
+    -- NOTE: Super Kupowers Myriad Mystery Boxes add an additional 20% chance the chest will be locked.
+    -----------------------------------
+    local typeChance       = math.random()
+    local chestStyle       = 965
+    local correctNum       = math.random(10, 99)
+    local attempts         = math.random(4, 6)
+    local kupowersBonus    = 0
 
-    local chestStyle = 965
-    local correctNum = math.random(10, 99)
-    local attempts   = math.random(4, 6)
+    -- if player:hasStatusEffect(xi.effect.KUPOWERS_MYRIAD_MYSTERY_BOXES) then    -- Super Kupowers Myriad Mystery Boxes not implimented yet.
+    --     kupowersBonus = 0.2
+    -- end
 
-    -- Get casket type.
-    local kupowersBonus = 0 -- TODO: Kupowers add a 20% chance.
-    if math.random(1, 100) <= 15 + kupowersBonus then
+    if typeChance < 0.2 + kupowersBonus then
         chestStyle = 966 -- Brown locked
     else
         chestStyle = 965 -- Blue
     end
 
-    npc:resetLocalVars()
-    npc:setAnimation(0)
-    npc:setAnimationSub(4)
-    -----------------------------------
-    -- Chest data
-    -----------------------------------
-    npc:setLocalVar('[caskets]PARTYID', partyID)
-    npc:setLocalVar('[caskets]ITEMS_SET', 0)
-    npc:setLocalVar('[caskets]MOBLVL', mobLvl)
+    if npc ~= nil then
+        npc:resetLocalVars()
+        npc:setAnimation(0)
+        npc:setAnimationSub(4)
+        -----------------------------------
+        -- Chest data
+        -----------------------------------
+        npc:setLocalVar('[caskets]PARTYID', partyID)
+        npc:setLocalVar('[caskets]ITEMS_SET', 0)
+        npc:setLocalVar('[caskets]MOBLVL', mobLvl)
 
-    -- Brown.
-    if chestStyle == 966 then
-        npc:setLocalVar('[caskets]ATTEMPTS', attempts)
-        npc:setLocalVar('[caskets]CORRECT_NUM', correctNum)
-        npc:setLocalVar('[caskets]FAILED_ATEMPTS', 0)
-        npc:setLocalVar('[caskets]LOCKED', 1)
-        npc:setLocalVar('[caskets]LOOT_TYPE', casketInfo.dropTypes.ITEM)
-        npc:setLocalVar('[caskets]HINTS_TABLE', 1234567)
-    else
-        npc:setLocalVar('[caskets]LOCKED', 0)
-        npc:setLocalVar('[caskets]LOOT_TYPE', casketInfo.dropTypes.TEMP)
+        if chestStyle == 966 then
+            npc:setLocalVar('[caskets]ATTEMPTS', attempts)
+            npc:setLocalVar('[caskets]CORRECT_NUM', correctNum)
+            npc:setLocalVar('[caskets]FAILED_ATEMPTS', 0)
+            npc:setLocalVar('[caskets]LOCKED', 1)
+            npc:setLocalVar('[caskets]LOOT_TYPE', 2)
+            npc:setLocalVar('[caskets]HINTS_TABLE', 1234567)
+        else
+            npc:setLocalVar('[caskets]LOCKED', 0)
+            npc:setLocalVar('[caskets]LOOT_TYPE', 1)
+        end
+
+        npc:setLocalVar('[caskets]SPAWNSTATUS', casketInfo.spawnStatus.SPAWNED_CLOSED)
+        npc:setLocalVar('[caskets]SPAWNTIME', os.time())
+        npc:setPos(x, y, z, r)
+        npc:setStatus(xi.status.NORMAL)
+        npc:entityAnimationPacket(xi.animationString.STATUS_VISIBLE)
+        npc:setModelId(chestStyle)
+        sendChestDropMessage(player)
+        -----------------------------------
+        -- Despawn chest after 3 Mins
+        -----------------------------------
+        npc:timer(1000 * 60 * 3, function(npcArg)
+            removeChest(npcArg)
+        end)
+    end
+end
+
+-----------------------------------
+-- Desc: Checks to see if the item needs multiples, i.e. Arrowheads, if so, sends true and the item is multiplied
+-----------------------------------
+local function multipleItemCheck(itemId)
+    local multiples = { 1214, 1215, 1211, 1212, 1213, 1217, 1222, 1962 }
+
+    for i = 1, #multiples do
+        if itemId == multiples[i] then
+            return true
+        end
     end
 
-    npc:setLocalVar('[caskets]SPAWNSTATUS', casketInfo.spawnStatus.SPAWNED_CLOSED)
-    npc:setLocalVar('[caskets]SPAWNTIME', GetSystemTime())
-    npc:setPos(x, y, z, r)
-    npc:setStatus(xi.status.NORMAL)
-    npc:entityAnimationPacket(xi.animationString.STATUS_VISIBLE)
-    npc:setModelId(chestStyle)
-    sendChestDropMessage(player)
-    -----------------------------------
-    -- Despawn chest after 3 Mins
-    -----------------------------------
-    npc:timer(1000 * 60 * 3, function(npcArg)
-        removeChest(npcArg)
-    end)
+    return false
 end
 
 -----------------------------------
@@ -389,6 +402,8 @@ end
 -- Grab random drops from zone item or temp tables depending on type of chest
 -----------------------------------
 local function getDrops(npc, dropType, zoneId)
+    local chestType = casketInfo.dropTypes[dropType]
+
     if npc:getLocalVar('[caskets]ITEMS_SET') == 1 then
         return
     end
@@ -396,9 +411,12 @@ local function getDrops(npc, dropType, zoneId)
     -----------------------------------
     -- Temp drops
     -----------------------------------
-    if dropType == casketInfo.dropTypes.TEMP then
-        -- Get item table.
+    if chestType == 'tempItems' then
+        local temps        = { 0, 0, 0 }
+        local tempCount    = 1
+        local randomTable  = { 1, 3, 1, 2, 1, 2, 1, 1, 3, 1, 2, 1 }
         local tempDrops = xi.casket_loot.casketItems[zoneId].temps
+
         if casketInfo.splitZones[zoneId] then
             local mobLvl = npc:getLocalVar('[caskets]MOBLVL')
             if mobLvl > 50 then
@@ -408,24 +426,43 @@ local function getDrops(npc, dropType, zoneId)
             end
         end
 
-        -- Get number of items in casket.
-        local randomTable = { 1, 3, 1, 2, 1, 2, 1, 1, 3, 1, 2, 1 }
-        local itemCount = utils.randomEntry(randomTable)
+        tempCount = randomTable[math.random(1, #randomTable)]
 
-        local temps = { 0, 0, 0 }
+        for i = 1, tempCount do
+            local sum = 0
 
-        -- roll for items
-        for i = 1, itemCount do
-            temps[i] = xi.itemUtils.pickItemRandom(tempDrops)
+            for k, v in pairs(tempDrops) do
+                sum = sum + v[1]
+            end
+
+            local rand = math.random() * sum -- note: NOT math.random(sum). That will truncate the fractional part of sum
+            local temp = 0
+
+            for k, v in pairs(tempDrops) do
+                rand = rand - v[1]
+                if rand <= 0 then
+                    temp = v[2]
+                    break
+                end
+            end
+
+            if temp == 0 or temp == nil then
+                temps[i] = 4112 -- default to potion
+            else
+                temps[i] = temp
+            end
         end
 
         setTempItems(npc, temps[1], temps[2], temps[3])
     -----------------------------------
     -- Item drops
     -----------------------------------
-    elseif dropType == casketInfo.dropTypes.ITEM then
-        -- Get item table.
+    elseif chestType == 'items' then
+        local items        = { 0, 0, 0, 0 }
+        local itemCount    = 1
+        local randomTable  = { 1, 4, 1, 3, 1, 1, 2, 1, 3, 1, 2, 1 }
         local drops = xi.casket_loot.casketItems[zoneId].items
+
         if casketInfo.splitZones[zoneId] then
             local mobLvl = npc:getLocalVar('[caskets]MOBLVL')
             if mobLvl > 50 then
@@ -435,20 +472,34 @@ local function getDrops(npc, dropType, zoneId)
             end
         end
 
-        -- Get number of items in casket.
-        local randomTable = { 1, 4, 1, 3, 1, 1, 2, 1, 3, 1, 2, 1 }
-        local itemCount = utils.randomEntry(randomTable)
+        itemCount = randomTable[math.random(1, #randomTable)]
 
-        local items = { 0, 0, 0, 0 }
-
-        -- roll for items and give a chance for a regional item for every dropped item
         for i = 1, itemCount do
-            local itemId = xi.itemUtils.pickItemRandom(drops)
+            local sum = 0
 
-            if math.random(1, 100) <= 5 then
-                items[1] = utils.randomEntry(xi.casket_loot.casketItems[zoneId].regionalItems)
+            for k, v in pairs(drops) do
+                sum = sum + v[1]
+            end
+
+            local rand = math.random() * sum -- note: NOT math.random(sum). That will truncate the fractional part of sum
+            local item = 0
+
+            for k, v in pairs(drops) do
+                rand = rand - v[1]
+                if rand <= 0 then
+                    item = v[2]
+                    break
+                end
+            end
+
+            if item == 0 or item == nil then
+                items[i] = 4112 -- default to potion
             else
-                items[i] = itemId
+                if math.random(1, 100) <= 5 then
+                    items[1] = xi.casket_loot.casketItems[zoneId].regionalItems[math.random(1, #xi.casket_loot.casketItems[zoneId].regionalItems)]
+                else
+                    items[i] = item
+                end
             end
         end
 
@@ -456,7 +507,7 @@ local function getDrops(npc, dropType, zoneId)
     -----------------------------------
     -- Evolith drops
     -----------------------------------
-    elseif dropType == casketInfo.dropTypes.EVOLITH then
+    elseif chestType == 'evolith' then
         -- local evolith = 2783
         -- NOTE: Not implimented yet and will be incorperated into items once implimented.
         -- this is mainly here as a means of testing before implimentation.
@@ -519,7 +570,7 @@ local function giveTempItem(player, npc, tempNum, subOption)
         player:messageSpecial(ID.text.UNABLE_TO_OBTAIN_ITEM)
         return
     else
-        if player:hasItem(tempID, xi.inventoryLocation.TEMPITEMS) then
+        if player:hasItem(tempID, 3) then
             return player:messageSpecial(ID.text.ALREADY_POSSESS_TEMP)
         else
             if player:addTempItem(tempID) then
@@ -579,16 +630,18 @@ local function giveItem(player, npc, itemNum, subOption)
             return
         elseif player:getFreeSlotsCount() > 0 then
             if itemID ~= 0 then
-                local quantity = 1
-                if casketInfo.multipleItems[itemID] then
-                    quantity = 33
-                end
-
-                if player:addItem(itemID, quantity) then
-                    -- TODO is the message supposed to give some indication if quantity > 1?
-                    messageChest(player, 'PLAYER_OBTAINS_ITEM', itemID, 0, 0, 0)
-                    npc:setLocalVar(itemQuery, 0)
-                    checkItemChestIsEmpty(npc)
+                if multipleItemCheck(itemID) then
+                    if player:addItem(itemID, 33) then
+                        messageChest(player, 'PLAYER_OBTAINS_ITEM', itemID, 0, 0, 0)
+                        npc:setLocalVar(itemQuery, 0)
+                        checkItemChestIsEmpty(npc)
+                    end
+                else
+                    if player:addItem(itemID) then
+                        messageChest(player, 'PLAYER_OBTAINS_ITEM', itemID, 0, 0, 0)
+                        npc:setLocalVar(itemQuery, 0)
+                        checkItemChestIsEmpty(npc)
+                    end
                 end
             end
         end
@@ -620,7 +673,7 @@ xi.caskets.onTrigger = function(player, npc)
     -- Basic chest var's
     -----------------------------------
     local chestId           = npc:getID()                             -- ID of the chest
-    local dropType          = npc:getLocalVar('[caskets]LOOT_TYPE')   -- Chest Type from casketInfo.dropTypes
+    local itemType          = npc:getLocalVar('[caskets]LOOT_TYPE')   -- Type: 1 Temps, 2 Items.
     local locked            = npc:getLocalVar('[caskets]LOCKED')      -- enter two-digit combination (10~99).
     local chestOwner        = npc:getLocalVar('[caskets]PARTYID')     -- the id of the party that has rights to the chest.
     local leaderId          = player:getLeaderID()
@@ -644,7 +697,7 @@ xi.caskets.onTrigger = function(player, npc)
         return
     end
 
-    getDrops(npc, dropType, player:getZoneID())
+    getDrops(npc, itemType, player:getZoneID())
 
     -----------------------------------
     -- Chest Locked
@@ -664,13 +717,13 @@ xi.caskets.onTrigger = function(player, npc)
             end
         end
 
-        if dropType == casketInfo.dropTypes.TEMP then
+        if itemType == 1 then                -- temp items
             player:startEvent(unlockedEvent + 1,
                 getTempDrop(npc, 1),
                 getTempDrop(npc, 2),
                 getTempDrop(npc, 3),
                 0, 0, 0, 0, 0)
-        elseif dropType == casketInfo.dropTypes.ITEM then
+        elseif itemType == 2 then            -- items
             player:startEvent(unlockedEvent,
                 getChestItem(npc, 1),
                 getChestItem(npc, 2),
@@ -765,7 +818,7 @@ xi.caskets.onEventFinish = function(player, csid, option, npc)
     local chestObj          = player:getEventTarget()
     local spawnStatus       = chestObj:getLocalVar('[caskets]SPAWNSTATUS')
     local locked            = chestObj:getLocalVar('[caskets]LOCKED')
-    local dropType          = chestObj:getLocalVar('[caskets]LOOT_TYPE')
+    local lootType          = chestObj:getLocalVar('[caskets]LOOT_TYPE')
     local lockedChoice      = bit.lshift(1, option -1)
     local inputNumber       = bit.rshift(option, 16)
 
@@ -903,9 +956,9 @@ xi.caskets.onEventFinish = function(player, csid, option, npc)
         local itemPos   = bit.band(option, 0x7)
         local subOption = bit.band(bit.rshift(option, 16), 0x3) -- 2 bit mask
 
-        if dropType == casketInfo.dropTypes.TEMP then
+        if lootType == 1 then
             giveTempItem(player, chestObj, itemPos, subOption)
-        elseif dropType == casketInfo.dropTypes.ITEM then
+        elseif lootType == 2 then
             giveItem(player, chestObj, itemPos, subOption)
         end
     end

@@ -696,7 +696,7 @@ local gearSets =
         items =
         {
             xi.item.ORISON_CAP_P2,
-            xi.item.ORISON_BLIAUT_P2,
+            xi.item.ORISON_BLIAUD_P2,
             xi.item.ORISON_MITTS_P2,
             xi.item.ORISON_PANTALOONS_P2,
             xi.item.ORISON_DUCKBILLS_P2,
@@ -952,8 +952,8 @@ local gearSets =
             xi.item.AMINI_GAPETTE,
             xi.item.AMINI_BOTTILLONS,
             xi.item.AMINI_BOTTILLONS_P1,
-            xi.item.AMINI_BRAGUES,
-            xi.item.AMINI_BRAGUES_P1,
+            xi.item.AMINI_BRAGUE,
+            xi.item.AMINI_BRAGUE_P1,
             xi.item.AMINI_GLOVELETTES,
             xi.item.AMINI_GLOVELETTES_P1,
         },
@@ -1062,8 +1062,8 @@ local gearSets =
             xi.item.EBERS_DUCKBILLS_P1,
             xi.item.EBERS_CAP,
             xi.item.EBERS_CAP_P1,
-            xi.item.EBERS_BLIAUT,
-            xi.item.EBERS_BLIAUT_P1,
+            xi.item.EBERS_BLIAUD,
+            xi.item.EBERS_BLIAUD_P1,
             xi.item.EBERS_MITTS,
             xi.item.EBERS_MITTS_P1,
         },
@@ -1966,8 +1966,8 @@ local gearSets =
             xi.item.LAKSAMANAS_BOTTES_P3,
             xi.item.LAKSAMANAS_TREWS_P2,
             xi.item.LAKSAMANAS_TREWS_P3,
-            xi.item.LAKSAMANAS_GANTS_P2,
-            xi.item.LAKSAMANAS_GANTS_P3,
+            xi.item.LASKAMANAS_GANTS_P2,
+            xi.item.LASKAMANAS_GANTS_P3,
             xi.item.LAKSAMANAS_FRAC_P2,
             xi.item.LAKSAMANAS_FRAC_P3,
             xi.item.LAKSAMANAS_TRICORNE_P2,
@@ -2120,7 +2120,7 @@ local gearSets =
             xi.item.REGAL_RING,
             xi.item.RUNEIST_BOTTES_P2,
             xi.item.RUNEIST_BOTTES_P3,
-            xi.item.RUNEIST_TROUSERS_P2,
+            xi.item.RUNIESTS_TROUSERS_P2,
             xi.item.RUNEIST_TROUSERS_P3,
             xi.item.RUNEIST_MITONS_P2,
             xi.item.RUNEIST_MITONS_P3,
@@ -2472,24 +2472,16 @@ xi.gear_sets.itemToSetId = xi.gear_sets.createItemToSetId()
 -- core on equip and unequip of an item.
 xi.gear_sets.checkForGearSet = function(player)
     player:clearGearSetMods()
-    local playerCurrentLevel = player:getMainLvl()
 
     -- Build a table containing equipped Set IDs, and the count for each one.
     local equippedSets = {}
     for equipmentSlot = 0, xi.MAX_SLOTID do
-        local equip = player:getEquippedItem(equipmentSlot)
-        if equip then
-            local equipId    = equip:getID()
-            local equipLevel = equip:getReqLvl()
-            local setId      = xi.gear_sets.itemToSetId[equipId]
+        local equipId = player:getEquipID(equipmentSlot)
+        local setId   = xi.gear_sets.itemToSetId[equipId]
 
-            if
-                setId and
-                playerCurrentLevel >= equipLevel -- Player may be under Level Sync/Cap
-            then
-                for _, v in ipairs(setId) do
-                    equippedSets[v] = equippedSets[v] and (equippedSets[v] + 1) or 1
-                end
+        if setId then
+            for _, v in ipairs(setId) do
+                equippedSets[v] = equippedSets[v] and (equippedSets[v] + 1) or 1
             end
         end
     end

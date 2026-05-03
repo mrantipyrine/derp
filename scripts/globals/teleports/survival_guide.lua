@@ -2,6 +2,7 @@
 -- Survival guides global file
 -----------------------------------
 require('scripts/globals/teleports')
+require('scripts/globals/utils')
 -----------------------------------
 local survival = require('scripts/globals/teleports/survival_guide_map')
 -----------------------------------

@@ -577,6 +577,23 @@ void CPetEntity::OnPetSkillFinished(CPetSkillState& state, action_t& action)
             actionResult.knockback = PSkill->getKnockback();
             if (first && PTargetFound->health.hp > 0 && PSkill->getPrimarySkillchain() != 0)
             {
+                const bool bstJugPair =
+                    this->getPetType() == PET_TYPE::JUG_PET &&
+                    PMaster != nullptr &&
+                    PMaster->objtype == TYPE_PC &&
+                    PMaster->GetMJob() == JOB_BST;
+
+                if (bstJugPair)
+                {
+                    if (auto* PSCEffect = PTargetFound->StatusEffectContainer->GetStatusEffect(EFFECT_SKILLCHAIN, 0);
+                        PSCEffect != nullptr &&
+                        PSCEffect->GetStartTime() + 2s < timer::now() &&
+                        PSCEffect->GetStartTime() + 3s >= timer::now())
+                    {
+                        PSCEffect->SetStartTime(PSCEffect->GetStartTime() - 1s);
+                    }
+                }
+
                 const auto effect = battleutils::GetSkillChainEffect(
                     PTargetFound,
                     PSkill->getPrimarySkillchain(),
@@ -584,7 +601,12 @@ void CPetEntity::OnPetSkillFinished(CPetSkillState& state, action_t& action)
                     PSkill->getTertiarySkillchain());
                 if (effect != ActionProcSkillChain::None)
                 {
-                    actionResult.recordSkillchain(effect, battleutils::TakeSkillchainDamage(this, PTargetFound, actionResult.param, nullptr));
+                    auto skillchainDamage = battleutils::TakeSkillchainDamage(this, PTargetFound, actionResult.param, nullptr);
+                    if (bstJugPair)
+                    {
+                        skillchainDamage = static_cast<int32>(std::floor(static_cast<float>(skillchainDamage) * 1.10f));
+                    }
+                    actionResult.recordSkillchain(effect, skillchainDamage);
                 }
 
                 first = false;

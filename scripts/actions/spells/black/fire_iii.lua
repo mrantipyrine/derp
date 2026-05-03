@@ -1,7 +1,4 @@
------------------------------------
--- Spell: Fire III
------------------------------------
----@type TSpell
+-- Fire III
 local spellObject = {}
 
 spellObject.onMagicCastingCheck = function(caster, target, spell)

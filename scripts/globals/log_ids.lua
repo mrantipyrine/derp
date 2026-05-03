@@ -1,6 +1,8 @@
 -----------------------------------
 --  Area/Content Identifiers
 -----------------------------------
+require('scripts/globals/utils')
+-----------------------------------
 
 -- NOTE: This should only be used to support GM commands, and is deprecated
 -- by explicitly defining fame area, mission, and quest log IDs from their
@@ -262,12 +264,6 @@ local qmLogInfo =
         ['full_name']   = 'Rhapsodies of Vana\'diel',
         ['mission_log'] = 13,
     },
-
-    TVR =
-    {
-        ['full_name']   = 'The Voracious Resurgence',
-        ['mission_log'] = 14, -- TODO: Find the right ID for this
-    },
 }
 
 local questLogs =
@@ -301,7 +297,6 @@ local missionLogs =
     [11] = 'ASA',
     [12] = 'SOA',
     [13] = 'ROV',
-    [14] = 'TVR', -- TODO: Find the right ID for this
 }
 
 local function getQMLogInfo(cmdParamText, logNameTable)

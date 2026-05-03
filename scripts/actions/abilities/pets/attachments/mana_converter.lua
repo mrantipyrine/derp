@@ -1,7 +1,6 @@
 -----------------------------------
 -- Attachment: Mana Converter
 -----------------------------------
----@type TAttachment
 local attachmentObject = {}
 
 attachmentObject.onEquip = function(pet)

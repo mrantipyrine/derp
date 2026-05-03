@@ -5,7 +5,6 @@
 -- Recast Time: 1:00
 -- Duration: 2:00:00
 -----------------------------------
----@type TAbility
 local abilityObject = {}
 
 abilityObject.onAbilityCheck = function(player, target, ability)
@@ -37,7 +36,19 @@ abilityObject.onUseAbility = function(player, target, ability)
         regenbonus = 3 * math.floor((player:getMainLvl() - 10) / 10)
     end
 
-    player:addStatusEffect(xi.effect.LIGHT_ARTS, { power = effectbonus, duration = 7200, origin = player, subPower = regenbonus })
+    player:addStatusEffect(xi.effect.LIGHT_ARTS, effectbonus, 0, 7200, 0, regenbonus)
+
+    -- Solo bonus
+    local isSCH = player:getMainJob() == xi.job.SCH
+    local lvl = player:getMainLvl()
+    local intBonus = isSCH and math.floor(lvl * 0.20) or math.floor(lvl * 0.10)
+    local mndBonus = isSCH and math.floor(lvl * 0.16) or math.floor(lvl * 0.08)
+    player:addMod(xi.mod.INT, intBonus)
+    player:addMod(xi.mod.MND, mndBonus)
+    player:timer(60000, function(p) p:delMod(xi.mod.INT, intBonus) p:delMod(xi.mod.MND, mndBonus) end)
+    if xi.soloSynergy then
+        xi.soloSynergy.flashBuff(player, 'Light Arts', string.format('INT +%d  MND +%d', intBonus, mndBonus))
+    end
 
     return xi.effect.LIGHT_ARTS
 end

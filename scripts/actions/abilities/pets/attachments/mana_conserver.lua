@@ -1,7 +1,6 @@
 -----------------------------------
 -- Attachment: Mana Conserver
 -----------------------------------
----@type TAttachment
 local attachmentObject = {}
 
 attachmentObject.onEquip = function(pet, attachment)

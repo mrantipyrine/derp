@@ -1,14 +1,14 @@
 -----------------------------------
 -- Concentric Pulse
 -----------------------------------
----@type TAbilityPet
 local abilityObject = {}
 
 abilityObject.onAbilityCheck = function(player, target, ability)
-    return xi.job_utils.geomancer.geoOnConcentricPulseAbilityCheck(player, target, ability)
+    return 0, 0
 end
 
-abilityObject.onPetAbility = function(target, pet, petskill, master, action)
+abilityObject.onPetAbility = function(target, pet, skill)
+    local master             = pet:getMaster()
     local masterEquippedHead = master:getEquipID(xi.slot.HEAD)
     local dmgBoost           = master:getJobPointLevel(xi.jp.CONCENTRIC_PULSE_EFFECT)
     local dmg                = pet:getHP()
@@ -24,8 +24,7 @@ abilityObject.onPetAbility = function(target, pet, petskill, master, action)
         dmg = dmg + (dmg * 0.01 * dmgBoost)
     end
 
-    -- TODO: Affected by Phalanx, MDT, Magic Damage % modifiers, OneForAll?
-    dmg = utils.handleStoneskin(target, dmg)
+    dmg = utils.stoneskin(target, dmg)
 
     target:takeDamage(dmg, pet, xi.attackType.MAGICAL, xi.damageType.NONE)
 

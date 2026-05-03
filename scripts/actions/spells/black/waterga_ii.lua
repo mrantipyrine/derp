@@ -1,7 +1,4 @@
------------------------------------
--- Spell: Waterga II
------------------------------------
----@type TSpell
+-- Wateraga II
 local spellObject = {}
 
 spellObject.onMagicCastingCheck = function(caster, target, spell)

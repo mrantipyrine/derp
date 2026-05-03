@@ -1,8 +1,6 @@
 -----------------------------------
--- Thunderspark
--- Family: Ramuh (Player Pet)
+-- Thunderspark M=whatever
 -----------------------------------
----@type TAbilityPet
 local abilityObject = {}
 
 abilityObject.onAbilityCheck = function(player, target, ability)
@@ -10,30 +8,33 @@ abilityObject.onAbilityCheck = function(player, target, ability)
 end
 
 abilityObject.onPetAbility = function(target, pet, petskill, summoner, action)
+    local numhits = 1
+    local accmod = 1
+    local dmgmod = 2
+    local dmgmodsubsequent = 1 -- ??
+
     xi.job_utils.summoner.onUseBloodPact(target, petskill, summoner, action)
 
-    local params = {}
+    local damage = xi.summon.avatarPhysicalMove(pet, target, petskill, numhits, accmod, dmgmod, dmgmodsubsequent, xi.mobskills.magicalTpBonus.NO_EFFECT, 1, 2, 3)
+    --get resist multiplier (1x if no resist)
+    local resist = xi.mobskills.applyPlayerResistance(pet, -1, target, pet:getStat(xi.mod.INT)-target:getStat(xi.mod.INT), xi.skill.ELEMENTAL_MAGIC, xi.element.THUNDER)
+    --get the resisted damage
+    damage.dmg = damage.dmg * resist
+    --add on bonuses (staff/day/weather/jas/mab/etc all go in this function)
+    damage.dmg = xi.mobskills.mobAddBonuses(pet, target, damage.dmg, xi.element.THUNDER, petskill)
 
-    params.baseDamage      = pet:getMainLvl() + 2
-    params.fTP             = { 2.500, 3.000, 3.246 }
-    params.int_wSC         = 0.30
-    params.element         = xi.element.THUNDER
-    params.attackType      = xi.attackType.MAGICAL
-    params.damageType      = xi.damageType.THUNDER
-    params.shadowBehavior  = xi.mobskills.shadowBehavior.NUMSHADOWS_1 -- TODO: Capture shadowBehavior
-    params.dStatMultiplier = 1.5
-    params.canMagicBurst   = true
-    params.primaryMessage  = xi.msg.basic.USES_JA_TAKE_DAMAGE
-
-    local info = xi.mobskills.mobMagicalMove(pet, target, petskill, action, params)
-
-    if xi.mobskills.processDamage(pet, target, petskill, action, info) then
-        target:takeDamage(info.damage, pet, info.attackType, info.damageType)
-
-        xi.mobskills.mobStatusEffectMove(pet, target, xi.effect.PARALYSIS, 15, 0, 60)
+    local tp = pet:getTP()
+    if tp < 1000 then
+        tp = 1000
     end
 
-    return info.damage
+    damage.dmg = damage.dmg * tp / 1000
+    local totaldamage = xi.summon.avatarFinalAdjustments(damage.dmg, pet, petskill, target, xi.attackType.MAGICAL, xi.damageType.THUNDER, numhits)
+    target:addStatusEffect(xi.effect.PARALYSIS, 15, 0, 60)
+    target:takeDamage(totaldamage, pet, xi.attackType.MAGICAL, xi.damageType.THUNDER)
+    target:updateEnmityFromDamage(pet, totaldamage)
+
+    return totaldamage
 end
 
 return abilityObject

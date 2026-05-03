@@ -1,15 +1,10 @@
 -----------------------------------
 -- Arcuballista
 -----------------------------------
----@type TAbilityAutomaton
 local abilityObject = {}
 
 abilityObject.onAutomatonAbilityCheck = function(target, automaton, skill)
     local master = automaton:getMaster()
-    if not master then
-        return
-    end
-
     return master:countEffect(xi.effect.FIRE_MANEUVER)
 end
 

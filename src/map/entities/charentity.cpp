@@ -1630,6 +1630,23 @@ void CCharEntity::OnWeaponSkillFinished(CWeaponSkillState& state, action_t& acti
 
                     if (PBattleTarget->health.hp > 0 && PWeaponSkill->getPrimarySkillchain() != 0)
                     {
+                        const bool bstJugPair =
+                            GetMJob() == JOB_BST &&
+                            PPet != nullptr &&
+                            PPet->objtype == TYPE_PET &&
+                            static_cast<CPetEntity*>(PPet)->getPetType() == PET_TYPE::JUG_PET;
+
+                        if (bstJugPair)
+                        {
+                            if (auto* PSCEffect = PBattleTarget->StatusEffectContainer->GetStatusEffect(EFFECT_SKILLCHAIN, 0);
+                                PSCEffect != nullptr &&
+                                PSCEffect->GetStartTime() + 2s < timer::now() &&
+                                PSCEffect->GetStartTime() + 3s >= timer::now())
+                            {
+                                PSCEffect->SetStartTime(PSCEffect->GetStartTime() - 1s);
+                            }
+                        }
+
                         // NOTE: GetSkillChainEffect is INSIDE this if statement because it
                         //  ALTERS the state of the resonance, which misses and non-elemental skills should NOT do.
                         const auto effect = battleutils::GetSkillChainEffect(
@@ -1639,7 +1656,12 @@ void CCharEntity::OnWeaponSkillFinished(CWeaponSkillState& state, action_t& acti
                             PWeaponSkill->getTertiarySkillchain());
                         if (effect != ActionProcSkillChain::None)
                         {
-                            actionResult.recordSkillchain(effect, battleutils::TakeSkillchainDamage(this, PBattleTarget, damage, taChar));
+                            auto skillchainDamage = battleutils::TakeSkillchainDamage(this, PBattleTarget, damage, taChar);
+                            if (bstJugPair)
+                            {
+                                skillchainDamage = static_cast<int32>(std::floor(static_cast<float>(skillchainDamage) * 1.10f));
+                            }
+                            actionResult.recordSkillchain(effect, skillchainDamage);
 
                             // Despite appearances, ws_points_skillchain is not a multiplier it is just an amount "per skillchain level"
                             const auto wsPointsSkillchain = settings::get<uint8>("map.WS_POINTS_SKILLCHAIN");

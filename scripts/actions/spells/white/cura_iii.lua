@@ -6,7 +6,6 @@
 -- Modeled after our cure_iii.lua, which was modeled after the below reference
 -- Shamelessly stolen from http://members.shaw.ca/pizza_steve/cure/Cure_Calculator.html
 -----------------------------------
----@type TSpell
 local spellObject = {}
 
 spellObject.onMagicCastingCheck = function(caster, target, spell)
@@ -108,6 +107,11 @@ spellObject.onSpellCast = function(caster, target, spell)
     end
 
     target:addHP(final)
+        
+        -- Solo Synergy: Divine Shield
+        if xi.soloSynergy then
+            xi.soloSynergy.applyCureSynergy(caster, target, final)
+        end
 
     target:wakeUp()
 

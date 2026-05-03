@@ -1,60 +1,45 @@
 -----------------------------------
 -- Level X Holy
--- Family: Cait sith (Player Pet)
 -----------------------------------
----@type TAbilityPet
 local abilityObject = {}
 
 abilityObject.onAbilityCheck = function(player, target, ability)
-    return xi.job_utils.summoner.canUseBloodPact(player, player:getPet(), target, ability)
+    return 0, 0
 end
 
-abilityObject.onPetAbility = function(target, pet, petskill, summoner, action)
-    xi.job_utils.summoner.onUseBloodPact(target, petskill, summoner, action)
-
+abilityObject.onPetAbility = function(target, pet, skill, master, action)
     local holyRollOneAnimID = 164
-    local primaryTargetID   = action:getPrimaryTargetID()
+    local primaryTargetID = action:getPrimaryTargetID()
 
     -- If primary target, roll for power by setting random animation.
-    -- We do this so the animation is random, but only rolled for once. (AKA: The same for all targets)
     if primaryTargetID == target:getID() then
         action:setAnimation(primaryTargetID, holyRollOneAnimID + math.random(0, 5))
     else
-        local animationId = action:getAnimation(primaryTargetID)
-        if animationId then
-            action:setAnimation(target:getID(), animationId)
-        end
+        action:setAnimation(target:getID(), action:getAnimation(primaryTargetID))
     end
 
-    local power = action:getAnimation(target:getID()) - 163
+    local power = action:getAnimation(target:getID()) - holyRollOneAnimID + 1
+    local dMND = math.floor(pet:getStat(xi.mod.MND) - target:getStat(xi.mod.MND))
+    local ele = xi.element.LIGHT
+    local dmg = 0
 
-    local params = {}
-
-    params.baseDamage       = pet:getMainLvl()
-    params.fTP              = { power, power, power }
-    -- TODO: wSCs?
-    params.element          = xi.element.LIGHT
-    params.attackType       = xi.attackType.MAGICAL
-    params.damageType       = xi.damageType.LIGHT
-    params.shadowBehavior   = xi.mobskills.shadowBehavior.NUMSHADOWS_1 -- TODO: Capture shadowBehavior
-    params.dStatMultiplier  = 1.5
-    params.dStatAttackerMod = xi.mod.MND
-    params.dStatDefenderMod = xi.mod.MND
-    params.canMagicBurst    = true
-    params.primaryMessage   = xi.msg.basic.USES_JA_TAKE_DAMAGE
-
-    local info = xi.mobskills.mobMagicalMove(pet, target, petskill, action, params)
-
+    local dmgmod = 1
+    local basedmg = pet:getMainLvl() * power + (dMND * 1.5)
     -- Only have an effect if target's level is divisible by die roll
     if target:getMainLvl() % power == 0 then
-        if xi.mobskills.processDamage(pet, target, petskill, action, info) then
-            target:takeDamage(info.damage, pet, info.attackType, info.damageType)
-        end
+        local info = xi.mobskills.mobMagicalMove(pet, target, skill, basedmg, ele, dmgmod, xi.mobskills.magicalTpBonus.NO_EFFECT, 10)
+        dmg = xi.mobskills.mobAddBonuses(pet, target, info.dmg, ele, skill)
+        dmg = xi.summon.avatarFinalAdjustments(dmg, pet, skill, target, xi.attackType.MAGICAL, xi.damageType.LIGHT, 1)
+
+        -- TODO: Magic burst?
+
+        target:takeDamage(dmg, pet, xi.attackType.MAGICAL, ele)
+        target:updateEnmityFromDamage(pet, dmg)
     else
-        petskill:setMsg(xi.msg.basic.JA_NO_EFFECT_2)
+        skill:setMsg(xi.msg.basic.JA_NO_EFFECT_2)
     end
 
-    return info.damage
+    return dmg
 end
 
 return abilityObject

@@ -5,7 +5,6 @@
 -- Recast Time: 5:00
 -- Duration: 2:00
 -----------------------------------
----@type TAbility
 local abilityObject = {}
 
 abilityObject.onAbilityCheck = function(player, target, ability)
@@ -13,7 +12,22 @@ abilityObject.onAbilityCheck = function(player, target, ability)
 end
 
 abilityObject.onUseAbility = function(player, target, ability)
-    return xi.job_utils.rune_fencer.useSwordplay(player, target, ability)
+    xi.job_utils.rune_fencer.useSwordplay(player, target, ability)
+
+    local isRUN   = player:getMainJob() == xi.job.RUN
+    local lvl     = player:getMainLvl()
+    local accBonus = isRUN and math.floor(lvl * 0.28) or math.floor(lvl * 0.14)
+    local evaBonus = isRUN and math.floor(lvl * 0.28) or math.floor(lvl * 0.14)
+    player:addMod(xi.mod.ACC, accBonus)
+    player:addMod(xi.mod.EVA, evaBonus)
+    player:timer(120000, function(p)
+        p:delMod(xi.mod.ACC, accBonus)
+        p:delMod(xi.mod.EVA, evaBonus)
+    end)
+
+    if xi.soloSynergy then
+        xi.soloSynergy.flashBuff(player, 'Swordplay', string.format('ACC +%d  EVA +%d', accBonus, evaBonus))
+    end
 end
 
 return abilityObject

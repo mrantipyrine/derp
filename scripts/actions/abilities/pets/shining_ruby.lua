@@ -1,7 +1,6 @@
 -----------------------------------
 -- Shining Ruby
 -----------------------------------
----@type TAbilityPet
 local abilityObject = {}
 
 abilityObject.onAbilityCheck = function(player, target, ability)
@@ -15,7 +14,7 @@ abilityObject.onPetAbility = function(target, pet, petskill, summoner, action)
     xi.job_utils.summoner.onUseBloodPact(target, petskill, summoner, action)
 
     target:delStatusEffect(xi.effect.SHINING_RUBY)
-    target:addStatusEffect(xi.effect.SHINING_RUBY, { power = 1, duration = duration, origin = pet })
+    target:addStatusEffect(xi.effect.SHINING_RUBY, 1, 0, duration)
 
     if target:getID() == action:getPrimaryTargetID() then
         petskill:setMsg(xi.msg.basic.SKILL_GAIN_EFFECT_2)

@@ -13,7 +13,9 @@ xi.server.onJSTMidnight = function()
 end
 
 xi.server.onTimeServerTick = function()
-    xi.chocobo.onTimeServerTick()
+    if xi.chocobo and xi.chocobo.onTimeServerTick then
+        xi.chocobo.onTimeServerTick()
+    end
 end
 
 -- Message for use with SmallPacket0x04B

@@ -1,7 +1,6 @@
 -----------------------------------
 -- Attachment: Heat Capacitor
 -----------------------------------
----@type TAttachment
 local attachmentObject = {}
 
 attachmentObject.onEquip = function(pet)

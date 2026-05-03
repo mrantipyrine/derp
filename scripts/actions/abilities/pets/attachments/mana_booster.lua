@@ -1,7 +1,6 @@
 -----------------------------------
 -- Attachment: Mana Booster -- Fix Me!
 -----------------------------------
----@type TAttachment
 local attachmentObject = {}
 
 attachmentObject.onEquip = function(pet, attachment)

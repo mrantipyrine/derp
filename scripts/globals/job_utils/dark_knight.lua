@@ -182,3 +182,23 @@ xi.job_utils.dark_knight.useWeaponBash = function(player, target, ability, actio
 
     return damage
 end
+
+end
+
+-- ══════════════════════════════════════════════════════════════
+-- Solo Synergy — Dark Knight (75 Era Strict)
+-- ══════════════════════════════════════════════════════════════
+require('scripts/globals/solo_synergy')
+
+do
+    local ss = xi.soloSynergy
+    local _DRK = xi.job_utils.dark_knight
+
+    local _lr = _DRK.useLastResort
+    _DRK.useLastResort = function(player, target, ability)
+        ss.onAbilityUse(player, target, ability)
+        _lr(player, target, ability)
+        player:setLocalVar('SS_EXECUTE', 1)
+        ss.flash(player, 'EXECUTE primed: massive missing-HP bonus.')
+    end
+end

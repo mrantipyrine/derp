@@ -3,9 +3,13 @@ require('scripts/globals/gear_sets')
 require('scripts/globals/quests')
 require('scripts/globals/teleports')
 require('scripts/events/login_campaign')
+require('scripts/globals/solo_modifications')
+require('scripts/globals/solo_synergy')
+require('scripts/globals/dynamic_world/blessings')
 -----------------------------------
 require('scripts/quests/full_speed_ahead')
 -----------------------------------
+
 
 local startingRaceInfo =
 {
@@ -28,13 +32,14 @@ local startingNationInfo =
 
 local startingJobGear =
 {
-    [xi.job.WAR] = { xi.item.ONION_SWORD                               },
-    [xi.job.MNK] = { xi.item.WHITE_BELT                                },
+    [xi.job.WAR] = { xi.item.ONION_SWORD,  xi.item.RUSTY_GREATSWORD    },
+    [xi.job.MNK] = { xi.item.WHITE_BELT,   xi.item.FRUIT_PUNCHES      },
     [xi.job.WHM] = { xi.item.ONION_ROD,    xi.item.SCROLL_OF_CURE_EX  },
     [xi.job.BLM] = { xi.item.ONION_STAFF,  xi.item.SCROLL_OF_STONE_EX },
     [xi.job.RDM] = { xi.item.ONION_DAGGER, xi.item.SCROLL_OF_DIA_EX   },
-    [xi.job.THF] = { xi.item.ONION_KNIFE                               },
+    [xi.job.THF] = { xi.item.ONION_KNIFE,  xi.item.ONION_DAGGER       },
 }
+
 
 -----------------------------------
 -- public functions
@@ -62,7 +67,7 @@ xi.player.charCreate = function(player)
             player:addItem(v)
         end
     end
-
+  
     -- add nation-specific map
     player:addKeyItem(nationInfo.map)
 
@@ -118,7 +123,7 @@ xi.player.charCreate = function(player)
     -- increase starting inventory
     if xi.settings.main.START_INVENTORY > 30 then
         player:changeContainerSize(xi.inv.INVENTORY, xi.settings.main.START_INVENTORY - 30)
-        player:changeContainerSize(xi.inv.MOGSATCHEL, xi.settings.main.START_INVENTORY) -- Default satchel size is zero, so just set it to the setting size.
+        player:changeContainerSize(xi.inv.MOGSATCHEL, xi.settings.main.START_INVENTORY - 30)
     end
 
     --[[
@@ -149,6 +154,7 @@ end
 
 -- called by core after a player logs into the server or zones
 xi.player.onGameIn = function(player, firstLogin, zoning)
+    
     if not zoning then
         -- things checked ONLY during logon go here
         if firstLogin then
@@ -169,15 +175,6 @@ xi.player.onGameIn = function(player, firstLogin, zoning)
         end
     end
 
-    local zoneID    = player:getZoneID()
-    local questVars = player:getCharVarsWithSuffix(']mustZone')
-
-    for tag, value in pairs(questVars) do
-        if value ~= zoneID then
-            player:setCharVar(tag, 0)
-        end
-    end
-
     -- Abyssea starting quest should be flagged when expansion is active
     if
         xi.settings.main.ENABLE_ABYSSEA == 1 and
@@ -194,8 +191,19 @@ xi.player.onGameIn = function(player, firstLogin, zoning)
         player:setTraverserEpoch()
     end
 
+    local zoneID    = player:getZoneID()
+    local questVars = player:getCharVarsWithSuffix(']mustZone')
+
+    for tag, value in pairs(questVars) do
+        if value ~= zoneID then
+            player:setCharVar(tag, 0)
+        end
+    end
+
     -- apply mods from gearsets (scripts/globals/gear_sets.lua)
     xi.gear_sets.checkForGearSet(player)
+
+    xi.dynamicWorld.blessings.onZoneIn(player)
 
     -- god mode
     if player:getCharVar('GodMode') == 1 then

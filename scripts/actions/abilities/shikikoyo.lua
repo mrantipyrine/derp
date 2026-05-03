@@ -6,15 +6,38 @@
 -- Duration: Instant
 -- Target: Party member, cannot target self.
 -----------------------------------
----@type TAbility
 local abilityObject = {}
 
 abilityObject.onAbilityCheck = function(player, target, ability)
-    return xi.job_utils.samurai.checkShikikoyo(player, target, ability)
+    if player:getID() == target:getID() then
+        return xi.msg.basic.CANNOT_PERFORM_TARG, 0
+    elseif player:getTP() < 1000 then
+        return xi.msg.basic.NOT_ENOUGH_TP, 0
+    end
+
+    return 0, 0
 end
 
-abilityObject.onUseAbility = function(player, target, ability, action)
-    return xi.job_utils.samurai.useShikikoyo(player, target, ability, action)
+abilityObject.onUseAbility = function(player, target, ability)
+    local pTP = (player:getTP() - 1000) * (1 + ((player:getMerit(xi.merit.SHIKIKOYO) - 12) / 100))
+    pTP       = utils.clamp(pTP, 0, 3000 - target:getTP())
+
+    player:setTP(1000)
+    target:setTP(target:getTP() + pTP)
+
+    -- Solo bonus
+    local isSAM = player:getMainJob() == xi.job.SAM
+    local lvl = player:getMainLvl()
+    local strBonus = isSAM and math.floor(lvl * 0.24) or math.floor(lvl * 0.12)
+    local tpGain   = isSAM and math.random(300, 500) or math.random(100, 200)
+    player:addMod(xi.mod.STR, strBonus)
+    player:addTP(tpGain)
+    player:timer(30000, function(p) p:delMod(xi.mod.STR, strBonus) end)
+    if xi.soloSynergy then
+        xi.soloSynergy.flashBuff(player, 'Shikikoyo', string.format('STR +%d  TP +%d', strBonus, tpGain))
+    end
+
+    return pTP
 end
 
 return abilityObject

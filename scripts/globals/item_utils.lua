@@ -1,6 +1,8 @@
 -----------------------------------
 -- Item Utils (Used by Skill Books)
 -----------------------------------
+require('scripts/globals/utils')
+-----------------------------------
 xi = xi or {}
 ---@class xi.itemUtils
 xi.itemUtils = {}
@@ -121,54 +123,61 @@ xi.itemUtils.skillBookUse = function(target, skillID)
     target:trySkillUp(skillID, target:getMainLvl(), true, true)
 end
 
--- selects an item from a weighted loot table
 ---@nodiscard
----@param lootGroup table
+---@param target CBaseEntity
+---@param itemgroup table
 ---@return integer
-xi.itemUtils.pickItemRandom = function(lootGroup)
-    local itemId = 0
-    -- sum weights
-    local max = 0
-    for i, entry in pairs(lootGroup) do
-        max = max + entry.weight
+xi.itemUtils.pickItemRandom = function(target, itemgroup) -- selects an item from a weighted result table
+    -- possible results
+    local items = itemgroup
 
-        if entry.itemId == nil then
-            print(fmt('[ERROR] xi.itemUtils.pickItemRandom has encountered nil item at index {} of lootGroup', i))
-        end
+    -- sum weights
+    local sum = 0
+    for i = 1, #items do
+        sum = sum + items[i][1]
     end
 
-    local roll    = math.random(max)
-    local current = 0
+    -- pick the weighted result
+    local item = 0
+    local pick = math.random(1, sum)
+    sum = 0
 
-    for _, entry in pairs(lootGroup) do
-        current = current + entry.weight
-
-        if current >= roll then
-            -- xi.item.NONE gives a chance to drop nothing from a group, don't return nil if the itemId is invalid
-            itemId = entry.itemId or 0
-
+    for i = 1, #items do
+        sum = sum + items[i][1]
+        if sum >= pick then
+            item = items[i][2]
             break
         end
     end
 
-    return itemId
+    return item
 end
 
-xi.itemUtils.addItemShield = function(target, power, duration, effect, subPower)
+xi.itemUtils.removeShield = function(effect, target)
+    if effect == xi.effect.PHYSICAL_SHIELD then
+        target:delStatusEffect(xi.effect.MAGIC_SHIELD)
+    else
+        target:delStatusEffect(xi.effect.PHYSICAL_SHIELD)
+    end
+end
+
+xi.itemUtils.addItemShield = function(target, power, duration, effect, special)
     if target:hasStatusEffect(effect) then
         local shield            = target:getStatusEffect(effect)
         local activeshieldpower = shield:getPower()
 
         if activeshieldpower > power then
             target:messageBasic(xi.msg.basic.NO_EFFECT)
-            return
+        else
+            xi.itemUtils.removeShield(effect, target)
+            target:addStatusEffect(effect, power, 0, duration, 0, special)
+            target:messageBasic(xi.msg.basic.GAINS_EFFECT_OF_STATUS, effect)
         end
+    else
+        xi.itemUtils.removeShield(effect, target)
+        target:addStatusEffect(effect, power, 0, duration, 0, special)
+        target:messageBasic(xi.msg.basic.GAINS_EFFECT_OF_STATUS, effect)
     end
-
-    target:delStatusEffect(xi.effect.PHYSICAL_SHIELD)
-    target:delStatusEffect(xi.effect.MAGIC_SHIELD)
-    target:addStatusEffect(effect, { power = power, duration = duration, origin = target, subPower = subPower })
-    target:messageBasic(xi.msg.basic.GAINS_EFFECT_OF_STATUS, effect)
 end
 
 xi.itemUtils.addItemEffect = function(target, effect, power, duration, subpower)
@@ -179,10 +188,10 @@ xi.itemUtils.addItemEffect = function(target, effect, power, duration, subpower)
         if effectpower > power then
             target:messageBasic(xi.msg.basic.NO_EFFECT)
         else
-            target:addStatusEffect(effect, { power = power, duration = duration, origin = target, subPower = subpower })
+            target:addStatusEffect(effect, power, 0, duration, 0, subpower)
         end
     else
-        target:addStatusEffect(effect, { power = power, duration = duration, origin = target, subPower = subpower })
+        target:addStatusEffect(effect, power, 0, duration, 0, subpower)
     end
 end
 
@@ -194,10 +203,10 @@ xi.itemUtils.addTwoItemEffects = function(target, effect1, effect2, power1, powe
         if effectpower > power1 then
             target:messageBasic(xi.msg.basic.NO_EFFECT)
         else
-            target:addStatusEffect(effect1, { power = power1, duration = duration, origin = target, subPower = power1 })
+            target:addStatusEffect(effect1, power1, 0, duration, 0, power1)
         end
     else
-        target:addStatusEffect(effect1, { power = power1, duration = duration, origin = target, subPower = power1 })
+        target:addStatusEffect(effect1, power1, 0, duration, 0, power1)
     end
 
     if target:hasStatusEffect(effect2) then
@@ -207,10 +216,10 @@ xi.itemUtils.addTwoItemEffects = function(target, effect1, effect2, power1, powe
         if effectpower > power2 then
             target:messageBasic(xi.msg.basic.NO_EFFECT)
         else
-            target:addStatusEffect(effect2, { power = power2, duration = duration, origin = target, subPower = power2 })
+            target:addStatusEffect(effect2, power2, 0, duration, 0, power2)
         end
     else
-        target:addStatusEffect(effect2, { power = power2, duration = duration, origin = target, subPower = power2 })
+        target:addStatusEffect(effect2, power2, 0, duration, 0, power2)
     end
 end
 
@@ -229,11 +238,11 @@ xi.itemUtils.addItemExpEffect = function(target, effect, power, duration, subpow
             target:messageBasic(xi.msg.basic.NO_EFFECT)
         else
             target:delStatusEffectSilent(deleffect)
-            target:addStatusEffect(effect, { power = power, duration = duration, origin = target, subPower = subpower })
+            target:addStatusEffect(effect, power, 0, duration, 0, subpower)
         end
     else
         target:delStatusEffectSilent(deleffect)
-        target:addStatusEffect(effect, { power = power, duration = duration, origin = target, subPower = subpower })
+        target:addStatusEffect(effect, power, 0, duration, 0, subpower)
     end
 end
 

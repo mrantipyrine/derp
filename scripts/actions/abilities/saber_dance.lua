@@ -5,7 +5,6 @@
 -- Recast Time: 3 minutes
 -- Duration: 5 minutes
 -----------------------------------
----@type TAbility
 local abilityObject = {}
 
 abilityObject.onAbilityCheck = function(player, target, ability)
@@ -13,7 +12,18 @@ abilityObject.onAbilityCheck = function(player, target, ability)
 end
 
 abilityObject.onUseAbility = function(player, target, ability)
-    player:addStatusEffect(xi.effect.SABER_DANCE, { power = 50, duration = 300, origin = player, tick = 3 })
+    player:addStatusEffect(xi.effect.SABER_DANCE, 50, 3, 300)
+    -- Solo bonus
+    local isDNC = player:getMainJob() == xi.job.DNC
+    local lvl = player:getMainLvl()
+    local agiBonus = isDNC and math.floor(lvl * 0.22) or math.floor(lvl * 0.11)
+    local evaBonus = isDNC and math.floor(lvl * 0.18) or math.floor(lvl * 0.09)
+    player:addMod(xi.mod.AGI, agiBonus)
+    player:addMod(xi.mod.EVA, evaBonus)
+    player:timer(30000, function(p) p:delMod(xi.mod.AGI, agiBonus) p:delMod(xi.mod.EVA, evaBonus) end)
+    if xi.soloSynergy then
+        xi.soloSynergy.flashBuff(player, 'Saber Dance', string.format('AGI +%d  EVA +%d', agiBonus, evaBonus))
+    end
 end
 
 return abilityObject

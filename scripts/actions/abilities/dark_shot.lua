@@ -3,7 +3,6 @@
 -- Consumes a Dark Card to enhance dark-based debuffs. Additional effect: Dark-based Dispel
 -- Bio Effect: Attack Down Effect +5% and DoT + 3
 -----------------------------------
----@type TAbility
 local abilityObject = {}
 
 abilityObject.onAbilityCheck = function(player, target, ability)
@@ -30,7 +29,7 @@ abilityObject.onUseAbility = function(player, target, ability, action)
     action:setRecast(math.max(0, action:getRecast() - player:getMod(xi.mod.QUICK_DRAW_RECAST)))
     local duration = 60
     local bonusAcc = player:getStat(xi.mod.AGI) / 2 + player:getMerit(xi.merit.QUICK_DRAW_ACCURACY) + player:getMod(xi.mod.QUICK_DRAW_MACC)
-    local resist   = xi.combat.magicHitRate.calculateResistRate(player, target, 0, 0, 0, xi.element.DARK, 0, 0, bonusAcc)
+    local resist   = applyResistanceAbility(player, target, xi.element.DARK, xi.skill.NONE, bonusAcc)
 
     if resist < 0.25 then
         ability:setMsg(xi.msg.basic.JA_MISS_2) -- resist message
@@ -70,12 +69,9 @@ abilityObject.onUseAbility = function(player, target, ability, action)
         power    = power * 1.5
         subpower = subpower * 1.5
         target:delStatusEffectSilent(effectId)
-        target:addStatusEffect(effectId, { power = power, duration = duration, origin = player, tick = tick, subType = subId, subPower = subpower, tier = tier })
+        target:addStatusEffect(effectId, power, tick, duration, subId, subpower, tier)
         local newEffect = target:getStatusEffect(effectId)
-
-        if newEffect then
-            newEffect:setStartTime(startTime)
-        end
+        newEffect:setStartTime(startTime)
     end
 
     ability:setMsg(xi.msg.basic.JA_REMOVE_EFFECT_2)
@@ -88,6 +84,18 @@ abilityObject.onUseAbility = function(player, target, ability, action)
 
     local _ = player:delItem(xi.item.DARK_CARD, 1) or player:delItem(xi.item.TRUMP_CARD, 1)
     target:updateClaim(player)
+
+    -- Solo bonus
+    local isRNG = player:getMainJob() == xi.job.RNG
+    local lvl = player:getMainLvl()
+    local raccBonus = isRNG and math.floor(lvl * 0.28) or math.floor(lvl * 0.14)
+    local tpGain   = isRNG and math.random(200, 400) or math.random(80, 160)
+    player:addMod(xi.mod.RACC, raccBonus)
+    player:addTP(tpGain)
+    player:timer(30000, function(p) p:delMod(xi.mod.RACC, raccBonus) end)
+    if xi.soloSynergy then
+        xi.soloSynergy.flashBuff(player, 'Dark Shot', string.format('RACC +%d  TP +%d', raccBonus, tpGain))
+    end
 
     return dispelledEffect
 end

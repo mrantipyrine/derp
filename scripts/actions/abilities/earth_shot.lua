@@ -3,7 +3,6 @@
 -- Consumes a Earth Card to enhance earth-based debuffs. Deals earth-based magic damage
 -- Rasp Effect: Enhanced DoT and DEX-, Slow Effect +10%
 -----------------------------------
----@type TAbility
 local abilityObject = {}
 
 abilityObject.onAbilityCheck = function(player, target, ability)
@@ -36,9 +35,8 @@ abilityObject.onUseAbility = function(player, target, ability, action)
     dmg       = addBonusesAbility(player, xi.element.EARTH, target, dmg, params)
 
     local bonusAcc = player:getStat(xi.mod.AGI) / 2 + player:getMerit(xi.merit.QUICK_DRAW_ACCURACY) + player:getMod(xi.mod.QUICK_DRAW_MACC)
-    dmg            = math.floor(dmg * xi.combat.magicHitRate.calculateResistRate(player, target, 0, 0, 0, xi.element.EARTH, 0, 0, bonusAcc))
-    dmg            = math.floor(dmg * xi.spells.damage.calculateAbsorption(target, xi.element.EARTH, false))
-    dmg            = math.floor(dmg * xi.spells.damage.calculateNullification(target, xi.element.EARTH, false, false))
+    dmg            = dmg * applyResistanceAbility(player, target, xi.element.EARTH, xi.skill.NONE, bonusAcc)
+    dmg            = adjustForTarget(target, dmg, xi.element.EARTH)
 
     params.targetTPMult = 0 -- Quick Draw does not feed TP
     dmg = xi.ability.takeDamage(target, player, params, true, dmg, xi.attackType.MAGICAL, xi.damageType.EARTH, xi.slot.RANGED, 1, 0, 0, 0, action, nil)
@@ -73,17 +71,26 @@ abilityObject.onUseAbility = function(player, target, ability, action)
             local subId     = effect:getSubType()
             power = power * 1.2
             target:delStatusEffectSilent(effectId)
-            target:addStatusEffect(effectId, { power = power, duration = duration, origin = player, tick = tick, subType = subId, subPower = subpower, tier = tier })
+            target:addStatusEffect(effectId, power, tick, duration, subId, subpower, tier)
             local newEffect = target:getStatusEffect(effectId)
-
-            if newEffect then
-                newEffect:setStartTime(startTime)
-            end
+            newEffect:setStartTime(startTime)
         end
     end
 
     local _ = player:delItem(xi.item.EARTH_CARD, 1) or player:delItem(xi.item.TRUMP_CARD, 1)
     target:updateClaim(player)
+
+    -- Solo bonus
+    local isRNG = player:getMainJob() == xi.job.RNG
+    local lvl = player:getMainLvl()
+    local raccBonus = isRNG and math.floor(lvl * 0.28) or math.floor(lvl * 0.14)
+    local tpGain   = isRNG and math.random(200, 400) or math.random(80, 160)
+    player:addMod(xi.mod.RACC, raccBonus)
+    player:addTP(tpGain)
+    player:timer(30000, function(p) p:delMod(xi.mod.RACC, raccBonus) end)
+    if xi.soloSynergy then
+        xi.soloSynergy.flashBuff(player, 'Earth Shot', string.format('RACC +%d  TP +%d', raccBonus, tpGain))
+    end
 
     return dmg
 end

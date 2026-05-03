@@ -1,7 +1,6 @@
 -----------------------------------
 -- Attachment: Armor Plate
 -----------------------------------
----@type TAttachment
 local attachmentObject = {}
 
 attachmentObject.onEquip = function(pet, attachment)

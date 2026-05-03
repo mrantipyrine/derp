@@ -1,26 +1,26 @@
 -----------------------------------
 -- Gambits decision making system
 -----------------------------------
+require('scripts/globals/utils')
+-----------------------------------
 
 ai = ai or {}
 
 -- Target
 ai.target =
 {
-    SELF                       = 0,
-    PARTY                      = 1,
-    TARGET                     = 2,
-    MASTER                     = 3,
-    TANK                       = 4,
-    MELEE                      = 5,
-    RANGED                     = 6,
-    CASTER                     = 7,
-    TOP_ENMITY                 = 8,
-    CURILLA                    = 9, -- Special case for Rainemard
-    PARTY_DEAD                 = 10,
-    PARTY_MULTI                = 11,
-    TRIGGER_SELF_ACTION_TARGET = 12, -- Triggers get checked on the trust but the action target is the battleTarget
-    TRIGGER_TARGET_ACTION_SELF = 13, -- Triggers get checked on the battleTarget but the action target is the trust
+    SELF        = 0,
+    PARTY       = 1,
+    TARGET      = 2,
+    MASTER      = 3,
+    TANK        = 4,
+    MELEE       = 5,
+    RANGED      = 6,
+    CASTER      = 7,
+    TOP_ENMITY  = 8,
+    CURILLA     = 9, -- Special case for Rainemard
+    PARTY_DEAD  = 10,
+    PARTY_MULTI = 11,
 }
 ai.t = ai.target
 
@@ -61,38 +61,27 @@ ai.condition =
     HPP_LT             = 1,
     HPP_GTE            = 2,
     MPP_LT             = 3,
-    MPP_GTE            = 4,
-    TP_LT              = 5,
-    TP_GTE             = 6,
-    LVL_LT             = 7,
-    LVL_GTE            = 8,
-    STATUS             = 9,
-    NOT_STATUS         = 10,
-    STATUS_FLAG        = 11,
-    HAS_TOP_ENMITY     = 12,
-    NOT_HAS_TOP_ENMITY = 13,
-    SC_AVAILABLE       = 14,
-    NOT_SC_AVAILABLE   = 15,
-    MB_AVAILABLE       = 16,
-    READYING_WS        = 17,
-    READYING_MS        = 18,
-    READYING_JA        = 19,
-    CASTING_MA         = 20,
-    RANDOM             = 21,
-    NO_SAMBA           = 22,
-    NO_STORM           = 23,
-    PT_HAS_TANK        = 24,
-    NOT_PT_HAS_TANK    = 25,
-    IS_ECOSYSTEM       = 26,
-    HP_MISSING         = 27,
-    CASTING_ELEMENT_MA = 28,
-    CAST_ELE_MA_SELF   = 29,
-    CASTING_ELE_MA_AOE = 30,
-    NEED_ELE_BAREFFECT = 31,
-    NO_MAX_RUNE        = 32,
-    HAS_RUNES          = 33,
-    LUNGE_MB_AVAILABLE = 34,
-    SUB_ANIMATION      = 35,
+    TP_LT              = 4,
+    TP_GTE             = 5,
+    STATUS             = 6,
+    NOT_STATUS         = 7,
+    STATUS_FLAG        = 8,
+    HAS_TOP_ENMITY     = 9,
+    NOT_HAS_TOP_ENMITY = 10,
+    SC_AVAILABLE       = 11,
+    NOT_SC_AVAILABLE   = 12,
+    MB_AVAILABLE       = 13,
+    READYING_WS        = 14,
+    READYING_MS        = 15,
+    READYING_JA        = 16,
+    CASTING_MA         = 17,
+    RANDOM             = 18,
+    NO_SAMBA           = 19,
+    NO_STORM           = 20,
+    PT_HAS_TANK        = 21,
+    NOT_PT_HAS_TANK    = 22,
+    IS_ECOSYSTEM       = 23,
+    HP_MISSING         = 24,
 }
 ai.c = ai.condition
 
@@ -117,19 +106,16 @@ ai.select =
     RANDOM              = 3,
     MB_ELEMENT          = 4,
     SPECIAL_AYAME       = 5,
-    SPECIAL_AUGUST      = 6,
-    BEST_AGAINST_TARGET = 7,
-    BEST_SAMBA          = 8,
-    HIGHEST_WALTZ       = 9,
-    ENTRUSTED           = 10,
-    BEST_INDI           = 11,
-    STORM_DAY           = 12,
-    HELIX_DAY           = 13,
-    EN_MOB_WEAKNESS     = 14,
-    STORM_MOB_WEAKNESS  = 15,
-    HELIX_MOB_WEAKNESS  = 16,
-    DEF_BAR_ELEMENT     = 17,
-    RUNE_DAY            = 18,
+    BEST_AGAINST_TARGET = 6,
+    BEST_SAMBA          = 7,
+    HIGHEST_WALTZ       = 8,
+    ENTRUSTED           = 9,
+    BEST_INDI           = 10,
+    STORM_DAY           = 11,
+    HELIX_DAY           = 12,
+    EN_MOB_WEAKNESS     = 13,
+    STORM_MOB_WEAKNESS  = 14,
+    HELIX_MOB_WEAKNESS  = 15,
 }
 ai.s = ai.select
 

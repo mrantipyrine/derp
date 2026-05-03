@@ -1,7 +1,4 @@
------------------------------------
--- Spell: Blizzard II
------------------------------------
----@type TSpell
+-- Blizzard II
 local spellObject = {}
 
 spellObject.onMagicCastingCheck = function(caster, target, spell)

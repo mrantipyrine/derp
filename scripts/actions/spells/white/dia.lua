@@ -2,7 +2,6 @@
 -- Spell: Dia
 -- Lowers an enemy's defense and gradually deals light elemental damage.
 -----------------------------------
----@type TSpell
 local spellObject = {}
 
 spellObject.onMagicCastingCheck = function(caster, target, spell)
@@ -10,22 +9,64 @@ spellObject.onMagicCastingCheck = function(caster, target, spell)
 end
 
 spellObject.onSpellCast = function(caster, target, spell)
-    local damage = xi.spells.damage.useDamageSpell(caster, target, spell)
-    local tier   = 1
+    local basedmg = caster:getSkillLevel(xi.skill.ENFEEBLING_MAGIC) / 4
+    local params = {}
+    params.dmg = basedmg
+    params.multiplier = 1
+    params.skillType = xi.skill.ENFEEBLING_MAGIC
+    params.hasMultipleTargetReduction = false
+    params.diff = 0
+    params.bonus = 1.0
+
+    -- Calculate raw damage
+    local dmg = basedmg
+    -- Softcaps at 2, should always do at least 1
+    dmg = utils.clamp(dmg, 1, 2)
+    -- Get resist multiplier (1x if no resist)
+    local resist = applyResistanceEffect(caster, target, spell, params)
+    -- Get the resisted damage
+    dmg = dmg * resist
+    -- Add on bonuses (staff/day/weather/jas/mab/etc all go in this function)
+    dmg = addBonuses(caster, spell, target, dmg)
+    -- Add in target adjustment
+    dmg = adjustForTarget(target, dmg, spell:getElement())
+    -- Add in final adjustments including the actual damage dealt
+    local final = finalMagicAdjustments(caster, target, spell, dmg)
+
+    -- Calculate duration and bonus
+    local duration = calculateDuration(60, spell:getSkillType(), spell:getSpellGroup(), caster, target)
+    local dotBonus = caster:getMod(xi.mod.DIA_DOT) -- Dia Wand
+
+    spell:setMsg(xi.msg.basic.MAGIC_DMG) -- hit for initial damage
 
     -- Check for Bio
     local bio = target:getStatusEffect(xi.effect.BIO)
-    if
-        not bio or
-        (bio and bio:getTier() < tier)
-    then
-        target:delStatusEffect(xi.effect.BIO)
-        local power = 1 + caster:getMod(xi.mod.DIA_DOT)
 
-        target:addStatusEffect(xi.effect.DIA, { power = power, duration = 60, origin = caster, tick = 3, subPower = 10, tier = tier })
+    if  bio == nil then -- if no bio, add dia dot
+        target:addStatusEffect(xi.effect.DIA, 1 + dotBonus, 3, duration, 0, 10, 1)
+    elseif  bio:getSubPower() == 10 and xi.settings.main.BIO_OVERWRITE == 1 then -- Try to kill same tier Bio (non-default behavior)
+            target:delStatusEffect(xi.effect.BIO)
+            target:addStatusEffect(xi.effect.DIA, 1 + dotBonus, 3, duration, 0, 10, 1)
     end
 
-    return damage
+
+    local main = caster:getMainJob()
+    local sub = caster:getSubJob()
+    local level = caster:getMainLvl()
+    local buffDuration = 120
+    local power = level >= 50 and level * 4 or level * 2
+
+    if main == xi.job.RDM or sub == xi.job.RDM then
+        if not caster:hasStatusEffect(xi.effect.HASTE) then
+            caster:addStatusEffect(xi.effect.HASTE, power, 3, buffDuration)
+        end
+    end
+
+    if not caster:hasStatusEffect(xi.effect.REGEN) then
+        caster:addStatusEffect(xi.effect.REGEN, power, 3, buffDuration, 0, 10, 1)
+    end
+    
+    return final
 end
 
 return spellObject

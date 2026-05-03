@@ -186,7 +186,7 @@ local function areSuppliesRotten(player, npc, guardType)
     local rotten = false
     local text   = zones[player:getZoneID()].text
 
-    if region > 0 and fresh <= GetSystemTime() then
+    if region > 0 and fresh <= os.time() then
         rotten = true
     end
 
@@ -1353,7 +1353,7 @@ xi.conquest.overseerOnEventFinish = function(player, csid, option, guardNation, 
     if option == 1 then
         local duration = (pRank + GetNationRank(pNation) + 3) * 3600
         player:delStatusEffectsByFlag(xi.effectFlag.INFLUENCE, true)
-        player:addStatusEffect(xi.effect.SIGNET, { duration = duration, origin = player })
+        player:addStatusEffect(xi.effect.SIGNET, 0, 0, duration)
         player:messageSpecial(mOffset + 1) -- 'You've received your nation's Signet!'
 
         if player:getEminenceProgress(3367) then
@@ -1408,7 +1408,7 @@ xi.conquest.overseerOnEventFinish = function(player, csid, option, guardNation, 
     -- PURCHASE CP ITEM
     elseif option >= 32768 and option <= 32944 then
         local stock = getStock(player, guardNation, option)
-        local price = canPurchaseItem(player, stock, pRank, guardNation, mOffset, option) -- Validation included.
+        local price = canPurchaseItem(player, stock, pRank, guardNation, mOffset, option)
 
         if price < 0 then
             return
@@ -1474,11 +1474,11 @@ xi.conquest.vendorOnEventFinish = function(player, option, vendorRegion)
         xi.shop.outpost(player)
     elseif option == 2 then
         if player:delGil(fee) then
-            player:addStatusEffect(xi.effect.TELEPORT, { power = xi.teleport.id.HOME_NATION, duration = 1, origin = player, icon = 0, subPower = vendorRegion })
+            player:addStatusEffectEx(xi.effect.TELEPORT, 0, xi.teleport.id.HOME_NATION, 0, 1, 0, vendorRegion)
         end
     elseif option == 6 then
         player:delCP(fee)
-        player:addStatusEffect(xi.effect.TELEPORT, { power = xi.teleport.id.HOME_NATION, duration = 1, origin = player, icon = 0, subPower = vendorRegion })
+        player:addStatusEffectEx(xi.effect.TELEPORT, 0, xi.teleport.id.HOME_NATION, 0, 1, 0, vendorRegion)
     end
 end
 
@@ -1517,7 +1517,7 @@ xi.conquest.teleporterOnEventFinish = function(player, csid, option, teleporterE
                 xi.conquest.canTeleportToOutpost(player, region) and
                 player:delGil(fee)
             then
-                player:addStatusEffect(xi.effect.TELEPORT, { power = xi.teleport.id.OUTPOST, duration = 1, origin = player, icon = 0, subPower = region })
+                player:addStatusEffectEx(xi.effect.TELEPORT, 0, xi.teleport.id.OUTPOST, 0, 1, 0, region)
             end
 
         -- TELEPORT WITH CP
@@ -1530,7 +1530,7 @@ xi.conquest.teleporterOnEventFinish = function(player, csid, option, teleporterE
                 player:getCP() >= cpFee
             then
                 player:delCP(cpFee)
-                player:addStatusEffect(xi.effect.TELEPORT, { power = xi.teleport.id.OUTPOST, duration = 1, origin = player, icon = 0, subPower = region })
+                player:addStatusEffectEx(xi.effect.TELEPORT, 0, xi.teleport.id.OUTPOST, 0, 1, 0, region)
             end
         end
     end

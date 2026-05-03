@@ -5,7 +5,6 @@
 -- Recast Time: 5:00
 -- Duration: Instant
 -----------------------------------
----@type TAbility
 local abilityObject = {}
 
 abilityObject.onAbilityCheck = function(player, target, ability)
@@ -24,27 +23,63 @@ abilityObject.onAbilityCheck = function(player, target, ability)
 end
 
 abilityObject.onUseAbility = function(player, target, ability)
-    local spirit = player:getPet()
-    if not spirit then
+    local spirit    = player:getPet()
+    local spiritEle = 0
+
+    -- get the spirit's ID, it is already aligned in proper element order
+    -- element order: fire, ice, wind, earth, thunder, water, light, dark
+    if spirit then
+        spiritEle = spirit:getPetID() + 1
+    else
         return 0
     end
 
-    local spiritElement = spirit:getPetID() + 1
-    if not spiritElement then
-        return 0
+    local pEquipMods = player:getMod(xi.mod.ENHANCES_ELEMENTAL_SIPHON)
+    local basePower  = player:getSkillLevel(xi.skill.SUMMONING_MAGIC) + pEquipMods - 50
+
+    if basePower < 0 then
+        basePower = 0
     end
 
-    -- Calculate potency.
-    local power = utils.clamp(player:getSkillLevel(xi.skill.SUMMONING_MAGIC), 0, 700)                      -- Skill
-    power       = math.floor(power * 1.05 + player:getMod(xi.mod.ENHANCES_ELEMENTAL_SIPHON) - 55)          -- Gear
-    power       = math.floor(power * xi.spells.damage.calculateDayAndWeather(player, spiritElement, true)) -- Day and Weather bonuses (Forced)
-    power       = math.floor(power + player:getJobPointLevel(xi.jp.ELEMENTAL_SIPHON_EFFECT) * 3)           -- Job Points
+    local weatherDayBonus = 1
+    local dayElement      = VanadielDayElement()
+    local weather         = player:getWeather()
 
-    -- Enforce special limits (player and spirit mp)
-    power = utils.clamp(power, 0, spirit:getMP())                     -- Cap MP drained at spirit's MP
-    power = utils.clamp(power, 0, player:getMaxMP() - player:getMP()) -- Cap MP drained at the max MP - current MP
+    -- Day bonus/penalty
+    if dayElement == xi.magic.dayStrong[spiritEle] then
+        weatherDayBonus = weatherDayBonus + 0.1
+    elseif dayElement == xi.magic.dayWeak[spiritEle] then
+        weatherDayBonus = weatherDayBonus - 0.1
+    end
+
+    -- Weather bonus/penalty
+    if weather == xi.magic.singleWeatherStrong[spiritEle] then
+        weatherDayBonus = weatherDayBonus + 0.1
+    elseif weather == xi.magic.singleWeatherWeak[spiritEle] then
+        weatherDayBonus = weatherDayBonus - 0.1
+    elseif weather == xi.magic.doubleWeatherStrong[spiritEle] then
+        weatherDayBonus = weatherDayBonus + 0.25
+    elseif weather == xi.magic.doubleWeatherWeak[spiritEle] then
+        weatherDayBonus = weatherDayBonus - 0.25
+    end
+
+    local power  = math.floor(basePower * weatherDayBonus)
+    power        = utils.clamp(power, 0, spirit:getMP()) -- cap MP drained at spirit's MP
+    power        = utils.clamp(power, 0, player:getMaxMP() - player:getMP()) -- cap MP drained at the max MP - current MP
 
     spirit:delMP(power)
+
+    -- Solo bonus
+    local isPUP = player:getMainJob() == xi.job.PUP
+    local lvl = player:getMainLvl()
+    local strBonus = isPUP and math.floor(lvl * 0.20) or math.floor(lvl * 0.10)
+    local intBonus = isPUP and math.floor(lvl * 0.20) or math.floor(lvl * 0.10)
+    player:addMod(xi.mod.STR, strBonus)
+    player:addMod(xi.mod.INT, intBonus)
+    player:timer(60000, function(p) p:delMod(xi.mod.STR, strBonus) p:delMod(xi.mod.INT, intBonus) end)
+    if xi.soloSynergy then
+        xi.soloSynergy.flashBuff(player, 'Elemental Siphon', string.format('STR +%d  INT +%d', strBonus, intBonus))
+    end
 
     return player:addMP(power)
 end

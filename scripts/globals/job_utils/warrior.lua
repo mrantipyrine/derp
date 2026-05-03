@@ -136,3 +136,29 @@ xi.job_utils.warrior.useWarriorsCharge = function(player, target, ability, actio
 
     return xi.effect.WARRIORS_CHARGE
 end
+
+end
+
+-- ══════════════════════════════════════════════════════════════
+-- Solo Synergy — Warrior (75 Era Strict)
+-- ══════════════════════════════════════════════════════════════
+require('scripts/globals/solo_synergy')
+
+do
+    local ss = xi.soloSynergy
+    local _WAR = xi.job_utils.warrior
+
+    local _berserk = _WAR.useBerserk
+    _WAR.useBerserk = function(player, target, ability)
+        ss.onAbilityUse(player, target, ability)
+        _berserk(player, target, ability)
+        ss.flash(player, 'Berserk: next Weaponskill deals bonus damage!')
+    end
+
+    local _warcry = _WAR.useWarcry
+    _WAR.useWarcry = function(player, target, ability)
+        ss.onAbilityUse(player, target, ability)
+        _warcry(player, target, ability)
+        ss.flash(player, 'Warcry: priming next Weaponskill!')
+    end
+end

@@ -285,6 +285,17 @@ xi.voidwalker.zoneOnInit = function(zone)
     end
 end
 
+local mobIsBusy = function(mob)
+    local act = mob:getCurrentAction()
+
+    return  act == xi.act.MOBABILITY_START or
+            act == xi.act.MOBABILITY_USING or
+            act == xi.act.MOBABILITY_FINISH or
+            act == xi.act.MAGIC_START or
+            act == xi.act.MAGIC_CASTING or
+            act == xi.act.MAGIC_FINISH
+end
+
 local function doMobSkillEveryHPP(mob, every, start, mobskill, condition)
     local mobhpp = mob:getHPP()
 
@@ -310,10 +321,10 @@ local function randomly(mob, chance, between, effect, skill)
     if
         math.random(0, 100) <= chance and
         not mob:hasStatusEffect(effect) and
-        GetSystemTime() > (mob:getLocalVar('MOBSKILL_TIME') + between)
+        os.time() > (mob:getLocalVar('MOBSKILL_TIME') + between)
     then
         mob:setLocalVar('MOBSKILL_USE', 1)
-        mob:setLocalVar('MOBSKILL_TIME', GetSystemTime())
+        mob:setLocalVar('MOBSKILL_TIME', os.time())
         mob:useMobAbility(skill)
     end
 end
@@ -340,12 +351,12 @@ end
 local modByMobName =
 {
     ['Krabkatoa'] = function(mob)
-        mob:addStatusEffect(xi.effect.REGAIN, { power = 10, origin = mob })
+        mob:addStatusEffect(xi.effect.REGAIN, 10, 0, 0)
         mob:addMod(xi.mod.DOUBLE_ATTACK, 10)
     end,
 
     ['Tammuz'] = function(mob)
-        mob:addStatusEffect(xi.effect.MIGHTY_STRIKES, { power = 1, origin = mob })
+        mob:addStatusEffect(xi.effect.MIGHTY_STRIKES, 1, 0, 0)
     end,
 
     ['Erebus'] = function(mob)
@@ -366,29 +377,26 @@ local modByMobName =
 local mixinByMobName =
 {
     ['Capricornus'] = function(mob)
-        doMobSkillEveryHPP(mob, 20, 80, xi.mobSkill.MIGHTY_STRIKES_1, not mob:hasStatusEffect(xi.effect.MIGHTY_STRIKES))
-        if
-            mob:hasStatusEffect(xi.effect.MIGHTY_STRIKES) and
-            not xi.combat.behavior.isEntityBusy(mob)
-        then
-            mob:useMobAbility(xi.mobSkill.RECOIL_DIVE_1)
+        doMobSkillEveryHPP(mob, 20, 80, xi.jsa.MIGHTY_STRIKES, not mob:hasStatusEffect(xi.effect.MIGHTY_STRIKES))
+        if mob:hasStatusEffect(xi.effect.MIGHTY_STRIKES) and not mobIsBusy(mob) then
+            mob:useMobAbility(xi.mob.skills.RECOIL_DIVE)
         end
     end,
 
     ['Yacumama'] = function(mob)
-        doMobSkillEveryHPP(mob, 20, 80, xi.mobSkill.HUNDRED_FISTS_1, not mob:hasStatusEffect(xi.effect.HUNDRED_FISTS))
+        doMobSkillEveryHPP(mob, 20, 80, xi.jsa.HUNDRED_FISTS, not mob:hasStatusEffect(xi.effect.HUNDRED_FISTS))
     end,
 
     ['Lamprey_Lord'] = function(mob)
-        randomly(mob, 10, 60, xi.effect.BLOOD_WEAPON, xi.mobSkill.BLOOD_WEAPON_1)
+        randomly(mob, 10, 60, xi.effect.BLOOD_WEAPON, xi.jsa.BLOOD_WEAPON)
     end,
 
     ['Shoggoth'] = function(mob)
-        doMobSkillEveryHPP(mob, 20, 80, xi.mobSkill.CHAINSPELL_1, not mob:hasStatusEffect(xi.effect.CHAINSPELL))
+        doMobSkillEveryHPP(mob, 20, 80, xi.jsa.CHAINSPELL, not mob:hasStatusEffect(xi.effect.CHAINSPELL))
     end,
 
     ['Jyeshtha'] = function(mob)
-        randomly(mob, 30, 60, xi.mobSkill.MIGHTY_STRIKES_1, xi.mobSkill.MIGHTY_STRIKES_1)
+        randomly(mob, 30, 60, xi.jsa.MIGHTY_STRIKES, xi.jsa.MIGHTY_STRIKES)
         if
             mob:getLocalVar('MOBSKILL_USE') == 1 and
             not mob:hasStatusEffect(xi.effect.MIGHTY_STRIKES)
@@ -398,33 +406,33 @@ local mixinByMobName =
     end,
 
     ['Blobdingnag'] = function(mob)
-        doMobSkillEveryHPP(mob, 20, 82, xi.mobSkill.CYTOKINESIS, true)
+        doMobSkillEveryHPP(mob, 20, 82, xi.mob.skills.CYTOKINESIS, true)
     end,
 
     ['Farruca_Fly'] = function(mob)
-        doMobSkillEveryHPP(mob, 20, 80, xi.mobSkill.PERFECT_DODGE_1, not mob:hasStatusEffect(xi.effect.PERFECT_DODGE))
+        doMobSkillEveryHPP(mob, 20, 80, xi.jsa.PERFECT_DODGE, not mob:hasStatusEffect(xi.effect.PERFECT_DODGE))
     end,
 
     ['Skuld'] = function(mob)
-        doMobSkillEveryHPP(mob, 20, 80, xi.mobSkill.CHAINSPELL_1, not mob:hasStatusEffect(xi.effect.CHAINSPELL))
+        doMobSkillEveryHPP(mob, 20, 80, xi.jsa.CHAINSPELL, not mob:hasStatusEffect(xi.effect.CHAINSPELL))
     end,
 
     ['Erebus'] = function(mob)
-        randomly(mob, 30, 60, xi.effect.BLOOD_WEAPON, xi.mobSkill.BLOOD_WEAPON_1)
+        randomly(mob, 30, 60, xi.effect.BLOOD_WEAPON, xi.jsa.BLOOD_WEAPON)
         if
             mob:hasStatusEffect(xi.effect.BLOOD_WEAPON) and
             not mob:hasStatusEffect(xi.effect.HUNDRED_FISTS)
         then
-            mob:addStatusEffect(xi.effect.HUNDRED_FISTS, { power = 1, duration = 30, origin = mob })
+            mob:addStatusEffect(xi.effect.HUNDRED_FISTS, 1, 0, 30)
         end
     end,
 
     ['Feuerunke'] = function(mob)
-        randomly(mob, 30, 60, xi.effect.HUNDRED_FISTS, xi.mobSkill.HUNDRED_FISTS_1)
+        randomly(mob, 30, 60, xi.effect.HUNDRED_FISTS, xi.jsa.HUNDRED_FISTS)
     end,
 
     ['Dawon'] = function(mob)
-        doMobSkillEveryHPP(mob, 20, 80, xi.mobSkill.PERFECT_DODGE_1, not mob:hasStatusEffect(xi.effect.PERFECT_DODGE))
+        doMobSkillEveryHPP(mob, 20, 80, xi.jsa.PERFECT_DODGE, not mob:hasStatusEffect(xi.effect.PERFECT_DODGE))
     end
 }
 
@@ -456,7 +464,7 @@ xi.voidwalker.onMobFight = function(mob, target)
     end
 
     local poptime = mob:getLocalVar('[VoidWalker]PopedAt')
-    local now     = GetSystemTime()
+    local now     = os.time()
 
     if
         mob:isSpawned() and
@@ -571,7 +579,7 @@ xi.voidwalker.onHealing = function(player)
 
         mob:setLocalVar('[VoidWalker]PopedBy', player:getID())
         mob:setLocalVar('[VoidWalker]PopedWith', mobNearest.keyItem)
-        mob:setLocalVar('[VoidWalker]PopedAt', GetSystemTime())
+        mob:setLocalVar('[VoidWalker]PopedAt', os.time())
 
         if
             mobNearest.keyItem ~= xi.keyItem.CLEAR_ABYSSITE and

@@ -5578,6 +5578,14 @@ CBaseEntity* GenerateDynamicEntity(CZone* PZone, CInstance* PInstance, sol::tabl
     PEntity->loc.p.z        = table.get_or<float>("z", 0.01);
     PEntity->loc.p.moving   = 0;
 
+    if (auto speed = table["speed"]; speed.valid())
+    {
+        auto overrideSpeed = speed.get<uint8>();
+        PEntity->baseSpeed = overrideSpeed;
+        PEntity->animationSpeed = overrideSpeed;
+        PEntity->UpdateSpeed();
+    }
+
     auto name = table.get_or<std::string>("name", "");
     if (name.empty())
     {
@@ -5722,13 +5730,24 @@ CBaseEntity* GenerateDynamicEntity(CZone* PZone, CInstance* PInstance, sol::tabl
         const auto modelSize = table["modelSize"].get_or<uint8>(0);
         if (modelSize > 0)
         {
-            PMob->modelSize = std::clamp<uint8>(modelSize, 0, 3);
+            PMob->modelSize = modelSize;
         }
 
         const auto modelHitboxSize = table["modelHitboxSize"].get_or<float>(0);
         if (modelHitboxSize > 0)
         {
             PMob->modelHitboxSize = std::max(modelHitboxSize, 0.0f);
+        }
+
+        const auto packetName = table["packetName"].get_or<std::string>("");
+        if (PMob->modelSize >= 200 || PMob->look.modelid == 426)
+        {
+            ShowInfoFmt(
+                "[DW_SIZE_INIT] packetName={} modelId={} modelSize={} hitbox={:.1f}",
+                packetName,
+                PMob->look.modelid,
+                PMob->modelSize,
+                PMob->modelHitboxSize);
         }
 
         luautils::OnEntityLoad(PMob);

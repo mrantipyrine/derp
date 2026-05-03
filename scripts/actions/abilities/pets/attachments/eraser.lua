@@ -1,7 +1,6 @@
 -----------------------------------
 -- Attachment: Eraser
 -----------------------------------
----@type TAttachment
 local attachmentObject = {}
 
 local removable =
@@ -44,7 +43,7 @@ attachmentObject.onEquip = function(pet)
             then
                 erasetarget = automaton
             elseif
-                automaton:checkDistance(target) < (7 + target:getHitboxSize() + automaton:getHitboxSize()) and -- needs verification
+                (automaton:checkDistance(master) - master:getModelSize()) < 7 and
                 (master:hasStatusEffectByFlag(xi.effectFlag.ERASABLE) or checkEffects(master))
             then
                 erasetarget = master

@@ -914,12 +914,16 @@ xi.weaponskills.doMagicWeaponskill = function(attacker, target, wsID, wsParams, 
     return dmg, calcParams.criticalHit, calcParams.tpHitsLanded, calcParams.extraHitsLanded, calcParams.shadowsAbsorbed
 end
 
--- After WS damage is calculated and damage reduction has been taken into account by the calling function,
--- handles displaying the appropriate action/message, delivering the damage to the mob, and any enmity from it
+
+-- Splash TP tuning — reduce TP gain/feed for secondary (AoE) WS targets.
+-- Set to 1.0 to disable splash TP reduction entirely.
+local WS_SPLASH_ATTACKER_TP_MULT = 0.25  -- attacker earns 25% TP per splash hit
+local WS_SPLASH_TARGET_TP_MULT   = 0.25  -- splash targets feed 25% TP to attacker
+
 xi.weaponskills.takeWeaponskillDamage = function(defender, attacker, wsParams, primaryMsg, attack, wsResults, action)
     local finaldmg = wsResults.finalDmg
 
-    if wsResults.hitsLanded > 0 then
+    if wsResults.tpHitsLanded + wsResults.extraHitsLanded > 0 then
         if finaldmg >= 0 then
             if primaryMsg then
                 action:messageID(defender:getID(), xi.msg.basic.DAMAGE)
@@ -928,11 +932,7 @@ xi.weaponskills.takeWeaponskillDamage = function(defender, attacker, wsParams, p
             end
 
             if finaldmg > 0 then
-                if wsResults.guardedHits and wsResults.guardedHits > 0 then
-                    action:resolution(defender:getID(), xi.action.resolution.GUARD)
-                else
-                    action:resolution(defender:getID(), xi.action.resolution.HIT)
-                end
+                action:resolution(defender:getID(), xi.action.resolution.HIT)
             end
         else
             if primaryMsg then
@@ -941,10 +941,11 @@ xi.weaponskills.takeWeaponskillDamage = function(defender, attacker, wsParams, p
                 action:messageID(defender:getID(), xi.msg.basic.SELF_HEAL_SECONDARY)
             end
         end
+
+        action:param(defender:getID(), math.abs(finaldmg))
     elseif wsResults.shadowsAbsorbed > 0 then
         action:messageID(defender:getID(), xi.msg.basic.SHADOW_ABSORB)
         action:param(defender:getID(), wsResults.shadowsAbsorbed)
-        action:resolution(defender:getID(), xi.action.resolution.MISS)
     else
         if primaryMsg then
             action:messageID(defender:getID(), xi.msg.basic.SKILL_MISS)
@@ -959,6 +960,14 @@ xi.weaponskills.takeWeaponskillDamage = function(defender, attacker, wsParams, p
     local attackerTPMult = wsParams.attackerTPMult or 1
     local isJump         = wsParams.isJump or false
 
+    -- Splash TP reduction: secondary/AoE hits grant and feed less TP
+    local splashAttackerMult = 1.0
+    local splashTargetMult   = 1.0
+    if not primaryMsg then
+        splashAttackerMult = WS_SPLASH_ATTACKER_TP_MULT
+        splashTargetMult   = WS_SPLASH_TARGET_TP_MULT
+    end
+
     -- DA/TA/QA/OaT/Oa2-3 etc give full TP return per hit on Jumps
     if isJump then
         -- Don't feed TP and don't gain TP from takeWeaponskillDamage
@@ -966,12 +975,22 @@ xi.weaponskills.takeWeaponskillDamage = function(defender, attacker, wsParams, p
         wsResults.extraHitsLanded = 0
     end
 
-    -- Core does not modify the TP for the 10 TP/hit like it should, so we're doing it here
-    local storeTPModifier = 1 + attacker:getMod(xi.mod.STORETP) / 100 -- TODO, make a global function to get this (inhibit TP is not accounted for properly in core)
+    finaldmg = defender:takeWeaponskillDamage(
+        attacker,
+        finaldmg,
+        attack.type,
+        attack.damageType,
+        attack.slot,
+        primaryMsg,
+        math.floor(wsResults.tpHitsLanded * attackerTPMult * splashAttackerMult),
+        math.floor(((wsResults.extraHitsLanded * 10) + wsResults.bonusTP) * splashAttackerMult),
+        targetTPMult * splashTargetMult
+    )
 
-    finaldmg = defender:takeWeaponskillDamage(attacker, finaldmg, attack.type, attack.damageType, attack.slot, primaryMsg, wsResults.tpHitsLanded * attackerTPMult, (wsResults.extraHitsLanded * 10 * storeTPModifier) + wsResults.bonusTP, targetTPMult)
     if wsResults.tpHitsLanded + wsResults.extraHitsLanded > 0 then
-        action:recordDamage(defender, attack.type, math.abs(finaldmg), wsResults.criticalHit)
+        if finaldmg >= 0 then
+            action:param(defender:getID(), math.abs(finaldmg))
+        end
     end
 
     local enmityEntity = wsResults.taChar or attacker
@@ -987,16 +1006,15 @@ xi.weaponskills.takeWeaponskillDamage = function(defender, attacker, wsParams, p
         defender:updateEnmityFromDamage(enmityEntity, finaldmg * enmityMult)
     end
 
-    local sengikoriEffect = attacker:getStatusEffect(xi.effect.SENGIKORI)
     -- TODO: does this effect not apply if you do 0 damage (or absorb)?
     -- Skillchains will still "proc" if you do 0 damage, so assume it does for now
     if
         (wsResults.tpHitsLanded +
         wsResults.extraHitsLanded > 0) and
-        sengikoriEffect ~= nil
+        attacker:hasStatusEffect(xi.effect.SENGIKORI)
     then
         local sengikoriBonus = attacker:getMod(xi.mod.SENGIKORI_BONUS) -- Additive % bonus: https://www.ffxiah.com/forum/topic/23457/july-11-sam-update/4/#1421344
-        local power = sengikoriEffect:getPower() + sengikoriBonus
+        local power = 25 + sengikoriBonus                              -- base 25% bonus for SC or MB
 
         -- If no SC effect, apply SC damage debuff
         -- If there is one, apply MB damage debuff
@@ -1039,13 +1057,62 @@ xi.weaponskills.getMeleeDmg = function(attacker, weaponType, kick)
     return { mainhandDamage, offhandDamage }
 end
 
----@param attacker CBaseEntity
----@param target CBaseEntity
----@param bonus number
----@param slot xi.attackAnimation
----@return number
-xi.weaponskills.getHitRate = function(attacker, target, bonus, slot)
-    return xi.combat.physicalHitRate.getPhysicalHitRate(attacker, target, bonus, slot, true)
+xi.weaponskills.getHitRate = function(attacker, target, bonus)
+    local flourishEffect = attacker:getStatusEffect(xi.effect.BUILDING_FLOURISH)
+
+    if flourishEffect ~= nil and flourishEffect:getPower() >= 1 then -- 1 or more Finishing moves used.
+        attacker:addMod(xi.mod.ACC, 40 + flourishEffect:getSubPower() * 2)
+    end
+
+    local acc = attacker:getACC()
+    local eva = target:getEVA()
+
+    if flourishEffect ~= nil and flourishEffect:getPower() >= 1 then -- 1 or more Finishing moves used.
+        attacker:delMod(xi.mod.ACC, 40 + flourishEffect:getSubPower() * 2)
+    end
+
+    if bonus == nil then
+        bonus = 0
+    end
+
+    if
+        attacker:hasStatusEffect(xi.effect.INNIN) and
+        attacker:isBehind(target, 23)
+    then
+        -- Innin acc boost if attacker is behind target
+        bonus = bonus + attacker:getStatusEffect(xi.effect.INNIN):getPower()
+    end
+
+    if
+        target:hasStatusEffect(xi.effect.YONIN) and
+        attacker:isFacing(target, 23)
+    then
+        -- Yonin evasion boost if attacker is facing target
+        bonus = bonus - target:getStatusEffect(xi.effect.YONIN):getPower()
+    end
+
+    if attacker:hasTrait(xi.trait.AMBUSH) and attacker:isBehind(target, 23) then
+        bonus = bonus + attacker:getMerit(xi.merit.AMBUSH)
+    end
+
+    acc = acc + bonus
+
+    -- Accuracy Bonus
+    if attacker:getMainLvl() > target:getMainLvl() then
+        acc = acc + (attacker:getMainLvl() - target:getMainLvl()) * 4
+
+    -- Accuracy Penalty
+    elseif attacker:getMainLvl() < target:getMainLvl() then
+        acc = acc - (target:getMainLvl() - attacker:getMainLvl()) * 4
+    end
+
+    local hitdiff = (acc - eva) / 2
+    local hitrate = (75 + hitdiff) / 100
+
+    -- Applying hitrate caps
+    hitrate = utils.clamp(hitrate, 0.2, 0.95)
+
+    return hitrate
 end
 
 -- TODO: Use a common function with optional multiplier on return, or multiply outside of this.
@@ -1077,10 +1144,391 @@ xi.weaponskills.handleWeaponskillEffect = function(actor, target, effectId, acti
     if
         damage > 0 and
         not target:hasStatusEffect(effectId) and
-        not xi.data.statusEffect.isTargetImmune(target, effectId, actionElement) and
-        not xi.data.statusEffect.isTargetResistant(actor, target, effectId) and
-        not xi.data.statusEffect.isEffectNullified(target, effectId, 0)
+        not xi.combat.statusEffect.isTargetImmune(target, effectId, actionElement) and
+        not xi.combat.statusEffect.isTargetResistant(actor, target, effectId) and
+        not xi.combat.statusEffect.isEffectNullified(target, effectId)
     then
-        target:addStatusEffect(effectId, { power = power, duration = duration, origin = actor })
+        target:addStatusEffect(effectId, power, 0, duration)
+    end
+end
+
+-----------------------------------
+-- Weaponskill Hooks
+-- Wraps doPhysicalWeaponskill and doRangedWeaponskill to add:
+--   * Splash damage — every WS deals reduced damage to nearby enemies
+--   * Combo Window — WS chain within 10s gives TP bonus + momentum
+--   * Bloodbath bonus damage for low-HP solo attackers
+--   * Surge burst at max momentum
+-----------------------------------
+
+-- Splash damage tuning
+local WS_SPLASH_RADIUS      = 6.0   -- yalms around primary target
+local WS_SPLASH_DMG_MIN_PCT = 0.50  -- splash targets take 50-70% of primary damage
+local WS_SPLASH_DMG_MAX_PCT = 0.70
+local WS_SPLASH_SURGE_PCT   = 1.00  -- max momentum: splash matches primary WS damage
+local SC_SPLASH_DMG_PCT     = 0.50  -- skillchain splash: 50% of SC damage
+local SC_SPLASH_DAY_BONUS   = 1.00  -- matching day: 100% of SC damage (double splash)
+
+local function isActivelyTargetingAttacker(mob, attacker)
+    if not mob or not attacker or not mob:isEngaged() then
+        return false
+    end
+
+    local target = mob:getTarget()
+    return target and target:getID() == attacker:getID()
+end
+
+local function getWSSplashPercent(attacker)
+    if xi.soloSynergy and xi.soloSynergy.isSurge and xi.soloSynergy.isSurge(attacker) then
+        return WS_SPLASH_SURGE_PCT, true
+    end
+
+    return math.random(WS_SPLASH_DMG_MIN_PCT * 100, WS_SPLASH_DMG_MAX_PCT * 100) / 100, false
+end
+
+local function doWSSplash(attacker, primaryTarget, primaryDmg, attackType, dmgType)
+    if primaryDmg <= 0 then return end
+    if attacker and attacker.printToPlayer then attacker:printToPlayer(string.format('[WS SPLASH] primary=%d', primaryDmg)) end
+    local zone = attacker:getZone()
+    if not zone then return end
+
+    local mobs = zone:getMobs()
+    if not mobs then return end
+    local splashHits = 0
+
+    local splashPct, isSurgeSplash = getWSSplashPercent(attacker)
+    local splashDmg = math.floor(primaryDmg * splashPct)
+    if splashDmg <= 0 then return end
+
+    if isSurgeSplash and xi.soloSynergy then
+        xi.soloSynergy.flash(attacker, 'SURGE SPLASH! Nearby attackers take full force.')
+    end
+
+    for _, mob in pairs(mobs) do
+        if mob and
+           mob:isAlive() and
+           mob:getID() ~= primaryTarget:getID() and
+           isActivelyTargetingAttacker(mob, attacker) and
+           primaryTarget:checkDistance(mob) <= WS_SPLASH_RADIUS
+        then
+            splashHits = splashHits + 1
+            mob:takeDamage(splashDmg, attacker, attackType, dmgType)
+            mob:messageBasic(xi.msg.basic.DAMAGE_SECONDARY, splashDmg, 0, mob)
+            attacker:addTP(math.floor(5 * WS_SPLASH_ATTACKER_TP_MULT))
+            mob:updateEnmityFromDamage(attacker, splashDmg)
+        end
+    end
+    if attacker and attacker.printToPlayer then attacker:printToPlayer(string.format('[WS SPLASH] hits=%d radius=%.1f', splashHits, WS_SPLASH_RADIUS)) end
+end
+
+local function doSCSplash(attacker, primaryTarget, scDmg, isMatchingDay)
+    if scDmg <= 0 then return end
+    local zone = attacker:getZone()
+    if not zone then return end
+
+    local mobs = zone:getMobs()
+    if not mobs then return end
+
+    local pct = isMatchingDay and SC_SPLASH_DAY_BONUS or SC_SPLASH_DMG_PCT
+    local splashDmg = math.floor(scDmg * pct)
+    if splashDmg <= 0 then return end
+
+    if isMatchingDay then
+        xi.soloSynergy.flash(attacker, 'RESONATING SPLASH! Day bonus triggered.')
+    end
+
+    for _, mob in pairs(mobs) do
+        if mob and
+           mob:isAlive() and
+           mob:getID() ~= primaryTarget:getID() and
+           isActivelyTargetingAttacker(mob, attacker) and
+           primaryTarget:checkDistance(mob) <= WS_SPLASH_RADIUS
+        then
+            -- Skillchain splash is always magical/elemental-ish (treated as SPECIAL/NONE for simplicity)
+            mob:takeDamage(splashDmg, attacker, xi.attackType.SPECIAL, xi.damageType.NONE)
+            mob:messageBasic(xi.msg.basic.DAMAGE_SECONDARY, splashDmg, 0, mob)
+            mob:updateEnmityFromDamage(attacker, splashDmg)
+        end
+    end
+end
+
+do
+    local ss = xi.soloSynergy
+
+    -----------------------------------
+    -- Physical WS wrapper
+    -----------------------------------
+    local _origPhys = xi.weaponskills.doPhysicalWeaponskill
+    xi.weaponskills.doPhysicalWeaponskill = function(attacker, target, wsID, wsParams, tp, action, primaryMsg, taChar)
+        if attacker and attacker:isPC() then
+            attacker:printToPlayer(string.format('[WS WRAP] physical ws=%d', wsID))
+        end
+
+        local hpBefore = target:getHP()
+
+        local finaldmg, crit, tpHits, extraHits, shadows =
+            _origPhys(attacker, target, wsID, wsParams, tp, action, primaryMsg, taChar)
+
+        if not attacker or not attacker:isPC() then
+            return finaldmg, crit, tpHits, extraHits, shadows
+        end
+
+        local totalDmg = math.max(0, hpBefore - target:getHP())
+        local scDmg    = totalDmg - finaldmg
+
+        -----------------------------------
+        -- 1. Weaponskill Splash
+        -----------------------------------
+        if finaldmg > 0 and target then
+            local weapDmgType = attacker:getWeaponDamageType(xi.slot.MAIN)
+            doWSSplash(attacker, target, finaldmg, xi.attackType.PHYSICAL, weapDmgType)
+        end
+
+        -----------------------------------
+        -- 2. Skillchain Splash
+        -----------------------------------
+        if scDmg > 0 and target then
+            local isMatchingDay = false
+            local scEffect = target:getStatusEffect(xi.effect.SKILLCHAIN)
+            if scEffect and ss then
+                isMatchingDay = ss.isSkillchainMatchingDay(scEffect:getPower())
+            end
+            doSCSplash(attacker, target, scDmg, isMatchingDay)
+        end
+
+        if not ss then return finaldmg, crit, tpHits, extraHits, shadows end
+
+        -----------------------------------
+        -- 1. Combo Window bonus
+        --    Same wsID = +25% TP reward;  different wsID = +15% TP reward
+        -----------------------------------
+        local comboBonus = ss.getComboBonus(attacker, wsID)
+        if comboBonus > 1.0 then
+            local tpReward = math.floor(200 * (comboBonus - 1.0) * 10)  -- +200-600 TP depending on tier
+            attacker:addTP(tpReward)
+            ss.addMomentum(attacker, 1)
+            ss.flash(attacker, string.format('WS Combo! +%d TP, momentum up!', tpReward))
+            ss.flashMomentum(attacker)
+        end
+
+        -----------------------------------
+        -- 2. Open combo window for next WS
+        -----------------------------------
+        ss.openComboWindow(attacker, wsID)
+
+        -----------------------------------
+        -- 3. Party size damage bonus (solo/small group)
+        -----------------------------------
+        local partyMult = ss.getPartyBonus(attacker)
+        if partyMult > 1.0 then
+            local bonus = math.floor(finaldmg * (partyMult - 1.0))
+            if bonus > 0 then
+                local weapDmgType = attacker:getWeaponDamageType(xi.slot.MAIN)
+                target:takeDamage(bonus, attacker, xi.attackType.PHYSICAL, weapDmgType)
+                finaldmg = finaldmg + bonus
+            end
+        end
+
+        -----------------------------------
+        -- 4. Reactive Synergy (JA -> WS)
+        -----------------------------------
+        local jaMult = ss.getWSAbilityBonus(attacker)
+        
+        -- Job-Specific Synergy Logic
+        local jobBonus = 0
+        local mainJob = attacker:getMainJob()
+        
+        if mainJob == xi.job.THF and attacker:getLocalVar('SS_LARCENY') == 1 then
+            attacker:setLocalVar('SS_LARCENY', 0)
+            attacker:addTP(250)
+            ss.flash(attacker, 'LARCENY! +250 TP stolen.')
+        elseif mainJob == xi.job.RDM and attacker:getLocalVar('SS_SPELLBLADE') == 1 then
+            attacker:setLocalVar('SS_SPELLBLADE', 0)
+            jaMult = jaMult + 0.25
+            ss.flash(attacker, 'SPELLBLADE! Damage surged.')
+        elseif mainJob == xi.job.PLD and attacker:getLocalVar('SS_RETRIBUTION') == 1 then
+            attacker:setLocalVar('SS_RETRIBUTION', 0)
+            jobBonus = math.floor(attacker:getStat(xi.mod.DEF) / 2)
+            ss.flash(attacker, string.format('RETRIBUTION! +%d DEF-based damage.', jobBonus))
+        elseif mainJob == xi.job.MNK and attacker:getLocalVar('SS_FOCUS_STRIKE') == 1 then
+            attacker:setLocalVar('SS_FOCUS_STRIKE', 0)
+            jaMult = jaMult + 0.20
+            ss.flash(attacker, 'FOCUS STRIKE! Precision hit.')
+        elseif mainJob == xi.job.DRK and attacker:getLocalVar('SS_EXECUTE') == 1 then
+            attacker:setLocalVar('SS_EXECUTE', 0)
+            local missingHP = target:getMaxHP() - target:getHP()
+            jobBonus = math.floor(missingHP * 0.10) -- 10% of missing HP as bonus dmg
+            ss.flash(attacker, string.format('EXECUTE! +%d lethal damage.', jobBonus))
+        elseif mainJob == xi.job.SAM and attacker:getLocalVar('SS_ECHO_STRIKE') == 1 then
+            attacker:setLocalVar('SS_ECHO_STRIKE', 0)
+            jaMult = jaMult + 0.50 -- Representing the "double hit" as massive dmg boost
+            ss.flash(attacker, 'ECHO STRIKE! Phantom blow landed.')
+        elseif mainJob == xi.job.BRD and attacker:getLocalVar('SS_RESONANCE') == 1 then
+            attacker:setLocalVar('SS_RESONANCE', 0)
+            -- Handled in splash logic if needed, or flat boost here
+            jaMult = jaMult + 0.15
+            ss.flash(attacker, 'SONIC RESONANCE! Echoing hit.')
+        elseif mainJob == xi.job.DNC and attacker:getLocalVar('SS_DANCE_STRIKE') == 1 then
+            attacker:setLocalVar('SS_DANCE_STRIKE', 0)
+            attacker:addStatusEffect(xi.effect.FINISHING_MOVE_1, 2, 0, 120)
+            ss.flash(attacker, 'DANCE STRIKE! +2 Finishing Moves.')
+        elseif mainJob == xi.job.SMN and attacker:getLocalVar('SS_AVATAR_BOND') == 1 then
+            attacker:setLocalVar('SS_AVATAR_BOND', 0)
+            local pet = attacker:getPet()
+            if pet then pet:addTP(1000) end
+            ss.flash(attacker, 'AVATAR BOND! Pet TP surged.')
+        elseif mainJob == xi.job.BLU and attacker:getLocalVar('SS_AZURE_FLOW') == 1 then
+            attacker:setLocalVar('SS_AZURE_FLOW', 0)
+            attacker:addStatusEffect(xi.effect.AZURE_LORE, 1, 0, 15) -- Short burst of power
+            ss.flash(attacker, 'AZURE FLOW! Magic potential peaking.')
+        elseif mainJob == xi.job.NIN and attacker:getLocalVar('SS_SHADOW_BOND') == 1 then
+            attacker:setLocalVar('SS_SHADOW_BOND', 0)
+            jaMult = jaMult + 0.15
+            -- Refill 1 shadow if possible
+            local effect = attacker:getStatusEffect(xi.effect.COPY_IMAGE)
+            if effect then
+                effect:setPower(effect:getPower() + 1)
+            else
+                attacker:addStatusEffect(xi.effect.COPY_IMAGE, 1, 0, 300)
+            end
+            ss.flash(attacker, 'SHADOW BOND! Damage up and shadow refilled.')
+        elseif mainJob == xi.job.RNG and attacker:getLocalVar('SS_DEADEYE') == 1 then
+            attacker:setLocalVar('SS_DEADEYE', 0)
+            jaMult = jaMult + 0.35
+            attacker:addTP(100)
+            ss.flash(attacker, 'DEADEYE! Precision shot +100 TP.')
+        elseif mainJob == xi.job.WHM and attacker:getLocalVar('SS_HEALING_BLADE') == 1 then
+            attacker:setLocalVar('SS_HEALING_BLADE', 0)
+            local heal = math.floor(finaldmg * 0.20)
+            ss.restoreHP(attacker, heal)
+            ss.flash(attacker, string.format('HEALING BLADE! Party restored for %d.', heal))
+        end
+
+        if jaMult > 1.0 or jobBonus > 0 then
+            local bonus = math.floor(finaldmg * (jaMult - 1.0)) + jobBonus
+            if bonus > 0 then
+                local weapDmgType = attacker:getWeaponDamageType(xi.slot.MAIN)
+                target:takeDamage(bonus, attacker, xi.attackType.PHYSICAL, weapDmgType)
+                finaldmg = finaldmg + bonus
+                if jaMult > 1.0 then
+                    ss.flash(attacker, string.format('Synergy Strike! +%d bonus damage', bonus))
+                end
+            end
+        end
+
+        -----------------------------------
+        -- 5. Bloodbath bonus — extra physical damage when low HP (solo/duo only)
+        -----------------------------------
+        if attacker:getPartySize() <= 2 and ss.isBloodbath(attacker) and finaldmg > 0 then
+            local bbMult = ss.getBloodbathMult(attacker)
+            local bonus  = math.floor(finaldmg * (bbMult - 1.0))
+            if bonus > 0 and target and target:isAlive() then
+                local weapDmgType = attacker:getWeaponDamageType(xi.slot.MAIN)
+                target:takeDamage(bonus, attacker, xi.attackType.PHYSICAL, weapDmgType)
+                finaldmg = finaldmg + bonus
+                ss.flash(attacker, string.format('Bloodbath! +%d WS damage!', bonus))
+            end
+        end
+
+        -----------------------------------
+        -- 6. Surge burst on max momentum
+        -----------------------------------
+        if ss.isSurge(attacker) and finaldmg > 0 then
+            local surgeDmg = math.floor(finaldmg * 0.30)
+            if target and target:isAlive() then
+                local weapDmgType = attacker:getWeaponDamageType(xi.slot.MAIN)
+                target:takeDamage(surgeDmg, attacker, xi.attackType.PHYSICAL, weapDmgType)
+                finaldmg = finaldmg + surgeDmg
+            end
+            ss.triggerSurge(attacker, nil)
+            ss.flash(attacker, string.format('SURGE BURST! +%d WS damage!', surgeDmg))
+        end
+
+        -----------------------------------
+        -- 7. Flowing Spirit (WS -> JA tracking)
+        -----------------------------------
+        ss.onWeaponskillHit(attacker, target, finaldmg)
+
+        -----------------------------------
+        -- 8. Pet Empowerment (Master -> Pet synergy)
+        -----------------------------------
+        ss.empowerPet(attacker, finaldmg)
+
+        -----------------------------------
+        -- 9. Elemental Ward (Bar-spell bonus)
+        -----------------------------------
+        local wardEle, wardDmg = ss.getElementalWardBonus(attacker)
+        if wardEle > 0 and wardDmg > 0 then
+            target:takeDamage(wardDmg, attacker, xi.attackType.MAGICAL, xi.damageType.ELEMENTAL + wardEle)
+            finaldmg = finaldmg + wardDmg
+            ss.flash(attacker, 'WARD BURST! Elemental resonance hit.')
+        end
+
+        return finaldmg, crit, tpHits, extraHits, shadows
+    end
+
+    -----------------------------------
+    -- Ranged WS wrapper (same logic)
+    -----------------------------------
+    local _origRng = xi.weaponskills.doRangedWeaponskill
+    xi.weaponskills.doRangedWeaponskill = function(attacker, target, wsID, wsParams, tp, action, primaryMsg)
+        if attacker and attacker:isPC() then
+            attacker:printToPlayer(string.format('[WS WRAP] ranged ws=%d', wsID))
+        end
+
+        local hpBefore = target:getHP()
+
+        local finaldmg, crit, tpHits, extraHits, shadows =
+            _origRng(attacker, target, wsID, wsParams, tp, action, primaryMsg)
+
+        if not attacker or not attacker:isPC() then
+            return finaldmg, crit, tpHits, extraHits, shadows
+        end
+
+        local totalDmg = math.max(0, hpBefore - target:getHP())
+        local scDmg    = totalDmg - finaldmg
+
+        -----------------------------------
+        -- 1. Weaponskill Splash
+        -----------------------------------
+        if finaldmg > 0 and target then
+            doWSSplash(attacker, target, finaldmg, xi.attackType.RANGED, xi.damageType.PIERCING)
+        end
+
+        -----------------------------------
+        -- 2. Skillchain Splash
+        -----------------------------------
+        if scDmg > 0 and target then
+            local isMatchingDay = false
+            local scEffect = target:getStatusEffect(xi.effect.SKILLCHAIN)
+            if scEffect and ss then
+                isMatchingDay = ss.isSkillchainMatchingDay(scEffect:getPower())
+            end
+            doSCSplash(attacker, target, scDmg, isMatchingDay)
+        end
+
+        if not ss then return finaldmg, crit, tpHits, extraHits, shadows end
+
+        -- Combo window
+        local comboBonus = ss.getComboBonus(attacker, wsID)
+        if comboBonus > 1.0 then
+            local tpReward = math.floor(200 * (comboBonus - 1.0) * 10)
+            attacker:addTP(tpReward)
+            ss.addMomentum(attacker, 1)
+            ss.flash(attacker, string.format('WS Combo! +%d TP, momentum up!', tpReward))
+            ss.flashMomentum(attacker)
+        end
+        ss.openComboWindow(attacker, wsID)
+
+        -- Surge burst on ranged too
+        if ss.isSurge(attacker) and finaldmg > 0 and target and target:isAlive() then
+            local surgeDmg = math.floor(finaldmg * 0.20) -- slightly smaller for ranged
+            target:takeDamage(surgeDmg, attacker, xi.attackType.RANGED, xi.damageType.PIERCING)
+            finaldmg = finaldmg + surgeDmg
+            ss.triggerSurge(attacker, nil)
+            ss.flash(attacker, string.format('SURGE BURST! +%d ranged WS damage!', surgeDmg))
+        end
+
+        return finaldmg, crit, tpHits, extraHits, shadows
     end
 end

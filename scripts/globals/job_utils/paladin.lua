@@ -236,3 +236,23 @@ xi.job_utils.paladin.useShieldBash = function(player, target, ability)
 
     return damage
 end
+
+end
+
+-- ══════════════════════════════════════════════════════════════
+-- Solo Synergy — Paladin (75 Era Strict)
+-- ══════════════════════════════════════════════════════════════
+require('scripts/globals/solo_synergy')
+
+do
+    local ss = xi.soloSynergy
+    local _PLD = xi.job_utils.paladin
+
+    local _sentinel = _PLD.useSentinel
+    _PLD.useSentinel = function(player, target, ability)
+        ss.onAbilityUse(player, target, ability)
+        _sentinel(player, target, ability)
+        player:setLocalVar('SS_RETRIBUTION', 1)
+        ss.flash(player, 'RETRIBUTION primed: next WS scales with DEF.')
+    end
+end

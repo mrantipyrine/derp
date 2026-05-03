@@ -5,6 +5,7 @@
 require('scripts/globals/combat/magic_hit_rate')
 require('scripts/globals/jobpoints')
 require('scripts/globals/magicburst')
+require('scripts/globals/solo_synergy')
 -----------------------------------
 xi = xi or {}
 xi.spells = xi.spells or {}
@@ -1145,6 +1146,13 @@ xi.spells.damage.useDamageSpell = function(caster, target, spell)
     local helixMeritMultiplier      = xi.spells.damage.calculateHelixMeritMultiplier(caster, spellId)
     local areaOfEffectResistance    = xi.spells.damage.calculateAreaOfEffectResistance(target, spell)
     local actionTypeMultiplier      = xi.spells.damage.calculateSpellActionTypeMultiplier(caster)
+    local magicComboMultiplier      = 1
+    local blackSelfBuffMultiplier   = 1
+
+    if xi.soloSynergy then
+        magicComboMultiplier    = xi.soloSynergy.getMagicComboMultiplier(caster, target, spell)
+        blackSelfBuffMultiplier = xi.soloSynergy.getBlackSelfBuffMultiplier(caster, spell)
+    end
 
     -- Calculate finalDamage. It MUST be floored after EACH multiplication.
     finalDamage = math.floor(spellDamage * multipleTargetReduction)
@@ -1170,6 +1178,8 @@ xi.spells.damage.useDamageSpell = function(caster, target, spell)
     finalDamage = math.floor(finalDamage * helixMeritMultiplier)
     finalDamage = math.floor(finalDamage * areaOfEffectResistance)
     finalDamage = math.floor(finalDamage * actionTypeMultiplier)
+    finalDamage = math.floor(finalDamage * magicComboMultiplier)
+    finalDamage = math.floor(finalDamage * blackSelfBuffMultiplier)
     finalDamage = math.floor(finalDamage * absorb)
     finalDamage = math.floor(finalDamage * magicBurst)
     finalDamage = math.floor(finalDamage * magicBurstBonus)
@@ -1203,6 +1213,10 @@ xi.spells.damage.useDamageSpell = function(caster, target, spell)
 
     -- Handle Enmity.
     target:updateEnmityFromDamage(caster, finalDamage)
+
+    if xi.soloSynergy then
+        xi.soloSynergy.applyMagicSynergy(caster, target, spell, finalDamage)
+    end
 
     -- Add "Magic Burst!" message
     if magicBurst > 1 then

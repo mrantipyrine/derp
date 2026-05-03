@@ -101,3 +101,22 @@ xi.job_utils.ninja.useMikage = function(player, target, ability, action)
 
     return xi.effect.MIKAGE
 end
+
+end
+
+-- ══════════════════════════════════════════════════════════════
+-- Solo Synergy — Ninja (75 Era Strict)
+-- ══════════════════════════════════════════════════════════════
+require('scripts/globals/solo_synergy')
+
+do
+    local ss = xi.soloSynergy
+    local _NIN = xi.job_utils.ninja
+
+    local _futae = _NIN.useFutae
+    _NIN.useFutae = function(player, target, ability, action)
+        ss.onAbilityUse(player, target, ability)
+        _futae(player, target, ability, action)
+        player:setLocalVar('SS_SHADOW_BOND', 1) -- Futae also primes the bond
+    end
+end

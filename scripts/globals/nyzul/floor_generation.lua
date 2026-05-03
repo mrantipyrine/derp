@@ -6,13 +6,9 @@ local ID = zones[xi.zone.NYZUL_ISLE]
 xi = xi or {}
 xi.nyzul = xi.nyzul or {}
 
----@alias coords { x: number, y: number, z: number }
----@alias coordArray { table: coords[] }
-
 -----------------------------------
 -- Data Tables
 -----------------------------------
----@type coordArray[]
 local lampSpawnPoints = -- Set lamp spawn points, by layout.
 {
     [1] = -- 380, -0.5, -500
@@ -193,7 +189,6 @@ local lampSpawnPoints = -- Set lamp spawn points, by layout.
     },
 }
 
----@type coordArray[]
 local layoutSpawnPoints = -- Spawnpoints by layout.
 {
     [1] =
@@ -1229,8 +1224,7 @@ xi.nyzul.prepareMobs = function(instance)
         -- Build dynamic table with all the possible spawn points.
         local floorLayout      = instance:getLocalVar('Nyzul_Isle_FloorLayout')
         local spawnPointIndex  = 0
-        ---@type coords
-        local spawnPoint       = nil
+        local spawnPoint       = 0
         local dTableSpawnPoint = {}
 
         for i = 1, #layoutSpawnPoints[floorLayout] do
