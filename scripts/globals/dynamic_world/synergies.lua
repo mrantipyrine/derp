@@ -3710,7 +3710,7 @@ db.combo_lone_wolf_ability =
     end,
     effect      = function(player, mob, template, tier, abilityId)
         player:addHP(40 + (tier * 15))
-        player:addStatusEffect(xi.effect.STONESKIN, 50, 0, 30)
+        player:addStatusEffect(xi.effect.STONESKIN, { power = 50, duration = 30 })
         player:printToPlayer(
             string.format('[Synergy: Lone Wolf Ability] Self-sufficient! (HP +%d, Stoneskin 50 for 30s)', 40 + (tier * 15)),
             xi.msg.channel.SYSTEM_3
