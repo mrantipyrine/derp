@@ -410,7 +410,8 @@ xi.combat.physical.calculateMeleePDIF = function(actor, target, weaponType, wsAt
         pDifLowerCap = wRatio - 0.375
     end
 
-    pDif = math.random(pDifLowerCap * 1000, pDifUpperCap * 1000) / 1000
+    pDifLowerCap = math.min(pDifLowerCap, pDifUpperCap) -- prevent inversion at cap boundary
+    pDif = math.random(math.floor(pDifLowerCap * 1000), math.floor(pDifUpperCap * 1000)) / 1000
 
     ----------------------------------------
     -- Step 4: Apply weapon type caps.
@@ -533,7 +534,8 @@ xi.combat.physical.calculateRangedPDIF = function(actor, target, weaponType, wsA
         pDifLowerCap = cRatio * 20 / 19 - 3 / 19
     end
 
-    pDif = math.random(pDifLowerCap * 1000, pDifUpperCap * 1000) / 1000
+    pDifLowerCap = math.min(pDifLowerCap, pDifUpperCap) -- prevent inversion when cRatio > 3 (e.g. Archery firstCap 3.2375)
+    pDif = math.random(math.floor(pDifLowerCap * 1000), math.floor(pDifUpperCap * 1000)) / 1000
 
     ----------------------------------------
     -- Step 4: Apply weapon type caps.

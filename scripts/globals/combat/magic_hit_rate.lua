@@ -258,7 +258,7 @@ local function magicAccuracyFromMagicBurst(target, actionElement, statUsed)
     end
 
     local magicAcc           = 0
-    local _, skillchainCount = xi.magicburst.formMagicBurst(actionElement, target)
+    local _, skillchainCount = xi.magicburst.formMagicBurst(target, actionElement)
 
     if skillchainCount > 0 then
         magicAcc = 100
