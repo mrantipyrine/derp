@@ -1148,7 +1148,7 @@ xi.weaponskills.handleWeaponskillEffect = function(actor, target, effectId, acti
         not xi.combat.statusEffect.isTargetResistant(actor, target, effectId) and
         not xi.combat.statusEffect.isEffectNullified(target, effectId)
     then
-        target:addStatusEffect(effectId, power, 0, duration)
+        target:addStatusEffect(effectId, { power = power, duration = duration, origin = actor })
     end
 end
 
@@ -1370,7 +1370,7 @@ do
             ss.flash(attacker, 'SONIC RESONANCE! Echoing hit.')
         elseif mainJob == xi.job.DNC and attacker:getLocalVar('SS_DANCE_STRIKE') == 1 then
             attacker:setLocalVar('SS_DANCE_STRIKE', 0)
-            attacker:addStatusEffect(xi.effect.FINISHING_MOVE_1, 2, 0, 120)
+            attacker:addStatusEffect(xi.effect.FINISHING_MOVE_1, { power = 2, duration = 120, origin = attacker })
             ss.flash(attacker, 'DANCE STRIKE! +2 Finishing Moves.')
         elseif mainJob == xi.job.SMN and attacker:getLocalVar('SS_AVATAR_BOND') == 1 then
             attacker:setLocalVar('SS_AVATAR_BOND', 0)
@@ -1379,7 +1379,7 @@ do
             ss.flash(attacker, 'AVATAR BOND! Pet TP surged.')
         elseif mainJob == xi.job.BLU and attacker:getLocalVar('SS_AZURE_FLOW') == 1 then
             attacker:setLocalVar('SS_AZURE_FLOW', 0)
-            attacker:addStatusEffect(xi.effect.AZURE_LORE, 1, 0, 15) -- Short burst of power
+            attacker:addStatusEffect(xi.effect.AZURE_LORE, { power = 1, duration = 15, origin = attacker }) -- Short burst of power
             ss.flash(attacker, 'AZURE FLOW! Magic potential peaking.')
         elseif mainJob == xi.job.NIN and attacker:getLocalVar('SS_SHADOW_BOND') == 1 then
             attacker:setLocalVar('SS_SHADOW_BOND', 0)
@@ -1389,7 +1389,7 @@ do
             if effect then
                 effect:setPower(effect:getPower() + 1)
             else
-                attacker:addStatusEffect(xi.effect.COPY_IMAGE, 1, 0, 300)
+                attacker:addStatusEffect(xi.effect.COPY_IMAGE, { power = 1, duration = 300, origin = attacker })
             end
             ss.flash(attacker, 'SHADOW BOND! Damage up and shadow refilled.')
         elseif mainJob == xi.job.RNG and attacker:getLocalVar('SS_DEADEYE') == 1 then

@@ -159,7 +159,7 @@ xi.additionalEffect.procFunctions[xi.additionalEffect.procType.DEBUFF] =  functi
         local tick = xi.additionalEffect.statusAttack(params.addStatus, defender)
         msgID      = xi.msg.basic.ADD_EFFECT_STATUS_2 -- TODO: does anything use ADD_EFFECT_STATUS? STatus bolts are observed on retail to use _2.
 
-        defender:addStatusEffect(params.addStatus, params.power, tick, params.duration)
+        defender:addStatusEffect(params.addStatus, { power = params.power, tick = tick, duration = params.duration, origin = attacker })
         msgParam = params.addStatus
     end
 
@@ -307,12 +307,12 @@ xi.additionalEffect.procFunctions[xi.additionalEffect.procType.SELF_BUFF] =  fun
         then
             return 0, 0, 0
         else
-            attacker:addStatusEffect(xi.effect.BLINK, params.power, 0, params.duration)
+            attacker:addStatusEffect(xi.effect.BLINK, { power = params.power, duration = params.duration, origin = attacker })
             msgID    = xi.msg.basic.ADD_EFFECT_SELFBUFF
             msgParam = xi.effect.BLINK
         end
     elseif params.addStatus == xi.effect.HASTE then
-        attacker:addStatusEffect(xi.effect.HASTE, params.power, 0, params.duration, 0, 0)
+        attacker:addStatusEffect(xi.effect.HASTE, { power = params.power, duration = params.duration, origin = attacker })
         -- Todo: verify power/duration/tier/overwrite etc
         msgID    = xi.msg.basic.ADD_EFFECT_SELFBUFF
         msgParam = xi.effect.HASTE
