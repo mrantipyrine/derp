@@ -151,7 +151,7 @@ end
 ss.tryProc = function(target, chance, effect, power, duration, tick)
     if not target or not target:isAlive() then return false end
     if math.random(100) <= chance then
-        target:addStatusEffect(effect, power or 10, tick or 0, duration or 30)
+        target:addStatusEffect(effect, { power = power or 10, tick = tick or 0, duration = duration or 30, origin = target })
         return true
     end
     return false
@@ -344,7 +344,7 @@ ss.applyMagicSynergy = function(caster, target, spell, damage)
         }
         if spikes[element] and not caster:hasStatusEffect(spikes[element]) then
             local power = math.floor(lv / 6) * 10
-            caster:addStatusEffect(spikes[element], power, 3, 180)
+            caster:addStatusEffect(spikes[element], { power = power, tick = 3, duration = 180, origin = caster })
         end
     end
 
@@ -694,7 +694,7 @@ ss.triggerSurge = function(player, surgeEffects)
     -- Apply any passed surge effects
     if surgeEffects then
         for _, e in ipairs(surgeEffects) do
-            player:addStatusEffect(e.effect, e.power or 10, 0, e.duration or 30)
+            player:addStatusEffect(e.effect, { power = e.power or 10, duration = e.duration or 30, origin = player })
         end
     end
 end
@@ -800,8 +800,8 @@ ss.empowerPet = function(master, damage)
     -- 2. Job-Specific Pet Empowerment
     if mainJob == xi.job.BST then
         -- Beastial Surge: Attack and Haste
-        pet:addStatusEffect(xi.effect.ATTACK_BOOST, 20, 0, 15)
-        pet:addStatusEffect(xi.effect.HASTE, 150, 0, 15)
+        pet:addStatusEffect(xi.effect.ATTACK_BOOST, { power = 20, duration = 15, origin = master })
+        pet:addStatusEffect(xi.effect.HASTE, { power = 150, duration = 15, origin = master })
         
         -- If master has Flowing Spirit active, reset a Ready charge (Recast ID 102)
         if master:getLocalVar('SS_FLOW_ACTIVE') == 1 then
@@ -813,8 +813,8 @@ ss.empowerPet = function(master, damage)
         
     elseif mainJob == xi.job.DRG then
         -- Wyvern's Fury: Wyvern gains Attack and Accuracy boost
-        pet:addStatusEffect(xi.effect.ATTACK_BOOST, 30, 0, 15)
-        pet:addStatusEffect(xi.effect.ACCURACY_BOOST, 20, 0, 15)
+        pet:addStatusEffect(xi.effect.ATTACK_BOOST, { power = 30, duration = 15, origin = master })
+        pet:addStatusEffect(xi.effect.ACCURACY_BOOST, { power = 20, duration = 15, origin = master })
 
         -- Wyvern's Breath: Wyvern heals the master for 5% of WS damage
         local heal = math.floor(damage * 0.05)
@@ -827,8 +827,8 @@ ss.empowerPet = function(master, damage)
         -- Automaton Overdrive: Instantly remove 1 Burden from all elements
         -- Note: core often handles burden via setLocalVar or internal methods.
         -- We'll give the automaton a short Haste/Store TP boost instead.
-        pet:addStatusEffect(xi.effect.HASTE, 200, 0, 20)
-        pet:addStatusEffect(xi.effect.STORE_TP, 25, 0, 20)
+        pet:addStatusEffect(xi.effect.HASTE, { power = 200, duration = 20, origin = master })
+        pet:addStatusEffect(xi.effect.STORE_TP, { power = 25, duration = 20, origin = master })
         ss.flash(master, 'Clockwork Surge! Automaton Haste Up.')
     end
 end
@@ -949,7 +949,7 @@ end
 ss.applySubJobBonus = function(player)
     local sub = player:getSubJob()
     for _, b in ipairs(ss.getSubJobBonus(player, sub)) do
-        player:addStatusEffect(b.effect, b.power, 0, b.duration)
+        player:addStatusEffect(b.effect, { power = b.power, duration = b.duration, origin = player })
     end
 end
 
