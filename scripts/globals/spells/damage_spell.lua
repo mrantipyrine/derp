@@ -1235,19 +1235,23 @@ xi.spells.damage.useDamageSpell = function(caster, target, spell)
         end
     end
 
-    printf(
-        '[MAGDBG] caster=%s target=%s spell=%d dmg=%d base=%d resist=%.3f mab=%.3f sdt=%.3f adj=%.3f absorb=%.3f',
-        caster:getName(),
-        target:getName(),
-        spellId,
-        finalDamage,
-        spellDamage,
-        resistTier * additionalResistTier,
-        magicBonusDiff,
-        sdt,
-        targetMagicDamageAdjustment,
-        absorb
-    )
+    local log = io.open('/tmp/magdbg.log', 'a')
+    if log then
+        log:write(string.format(
+            '[MAGDBG] caster=%s target=%s spell=%d dmg=%d base=%d resist=%.3f mab=%.3f sdt=%.3f adj=%.3f absorb=%.3f\n',
+            caster:getName(),
+            target:getName(),
+            spellId,
+            finalDamage,
+            spellDamage,
+            resistTier * additionalResistTier,
+            magicBonusDiff,
+            sdt,
+            targetMagicDamageAdjustment,
+            absorb
+        ))
+        log:close()
+    end
 
     -- Add "Magic Burst!" message
     if magicBurst > 1 then
