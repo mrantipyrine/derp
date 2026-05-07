@@ -939,6 +939,20 @@ xi.spells.damage.calculateNullification = function(target, element, isMagic, isB
     return 1
 end
 
+-- Compatibility wrappers for legacy callers in magic.lua and additional_effects.lua.
+xi.spells.damage.calculateTMDA = function(target, element)
+    return xi.combat.damage.calculateDamageAdjustment(target, false, true, false, false)
+end
+
+xi.spells.damage.calculateNukeAbsorbOrNullify = function(target, element)
+    local absorb = xi.spells.damage.calculateAbsorption(target, element, true)
+    if absorb < 0 then
+        return absorb
+    end
+
+    return xi.spells.damage.calculateNullification(target, element, true, false)
+end
+
 xi.spells.damage.calculateIfMagicBurst = function(target, spellElement, skillchainCount)
     local magicBurst = 1 -- The variable we want to calculate
 
