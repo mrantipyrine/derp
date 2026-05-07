@@ -39,7 +39,9 @@ xi.combat.damage.magicalElementSDT = function(target, element)
         return 1
     end
 
-    return (1000 + target:getMod(mod)) / 1000
+    local sdt = 1 + target:getMod(mod) / 10000
+
+    return utils.clamp(sdt, 0, 3)
 end
 
 
