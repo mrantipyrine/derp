@@ -1235,19 +1235,19 @@ xi.spells.damage.useDamageSpell = function(caster, target, spell)
         end
     end
 
-    if caster:isPC() then
-        caster:printToPlayer(string.format(
-            '[MAGDBG] spell=%d dmg=%d base=%d resist=%.3f mab=%.3f sdt=%.3f adj=%.3f absorb=%.3f',
-            spellId,
-            finalDamage,
-            spellDamage,
-            resistTier * additionalResistTier,
-            magicBonusDiff,
-            sdt,
-            targetMagicDamageAdjustment,
-            absorb
-        ))
-    end
+    printf(
+        '[MAGDBG] caster=%s target=%s spell=%d dmg=%d base=%d resist=%.3f mab=%.3f sdt=%.3f adj=%.3f absorb=%.3f',
+        caster:getName(),
+        target:getName(),
+        spellId,
+        finalDamage,
+        spellDamage,
+        resistTier * additionalResistTier,
+        magicBonusDiff,
+        sdt,
+        targetMagicDamageAdjustment,
+        absorb
+    )
 
     -- Add "Magic Burst!" message
     if magicBurst > 1 then
