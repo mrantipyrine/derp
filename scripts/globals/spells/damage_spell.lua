@@ -1215,7 +1215,10 @@ xi.spells.damage.useDamageSpell = function(caster, target, spell)
     target:updateEnmityFromDamage(caster, finalDamage)
 
     if xi.soloSynergy then
-        xi.soloSynergy.applyMagicSynergy(caster, target, spell, finalDamage)
+        local ok, err = pcall(xi.soloSynergy.applyMagicSynergy, caster, target, spell, finalDamage)
+        if not ok then
+            caster:printToPlayer('[SPELL ERR] ' .. tostring(err))
+        end
     end
 
     -- Add "Magic Burst!" message
