@@ -21,6 +21,8 @@
 
 #include "battleentity.h"
 
+#include <fstream>
+
 #include "common/database.h"
 #include "common/logging.h"
 #include "common/utils.h"
@@ -2382,6 +2384,19 @@ void CBattleEntity::OnCastFinished(CMagicState& state, action_t& action)
         }
 
         actionResult.messageID = msg;
+
+        if (auto debug = std::ofstream("/tmp/spell_trace.log", std::ios::app); debug.is_open())
+        {
+            debug << "SpellAction"
+                  << " caster=" << getName()
+                  << " target=" << PTarget->getName()
+                  << " spell=" << PSpell->getName()
+                  << " msg=" << static_cast<uint16>(actionResult.messageID)
+                  << " param=" << actionResult.param
+                  << " resolution=" << static_cast<uint16>(actionResult.resolution)
+                  << " animation=" << static_cast<uint16>(actionResult.animation)
+                  << '\n';
+        }
 
         if (IsMagicCovered)
         {
