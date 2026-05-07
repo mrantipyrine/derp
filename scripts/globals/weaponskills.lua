@@ -1183,7 +1183,7 @@ local function getWSSplashPercent(attacker)
         return WS_SPLASH_SURGE_PCT, true
     end
 
-    return math.random(WS_SPLASH_DMG_MIN_PCT * 100, WS_SPLASH_DMG_MAX_PCT * 100) / 100, false
+    return math.random(math.floor(WS_SPLASH_DMG_MIN_PCT * 100), math.floor(WS_SPLASH_DMG_MAX_PCT * 100)) / 100, false
 end
 
 local function doWSSplash(attacker, primaryTarget, primaryDmg, attackType, dmgType)
