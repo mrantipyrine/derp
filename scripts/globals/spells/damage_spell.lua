@@ -1235,22 +1235,15 @@ xi.spells.damage.useDamageSpell = function(caster, target, spell)
         end
     end
 
-    local log = io.open('/tmp/magdbg.log', 'a')
-    if log then
-        log:write(string.format(
-            '[MAGDBG] caster=%s target=%s spell=%d dmg=%d base=%d resist=%.3f mab=%.3f sdt=%.3f adj=%.3f absorb=%.3f\n',
-            caster:getName(),
-            target:getName(),
-            spellId,
-            finalDamage,
-            spellDamage,
-            resistTier * additionalResistTier,
-            magicBonusDiff,
-            sdt,
-            targetMagicDamageAdjustment,
-            absorb
-        ))
-        log:close()
+    if caster:isPC() then
+        caster:setCharVar('MAGDBG_SPELL', spellId)
+        caster:setCharVar('MAGDBG_DMG', finalDamage)
+        caster:setCharVar('MAGDBG_BASE', spellDamage)
+        caster:setCharVar('MAGDBG_RESIST', math.floor(resistTier * additionalResistTier * 1000))
+        caster:setCharVar('MAGDBG_MAB', math.floor(magicBonusDiff * 1000))
+        caster:setCharVar('MAGDBG_SDT', math.floor(sdt * 1000))
+        caster:setCharVar('MAGDBG_ADJ', math.floor(targetMagicDamageAdjustment * 1000))
+        caster:setCharVar('MAGDBG_ABSORB', math.floor(absorb * 1000))
     end
 
     -- Add "Magic Burst!" message
