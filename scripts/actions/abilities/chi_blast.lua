@@ -17,7 +17,7 @@ abilityObject.onUseAbility = function(player, target, ability)
 
     -- Target CC: TP drain + stun (retail-correct)
     target:setTP(0)
-    target:addStatusEffect(xi.effect.STUN, { power = 1, duration = 5 })
+    target:addStatusEffect(xi.effect.STUN, { power = 1, duration = 5, origin = player })
 
     -- Self reward: Regen + Regain to recover from the buildup
     local regenAmt  = isMNK and math.floor(lvl / 12) or math.floor(lvl / 16)
@@ -25,8 +25,8 @@ abilityObject.onUseAbility = function(player, target, ability)
     regenAmt  = math.max(2, regenAmt)
     regainAmt = math.max(2, regainAmt)
 
-    player:addStatusEffect(xi.effect.REGEN, { power = regenAmt, duration = duration, tick = 3 })
-    player:addStatusEffect(xi.effect.REGAIN, { power = regainAmt, duration = duration, tick = 3 })
+    player:addStatusEffect(xi.effect.REGEN, { power = regenAmt, duration = duration, tick = 3, origin = player })
+    player:addStatusEffect(xi.effect.REGAIN, { power = regainAmt, duration = duration, tick = 3, origin = player })
 
     if xi.soloSynergy then
         xi.soloSynergy.flashBuff(player, 'Chi Blast', 'TP Drained  Regen +' .. regenAmt .. '  Regain +' .. regainAmt)

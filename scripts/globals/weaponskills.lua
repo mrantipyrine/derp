@@ -1260,10 +1260,6 @@ do
     -----------------------------------
     local _origPhys = xi.weaponskills.doPhysicalWeaponskill
     xi.weaponskills.doPhysicalWeaponskill = function(attacker, target, wsID, wsParams, tp, action, primaryMsg, taChar)
-        if attacker and attacker:isPC() then
-            attacker:printToPlayer(string.format('[WS WRAP] physical ws=%d', wsID))
-        end
-
         local hpBefore = target:getHP()
 
         local finaldmg, crit, tpHits, extraHits, shadows =
@@ -1272,6 +1268,9 @@ do
         if not attacker or not attacker:isPC() then
             return finaldmg, crit, tpHits, extraHits, shadows
         end
+
+        -- Wrap all post-damage processing in pcall so errors don't zero out displayed damage
+        local ok, err = pcall(function()
 
         local totalDmg = math.max(0, hpBefore - target:getHP())
         local scDmg    = totalDmg - finaldmg
@@ -1462,6 +1461,11 @@ do
             target:takeDamage(wardDmg, attacker, xi.attackType.MAGICAL, xi.damageType.ELEMENTAL + wardEle)
             finaldmg = finaldmg + wardDmg
             ss.flash(attacker, 'WARD BURST! Elemental resonance hit.')
+        end
+
+        end) -- end pcall
+        if not ok then
+            attacker:printToPlayer('[WS ERR] ' .. tostring(err))
         end
 
         return finaldmg, crit, tpHits, extraHits, shadows
