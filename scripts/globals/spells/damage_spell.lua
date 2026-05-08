@@ -15,6 +15,11 @@ xi.spells.damage = xi.spells.damage or {}
 -- 17 INDEPENDENT functions. Close them for better readability.
 -- 1 FINAL function. Uses all 17 previous functions in succession and order.
 
+local function applySpellDamage(target, caster, spell, damage, attackType, damageType)
+    local ok, err = pcall(target.takeSpellDamage, target, caster, spell, damage, attackType, damageType)
+    return ok, err
+end
+
 -----------------------------------
 -- Tables
 -----------------------------------
@@ -1220,7 +1225,14 @@ xi.spells.damage.useDamageSpell = function(caster, target, spell)
     finalDamage = target:checkDamageCap(finalDamage)
 
     -- Handle Bind break and TP?
-    target:takeSpellDamage(caster, spell, finalDamage, xi.attackType.MAGICAL, xi.damageType.ELEMENTAL + spellElement)
+    local spellDamageApplied, spellDamageError = applySpellDamage(
+        target,
+        caster,
+        spell,
+        finalDamage,
+        xi.attackType.MAGICAL,
+        xi.damageType.ELEMENTAL + spellElement
+    )
 
     -- Handle Afflatus Misery.
     target:handleAfflatusMiseryDamage(finalDamage)
@@ -1259,6 +1271,12 @@ xi.spells.damage.useDamageSpell = function(caster, target, spell)
         caster:setCharVar('MAGDBG_SELF', math.floor(blackSelfBuffMultiplier * 1000))
         caster:setCharVar('MAGDBG_BURST', math.floor(magicBurst * 1000))
         caster:setCharVar('MAGDBG_BONUS', math.floor(magicBurstBonus * 1000))
+        caster:setCharVar('MAGDBG_OK', spellDamageApplied and 1 or 0)
+        caster:setCharVar('MAGDBG_ERR', spellDamageApplied and 0 or 1)
+
+        if not spellDamageApplied then
+            SetServerVariable(prefix .. 'ERR', tostring(spellDamageError or 'unknown'))
+        end
     end
 
     -- Add "Magic Burst!" message
