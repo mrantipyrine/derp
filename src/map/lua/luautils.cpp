@@ -21,8 +21,6 @@
 
 #include "luautils.h"
 
-#include <fstream>
-
 #include <common/application.h>
 #include <common/filewatcher.h>
 #include <common/ipc.h>
@@ -2833,33 +2831,10 @@ int32 OnSpellCast(CBattleEntity* PCaster, CBattleEntity* PTarget, CSpell* PSpell
         sol::error err = result;
         ShowError("luautils::onSpellCast: %s", err.what());
         ReportErrorToPlayer(PCaster, err.what());
-
-        if (auto debug = std::ofstream("/tmp/spell_trace.log", std::ios::app); debug.is_open())
-        {
-            debug << "OnSpellCastError"
-                  << " caster=" << (PCaster ? PCaster->getName() : "nil")
-                  << " target=" << (PTarget ? PTarget->getName() : "nil")
-                  << " spell=" << (PSpell ? PSpell->getName() : "nil")
-                  << " err=" << err.what()
-                  << '\n';
-        }
         return 0;
     }
 
     int32 retVal = result.get_type() == sol::type::number ? result.get<int32>() : 0;
-
-    if (auto debug = std::ofstream("/tmp/spell_trace.log", std::ios::app); debug.is_open())
-    {
-        debug << "OnSpellCast"
-              << " caster=" << (PCaster ? PCaster->getName() : "nil")
-              << " target=" << (PTarget ? PTarget->getName() : "nil")
-              << " spell=" << (PSpell ? PSpell->getName() : "nil")
-              << " msg=" << (PSpell ? static_cast<uint16>(PSpell->getMessage()) : 0)
-              << " type=" << static_cast<int>(result.get_type())
-              << " ret=" << retVal
-              << '\n';
-    }
-
     return retVal;
 }
 

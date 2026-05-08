@@ -16,8 +16,8 @@ xi.spells.damage = xi.spells.damage or {}
 -- 1 FINAL function. Uses all 17 previous functions in succession and order.
 
 local function applySpellDamage(target, caster, spell, damage, attackType, damageType)
-    local ok, err = pcall(target.takeSpellDamage, target, caster, spell, damage, attackType, damageType)
-    return ok, err
+    local ok = pcall(target.takeSpellDamage, target, caster, spell, damage, attackType, damageType)
+    return ok
 end
 
 -----------------------------------
@@ -1225,7 +1225,7 @@ xi.spells.damage.useDamageSpell = function(caster, target, spell)
     finalDamage = target:checkDamageCap(finalDamage)
 
     -- Handle Bind break and TP?
-    local spellDamageApplied, spellDamageError = applySpellDamage(
+    applySpellDamage(
         target,
         caster,
         spell,
@@ -1245,35 +1245,6 @@ xi.spells.damage.useDamageSpell = function(caster, target, spell)
         if not ok then
             caster:printToPlayer('[SPELL ERR] ' .. tostring(err))
         end
-    end
-
-    if caster:isPC() then
-        local prefix = 'MAGDBG_' .. caster:getName() .. '_'
-        SetServerVariable(prefix .. 'SPELL', spellId)
-        SetServerVariable(prefix .. 'DMG', finalDamage)
-        SetServerVariable(prefix .. 'BASE', spellDamage)
-        SetServerVariable(prefix .. 'RESIST', math.floor(resistTier * additionalResistTier * 1000))
-        SetServerVariable(prefix .. 'MAB', math.floor(magicBonusDiff * 1000))
-        SetServerVariable(prefix .. 'SDT', math.floor(sdt * 1000))
-        SetServerVariable(prefix .. 'ADJ', math.floor(targetMagicDamageAdjustment * 1000))
-        SetServerVariable(prefix .. 'ABSORB', math.floor(absorb * 1000))
-        caster:setCharVar('MAGDBG_SPELL', spellId)
-        caster:setCharVar('MAGDBG_DMG', finalDamage)
-        caster:setCharVar('MAGDBG_BASE', spellDamage)
-        caster:setCharVar('MAGDBG_RESIST', math.floor(resistTier * additionalResistTier * 1000))
-        caster:setCharVar('MAGDBG_MAB', math.floor(magicBonusDiff * 1000))
-        caster:setCharVar('MAGDBG_SDT', math.floor(sdt * 1000))
-        caster:setCharVar('MAGDBG_ADJ', math.floor(targetMagicDamageAdjustment * 1000))
-        caster:setCharVar('MAGDBG_ABSORB', math.floor(absorb * 1000))
-        caster:setCharVar('MAGDBG_AOE', math.floor(areaOfEffectResistance * 1000))
-        caster:setCharVar('MAGDBG_ACT', math.floor(actionTypeMultiplier * 1000))
-        caster:setCharVar('MAGDBG_COMBO', math.floor(magicComboMultiplier * 1000))
-        caster:setCharVar('MAGDBG_SELF', math.floor(blackSelfBuffMultiplier * 1000))
-        caster:setCharVar('MAGDBG_BURST', math.floor(magicBurst * 1000))
-        caster:setCharVar('MAGDBG_BONUS', math.floor(magicBurstBonus * 1000))
-        caster:setCharVar('MAGDBG_OK', spellDamageApplied and 1 or 0)
-        caster:setCharVar('MAGDBG_ERR', spellDamageApplied and 0 or 1)
-
     end
 
     -- Add "Magic Burst!" message
