@@ -1245,31 +1245,20 @@ xi.spells.damage.useDamageSpell = function(caster, target, spell)
         SetServerVariable(prefix .. 'SDT', math.floor(sdt * 1000))
         SetServerVariable(prefix .. 'ADJ', math.floor(targetMagicDamageAdjustment * 1000))
         SetServerVariable(prefix .. 'ABSORB', math.floor(absorb * 1000))
-
-        local debugFile = io.open('/tmp/spell_lua_trace.log', 'a')
-        if debugFile then
-            debugFile:write(string.format(
-                'caster=%s spell=%u target=%s base=%d final=%d resist=%.3f addResist=%.3f mab=%.3f sdt=%.3f adj=%.3f absorb=%.3f aoe=%.3f action=%.3f combo=%.3f self=%.3f burst=%.3f burstBonus=%.3f\n',
-                caster:getName(),
-                spellId,
-                target:getName(),
-                spellDamage,
-                finalDamage,
-                resistTier,
-                additionalResistTier,
-                magicBonusDiff,
-                sdt,
-                targetMagicDamageAdjustment,
-                absorb,
-                areaOfEffectResistance,
-                actionTypeMultiplier,
-                magicComboMultiplier,
-                blackSelfBuffMultiplier,
-                magicBurst,
-                magicBurstBonus
-            ))
-            debugFile:close()
-        end
+        caster:setCharVar('MAGDBG_SPELL', spellId)
+        caster:setCharVar('MAGDBG_DMG', finalDamage)
+        caster:setCharVar('MAGDBG_BASE', spellDamage)
+        caster:setCharVar('MAGDBG_RESIST', math.floor(resistTier * additionalResistTier * 1000))
+        caster:setCharVar('MAGDBG_MAB', math.floor(magicBonusDiff * 1000))
+        caster:setCharVar('MAGDBG_SDT', math.floor(sdt * 1000))
+        caster:setCharVar('MAGDBG_ADJ', math.floor(targetMagicDamageAdjustment * 1000))
+        caster:setCharVar('MAGDBG_ABSORB', math.floor(absorb * 1000))
+        caster:setCharVar('MAGDBG_AOE', math.floor(areaOfEffectResistance * 1000))
+        caster:setCharVar('MAGDBG_ACT', math.floor(actionTypeMultiplier * 1000))
+        caster:setCharVar('MAGDBG_COMBO', math.floor(magicComboMultiplier * 1000))
+        caster:setCharVar('MAGDBG_SELF', math.floor(blackSelfBuffMultiplier * 1000))
+        caster:setCharVar('MAGDBG_BURST', math.floor(magicBurst * 1000))
+        caster:setCharVar('MAGDBG_BONUS', math.floor(magicBurstBonus * 1000))
     end
 
     -- Add "Magic Burst!" message
