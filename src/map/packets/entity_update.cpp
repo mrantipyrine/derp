@@ -595,12 +595,15 @@ void CEntityUpdatePacket::updateWith(CBaseEntity* PEntity, ENTITYUPDATE type, ui
 
         if (PEntity->modelSize >= 200 || PEntity->look.modelid == 426)
         {
+            const auto graphSize  = static_cast<uint32_t>(packet->Flags1.GraphSize);
+            const auto hitboxByte = static_cast<uint32_t>(packet->Flags2.g);
+
             ShowInfoFmt(
                 "[DW_SIZE_PKT] name={} modelId={} graph={} hitboxByte={} rawHitbox={:.1f}",
                 PEntity->name,
                 PEntity->look.modelid,
-                packet->Flags1.GraphSize,
-                packet->Flags2.g,
+                graphSize,
+                hitboxByte,
                 PEntity->modelHitboxSize);
         }
     }
