@@ -2833,6 +2833,16 @@ int32 OnSpellCast(CBattleEntity* PCaster, CBattleEntity* PTarget, CSpell* PSpell
         sol::error err = result;
         ShowError("luautils::onSpellCast: %s", err.what());
         ReportErrorToPlayer(PCaster, err.what());
+
+        if (auto debug = std::ofstream("/tmp/spell_trace.log", std::ios::app); debug.is_open())
+        {
+            debug << "OnSpellCastError"
+                  << " caster=" << (PCaster ? PCaster->getName() : "nil")
+                  << " target=" << (PTarget ? PTarget->getName() : "nil")
+                  << " spell=" << (PSpell ? PSpell->getName() : "nil")
+                  << " err=" << err.what()
+                  << '\n';
+        }
         return 0;
     }
 
