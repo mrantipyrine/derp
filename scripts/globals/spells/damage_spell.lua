@@ -1245,6 +1245,31 @@ xi.spells.damage.useDamageSpell = function(caster, target, spell)
         SetServerVariable(prefix .. 'SDT', math.floor(sdt * 1000))
         SetServerVariable(prefix .. 'ADJ', math.floor(targetMagicDamageAdjustment * 1000))
         SetServerVariable(prefix .. 'ABSORB', math.floor(absorb * 1000))
+
+        local debugFile = io.open('/tmp/spell_lua_trace.log', 'a')
+        if debugFile then
+            debugFile:write(string.format(
+                'caster=%s spell=%u target=%s base=%d final=%d resist=%.3f addResist=%.3f mab=%.3f sdt=%.3f adj=%.3f absorb=%.3f aoe=%.3f action=%.3f combo=%.3f self=%.3f burst=%.3f burstBonus=%.3f\n',
+                caster:getName(),
+                spellId,
+                target:getName(),
+                spellDamage,
+                finalDamage,
+                resistTier,
+                additionalResistTier,
+                magicBonusDiff,
+                sdt,
+                targetMagicDamageAdjustment,
+                absorb,
+                areaOfEffectResistance,
+                actionTypeMultiplier,
+                magicComboMultiplier,
+                blackSelfBuffMultiplier,
+                magicBurst,
+                magicBurstBonus
+            ))
+            debugFile:close()
+        end
     end
 
     -- Add "Magic Burst!" message
