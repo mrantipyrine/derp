@@ -285,6 +285,53 @@ local function buildGodEmperorConfig(zoneId, pos, groupRef)
     }
 end
 
+local function buildShowcaseBossConfig(key, zoneId, pos, groupRef, options)
+    options = options or {}
+
+    local packetName = options.packetName or options.name
+
+    return {
+        name = options.name,
+        packetName = packetName,
+        cooldownKey = key,
+        groupRef = groupRef,
+        zone = zoneId,
+        pos = pos,
+        level = options.level or { 99, 99 },
+        speed = options.speed or 40,
+        modelSize = options.modelSize or 32,
+        modelHitboxSize = options.modelHitboxSize or 1.5,
+        roamDistance = options.roamDistance or 50,
+        roamCool = options.roamCool or 3,
+        fightMagicCool = options.fightMagicCool or 20,
+        hpMultiplier = options.hpMultiplier or 40,
+        autoSpawn = false,
+        cooldown = options.cooldown or 300,
+        duration = options.duration or 1800,
+        loot = options.loot or {},
+        bossMods = options.bossMods or {
+            att = 120,
+            acc = 120,
+            def = 120,
+            eva = 80,
+            macc = 80,
+            matt = 80,
+            meva = 80,
+            regain = 50,
+        },
+        scaleBands = options.scaleBands or {
+            { maxLevel = 20, baseDamageMultiplier = 55, attMod = -40, accMod = -30, mattMod = -25 },
+            { maxLevel = 40, baseDamageMultiplier = 75, attMod = -20, accMod = -15, mattMod = -10 },
+            { maxLevel = 60, baseDamageMultiplier = 90, attMod = -10, accMod = -5, mattMod = -5 },
+            { maxLevel = 75, baseDamageMultiplier = 100, attMod = 0, accMod = 0, mattMod = 0 },
+            { maxLevel = 99, baseDamageMultiplier = 112, attMod = 15, accMod = 10, mattMod = 10 },
+        },
+        spawnMsg = options.spawnMsg or string.format('[Dynamic World] %s appears.', packetName),
+        despawnMsg = options.despawnMsg or string.format('[Dynamic World] %s disappears.', packetName),
+        deathMsg = options.deathMsg or string.format('[Dynamic World] %s has been defeated.', packetName),
+    }
+end
+
 wb.db.god_emperor = buildGodEmperorConfig(
     xi.zone.EASTERN_ALTEPA_DESERT,
     { x = 366.0, y = 0.0, z = 296.0, rot = 127 },
@@ -295,6 +342,86 @@ wb.db.god_emperor_west = buildGodEmperorConfig(
     xi.zone.WESTERN_ALTEPA_DESERT,
     { x = -460.0, y = 6.0, z = 307.0, rot = 127 },
     { groupId = 3, groupZoneId = xi.zone.WESTERN_ALTEPA_DESERT }
+)
+
+wb.db.placeholder_spider_alpha = buildShowcaseBossConfig(
+    'placeholder_spider_alpha',
+    xi.zone.CRAWLERS_NEST,
+    { x = -162.0, y = -0.2, z = 293.0, rot = 96 },
+    { groupId = 6, groupZoneId = 52 },
+    {
+        name = 'Placeholder Spider Alpha',
+        packetName = 'Big Spider',
+        modelSize = 255,
+        modelHitboxSize = 12.0,
+        hpMultiplier = 90,
+        spawnMsg = '[Dynamic World] A huge placeholder spider unfolds from the dark.',
+        deathMsg = '[Dynamic World] The huge placeholder spider crumples into a heap.',
+    }
+)
+
+wb.db.placeholder_skeleton_colossus = buildShowcaseBossConfig(
+    'placeholder_skeleton_colossus',
+    xi.zone.MAZE_OF_SHAKHRAMI,
+    { x = 218.0, y = -24.0, z = -101.0, rot = 127 },
+    { groupId = 24, groupZoneId = 2 },
+    {
+        name = 'Placeholder Skeleton Colossus',
+        packetName = 'Big Skeleton',
+        modelSize = 255,
+        modelHitboxSize = 10.0,
+        hpMultiplier = 75,
+        spawnMsg = '[Dynamic World] A colossal placeholder skeleton rattles into view.',
+        deathMsg = '[Dynamic World] The colossal placeholder skeleton collapses into bones.',
+    }
+)
+
+wb.db.placeholder_skeleton_pebble = buildShowcaseBossConfig(
+    'placeholder_skeleton_pebble',
+    xi.zone.EAST_RONFAURE,
+    { x = -133.0, y = -1.0, z = 115.0, rot = 64 },
+    { groupId = 25, groupZoneId = 2 },
+    {
+        name = 'Placeholder Skeleton Pebble',
+        packetName = 'Tiny Skeleton',
+        modelSize = 12,
+        modelHitboxSize = 0.7,
+        hpMultiplier = 8,
+        spawnMsg = '[Dynamic World] A comically tiny placeholder skeleton clatters out of the grass.',
+        deathMsg = '[Dynamic World] The tiny placeholder skeleton falls apart dramatically.',
+    }
+)
+
+wb.db.placeholder_crab_titan = buildShowcaseBossConfig(
+    'placeholder_crab_titan',
+    xi.zone.QUFIM_ISLAND,
+    { x = -250.0, y = -19.0, z = 299.0, rot = 127 },
+    { groupId = 2, groupZoneId = 2 },
+    {
+        name = 'Placeholder Crab Titan',
+        packetName = 'Giant Crab',
+        modelSize = 255,
+        modelHitboxSize = 13.0,
+        hpMultiplier = 110,
+        spawnMsg = '[Dynamic World] An absurdly large placeholder crab scuttles into the open.',
+        deathMsg = '[Dynamic World] The giant placeholder crab finally stops skittering.',
+    }
+)
+
+wb.db.placeholder_behemoth_crumb = buildShowcaseBossConfig(
+    'placeholder_behemoth_crumb',
+    xi.zone.BEHEMOTHS_DOMINION,
+    { x = -242.0, y = -19.8, z = 49.0, rot = 127 },
+    { groupId = 9, groupZoneId = xi.zone.BEHEMOTHS_DOMINION },
+    {
+        name = 'Placeholder Behemoth Crumb',
+        packetName = 'Tiny Behemoth',
+        modelSize = 14,
+        modelHitboxSize = 0.9,
+        hpMultiplier = 12,
+        spawnMsg = '[Dynamic World] A comically tiny placeholder behemoth stomps in with misplaced confidence.',
+        deathMsg = '[Dynamic World] The tiny placeholder behemoth topples over with surprising dignity.',
+    }
 )
 
 wb.resolveKey = function(query)
