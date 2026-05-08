@@ -1274,9 +1274,6 @@ xi.spells.damage.useDamageSpell = function(caster, target, spell)
         caster:setCharVar('MAGDBG_OK', spellDamageApplied and 1 or 0)
         caster:setCharVar('MAGDBG_ERR', spellDamageApplied and 0 or 1)
 
-        if not spellDamageApplied then
-            SetServerVariable(prefix .. 'ERR', tostring(spellDamageError or 'unknown'))
-        end
     end
 
     -- Add "Magic Burst!" message
