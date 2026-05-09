@@ -305,6 +305,28 @@ local function updateSwarmState(key)
     end
 end
 
+local function linkSwarmAggro(key, target)
+    if not target or not target:isAlive() then
+        return
+    end
+
+    local queen = wb.alive[key]
+    if queen and queen:isAlive() then
+        queen:updateEnmity(target)
+    end
+
+    local swarm = wb.swarms[key]
+    if not swarm then
+        return
+    end
+
+    for _, addMob in ipairs(swarm.adds or {}) do
+        if addMob and addMob:isSpawned() and addMob:isAlive() then
+            addMob:updateEnmity(target)
+        end
+    end
+end
+
 local function spawnSwarmAdds(key, zone, queen, config)
     local swarmConfig = config and config.swarm
     if not swarmConfig then
@@ -378,9 +400,7 @@ local function spawnSwarmAdds(key, zone, queen, config)
                 end)
             end,
             onMobEngage = function(addMob, target)
-                if target then
-                    addMob:updateEnmity(target)
-                end
+                linkSwarmAggro(key, target)
             end,
             onMobDeath = function()
                 updateSwarmState(key)
@@ -794,6 +814,7 @@ wb.forceSpawn = function(query, player)
         onMobEngage = function(mob, target)
             mob:setMobMod(xi.mobMod.MAGIC_COOL, config.fightMagicCool or 12)
             applyScaleForTarget(mob, target, config)
+            linkSwarmAggro(key, target)
         end,
         onMobFight = function(mob, target)
             applyScaleForTarget(mob, target, config)
