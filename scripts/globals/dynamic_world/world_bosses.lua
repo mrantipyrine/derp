@@ -493,6 +493,7 @@ local function buildShowcaseBossConfig(key, zoneId, pos, groupRef, options)
         cooldown = options.cooldown ~= nil and options.cooldown or 300,
         duration = options.duration ~= nil and options.duration or 1800,
         loot = options.loot or {},
+        swarm = options.swarm,
         bossMods = options.bossMods or {
             att = 120,
             acc = 120,
