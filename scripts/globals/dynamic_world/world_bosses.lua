@@ -611,7 +611,7 @@ wb.db.placeholder_behemoth_crumb = buildShowcaseBossConfig(
 wb.db.queen_bee_swarm = buildShowcaseBossConfig(
     'queen_bee_swarm',
     xi.zone.WEST_SARUTABARUTA,
-    { x = -152.0, y = -12.0, z = -463.0, rot = 127 },
+    { x = 148.0, y = -39.0, z = 325.0, rot = 127 },
     { groupId = 23, groupZoneId = xi.zone.WEST_SARUTABARUTA },
     {
         name = 'Queen Bee Swarm',
