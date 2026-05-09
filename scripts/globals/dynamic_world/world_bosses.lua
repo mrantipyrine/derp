@@ -509,6 +509,12 @@ wb.forceSpawn = function(query, player)
             if config.modelId and config.modelId > 0 then
                 mob:setModelId(config.modelId)
             end
+            if config.modelSize and config.modelSize > 0 then
+                mob:setModelSize(config.modelSize)
+            end
+            if config.modelHitboxSize and config.modelHitboxSize > 0 then
+                mob:setHitboxSize(config.modelHitboxSize)
+            end
             mob:renameEntity(config.packetName)
             applyBossMods(mob, config)
             applyBossHealth(mob, config)
