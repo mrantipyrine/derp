@@ -384,8 +384,8 @@ wb.db.placeholder_skeleton_pebble = buildShowcaseBossConfig(
     {
         name = 'Placeholder Skeleton Pebble',
         packetName = 'Tiny Skeleton',
-        modelSize = 12,
-        modelHitboxSize = 0.7,
+        modelSize = 255,
+        modelHitboxSize = 16.0,
         hpMultiplier = 8,
         spawnMsg = '[Dynamic World] A comically tiny placeholder skeleton clatters out of the grass.',
         deathMsg = '[Dynamic World] The tiny placeholder skeleton falls apart dramatically.',
