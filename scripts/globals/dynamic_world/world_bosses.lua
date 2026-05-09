@@ -18,6 +18,7 @@ local wb = xi.dynamicWorld.worldBosses
 wb.db = wb.db or {}
 wb.alive = wb.alive or {}
 wb.participants = wb.participants or {}
+wb.swarms = wb.swarms or {}
 
 local function normalizeKey(value)
     if type(value) ~= 'string' then
@@ -172,6 +173,20 @@ local function applyScaleForTarget(mob, target, config)
     mob:setLocalVar('DW_WB_SCALE_TARGET', scaleTargetId)
 end
 
+local function applyDamageShield(mob)
+    mob:setMod(xi.mod.UDMGPHYS, -10000)
+    mob:setMod(xi.mod.UDMGMAGIC, -10000)
+    mob:setMod(xi.mod.UDMGRANGE, -10000)
+    mob:setMod(xi.mod.UDMGBREATH, -10000)
+end
+
+local function clearDamageShield(mob)
+    mob:setMod(xi.mod.UDMGPHYS, 0)
+    mob:setMod(xi.mod.UDMGMAGIC, 0)
+    mob:setMod(xi.mod.UDMGRANGE, 0)
+    mob:setMod(xi.mod.UDMGBREATH, 0)
+end
+
 local function markParticipant(key, mob, attacker)
     local player = getSourcePlayer(attacker)
     if not player or not player.getZoneID or player:getZoneID() ~= mob:getZoneID() then
@@ -226,6 +241,175 @@ local function resolveParticipantPlayers(zone, key)
     end
 
     return resolved
+end
+
+local function cleanupSwarm(key)
+    local swarm = wb.swarms[key]
+    if not swarm then
+        return
+    end
+
+    swarm.clearing = true
+
+    for _, addMob in ipairs(swarm.adds or {}) do
+        if addMob and addMob:isSpawned() then
+            addMob:setStatus(xi.status.DISAPPEAR)
+        end
+    end
+
+    wb.swarms[key] = nil
+end
+
+local function countAliveSwarmAdds(key)
+    local swarm = wb.swarms[key]
+    if not swarm then
+        return 0
+    end
+
+    local aliveCount = 0
+
+    for _, addMob in ipairs(swarm.adds or {}) do
+        if addMob and addMob:isSpawned() and addMob:isAlive() then
+            aliveCount = aliveCount + 1
+        end
+    end
+
+    return aliveCount
+end
+
+local function releaseSwarmShield(key)
+    local swarm = wb.swarms[key]
+    local queen = wb.alive[key]
+    if not swarm or swarm.released or not queen or not queen:isAlive() then
+        return
+    end
+
+    clearDamageShield(queen)
+    swarm.released = true
+
+    local zone = queen:getZone()
+    if zone then
+        xi.dynamicWorld.announceZone(zone, swarm.releaseMsg or '[Dynamic World] The queen bee loses her shield!')
+    end
+end
+
+local function updateSwarmState(key)
+    local swarm = wb.swarms[key]
+    if not swarm or swarm.clearing then
+        return
+    end
+
+    local aliveAdds = countAliveSwarmAdds(key)
+    if aliveAdds <= 0 then
+        releaseSwarmShield(key)
+    end
+end
+
+local function spawnSwarmAdds(key, zone, queen, config)
+    local swarmConfig = config and config.swarm
+    if not swarmConfig then
+        return
+    end
+
+    local state =
+    {
+        adds = {},
+        released = false,
+        releaseMsg = swarmConfig.releaseMsg,
+    }
+
+    wb.swarms[key] = state
+
+    for index = 1, (swarmConfig.count or 0) do
+        local angle = ((index - 1) / math.max(1, swarmConfig.count)) * math.pi * 2
+        local distance = swarmConfig.radius or 3
+        local offsetX = math.cos(angle) * distance
+        local offsetZ = math.sin(angle) * distance
+        local addConfig = swarmConfig.adds or {}
+
+        local addEntity = zone:insertDynamicEntity({
+            objtype = xi.objType.MOB,
+            name = (addConfig.name or 'Queen_Bee_Drone'):gsub(' ', '_'),
+            packetName = addConfig.packetName or 'Bee',
+            x = queen:getXPos() + offsetX,
+            y = queen:getYPos(),
+            z = queen:getZPos() + offsetZ,
+            rotation = math.random(0, 255),
+            groupId = addConfig.groupRef.groupId,
+            groupZoneId = addConfig.groupRef.groupZoneId,
+            minLevel = addConfig.level and addConfig.level[1] or config.level[1],
+            maxLevel = addConfig.level and addConfig.level[2] or config.level[2],
+            speed = addConfig.speed or math.max(40, config.speed or 40),
+            modelSize = addConfig.modelSize,
+            modelHitboxSize = addConfig.modelHitboxSize,
+            releaseIdOnDisappear = true,
+            specialSpawnAnimation = false,
+            isAggro = true,
+            onMobSpawn = function(addMob)
+                addMob:renameEntity(addConfig.packetName or 'Bee')
+                if addConfig.modelId and addConfig.modelId > 0 then
+                    addMob:setModelId(addConfig.modelId)
+                end
+                if addConfig.modelSize ~= nil then
+                    addMob:setModelSize(addConfig.modelSize)
+                end
+                if addConfig.modelHitboxSize and addConfig.modelHitboxSize > 0 then
+                    addMob:setHitboxSize(addConfig.modelHitboxSize)
+                end
+                if addConfig.bossMods then
+                    applyBossMods(addMob, { bossMods = addConfig.bossMods })
+                end
+                if addConfig.hpMultiplier and addConfig.hpMultiplier > 1 then
+                    applyBossHealth(addMob, { hpMultiplier = addConfig.hpMultiplier })
+                end
+                addMob:setRoamFlags(xi.roamFlag.NONE)
+                addMob:setMobMod(xi.mobMod.ROAM_DISTANCE, addConfig.roamDistance or 12)
+                addMob:setMobMod(xi.mobMod.ROAM_COOL, addConfig.roamCool or 1)
+                addMob:setMobMod(xi.mobMod.ROAM_TURNS, 6)
+                addMob:setMobMod(xi.mobMod.ROAM_RATE, 10)
+                addMob:setMobMod(xi.mobMod.MAGIC_COOL, addConfig.roamMagicCool or 600)
+                addMob:setMobMod(xi.mobMod.CHECK_AS_NM, 1)
+                addMob:setMobMod(xi.mobMod.NO_LINK, 1)
+                addMob:setMobMod(xi.mobMod.CLAIM_TYPE, xi.claimType.NON_EXCLUSIVE)
+                addMob:addListener('TAKE_DAMAGE', 'DW_WB_SWARM_TAG_' .. key .. '_' .. index, function(target, amount, attacker)
+                    if amount and amount > 0 then
+                        markParticipant(key, target, attacker)
+                    end
+                end)
+            end,
+            onMobEngage = function(addMob, target)
+                if target then
+                    addMob:updateEnmity(target)
+                end
+            end,
+            onMobDeath = function()
+                updateSwarmState(key)
+            end,
+            onMobDespawn = function()
+                updateSwarmState(key)
+            end,
+        })
+
+        if addEntity then
+            state.adds[#state.adds + 1] = addEntity
+            addEntity:setSpawn(
+                queen:getXPos() + offsetX,
+                queen:getYPos(),
+                queen:getZPos() + offsetZ,
+                math.random(0, 255)
+            )
+            addEntity:spawn()
+
+            local target = queen:getTarget()
+            if target and target:isAlive() then
+                addEntity:updateEnmity(target)
+            end
+        end
+    end
+
+    if swarmConfig.protectQueen then
+        applyDamageShield(queen)
+    end
 end
 
 local function buildGodEmperorConfig(zoneId, pos, groupRef)
@@ -298,16 +482,16 @@ local function buildShowcaseBossConfig(key, zoneId, pos, groupRef, options)
         zone = zoneId,
         pos = pos,
         level = options.level or { 99, 99 },
-        speed = options.speed or 40,
-        modelSize = options.modelSize or 32,
-        modelHitboxSize = options.modelHitboxSize or 1.5,
-        roamDistance = options.roamDistance or 50,
-        roamCool = options.roamCool or 3,
-        fightMagicCool = options.fightMagicCool or 20,
-        hpMultiplier = options.hpMultiplier or 40,
+        speed = options.speed ~= nil and options.speed or 40,
+        modelSize = options.modelSize ~= nil and options.modelSize or 32,
+        modelHitboxSize = options.modelHitboxSize ~= nil and options.modelHitboxSize or 1.5,
+        roamDistance = options.roamDistance ~= nil and options.roamDistance or 50,
+        roamCool = options.roamCool ~= nil and options.roamCool or 3,
+        fightMagicCool = options.fightMagicCool ~= nil and options.fightMagicCool or 20,
+        hpMultiplier = options.hpMultiplier ~= nil and options.hpMultiplier or 40,
         autoSpawn = false,
-        cooldown = options.cooldown or 300,
-        duration = options.duration or 1800,
+        cooldown = options.cooldown ~= nil and options.cooldown or 300,
+        duration = options.duration ~= nil and options.duration or 1800,
         loot = options.loot or {},
         bossMods = options.bossMods or {
             att = 120,
@@ -384,8 +568,8 @@ wb.db.placeholder_skeleton_pebble = buildShowcaseBossConfig(
     {
         name = 'Placeholder Skeleton Pebble',
         packetName = 'Tiny Skeleton',
-        modelSize = 255,
-        modelHitboxSize = 16.0,
+        modelSize = 0,
+        modelHitboxSize = 0.05,
         hpMultiplier = 8,
         spawnMsg = '[Dynamic World] A comically tiny placeholder skeleton clatters out of the grass.',
         deathMsg = '[Dynamic World] The tiny placeholder skeleton falls apart dramatically.',
@@ -416,11 +600,68 @@ wb.db.placeholder_behemoth_crumb = buildShowcaseBossConfig(
     {
         name = 'Placeholder Behemoth Crumb',
         packetName = 'Tiny Behemoth',
-        modelSize = 14,
-        modelHitboxSize = 0.9,
+        modelSize = 255,
+        modelHitboxSize = 18.0,
         hpMultiplier = 12,
         spawnMsg = '[Dynamic World] A comically tiny placeholder behemoth stomps in with misplaced confidence.',
         deathMsg = '[Dynamic World] The tiny placeholder behemoth topples over with surprising dignity.',
+    }
+)
+
+wb.db.queen_bee_swarm = buildShowcaseBossConfig(
+    'queen_bee_swarm',
+    xi.zone.WEST_SARUTABARUTA,
+    { x = -152.0, y = -12.0, z = -463.0, rot = 127 },
+    { groupId = 23, groupZoneId = xi.zone.WEST_SARUTABARUTA },
+    {
+        name = 'Queen Bee Swarm',
+        packetName = 'Queen Bee',
+        modelSize = 3,
+        modelHitboxSize = 3.2,
+        hpMultiplier = 65,
+        speed = 45,
+        spawnMsg = '[Dynamic World] A furious queen bee descends with a humming swarm.',
+        deathMsg = '[Dynamic World] The queen bee crashes to the ground as the swarm scatters.',
+        despawnMsg = '[Dynamic World] The queen bee and her swarm drift away.',
+        bossMods =
+        {
+            att = 150,
+            acc = 140,
+            def = 140,
+            eva = 110,
+            macc = 80,
+            matt = 80,
+            meva = 90,
+            regain = 60,
+            storeTp = 30,
+        },
+        swarm =
+        {
+            count = 6,
+            radius = 3.5,
+            protectQueen = true,
+            releaseMsg = '[Dynamic World] The queen bee is exposed after her swarm is destroyed!',
+            adds =
+            {
+                name = 'Queen Bee Drone',
+                packetName = 'Bee',
+                groupRef = { groupId = 23, groupZoneId = xi.zone.WEST_SARUTABARUTA },
+                level = { 72, 74 },
+                speed = 48,
+                modelSize = 0,
+                modelHitboxSize = 0.2,
+                hpMultiplier = 8,
+                roamDistance = 10,
+                roamCool = 1,
+                bossMods =
+                {
+                    att = 40,
+                    acc = 60,
+                    eva = 40,
+                    regain = 25,
+                },
+            },
+        },
     }
 )
 
@@ -450,6 +691,7 @@ end
 wb.init = function()
     wb.alive = {}
     wb.participants = {}
+    wb.swarms = {}
     wb.lastAutoCheck = {}
 end
 
@@ -509,7 +751,7 @@ wb.forceSpawn = function(query, player)
             if config.modelId and config.modelId > 0 then
                 mob:setModelId(config.modelId)
             end
-            if config.modelSize and config.modelSize > 0 then
+            if config.modelSize ~= nil then
                 mob:setModelSize(config.modelSize)
             end
             if config.modelHitboxSize and config.modelHitboxSize > 0 then
@@ -533,12 +775,14 @@ wb.forceSpawn = function(query, player)
                     markParticipant(key, target, attacker)
                 end
             end)
+            spawnSwarmAdds(key, mob:getZone(), mob, config)
             mob:timer((config.duration or 1200) * 1000, function(mobArg)
                 if mobArg and mobArg:isAlive() then
                     local z = mobArg:getZone()
                     if z then
                         xi.dynamicWorld.announceZone(z, config.despawnMsg)
                     end
+                    cleanupSwarm(key)
                     wb.alive[key] = nil
                     wb.participants[key] = nil
                     clearAppliedScale(mobArg)
@@ -577,6 +821,7 @@ wb.forceSpawn = function(query, player)
             local zoneArg = mob:getZone()
             SetServerVariable(getCooldownVar(key, config), os.time())
             clearAppliedScale(mob)
+            cleanupSwarm(key)
             wb.alive[key] = nil
 
             if zoneArg then
@@ -590,6 +835,7 @@ wb.forceSpawn = function(query, player)
         end,
         onMobDespawn = function(mob)
             clearAppliedScale(mob)
+            cleanupSwarm(key)
             wb.alive[key] = nil
             wb.participants[key] = nil
         end,
