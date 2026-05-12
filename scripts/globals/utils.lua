@@ -518,6 +518,15 @@ function utils.handlePhalanx(target, dmg)
 end
 
 ---@nodiscard
+---@param actor CBaseEntity
+---@param skill CMobSkill|CPetSkill
+---@param damage integer
+---@return integer
+function utils.handleAutomatonAutoAnalyzer(actor, skill, damage)
+    return damage
+end
+
+---@nodiscard
 ---@param target CBaseEntity
 ---@param dmg integer
 ---@return integer
