@@ -55,18 +55,12 @@ REPLACE INTO `item_equipment` VALUES
     --                                                       ^all jobs              ^HEAD slot
 
 REPLACE INTO `item_mods` VALUES
-    (23437, 1, 8), -- DEF +8
-    (23437, 5, 30), -- MP +30
-    (23437, 12, 6), -- INT +6
-    (23437, 13, 4), -- MND +4
-    (23437, 14, 4), -- CHR +4
-    (23437, 28, 6), -- MAB +6
-    (23437, 30, 6), -- MACC +6
-    (23437, 562, 3), -- M.Crit +3
-    (23437, 563, 5), -- M.Crit Dmg. +5
-    (23437, 369, 1); -- Refresh +1
-
--- [16402] Morris's Sporeling  (rare key item / curiosity, no equip — just a trophy drop)
+    (23437, 13, 10),
+    (23437, 14, 8),
+    (23437, 112, 12),
+    (23437, 374, 4),
+    (23437, 170, 5),
+    (23437, 369, 2);
 REPLACE INTO `item_basic` VALUES
     (16402, 0, 'Mrrs_Sporeling', 'mrrs_sporeling', 1, 59476, 99, 1, 0);
     -- NoSale=1, BaseSell=0 — unsellable trophy
@@ -76,26 +70,14 @@ REPLACE INTO `item_basic` VALUES
     (26117, 0, 'Fungal_Medal', 'fungal_medal', 1, 59476, 99, 0, 28197);
 
 REPLACE INTO `item_equipment` VALUES
-    (26117, "fungal_medal", 45, 0, 16924, 0, 0, 0, 6144, 0, 0, 0);
-    --                                                                                   ^EARS slot
-
+    (26117, "fungal_medal", 45, 0, 1589780, 0, 0, 0, 6144, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (26117, 5, 45), -- MP +45
-    (26117, 12, 9), -- INT +9
-    (26117, 13, 6), -- MND +6
-    (26117, 14, 6), -- CHR +6
-    (26117, 28, 9), -- MAB +9
-    (26117, 30, 9), -- MACC +9
-    (26117, 562, 4), -- M.Crit +4
-    (26117, 563, 7), -- M.Crit Dmg. +7
-    (26117, 369, 2); -- Refresh +2
-
--- =============================================================================
--- SECTION 2: DYNAMIC WORLD TIER REWARDS
--- Generic rare drops from Elite / Apex tiers
--- =============================================================================
-
--- [16424] Wanderer's Token  (ring, all jobs, lv1)
+    (26117, 13, 6),
+    (26117, 14, 6),
+    (26117, 112, 11),
+    (26117, 374, 3),
+    (26117, 170, 3),
+    (26117, 369, 1);
 REPLACE INTO `item_basic` VALUES
     (11638, 0, 'Wanderer_Token', 'wanderer_token', 1, 59476, 99, 0, 200);
 REPLACE INTO `item_equipment` VALUES
@@ -112,31 +94,23 @@ REPLACE INTO `item_mods` VALUES
 REPLACE INTO `item_basic` VALUES
     (28439, 0, 'Nomad_Cord', 'nomad_cord', 1, 59476, 99, 0, 1000);
 REPLACE INTO `item_equipment` VALUES
-    (28439, "nomads_cord", 36, 0, 131, 0, 0, 0, 1024, 0, 0, 0);
+    (28439, "nomads_cord", 36, 0, 2097601, 0, 0, 0, 1024, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (28439, 1, 3), -- DEF +3
-    (28439, 2, 40), -- HP +40
-    (28439, 8, 6), -- STR +6
-    (28439, 10, 6), -- VIT +6
-    (28439, 23, 12), -- Attack +12
-    (28439, 25, 10), -- Accuracy +10
-    (28439, 421, 4); -- Crit Dmg. +4
-
--- [16436] Elite's Resolve  (back, all jobs, lv40)
+    (28439, 10, 9),
+    (28439, 1, 18),
+    (28439, 27, 5),
+    (28439, 160, -3),
+    (28439, 170, 2);
 REPLACE INTO `item_basic` VALUES
     (28610, 0, 'Elite_Resolve', 'elite_resolve', 1, 59476, 99, 0, 3000);
 REPLACE INTO `item_equipment` VALUES
-    (28610, "elites_resolve", 51, 0, 10240, 0, 0, 0, 32768, 0, 0, 0);
+    (28610, "elites_resolve", 51, 0, 2097601, 0, 0, 0, 32768, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (28610, 1, 6), -- DEF +6
-    (28610, 8, 9), -- STR +9
-    (28610, 9, 9), -- DEX +9
-    (28610, 23, 18), -- Attack +18
-    (28610, 25, 18), -- Accuracy +18
-    (28610, 73, 7), -- Store TP +7
-    (28610, 384, 300); -- Haste +3%
-
--- [16462] Apex Shard  (ring, all jobs, lv50)
+    (28610, 10, 12),
+    (28610, 1, 22),
+    (28610, 27, 6),
+    (28610, 160, -4),
+    (28610, 73, 3);
 REPLACE INTO `item_basic` VALUES
     (11677, 0, 'Apex_Charm', 'apex_charm', 1, 59476, 99, 0, 10000);
 REPLACE INTO `item_equipment` VALUES
@@ -169,133 +143,96 @@ REPLACE INTO `item_basic` VALUES
 REPLACE INTO `item_basic` VALUES
     (23438, 0, 'William_Woolcap', 'william_woolcap', 1, 59476, 99, 0, 300);
 REPLACE INTO `item_equipment` VALUES
-    (23438, "williams_woolcap", 14, 0, 16924, 339, 0, 0, 16, 0, 0, 0);
+    (23438, "williams_woolcap", 14, 0, 1589780, 339, 0, 0, 16, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23438, 1, 4), -- DEF +4
-    (23438, 5, 15), -- MP +15
-    (23438, 12, 3), -- INT +3
-    (23438, 13, 2), -- MND +2
-    (23438, 14, 2), -- CHR +2
-    (23438, 28, 3), -- MAB +3
-    (23438, 30, 3), -- MACC +3
-    (23438, 562, 2), -- M.Crit +2
-    (23438, 563, 3), -- M.Crit Dmg. +3
-    (23438, 369, 1); -- Refresh +1
-
+    (23438, 12, 8),
+    (23438, 13, 8),
+    (23438, 117, 13),
+    (23438, 487, 4),
+    (23438, 30, 16),
+    (23438, 369, 2);
 REPLACE INTO `item_basic` VALUES
     (23539, 0, 'Wllm_Woolmitt', 'wllm_woolmitt', 1, 59476, 99, 0, 500);
 REPLACE INTO `item_equipment` VALUES
-    (23539, "williams_woolmitt", 11, 0, 131, 79, 0, 0, 64, 0, 0, 0);
+    (23539, "williams_woolmitt", 11, 0, 6146, 79, 0, 0, 64, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23539, 1, 3), -- DEF +3
-    (23539, 2, 20), -- HP +20
-    (23539, 8, 3), -- STR +3
-    (23539, 10, 3), -- VIT +3
-    (23539, 23, 6), -- Attack +6
-    (23539, 25, 5), -- Accuracy +5
-    (23539, 421, 2); -- Crit Dmg. +2
-
--- Baa-rbara (lv10-13)
--- Baarbara Bell is defined in SECTION 4 with the current weapon DAT mapping.
-
+    (23539, 8, 8),
+    (23539, 9, 8),
+    (23539, 23, 19),
+    (23539, 25, 20),
+    (23539, 165, 3),
+    (23539, 289, 5);
 REPLACE INTO `item_basic` VALUES
     (26007, 0, 'Baarbara_Collar', 'baarbara_collar', 1, 59476, 99, 0, 600);
 REPLACE INTO `item_equipment` VALUES
-    (26007, "baarbaras_collar", 24, 0, 16924, 0, 0, 0, 512, 0, 0, 0);
+    (26007, "baarbaras_collar", 24, 0, 1589780, 0, 0, 0, 512, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (26007, 5, 30), -- MP +30
-    (26007, 12, 6), -- INT +6
-    (26007, 13, 4), -- MND +4
-    (26007, 14, 4), -- CHR +4
-    (26007, 28, 6), -- MAB +6
-    (26007, 30, 6), -- MACC +6
-    (26007, 562, 3), -- M.Crit +3
-    (26007, 563, 5), -- M.Crit Dmg. +5
-    (26007, 369, 1); -- Refresh +1
-
+    (26007, 14, 9),
+    (26007, 13, 8),
+    (26007, 170, 4),
+    (26007, 369, 2),
+    (26007, 112, 8),
+    (26007, 117, 8);
 REPLACE INTO `item_basic` VALUES
     (28441, 0, 'Baarbara_Ribbon', 'baarbara_ribbon', 1, 59476, 99, 0, 900);
 REPLACE INTO `item_equipment` VALUES
-    (28441, "baarbaras_ribbon", 21, 0, 263200, 0, 0, 0, 1024, 0, 0, 0);
+    (28441, "baarbaras_ribbon", 21, 0, 328736, 0, 0, 0, 1024, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (28441, 1, 3), -- DEF +3
-    (28441, 9, 6), -- DEX +6
-    (28441, 11, 6), -- AGI +6
-    (28441, 25, 10), -- Accuracy +10
-    (28441, 26, 10), -- Rng. Acc. +10
-    (28441, 23, 12), -- Attack +12
-    (28441, 24, 12), -- Rng. Atk. +12
-    (28441, 68, 10), -- Evasion +10
-    (28441, 165, 3); -- Crit Rate +3
-
--- Lambchop Larry (lv20-24) — 18548-18550
+    (28441, 9, 7),
+    (28441, 11, 7),
+    (28441, 25, 14),
+    (28441, 26, 15),
+    (28441, 165, 3),
+    (28441, 365, 4);
 REPLACE INTO `item_basic` VALUES
     (18548, 0, 'Larry_Lambchop', 'larry_lambchop', 1, 59476, 99, 0, 50);
 
 REPLACE INTO `item_basic` VALUES
     (28611, 0, 'Larry_Fleece', 'larry_fleece', 1, 59476, 99, 0, 1200);
 REPLACE INTO `item_equipment` VALUES
-    (28611, "larrys_lucky_fleece", 13, 0, 131, 0, 0, 0, 32768, 0, 0, 0);
+    (28611, "larrys_lucky_fleece", 13, 0, 10371, 0, 0, 0, 32768, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (28611, 1, 2), -- DEF +2
-    (28611, 2, 20), -- HP +20
-    (28611, 8, 3), -- STR +3
-    (28611, 10, 3), -- VIT +3
-    (28611, 23, 6), -- Attack +6
-    (28611, 25, 5), -- Accuracy +5
-    (28611, 421, 2); -- Crit Dmg. +2
-
+    (28611, 8, 10),
+    (28611, 10, 8),
+    (28611, 23, 20),
+    (28611, 25, 16),
+    (28611, 73, 4),
+    (28611, 288, 3);
 REPLACE INTO `item_basic` VALUES
     (26008, 0, 'Larry_Lanyard', 'larry_lanyard', 1, 59476, 99, 0, 1800);
 REPLACE INTO `item_equipment` VALUES
-    (26008, "larrys_lanyard", 26, 0, 131, 0, 0, 0, 512, 0, 0, 0);
+    (26008, "larrys_lanyard", 26, 0, 301090, 0, 0, 0, 512, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (26008, 2, 40), -- HP +40
-    (26008, 8, 6), -- STR +6
-    (26008, 10, 6), -- VIT +6
-    (26008, 23, 12), -- Attack +12
-    (26008, 25, 10), -- Accuracy +10
-    (26008, 421, 4); -- Crit Dmg. +4
-
--- Shear Sharon (lv35-40) — 18567-18569
+    (26008, 9, 8),
+    (26008, 11, 8),
+    (26008, 25, 16),
+    (26008, 165, 4),
+    (26008, 302, 2),
+    (26008, 76, 6);
 REPLACE INTO `item_basic` VALUES
     (18567, 0, 'Sharon_Fleece', 'sharon_fleece', 1, 59476, 99, 0, 100);
 
 REPLACE INTO `item_basic` VALUES
     (23529, 0, 'Sharon_Shears', 'sharon_shears', 1, 59476, 99, 0, 4000);
 REPLACE INTO `item_equipment` VALUES
-    (23529, "sharons_shears", 50, 0, 6146, 214, 0, 0, 64, 0, 0, 0);
+    (23529, "sharons_shears", 50, 0, 8321, 214, 0, 0, 64, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23529, 1, 9), -- DEF +9
-    (23529, 8, 6), -- STR +6
-    (23529, 9, 9), -- DEX +9
-    (23529, 23, 18), -- Attack +18
-    (23529, 25, 20), -- Accuracy +20
-    (23529, 73, 8), -- Store TP +8
-    (23529, 384, 300), -- Haste +3%
-    (23529, 165, 4); -- Crit Rate +4
-
+    (23529, 8, 10),
+    (23529, 10, 8),
+    (23529, 23, 24),
+    (23529, 25, 17),
+    (23529, 73, 6),
+    (23529, 288, 3);
 REPLACE INTO `item_basic` VALUES
     (28612, 0, 'Sharon_Mantle', 'sharon_mantle', 1, 59476, 99, 0, 6000);
 REPLACE INTO `item_equipment` VALUES
-    (28612, "sharons_silken_mantle", 16, 0, 16924, 0, 0, 0, 32768, 0, 0, 0);
+    (28612, "sharons_silken_mantle", 16, 0, 1589780, 0, 0, 0, 32768, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (28612, 1, 2), -- DEF +2
-    (28612, 5, 15), -- MP +15
-    (28612, 12, 3), -- INT +3
-    (28612, 13, 2), -- MND +2
-    (28612, 14, 2), -- CHR +2
-    (28612, 28, 3), -- MAB +3
-    (28612, 30, 3), -- MACC +3
-    (28612, 562, 2), -- M.Crit +2
-    (28612, 563, 3), -- M.Crit Dmg. +3
-    (28612, 369, 1); -- Refresh +1
-
--- =========================================================
--- RABBITS
--- =========================================================
-
--- Cottontail Tom (lv5-7) — 18570-18795
+    (28612, 14, 10),
+    (28612, 13, 7),
+    (28612, 112, 8),
+    (28612, 117, 12),
+    (28612, 369, 3);
 REPLACE INTO `item_basic` VALUES
     (18570, 0, 'Tom_Cottontail', 'tom_cottontail', 1, 59476, 99, 0, 50);
 
@@ -316,19 +253,14 @@ REPLACE INTO `item_mods` VALUES
 REPLACE INTO `item_basic` VALUES
     (23751, 0, 'Tom_Hop_Boots', 'tom_hop_boots', 1, 59476, 99, 0, 500);
 REPLACE INTO `item_equipment` VALUES
-    (23751, "toms_hop_boots", 6, 0, 263200, 252, 0, 0, 256, 0, 0, 0);
+    (23751, "toms_hop_boots", 6, 0, 66592, 252, 0, 0, 256, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23751, 1, 3), -- DEF +3
-    (23751, 9, 3), -- DEX +3
-    (23751, 11, 3), -- AGI +3
-    (23751, 25, 5), -- Accuracy +5
-    (23751, 26, 5), -- Rng. Acc. +5
-    (23751, 23, 6), -- Attack +6
-    (23751, 24, 6), -- Rng. Atk. +6
-    (23751, 68, 5), -- Evasion +5
-    (23751, 165, 2); -- Crit Rate +2
-
--- Hopscotch Harvey (lv10-13) — 18796-18798
+    (23751, 9, 9),
+    (23751, 11, 8),
+    (23751, 25, 18),
+    (23751, 26, 18),
+    (23751, 165, 4),
+    (23751, 365, 4);
 REPLACE INTO `item_basic` VALUES
     (18796, 0, 'Harvey_Hopstone', 'harvey_hopstone', 1, 59476, 99, 0, 50);
 
@@ -350,303 +282,224 @@ REPLACE INTO `item_mods` VALUES
 REPLACE INTO `item_basic` VALUES
     (27526, 0, 'Harvey_Earring', 'harvey_earring', 1, 59476, 99, 0, 900);
 REPLACE INTO `item_equipment` VALUES
-    (27526, "harveys_spring_earring", 27, 0, 263200, 0, 0, 0, 6144, 0, 0, 0);
+    (27526, "harveys_spring_earring", 27, 0, 328736, 0, 0, 0, 6144, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (27526, 9, 6), -- DEX +6
-    (27526, 11, 6), -- AGI +6
-    (27526, 25, 10), -- Accuracy +10
-    (27526, 26, 10), -- Rng. Acc. +10
-    (27526, 23, 12), -- Attack +12
-    (27526, 24, 12), -- Rng. Atk. +12
-    (27526, 68, 10), -- Evasion +10
-    (27526, 165, 3); -- Crit Rate +3
-
--- Bunbun Benedict (lv22-28) — 18799-18835
+    (27526, 9, 5),
+    (27526, 11, 7),
+    (27526, 24, 16),
+    (27526, 26, 14),
+    (27526, 73, 3),
+    (27526, 68, 8);
 REPLACE INTO `item_basic` VALUES
     (18799, 0, 'Benedict_Bonnet', 'benedict_bonnet', 1, 59476, 99, 0, 50);
 
 REPLACE INTO `item_basic` VALUES
     (23439, 0, 'Benedict_Cap', 'benedict_cap', 1, 59476, 99, 0, 1400);
 REPLACE INTO `item_equipment` VALUES
-    (23439, "benedicts_fur_cap", 39, 0, 263200, 339, 0, 0, 16, 0, 0, 0);
+    (23439, "benedicts_fur_cap", 39, 0, 66592, 339, 0, 0, 16, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23439, 1, 8), -- DEF +8
-    (23439, 9, 6), -- DEX +6
-    (23439, 11, 6), -- AGI +6
-    (23439, 25, 10), -- Accuracy +10
-    (23439, 26, 10), -- Rng. Acc. +10
-    (23439, 23, 12), -- Attack +12
-    (23439, 24, 12), -- Rng. Atk. +12
-    (23439, 68, 10), -- Evasion +10
-    (23439, 165, 3); -- Crit Rate +3
-
+    (23439, 9, 10),
+    (23439, 11, 8),
+    (23439, 25, 20),
+    (23439, 26, 20),
+    (23439, 165, 4),
+    (23439, 365, 4);
 REPLACE INTO `item_basic` VALUES
     (28442, 0, 'Benedict_Belt', 'benedict_belt', 1, 59476, 99, 0, 2000);
 REPLACE INTO `item_equipment` VALUES
-    (28442, "benedicts_burrow_belt", 38, 0, 263200, 0, 0, 0, 1024, 0, 0, 0);
+    (28442, "benedicts_burrow_belt", 38, 0, 328736, 0, 0, 0, 1024, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (28442, 1, 3), -- DEF +3
-    (28442, 9, 6), -- DEX +6
-    (28442, 11, 6), -- AGI +6
-    (28442, 25, 10), -- Accuracy +10
-    (28442, 26, 10), -- Rng. Acc. +10
-    (28442, 23, 12), -- Attack +12
-    (28442, 24, 12), -- Rng. Atk. +12
-    (28442, 68, 10), -- Evasion +10
-    (28442, 165, 3); -- Crit Rate +3
-
--- Twitchy Theodore (lv38-45) — 18836-18838
+    (28442, 11, 8),
+    (28442, 24, 18),
+    (28442, 26, 16),
+    (28442, 365, 4),
+    (28442, 73, 4);
 REPLACE INTO `item_basic` VALUES
     (18836, 0, 'Theodore_Twitch', 'theodore_twitch', 1, 59476, 99, 0, 100);
 
 REPLACE INTO `item_basic` VALUES
     (23752, 0, 'Thaddeus_Greaves', 'thaddeus_greaves', 1, 59476, 99, 0, 5000);
 REPLACE INTO `item_equipment` VALUES
-    (23752, "theodores_dash_greaves", 55, 0, 263200, 267, 0, 0, 256, 0, 0, 0);
+    (23752, "theodores_dash_greaves", 55, 0, 66592, 267, 0, 0, 256, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23752, 1, 9), -- DEF +9
-    (23752, 9, 9), -- DEX +9
-    (23752, 11, 9), -- AGI +9
-    (23752, 25, 15), -- Accuracy +15
-    (23752, 26, 15), -- Rng. Acc. +15
-    (23752, 23, 18), -- Attack +18
-    (23752, 24, 18), -- Rng. Atk. +18
-    (23752, 68, 15), -- Evasion +15
-    (23752, 165, 4); -- Crit Rate +4
-
+    (23752, 9, 7),
+    (23752, 11, 9),
+    (23752, 24, 20),
+    (23752, 26, 16),
+    (23752, 68, 14),
+    (23752, 73, 5);
 REPLACE INTO `item_basic` VALUES
     (27527, 0, 'Thaddeus_Earring', 'thaddeus_earring', 1, 59476, 99, 0, 7000);
 REPLACE INTO `item_equipment` VALUES
-    (27527, "theodores_panic_earring", 51, 0, 263200, 0, 0, 0, 6144, 0, 0, 0);
+    (27527, "theodores_panic_earring", 51, 0, 328736, 0, 0, 0, 6144, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (27527, 9, 9), -- DEX +9
-    (27527, 11, 9), -- AGI +9
-    (27527, 25, 15), -- Accuracy +15
-    (27527, 26, 15), -- Rng. Acc. +15
-    (27527, 23, 18), -- Attack +18
-    (27527, 24, 18), -- Rng. Atk. +18
-    (27527, 68, 15), -- Evasion +15
-    (27527, 165, 4); -- Crit Rate +4
-
--- =========================================================
--- CRABS
--- =========================================================
-
--- Crableg Cameron (lv12-16) — 18889-18917
+    (27527, 9, 5),
+    (27527, 11, 7),
+    (27527, 24, 17),
+    (27527, 26, 14),
+    (27527, 73, 3),
+    (27527, 68, 8);
 REPLACE INTO `item_basic` VALUES
     (18889, 0, 'Cameron_Claw', 'cameron_claw', 1, 59476, 99, 0, 50);
 
 REPLACE INTO `item_basic` VALUES
     (23530, 0, 'Cameron_Shield', 'cameron_shield', 1, 59476, 99, 0, 700);
 REPLACE INTO `item_equipment` VALUES
-    (23530, "camerons_shell_shield", 7, 0, 131, 308, 0, 0, 64, 0, 0, 0);
+    (23530, "camerons_shell_shield", 7, 0, 6146, 308, 0, 0, 64, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23530, 1, 3), -- DEF +3
-    (23530, 2, 20), -- HP +20
-    (23530, 8, 3), -- STR +3
-    (23530, 10, 3), -- VIT +3
-    (23530, 23, 6), -- Attack +6
-    (23530, 25, 5), -- Accuracy +5
-    (23530, 421, 2); -- Crit Dmg. +2
-
+    (23530, 8, 8),
+    (23530, 9, 8),
+    (23530, 23, 19),
+    (23530, 25, 19),
+    (23530, 165, 3),
+    (23530, 289, 5);
 REPLACE INTO `item_basic` VALUES
     (28529, 0, 'Cameron_Ring', 'cameron_ring', 1, 59476, 99, 0, 1000);
 REPLACE INTO `item_equipment` VALUES
-    (28529, "camerons_coral_ring", 9, 0, 131, 0, 0, 0, 24576, 0, 0, 0);
+    (28529, "camerons_coral_ring", 9, 0, 301090, 0, 0, 0, 24576, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (28529, 2, 20), -- HP +20
-    (28529, 8, 3), -- STR +3
-    (28529, 10, 3), -- VIT +3
-    (28529, 23, 6), -- Attack +6
-    (28529, 25, 5), -- Accuracy +5
-    (28529, 421, 2); -- Crit Dmg. +2
-
--- Old Bay Ollie (lv25-30) — 18918-18920
+    (28529, 8, 6),
+    (28529, 9, 6),
+    (28529, 23, 12),
+    (28529, 25, 12),
+    (28529, 73, 4),
+    (28529, 165, 2);
 REPLACE INTO `item_basic` VALUES
     (18918, 0, 'Ollie_Shell', 'ollie_shell', 1, 59476, 99, 0, 50);
 
 REPLACE INTO `item_basic` VALUES
     (23531, 0, 'Ollie_Gauntlets', 'ollie_gauntlets', 1, 59476, 99, 0, 1600);
 REPLACE INTO `item_equipment` VALUES
-    (23531, "ollies_brine_gauntlets", 30, 0, 131, 338, 0, 0, 64, 0, 0, 0);
+    (23531, "ollies_brine_gauntlets", 30, 0, 2097345, 338, 0, 0, 64, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23531, 1, 6), -- DEF +6
-    (23531, 2, 40), -- HP +40
-    (23531, 8, 6), -- STR +6
-    (23531, 10, 6), -- VIT +6
-    (23531, 23, 12), -- Attack +12
-    (23531, 25, 10), -- Accuracy +10
-    (23531, 421, 4); -- Crit Dmg. +4
-
+    (23531, 10, 10),
+    (23531, 13, 6),
+    (23531, 1, 19),
+    (23531, 27, 5),
+    (23531, 160, -3),
+    (23531, 73, 4);
 REPLACE INTO `item_basic` VALUES
     (28443, 0, 'Ollie_Belt', 'ollie_belt', 1, 59476, 99, 0, 2500);
 REPLACE INTO `item_equipment` VALUES
-    (28443, "ollies_seasoned_belt", 22, 0, 131, 0, 0, 0, 1024, 0, 0, 0);
+    (28443, "ollies_seasoned_belt", 22, 0, 301090, 0, 0, 0, 1024, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (28443, 1, 3), -- DEF +3
-    (28443, 2, 40), -- HP +40
-    (28443, 8, 6), -- STR +6
-    (28443, 10, 6), -- VIT +6
-    (28443, 23, 12), -- Attack +12
-    (28443, 25, 10), -- Accuracy +10
-    (28443, 421, 4); -- Crit Dmg. +4
-
--- Bisque Bernard (lv35-42) — 19322-19745
+    (28443, 8, 8),
+    (28443, 23, 18),
+    (28443, 25, 16),
+    (28443, 421, 4),
+    (28443, 73, 3);
 REPLACE INTO `item_basic` VALUES
     (19322, 0, 'Bernard_Bowl', 'bernard_bowl', 1, 59476, 99, 0, 100);
 
 REPLACE INTO `item_basic` VALUES
     (25692, 0, 'Bernard_Mail', 'bernard_mail', 1, 59476, 99, 0, 5000);
 REPLACE INTO `item_equipment` VALUES
-    (25692, "bernards_tidal_mail", 57, 0, 131, 323, 0, 0, 32, 0, 0, 0);
+    (25692, "bernards_tidal_mail", 57, 0, 8321, 323, 0, 0, 32, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (25692, 1, 18), -- DEF +18
-    (25692, 2, 70), -- HP +70
-    (25692, 8, 9), -- STR +9
-    (25692, 10, 9), -- VIT +9
-    (25692, 23, 18), -- Attack +18
-    (25692, 25, 15), -- Accuracy +15
-    (25692, 421, 6); -- Crit Dmg. +6
-
+    (25692, 8, 13),
+    (25692, 10, 10),
+    (25692, 23, 32),
+    (25692, 25, 23),
+    (25692, 73, 8),
+    (25692, 288, 4);
 REPLACE INTO `item_basic` VALUES
     (27528, 0, 'Bernard_Earring', 'bernard_earring', 1, 59476, 99, 0, 7000);
 REPLACE INTO `item_equipment` VALUES
-    (27528, "bernards_brine_earring", 38, 0, 16924, 0, 0, 0, 6144, 0, 0, 0);
+    (27528, "bernards_brine_earring", 38, 0, 1589276, 0, 0, 0, 6144, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (27528, 5, 30), -- MP +30
-    (27528, 12, 6), -- INT +6
-    (27528, 13, 4), -- MND +4
-    (27528, 14, 4), -- CHR +4
-    (27528, 28, 6), -- MAB +6
-    (27528, 30, 6), -- MACC +6
-    (27528, 562, 3), -- M.Crit +3
-    (27528, 563, 5), -- M.Crit Dmg. +5
-    (27528, 369, 1); -- Refresh +1
-
--- Dungeness Duncan (lv45-52) — 19804-19969
+    (27528, 12, 5),
+    (27528, 13, 5),
+    (27528, 28, 11),
+    (27528, 30, 10),
+    (27528, 170, 3),
+    (27528, 369, 1);
 REPLACE INTO `item_basic` VALUES
     (19804, 0, 'Duncan_Pincer', 'duncan_pincer', 1, 59476, 99, 0, 100);
 
 REPLACE INTO `item_basic` VALUES
     (23440, 0, 'Duncan_Helm', 'duncan_helm', 1, 59476, 99, 0, 8000);
 REPLACE INTO `item_equipment` VALUES
-    (23440, "duncans_abyssal_helm", 59, 0, 131, 339, 0, 0, 16, 0, 0, 0);
+    (23440, "duncans_abyssal_helm", 59, 0, 6146, 339, 0, 0, 16, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23440, 1, 12), -- DEF +12
-    (23440, 2, 70), -- HP +70
-    (23440, 8, 9), -- STR +9
-    (23440, 10, 9), -- VIT +9
-    (23440, 23, 18), -- Attack +18
-    (23440, 25, 15), -- Accuracy +15
-    (23440, 421, 6); -- Crit Dmg. +6
-
+    (23440, 8, 8),
+    (23440, 9, 8),
+    (23440, 23, 20),
+    (23440, 25, 21),
+    (23440, 165, 3),
+    (23440, 289, 5);
 REPLACE INTO `item_basic` VALUES
     (28567, 0, 'Duncan_Ring', 'duncan_ring', 1, 59476, 99, 0, 12000);
 REPLACE INTO `item_equipment` VALUES
-    (28567, "duncans_deepwater_ring", 74, 0, 131, 0, 0, 0, 24576, 0, 0, 0);
+    (28567, "duncans_deepwater_ring", 74, 0, 2097601, 0, 0, 0, 24576, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (28567, 2, 100), -- HP +100
-    (28567, 8, 12), -- STR +12
-    (28567, 10, 12), -- VIT +12
-    (28567, 23, 24), -- Attack +24
-    (28567, 25, 20), -- Accuracy +20
-    (28567, 421, 8); -- Crit Dmg. +8
-
--- =========================================================
--- FUNGARS
--- =========================================================
-
--- Cap'n Chanterelle (lv18-22) — 19970-19972
+    (28567, 8, 5),
+    (28567, 10, 5),
+    (28567, 23, 10),
+    (28567, 25, 8),
+    (28567, 27, 4),
+    (28567, 160, -2);
 REPLACE INTO `item_basic` VALUES
     (19970, 0, 'Chanterelle_Cap', 'chanterelle_cap', 1, 59476, 99, 0, 50);
 
 REPLACE INTO `item_basic` VALUES
     (23441, 0, 'Chanterelle_Hat', 'chanterelle_hat', 1, 59476, 99, 0, 1200);
 REPLACE INTO `item_equipment` VALUES
-    (23441, "chanterelles_spore_hat", 16, 0, 16924, 339, 0, 0, 16, 0, 0, 0);
+    (23441, "chanterelles_spore_hat", 16, 0, 1589780, 339, 0, 0, 16, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23441, 1, 4), -- DEF +4
-    (23441, 5, 15), -- MP +15
-    (23441, 12, 3), -- INT +3
-    (23441, 13, 2), -- MND +2
-    (23441, 14, 2), -- CHR +2
-    (23441, 28, 3), -- MAB +3
-    (23441, 30, 3), -- MACC +3
-    (23441, 562, 2), -- M.Crit +2
-    (23441, 563, 3), -- M.Crit Dmg. +3
-    (23441, 369, 1); -- Refresh +1
-
+    (23441, 12, 8),
+    (23441, 13, 8),
+    (23441, 117, 12),
+    (23441, 487, 4),
+    (23441, 30, 17),
+    (23441, 369, 2);
 REPLACE INTO `item_basic` VALUES
     (28445, 0, 'Chntrll_Mycelia', 'chntrll_mycelia', 1, 59476, 99, 0, 1800);
 REPLACE INTO `item_equipment` VALUES
-    (28445, "chanterelles_mycelia", 21, 0, 16924, 0, 0, 0, 1024, 0, 0, 0);
+    (28445, "chanterelles_mycelia", 21, 0, 1589276, 0, 0, 0, 1024, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (28445, 1, 3), -- DEF +3
-    (28445, 5, 30), -- MP +30
-    (28445, 12, 6), -- INT +6
-    (28445, 13, 4), -- MND +4
-    (28445, 14, 4), -- CHR +4
-    (28445, 28, 6), -- MAB +6
-    (28445, 30, 6), -- MACC +6
-    (28445, 562, 3), -- M.Crit +3
-    (28445, 563, 5), -- M.Crit Dmg. +5
-    (28445, 369, 1); -- Refresh +1
-
--- Portobello Pete (lv35-40) — 19973-19975
+    (28445, 12, 8),
+    (28445, 28, 12),
+    (28445, 30, 12),
+    (28445, 487, 4),
+    (28445, 369, 1);
 REPLACE INTO `item_basic` VALUES
     (19973, 0, 'Pete_Portobello', 'pete_portobello', 1, 59476, 99, 0, 100);
 
 REPLACE INTO `item_basic` VALUES
     (25693, 0, 'Pete_Robe', 'pete_robe', 1, 59476, 99, 0, 5000);
 REPLACE INTO `item_equipment` VALUES
-    (25693, "petes_fungal_robe", 46, 0, 16924, 323, 0, 0, 32, 0, 0, 0);
+    (25693, "petes_fungal_robe", 46, 0, 16916, 323, 0, 0, 32, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (25693, 1, 18), -- DEF +18
-    (25693, 5, 45), -- MP +45
-    (25693, 12, 9), -- INT +9
-    (25693, 13, 6), -- MND +6
-    (25693, 14, 6), -- CHR +6
-    (25693, 28, 9), -- MAB +9
-    (25693, 30, 9), -- MACC +9
-    (25693, 562, 4), -- M.Crit +4
-    (25693, 563, 7), -- M.Crit Dmg. +7
-    (25693, 369, 2); -- Refresh +2
-
+    (25693, 13, 14),
+    (25693, 14, 10),
+    (25693, 112, 15),
+    (25693, 374, 5),
+    (25693, 170, 5),
+    (25693, 369, 3);
 REPLACE INTO `item_basic` VALUES
     (26009, 0, 'Pete_Necklace', 'pete_necklace', 1, 59476, 99, 0, 7000);
 REPLACE INTO `item_equipment` VALUES
-    (26009, "petes_spore_necklace", 31, 0, 16924, 0, 0, 0, 512, 0, 0, 0);
+    (26009, "petes_spore_necklace", 31, 0, 1589276, 0, 0, 0, 512, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (26009, 5, 30), -- MP +30
-    (26009, 12, 6), -- INT +6
-    (26009, 13, 4), -- MND +4
-    (26009, 14, 4), -- CHR +4
-    (26009, 28, 6), -- MAB +6
-    (26009, 30, 6), -- MACC +6
-    (26009, 562, 3), -- M.Crit +3
-    (26009, 563, 5), -- M.Crit Dmg. +5
-    (26009, 369, 1); -- Refresh +1
-
--- Truffle Trevor (lv55-62) — 19976-19978
+    (26009, 11, 9),
+    (26009, 24, 18),
+    (26009, 26, 18),
+    (26009, 365, 5),
+    (26009, 165, 2);
 REPLACE INTO `item_basic` VALUES
     (19976, 0, 'Trevor_Truffle', 'trevor_truffle', 1, 59476, 99, 0, 100);
 
 REPLACE INTO `item_basic` VALUES
     (23710, 0, 'Trevor_Crown', 'trevor_crown', 1, 59476, 99, 0, 12000);
 REPLACE INTO `item_equipment` VALUES
-    (23710, "trevors_myconid_crown", 71, 0, 16924, 132, 0, 0, 16, 0, 0, 0);
+    (23710, "trevors_myconid_crown", 71, 0, 16916, 132, 0, 0, 16, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23710, 1, 16), -- DEF +16
-    (23710, 5, 60), -- MP +60
-    (23710, 12, 12), -- INT +12
-    (23710, 13, 8), -- MND +8
-    (23710, 14, 8), -- CHR +8
-    (23710, 28, 12), -- MAB +12
-    (23710, 30, 12), -- MACC +12
-    (23710, 562, 5), -- M.Crit +5
-    (23710, 563, 10), -- M.Crit Dmg. +10
-    (23710, 369, 3); -- Refresh +3
-
+    (23710, 13, 10),
+    (23710, 14, 8),
+    (23710, 112, 12),
+    (23710, 374, 4),
+    (23710, 170, 4),
+    (23710, 369, 3);
 REPLACE INTO `item_basic` VALUES
     (11628, 0, 'Trevor_Cape', 'trevor_cape', 1, 59476, 99, 0, 15000);
 REPLACE INTO `item_equipment` VALUES
@@ -673,79 +526,64 @@ REPLACE INTO `item_basic` VALUES
 REPLACE INTO `item_basic` VALUES
     (23711, 0, 'Bruno_Helm', 'bruno_helm', 1, 59476, 99, 0, 700);
 REPLACE INTO `item_equipment` VALUES
-    (23711, "brunos_discount_helm", 8, 0, 10240, 128, 0, 0, 16, 0, 0, 0);
+    (23711, "brunos_discount_helm", 8, 0, 2097345, 128, 0, 0, 16, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23711, 1, 4), -- DEF +4
-    (23711, 8, 3), -- STR +3
-    (23711, 9, 3), -- DEX +3
-    (23711, 23, 6), -- Attack +6
-    (23711, 25, 6), -- Accuracy +6
-    (23711, 73, 3), -- Store TP +3
-    (23711, 384, 100); -- Haste +1%
-
+    (23711, 10, 10),
+    (23711, 13, 6),
+    (23711, 1, 20),
+    (23711, 27, 5),
+    (23711, 160, -3),
+    (23711, 73, 5);
 REPLACE INTO `item_basic` VALUES
     (28446, 0, 'Bruno_Pouch', 'bruno_pouch', 1, 59476, 99, 0, 1000);
 REPLACE INTO `item_equipment` VALUES
-    (28446, "brunos_lucky_pouch", 26, 0, 10240, 0, 0, 0, 1024, 0, 0, 0);
+    (28446, "brunos_lucky_pouch", 26, 0, 301090, 0, 0, 0, 1024, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (28446, 1, 3), -- DEF +3
-    (28446, 8, 6), -- STR +6
-    (28446, 9, 6), -- DEX +6
-    (28446, 23, 12), -- Attack +12
-    (28446, 25, 12), -- Accuracy +12
-    (28446, 73, 5), -- Store TP +5
-    (28446, 384, 200); -- Haste +2%
-
--- Swindler Sam (lv30-36) — 19982-19984
+    (28446, 8, 7),
+    (28446, 9, 7),
+    (28446, 25, 14),
+    (28446, 289, 5),
+    (28446, 73, 3),
+    (28446, 421, 3);
 REPLACE INTO `item_basic` VALUES
     (19982, 0, 'Sam_Loaded_Dice', 'sam_loaded_dice', 1, 59476, 99, 0, 100);
 
 REPLACE INTO `item_basic` VALUES
     (25694, 0, 'Sam_Vest', 'sam_vest', 1, 59476, 99, 0, 4000);
 REPLACE INTO `item_equipment` VALUES
-    (25694, "sams_swindler_vest", 46, 0, 263200, 324, 0, 0, 32, 0, 0, 0);
+    (25694, "sams_swindler_vest", 46, 0, 266272, 324, 0, 0, 32, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (25694, 1, 18), -- DEF +18
-    (25694, 9, 9), -- DEX +9
-    (25694, 11, 9), -- AGI +9
-    (25694, 25, 15), -- Accuracy +15
-    (25694, 26, 15), -- Rng. Acc. +15
-    (25694, 23, 18), -- Attack +18
-    (25694, 24, 18), -- Rng. Atk. +18
-    (25694, 68, 15), -- Evasion +15
-    (25694, 165, 4); -- Crit Rate +4
-
+    (25694, 9, 11),
+    (25694, 11, 11),
+    (25694, 25, 23),
+    (25694, 421, 4),
+    (25694, 302, 3),
+    (25694, 76, 4);
 REPLACE INTO `item_basic` VALUES
     (27529, 0, 'Sam_Earring', 'sam_earring', 1, 59476, 99, 0, 6000);
 REPLACE INTO `item_equipment` VALUES
-    (27529, "sams_grift_earring", 55, 0, 10240, 0, 0, 0, 6144, 0, 0, 0);
+    (27529, "sams_grift_earring", 55, 0, 301090, 0, 0, 0, 6144, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (27529, 8, 9), -- STR +9
-    (27529, 9, 9), -- DEX +9
-    (27529, 23, 18), -- Attack +18
-    (27529, 25, 18), -- Accuracy +18
-    (27529, 73, 7), -- Store TP +7
-    (27529, 384, 300); -- Haste +3%
-
--- Shiny Steve (lv45-52) — 19985-19987
+    (27529, 8, 6),
+    (27529, 23, 12),
+    (27529, 25, 10),
+    (27529, 421, 3),
+    (27529, 73, 3),
+    (27529, 76, 4);
 REPLACE INTO `item_basic` VALUES
     (19985, 0, 'Steve_Shiniest', 'steve_shiniest', 1, 59476, 99, 0, 100);
 
 REPLACE INTO `item_basic` VALUES
     (25695, 0, 'Steve_Mail', 'steve_mail', 1, 59476, 99, 0, 9000);
 REPLACE INTO `item_equipment` VALUES
-    (25695, "steves_glittering_mail", 64, 0, 263200, 324, 0, 0, 32, 0, 0, 0);
+    (25695, "steves_glittering_mail", 64, 0, 66592, 324, 0, 0, 32, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (25695, 1, 25), -- DEF +25
-    (25695, 9, 12), -- DEX +12
-    (25695, 11, 12), -- AGI +12
-    (25695, 25, 20), -- Accuracy +20
-    (25695, 26, 20), -- Rng. Acc. +20
-    (25695, 23, 24), -- Attack +24
-    (25695, 24, 24), -- Rng. Atk. +24
-    (25695, 68, 20), -- Evasion +20
-    (25695, 165, 5); -- Crit Rate +5
-
+    (25695, 9, 13),
+    (25695, 11, 10),
+    (25695, 25, 25),
+    (25695, 26, 25),
+    (25695, 165, 5),
+    (25695, 365, 5);
 REPLACE INTO `item_basic` VALUES
     (11630, 0, 'Steve_Ring', 'steve_ring', 1, 59476, 99, 0, 14000);
 REPLACE INTO `item_equipment` VALUES
@@ -770,77 +608,63 @@ REPLACE INTO `item_basic` VALUES
 REPLACE INTO `item_basic` VALUES
     (26010, 0, 'Wilhelmina_Neck', 'wilhelmina_neck', 1, 59476, 99, 0, 3500);
 REPLACE INTO `item_equipment` VALUES
-    (26010, "wilhelminas_fang_necklace", 34, 0, 10240, 0, 0, 0, 512, 0, 0, 0);
+    (26010, "wilhelminas_fang_necklace", 34, 0, 10371, 0, 0, 0, 512, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (26010, 8, 6), -- STR +6
-    (26010, 9, 6), -- DEX +6
-    (26010, 23, 12), -- Attack +12
-    (26010, 25, 12), -- Accuracy +12
-    (26010, 73, 5), -- Store TP +5
-    (26010, 384, 200); -- Haste +2%
-
+    (26010, 8, 10),
+    (26010, 23, 20),
+    (26010, 25, 14),
+    (26010, 73, 4),
+    (26010, 288, 2);
 REPLACE INTO `item_basic` VALUES
     (23253, 0, 'Wilhelmina_Legs', 'wilhelmina_legs', 1, 59476, 99, 0, 5500);
 REPLACE INTO `item_equipment` VALUES
-    (23253, "wilhelminas_grace_legs", 58, 0, 263200, 88, 0, 0, 128, 0, 0, 0);
+    (23253, "wilhelminas_grace_legs", 58, 0, 266272, 88, 0, 0, 128, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23253, 1, 16), -- DEF +16
-    (23253, 9, 9), -- DEX +9
-    (23253, 11, 9), -- AGI +9
-    (23253, 25, 15), -- Accuracy +15
-    (23253, 26, 15), -- Rng. Acc. +15
-    (23253, 23, 18), -- Attack +18
-    (23253, 24, 18), -- Rng. Atk. +18
-    (23253, 68, 15), -- Evasion +15
-    (23253, 165, 4); -- Crit Rate +4
-
--- Purring Patricia (lv42-48) — 19991-19993
+    (23253, 9, 11),
+    (23253, 11, 11),
+    (23253, 25, 18),
+    (23253, 68, 20),
+    (23253, 165, 4),
+    (23253, 302, 2);
 REPLACE INTO `item_basic` VALUES
     (19991, 0, 'Patricia_Purr', 'patricia_purr', 1, 59476, 99, 0, 100);
 
 REPLACE INTO `item_basic` VALUES
     (23532, 0, 'Ptrc_Gauntlets', 'ptrc_gauntlets', 1, 59476, 99, 0, 7000);
 REPLACE INTO `item_equipment` VALUES
-    (23532, "patricias_claw_gauntlets", 60, 0, 131, 65, 0, 0, 64, 0, 0, 0);
+    (23532, "patricias_claw_gauntlets", 60, 0, 8321, 65, 0, 0, 64, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23532, 1, 12), -- DEF +12
-    (23532, 2, 100), -- HP +100
-    (23532, 8, 12), -- STR +12
-    (23532, 10, 12), -- VIT +12
-    (23532, 23, 24), -- Attack +24
-    (23532, 25, 20), -- Accuracy +20
-    (23532, 421, 8); -- Crit Dmg. +8
-
+    (23532, 8, 10),
+    (23532, 10, 8),
+    (23532, 23, 23),
+    (23532, 25, 18),
+    (23532, 73, 6),
+    (23532, 288, 3);
 REPLACE INTO `item_basic` VALUES
     (28614, 0, 'Patricia_Cape', 'patricia_cape', 1, 59476, 99, 0, 10000);
 REPLACE INTO `item_equipment` VALUES
-    (28614, "patricias_predator_cape", 72, 0, 10240, 0, 0, 0, 32768, 0, 0, 0);
+    (28614, "patricias_predator_cape", 72, 0, 301090, 0, 0, 0, 32768, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (28614, 1, 8), -- DEF +8
-    (28614, 8, 12), -- STR +12
-    (28614, 9, 12), -- DEX +12
-    (28614, 23, 24), -- Attack +24
-    (28614, 25, 24), -- Accuracy +24
-    (28614, 73, 10), -- Store TP +10
-    (28614, 384, 400); -- Haste +4%
-
--- Nine Lives Nigel (lv58-65) — 19994-19996
+    (28614, 8, 8),
+    (28614, 9, 8),
+    (28614, 23, 16),
+    (28614, 25, 16),
+    (28614, 165, 3),
+    (28614, 73, 4);
 REPLACE INTO `item_basic` VALUES
     (19994, 0, 'Nigel_Life', 'nigel_life', 1, 59476, 99, 0, 100);
 
 REPLACE INTO `item_basic` VALUES
     (25696, 0, 'Nigel_Cuirass', 'nigel_cuirass', 1, 59476, 99, 0, 15000);
 REPLACE INTO `item_equipment` VALUES
-    (25696, "nigels_feral_cuirass", 64, 0, 10240, 320, 0, 0, 32, 0, 0, 0);
+    (25696, "nigels_feral_cuirass", 64, 0, 6146, 320, 0, 0, 32, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (25696, 1, 25), -- DEF +25
-    (25696, 8, 12), -- STR +12
-    (25696, 9, 12), -- DEX +12
-    (25696, 23, 24), -- Attack +24
-    (25696, 25, 24), -- Accuracy +24
-    (25696, 73, 10), -- Store TP +10
-    (25696, 384, 400); -- Haste +4%
-
+    (25696, 8, 10),
+    (25696, 9, 10),
+    (25696, 23, 25),
+    (25696, 25, 25),
+    (25696, 165, 4),
+    (25696, 289, 8);
 REPLACE INTO `item_basic` VALUES
     (11631, 0, 'Nigel_Ring', 'nigel_ring', 1, 59476, 99, 0, 18000);
 REPLACE INTO `item_equipment` VALUES
@@ -865,75 +689,63 @@ REPLACE INTO `item_basic` VALUES
 REPLACE INTO `item_basic` VALUES
     (26011, 0, 'Steve_Fangs', 'steve_fangs', 1, 59476, 99, 0, 1500);
 REPLACE INTO `item_equipment` VALUES
-    (26011, "steves_tiger_fangs", 16, 0, 131, 0, 0, 0, 512, 0, 0, 0);
+    (26011, "steves_tiger_fangs", 16, 0, 301090, 0, 0, 0, 512, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (26011, 2, 20), -- HP +20
-    (26011, 8, 3), -- STR +3
-    (26011, 10, 3), -- VIT +3
-    (26011, 23, 6), -- Attack +6
-    (26011, 25, 5), -- Accuracy +5
-    (26011, 421, 2); -- Crit Dmg. +2
-
+    (26011, 8, 8),
+    (26011, 9, 8),
+    (26011, 25, 16),
+    (26011, 289, 4),
+    (26011, 421, 4);
 REPLACE INTO `item_basic` VALUES
     (28615, 0, 'Steve_Mantle', 'steve_mantle', 1, 59476, 99, 0, 2200);
 REPLACE INTO `item_equipment` VALUES
-    (28615, "steves_pelt_mantle", 40, 0, 131, 0, 0, 0, 32768, 0, 0, 0);
+    (28615, "steves_pelt_mantle", 40, 0, 301090, 0, 0, 0, 32768, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (28615, 1, 6), -- DEF +6
-    (28615, 2, 70), -- HP +70
-    (28615, 8, 9), -- STR +9
-    (28615, 10, 9), -- VIT +9
-    (28615, 23, 18), -- Attack +18
-    (28615, 25, 15), -- Accuracy +15
-    (28615, 421, 6); -- Crit Dmg. +6
-
--- Mauler Maurice (lv38-46) — 20000-20002
+    (28615, 8, 8),
+    (28615, 9, 6),
+    (28615, 23, 16),
+    (28615, 25, 16),
+    (28615, 289, 4),
+    (28615, 421, 4);
 REPLACE INTO `item_basic` VALUES
     (20000, 0, 'Maurice_Hide', 'maurice_hide', 1, 59476, 99, 0, 100);
 
 REPLACE INTO `item_basic` VALUES
     (23712, 0, 'Maurice_Helm', 'maurice_helm', 1, 59476, 99, 0, 6000);
 REPLACE INTO `item_equipment` VALUES
-    (23712, "maurices_savage_helm", 52, 0, 131, 164, 0, 0, 16, 0, 0, 0);
+    (23712, "maurices_savage_helm", 52, 0, 8321, 164, 0, 0, 16, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23712, 1, 12), -- DEF +12
-    (23712, 2, 70), -- HP +70
-    (23712, 8, 9), -- STR +9
-    (23712, 10, 9), -- VIT +9
-    (23712, 23, 18), -- Attack +18
-    (23712, 25, 15), -- Accuracy +15
-    (23712, 421, 6); -- Crit Dmg. +6
-
+    (23712, 8, 10),
+    (23712, 10, 8),
+    (23712, 23, 25),
+    (23712, 25, 18),
+    (23712, 73, 6),
+    (23712, 288, 3);
 REPLACE INTO `item_basic` VALUES
     (28447, 0, 'Maurice_Belt', 'maurice_belt', 1, 59476, 99, 0, 9000);
 REPLACE INTO `item_equipment` VALUES
-    (28447, "maurices_mauler_belt", 63, 0, 10240, 0, 0, 0, 1024, 0, 0, 0);
+    (28447, "maurices_mauler_belt", 63, 0, 301090, 0, 0, 0, 1024, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (28447, 1, 7), -- DEF +7
-    (28447, 8, 12), -- STR +12
-    (28447, 9, 12), -- DEX +12
-    (28447, 23, 24), -- Attack +24
-    (28447, 25, 24), -- Accuracy +24
-    (28447, 73, 10), -- Store TP +10
-    (28447, 384, 400); -- Haste +4%
-
--- Saber Sabrina (lv58-65) — 16464-16561
+    (28447, 8, 7),
+    (28447, 9, 6),
+    (28447, 23, 16),
+    (28447, 25, 14),
+    (28447, 289, 4),
+    (28447, 73, 3);
 REPLACE INTO `item_basic` VALUES
     (16464, 0, 'Sbrn_Saber-Fang', 'sbrn_saberfang', 1, 59476, 99, 0, 100);
 
 REPLACE INTO `item_basic` VALUES
     (23265, 0, 'Sabrina_Legs', 'sabrina_legs', 1, 59476, 99, 0, 15000);
 REPLACE INTO `item_equipment` VALUES
-    (23265, "sabrinas_feral_legs", 67, 0, 10240, 67, 0, 0, 128, 0, 0, 0);
+    (23265, "sabrinas_feral_legs", 67, 0, 8321, 67, 0, 0, 128, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23265, 1, 22), -- DEF +22
-    (23265, 8, 12), -- STR +12
-    (23265, 9, 12), -- DEX +12
-    (23265, 23, 24), -- Attack +24
-    (23265, 25, 24), -- Accuracy +24
-    (23265, 73, 10), -- Store TP +10
-    (23265, 384, 400); -- Haste +4%
-
+    (23265, 8, 11),
+    (23265, 10, 9),
+    (23265, 23, 26),
+    (23265, 25, 20),
+    (23265, 73, 7),
+    (23265, 288, 3);
 REPLACE INTO `item_basic` VALUES
     (11641, 0, 'Sabrina_Ring', 'sabrina_ring', 1, 59476, 99, 0, 20000);
 REPLACE INTO `item_equipment` VALUES
@@ -958,53 +770,39 @@ REPLACE INTO `item_basic` VALUES
 REPLACE INTO `item_basic` VALUES
     (27530, 0, 'Rita_Earring', 'rita_earring', 1, 59476, 99, 0, 10479);
 REPLACE INTO `item_equipment` VALUES
-    (27530, "ritas_leaf_earring", 11, 0, 263200, 0, 0, 0, 6144, 0, 0, 0);
+    (27530, "ritas_leaf_earring", 11, 0, 328736, 0, 0, 0, 6144, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (27530, 9, 3), -- DEX +3
-    (27530, 11, 3), -- AGI +3
-    (27530, 25, 5), -- Accuracy +5
-    (27530, 26, 5), -- Rng. Acc. +5
-    (27530, 23, 6), -- Attack +6
-    (27530, 24, 6), -- Rng. Atk. +6
-    (27530, 68, 5), -- Evasion +5
-    (27530, 165, 2); -- Crit Rate +2
-
+    (27530, 11, 7),
+    (27530, 24, 14),
+    (27530, 26, 17),
+    (27530, 365, 4),
+    (27530, 165, 2),
+    (27530, 76, 3);
 REPLACE INTO `item_basic` VALUES
     (23533, 0, 'Rita_Wrist', 'rita_wrist', 1, 59476, 99, 0, 600);
 REPLACE INTO `item_equipment` VALUES
-    (23533, "ritas_petal_wrist", 10, 0, 16924, 67, 0, 0, 64, 0, 0, 0);
+    (23533, "ritas_petal_wrist", 10, 0, 16916, 67, 0, 0, 64, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23533, 1, 3), -- DEF +3
-    (23533, 5, 15), -- MP +15
-    (23533, 12, 3), -- INT +3
-    (23533, 13, 2), -- MND +2
-    (23533, 14, 2), -- CHR +2
-    (23533, 28, 3), -- MAB +3
-    (23533, 30, 3), -- MACC +3
-    (23533, 562, 2), -- M.Crit +2
-    (23533, 563, 3), -- M.Crit Dmg. +3
-    (23533, 369, 1); -- Refresh +1
-
--- Sprout Spencer (lv22-28) — 20006-20008
+    (23533, 13, 10),
+    (23533, 14, 8),
+    (23533, 112, 11),
+    (23533, 374, 5),
+    (23533, 170, 4),
+    (23533, 369, 2);
 REPLACE INTO `item_basic` VALUES
     (20006, 0, 'Spencer_Sprout', 'spencer_sprout', 1, 59476, 99, 0, 50);
 
 REPLACE INTO `item_basic` VALUES
     (23713, 0, 'Spencer_Hat', 'spencer_hat', 1, 59476, 99, 0, 1500);
 REPLACE INTO `item_equipment` VALUES
-    (23713, "spencers_verdant_hat", 36, 0, 16924, 163, 0, 0, 16, 0, 0, 0);
+    (23713, "spencers_verdant_hat", 36, 0, 16916, 163, 0, 0, 16, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23713, 1, 8), -- DEF +8
-    (23713, 5, 30), -- MP +30
-    (23713, 12, 6), -- INT +6
-    (23713, 13, 4), -- MND +4
-    (23713, 14, 4), -- CHR +4
-    (23713, 28, 6), -- MAB +6
-    (23713, 30, 6), -- MACC +6
-    (23713, 562, 3), -- M.Crit +3
-    (23713, 563, 5), -- M.Crit Dmg. +5
-    (23713, 369, 1); -- Refresh +1
-
+    (23713, 13, 10),
+    (23713, 14, 9),
+    (23713, 112, 12),
+    (23713, 374, 4),
+    (23713, 170, 4),
+    (23713, 369, 2);
 REPLACE INTO `item_basic` VALUES
     (11632, 0, 'Spencer_Sash', 'spencer_sash', 1, 59476, 99, 0, 2200);
 REPLACE INTO `item_equipment` VALUES
@@ -1027,56 +825,39 @@ REPLACE INTO `item_basic` VALUES
 REPLACE INTO `item_basic` VALUES
     (23732, 0, 'Max_Shriek_Mask', 'max_shriek_mask', 1, 59476, 99, 0, 7000);
 REPLACE INTO `item_equipment` VALUES
-    (23732, "maxs_shriek_mask", 64, 0, 16924, 458, 0, 0, 16, 0, 0, 0);
+    (23732, "maxs_shriek_mask", 64, 0, 1589780, 458, 0, 0, 16, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23732, 1, 16), -- DEF +16
-    (23732, 5, 60), -- MP +60
-    (23732, 12, 12), -- INT +12
-    (23732, 13, 8), -- MND +8
-    (23732, 14, 8), -- CHR +8
-    (23732, 28, 12), -- MAB +12
-    (23732, 30, 12), -- MACC +12
-    (23732, 562, 5), -- M.Crit +5
-    (23732, 563, 10), -- M.Crit Dmg. +10
-    (23732, 369, 3); -- Refresh +3
-
+    (23732, 12, 9),
+    (23732, 13, 8),
+    (23732, 117, 12),
+    (23732, 487, 4),
+    (23732, 30, 16),
+    (23732, 369, 2);
 REPLACE INTO `item_basic` VALUES
     (28448, 0, 'Max_Belt', 'max_belt', 1, 59476, 99, 0, 10000);
 REPLACE INTO `item_equipment` VALUES
-    (28448, "maxs_earthscream_belt", 59, 0, 16924, 0, 0, 0, 1024, 0, 0, 0);
+    (28448, "maxs_earthscream_belt", 59, 0, 1589276, 0, 0, 0, 1024, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (28448, 1, 5), -- DEF +5
-    (28448, 5, 45), -- MP +45
-    (28448, 12, 9), -- INT +9
-    (28448, 13, 6), -- MND +6
-    (28448, 14, 6), -- CHR +6
-    (28448, 28, 9), -- MAB +9
-    (28448, 30, 9), -- MACC +9
-    (28448, 562, 4), -- M.Crit +4
-    (28448, 563, 7), -- M.Crit Dmg. +7
-    (28448, 369, 2); -- Refresh +2
-
--- =========================================================
--- BEETLES
--- =========================================================
-
--- Click Clack Clayton (lv10-15) — 20012-20014
+    (28448, 12, 7),
+    (28448, 13, 7),
+    (28448, 28, 11),
+    (28448, 30, 10),
+    (28448, 170, 4),
+    (28448, 369, 1);
 REPLACE INTO `item_basic` VALUES
     (20012, 0, 'Clytn_Clicking', 'clytn_clicking', 1, 59476, 99, 0, 50);
 
 REPLACE INTO `item_basic` VALUES
     (23259, 0, 'Clayton_Legs', 'clayton_legs', 1, 59476, 99, 0, 600);
 REPLACE INTO `item_equipment` VALUES
-    (23259, "claytons_chitin_legs", 13, 0, 131, 211, 0, 0, 128, 0, 0, 0);
+    (23259, "claytons_chitin_legs", 13, 0, 6146, 211, 0, 0, 128, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23259, 1, 5), -- DEF +5
-    (23259, 2, 20), -- HP +20
-    (23259, 8, 3), -- STR +3
-    (23259, 10, 3), -- VIT +3
-    (23259, 23, 6), -- Attack +6
-    (23259, 25, 5), -- Accuracy +5
-    (23259, 421, 2); -- Crit Dmg. +2
-
+    (23259, 8, 10),
+    (23259, 9, 8),
+    (23259, 25, 16),
+    (23259, 73, 7),
+    (23259, 289, 7),
+    (23259, 421, 4);
 REPLACE INTO `item_basic` VALUES
     (11634, 0, 'Clayton_Ring', 'clayton_ring', 1, 59476, 99, 0, 900);
 REPLACE INTO `item_equipment` VALUES
@@ -1096,45 +877,38 @@ REPLACE INTO `item_basic` VALUES
 REPLACE INTO `item_basic` VALUES
     (23783, 0, 'Douglas_Boots', 'douglas_boots', 1, 59476, 99, 0, 3000);
 REPLACE INTO `item_equipment` VALUES
-    (23783, "douglass_roller_boots", 31, 0, 131, 467, 0, 0, 256, 0, 0, 0);
+    (23783, "douglass_roller_boots", 31, 0, 2097345, 467, 0, 0, 256, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23783, 1, 6), -- DEF +6
-    (23783, 2, 40), -- HP +40
-    (23783, 8, 6), -- STR +6
-    (23783, 10, 6), -- VIT +6
-    (23783, 23, 12), -- Attack +12
-    (23783, 25, 10), -- Accuracy +10
-    (23783, 421, 4); -- Crit Dmg. +4
-
+    (23783, 10, 9),
+    (23783, 13, 5),
+    (23783, 1, 18),
+    (23783, 27, 7),
+    (23783, 160, -3),
+    (23783, 73, 4);
 REPLACE INTO `item_basic` VALUES
     (26012, 0, 'Douglas_Neck', 'douglas_neck', 1, 59476, 99, 0, 4500);
 REPLACE INTO `item_equipment` VALUES
-    (26012, "douglass_carapace_necklace", 19, 0, 131, 0, 0, 0, 512, 0, 0, 0);
+    (26012, "douglass_carapace_necklace", 19, 0, 2097601, 0, 0, 0, 512, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (26012, 2, 20), -- HP +20
-    (26012, 8, 3), -- STR +3
-    (26012, 10, 3), -- VIT +3
-    (26012, 23, 6), -- Attack +6
-    (26012, 25, 5), -- Accuracy +5
-    (26012, 421, 2); -- Crit Dmg. +2
-
--- Scarab Sebastian (lv45-52) — 20018-20020
+    (26012, 10, 9),
+    (26012, 1, 18),
+    (26012, 27, 6),
+    (26012, 160, -3),
+    (26012, 170, 2);
 REPLACE INTO `item_basic` VALUES
     (20018, 0, 'Sbstn_Scarab', 'sbstn_scarab', 1, 59476, 99, 0, 100);
 
 REPLACE INTO `item_basic` VALUES
     (23738, 0, 'Sebastian_Helm', 'sebastian_helm', 1, 59476, 99, 0, 9000);
 REPLACE INTO `item_equipment` VALUES
-    (23738, "sebastians_sacred_helm", 65, 0, 131, 276, 0, 0, 16, 0, 0, 0);
+    (23738, "sebastians_sacred_helm", 65, 0, 2097345, 276, 0, 0, 16, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23738, 1, 16), -- DEF +16
-    (23738, 2, 100), -- HP +100
-    (23738, 8, 12), -- STR +12
-    (23738, 10, 12), -- VIT +12
-    (23738, 23, 24), -- Attack +24
-    (23738, 25, 20), -- Accuracy +20
-    (23738, 421, 8); -- Crit Dmg. +8
-
+    (23738, 10, 10),
+    (23738, 13, 6),
+    (23738, 1, 22),
+    (23738, 27, 5),
+    (23738, 160, -3),
+    (23738, 73, 4);
 REPLACE INTO `item_basic` VALUES
     (11635, 0, 'Sebastian_Ring', 'sebastian_ring', 1, 59476, 99, 0, 13000);
 REPLACE INTO `item_equipment` VALUES
@@ -1158,48 +932,39 @@ REPLACE INTO `item_basic` VALUES
 REPLACE INTO `item_basic` VALUES
     (23534, 0, 'Simon_Gloves', 'simon_gloves', 1, 59476, 99, 0, 1000);
 REPLACE INTO `item_equipment` VALUES
-    (23534, "simons_silk_gloves", 14, 0, 10240, 69, 0, 0, 64, 0, 0, 0);
+    (23534, "simons_silk_gloves", 14, 0, 2097345, 69, 0, 0, 64, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23534, 1, 3), -- DEF +3
-    (23534, 8, 3), -- STR +3
-    (23534, 9, 3), -- DEX +3
-    (23534, 23, 6), -- Attack +6
-    (23534, 25, 6), -- Accuracy +6
-    (23534, 73, 3), -- Store TP +3
-    (23534, 384, 100); -- Haste +1%
-
+    (23534, 10, 10),
+    (23534, 13, 6),
+    (23534, 1, 19),
+    (23534, 27, 6),
+    (23534, 160, -3),
+    (23534, 73, 4);
 REPLACE INTO `item_basic` VALUES
     (28616, 0, 'Simon_Cape', 'simon_cape', 1, 59476, 99, 0, 1500);
 REPLACE INTO `item_equipment` VALUES
-    (28616, "simons_webbed_cape", 11, 0, 263200, 0, 0, 0, 32768, 0, 0, 0);
+    (28616, "simons_webbed_cape", 11, 0, 328736, 0, 0, 0, 32768, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (28616, 1, 2), -- DEF +2
-    (28616, 9, 3), -- DEX +3
-    (28616, 11, 3), -- AGI +3
-    (28616, 25, 5), -- Accuracy +5
-    (28616, 26, 5), -- Rng. Acc. +5
-    (28616, 23, 6), -- Attack +6
-    (28616, 24, 6), -- Rng. Atk. +6
-    (28616, 68, 5), -- Evasion +5
-    (28616, 165, 2); -- Crit Rate +2
-
--- Cocoon Carl (lv50-58) — 20024-20026
+    (28616, 9, 9),
+    (28616, 11, 9),
+    (28616, 25, 16),
+    (28616, 26, 16),
+    (28616, 165, 3),
+    (28616, 365, 4);
 REPLACE INTO `item_basic` VALUES
     (20024, 0, 'Carl_Shard', 'carl_shard', 1, 59476, 99, 0, 100);
 
 REPLACE INTO `item_basic` VALUES
     (25697, 0, 'Carl_Mail', 'carl_mail', 1, 59476, 99, 0, 12000);
 REPLACE INTO `item_equipment` VALUES
-    (25697, "carls_chrysalis_mail", 65, 0, 131, 320, 0, 0, 32, 0, 0, 0);
+    (25697, "carls_chrysalis_mail", 65, 0, 2097345, 320, 0, 0, 32, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (25697, 1, 25), -- DEF +25
-    (25697, 2, 100), -- HP +100
-    (25697, 8, 12), -- STR +12
-    (25697, 10, 12), -- VIT +12
-    (25697, 23, 24), -- Attack +24
-    (25697, 25, 20), -- Accuracy +20
-    (25697, 421, 8); -- Crit Dmg. +8
-
+    (25697, 10, 13),
+    (25697, 13, 8),
+    (25697, 1, 25),
+    (25697, 27, 9),
+    (25697, 160, -4),
+    (25697, 73, 5);
 REPLACE INTO `item_basic` VALUES
     (14646, 0, 'Carl_Ring', 'carl_ring', 1, 59476, 99, 0, 16000);
 REPLACE INTO `item_equipment` VALUES
@@ -1223,18 +988,14 @@ REPLACE INTO `item_basic` VALUES
 REPLACE INTO `item_basic` VALUES
     (25698, 0, 'Fred_Down_Vest', 'fred_down_vest', 1, 59476, 99, 0, 600);
 REPLACE INTO `item_equipment` VALUES
-    (25698, "freds_down_vest", 11, 0, 263200, 322, 0, 0, 32, 0, 0, 0);
+    (25698, "freds_down_vest", 11, 0, 66592, 322, 0, 0, 32, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (25698, 1, 6), -- DEF +6
-    (25698, 9, 3), -- DEX +3
-    (25698, 11, 3), -- AGI +3
-    (25698, 25, 5), -- Accuracy +5
-    (25698, 26, 5), -- Rng. Acc. +5
-    (25698, 23, 6), -- Attack +6
-    (25698, 24, 6), -- Rng. Atk. +6
-    (25698, 68, 5), -- Evasion +5
-    (25698, 165, 2); -- Crit Rate +2
-
+    (25698, 9, 13),
+    (25698, 11, 10),
+    (25698, 25, 25),
+    (25698, 26, 26),
+    (25698, 165, 5),
+    (25698, 365, 5);
 REPLACE INTO `item_basic` VALUES
     (15549, 0, 'Fred_Ear', 'fred_ear', 1, 59476, 99, 0, 900);
 REPLACE INTO `item_equipment` VALUES
@@ -1256,51 +1017,39 @@ REPLACE INTO `item_basic` VALUES
 REPLACE INTO `item_basic` VALUES
     (23739, 0, 'Beatrice_Hat', 'beatrice_hat', 1, 59476, 99, 0, 3000);
 REPLACE INTO `item_equipment` VALUES
-    (23739, "beatrices_plume_hat", 40, 0, 263200, 252, 0, 0, 16, 0, 0, 0);
+    (23739, "beatrices_plume_hat", 40, 0, 66592, 252, 0, 0, 16, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23739, 1, 12), -- DEF +12
-    (23739, 9, 9), -- DEX +9
-    (23739, 11, 9), -- AGI +9
-    (23739, 25, 15), -- Accuracy +15
-    (23739, 26, 15), -- Rng. Acc. +15
-    (23739, 23, 18), -- Attack +18
-    (23739, 24, 18), -- Rng. Atk. +18
-    (23739, 68, 15), -- Evasion +15
-    (23739, 165, 4); -- Crit Rate +4
-
+    (23739, 9, 10),
+    (23739, 11, 8),
+    (23739, 25, 20),
+    (23739, 26, 21),
+    (23739, 165, 4),
+    (23739, 365, 4);
 REPLACE INTO `item_basic` VALUES
     (27531, 0, 'Beatrice_Earring', 'beatrice_earring', 1, 59476, 99, 0, 4500);
 REPLACE INTO `item_equipment` VALUES
-    (27531, "beatrices_wind_earring", 48, 0, 263200, 0, 0, 0, 6144, 0, 0, 0);
+    (27531, "beatrices_wind_earring", 48, 0, 332832, 0, 0, 0, 6144, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (27531, 9, 9), -- DEX +9
-    (27531, 11, 9), -- AGI +9
-    (27531, 25, 15), -- Accuracy +15
-    (27531, 26, 15), -- Rng. Acc. +15
-    (27531, 23, 18), -- Attack +18
-    (27531, 24, 18), -- Rng. Atk. +18
-    (27531, 68, 15), -- Evasion +15
-    (27531, 165, 4); -- Crit Rate +4
-
--- Plume Patricia (lv50-58) — 20033-20035
+    (27531, 9, 5),
+    (27531, 11, 5),
+    (27531, 25, 13),
+    (27531, 68, 12),
+    (27531, 302, 2),
+    (27531, 289, 3);
 REPLACE INTO `item_basic` VALUES
     (20033, 0, 'Patricia_Plume', 'patricia_plume', 1, 59476, 99, 0, 100);
 
 REPLACE INTO `item_basic` VALUES
     (25699, 0, 'Patricia_Vest', 'patricia_vest', 1, 59476, 99, 0, 12000);
 REPLACE INTO `item_equipment` VALUES
-    (25699, "patricias_zephyr_vest", 71, 0, 263200, 322, 0, 0, 32, 0, 0, 0);
+    (25699, "patricias_zephyr_vest", 71, 0, 66592, 322, 0, 0, 32, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (25699, 1, 25), -- DEF +25
-    (25699, 9, 12), -- DEX +12
-    (25699, 11, 12), -- AGI +12
-    (25699, 25, 20), -- Accuracy +20
-    (25699, 26, 20), -- Rng. Acc. +20
-    (25699, 23, 24), -- Attack +24
-    (25699, 24, 24), -- Rng. Atk. +24
-    (25699, 68, 20), -- Evasion +20
-    (25699, 165, 5); -- Crit Rate +5
-
+    (25699, 9, 10),
+    (25699, 11, 13),
+    (25699, 24, 29),
+    (25699, 26, 23),
+    (25699, 68, 20),
+    (25699, 73, 5);
 REPLACE INTO `item_basic` VALUES
     (15550, 0, 'Plume_Cape', 'plume_cape', 1, 59476, 99, 0, 16000);
 REPLACE INTO `item_equipment` VALUES
@@ -1326,16 +1075,13 @@ REPLACE INTO `item_basic` VALUES
 REPLACE INTO `item_basic` VALUES
     (27532, 0, 'Harold_Earring', 'harold_earring', 1, 59476, 99, 0, 600);
 REPLACE INTO `item_equipment` VALUES
-    (27532, "harolds_honey_earring", 7, 0, 131, 0, 0, 0, 6144, 0, 0, 0);
+    (27532, "harolds_honey_earring", 7, 0, 2097601, 0, 0, 0, 6144, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (27532, 1, 2), -- DEF +2
-    (27532, 2, 20), -- HP +20
-    (27532, 8, 3), -- STR +3
-    (27532, 10, 3), -- VIT +3
-    (27532, 23, 6), -- Attack +6
-    (27532, 25, 5), -- Accuracy +5
-    (27532, 421, 2); -- Crit Dmg. +2
-
+    (27532, 10, 7),
+    (27532, 1, 16),
+    (27532, 27, 5),
+    (27532, 160, -2),
+    (27532, 73, 2);
 REPLACE INTO `item_basic` VALUES
     (15780, 0, 'Harold_Ring', 'harold_ring', 1, 59476, 99, 0, 900);
 REPLACE INTO `item_equipment` VALUES
@@ -1355,48 +1101,39 @@ REPLACE INTO `item_basic` VALUES
 REPLACE INTO `item_basic` VALUES
     (23535, 0, 'Barry_Gauntlets', 'barry_gauntlets', 1, 59476, 99, 0, 4000);
 REPLACE INTO `item_equipment` VALUES
-    (23535, "barrys_venom_gauntlets", 56, 0, 131, 71, 0, 0, 64, 0, 0, 0);
+    (23535, "barrys_venom_gauntlets", 56, 0, 8321, 71, 0, 0, 64, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23535, 1, 9), -- DEF +9
-    (23535, 2, 70), -- HP +70
-    (23535, 8, 9), -- STR +9
-    (23535, 10, 9), -- VIT +9
-    (23535, 23, 18), -- Attack +18
-    (23535, 25, 15), -- Accuracy +15
-    (23535, 421, 6); -- Crit Dmg. +6
-
+    (23535, 8, 11),
+    (23535, 10, 8),
+    (23535, 23, 23),
+    (23535, 25, 17),
+    (23535, 73, 6),
+    (23535, 288, 3);
 REPLACE INTO `item_basic` VALUES
     (26013, 0, 'Barry_Necklace', 'barry_necklace', 1, 59476, 99, 0, 6000);
 REPLACE INTO `item_equipment` VALUES
-    (26013, "barrys_swarm_necklace", 37, 0, 10240, 0, 0, 0, 512, 0, 0, 0);
+    (26013, "barrys_swarm_necklace", 37, 0, 301090, 0, 0, 0, 512, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (26013, 8, 6), -- STR +6
-    (26013, 9, 6), -- DEX +6
-    (26013, 23, 12), -- Attack +12
-    (26013, 25, 12), -- Accuracy +12
-    (26013, 73, 5), -- Store TP +5
-    (26013, 384, 200); -- Haste +2%
-
--- Queen Quentin (lv62-70) — 20042-20044
+    (26013, 8, 7),
+    (26013, 9, 7),
+    (26013, 23, 16),
+    (26013, 25, 16),
+    (26013, 73, 3),
+    (26013, 165, 3);
 REPLACE INTO `item_basic` VALUES
     (20042, 0, 'Quentin_Jelly', 'quentin_jelly', 1, 59476, 99, 0, 100);
 
 REPLACE INTO `item_basic` VALUES
     (23740, 0, 'Quentin_Crown', 'quentin_crown', 1, 59476, 99, 0, 18000);
 REPLACE INTO `item_equipment` VALUES
-    (23740, "quentins_royal_crown", 69, 0, 16924, 267, 0, 0, 16, 0, 0, 0);
+    (23740, "quentins_royal_crown", 69, 0, 16916, 267, 0, 0, 16, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23740, 1, 16), -- DEF +16
-    (23740, 5, 60), -- MP +60
-    (23740, 12, 12), -- INT +12
-    (23740, 13, 8), -- MND +8
-    (23740, 14, 8), -- CHR +8
-    (23740, 28, 12), -- MAB +12
-    (23740, 30, 12), -- MACC +12
-    (23740, 562, 5), -- M.Crit +5
-    (23740, 563, 10), -- M.Crit Dmg. +10
-    (23740, 369, 3); -- Refresh +3
-
+    (23740, 13, 10),
+    (23740, 14, 8),
+    (23740, 112, 14),
+    (23740, 374, 4),
+    (23740, 170, 4),
+    (23740, 369, 2);
 REPLACE INTO `item_basic` VALUES
     (15781, 0, 'Quentin_Ring', 'quentin_ring', 1, 59476, 99, 0, 22000);
 REPLACE INTO `item_equipment` VALUES
@@ -1435,80 +1172,63 @@ REPLACE INTO `item_mods` VALUES
 REPLACE INTO `item_basic` VALUES
     (28449, 0, 'Winston_Belt', 'winston_belt', 1, 59476, 99, 0, 250);
 REPLACE INTO `item_equipment` VALUES
-    (28449, "winstons_earthen_belt", 5, 0, 131, 0, 0, 0, 1024, 0, 0, 0);
+    (28449, "winstons_earthen_belt", 5, 0, 2097601, 0, 0, 0, 1024, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (28449, 1, 1), -- DEF +1
-    (28449, 2, 20), -- HP +20
-    (28449, 8, 3), -- STR +3
-    (28449, 10, 3), -- VIT +3
-    (28449, 23, 6), -- Attack +6
-    (28449, 25, 5), -- Accuracy +5
-    (28449, 421, 2); -- Crit Dmg. +2
-
--- Squirmy Sherman (lv18-24) — 20048-20050
+    (28449, 10, 8),
+    (28449, 1, 19),
+    (28449, 27, 5),
+    (28449, 160, -3),
+    (28449, 73, 3);
 REPLACE INTO `item_basic` VALUES
     (20048, 0, 'Sherman_Squirm', 'sherman_squirm', 1, 59476, 99, 0, 50);
 
 REPLACE INTO `item_basic` VALUES
     (23755, 0, 'Sherman_Helm', 'sherman_helm', 1, 59476, 99, 0, 1200);
 REPLACE INTO `item_equipment` VALUES
-    (23755, "shermans_subterran_helm", 23, 0, 131, 464, 0, 0, 16, 0, 0, 0);
+    (23755, "shermans_subterran_helm", 23, 0, 6146, 464, 0, 0, 16, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23755, 1, 8), -- DEF +8
-    (23755, 2, 40), -- HP +40
-    (23755, 8, 6), -- STR +6
-    (23755, 10, 6), -- VIT +6
-    (23755, 23, 12), -- Attack +12
-    (23755, 25, 10), -- Accuracy +10
-    (23755, 421, 4); -- Crit Dmg. +4
-
+    (23755, 8, 9),
+    (23755, 9, 8),
+    (23755, 23, 20),
+    (23755, 25, 20),
+    (23755, 165, 3),
+    (23755, 289, 5);
 REPLACE INTO `item_basic` VALUES
     (27533, 0, 'Sherman_Earring', 'sherman_earring', 1, 59476, 99, 0, 1800);
 REPLACE INTO `item_equipment` VALUES
-    (27533, "shermans_tunnel_earring", 23, 0, 131, 0, 0, 0, 6144, 0, 0, 0);
+    (27533, "shermans_tunnel_earring", 23, 0, 301090, 0, 0, 0, 6144, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (27533, 2, 40), -- HP +40
-    (27533, 8, 6), -- STR +6
-    (27533, 10, 6), -- VIT +6
-    (27533, 23, 12), -- Attack +12
-    (27533, 25, 10), -- Accuracy +10
-    (27533, 421, 4); -- Crit Dmg. +4
-
--- Earthcrawler Ernest (lv40-48) — 16570-16574
+    (27533, 8, 5),
+    (27533, 9, 5),
+    (27533, 23, 14),
+    (27533, 25, 15),
+    (27533, 289, 3),
+    (27533, 165, 2);
 REPLACE INTO `item_basic` VALUES
     (16570, 0, 'Ernest_Earthen', 'ernest_earthen', 1, 59476, 99, 0, 100);
 
 REPLACE INTO `item_basic` VALUES
     (25689, 0, 'Ernest_Vest', 'ernest_vest', 1, 59476, 99, 0, 8000);
 REPLACE INTO `item_equipment` VALUES
-    (25689, "ernests_burrower_vest", 53, 0, 131, 322, 0, 0, 32, 0, 0, 0);
+    (25689, "ernests_burrower_vest", 53, 0, 8321, 322, 0, 0, 32, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (25689, 1, 18), -- DEF +18
-    (25689, 2, 70), -- HP +70
-    (25689, 8, 9), -- STR +9
-    (25689, 10, 9), -- VIT +9
-    (25689, 23, 18), -- Attack +18
-    (25689, 25, 15), -- Accuracy +15
-    (25689, 421, 6); -- Crit Dmg. +6
-
+    (25689, 8, 13),
+    (25689, 10, 11),
+    (25689, 23, 30),
+    (25689, 25, 23),
+    (25689, 73, 8),
+    (25689, 288, 4);
 REPLACE INTO `item_basic` VALUES
     (23750, 0, 'Ernest_Boots', 'ernest_boots', 1, 59476, 99, 0, 11000);
 REPLACE INTO `item_equipment` VALUES
-    (23750, "ernests_tremor_boots", 53, 0, 131, 276, 0, 0, 256, 0, 0, 0);
+    (23750, "ernests_tremor_boots", 53, 0, 2097345, 276, 0, 0, 256, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23750, 1, 9), -- DEF +9
-    (23750, 2, 70), -- HP +70
-    (23750, 8, 9), -- STR +9
-    (23750, 10, 9), -- VIT +9
-    (23750, 23, 18), -- Attack +18
-    (23750, 25, 15), -- Accuracy +15
-    (23750, 421, 6); -- Crit Dmg. +6
-
--- =========================================================
--- LIZARDS
--- =========================================================
-
--- Scaly Sally (lv8-12) — 16715-17084
+    (23750, 10, 9),
+    (23750, 13, 5),
+    (23750, 1, 20),
+    (23750, 27, 5),
+    (23750, 160, -3),
+    (23750, 73, 4);
 REPLACE INTO `item_basic` VALUES
     (16715, 0, 'Sally_Chip', 'sally_chip', 1, 59476, 99, 0, 50);
 
@@ -1529,64 +1249,52 @@ REPLACE INTO `item_mods` VALUES
 REPLACE INTO `item_basic` VALUES
     (28440, 0, 'Sally_Belt', 'sally_belt', 1, 59476, 99, 0, 14337);
 REPLACE INTO `item_equipment` VALUES
-    (28440, "sallys_tail_belt", 14, 0, 10240, 0, 0, 0, 1024, 0, 0, 0);
+    (28440, "sallys_tail_belt", 14, 0, 2097601, 0, 0, 0, 1024, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (28440, 1, 1), -- DEF +1
-    (28440, 8, 3), -- STR +3
-    (28440, 9, 3), -- DEX +3
-    (28440, 23, 6), -- Attack +6
-    (28440, 25, 6), -- Accuracy +6
-    (28440, 73, 3), -- Store TP +3
-    (28440, 384, 100); -- Haste +1%
-
--- Cold-blooded Carlos (lv30-36) — 17107-17168
+    (28440, 10, 8),
+    (28440, 1, 18),
+    (28440, 27, 5),
+    (28440, 160, -3),
+    (28440, 73, 3);
 REPLACE INTO `item_basic` VALUES
     (17107, 0, 'Carlos_Cold', 'carlos_cold', 1, 59476, 99, 0, 100);
 
 REPLACE INTO `item_basic` VALUES
     (25690, 0, 'Carlos_Vest', 'carlos_vest', 1, 59476, 99, 0, 4500);
 REPLACE INTO `item_equipment` VALUES
-    (25690, "carloss_reptile_vest", 41, 0, 131, 321, 0, 0, 32, 0, 0, 0);
+    (25690, "carloss_reptile_vest", 41, 0, 6146, 321, 0, 0, 32, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (25690, 1, 18), -- DEF +18
-    (25690, 2, 70), -- HP +70
-    (25690, 8, 9), -- STR +9
-    (25690, 10, 9), -- VIT +9
-    (25690, 23, 18), -- Attack +18
-    (25690, 25, 15), -- Accuracy +15
-    (25690, 421, 6); -- Crit Dmg. +6
-
+    (25690, 8, 10),
+    (25690, 9, 12),
+    (25690, 23, 25),
+    (25690, 25, 25),
+    (25690, 165, 4),
+    (25690, 289, 6);
 REPLACE INTO `item_basic` VALUES
     (26118, 0, 'Carlos_Earring', 'carlos_earring', 1, 59476, 99, 0, 6500);
 REPLACE INTO `item_equipment` VALUES
-    (26118, "carloss_venom_earring", 44, 0, 263200, 0, 0, 0, 6144, 0, 0, 0);
+    (26118, "carloss_venom_earring", 44, 0, 328736, 0, 0, 0, 6144, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (26118, 9, 9), -- DEX +9
-    (26118, 11, 9), -- AGI +9
-    (26118, 25, 15), -- Accuracy +15
-    (26118, 26, 15), -- Rng. Acc. +15
-    (26118, 23, 18), -- Attack +18
-    (26118, 24, 18), -- Rng. Atk. +18
-    (26118, 68, 15), -- Evasion +15
-    (26118, 165, 4); -- Crit Rate +4
-
--- Basilisk Boris (lv52-60) — 17169-17752
+    (26118, 9, 6),
+    (26118, 11, 6),
+    (26118, 25, 12),
+    (26118, 26, 12),
+    (26118, 165, 3),
+    (26118, 365, 3);
 REPLACE INTO `item_basic` VALUES
     (17169, 0, 'Boris_Basilisk', 'boris_basilisk', 1, 59476, 99, 0, 100);
 
 REPLACE INTO `item_basic` VALUES
     (25691, 0, 'Boris_Carapace', 'boris_carapace', 1, 59476, 99, 0, 13000);
 REPLACE INTO `item_equipment` VALUES
-    (25691, "boriss_granite_carapace", 62, 0, 131, 321, 0, 0, 32, 0, 0, 0);
+    (25691, "boriss_granite_carapace", 62, 0, 2097345, 321, 0, 0, 32, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (25691, 1, 25), -- DEF +25
-    (25691, 2, 100), -- HP +100
-    (25691, 8, 12), -- STR +12
-    (25691, 10, 12), -- VIT +12
-    (25691, 23, 24), -- Attack +24
-    (25691, 25, 20), -- Accuracy +20
-    (25691, 421, 8); -- Crit Dmg. +8
-
+    (25691, 10, 13),
+    (25691, 13, 8),
+    (25691, 1, 28),
+    (25691, 27, 6),
+    (25691, 160, -4),
+    (25691, 73, 5);
 REPLACE INTO `item_basic` VALUES
     (11643, 0, 'Boris_Gaze_Ring', 'boris_gaze_ring', 1, 59476, 99, 0, 17000);
 REPLACE INTO `item_equipment` VALUES
@@ -1610,16 +1318,14 @@ REPLACE INTO `item_basic` VALUES
 REPLACE INTO `item_basic` VALUES
     (23784, 0, 'LittleJim_Boots', 'littlejim_boots', 1, 59476, 99, 0, 2000);
 REPLACE INTO `item_equipment` VALUES
-    (23784, "little_jim_boots", 52, 0, 131, 465, 0, 0, 256, 0, 0, 0);
+    (23784, "little_jim_boots", 52, 0, 8321, 465, 0, 0, 256, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23784, 1, 9), -- DEF +9
-    (23784, 2, 70), -- HP +70
-    (23784, 8, 9), -- STR +9
-    (23784, 10, 9), -- VIT +9
-    (23784, 23, 18), -- Attack +18
-    (23784, 25, 15), -- Accuracy +15
-    (23784, 421, 6); -- Crit Dmg. +6
-
+    (23784, 8, 9),
+    (23784, 10, 7),
+    (23784, 23, 22),
+    (23784, 25, 17),
+    (23784, 73, 5),
+    (23784, 288, 3);
 REPLACE INTO `item_basic` VALUES
     (15795, 0, 'Little_Jim_Ring', 'little_jim_ring', 1, 59476, 99, 0, 3000);
 REPLACE INTO `item_equipment` VALUES
@@ -1639,18 +1345,14 @@ REPLACE INTO `item_basic` VALUES
 REPLACE INTO `item_basic` VALUES
     (23756, 0, 'Big_Jim_Hat', 'big_jim_hat', 1, 59476, 99, 0, 2000);
 REPLACE INTO `item_equipment` VALUES
-    (23756, "big_jim_hat", 52, 0, 263200, 465, 0, 0, 16, 0, 0, 0);
+    (23756, "big_jim_hat", 52, 0, 266272, 465, 0, 0, 16, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23756, 1, 12), -- DEF +12
-    (23756, 9, 9), -- DEX +9
-    (23756, 11, 9), -- AGI +9
-    (23756, 25, 15), -- Accuracy +15
-    (23756, 26, 15), -- Rng. Acc. +15
-    (23756, 23, 18), -- Attack +18
-    (23756, 24, 18), -- Rng. Atk. +18
-    (23756, 68, 15), -- Evasion +15
-    (23756, 165, 4); -- Crit Rate +4
-
+    (23756, 9, 9),
+    (23756, 11, 9),
+    (23756, 25, 18),
+    (23756, 421, 3),
+    (23756, 302, 2),
+    (23756, 76, 3);
 REPLACE INTO `item_basic` VALUES
     (15796, 0, 'Big_Jim_Cape', 'big_jim_cape', 1, 59476, 99, 0, 3000);
 REPLACE INTO `item_equipment` VALUES
@@ -1684,91 +1386,69 @@ REPLACE INTO `item_basic` VALUES (336, 0, 'Winifred_Fleece', 'winifred_fleece', 
 REPLACE INTO `item_basic` VALUES (23757, 0, 'Winifred_Cap', 'winifred_cap', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (23757, "WnfrdWCap", 26, 0, 131, 466, 0, 0, 16, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23757, 1, 8), -- DEF +8
-    (23757, 2, 40), -- HP +40
-    (23757, 8, 6), -- STR +6
-    (23757, 10, 6), -- VIT +6
-    (23757, 23, 12), -- Attack +12
-    (23757, 25, 10), -- Accuracy +10
-    (23757, 421, 4); -- Crit Dmg. +4
-
+    (23757, 8, 10),
+    (23757, 10, 8),
+    (23757, 23, 24),
+    (23757, 25, 19),
+    (23757, 73, 6),
+    (23757, 288, 3);
 REPLACE INTO `item_basic` VALUES (23536, 0, 'Wnfrd_Mittens', 'wnfrd_mittens', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (23536, "WnfrdWMit", 27, 0, 16924, 73, 0, 0, 64, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23536, 1, 6), -- DEF +6
-    (23536, 5, 30), -- MP +30
-    (23536, 12, 6), -- INT +6
-    (23536, 13, 4), -- MND +4
-    (23536, 14, 4), -- CHR +4
-    (23536, 28, 6), -- MAB +6
-    (23536, 30, 6), -- MACC +6
-    (23536, 562, 3), -- M.Crit +3
-    (23536, 563, 5), -- M.Crit Dmg. +5
-    (23536, 369, 1); -- Refresh +1
+    (23536, 13, 11),
+    (23536, 14, 8),
+    (23536, 112, 11),
+    (23536, 374, 4),
+    (23536, 170, 4),
+    (23536, 369, 2);
 REPLACE INTO `item_basic` VALUES (339, 0, 'Beatrice_Foot', 'beatrice_foot', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_basic` VALUES (23786, 0, 'Beatrice_Shoes', 'beatrice_shoes', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (23786, "BtrceSShoe", 27, 0, 131, 467, 0, 0, 256, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23786, 1, 6), -- DEF +6
-    (23786, 2, 40), -- HP +40
-    (23786, 8, 6), -- STR +6
-    (23786, 10, 6), -- VIT +6
-    (23786, 23, 12), -- Attack +12
-    (23786, 25, 10), -- Accuracy +10
-    (23786, 421, 4); -- Crit Dmg. +4
-
+    (23786, 10, 11),
+    (23786, 13, 5),
+    (23786, 1, 18),
+    (23786, 27, 5),
+    (23786, 160, -3),
+    (23786, 73, 4);
 REPLACE INTO `item_basic` VALUES (23260, 0, 'Beatrice_Hakama', 'beatrice_hakama', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (23260, "BtrceHHkm", 28, 0, 16924, 211, 0, 0, 128, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23260, 1, 10), -- DEF +10
-    (23260, 5, 30), -- MP +30
-    (23260, 12, 6), -- INT +6
-    (23260, 13, 4), -- MND +4
-    (23260, 14, 4), -- CHR +4
-    (23260, 28, 6), -- MAB +6
-    (23260, 30, 6), -- MACC +6
-    (23260, 562, 3), -- M.Crit +3
-    (23260, 563, 5), -- M.Crit Dmg. +5
-    (23260, 369, 1); -- Refresh +1
+    (23260, 13, 12),
+    (23260, 14, 10),
+    (23260, 112, 15),
+    (23260, 374, 5),
+    (23260, 170, 5),
+    (23260, 369, 2);
 REPLACE INTO `item_basic` VALUES (342, 0, 'Clyde_Shard', 'clyde_shard', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_basic` VALUES (23537, 0, 'Clyde_Gauntlets', 'clyde_gauntlets', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (23537, "ClydeCGnt", 27, 0, 131, 75, 0, 0, 64, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23537, 1, 6), -- DEF +6
-    (23537, 2, 40), -- HP +40
-    (23537, 8, 6), -- STR +6
-    (23537, 10, 6), -- VIT +6
-    (23537, 23, 12), -- Attack +12
-    (23537, 25, 10), -- Accuracy +10
-    (23537, 421, 4); -- Crit Dmg. +4
-
+    (23537, 10, 11),
+    (23537, 13, 6),
+    (23537, 1, 19),
+    (23537, 27, 5),
+    (23537, 160, -3),
+    (23537, 73, 4);
 REPLACE INTO `item_basic` VALUES (28450, 0, 'Clyde_Belt', 'clyde_belt', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (28450, "ClydePBlt", 21, 0, 16924, 0, 0, 0, 1024, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (28450, 1, 3), -- DEF +3
-    (28450, 5, 30), -- MP +30
-    (28450, 12, 6), -- INT +6
-    (28450, 13, 4), -- MND +4
-    (28450, 14, 4), -- CHR +4
-    (28450, 28, 6), -- MAB +6
-    (28450, 30, 6), -- MACC +6
-    (28450, 562, 3), -- M.Crit +3
-    (28450, 563, 5), -- M.Crit Dmg. +5
-    (28450, 369, 1); -- Refresh +1
+    (28450, 12, 6),
+    (28450, 13, 6),
+    (28450, 30, 10),
+    (28450, 170, 5),
+    (28450, 369, 2),
+    (28450, 112, 6);
 REPLACE INTO `item_basic` VALUES (345, 0, 'Srphn_Trinket', 'srphn_trinket', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_basic` VALUES (23787, 0, 'Seraphine_Boots', 'seraphine_boots', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (23787, "SrphnSBts", 17, 0, 263200, 468, 0, 0, 256, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23787, 1, 3), -- DEF +3
-    (23787, 9, 3), -- DEX +3
-    (23787, 11, 3), -- AGI +3
-    (23787, 25, 5), -- Accuracy +5
-    (23787, 26, 5), -- Rng. Acc. +5
-    (23787, 23, 6), -- Attack +6
-    (23787, 24, 6), -- Rng. Atk. +6
-    (23787, 68, 5), -- Evasion +5
-    (23787, 165, 2); -- Crit Rate +2
-
+    (23787, 9, 9),
+    (23787, 11, 7),
+    (23787, 25, 18),
+    (23787, 26, 18),
+    (23787, 165, 4),
+    (23787, 365, 5);
 REPLACE INTO `item_basic` VALUES (15798, 0, 'Seraphine_Ring', 'seraphine_ring', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (15798, "SrphnRRng", 39, 0, 16924, 0, 0, 0, 24576, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
@@ -1785,148 +1465,106 @@ REPLACE INTO `item_basic` VALUES (348, 0, 'Cordelia_Whisker', 'cordelia_whisker'
 REPLACE INTO `item_basic` VALUES (27536, 0, 'Cordelia_Earring', 'cordelia_earring', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (27536, "CrdelaEar", 39, 0, 16924, 0, 0, 0, 6144, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (27536, 5, 30), -- MP +30
-    (27536, 12, 6), -- INT +6
-    (27536, 13, 4), -- MND +4
-    (27536, 14, 4), -- CHR +4
-    (27536, 28, 6), -- MAB +6
-    (27536, 30, 6), -- MACC +6
-    (27536, 562, 3), -- M.Crit +3
-    (27536, 563, 5), -- M.Crit Dmg. +5
-    (27536, 369, 1); -- Refresh +1
-
+    (27536, 12, 6),
+    (27536, 117, 10),
+    (27536, 487, 3),
+    (27536, 30, 12),
+    (27536, 369, 1);
 REPLACE INTO `item_basic` VALUES (28619, 0, 'Cordelia_Mantle', 'cordelia_mantle', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (28619, "CrdelasMnt", 40, 0, 16924, 0, 0, 0, 32768, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (28619, 1, 6), -- DEF +6
-    (28619, 5, 45), -- MP +45
-    (28619, 12, 9), -- INT +9
-    (28619, 13, 6), -- MND +6
-    (28619, 14, 6), -- CHR +6
-    (28619, 28, 9), -- MAB +9
-    (28619, 30, 9), -- MACC +9
-    (28619, 562, 4), -- M.Crit +4
-    (28619, 563, 7), -- M.Crit Dmg. +7
-    (28619, 369, 2); -- Refresh +2
+    (28619, 12, 7),
+    (28619, 13, 7),
+    (28619, 117, 12),
+    (28619, 30, 12),
+    (28619, 369, 2),
+    (28619, 170, 4);
 REPLACE INTO `item_basic` VALUES (351, 0, 'Frederica_Fang', 'frederica_fang', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_basic` VALUES (28618, 0, 'Frederica_Cloak', 'frederica_cloak', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (28618, "FrdrcaClk", 40, 0, 16924, 0, 0, 0, 32768, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (28618, 1, 6), -- DEF +6
-    (28618, 5, 45), -- MP +45
-    (28618, 12, 9), -- INT +9
-    (28618, 13, 6), -- MND +6
-    (28618, 14, 6), -- CHR +6
-    (28618, 28, 9), -- MAB +9
-    (28618, 30, 9), -- MACC +9
-    (28618, 562, 4), -- M.Crit +4
-    (28618, 563, 7), -- M.Crit Dmg. +7
-    (28618, 369, 2); -- Refresh +2
-
+    (28618, 13, 9),
+    (28618, 14, 9),
+    (28618, 112, 14),
+    (28618, 374, 4),
+    (28618, 170, 4),
+    (28618, 369, 2);
 REPLACE INTO `item_basic` VALUES (23261, 0, 'Frederica_Hose', 'frederica_hose', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (23261, "FrdrcaHse", 34, 0, 131, 214, 0, 0, 128, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23261, 1, 10), -- DEF +10
-    (23261, 2, 40), -- HP +40
-    (23261, 8, 6), -- STR +6
-    (23261, 10, 6), -- VIT +6
-    (23261, 23, 12), -- Attack +12
-    (23261, 25, 10), -- Accuracy +10
-    (23261, 421, 4); -- Crit Dmg. +4
+    (23261, 10, 12),
+    (23261, 1, 28),
+    (23261, 27, 7),
+    (23261, 160, -4),
+    (23261, 25, 10),
+    (23261, 73, 3);
 REPLACE INTO `item_basic` VALUES (354, 0, 'Millicent_Petal', 'millicent_petal', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_basic` VALUES (23758, 0, 'Mllcnt_Headband', 'mllcnt_headband', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (23758, "MllcntHbd", 63, 0, 263200, 467, 0, 0, 16, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23758, 1, 16), -- DEF +16
-    (23758, 9, 12), -- DEX +12
-    (23758, 11, 12), -- AGI +12
-    (23758, 25, 20), -- Accuracy +20
-    (23758, 26, 20), -- Rng. Acc. +20
-    (23758, 23, 24), -- Attack +24
-    (23758, 24, 24), -- Rng. Atk. +24
-    (23758, 68, 20), -- Evasion +20
-    (23758, 165, 5); -- Crit Rate +5
-
+    (23758, 9, 8),
+    (23758, 11, 10),
+    (23758, 24, 22),
+    (23758, 26, 18),
+    (23758, 68, 16),
+    (23758, 73, 4);
 REPLACE INTO `item_basic` VALUES (23538, 0, 'Mllcnt_Gloves', 'mllcnt_gloves', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (23538, "MllcntGGl", 21, 0, 16924, 77, 0, 0, 64, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23538, 1, 6), -- DEF +6
-    (23538, 5, 30), -- MP +30
-    (23538, 12, 6), -- INT +6
-    (23538, 13, 4), -- MND +4
-    (23538, 14, 4), -- CHR +4
-    (23538, 28, 6), -- MAB +6
-    (23538, 30, 6), -- MACC +6
-    (23538, 562, 3), -- M.Crit +3
-    (23538, 563, 5), -- M.Crit Dmg. +5
-    (23538, 369, 1); -- Refresh +1
+    (23538, 12, 10),
+    (23538, 13, 8),
+    (23538, 28, 19),
+    (23538, 30, 18),
+    (23538, 170, 4),
+    (23538, 369, 2);
 REPLACE INTO `item_basic` VALUES (357, 0, 'Brndn_Carapace', 'brndn_carapace', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_basic` VALUES (25700, 0, 'Brn_Breastplate', 'brn_breastplate', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (25700, "BrndnABpl", 38, 0, 131, 321, 0, 0, 32, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (25700, 1, 12), -- DEF +12
-    (25700, 2, 40), -- HP +40
-    (25700, 8, 6), -- STR +6
-    (25700, 10, 6), -- VIT +6
-    (25700, 23, 12), -- Attack +12
-    (25700, 25, 10), -- Accuracy +10
-    (25700, 421, 4); -- Crit Dmg. +4
-
+    (25700, 10, 16),
+    (25700, 13, 8),
+    (25700, 1, 25),
+    (25700, 27, 6),
+    (25700, 160, -4),
+    (25700, 73, 5);
 REPLACE INTO `item_basic` VALUES (23788, 0, 'Brendan_Greaves', 'brendan_greaves', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (23788, "BrndnIGrv", 36, 0, 16924, 469, 0, 0, 256, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23788, 1, 6), -- DEF +6
-    (23788, 5, 30), -- MP +30
-    (23788, 12, 6), -- INT +6
-    (23788, 13, 4), -- MND +4
-    (23788, 14, 4), -- CHR +4
-    (23788, 28, 6), -- MAB +6
-    (23788, 30, 6), -- MACC +6
-    (23788, 562, 3), -- M.Crit +3
-    (23788, 563, 5), -- M.Crit Dmg. +5
-    (23788, 369, 1); -- Refresh +1
+    (23788, 13, 9),
+    (23788, 14, 7),
+    (23788, 112, 12),
+    (23788, 374, 4),
+    (23788, 170, 4),
+    (23788, 369, 2);
 REPLACE INTO `item_basic` VALUES (360, 0, 'Grt_Tailfeather', 'grt_tailfeather', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_basic` VALUES (28599, 0, 'Gertrude_Mantle', 'gertrude_mantle', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (28599, "GrtrdGMnt", 41, 0, 263200, 0, 0, 0, 32768, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (28599, 1, 6), -- DEF +6
-    (28599, 9, 9), -- DEX +9
-    (28599, 11, 9), -- AGI +9
-    (28599, 25, 15), -- Accuracy +15
-    (28599, 26, 15), -- Rng. Acc. +15
-    (28599, 23, 18), -- Attack +18
-    (28599, 24, 18), -- Rng. Atk. +18
-    (28599, 68, 15), -- Evasion +15
-    (28599, 165, 4); -- Crit Rate +4
-
+    (28599, 9, 9),
+    (28599, 11, 8),
+    (28599, 25, 16),
+    (28599, 68, 14),
+    (28599, 302, 3),
+    (28599, 76, 8);
 REPLACE INTO `item_basic` VALUES (23706, 0, 'Gertrude_Shoes', 'gertrude_shoes', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (23706, "GrtrdWShs", 44, 0, 16924, 339, 0, 0, 256, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23706, 1, 9), -- DEF +9
-    (23706, 5, 45), -- MP +45
-    (23706, 12, 9), -- INT +9
-    (23706, 13, 6), -- MND +6
-    (23706, 14, 6), -- CHR +6
-    (23706, 28, 9), -- MAB +9
-    (23706, 30, 9), -- MACC +9
-    (23706, 562, 4), -- M.Crit +4
-    (23706, 563, 7), -- M.Crit Dmg. +7
-    (23706, 369, 2); -- Refresh +2
+    (23706, 12, 10),
+    (23706, 13, 7),
+    (23706, 28, 18),
+    (23706, 30, 16),
+    (23706, 170, 4),
+    (23706, 369, 2);
 REPLACE INTO `item_basic` VALUES (363, 0, 'Vlntn_Stinger', 'vlntn_stinger', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_basic` VALUES (23759, 0, 'Vlntn_Hairpin', 'vlntn_hairpin', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (23759, "VlntnHHpn", 25, 0, 16924, 468, 0, 0, 16, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23759, 1, 8), -- DEF +8
-    (23759, 5, 30), -- MP +30
-    (23759, 12, 6), -- INT +6
-    (23759, 13, 4), -- MND +4
-    (23759, 14, 4), -- CHR +4
-    (23759, 28, 6), -- MAB +6
-    (23759, 30, 6), -- MACC +6
-    (23759, 562, 3), -- M.Crit +3
-    (23759, 563, 5), -- M.Crit Dmg. +5
-    (23759, 369, 1); -- Refresh +1
-
+    (23759, 12, 8),
+    (23759, 13, 9),
+    (23759, 117, 12),
+    (23759, 487, 4),
+    (23759, 30, 16),
+    (23759, 369, 2);
 REPLACE INTO `item_basic` VALUES (15797, 0, 'Valentina_Ring', 'valentina_ring', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (15797, "VlntnVRng", 61, 0, 16924, 0, 0, 0, 24576, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
@@ -1943,39 +1581,31 @@ REPLACE INTO `item_basic` VALUES (366, 0, 'Deidre_Earthen', 'deidre_earthen', 1,
 REPLACE INTO `item_basic` VALUES (24076, 0, 'Deidre_Boots', 'deidre_boots', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (24076, "DdrBrwBts", 28, 0, 131, 172, 0, 0, 256, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (24076, 1, 6), -- DEF +6
-    (24076, 2, 40), -- HP +40
-    (24076, 8, 6), -- STR +6
-    (24076, 10, 6), -- VIT +6
-    (24076, 23, 12), -- Attack +12
-    (24076, 25, 10), -- Accuracy +10
-    (24076, 421, 4); -- Crit Dmg. +4
-
+    (24076, 8, 8),
+    (24076, 9, 7),
+    (24076, 23, 18),
+    (24076, 25, 18),
+    (24076, 165, 3),
+    (24076, 289, 5);
 REPLACE INTO `item_basic` VALUES (28451, 0, 'Deidre_Belt', 'deidre_belt', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (28451, "DdrMdsBlt", 22, 0, 16924, 0, 0, 0, 1024, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (28451, 1, 3), -- DEF +3
-    (28451, 5, 30), -- MP +30
-    (28451, 12, 6), -- INT +6
-    (28451, 13, 4), -- MND +4
-    (28451, 14, 4), -- CHR +4
-    (28451, 28, 6), -- MAB +6
-    (28451, 30, 6), -- MACC +6
-    (28451, 562, 3), -- M.Crit +3
-    (28451, 563, 5), -- M.Crit Dmg. +5
-    (28451, 369, 1); -- Refresh +1
+    (28451, 13, 8),
+    (28451, 14, 7),
+    (28451, 112, 13),
+    (28451, 374, 4),
+    (28451, 170, 4),
+    (28451, 369, 1);
 REPLACE INTO `item_basic` VALUES (369, 0, 'Vincenzo_Scale', 'vincenzo_scale', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_basic` VALUES (23252, 0, 'Vncnz_Cuisses', 'vncnz_cuisses', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (23252, "VncznSCss", 40, 0, 131, 86, 0, 0, 128, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23252, 1, 16), -- DEF +16
-    (23252, 2, 70), -- HP +70
-    (23252, 8, 9), -- STR +9
-    (23252, 10, 9), -- VIT +9
-    (23252, 23, 18), -- Attack +18
-    (23252, 25, 15), -- Accuracy +15
-    (23252, 421, 6); -- Crit Dmg. +6
-
+    (23252, 8, 12),
+    (23252, 10, 8),
+    (23252, 23, 24),
+    (23252, 25, 18),
+    (23252, 73, 5),
+    (23252, 288, 3);
 REPLACE INTO `item_basic` VALUES (11665, 0, 'Vincenzo_Ring', 'vincenzo_ring', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (11665, "VncznTRng", 38, 0, 16924, 0, 0, 0, 24576, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
@@ -1992,98 +1622,69 @@ REPLACE INTO `item_basic` VALUES (372, 0, 'Gideon_Axe', 'gideon_axe', 1, 59476, 
 REPLACE INTO `item_basic` VALUES (23511, 0, 'Gideon_Armband', 'gideon_armband', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (23511, "GdnSArmb", 8, 0, 16924, 68, 0, 0, 64, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23511, 1, 3), -- DEF +3
-    (23511, 5, 15), -- MP +15
-    (23511, 12, 3), -- INT +3
-    (23511, 13, 2), -- MND +2
-    (23511, 14, 2), -- CHR +2
-    (23511, 28, 3), -- MAB +3
-    (23511, 30, 3), -- MACC +3
-    (23511, 562, 2), -- M.Crit +2
-    (23511, 563, 3), -- M.Crit Dmg. +3
-    (23511, 369, 1); -- Refresh +1
-
+    (23511, 12, 8),
+    (23511, 13, 8),
+    (23511, 30, 12),
+    (23511, 170, 6),
+    (23511, 117, 14),
+    (23511, 369, 2);
 REPLACE INTO `item_basic` VALUES (28430, 0, 'Gideon_Belt', 'gideon_belt', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (28430, "GdnGBlt", 12, 0, 16924, 0, 0, 0, 1024, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (28430, 1, 1), -- DEF +1
-    (28430, 5, 15), -- MP +15
-    (28430, 12, 3), -- INT +3
-    (28430, 13, 2), -- MND +2
-    (28430, 14, 2), -- CHR +2
-    (28430, 28, 3), -- MAB +3
-    (28430, 30, 3), -- MACC +3
-    (28430, 562, 2), -- M.Crit +2
-    (28430, 563, 3), -- M.Crit Dmg. +3
-    (28430, 369, 1); -- Refresh +1
+    (28430, 13, 8),
+    (28430, 14, 7),
+    (28430, 112, 12),
+    (28430, 374, 4),
+    (28430, 170, 4),
+    (28430, 369, 1);
 REPLACE INTO `item_basic` VALUES (375, 0, 'Sven_Medal', 'sven_medal', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_basic` VALUES (23418, 0, 'Sven_Helm', 'sven_helm', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (23418, "SvnWCHlm", 29, 0, 16924, 310, 0, 0, 16, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23418, 1, 8), -- DEF +8
-    (23418, 5, 30), -- MP +30
-    (23418, 12, 6), -- INT +6
-    (23418, 13, 4), -- MND +4
-    (23418, 14, 4), -- CHR +4
-    (23418, 28, 6), -- MAB +6
-    (23418, 30, 6), -- MACC +6
-    (23418, 562, 3), -- M.Crit +3
-    (23418, 563, 5), -- M.Crit Dmg. +5
-    (23418, 369, 1); -- Refresh +1
-
+    (23418, 14, 10),
+    (23418, 13, 10),
+    (23418, 117, 12),
+    (23418, 112, 10),
+    (23418, 170, 5),
+    (23418, 369, 2);
 REPLACE INTO `item_basic` VALUES (28604, 0, 'Sven_Mantle', 'sven_mantle', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (28604, "SvnBtlMnt", 25, 0, 16924, 0, 0, 0, 32768, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (28604, 1, 4), -- DEF +4
-    (28604, 5, 30), -- MP +30
-    (28604, 12, 6), -- INT +6
-    (28604, 13, 4), -- MND +4
-    (28604, 14, 4), -- CHR +4
-    (28604, 28, 6), -- MAB +6
-    (28604, 30, 6), -- MACC +6
-    (28604, 562, 3), -- M.Crit +3
-    (28604, 563, 5), -- M.Crit Dmg. +5
-    (28604, 369, 1); -- Refresh +1
+    (28604, 14, 9),
+    (28604, 13, 9),
+    (28604, 112, 12),
+    (28604, 170, 4),
+    (28604, 369, 2),
+    (28604, 374, 3);
 REPLACE INTO `item_basic` VALUES (378, 0, 'Rgnld_Standard', 'rgnld_standard', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_basic` VALUES (25701, 0, 'Rgnld_Hauberk', 'rgnld_hauberk', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (25701, "RgnldWHbk", 37, 0, 131, 321, 0, 0, 32, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (25701, 1, 12), -- DEF +12
-    (25701, 2, 40), -- HP +40
-    (25701, 8, 6), -- STR +6
-    (25701, 10, 6), -- VIT +6
-    (25701, 23, 12), -- Attack +12
-    (25701, 25, 10), -- Accuracy +10
-    (25701, 421, 4); -- Crit Dmg. +4
-
+    (25701, 8, 13),
+    (25701, 10, 10),
+    (25701, 23, 30),
+    (25701, 25, 25),
+    (25701, 73, 8),
+    (25701, 288, 4);
 REPLACE INTO `item_basic` VALUES (24077, 0, 'Rgnld_Greaves', 'rgnld_greaves', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (24077, "RgnldCGrv", 39, 0, 16924, 172, 0, 0, 256, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (24077, 1, 6), -- DEF +6
-    (24077, 5, 30), -- MP +30
-    (24077, 12, 6), -- INT +6
-    (24077, 13, 4), -- MND +4
-    (24077, 14, 4), -- CHR +4
-    (24077, 28, 6), -- MAB +6
-    (24077, 30, 6), -- MACC +6
-    (24077, 562, 3), -- M.Crit +3
-    (24077, 563, 5), -- M.Crit Dmg. +5
-    (24077, 369, 1); -- Refresh +1
+    (24077, 12, 7),
+    (24077, 13, 7),
+    (24077, 117, 11),
+    (24077, 487, 4),
+    (24077, 30, 15),
+    (24077, 369, 2);
 REPLACE INTO `item_basic` VALUES (381, 0, 'Ophelia_Crown', 'ophelia_crown', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_basic` VALUES (25702, 0, 'Ophelia_Plate', 'ophelia_plate', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (25702, "OphlDPlt", 60, 0, 16924, 99, 0, 0, 32, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (25702, 1, 25), -- DEF +25
-    (25702, 5, 60), -- MP +60
-    (25702, 12, 12), -- INT +12
-    (25702, 13, 8), -- MND +8
-    (25702, 14, 8), -- CHR +8
-    (25702, 28, 12), -- MAB +12
-    (25702, 30, 12), -- MACC +12
-    (25702, 562, 5), -- M.Crit +5
-    (25702, 563, 10), -- M.Crit Dmg. +10
-    (25702, 369, 3); -- Refresh +3
-
+    (25702, 13, 13),
+    (25702, 14, 10),
+    (25702, 112, 15),
+    (25702, 374, 5),
+    (25702, 170, 6),
+    (25702, 369, 3);
 REPLACE INTO `item_basic` VALUES (14631, 0, 'Ophelia_Ring', 'ophelia_ring', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (14631, "OphlCRng", 37, 0, 16924, 0, 0, 0, 24576, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
@@ -2100,68 +1701,49 @@ REPLACE INTO `item_basic` VALUES (384, 0, 'Fenwick_Talon', 'fenwick_talon', 1, 5
 REPLACE INTO `item_basic` VALUES (24075, 0, 'Fenwick_Sandals', 'fenwick_sandals', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (24075, "FnwkISndl", 13, 0, 263200, 172, 0, 0, 256, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (24075, 1, 3), -- DEF +3
-    (24075, 9, 3), -- DEX +3
-    (24075, 11, 3), -- AGI +3
-    (24075, 25, 5), -- Accuracy +5
-    (24075, 26, 5), -- Rng. Acc. +5
-    (24075, 23, 6), -- Attack +6
-    (24075, 24, 6), -- Rng. Atk. +6
-    (24075, 68, 5), -- Evasion +5
-    (24075, 165, 2); -- Crit Rate +2
-
+    (24075, 9, 9),
+    (24075, 11, 7),
+    (24075, 25, 18),
+    (24075, 26, 18),
+    (24075, 165, 5),
+    (24075, 365, 4);
 REPLACE INTO `item_basic` VALUES (28429, 0, 'Fenwick_Sash', 'fenwick_sash', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (28429, "FnwkNSsh", 12, 0, 16924, 0, 0, 0, 1024, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (28429, 1, 1), -- DEF +1
-    (28429, 5, 15), -- MP +15
-    (28429, 12, 3), -- INT +3
-    (28429, 13, 2), -- MND +2
-    (28429, 14, 2), -- CHR +2
-    (28429, 28, 3), -- MAB +3
-    (28429, 30, 3), -- MACC +3
-    (28429, 562, 2), -- M.Crit +2
-    (28429, 563, 3), -- M.Crit Dmg. +3
-    (28429, 369, 1); -- Refresh +1
+    (28429, 11, 8),
+    (28429, 24, 18),
+    (28429, 26, 18),
+    (28429, 365, 5),
+    (28429, 165, 2);
 REPLACE INTO `item_basic` VALUES (387, 0, 'Delilah_Beads', 'delilah_beads', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_basic` VALUES (26014, 0, 'Delilah_Collar', 'delilah_collar', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (26014, "DllhCCll", 64, 0, 263200, 0, 0, 0, 512, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (26014, 9, 12), -- DEX +12
-    (26014, 11, 12), -- AGI +12
-    (26014, 25, 20), -- Accuracy +20
-    (26014, 26, 20), -- Rng. Acc. +20
-    (26014, 23, 24), -- Attack +24
-    (26014, 24, 24), -- Rng. Atk. +24
-    (26014, 68, 20), -- Evasion +20
-    (26014, 165, 5); -- Crit Rate +5
-
+    (26014, 9, 8),
+    (26014, 11, 8),
+    (26014, 25, 14),
+    (26014, 26, 14),
+    (26014, 165, 3),
+    (26014, 365, 4);
 REPLACE INTO `item_basic` VALUES (27537, 0, 'Delilah_Earring', 'delilah_earring', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (27537, "DllhSEar", 56, 0, 16924, 0, 0, 0, 6144, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (27537, 5, 45), -- MP +45
-    (27537, 12, 9), -- INT +9
-    (27537, 13, 6), -- MND +6
-    (27537, 14, 6), -- CHR +6
-    (27537, 28, 9), -- MAB +9
-    (27537, 30, 9), -- MACC +9
-    (27537, 562, 4), -- M.Crit +4
-    (27537, 563, 7), -- M.Crit Dmg. +7
-    (27537, 369, 2); -- Refresh +2
+    (27537, 13, 6),
+    (27537, 14, 6),
+    (27537, 112, 10),
+    (27537, 374, 4),
+    (27537, 170, 3),
+    (27537, 369, 1);
 REPLACE INTO `item_basic` VALUES (390, 0, 'Horatio_Relic', 'horatio_relic', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_basic` VALUES (23895, 0, 'Horatio_Mitre', 'horatio_mitre', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (23895, "HrtZMtre", 62, 0, 263200, 480, 0, 0, 16, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23895, 1, 16), -- DEF +16
-    (23895, 9, 12), -- DEX +12
-    (23895, 11, 12), -- AGI +12
-    (23895, 25, 20), -- Accuracy +20
-    (23895, 26, 20), -- Rng. Acc. +20
-    (23895, 23, 24), -- Attack +24
-    (23895, 24, 24), -- Rng. Atk. +24
-    (23895, 68, 20), -- Evasion +20
-    (23895, 165, 5); -- Crit Rate +5
-
+    (23895, 9, 10),
+    (23895, 11, 9),
+    (23895, 25, 20),
+    (23895, 26, 20),
+    (23895, 165, 4),
+    (23895, 365, 4);
 REPLACE INTO `item_basic` VALUES (14641, 0, 'Horatio_Ring', 'horatio_ring', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (14641, "HrtFthRng", 58, 0, 16924, 0, 0, 0, 24576, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
@@ -2178,87 +1760,69 @@ REPLACE INTO `item_basic` VALUES (393, 0, 'Dmd_Feather', 'dmd_feather', 1, 59476
 REPLACE INTO `item_basic` VALUES (25703, 0, 'Diomedea_Robe', 'diomedea_robe', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (25703, "DmdaARbe", 70, 0, 263200, 328, 0, 0, 32, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (25703, 1, 25), -- DEF +25
-    (25703, 9, 12), -- DEX +12
-    (25703, 11, 12), -- AGI +12
-    (25703, 25, 20), -- Accuracy +20
-    (25703, 26, 20), -- Rng. Acc. +20
-    (25703, 23, 24), -- Attack +24
-    (25703, 24, 24), -- Rng. Atk. +24
-    (25703, 68, 20), -- Evasion +20
-    (25703, 165, 5); -- Crit Rate +5
-
+    (25703, 9, 11),
+    (25703, 11, 11),
+    (25703, 25, 24),
+    (25703, 421, 4),
+    (25703, 302, 3),
+    (25703, 76, 4);
 REPLACE INTO `item_basic` VALUES (23797, 0, 'Dmd_Headband', 'dmd_headband', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (23797, "DmdaHHbd", 70, 0, 10240, 172, 0, 0, 16, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23797, 1, 16), -- DEF +16
-    (23797, 8, 12), -- STR +12
-    (23797, 9, 12), -- DEX +12
-    (23797, 23, 24), -- Attack +24
-    (23797, 25, 24), -- Accuracy +24
-    (23797, 73, 10), -- Store TP +10
-    (23797, 384, 400); -- Haste +4%
+    (23797, 8, 8),
+    (23797, 9, 8),
+    (23797, 23, 20),
+    (23797, 25, 20),
+    (23797, 165, 3),
+    (23797, 289, 6);
 REPLACE INTO `item_basic` VALUES (396, 0, 'Cornelius_Scale', 'cornelius_scale', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_basic` VALUES (23544, 0, 'Cornelius_Shard', 'cornelius_shard', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (23544, "CrnlsSShr", 9, 0, 131, 89, 0, 0, 64, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23544, 1, 3), -- DEF +3
-    (23544, 2, 20), -- HP +20
-    (23544, 8, 3), -- STR +3
-    (23544, 10, 3), -- VIT +3
-    (23544, 23, 6), -- Attack +6
-    (23544, 25, 5), -- Accuracy +5
-    (23544, 421, 2); -- Crit Dmg. +2
-
+    (23544, 8, 10),
+    (23544, 10, 8),
+    (23544, 23, 23),
+    (23544, 25, 17),
+    (23544, 73, 7),
+    (23544, 288, 3);
 REPLACE INTO `item_basic` VALUES (23785, 0, 'Crnls_Anklet', 'crnls_anklet', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (23785, "CrnlsAnkl", 11, 0, 16924, 466, 0, 0, 256, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23785, 1, 3), -- DEF +3
-    (23785, 5, 15), -- MP +15
-    (23785, 12, 3), -- INT +3
-    (23785, 13, 2), -- MND +2
-    (23785, 14, 2), -- CHR +2
-    (23785, 28, 3), -- MAB +3
-    (23785, 30, 3), -- MACC +3
-    (23785, 562, 2), -- M.Crit +2
-    (23785, 563, 3), -- M.Crit Dmg. +3
-    (23785, 369, 1); -- Refresh +1
+    (23785, 13, 9),
+    (23785, 14, 7),
+    (23785, 112, 11),
+    (23785, 374, 4),
+    (23785, 170, 4),
+    (23785, 369, 2);
 REPLACE INTO `item_basic` VALUES (399, 0, 'Sylvester_Ingot', 'sylvester_ingot', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_basic` VALUES (23978, 0, 'Sylvstr_Cuirass', 'sylvstr_cuirass', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (23978, "SlvstPCrs", 22, 0, 131, 480, 0, 0, 32, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23978, 1, 12), -- DEF +12
-    (23978, 2, 40), -- HP +40
-    (23978, 8, 6), -- STR +6
-    (23978, 10, 6), -- VIT +6
-    (23978, 23, 12), -- Attack +12
-    (23978, 25, 10), -- Accuracy +10
-    (23978, 421, 4); -- Crit Dmg. +4
-
+    (23978, 10, 13),
+    (23978, 13, 8),
+    (23978, 1, 25),
+    (23978, 27, 8),
+    (23978, 160, -4),
+    (23978, 73, 5);
 REPLACE INTO `item_basic` VALUES (26015, 0, 'Sylvstr_Collar', 'sylvstr_collar', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (26015, "SlvstGCll", 12, 0, 16924, 0, 0, 0, 512, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (26015, 5, 15), -- MP +15
-    (26015, 12, 3), -- INT +3
-    (26015, 13, 2), -- MND +2
-    (26015, 14, 2), -- CHR +2
-    (26015, 28, 3), -- MAB +3
-    (26015, 30, 3), -- MACC +3
-    (26015, 562, 2), -- M.Crit +2
-    (26015, 563, 3), -- M.Crit Dmg. +3
-    (26015, 369, 1); -- Refresh +1
+    (26015, 12, 6),
+    (26015, 13, 6),
+    (26015, 117, 12),
+    (26015, 170, 4),
+    (26015, 369, 2),
+    (26015, 30, 10);
 REPLACE INTO `item_basic` VALUES (402, 0, 'Basil_Chip', 'basil_chip', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_basic` VALUES (23728, 0, 'Basil_Greaves', 'basil_greaves', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (23728, "BaslFGrv", 37, 0, 131, 164, 0, 0, 256, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23728, 1, 6), -- DEF +6
-    (23728, 2, 40), -- HP +40
-    (23728, 8, 6), -- STR +6
-    (23728, 10, 6), -- VIT +6
-    (23728, 23, 12), -- Attack +12
-    (23728, 25, 10), -- Accuracy +10
-    (23728, 421, 4); -- Crit Dmg. +4
-
+    (23728, 8, 7),
+    (23728, 9, 7),
+    (23728, 23, 18),
+    (23728, 25, 19),
+    (23728, 165, 3),
+    (23728, 289, 5);
 REPLACE INTO `item_basic` VALUES (14639, 0, 'Basil_Ring', 'basil_ring', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (14639, "BaslRRng", 28, 0, 16924, 0, 0, 0, 24576, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
@@ -2275,89 +1839,68 @@ REPLACE INTO `item_basic` VALUES (405, 0, 'Dsmnd_Carapace', 'dsmnd_carapace', 1,
 REPLACE INTO `item_basic` VALUES (25705, 0, 'Desmond_Hauberk', 'desmond_hauberk', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (25705, "DsmndIHbk", 55, 0, 16924, 329, 0, 0, 32, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (25705, 1, 18), -- DEF +18
-    (25705, 5, 45), -- MP +45
-    (25705, 12, 9), -- INT +9
-    (25705, 13, 6), -- MND +6
-    (25705, 14, 6), -- CHR +6
-    (25705, 28, 9), -- MAB +9
-    (25705, 30, 9), -- MACC +9
-    (25705, 562, 4), -- M.Crit +4
-    (25705, 563, 7), -- M.Crit Dmg. +7
-    (25705, 369, 2); -- Refresh +2
-
+    (25705, 13, 13),
+    (25705, 14, 10),
+    (25705, 112, 15),
+    (25705, 374, 5),
+    (25705, 170, 5),
+    (25705, 369, 4);
 REPLACE INTO `item_basic` VALUES (23896, 0, 'Desmond_Visor', 'desmond_visor', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (23896, "DsmndWVsr", 46, 0, 16924, 480, 0, 0, 16, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23896, 1, 12), -- DEF +12
-    (23896, 5, 45), -- MP +45
-    (23896, 12, 9), -- INT +9
-    (23896, 13, 6), -- MND +6
-    (23896, 14, 6), -- CHR +6
-    (23896, 28, 9), -- MAB +9
-    (23896, 30, 9), -- MACC +9
-    (23896, 562, 4), -- M.Crit +4
-    (23896, 563, 7), -- M.Crit Dmg. +7
-    (23896, 369, 2); -- Refresh +2
+    (23896, 13, 10),
+    (23896, 14, 8),
+    (23896, 112, 12),
+    (23896, 374, 6),
+    (23896, 170, 4),
+    (23896, 369, 2);
 REPLACE INTO `item_basic` VALUES (408, 0, 'Fiona_Scrap', 'fiona_scrap', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_basic` VALUES (27538, 0, 'Fiona_Earring', 'fiona_earring', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (27538, "FnaWngEar", 15, 0, 2097345, 0, 0, 0, 6144, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (27538, 1, 3), -- DEF +3
-    (27538, 2, 30), -- HP +30
-    (27538, 10, 4), -- VIT +4
-    (27538, 13, 2), -- MND +2
-    (27538, 109, 8), -- Shield Skill +8
-    (27538, 161, -100); -- Phys. Dmg. Taken -1%
-
+    (27538, 8, 5),
+    (27538, 9, 6),
+    (27538, 23, 14),
+    (27538, 25, 14),
+    (27538, 289, 3),
+    (27538, 165, 2);
 REPLACE INTO `item_basic` VALUES (23707, 0, 'Fiona_Sandals', 'fiona_sandals', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (23707, "FnaNgtSnd", 10, 0, 263200, 132, 0, 0, 256, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23707, 1, 3), -- DEF +3
-    (23707, 9, 3), -- DEX +3
-    (23707, 11, 3), -- AGI +3
-    (23707, 25, 5), -- Accuracy +5
-    (23707, 26, 5), -- Rng. Acc. +5
-    (23707, 23, 6), -- Attack +6
-    (23707, 24, 6), -- Rng. Atk. +6
-    (23707, 68, 5), -- Evasion +5
-    (23707, 165, 2); -- Crit Rate +2
+    (23707, 9, 7),
+    (23707, 11, 10),
+    (23707, 24, 20),
+    (23707, 26, 16),
+    (23707, 68, 14),
+    (23707, 73, 4);
 REPLACE INTO `item_basic` VALUES (411, 0, 'Edgar_Wing', 'edgar_wing', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_basic` VALUES (27539, 0, 'Edgar_Earring', 'edgar_earring', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (27539, "EdgrEEar", 27, 0, 16924, 0, 0, 0, 6144, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (27539, 5, 30), -- MP +30
-    (27539, 12, 6), -- INT +6
-    (27539, 13, 4), -- MND +4
-    (27539, 14, 4), -- CHR +4
-    (27539, 28, 6), -- MAB +6
-    (27539, 30, 6), -- MACC +6
-    (27539, 562, 3), -- M.Crit +3
-    (27539, 563, 5), -- M.Crit Dmg. +5
-    (27539, 369, 1); -- Refresh +1
-
+    (27539, 12, 6),
+    (27539, 117, 11),
+    (27539, 487, 3),
+    (27539, 30, 12),
+    (27539, 369, 1);
 REPLACE INTO `item_basic` VALUES (23543, 0, 'Edgar_Mitts', 'edgar_mitts', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (23543, "EdgrShMtt", 24, 0, 131, 87, 0, 0, 64, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23543, 1, 6), -- DEF +6
-    (23543, 2, 40), -- HP +40
-    (23543, 8, 6), -- STR +6
-    (23543, 10, 6), -- VIT +6
-    (23543, 23, 12), -- Attack +12
-    (23543, 25, 10), -- Accuracy +10
-    (23543, 421, 4); -- Crit Dmg. +4
+    (23543, 10, 10),
+    (23543, 13, 6),
+    (23543, 1, 19),
+    (23543, 27, 5),
+    (23543, 160, -3),
+    (23543, 73, 5);
 REPLACE INTO `item_basic` VALUES (414, 0, 'Valerian_Fang', 'valerian_fang', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_basic` VALUES (23761, 0, 'Valerian_Cowl', 'valerian_cowl', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (23761, "VlrnNtCwl", 28, 0, 131, 470, 0, 0, 16, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23761, 1, 8), -- DEF +8
-    (23761, 2, 40), -- HP +40
-    (23761, 8, 6), -- STR +6
-    (23761, 10, 6), -- VIT +6
-    (23761, 23, 12), -- Attack +12
-    (23761, 25, 10), -- Accuracy +10
-    (23761, 421, 4); -- Crit Dmg. +4
-
+    (23761, 8, 8),
+    (23761, 9, 9),
+    (23761, 23, 20),
+    (23761, 25, 20),
+    (23761, 165, 3),
+    (23761, 289, 5);
 REPLACE INTO `item_basic` VALUES (14637, 0, 'Valerian_Ring', 'valerian_ring', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (14637, "VlrnVRng", 24, 0, 6146, 0, 0, 0, 24576, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
@@ -2372,116 +1915,87 @@ REPLACE INTO `item_basic` VALUES (417, 0, 'Araminta_Fang', 'araminta_fang', 1, 5
 REPLACE INTO `item_basic` VALUES (28620, 0, 'Araminta_Mantle', 'araminta_mantle', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (28620, "ArmntDMnt", 31, 0, 263200, 0, 0, 0, 32768, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (28620, 1, 4), -- DEF +4
-    (28620, 9, 6), -- DEX +6
-    (28620, 11, 6), -- AGI +6
-    (28620, 25, 10), -- Accuracy +10
-    (28620, 26, 10), -- Rng. Acc. +10
-    (28620, 23, 12), -- Attack +12
-    (28620, 24, 12), -- Rng. Atk. +12
-    (28620, 68, 10), -- Evasion +10
-    (28620, 165, 3); -- Crit Rate +3
-
+    (28620, 9, 8),
+    (28620, 11, 8),
+    (28620, 25, 14),
+    (28620, 68, 12),
+    (28620, 302, 2),
+    (28620, 76, 6);
 REPLACE INTO `item_basic` VALUES (23708, 0, 'Araminta_Anklet', 'araminta_anklet', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (23708, "ArmntHAnk", 36, 0, 131, 132, 0, 0, 256, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23708, 1, 6), -- DEF +6
-    (23708, 2, 40), -- HP +40
-    (23708, 8, 6), -- STR +6
-    (23708, 10, 6), -- VIT +6
-    (23708, 23, 12), -- Attack +12
-    (23708, 25, 10), -- Accuracy +10
-    (23708, 421, 4); -- Crit Dmg. +4
+    (23708, 10, 9),
+    (23708, 13, 5),
+    (23708, 1, 18),
+    (23708, 27, 6),
+    (23708, 160, -3),
+    (23708, 73, 4);
 REPLACE INTO `item_basic` VALUES (420, 0, 'Silas_Shed', 'silas_shed', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_basic` VALUES (23729, 0, 'Silas_Sandals', 'silas_sandals', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (23729, "SlsSnkSnd", 13, 0, 131, 163, 0, 0, 256, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23729, 1, 3), -- DEF +3
-    (23729, 2, 20), -- HP +20
-    (23729, 8, 3), -- STR +3
-    (23729, 10, 3), -- VIT +3
-    (23729, 23, 6), -- Attack +6
-    (23729, 25, 5), -- Accuracy +5
-    (23729, 421, 2); -- Crit Dmg. +2
-
+    (23729, 10, 9),
+    (23729, 13, 5),
+    (23729, 1, 18),
+    (23729, 27, 5),
+    (23729, 160, -3),
+    (23729, 73, 5);
 REPLACE INTO `item_basic` VALUES (28438, 0, 'Silas_Coil_Sash', 'silas_coil_sash', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (28438, "SlsColSsh", 5, 0, 16924, 0, 0, 0, 1024, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (28438, 1, 1), -- DEF +1
-    (28438, 5, 15), -- MP +15
-    (28438, 12, 3), -- INT +3
-    (28438, 13, 2), -- MND +2
-    (28438, 14, 2), -- CHR +2
-    (28438, 28, 3), -- MAB +3
-    (28438, 30, 3), -- MACC +3
-    (28438, 562, 2), -- M.Crit +2
-    (28438, 563, 3), -- M.Crit Dmg. +3
-    (28438, 369, 1); -- Refresh +1
+    (28438, 9, 7),
+    (28438, 11, 7),
+    (28438, 25, 14),
+    (28438, 26, 14),
+    (28438, 165, 3),
+    (28438, 365, 4);
 REPLACE INTO `item_basic` VALUES (423, 0, 'Heloise_Scale', 'heloise_scale', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_basic` VALUES (25538, 0, 'Heloise_Collar', 'heloise_collar', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (25538, "HlseCCll", 59, 0, 263200, 0, 0, 0, 512, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (25538, 9, 9), -- DEX +9
-    (25538, 11, 9), -- AGI +9
-    (25538, 25, 15), -- Accuracy +15
-    (25538, 26, 15), -- Rng. Acc. +15
-    (25538, 23, 18), -- Attack +18
-    (25538, 24, 18), -- Rng. Atk. +18
-    (25538, 68, 15), -- Evasion +15
-    (25538, 165, 4); -- Crit Rate +4
-
+    (25538, 9, 9),
+    (25538, 11, 8),
+    (25538, 25, 16),
+    (25538, 68, 12),
+    (25538, 302, 2),
+    (25538, 76, 8);
 REPLACE INTO `item_basic` VALUES (27535, 0, 'Heloise_Earring', 'heloise_earring', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (27535, "HlseLEar", 12, 0, 10240, 0, 0, 0, 6144, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (27535, 8, 3), -- STR +3
-    (27535, 9, 3), -- DEX +3
-    (27535, 23, 6), -- Attack +6
-    (27535, 25, 6), -- Accuracy +6
-    (27535, 73, 3), -- Store TP +3
-    (27535, 384, 100); -- Haste +1%
+    (27535, 8, 6),
+    (27535, 9, 5),
+    (27535, 23, 14),
+    (27535, 25, 14),
+    (27535, 289, 3),
+    (27535, 165, 2);
 REPLACE INTO `item_basic` VALUES (426, 0, 'Cressida_Coil', 'cressida_coil', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_basic` VALUES (23541, 0, 'Cressida_Gloves', 'cressida_gloves', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (23541, "CrsdSqGlv", 32, 0, 16924, 83, 0, 0, 64, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23541, 1, 6), -- DEF +6
-    (23541, 5, 30), -- MP +30
-    (23541, 12, 6), -- INT +6
-    (23541, 13, 4), -- MND +4
-    (23541, 14, 4), -- CHR +4
-    (23541, 28, 6), -- MAB +6
-    (23541, 30, 6), -- MACC +6
-    (23541, 562, 3), -- M.Crit +3
-    (23541, 563, 5), -- M.Crit Dmg. +5
-    (23541, 369, 1); -- Refresh +1
-
+    (23541, 12, 11),
+    (23541, 13, 8),
+    (23541, 28, 19),
+    (23541, 30, 17),
+    (23541, 170, 4),
+    (23541, 369, 2);
 REPLACE INTO `item_basic` VALUES (28435, 0, 'Cressida_Belt', 'cressida_belt', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (28435, "CrsdBBlt", 24, 0, 16924, 0, 0, 0, 1024, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (28435, 1, 3), -- DEF +3
-    (28435, 5, 30), -- MP +30
-    (28435, 12, 6), -- INT +6
-    (28435, 13, 4), -- MND +4
-    (28435, 14, 4), -- CHR +4
-    (28435, 28, 6), -- MAB +6
-    (28435, 30, 6), -- MACC +6
-    (28435, 562, 3), -- M.Crit +3
-    (28435, 563, 5), -- M.Crit Dmg. +5
-    (28435, 369, 1); -- Refresh +1
+    (28435, 14, 9),
+    (28435, 13, 7),
+    (28435, 112, 10),
+    (28435, 117, 8),
+    (28435, 369, 2);
 REPLACE INTO `item_basic` VALUES (429, 0, 'Viviane_Sac', 'viviane_sac', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_basic` VALUES (23415, 0, 'Viviane_Tiara', 'viviane_tiara', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (23415, "VvneTxTar", 51, 0, 16924, 170, 0, 0, 16, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23415, 1, 12), -- DEF +12
-    (23415, 5, 45), -- MP +45
-    (23415, 12, 9), -- INT +9
-    (23415, 13, 6), -- MND +6
-    (23415, 14, 6), -- CHR +6
-    (23415, 28, 9), -- MAB +9
-    (23415, 30, 9), -- MACC +9
-    (23415, 562, 4), -- M.Crit +4
-    (23415, 563, 7), -- M.Crit Dmg. +7
-    (23415, 369, 2); -- Refresh +2
-
+    (23415, 12, 10),
+    (23415, 13, 8),
+    (23415, 28, 21),
+    (23415, 30, 18),
+    (23415, 170, 4),
+    (23415, 369, 2);
 REPLACE INTO `item_basic` VALUES (14645, 0, 'Viviane_Ring', 'viviane_ring', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (14645, "VvneSrpRng", 66, 0, 263200, 0, 0, 0, 24576, 0, 0, 0);
 
@@ -2490,40 +2004,30 @@ REPLACE INTO `item_basic` VALUES (432, 0, 'Barnabas_Eye', 'barnabas_eye', 1, 594
 REPLACE INTO `item_basic` VALUES (26003, 0, 'Barnabas_Brooch', 'barnabas_brooch', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (26003, "BrnbsWBrc", 13, 0, 16924, 0, 0, 0, 512, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (26003, 5, 15), -- MP +15
-    (26003, 12, 3), -- INT +3
-    (26003, 13, 2), -- MND +2
-    (26003, 14, 2), -- CHR +2
-    (26003, 28, 3), -- MAB +3
-    (26003, 30, 3), -- MACC +3
-    (26003, 562, 2), -- M.Crit +2
-    (26003, 563, 3), -- M.Crit Dmg. +3
-    (26003, 369, 1); -- Refresh +1
-
+    (26003, 12, 8),
+    (26003, 28, 12),
+    (26003, 30, 14),
+    (26003, 170, 4),
+    (26003, 117, 8);
 REPLACE INTO `item_basic` VALUES (23709, 0, 'Barnabas_Boots', 'barnabas_boots', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (23709, "BrnbsBBts", 13, 0, 263200, 132, 0, 0, 256, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23709, 1, 3), -- DEF +3
-    (23709, 9, 3), -- DEX +3
-    (23709, 11, 3), -- AGI +3
-    (23709, 25, 5), -- Accuracy +5
-    (23709, 26, 5), -- Rng. Acc. +5
-    (23709, 23, 6), -- Attack +6
-    (23709, 24, 6), -- Rng. Atk. +6
-    (23709, 68, 5), -- Evasion +5
-    (23709, 165, 2); -- Crit Rate +2
+    (23709, 9, 9),
+    (23709, 11, 7),
+    (23709, 25, 18),
+    (23709, 26, 19),
+    (23709, 165, 4),
+    (23709, 365, 4);
 REPLACE INTO `item_basic` VALUES (435, 0, 'Dorothea_Claw', 'dorothea_claw', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_basic` VALUES (25706, 0, 'Dorothea_Vest', 'dorothea_vest', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (25706, "DrthaCV", 29, 0, 131, 348, 0, 0, 32, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (25706, 1, 12), -- DEF +12
-    (25706, 2, 40), -- HP +40
-    (25706, 8, 6), -- STR +6
-    (25706, 10, 6), -- VIT +6
-    (25706, 23, 12), -- Attack +12
-    (25706, 25, 10), -- Accuracy +10
-    (25706, 421, 4); -- Crit Dmg. +4
-
+    (25706, 10, 13),
+    (25706, 13, 8),
+    (25706, 1, 25),
+    (25706, 27, 6),
+    (25706, 160, -4),
+    (25706, 73, 8);
 REPLACE INTO `item_basic` VALUES (14633, 0, 'Dorothea_Ring', 'dorothea_ring', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (14633, "DrthaHRng", 26, 0, 16924, 0, 0, 0, 24576, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
@@ -2540,91 +2044,68 @@ REPLACE INTO `item_basic` VALUES (438, 0, 'Percival_Gland', 'percival_gland', 1,
 REPLACE INTO `item_basic` VALUES (23417, 0, 'Percival_Mask', 'percival_mask', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (23417, "PrcvlPMsk", 28, 0, 16924, 215, 0, 0, 16, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23417, 1, 8), -- DEF +8
-    (23417, 5, 30), -- MP +30
-    (23417, 12, 6), -- INT +6
-    (23417, 13, 4), -- MND +4
-    (23417, 14, 4), -- CHR +4
-    (23417, 28, 6), -- MAB +6
-    (23417, 30, 6), -- MACC +6
-    (23417, 562, 3), -- M.Crit +3
-    (23417, 563, 5), -- M.Crit Dmg. +5
-    (23417, 369, 1); -- Refresh +1
-
+    (23417, 12, 8),
+    (23417, 13, 8),
+    (23417, 117, 12),
+    (23417, 487, 4),
+    (23417, 30, 16),
+    (23417, 369, 2);
 REPLACE INTO `item_basic` VALUES (28617, 0, 'Percival_Mantle', 'percival_mantle', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (28617, "PrcvlBMnt", 24, 0, 16924, 0, 0, 0, 32768, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (28617, 1, 4), -- DEF +4
-    (28617, 5, 30), -- MP +30
-    (28617, 12, 6), -- INT +6
-    (28617, 13, 4), -- MND +4
-    (28617, 14, 4), -- CHR +4
-    (28617, 28, 6), -- MAB +6
-    (28617, 30, 6), -- MACC +6
-    (28617, 562, 3), -- M.Crit +3
-    (28617, 563, 5), -- M.Crit Dmg. +5
-    (28617, 369, 1); -- Refresh +1
+    (28617, 10, 10),
+    (28617, 1, 20),
+    (28617, 27, 6),
+    (28617, 160, -3),
+    (28617, 170, 3);
 REPLACE INTO `item_basic` VALUES (441, 0, 'Sophonias_Jelly', 'sophonias_jelly', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_basic` VALUES (23416, 0, 'Sophonias_Helm', 'sophonias_helm', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (23416, "SphnHMHlm", 70, 0, 10240, 304, 0, 0, 16, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23416, 1, 16), -- DEF +16
-    (23416, 8, 12), -- STR +12
-    (23416, 9, 12), -- DEX +12
-    (23416, 23, 24), -- Attack +24
-    (23416, 25, 24), -- Accuracy +24
-    (23416, 73, 10), -- Store TP +10
-    (23416, 384, 400); -- Haste +4%
-
+    (23416, 8, 8),
+    (23416, 9, 8),
+    (23416, 23, 20),
+    (23416, 25, 20),
+    (23416, 165, 3),
+    (23416, 289, 5);
 REPLACE INTO `item_basic` VALUES (23264, 0, 'Sphns_Tassets', 'sphns_tassets', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (23264, "SphnDTsst", 44, 0, 131, 65, 0, 0, 128, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23264, 1, 16), -- DEF +16
-    (23264, 2, 70), -- HP +70
-    (23264, 8, 9), -- STR +9
-    (23264, 10, 9), -- VIT +9
-    (23264, 23, 18), -- Attack +18
-    (23264, 25, 15), -- Accuracy +15
-    (23264, 421, 6); -- Crit Dmg. +6
+    (23264, 10, 11),
+    (23264, 13, 7),
+    (23264, 1, 22),
+    (23264, 27, 6),
+    (23264, 160, -3),
+    (23264, 73, 4);
 REPLACE INTO `item_basic` VALUES (444, 0, 'Nathaniel_Bone', 'nathaniel_bone', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_basic` VALUES (23542, 0, 'Nthnl_Armband', 'nthnl_armband', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (23542, "NthnlRArmb", 7, 0, 16924, 85, 0, 0, 64, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23542, 1, 3), -- DEF +3
-    (23542, 5, 15), -- MP +15
-    (23542, 12, 3), -- INT +3
-    (23542, 13, 2), -- MND +2
-    (23542, 14, 2), -- CHR +2
-    (23542, 28, 3), -- MAB +3
-    (23542, 30, 3), -- MACC +3
-    (23542, 562, 2), -- M.Crit +2
-    (23542, 563, 3), -- M.Crit Dmg. +3
-    (23542, 369, 1); -- Refresh +1
-
+    (23542, 13, 10),
+    (23542, 14, 8),
+    (23542, 112, 11),
+    (23542, 374, 4),
+    (23542, 170, 5),
+    (23542, 369, 2);
 REPLACE INTO `item_basic` VALUES (23726, 0, 'Nthnl_Sandals', 'nthnl_sandals', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (23726, "NthnlGSnd", 5, 0, 131, 132, 0, 0, 256, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23726, 1, 3), -- DEF +3
-    (23726, 2, 20), -- HP +20
-    (23726, 8, 3), -- STR +3
-    (23726, 10, 3), -- VIT +3
-    (23726, 23, 6), -- Attack +6
-    (23726, 25, 5), -- Accuracy +5
-    (23726, 421, 2); -- Crit Dmg. +2
+    (23726, 10, 10),
+    (23726, 13, 5),
+    (23726, 1, 18),
+    (23726, 27, 5),
+    (23726, 160, -3),
+    (23726, 73, 4);
 REPLACE INTO `item_basic` VALUES (447, 0, 'Francesca_Finger', 'francesca_finger', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_basic` VALUES (27534, 0, 'Francesca_Earring', 'francesca_earring', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (27534, "FrncsBEar", 26, 0, 16924, 0, 0, 0, 6144, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (27534, 5, 30), -- MP +30
-    (27534, 12, 6), -- INT +6
-    (27534, 13, 4), -- MND +4
-    (27534, 14, 4), -- CHR +4
-    (27534, 28, 6), -- MAB +6
-    (27534, 30, 6), -- MACC +6
-    (27534, 562, 3), -- M.Crit +3
-    (27534, 563, 5), -- M.Crit Dmg. +5
-    (27534, 369, 1); -- Refresh +1
-
+    (27534, 12, 5),
+    (27534, 13, 5),
+    (27534, 28, 10),
+    (27534, 30, 11),
+    (27534, 170, 3),
+    (27534, 369, 1);
 REPLACE INTO `item_basic` VALUES (14635, 0, 'Francesca_Ring', 'francesca_ring', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (14635, "FrncsRng", 48, 0, 16924, 0, 0, 0, 24576, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
@@ -2641,39 +2122,31 @@ REPLACE INTO `item_basic` VALUES (450, 0, 'Hortensia_Bile', 'hortensia_bile', 1,
 REPLACE INTO `item_basic` VALUES (23979, 0, 'Hortensia_Guard', 'hortensia_guard', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (23979, "HrtnMwGrd", 44, 0, 131, 480, 0, 0, 32, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23979, 1, 18), -- DEF +18
-    (23979, 2, 70), -- HP +70
-    (23979, 8, 9), -- STR +9
-    (23979, 10, 9), -- VIT +9
-    (23979, 23, 18), -- Attack +18
-    (23979, 25, 15), -- Accuracy +15
-    (23979, 421, 6); -- Crit Dmg. +6
-
+    (23979, 8, 13),
+    (23979, 10, 10),
+    (23979, 23, 30),
+    (23979, 25, 24),
+    (23979, 73, 8),
+    (23979, 288, 4);
 REPLACE INTO `item_basic` VALUES (23540, 0, 'Hrtns_Gauntlets', 'hrtns_gauntlets', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (23540, "HrtnGGnt", 37, 0, 16924, 81, 0, 0, 64, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23540, 1, 6), -- DEF +6
-    (23540, 5, 30), -- MP +30
-    (23540, 12, 6), -- INT +6
-    (23540, 13, 4), -- MND +4
-    (23540, 14, 4), -- CHR +4
-    (23540, 28, 6), -- MAB +6
-    (23540, 30, 6), -- MACC +6
-    (23540, 562, 3), -- M.Crit +3
-    (23540, 563, 5), -- M.Crit Dmg. +5
-    (23540, 369, 1); -- Refresh +1
+    (23540, 12, 8),
+    (23540, 13, 9),
+    (23540, 117, 11),
+    (23540, 487, 4),
+    (23540, 30, 15),
+    (23540, 369, 2);
 REPLACE INTO `item_basic` VALUES (453, 0, 'Cornelius_Crown', 'cornelius_crown', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_basic` VALUES (23980, 0, 'Crnls_Shroud', 'crnls_shroud', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (23980, "CrnlsDShr", 71, 0, 10240, 480, 0, 0, 32, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23980, 1, 25), -- DEF +25
-    (23980, 8, 12), -- STR +12
-    (23980, 9, 12), -- DEX +12
-    (23980, 23, 24), -- Attack +24
-    (23980, 25, 24), -- Accuracy +24
-    (23980, 73, 10), -- Store TP +10
-    (23980, 384, 400); -- Haste +4%
-
+    (23980, 8, 10),
+    (23980, 9, 10),
+    (23980, 23, 26),
+    (23980, 25, 25),
+    (23980, 165, 4),
+    (23980, 289, 6);
 REPLACE INTO `item_basic` VALUES (11640, 0, 'Cornelius_Ring', 'cornelius_ring', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (11640, "CrnlsGRng", 57, 0, 16924, 0, 0, 0, 24576, 0, 0, 0);
 
@@ -2682,86 +2155,66 @@ REPLACE INTO `item_basic` VALUES (456, 0, 'Roderick_Finger', 'roderick_finger', 
 REPLACE INTO `item_basic` VALUES (26107, 0, 'Roderick_Earring', 'roderick_earring', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (26107, "RdrckBEar", 16, 0, 2097345, 0, 0, 0, 6144, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (26107, 1, 3), -- DEF +3
-    (26107, 2, 30), -- HP +30
-    (26107, 10, 4), -- VIT +4
-    (26107, 13, 2), -- MND +2
-    (26107, 109, 8), -- Shield Skill +8
-    (26107, 161, -100); -- Phys. Dmg. Taken -1%
-
+    (26107, 8, 5),
+    (26107, 23, 12),
+    (26107, 25, 11),
+    (26107, 421, 3),
+    (26107, 73, 3),
+    (26107, 76, 4);
 REPLACE INTO `item_basic` VALUES (23727, 0, 'Roderick_Greaves', 'roderick_greaves', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (23727, "RdrckRGrv", 14, 0, 16924, 128, 0, 0, 256, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23727, 1, 3), -- DEF +3
-    (23727, 5, 15), -- MP +15
-    (23727, 12, 3), -- INT +3
-    (23727, 13, 2), -- MND +2
-    (23727, 14, 2), -- CHR +2
-    (23727, 28, 3), -- MAB +3
-    (23727, 30, 3), -- MACC +3
-    (23727, 562, 2), -- M.Crit +2
-    (23727, 563, 3), -- M.Crit Dmg. +3
-    (23727, 369, 1); -- Refresh +1
+    (23727, 12, 9),
+    (23727, 13, 7),
+    (23727, 28, 18),
+    (23727, 30, 16),
+    (23727, 170, 5),
+    (23727, 369, 2);
 REPLACE INTO `item_basic` VALUES (459, 0, 'Cavendish_Skull', 'cavendish_skull', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_basic` VALUES (25537, 0, 'Cavendish_Collar', 'cavendish_collar', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (25537, "CvndshHCl", 60, 0, 10240, 0, 0, 0, 512, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (25537, 8, 12), -- STR +12
-    (25537, 9, 12), -- DEX +12
-    (25537, 23, 24), -- Attack +24
-    (25537, 25, 24), -- Accuracy +24
-    (25537, 73, 10), -- Store TP +10
-    (25537, 384, 400); -- Haste +4%
-
+    (25537, 8, 8),
+    (25537, 23, 18),
+    (25537, 25, 16),
+    (25537, 165, 3),
+    (25537, 73, 4);
 REPLACE INTO `item_basic` VALUES (26105, 0, 'Cavendish_Earring', 'cavendish_earring', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (26105, "CvndshEar", 17, 0, 10240, 0, 0, 0, 6144, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (26105, 8, 3), -- STR +3
-    (26105, 9, 3), -- DEX +3
-    (26105, 23, 6), -- Attack +6
-    (26105, 25, 6), -- Accuracy +6
-    (26105, 73, 3), -- Store TP +3
-    (26105, 384, 100); -- Haste +1%
+    (26105, 10, 7),
+    (26105, 1, 17),
+    (26105, 27, 4),
+    (26105, 160, -2),
+    (26105, 73, 2);
 REPLACE INTO `item_basic` VALUES (462, 0, 'Benedict_Femur', 'benedict_femur', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_basic` VALUES (23736, 0, 'Benedict_Boots', 'benedict_boots', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (23736, "BndctDBts", 26, 0, 16924, 458, 0, 0, 256, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23736, 1, 6), -- DEF +6
-    (23736, 5, 30), -- MP +30
-    (23736, 12, 6), -- INT +6
-    (23736, 13, 4), -- MND +4
-    (23736, 14, 4), -- CHR +4
-    (23736, 28, 6), -- MAB +6
-    (23736, 30, 6), -- MACC +6
-    (23736, 562, 3), -- M.Crit +3
-    (23736, 563, 5), -- M.Crit Dmg. +5
-    (23736, 369, 1); -- Refresh +1
-
+    (23736, 12, 9),
+    (23736, 13, 7),
+    (23736, 28, 18),
+    (23736, 30, 16),
+    (23736, 170, 4),
+    (23736, 369, 3);
 REPLACE INTO `item_basic` VALUES (28434, 0, 'Benedict_Belt', 'benedict_belt', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (28434, "BndctUBlt", 5, 0, 16924, 0, 0, 0, 1024, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (28434, 1, 1), -- DEF +1
-    (28434, 5, 15), -- MP +15
-    (28434, 12, 3), -- INT +3
-    (28434, 13, 2), -- MND +2
-    (28434, 14, 2), -- CHR +2
-    (28434, 28, 3), -- MAB +3
-    (28434, 30, 3), -- MACC +3
-    (28434, 562, 2), -- M.Crit +2
-    (28434, 563, 3), -- M.Crit Dmg. +3
-    (28434, 369, 1); -- Refresh +1
+    (28434, 12, 6),
+    (28434, 117, 12),
+    (28434, 30, 10),
+    (28434, 170, 4),
+    (28434, 369, 2);
 REPLACE INTO `item_basic` VALUES (465, 0, 'Lntn_Crystal', 'lntn_crystal', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_basic` VALUES (23977, 0, 'Leontine_Robe', 'leontine_robe', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (23977, "LntNRobe", 67, 0, 10240, 480, 0, 0, 32, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23977, 1, 25), -- DEF +25
-    (23977, 8, 12), -- STR +12
-    (23977, 9, 12), -- DEX +12
-    (23977, 23, 24), -- Attack +24
-    (23977, 25, 24), -- Accuracy +24
-    (23977, 73, 10), -- Store TP +10
-    (23977, 384, 400); -- Haste +4%
-
+    (23977, 8, 10),
+    (23977, 9, 10),
+    (23977, 23, 25),
+    (23977, 25, 25),
+    (23977, 165, 4),
+    (23977, 289, 7);
 REPLACE INTO `item_basic` VALUES (14643, 0, 'Leontine_Ring', 'leontine_ring', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (14643, "LntSDRng", 42, 0, 16924, 0, 0, 0, 24576, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
@@ -2778,69 +2231,49 @@ REPLACE INTO `item_basic` VALUES (468, 0, 'Simeon_Claw', 'simeon_claw', 1, 59476
 REPLACE INTO `item_basic` VALUES (23510, 0, 'Smn_Wristlets', 'smn_wristlets', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (23510, "SmeonWrst", 11, 0, 16924, 66, 0, 0, 64, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23510, 1, 3), -- DEF +3
-    (23510, 5, 15), -- MP +15
-    (23510, 12, 3), -- INT +3
-    (23510, 13, 2), -- MND +2
-    (23510, 14, 2), -- CHR +2
-    (23510, 28, 3), -- MAB +3
-    (23510, 30, 3), -- MACC +3
-    (23510, 562, 2), -- M.Crit +2
-    (23510, 563, 3), -- M.Crit Dmg. +3
-    (23510, 369, 1); -- Refresh +1
-
+    (23510, 12, 8),
+    (23510, 13, 8),
+    (23510, 117, 11),
+    (23510, 487, 4),
+    (23510, 30, 15),
+    (23510, 369, 2);
 REPLACE INTO `item_basic` VALUES (26106, 0, 'Simeon_Earring', 'simeon_earring', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (26106, "SmeonSEar", 5, 0, 16924, 0, 0, 0, 6144, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (26106, 5, 15), -- MP +15
-    (26106, 12, 3), -- INT +3
-    (26106, 13, 2), -- MND +2
-    (26106, 14, 2), -- CHR +2
-    (26106, 28, 3), -- MAB +3
-    (26106, 30, 3), -- MACC +3
-    (26106, 562, 2), -- M.Crit +2
-    (26106, 563, 3), -- M.Crit Dmg. +3
-    (26106, 369, 1); -- Refresh +1
+    (26106, 12, 4),
+    (26106, 13, 7),
+    (26106, 30, 12),
+    (26106, 170, 5),
+    (26106, 112, 6),
+    (26106, 369, 1);
 REPLACE INTO `item_basic` VALUES (471, 0, 'Vespera_Sac', 'vespera_sac', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_basic` VALUES (28598, 0, 'Vespera_Mantle', 'vespera_mantle', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (28598, "VsprTxMnt", 25, 0, 16924, 0, 0, 0, 32768, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (28598, 1, 4), -- DEF +4
-    (28598, 5, 30), -- MP +30
-    (28598, 12, 6), -- INT +6
-    (28598, 13, 4), -- MND +4
-    (28598, 14, 4), -- CHR +4
-    (28598, 28, 6), -- MAB +6
-    (28598, 30, 6), -- MACC +6
-    (28598, 562, 3), -- M.Crit +3
-    (28598, 563, 5), -- M.Crit Dmg. +5
-    (28598, 369, 1); -- Refresh +1
-
+    (28598, 13, 7),
+    (28598, 117, 12),
+    (28598, 30, 12),
+    (28598, 170, 4),
+    (28598, 369, 2),
+    (28598, 112, 8);
 REPLACE INTO `item_basic` VALUES (28433, 0, 'Vespera_Belt', 'vespera_belt', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (28433, "VsprCBlt", 5, 0, 16924, 0, 0, 0, 1024, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (28433, 1, 1), -- DEF +1
-    (28433, 5, 15), -- MP +15
-    (28433, 12, 3), -- INT +3
-    (28433, 13, 2), -- MND +2
-    (28433, 14, 2), -- CHR +2
-    (28433, 28, 3), -- MAB +3
-    (28433, 30, 3), -- MACC +3
-    (28433, 562, 2), -- M.Crit +2
-    (28433, 563, 3), -- M.Crit Dmg. +3
-    (28433, 369, 1); -- Refresh +1
+    (28433, 12, 7),
+    (28433, 13, 7),
+    (28433, 30, 12),
+    (28433, 170, 5),
+    (28433, 369, 2);
 REPLACE INTO `item_basic` VALUES (474, 0, 'Ptolemy_Pincer', 'ptolemy_pincer', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_basic` VALUES (23263, 0, 'Ptolemy_Cuisses', 'ptolemy_cuisses', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (23263, "PtlmyACss", 33, 0, 131, 338, 0, 0, 128, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23263, 1, 10), -- DEF +10
-    (23263, 2, 40), -- HP +40
-    (23263, 8, 6), -- STR +6
-    (23263, 10, 6), -- VIT +6
-    (23263, 23, 12), -- Attack +12
-    (23263, 25, 10), -- Accuracy +10
-    (23263, 421, 4); -- Crit Dmg. +4
-
+    (23263, 8, 9),
+    (23263, 9, 9),
+    (23263, 23, 22),
+    (23263, 25, 22),
+    (23263, 165, 3),
+    (23263, 289, 6);
 REPLACE INTO `item_basic` VALUES (15857, 0, 'Ptolemy_Ring', 'ptolemy_ring', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (15857, "PtlmyERng", 30, 0, 16924, 0, 0, 0, 24576, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
@@ -2857,29 +2290,21 @@ REPLACE INTO `item_basic` VALUES (477, 0, 'Dagny_Barb', 'dagny_barb', 1, 59476, 
 REPLACE INTO `item_basic` VALUES (25682, 0, 'Dagny_Carapace', 'dagny_carapace', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (25682, "DgnyRCrp", 50, 0, 16924, 323, 0, 0, 32, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (25682, 1, 18), -- DEF +18
-    (25682, 5, 45), -- MP +45
-    (25682, 12, 9), -- INT +9
-    (25682, 13, 6), -- MND +6
-    (25682, 14, 6), -- CHR +6
-    (25682, 28, 9), -- MAB +9
-    (25682, 30, 9), -- MACC +9
-    (25682, 562, 4), -- M.Crit +4
-    (25682, 563, 7), -- M.Crit Dmg. +7
-    (25682, 369, 2); -- Refresh +2
-
+    (25682, 12, 11),
+    (25682, 13, 10),
+    (25682, 117, 15),
+    (25682, 487, 5),
+    (25682, 30, 20),
+    (25682, 369, 3);
 REPLACE INTO `item_basic` VALUES (26116, 0, 'Dagny_Earring', 'dagny_earring', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (26116, "DgnyFEar", 53, 0, 16924, 0, 0, 0, 6144, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (26116, 5, 45), -- MP +45
-    (26116, 12, 9), -- INT +9
-    (26116, 13, 6), -- MND +6
-    (26116, 14, 6), -- CHR +6
-    (26116, 28, 9), -- MAB +9
-    (26116, 30, 9), -- MACC +9
-    (26116, 562, 4), -- M.Crit +4
-    (26116, 563, 7), -- M.Crit Dmg. +7
-    (26116, 369, 2); -- Refresh +2
+    (26116, 12, 4),
+    (26116, 13, 6),
+    (26116, 30, 12),
+    (26116, 170, 6),
+    (26116, 112, 6),
+    (26116, 369, 1);
 REPLACE INTO `item_basic` VALUES (480, 0, 'Wendy_Thread', 'wendy_thread', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_basic` VALUES (15856, 0, 'Wendy_Ring', 'wendy_ring', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (15856, "WndyWRng", 14, 0, 6146, 0, 0, 0, 24576, 0, 0, 0);
@@ -2895,91 +2320,68 @@ REPLACE INTO `item_mods` VALUES
 REPLACE INTO `item_basic` VALUES (23789, 0, 'Wendy_Sandals', 'wendy_sandals', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (23789, "WndySpSnd", 10, 0, 263200, 470, 0, 0, 256, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23789, 1, 3), -- DEF +3
-    (23789, 9, 3), -- DEX +3
-    (23789, 11, 3), -- AGI +3
-    (23789, 25, 5), -- Accuracy +5
-    (23789, 26, 5), -- Rng. Acc. +5
-    (23789, 23, 6), -- Attack +6
-    (23789, 24, 6), -- Rng. Atk. +6
-    (23789, 68, 5), -- Evasion +5
-    (23789, 165, 2); -- Crit Rate +2
+    (23789, 9, 8),
+    (23789, 11, 8),
+    (23789, 25, 17),
+    (23789, 421, 3),
+    (23789, 302, 2),
+    (23789, 76, 3);
 REPLACE INTO `item_basic` VALUES (483, 0, 'Stanislava_Sac', 'stanislava_sac', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_basic` VALUES (26002, 0, 'Stnslv_Collar', 'stnslv_collar', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (26002, "StnslaGCl", 24, 0, 16924, 0, 0, 0, 512, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (26002, 5, 30), -- MP +30
-    (26002, 12, 6), -- INT +6
-    (26002, 13, 4), -- MND +4
-    (26002, 14, 4), -- CHR +4
-    (26002, 28, 6), -- MAB +6
-    (26002, 30, 6), -- MACC +6
-    (26002, 562, 3), -- M.Crit +3
-    (26002, 563, 5), -- M.Crit Dmg. +5
-    (26002, 369, 1); -- Refresh +1
-
+    (26002, 13, 10),
+    (26002, 112, 14),
+    (26002, 374, 5),
+    (26002, 30, 8),
+    (26002, 170, 4);
 REPLACE INTO `item_basic` VALUES (27928, 0, 'Stnslv_Mitts', 'stnslv_mitts', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (27928, "StnslasMtt", 21, 0, 16924, 182, 0, 0, 64, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (27928, 1, 6), -- DEF +6
-    (27928, 5, 30), -- MP +30
-    (27928, 12, 6), -- INT +6
-    (27928, 13, 4), -- MND +4
-    (27928, 14, 4), -- CHR +4
-    (27928, 28, 6), -- MAB +6
-    (27928, 30, 6), -- MACC +6
-    (27928, 562, 3), -- M.Crit +3
-    (27928, 563, 5), -- M.Crit Dmg. +5
-    (27928, 369, 1); -- Refresh +1
+    (27928, 13, 10),
+    (27928, 14, 8),
+    (27928, 112, 11),
+    (27928, 374, 4),
+    (27928, 170, 4),
+    (27928, 369, 3);
 REPLACE INTO `item_basic` VALUES (486, 0, 'Elnr_Ensnaring', 'elnr_ensnaring', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_basic` VALUES (25683, 0, 'Eleanor_Vest', 'eleanor_vest', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (25683, "ElnrArVst", 31, 0, 131, 323, 0, 0, 32, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (25683, 1, 12), -- DEF +12
-    (25683, 2, 40), -- HP +40
-    (25683, 8, 6), -- STR +6
-    (25683, 10, 6), -- VIT +6
-    (25683, 23, 12), -- Attack +12
-    (25683, 25, 10), -- Accuracy +10
-    (25683, 421, 4); -- Crit Dmg. +4
-
+    (25683, 8, 13),
+    (25683, 10, 10),
+    (25683, 23, 30),
+    (25683, 25, 23),
+    (25683, 73, 9),
+    (25683, 288, 4);
 REPLACE INTO `item_basic` VALUES (28432, 0, 'Eleanor_Belt', 'eleanor_belt', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (28432, "ElnrSWBlt", 11, 0, 263200, 0, 0, 0, 1024, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (28432, 1, 1), -- DEF +1
-    (28432, 9, 3), -- DEX +3
-    (28432, 11, 3), -- AGI +3
-    (28432, 25, 5), -- Accuracy +5
-    (28432, 26, 5), -- Rng. Acc. +5
-    (28432, 23, 6), -- Attack +6
-    (28432, 24, 6), -- Rng. Atk. +6
-    (28432, 68, 5), -- Evasion +5
-    (28432, 165, 2); -- Crit Rate +2
+    (28432, 9, 8),
+    (28432, 11, 7),
+    (28432, 25, 14),
+    (28432, 421, 4),
+    (28432, 302, 2),
+    (28432, 76, 8);
 REPLACE INTO `item_basic` VALUES (489, 0, 'Gwendolyn_Crown', 'gwendolyn_crown', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_basic` VALUES (23435, 0, 'Gwendolyn_Tiara', 'gwendolyn_tiara', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (23435, "GwndlnSTar", 46, 0, 10240, 339, 0, 0, 16, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23435, 1, 12), -- DEF +12
-    (23435, 8, 9), -- STR +9
-    (23435, 9, 9), -- DEX +9
-    (23435, 23, 18), -- Attack +18
-    (23435, 25, 18), -- Accuracy +18
-    (23435, 73, 7), -- Store TP +7
-    (23435, 384, 300); -- Haste +3%
-
+    (23435, 10, 11),
+    (23435, 13, 6),
+    (23435, 1, 20),
+    (23435, 27, 5),
+    (23435, 160, -3),
+    (23435, 73, 4);
 REPLACE INTO `item_basic` VALUES (28597, 0, 'Gwndlyn_Mantle', 'gwndlyn_mantle', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (28597, "GwndlnSMnt", 49, 0, 16924, 0, 0, 0, 32768, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (28597, 1, 6), -- DEF +6
-    (28597, 5, 45), -- MP +45
-    (28597, 12, 9), -- INT +9
-    (28597, 13, 6), -- MND +6
-    (28597, 14, 6), -- CHR +6
-    (28597, 28, 9), -- MAB +9
-    (28597, 30, 9), -- MACC +9
-    (28597, 562, 4), -- M.Crit +4
-    (28597, 563, 7), -- M.Crit Dmg. +7
-    (28597, 369, 2); -- Refresh +2
+    (28597, 12, 7),
+    (28597, 13, 7),
+    (28597, 30, 14),
+    (28597, 170, 5),
+    (28597, 369, 2),
+    (28597, 374, 3);
 REPLACE INTO `item_basic` VALUES (492, 0, 'Oswald_Sample', 'oswald_sample', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_basic` VALUES (11062, 0, 'Oswald_Ring', 'oswald_ring', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (11062, "OswldSRng", 21, 0, 16924, 0, 0, 0, 24576, 0, 0, 0);
@@ -2997,309 +2399,225 @@ REPLACE INTO `item_mods` VALUES
 REPLACE INTO `item_basic` VALUES (28208, 0, 'Oswald_Sandals', 'oswald_sandals', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (28208, "OswldSlSnd", 15, 0, 263200, 182, 0, 0, 256, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (28208, 1, 3), -- DEF +3
-    (28208, 9, 3), -- DEX +3
-    (28208, 11, 3), -- AGI +3
-    (28208, 25, 5), -- Accuracy +5
-    (28208, 26, 5), -- Rng. Acc. +5
-    (28208, 23, 6), -- Attack +6
-    (28208, 24, 6), -- Rng. Atk. +6
-    (28208, 68, 5), -- Evasion +5
-    (28208, 165, 2); -- Crit Rate +2
+    (28208, 9, 9),
+    (28208, 11, 8),
+    (28208, 25, 16),
+    (28208, 421, 3),
+    (28208, 302, 2),
+    (28208, 76, 3);
 REPLACE INTO `item_basic` VALUES (495, 0, 'Borghild_Mass', 'borghild_mass', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_basic` VALUES (26001, 0, 'Borghild_Collar', 'borghild_collar', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (26001, "BrghldVCl", 52, 0, 10240, 0, 0, 0, 512, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (26001, 8, 9), -- STR +9
-    (26001, 9, 9), -- DEX +9
-    (26001, 23, 18), -- Attack +18
-    (26001, 25, 18), -- Accuracy +18
-    (26001, 73, 7), -- Store TP +7
-    (26001, 384, 300); -- Haste +3%
-
+    (26001, 8, 8),
+    (26001, 23, 18),
+    (26001, 25, 15),
+    (26001, 421, 4),
+    (26001, 73, 3);
 REPLACE INTO `item_basic` VALUES (26108, 0, 'Borghild_Earring', 'borghild_earring', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (26108, "BrghldAEar", 14, 0, 6146, 0, 0, 0, 6144, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (26108, 8, 3), -- STR +3
-    (26108, 9, 3), -- DEX +3
-    (26108, 23, 6), -- Attack +6
-    (26108, 25, 6), -- Accuracy +6
-    (26108, 73, 3), -- Store TP +3
-    (26108, 384, 100); -- Haste +1%
+    (26108, 8, 6),
+    (26108, 23, 16),
+    (26108, 25, 12),
+    (26108, 73, 3),
+    (26108, 288, 2);
 REPLACE INTO `item_basic` VALUES (498, 0, 'Callista_Sac', 'callista_sac', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_basic` VALUES (27937, 0, 'Callista_Mitts', 'callista_mitts', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (27937, "CllstDMtt", 29, 0, 16924, 186, 0, 0, 64, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (27937, 1, 6), -- DEF +6
-    (27937, 5, 30), -- MP +30
-    (27937, 12, 6), -- INT +6
-    (27937, 13, 4), -- MND +4
-    (27937, 14, 4), -- CHR +4
-    (27937, 28, 6), -- MAB +6
-    (27937, 30, 6), -- MACC +6
-    (27937, 562, 3), -- M.Crit +3
-    (27937, 563, 5), -- M.Crit Dmg. +5
-    (27937, 369, 1); -- Refresh +1
-
+    (27937, 13, 10),
+    (27937, 14, 9),
+    (27937, 112, 11),
+    (27937, 374, 4),
+    (27937, 170, 4),
+    (27937, 369, 2);
 REPLACE INTO `item_basic` VALUES (27564, 0, 'Callista_Ring', 'callista_ring', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (27564, "CllstCRng", 18, 0, 16924, 0, 0, 0, 24576, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (27564, 5, 15), -- MP +15
-    (27564, 12, 3), -- INT +3
-    (27564, 13, 2), -- MND +2
-    (27564, 14, 2), -- CHR +2
-    (27564, 28, 3), -- MAB +3
-    (27564, 30, 3), -- MACC +3
-    (27564, 562, 2), -- M.Crit +2
-    (27564, 563, 3), -- M.Crit Dmg. +3
-    (27564, 369, 1); -- Refresh +1
+    (27564, 13, 7),
+    (27564, 374, 4),
+    (27564, 170, 4),
+    (27564, 369, 1),
+    (27564, 112, 8),
+    (27564, 30, 6);
 REPLACE INTO `item_basic` VALUES (501, 0, 'Proteus_Ooze', 'proteus_ooze', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_basic` VALUES (25680, 0, 'Proteus_Robe', 'proteus_robe', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (25680, "PrtsaPRbe", 68, 0, 10240, 11, 0, 0, 32, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (25680, 1, 25), -- DEF +25
-    (25680, 8, 12), -- STR +12
-    (25680, 9, 12), -- DEX +12
-    (25680, 23, 24), -- Attack +24
-    (25680, 25, 24), -- Accuracy +24
-    (25680, 73, 10), -- Store TP +10
-    (25680, 384, 400); -- Haste +4%
-
+    (25680, 8, 14),
+    (25680, 10, 10),
+    (25680, 23, 30),
+    (25680, 25, 23),
+    (25680, 73, 8),
+    (25680, 288, 4);
 REPLACE INTO `item_basic` VALUES (27574, 0, 'Proteus_Ring', 'proteus_ring', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (27574, "PrtsaShRng", 36, 0, 16924, 0, 0, 0, 24576, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (27574, 5, 30), -- MP +30
-    (27574, 12, 6), -- INT +6
-    (27574, 13, 4), -- MND +4
-    (27574, 14, 4), -- CHR +4
-    (27574, 28, 6), -- MAB +6
-    (27574, 30, 6), -- MACC +6
-    (27574, 562, 3), -- M.Crit +3
-    (27574, 563, 5), -- M.Crit Dmg. +5
-    (27574, 369, 1); -- Refresh +1
+    (27574, 14, 7),
+    (27574, 13, 5),
+    (27574, 170, 4),
+    (27574, 369, 2),
+    (27574, 112, 6),
+    (27574, 117, 6);
 REPLACE INTO `item_basic` VALUES (504, 0, 'Salvatore_Fin', 'salvatore_fin', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_basic` VALUES (26115, 0, 'Salvatore_Earring', 'salvatore_earring', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (26115, "SlvtrGEar", 14, 0, 2097281, 0, 0, 0, 6144, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (26115, 2, 20), -- HP +20
-    (26115, 8, 4), -- STR +4
-    (26115, 10, 2), -- VIT +2
-    (26115, 23, 7), -- Attack +7
-    (26115, 25, 5), -- Accuracy +5
-    (26115, 421, 2); -- Crit Dmg. +2
-
+    (26115, 10, 6),
+    (26115, 13, 4),
+    (26115, 1, 12),
+    (26115, 27, 5),
+    (26115, 170, 2),
+    (26115, 160, -2);
 REPLACE INTO `item_basic` VALUES (23661, 0, 'Salvatore_Boots', 'salvatore_boots', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (23661, "SlvtrWBts", 9, 0, 263200, 211, 0, 0, 256, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23661, 1, 3), -- DEF +3
-    (23661, 9, 3), -- DEX +3
-    (23661, 11, 3), -- AGI +3
-    (23661, 25, 5), -- Accuracy +5
-    (23661, 26, 5), -- Rng. Acc. +5
-    (23661, 23, 6), -- Attack +6
-    (23661, 24, 6), -- Rng. Atk. +6
-    (23661, 68, 5), -- Evasion +5
-    (23661, 165, 2); -- Crit Rate +2
+    (23661, 9, 9),
+    (23661, 11, 7),
+    (23661, 25, 18),
+    (23661, 26, 18),
+    (23661, 165, 4),
+    (23661, 365, 4);
 REPLACE INTO `item_basic` VALUES (507, 0, 'Sicily_Mark', 'sicily_mark', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_basic` VALUES (28431, 0, 'Sicily_Belt', 'sicily_belt', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (28431, "SclllyRBlt", 6, 0, 16924, 0, 0, 0, 1024, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (28431, 1, 1), -- DEF +1
-    (28431, 5, 15), -- MP +15
-    (28431, 12, 3), -- INT +3
-    (28431, 13, 2), -- MND +2
-    (28431, 14, 2), -- CHR +2
-    (28431, 28, 3), -- MAB +3
-    (28431, 30, 3), -- MACC +3
-    (28431, 562, 2), -- M.Crit +2
-    (28431, 563, 3), -- M.Crit Dmg. +3
-    (28431, 369, 1); -- Refresh +1
-
+    (28431, 12, 8),
+    (28431, 28, 12),
+    (28431, 30, 12),
+    (28431, 487, 4),
+    (28431, 170, 4);
 REPLACE INTO `item_basic` VALUES (25681, 0, 'Sicily_Mail', 'sicily_mail', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (25681, "ScllySMl", 30, 0, 131, 11, 0, 0, 32, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (25681, 1, 12), -- DEF +12
-    (25681, 2, 40), -- HP +40
-    (25681, 8, 6), -- STR +6
-    (25681, 10, 6), -- VIT +6
-    (25681, 23, 12), -- Attack +12
-    (25681, 25, 10), -- Accuracy +10
-    (25681, 421, 4); -- Crit Dmg. +4
+    (25681, 8, 10),
+    (25681, 9, 10),
+    (25681, 23, 25),
+    (25681, 25, 27),
+    (25681, 165, 4),
+    (25681, 289, 6);
 REPLACE INTO `item_basic` VALUES (510, 0, 'Tiberius_Scale', 'tiberius_scale', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_basic` VALUES (28609, 0, 'Tiberius_Mantle', 'tiberius_mantle', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (28609, "TbrsaCMnt", 21, 0, 16924, 0, 0, 0, 32768, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (28609, 1, 4), -- DEF +4
-    (28609, 5, 30), -- MP +30
-    (28609, 12, 6), -- INT +6
-    (28609, 13, 4), -- MND +4
-    (28609, 14, 4), -- CHR +4
-    (28609, 28, 6), -- MAB +6
-    (28609, 30, 6), -- MACC +6
-    (28609, 562, 3), -- M.Crit +3
-    (28609, 563, 5), -- M.Crit Dmg. +5
-    (28609, 369, 1); -- Refresh +1
-
+    (28609, 13, 9),
+    (28609, 14, 8),
+    (28609, 112, 12),
+    (28609, 117, 8),
+    (28609, 369, 2),
+    (28609, 170, 3);
 REPLACE INTO `item_basic` VALUES (28575, 0, 'Tiberius_Ring', 'tiberius_ring', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (28575, "TbrsaRRng", 29, 0, 16924, 0, 0, 0, 24576, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (28575, 5, 30), -- MP +30
-    (28575, 12, 6), -- INT +6
-    (28575, 13, 4), -- MND +4
-    (28575, 14, 4), -- CHR +4
-    (28575, 28, 6), -- MAB +6
-    (28575, 30, 6), -- MACC +6
-    (28575, 562, 3), -- M.Crit +3
-    (28575, 563, 5), -- M.Crit Dmg. +5
-    (28575, 369, 1); -- Refresh +1
+    (28575, 12, 6),
+    (28575, 13, 4),
+    (28575, 28, 10),
+    (28575, 30, 10),
+    (28575, 170, 3),
+    (28575, 369, 1);
 REPLACE INTO `item_basic` VALUES (513, 0, 'Delacroix_Scale', 'delacroix_scale', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_basic` VALUES (23434, 0, 'Delacroix_Helm', 'delacroix_helm', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (23434, "DlcxMHlm", 35, 0, 16924, 339, 0, 0, 16, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23434, 1, 8), -- DEF +8
-    (23434, 5, 30), -- MP +30
-    (23434, 12, 6), -- INT +6
-    (23434, 13, 4), -- MND +4
-    (23434, 14, 4), -- CHR +4
-    (23434, 28, 6), -- MAB +6
-    (23434, 30, 6), -- MACC +6
-    (23434, 562, 3), -- M.Crit +3
-    (23434, 563, 5), -- M.Crit Dmg. +5
-    (23434, 369, 1); -- Refresh +1
-
+    (23434, 13, 11),
+    (23434, 14, 8),
+    (23434, 112, 12),
+    (23434, 374, 4),
+    (23434, 170, 4),
+    (23434, 369, 2);
 REPLACE INTO `item_basic` VALUES (27568, 0, 'Delacroix_Ring', 'delacroix_ring', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (27568, "DlcxAbRng", 36, 0, 16924, 0, 0, 0, 24576, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (27568, 5, 30), -- MP +30
-    (27568, 12, 6), -- INT +6
-    (27568, 13, 4), -- MND +4
-    (27568, 14, 4), -- CHR +4
-    (27568, 28, 6), -- MAB +6
-    (27568, 30, 6), -- MACC +6
-    (27568, 562, 3), -- M.Crit +3
-    (27568, 563, 5), -- M.Crit Dmg. +5
-    (27568, 369, 1); -- Refresh +1
+    (27568, 12, 7),
+    (27568, 28, 12),
+    (27568, 30, 10),
+    (27568, 487, 4),
+    (27568, 170, 2);
 REPLACE INTO `item_basic` VALUES (516, 0, 'Loretta_Neck', 'loretta_neck', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_basic` VALUES (25545, 0, 'Lrtt_Neckguard', 'lrtt_neckguard', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (25545, "LrttaPNGd", 10, 0, 16924, 0, 0, 0, 512, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (25545, 5, 15), -- MP +15
-    (25545, 12, 3), -- INT +3
-    (25545, 13, 2), -- MND +2
-    (25545, 14, 2), -- CHR +2
-    (25545, 28, 3), -- MAB +3
-    (25545, 30, 3), -- MACC +3
-    (25545, 562, 2), -- M.Crit +2
-    (25545, 563, 3), -- M.Crit Dmg. +3
-    (25545, 369, 1); -- Refresh +1
-
+    (25545, 12, 7),
+    (25545, 13, 7),
+    (25545, 30, 15),
+    (25545, 170, 5),
+    (25545, 369, 1),
+    (25545, 117, 8);
 REPLACE INTO `item_basic` VALUES (23684, 0, 'Loretta_Boots', 'loretta_boots', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (23684, "LrttaSBts", 13, 0, 16924, 304, 0, 0, 256, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23684, 1, 3), -- DEF +3
-    (23684, 5, 15), -- MP +15
-    (23684, 12, 3), -- INT +3
-    (23684, 13, 2), -- MND +2
-    (23684, 14, 2), -- CHR +2
-    (23684, 28, 3), -- MAB +3
-    (23684, 30, 3), -- MACC +3
-    (23684, 562, 2), -- M.Crit +2
-    (23684, 563, 3), -- M.Crit Dmg. +3
-    (23684, 369, 1); -- Refresh +1
+    (23684, 12, 7),
+    (23684, 13, 7),
+    (23684, 117, 11),
+    (23684, 487, 4),
+    (23684, 30, 14),
+    (23684, 369, 2);
 REPLACE INTO `item_basic` VALUES (519, 0, 'Thaddeus_Spine', 'thaddeus_spine', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_basic` VALUES (28606, 0, 'Thaddeus_Mantle', 'thaddeus_mantle', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (28606, "ThadsMnt", 18, 0, 16924, 0, 0, 0, 32768, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (28606, 1, 2), -- DEF +2
-    (28606, 5, 15), -- MP +15
-    (28606, 12, 3), -- INT +3
-    (28606, 13, 2), -- MND +2
-    (28606, 14, 2), -- CHR +2
-    (28606, 28, 3), -- MAB +3
-    (28606, 30, 3), -- MACC +3
-    (28606, 562, 2), -- M.Crit +2
-    (28606, 563, 3), -- M.Crit Dmg. +3
-    (28606, 369, 1); -- Refresh +1
-
+    (28606, 13, 10),
+    (28606, 112, 14),
+    (28606, 374, 4),
+    (28606, 30, 10),
+    (28606, 170, 4),
+    (28606, 369, 1);
 REPLACE INTO `item_basic` VALUES (26349, 0, 'Thaddeus_Belt', 'thaddeus_belt', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (26349, "ThdsaTBlt", 20, 0, 16924, 0, 0, 0, 1024, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (26349, 1, 3), -- DEF +3
-    (26349, 5, 30), -- MP +30
-    (26349, 12, 6), -- INT +6
-    (26349, 13, 4), -- MND +4
-    (26349, 14, 4), -- CHR +4
-    (26349, 28, 6), -- MAB +6
-    (26349, 30, 6), -- MACC +6
-    (26349, 562, 3), -- M.Crit +3
-    (26349, 563, 5), -- M.Crit Dmg. +5
-    (26349, 369, 1); -- Refresh +1
+    (26349, 12, 6),
+    (26349, 30, 12),
+    (26349, 170, 5),
+    (26349, 117, 12),
+    (26349, 369, 1);
 REPLACE INTO `item_basic` VALUES (522, 0, 'Crisanta_Spine', 'crisanta_spine', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_basic` VALUES (23262, 0, 'Crsnt_Cuisses', 'crsnt_cuisses', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (23262, "CrsntaICss", 33, 0, 131, 308, 0, 0, 128, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23262, 1, 10), -- DEF +10
-    (23262, 2, 40), -- HP +40
-    (23262, 8, 6), -- STR +6
-    (23262, 10, 6), -- VIT +6
-    (23262, 23, 12), -- Attack +12
-    (23262, 25, 10), -- Accuracy +10
-    (23262, 421, 4); -- Crit Dmg. +4
-
+    (23262, 8, 11),
+    (23262, 10, 9),
+    (23262, 23, 20),
+    (23262, 25, 16),
+    (23262, 288, 4),
+    (23262, 165, 3);
 REPLACE INTO `item_basic` VALUES (28550, 0, 'Crisanta_Ring', 'crisanta_ring', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (28550, "CrsntaCRng", 33, 0, 16924, 0, 0, 0, 24576, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (28550, 5, 30), -- MP +30
-    (28550, 12, 6), -- INT +6
-    (28550, 13, 4), -- MND +4
-    (28550, 14, 4), -- CHR +4
-    (28550, 28, 6), -- MAB +6
-    (28550, 30, 6), -- MACC +6
-    (28550, 562, 3), -- M.Crit +3
-    (28550, 563, 5), -- M.Crit Dmg. +5
-    (28550, 369, 1); -- Refresh +1
+    (28550, 12, 5),
+    (28550, 28, 10),
+    (28550, 30, 8),
+    (28550, 170, 4),
+    (28550, 369, 1),
+    (28550, 487, 2);
 REPLACE INTO `item_basic` VALUES (525, 0, 'Percival_Spine', 'percival_spine', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_basic` VALUES (23983, 0, 'Percival_Plate', 'percival_plate', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (23983, "PrcvlBPlt", 55, 0, 16924, 480, 0, 0, 32, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23983, 1, 18), -- DEF +18
-    (23983, 5, 45), -- MP +45
-    (23983, 12, 9), -- INT +9
-    (23983, 13, 6), -- MND +6
-    (23983, 14, 6), -- CHR +6
-    (23983, 28, 9), -- MAB +9
-    (23983, 30, 9), -- MACC +9
-    (23983, 562, 4), -- M.Crit +4
-    (23983, 563, 7), -- M.Crit Dmg. +7
-    (23983, 369, 2); -- Refresh +2
-
+    (23983, 13, 13),
+    (23983, 14, 10),
+    (23983, 112, 15),
+    (23983, 374, 6),
+    (23983, 170, 5),
+    (23983, 369, 3);
 REPLACE INTO `item_basic` VALUES (25544, 0, 'Percival_Collar', 'percival_collar', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (25544, "PrcvlTCll", 44, 0, 16924, 0, 0, 0, 512, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (25544, 5, 45), -- MP +45
-    (25544, 12, 9), -- INT +9
-    (25544, 13, 6), -- MND +6
-    (25544, 14, 6), -- CHR +6
-    (25544, 28, 9), -- MAB +9
-    (25544, 30, 9), -- MACC +9
-    (25544, 562, 4), -- M.Crit +4
-    (25544, 563, 7), -- M.Crit Dmg. +7
-    (25544, 369, 2); -- Refresh +2
+    (25544, 10, 10),
+    (25544, 1, 22),
+    (25544, 27, 6),
+    (25544, 160, -3),
+    (25544, 170, 3);
 REPLACE INTO `item_basic` VALUES (528, 0, 'Clmns_Fragment', 'clmns_fragment', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_basic` VALUES (23512, 0, 'Clmns_Armguard', 'clmns_armguard', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (23512, "ClmnsBAGd", 21, 0, 16924, 70, 0, 0, 64, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23512, 1, 6), -- DEF +6
-    (23512, 5, 30), -- MP +30
-    (23512, 12, 6), -- INT +6
-    (23512, 13, 4), -- MND +4
-    (23512, 14, 4), -- CHR +4
-    (23512, 28, 6), -- MAB +6
-    (23512, 30, 6), -- MACC +6
-    (23512, 562, 3), -- M.Crit +3
-    (23512, 563, 5), -- M.Crit Dmg. +5
-    (23512, 369, 1); -- Refresh +1
-
+    (23512, 13, 10),
+    (23512, 14, 6),
+    (23512, 112, 14),
+    (23512, 30, 10),
+    (23512, 374, 4),
+    (23512, 170, 5);
 REPLACE INTO `item_basic` VALUES (10789, 0, 'Clemens_Sash', 'clemens_sash', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (10789, "clemens_sash", 9, 0, 16924, 0, 0, 0, 1024, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
@@ -3316,194 +2634,141 @@ REPLACE INTO `item_basic` VALUES (531, 0, 'Bartholomew_Stone', 'bartholomew_ston
 REPLACE INTO `item_basic` VALUES (23419, 0, 'Bartholomew_Helm', 'bartholomew_helm', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (23419, "BrthlmBHlm", 25, 0, 16924, 339, 0, 0, 16, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23419, 1, 8), -- DEF +8
-    (23419, 5, 30), -- MP +30
-    (23419, 12, 6), -- INT +6
-    (23419, 13, 4), -- MND +4
-    (23419, 14, 4), -- CHR +4
-    (23419, 28, 6), -- MAB +6
-    (23419, 30, 6), -- MACC +6
-    (23419, 562, 3), -- M.Crit +3
-    (23419, 563, 5), -- M.Crit Dmg. +5
-    (23419, 369, 1); -- Refresh +1
-
+    (23419, 13, 10),
+    (23419, 14, 8),
+    (23419, 112, 12),
+    (23419, 374, 4),
+    (23419, 170, 4),
+    (23419, 369, 2);
 REPLACE INTO `item_basic` VALUES (26345, 0, 'Bartholomew_Belt', 'bartholomew_belt', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (26345, "BrthlmSBlt", 26, 0, 16924, 0, 0, 0, 1024, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (26345, 1, 3), -- DEF +3
-    (26345, 5, 30), -- MP +30
-    (26345, 12, 6), -- INT +6
-    (26345, 13, 4), -- MND +4
-    (26345, 14, 4), -- CHR +4
-    (26345, 28, 6), -- MAB +6
-    (26345, 30, 6), -- MACC +6
-    (26345, 562, 3), -- M.Crit +3
-    (26345, 563, 5), -- M.Crit Dmg. +5
-    (26345, 369, 1); -- Refresh +1
+    (26345, 13, 9),
+    (26345, 14, 7),
+    (26345, 112, 12),
+    (26345, 374, 4),
+    (26345, 170, 4),
+    (26345, 369, 1);
 REPLACE INTO `item_basic` VALUES (534, 0, 'Conrad_Knuckle', 'conrad_knuckle', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_basic` VALUES (23981, 0, 'Conrad_Hauberk', 'conrad_hauberk', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (23981, "CnrdMHbk", 55, 0, 16924, 480, 0, 0, 32, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23981, 1, 18), -- DEF +18
-    (23981, 5, 45), -- MP +45
-    (23981, 12, 9), -- INT +9
-    (23981, 13, 6), -- MND +6
-    (23981, 14, 6), -- CHR +6
-    (23981, 28, 9), -- MAB +9
-    (23981, 30, 9), -- MACC +9
-    (23981, 562, 4), -- M.Crit +4
-    (23981, 563, 7), -- M.Crit Dmg. +7
-    (23981, 369, 2); -- Refresh +2
-
+    (23981, 12, 10),
+    (23981, 13, 10),
+    (23981, 117, 15),
+    (23981, 487, 5),
+    (23981, 30, 21),
+    (23981, 369, 3);
 REPLACE INTO `item_basic` VALUES (23685, 0, 'Conrad_Boots', 'conrad_boots', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (23685, "CnrdESBts", 33, 0, 16924, 215, 0, 0, 256, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23685, 1, 6), -- DEF +6
-    (23685, 5, 30), -- MP +30
-    (23685, 12, 6), -- INT +6
-    (23685, 13, 4), -- MND +4
-    (23685, 14, 4), -- CHR +4
-    (23685, 28, 6), -- MAB +6
-    (23685, 30, 6), -- MACC +6
-    (23685, 562, 3), -- M.Crit +3
-    (23685, 563, 5), -- M.Crit Dmg. +5
-    (23685, 369, 1); -- Refresh +1
+    (23685, 12, 9),
+    (23685, 13, 7),
+    (23685, 28, 18),
+    (23685, 30, 16),
+    (23685, 170, 4),
+    (23685, 369, 2);
 REPLACE INTO `item_basic` VALUES (537, 0, 'Theobald_Core', 'theobald_core', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_basic` VALUES (23982, 0, 'Theobald_Plate', 'theobald_plate', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (23982, "ThbldCPlt", 67, 0, 16924, 480, 0, 0, 32, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23982, 1, 25), -- DEF +25
-    (23982, 5, 60), -- MP +60
-    (23982, 12, 12), -- INT +12
-    (23982, 13, 8), -- MND +8
-    (23982, 14, 8), -- CHR +8
-    (23982, 28, 12), -- MAB +12
-    (23982, 30, 12), -- MACC +12
-    (23982, 562, 5), -- M.Crit +5
-    (23982, 563, 10), -- M.Crit Dmg. +10
-    (23982, 369, 3); -- Refresh +3
-
+    (23982, 12, 13),
+    (23982, 13, 10),
+    (23982, 28, 25),
+    (23982, 30, 23),
+    (23982, 170, 5),
+    (23982, 369, 4);
 REPLACE INTO `item_basic` VALUES (28547, 0, 'Theobald_Ring', 'theobald_ring', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (28547, "ThbldWRng", 47, 0, 16924, 0, 0, 0, 24576, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (28547, 5, 45), -- MP +45
-    (28547, 12, 9), -- INT +9
-    (28547, 13, 6), -- MND +6
-    (28547, 14, 6), -- CHR +6
-    (28547, 28, 9), -- MAB +9
-    (28547, 30, 9), -- MACC +9
-    (28547, 562, 4), -- M.Crit +4
-    (28547, 563, 7), -- M.Crit Dmg. +7
-    (28547, 369, 2); -- Refresh +2
+    (28547, 12, 6),
+    (28547, 30, 12),
+    (28547, 170, 5),
+    (28547, 487, 3),
+    (28547, 369, 1);
 REPLACE INTO `item_basic` VALUES (540, 0, 'Mortimer_Bark', 'mortimer_bark', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_basic` VALUES (28534, 0, 'Mortimer_Belt', 'mortimer_belt', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (28534, "mortimer_belt", 41, 0, 263200, 0, 0, 0, 1024, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (28534, 9, 9), -- DEX +9
-    (28534, 11, 9), -- AGI +9
-    (28534, 25, 15), -- Accuracy +15
-    (28534, 26, 15), -- Rng. Acc. +15
-    (28534, 23, 18), -- Attack +18
-    (28534, 24, 18), -- Rng. Atk. +18
-    (28534, 68, 15), -- Evasion +15
-    (28534, 165, 4); -- Crit Rate +4
-
+    (28534, 9, 6),
+    (28534, 11, 8),
+    (28534, 24, 18),
+    (28534, 26, 16),
+    (28534, 73, 4),
+    (28534, 68, 10);
 REPLACE INTO `item_basic` VALUES (23686, 0, 'Mrtmr_Sandals', 'mrtmr_sandals', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (23686, "MrtmrRSnd", 25, 0, 263200, 310, 0, 0, 256, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23686, 1, 6), -- DEF +6
-    (23686, 9, 6), -- DEX +6
-    (23686, 11, 6), -- AGI +6
-    (23686, 25, 10), -- Accuracy +10
-    (23686, 26, 10), -- Rng. Acc. +10
-    (23686, 23, 12), -- Attack +12
-    (23686, 24, 12), -- Rng. Atk. +12
-    (23686, 68, 10), -- Evasion +10
-    (23686, 165, 3); -- Crit Rate +3
+    (23686, 9, 7),
+    (23686, 11, 9),
+    (23686, 24, 20),
+    (23686, 26, 16),
+    (23686, 68, 14),
+    (23686, 73, 4);
 REPLACE INTO `item_basic` VALUES (543, 0, 'Aldrc_Heartwood', 'aldrc_heartwood', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_basic` VALUES (28523, 0, 'Aldric_Earring', 'aldric_earring', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (28523, "AldrHEar", 46, 0, 263200, 0, 0, 0, 6144, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (28523, 9, 9), -- DEX +9
-    (28523, 11, 9), -- AGI +9
-    (28523, 25, 15), -- Accuracy +15
-    (28523, 26, 15), -- Rng. Acc. +15
-    (28523, 23, 18), -- Attack +18
-    (28523, 24, 18), -- Rng. Atk. +18
-    (28523, 68, 15), -- Evasion +15
-    (28523, 165, 4); -- Crit Rate +4
-
+    (28523, 9, 6),
+    (28523, 11, 6),
+    (28523, 25, 14),
+    (28523, 421, 3),
+    (28523, 302, 2),
+    (28523, 76, 4);
 REPLACE INTO `item_basic` VALUES (26042, 0, 'Aldric_Collar', 'aldric_collar', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (26042, "AldrGCll", 58, 0, 10240, 0, 0, 0, 512, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (26042, 8, 9), -- STR +9
-    (26042, 9, 9), -- DEX +9
-    (26042, 23, 18), -- Attack +18
-    (26042, 25, 18), -- Accuracy +18
-    (26042, 73, 7), -- Store TP +7
-    (26042, 384, 300); -- Haste +3%
+    (26042, 10, 11),
+    (26042, 1, 24),
+    (26042, 27, 7),
+    (26042, 160, -4),
+    (26042, 73, 2);
 REPLACE INTO `item_basic` VALUES (546, 0, 'Elspeth_Sap', 'elspeth_sap', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_basic` VALUES (28608, 0, 'Elspeth_Mantle', 'elspeth_mantle', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (28608, "ElsptGMnt", 74, 0, 263200, 0, 0, 0, 32768, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (28608, 1, 8), -- DEF +8
-    (28608, 9, 12), -- DEX +12
-    (28608, 11, 12), -- AGI +12
-    (28608, 25, 20), -- Accuracy +20
-    (28608, 26, 20), -- Rng. Acc. +20
-    (28608, 23, 24), -- Attack +24
-    (28608, 24, 24), -- Rng. Atk. +24
-    (28608, 68, 20), -- Evasion +20
-    (28608, 165, 5); -- Crit Rate +5
-
+    (28608, 11, 10),
+    (28608, 24, 20),
+    (28608, 26, 18),
+    (28608, 365, 5),
+    (28608, 165, 3);
 REPLACE INTO `item_basic` VALUES (28542, 0, 'Elspeth_Cape', 'elspeth_cape', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (28542, "elspeth_cape", 63, 0, 263200, 0, 0, 0, 32768, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (28542, 9, 12), -- DEX +12
-    (28542, 11, 12), -- AGI +12
-    (28542, 25, 20), -- Accuracy +20
-    (28542, 26, 20), -- Rng. Acc. +20
-    (28542, 23, 24), -- Attack +24
-    (28542, 24, 24), -- Rng. Atk. +24
-    (28542, 68, 20), -- Evasion +20
-    (28542, 165, 5); -- Crit Rate +5
+    (28542, 9, 8),
+    (28542, 11, 10),
+    (28542, 25, 14),
+    (28542, 26, 16),
+    (28542, 165, 4),
+    (28542, 365, 4);
 REPLACE INTO `item_basic` VALUES (549, 0, 'Wilhelmina_Core', 'wilhelmina_core', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_basic` VALUES (25687, 0, 'Wilhelmina_Robe', 'wilhelmina_robe', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (25687, "WhlmnaARbe", 70, 0, 263200, 320, 0, 0, 32, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (25687, 1, 25), -- DEF +25
-    (25687, 9, 12), -- DEX +12
-    (25687, 11, 12), -- AGI +12
-    (25687, 25, 20), -- Accuracy +20
-    (25687, 26, 20), -- Rng. Acc. +20
-    (25687, 23, 24), -- Attack +24
-    (25687, 24, 24), -- Rng. Atk. +24
-    (25687, 68, 20), -- Evasion +20
-    (25687, 165, 5); -- Crit Rate +5
-
+    (25687, 9, 10),
+    (25687, 11, 13),
+    (25687, 24, 28),
+    (25687, 26, 23),
+    (25687, 68, 20),
+    (25687, 73, 5);
 REPLACE INTO `item_basic` VALUES (28564, 0, 'Wilhelmina_Ear', 'wilhelmina_ear', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (28564, "wilhelmina_ear", 65, 0, 263200, 0, 0, 0, 6144, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (28564, 9, 12), -- DEX +12
-    (28564, 11, 12), -- AGI +12
-    (28564, 25, 20), -- Accuracy +20
-    (28564, 26, 20), -- Rng. Acc. +20
-    (28564, 23, 24), -- Attack +24
-    (28564, 24, 24), -- Rng. Atk. +24
-    (28564, 68, 20), -- Evasion +20
-    (28564, 165, 5); -- Crit Rate +5
+    (28564, 9, 6),
+    (28564, 11, 6),
+    (28564, 25, 12),
+    (28564, 26, 13),
+    (28564, 165, 3),
+    (28564, 365, 3);
 REPLACE INTO `item_basic` VALUES (552, 0, 'Marcelino_Imp', 'marcelino_imp', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_basic` VALUES (26082, 0, 'Marcelino_Earring', 'marcelino_earring', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (26082, "MrclnPEar", 14, 0, 131, 0, 0, 0, 6144, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (26082, 1, 2), -- DEF +2
-    (26082, 2, 20), -- HP +20
-    (26082, 8, 3), -- STR +3
-    (26082, 10, 3), -- VIT +3
-    (26082, 23, 6), -- Attack +6
-    (26082, 25, 5), -- Accuracy +5
-    (26082, 421, 2); -- Crit Dmg. +2
-
+    (26082, 10, 7),
+    (26082, 1, 16),
+    (26082, 27, 4),
+    (26082, 160, -2),
+    (26082, 73, 2);
 REPLACE INTO `item_basic` VALUES (10786, 0, 'Marcelino_Ring', 'marcelino_ring', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (10786, "MrclnTRng", 10, 0, 6146, 0, 0, 0, 24576, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
@@ -3518,14 +2783,12 @@ REPLACE INTO `item_basic` VALUES (555, 0, 'Temperance_Tail', 'temperance_tail', 
 REPLACE INTO `item_basic` VALUES (23420, 0, 'Temperance_Hat', 'temperance_hat', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (23420, "TmprJHat", 28, 0, 131, 339, 0, 0, 16, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23420, 1, 8), -- DEF +8
-    (23420, 2, 40), -- HP +40
-    (23420, 8, 6), -- STR +6
-    (23420, 10, 6), -- VIT +6
-    (23420, 23, 12), -- Attack +12
-    (23420, 25, 10), -- Accuracy +10
-    (23420, 421, 4); -- Crit Dmg. +4
-
+    (23420, 10, 10),
+    (23420, 13, 6),
+    (23420, 1, 20),
+    (23420, 27, 6),
+    (23420, 160, -3),
+    (23420, 73, 4);
 REPLACE INTO `item_basic` VALUES (26000, 0, 'Tmprnc_Collar', 'tmprnc_collar', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (26000, "TmprCCll", 58, 0, 10240, 0, 0, 0, 512, 0, 0, 0);
 
@@ -3534,119 +2797,85 @@ REPLACE INTO `item_basic` VALUES (558, 0, 'Hieronymus_Wand', 'hieronymus_wand', 
 REPLACE INTO `item_basic` VALUES (25684, 0, 'Hieronymus_Robe', 'hieronymus_robe', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (25684, "HrnmsSRbe", 74, 0, 10240, 324, 0, 0, 32, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (25684, 1, 25), -- DEF +25
-    (25684, 8, 12), -- STR +12
-    (25684, 9, 12), -- DEX +12
-    (25684, 23, 24), -- Attack +24
-    (25684, 25, 24), -- Accuracy +24
-    (25684, 73, 10), -- Store TP +10
-    (25684, 384, 400); -- Haste +4%
-
+    (25684, 8, 12),
+    (25684, 9, 10),
+    (25684, 23, 25),
+    (25684, 25, 25),
+    (25684, 165, 4),
+    (25684, 289, 6);
 REPLACE INTO `item_basic` VALUES (28553, 0, 'Hieronymus_Ring', 'hieronymus_ring', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (28553, "HrnmsIRng", 33, 0, 16924, 0, 0, 0, 24576, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (28553, 5, 30), -- MP +30
-    (28553, 12, 6), -- INT +6
-    (28553, 13, 4), -- MND +4
-    (28553, 14, 4), -- CHR +4
-    (28553, 28, 6), -- MAB +6
-    (28553, 30, 6), -- MACC +6
-    (28553, 562, 3), -- M.Crit +3
-    (28553, 563, 5), -- M.Crit Dmg. +5
-    (28553, 369, 1); -- Refresh +1
+    (28553, 13, 6),
+    (28553, 14, 6),
+    (28553, 374, 3),
+    (28553, 170, 3),
+    (28553, 369, 1),
+    (28553, 117, 5);
 REPLACE INTO `item_basic` VALUES (561, 0, 'Gregoire_Staff', 'gregoire_staff', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_basic` VALUES (28607, 0, 'Gregoire_Mantle', 'gregoire_mantle', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (28607, "GrgrCMnt", 48, 0, 16924, 0, 0, 0, 32768, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (28607, 1, 6), -- DEF +6
-    (28607, 5, 45), -- MP +45
-    (28607, 12, 9), -- INT +9
-    (28607, 13, 6), -- MND +6
-    (28607, 14, 6), -- CHR +6
-    (28607, 28, 9), -- MAB +9
-    (28607, 30, 9), -- MACC +9
-    (28607, 562, 4), -- M.Crit +4
-    (28607, 563, 7), -- M.Crit Dmg. +7
-    (28607, 369, 2); -- Refresh +2
-
+    (28607, 12, 8),
+    (28607, 13, 8),
+    (28607, 28, 12),
+    (28607, 30, 12),
+    (28607, 170, 4),
+    (28607, 369, 2);
 REPLACE INTO `item_basic` VALUES (28579, 0, 'Gregoire_Ring', 'gregoire_ring', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (28579, "GrgrMRng", 33, 0, 16924, 0, 0, 0, 24576, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (28579, 5, 30), -- MP +30
-    (28579, 12, 6), -- INT +6
-    (28579, 13, 4), -- MND +4
-    (28579, 14, 4), -- CHR +4
-    (28579, 28, 6), -- MAB +6
-    (28579, 30, 6), -- MACC +6
-    (28579, 562, 3), -- M.Crit +3
-    (28579, 563, 5), -- M.Crit Dmg. +5
-    (28579, 369, 1); -- Refresh +1
+    (28579, 13, 7),
+    (28579, 112, 8),
+    (28579, 374, 3),
+    (28579, 170, 3),
+    (28579, 369, 1),
+    (28579, 14, 4);
 REPLACE INTO `item_basic` VALUES (564, 0, 'Tortuga_Stub', 'tortuga_stub', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_basic` VALUES (28549, 0, 'Tortuga_Ring', 'tortuga_ring', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (28549, "TrtgaLRng", 43, 0, 10240, 0, 0, 0, 24576, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (28549, 8, 9), -- STR +9
-    (28549, 9, 9), -- DEX +9
-    (28549, 23, 18), -- Attack +18
-    (28549, 25, 18), -- Accuracy +18
-    (28549, 73, 7), -- Store TP +7
-    (28549, 384, 300); -- Haste +3%
-
+    (28549, 10, 7),
+    (28549, 1, 18),
+    (28549, 27, 5),
+    (28549, 160, -2),
+    (28549, 73, 2);
 REPLACE INTO `item_basic` VALUES (23687, 0, 'Tortuga_Boots', 'tortuga_boots', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (23687, "TrtgaGBts", 12, 0, 16924, 339, 0, 0, 256, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23687, 1, 3), -- DEF +3
-    (23687, 5, 15), -- MP +15
-    (23687, 12, 3), -- INT +3
-    (23687, 13, 2), -- MND +2
-    (23687, 14, 2), -- CHR +2
-    (23687, 28, 3), -- MAB +3
-    (23687, 30, 3), -- MACC +3
-    (23687, 562, 2), -- M.Crit +2
-    (23687, 563, 3), -- M.Crit Dmg. +3
-    (23687, 369, 1); -- Refresh +1
+    (23687, 12, 7),
+    (23687, 13, 7),
+    (23687, 117, 12),
+    (23687, 487, 4),
+    (23687, 30, 14),
+    (23687, 369, 2);
 REPLACE INTO `item_basic` VALUES (567, 0, 'Sbstn_Knife', 'sbstn_knife', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_basic` VALUES (26006, 0, 'Sbstn_Collar', 'sbstn_collar', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (26006, "SbstnCCll", 34, 0, 16924, 0, 0, 0, 512, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (26006, 5, 30), -- MP +30
-    (26006, 12, 6), -- INT +6
-    (26006, 13, 4), -- MND +4
-    (26006, 14, 4), -- CHR +4
-    (26006, 28, 6), -- MAB +6
-    (26006, 30, 6), -- MACC +6
-    (26006, 562, 3), -- M.Crit +3
-    (26006, 563, 5), -- M.Crit Dmg. +5
-    (26006, 369, 1); -- Refresh +1
-
+    (26006, 13, 9),
+    (26006, 112, 12),
+    (26006, 374, 4),
+    (26006, 170, 4),
+    (26006, 369, 1);
 REPLACE INTO `item_basic` VALUES (25685, 0, 'Sbstn_Apron', 'sbstn_apron', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (25685, "SbstnGApn", 52, 0, 16924, 324, 0, 0, 32, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (25685, 1, 18), -- DEF +18
-    (25685, 5, 45), -- MP +45
-    (25685, 12, 9), -- INT +9
-    (25685, 13, 6), -- MND +6
-    (25685, 14, 6), -- CHR +6
-    (25685, 28, 9), -- MAB +9
-    (25685, 30, 9), -- MACC +9
-    (25685, 562, 4), -- M.Crit +4
-    (25685, 563, 7), -- M.Crit Dmg. +7
-    (25685, 369, 2); -- Refresh +2
+    (25685, 12, 10),
+    (25685, 13, 11),
+    (25685, 117, 15),
+    (25685, 487, 5),
+    (25685, 30, 20),
+    (25685, 369, 3);
 REPLACE INTO `item_basic` VALUES (570, 0, 'Giuliana_Grudge', 'giuliana_grudge', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_basic` VALUES (28605, 0, 'Giuliana_Mantle', 'giuliana_mantle', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (28605, "GlnaRMnt", 50, 0, 16924, 0, 0, 0, 32768, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (28605, 1, 6), -- DEF +6
-    (28605, 5, 45), -- MP +45
-    (28605, 12, 9), -- INT +9
-    (28605, 13, 6), -- MND +6
-    (28605, 14, 6), -- CHR +6
-    (28605, 28, 9), -- MAB +9
-    (28605, 30, 9), -- MACC +9
-    (28605, 562, 4), -- M.Crit +4
-    (28605, 563, 7), -- M.Crit Dmg. +7
-    (28605, 369, 2); -- Refresh +2
-
+    (28605, 12, 8),
+    (28605, 30, 16),
+    (28605, 170, 5),
+    (28605, 487, 4),
+    (28605, 369, 2);
 REPLACE INTO `item_basic` VALUES (11059, 0, 'Giuliana_Ring', 'giuliana_ring', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (11059, "GlnaKRng", 42, 0, 16924, 0, 0, 0, 24576, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
@@ -3663,14 +2892,12 @@ REPLACE INTO `item_basic` VALUES (573, 0, 'LstTnbr_Lantern', 'lsttnbr_lantern', 
 REPLACE INTO `item_basic` VALUES (25686, 0, 'LstTnbrry_Robe', 'lsttnbrry_robe', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (25686, "LstTnFRbe", 75, 0, 10240, 320, 0, 0, 32, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (25686, 1, 25), -- DEF +25
-    (25686, 8, 12), -- STR +12
-    (25686, 9, 12), -- DEX +12
-    (25686, 23, 24), -- Attack +24
-    (25686, 25, 24), -- Accuracy +24
-    (25686, 73, 10), -- Store TP +10
-    (25686, 384, 400); -- Haste +4%
-
+    (25686, 8, 13),
+    (25686, 10, 10),
+    (25686, 23, 30),
+    (25686, 25, 23),
+    (25686, 73, 8),
+    (25686, 288, 5);
 REPLACE INTO `item_basic` VALUES (10785, 0, 'LastTnby_Belt', 'lasttnby_belt', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (10785, "lasttnby_belt", 55, 0, 16924, 0, 0, 0, 1024, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
@@ -3687,68 +2914,48 @@ REPLACE INTO `item_basic` VALUES (576, 0, 'Rocco_Scale', 'rocco_scale', 1, 59476
 REPLACE INTO `item_basic` VALUES (23688, 0, 'Rocco_Boots', 'rocco_boots', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (23688, "RccoRBts", 12, 0, 131, 339, 0, 0, 256, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23688, 1, 3), -- DEF +3
-    (23688, 2, 20), -- HP +20
-    (23688, 8, 3), -- STR +3
-    (23688, 10, 3), -- VIT +3
-    (23688, 23, 6), -- Attack +6
-    (23688, 25, 5), -- Accuracy +5
-    (23688, 421, 2); -- Crit Dmg. +2
-
+    (23688, 8, 9),
+    (23688, 10, 7),
+    (23688, 23, 22),
+    (23688, 25, 16),
+    (23688, 73, 5),
+    (23688, 288, 3);
 REPLACE INTO `item_basic` VALUES (26083, 0, 'Rocco_Earring', 'rocco_earring', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (26083, "RccoAEar", 8, 0, 16924, 0, 0, 0, 6144, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (26083, 5, 15), -- MP +15
-    (26083, 12, 3), -- INT +3
-    (26083, 13, 2), -- MND +2
-    (26083, 14, 2), -- CHR +2
-    (26083, 28, 3), -- MAB +3
-    (26083, 30, 3), -- MACC +3
-    (26083, 562, 2), -- M.Crit +2
-    (26083, 563, 3), -- M.Crit Dmg. +3
-    (26083, 369, 1); -- Refresh +1
+    (26083, 12, 5),
+    (26083, 13, 5),
+    (26083, 28, 10),
+    (26083, 30, 10),
+    (26083, 170, 3),
+    (26083, 369, 1);
 REPLACE INTO `item_basic` VALUES (579, 0, 'Thessaly_Totem', 'thessaly_totem', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_basic` VALUES (26005, 0, 'Thessaly_Collar', 'thessaly_collar', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (26005, "ThslyCCll", 28, 0, 16924, 0, 0, 0, 512, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (26005, 5, 30), -- MP +30
-    (26005, 12, 6), -- INT +6
-    (26005, 13, 4), -- MND +4
-    (26005, 14, 4), -- CHR +4
-    (26005, 28, 6), -- MAB +6
-    (26005, 30, 6), -- MACC +6
-    (26005, 562, 3), -- M.Crit +3
-    (26005, 563, 5), -- M.Crit Dmg. +5
-    (26005, 369, 1); -- Refresh +1
-
+    (26005, 14, 10),
+    (26005, 13, 7),
+    (26005, 112, 10),
+    (26005, 117, 10),
+    (26005, 369, 2);
 REPLACE INTO `item_basic` VALUES (28601, 0, 'Thessaly_Mantle', 'thessaly_mantle', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (28601, "ThslyRMnt", 26, 0, 16924, 0, 0, 0, 32768, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (28601, 1, 4), -- DEF +4
-    (28601, 5, 30), -- MP +30
-    (28601, 12, 6), -- INT +6
-    (28601, 13, 4), -- MND +4
-    (28601, 14, 4), -- CHR +4
-    (28601, 28, 6), -- MAB +6
-    (28601, 30, 6), -- MACC +6
-    (28601, 562, 3), -- M.Crit +3
-    (28601, 563, 5), -- M.Crit Dmg. +5
-    (28601, 369, 1); -- Refresh +1
+    (28601, 14, 10),
+    (28601, 13, 8),
+    (28601, 117, 12),
+    (28601, 112, 10),
+    (28601, 369, 2);
 REPLACE INTO `item_basic` VALUES (582, 0, 'Bldssr_Scale', 'bldssr_scale', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_basic` VALUES (23421, 0, 'Baldassare_Helm', 'baldassare_helm', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (23421, "BldsrLHlm", 41, 0, 16924, 339, 0, 0, 16, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23421, 1, 12), -- DEF +12
-    (23421, 5, 45), -- MP +45
-    (23421, 12, 9), -- INT +9
-    (23421, 13, 6), -- MND +6
-    (23421, 14, 6), -- CHR +6
-    (23421, 28, 9), -- MAB +9
-    (23421, 30, 9), -- MACC +9
-    (23421, 562, 4), -- M.Crit +4
-    (23421, 563, 7), -- M.Crit Dmg. +7
-    (23421, 369, 2); -- Refresh +2
-
+    (23421, 12, 10),
+    (23421, 13, 8),
+    (23421, 28, 20),
+    (23421, 30, 19),
+    (23421, 170, 4),
+    (23421, 369, 2);
 REPLACE INTO `item_basic` VALUES (10783, 0, 'Baldassare_Cape', 'baldassare_cape', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (10783, "baldassare_cape", 38, 0, 16924, 0, 0, 0, 32768, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
@@ -3765,14 +2972,12 @@ REPLACE INTO `item_basic` VALUES (585, 0, 'Desideria_Fin', 'desideria_fin', 1, 5
 REPLACE INTO `item_basic` VALUES (25688, 0, 'Desideria_Robe', 'desideria_robe', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (25688, "DsdraARbe", 61, 0, 10240, 322, 0, 0, 32, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (25688, 1, 25), -- DEF +25
-    (25688, 8, 12), -- STR +12
-    (25688, 9, 12), -- DEX +12
-    (25688, 23, 24), -- Attack +24
-    (25688, 25, 24), -- Accuracy +24
-    (25688, 73, 10), -- Store TP +10
-    (25688, 384, 400); -- Haste +4%
-
+    (25688, 10, 13),
+    (25688, 13, 8),
+    (25688, 1, 25),
+    (25688, 27, 6),
+    (25688, 160, -4),
+    (25688, 73, 7);
 REPLACE INTO `item_basic` VALUES (10787, 0, 'Desideria_Ear', 'desideria_ear', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (10787, "desideria_ear", 43, 0, 16924, 0, 0, 0, 6144, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
@@ -3789,25 +2994,21 @@ REPLACE INTO `item_basic` VALUES (588, 0, 'Persephone_Plume', 'persephone_plume'
 REPLACE INTO `item_basic` VALUES (26089, 0, 'Persephone_Earring', 'persephone_earring', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (26089, "PrsphnEar", 23, 0, 263200, 0, 0, 0, 6144, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (26089, 9, 6), -- DEX +6
-    (26089, 11, 6), -- AGI +6
-    (26089, 25, 10), -- Accuracy +10
-    (26089, 26, 10), -- Rng. Acc. +10
-    (26089, 23, 12), -- Attack +12
-    (26089, 24, 12), -- Rng. Atk. +12
-    (26089, 68, 10), -- Evasion +10
-    (26089, 165, 3); -- Crit Rate +3
-
+    (26089, 9, 5),
+    (26089, 11, 5),
+    (26089, 25, 12),
+    (26089, 68, 12),
+    (26089, 302, 2),
+    (26089, 289, 3);
 REPLACE INTO `item_basic` VALUES (28217, 0, 'Persephone_Shoes', 'persephone_shoes', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (28217, "PrsphnGShs", 17, 0, 131, 186, 0, 0, 256, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (28217, 1, 3), -- DEF +3
-    (28217, 2, 20), -- HP +20
-    (28217, 8, 3), -- STR +3
-    (28217, 10, 3), -- VIT +3
-    (28217, 23, 6), -- Attack +6
-    (28217, 25, 5), -- Accuracy +5
-    (28217, 421, 2); -- Crit Dmg. +2
+    (28217, 10, 9),
+    (28217, 13, 5),
+    (28217, 1, 18),
+    (28217, 27, 5),
+    (28217, 160, -3),
+    (28217, 73, 6);
 REPLACE INTO `item_basic` VALUES (591, 0, 'Theron_Plume', 'theron_plume', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_basic` VALUES (11007, 0, 'Theron_Mantle', 'theron_mantle', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (11007, "ThrnStMnt", 44, 0, 16924, 0, 0, 0, 32768, 0, 0, 0);
@@ -3837,36 +3038,31 @@ REPLACE INTO `item_basic` VALUES (594, 0, 'Sbstnn_Scale', 'sbstnn_scale', 1, 594
 REPLACE INTO `item_basic` VALUES (23423, 0, 'Sbstnn_Helm', 'sbstnn_helm', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (23423, "SbstAHlm", 38, 0, 131, 339, 0, 0, 16, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23423, 1, 8), -- DEF +8
-    (23423, 2, 40), -- HP +40
-    (23423, 8, 6), -- STR +6
-    (23423, 10, 6), -- VIT +6
-    (23423, 23, 12), -- Attack +12
-    (23423, 25, 10), -- Accuracy +10
-    (23423, 421, 4); -- Crit Dmg. +4
-
+    (23423, 8, 9),
+    (23423, 9, 9),
+    (23423, 25, 20),
+    (23423, 73, 5),
+    (23423, 289, 6),
+    (23423, 165, 3);
 REPLACE INTO `item_basic` VALUES (28436, 0, 'Sbstnn_Belt', 'sbstnn_belt', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (28436, "SbstWBlt", 39, 0, 131, 0, 0, 0, 1024, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (28436, 1, 3), -- DEF +3
-    (28436, 2, 40), -- HP +40
-    (28436, 8, 6), -- STR +6
-    (28436, 10, 6), -- VIT +6
-    (28436, 23, 12), -- Attack +12
-    (28436, 25, 10), -- Accuracy +10
-    (28436, 421, 4); -- Crit Dmg. +4
+    (28436, 8, 6),
+    (28436, 9, 6),
+    (28436, 25, 14),
+    (28436, 421, 3),
+    (28436, 289, 4),
+    (28436, 73, 3);
 REPLACE INTO `item_basic` VALUES (597, 0, 'Hieronyma_Scale', 'hieronyma_scale', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_basic` VALUES (23984, 0, 'Hieronyma_Plate', 'hieronyma_plate', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (23984, "HrnymCPlt", 48, 0, 131, 480, 0, 0, 32, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23984, 1, 18), -- DEF +18
-    (23984, 2, 70), -- HP +70
-    (23984, 8, 9), -- STR +9
-    (23984, 10, 9), -- VIT +9
-    (23984, 23, 18), -- Attack +18
-    (23984, 25, 15), -- Accuracy +15
-    (23984, 421, 6); -- Crit Dmg. +6
-
+    (23984, 10, 15),
+    (23984, 13, 8),
+    (23984, 1, 25),
+    (23984, 27, 6),
+    (23984, 160, -4),
+    (23984, 73, 5);
 REPLACE INTO `item_basic` VALUES (10792, 0, 'Hieronyma_Ring', 'hieronyma_ring', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (10792, "HrnymARng", 32, 0, 6146, 0, 0, 0, 24576, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
@@ -3881,13 +3077,12 @@ REPLACE INTO `item_basic` VALUES (600, 0, 'Fiorentina_Feather', 'fiorentina_feat
 REPLACE INTO `item_basic` VALUES (26099, 0, 'Fiorentina_Earring', 'fiorentina_earring', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (26099, "FrntnDEar", 8, 0, 10240, 0, 0, 0, 6144, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (26099, 8, 3), -- STR +3
-    (26099, 9, 3), -- DEX +3
-    (26099, 23, 6), -- Attack +6
-    (26099, 25, 6), -- Accuracy +6
-    (26099, 73, 3), -- Store TP +3
-    (26099, 384, 100); -- Haste +1%
-
+    (26099, 8, 5),
+    (26099, 23, 12),
+    (26099, 25, 10),
+    (26099, 421, 3),
+    (26099, 73, 3),
+    (26099, 76, 4);
 REPLACE INTO `item_basic` VALUES (10794, 0, 'Fiorentina_Ring', 'fiorentina_ring', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (10794, "FrntnTRng", 13, 0, 16924, 0, 0, 0, 24576, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
@@ -3904,14 +3099,12 @@ REPLACE INTO `item_basic` VALUES (603, 0, 'Sgsmnd_Feather', 'sgsmnd_feather', 1,
 REPLACE INTO `item_basic` VALUES (23424, 0, 'Sigismund_Helm', 'sigismund_helm', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (23424, "SgsmndCHlm", 37, 0, 131, 339, 0, 0, 16, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23424, 1, 8), -- DEF +8
-    (23424, 2, 40), -- HP +40
-    (23424, 8, 6), -- STR +6
-    (23424, 10, 6), -- VIT +6
-    (23424, 23, 12), -- Attack +12
-    (23424, 25, 10), -- Accuracy +10
-    (23424, 421, 4); -- Crit Dmg. +4
-
+    (23424, 8, 10),
+    (23424, 10, 8),
+    (23424, 23, 24),
+    (23424, 25, 18),
+    (23424, 73, 6),
+    (23424, 288, 3);
 REPLACE INTO `item_basic` VALUES (11000, 0, 'Sgsmnd_Mantle', 'sgsmnd_mantle', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (11000, "SgsmndGMnt", 26, 0, 16924, 0, 0, 0, 32768, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
@@ -3929,14 +3122,12 @@ REPLACE INTO `item_basic` VALUES (606, 0, 'Tancred_Quill', 'tancred_quill', 1, 5
 REPLACE INTO `item_basic` VALUES (25704, 0, 'Tancred_Plate', 'tancred_plate', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (25704, "TncrCyPlt", 49, 0, 131, 234, 0, 0, 32, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (25704, 1, 18), -- DEF +18
-    (25704, 2, 70), -- HP +70
-    (25704, 8, 9), -- STR +9
-    (25704, 10, 9), -- VIT +9
-    (25704, 23, 18), -- Attack +18
-    (25704, 25, 15), -- Accuracy +15
-    (25704, 421, 6); -- Crit Dmg. +6
-
+    (25704, 8, 15),
+    (25704, 10, 10),
+    (25704, 23, 30),
+    (25704, 25, 23),
+    (25704, 73, 8),
+    (25704, 288, 4);
 REPLACE INTO `item_basic` VALUES (10795, 0, 'Tancred_Ring', 'tancred_ring', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (10795, "TncrTRng", 35, 0, 16924, 0, 0, 0, 24576, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
@@ -3953,14 +3144,12 @@ REPLACE INTO `item_basic` VALUES (609, 0, 'Andromeda_Quill', 'andromeda_quill', 
 REPLACE INTO `item_basic` VALUES (23717, 0, 'Andromeda_Plate', 'andromeda_plate', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (23717, "AndrSSPlt", 60, 0, 131, 163, 0, 0, 32, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23717, 1, 25), -- DEF +25
-    (23717, 2, 100), -- HP +100
-    (23717, 8, 12), -- STR +12
-    (23717, 10, 12), -- VIT +12
-    (23717, 23, 24), -- Attack +24
-    (23717, 25, 20), -- Accuracy +20
-    (23717, 421, 8); -- Crit Dmg. +8
-
+    (23717, 10, 13),
+    (23717, 13, 8),
+    (23717, 1, 25),
+    (23717, 27, 6),
+    (23717, 160, -4),
+    (23717, 73, 5);
 REPLACE INTO `item_basic` VALUES (10793, 0, 'Andromeda_Ring', 'andromeda_ring', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (10793, "AndrLRng", 46, 0, 16924, 0, 0, 0, 24576, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
@@ -3990,56 +3179,39 @@ REPLACE INTO `item_mods` VALUES
 REPLACE INTO `item_basic` VALUES (28339, 0, 'Sbstn_Boots', 'sbstn_boots', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (28339, "SbstnSBts", 14, 0, 131, 350, 0, 0, 256, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (28339, 1, 3), -- DEF +3
-    (28339, 2, 20), -- HP +20
-    (28339, 8, 3), -- STR +3
-    (28339, 10, 3), -- VIT +3
-    (28339, 23, 6), -- Attack +6
-    (28339, 25, 5), -- Accuracy +5
-    (28339, 421, 2); -- Crit Dmg. +2
+    (28339, 8, 7),
+    (28339, 9, 8),
+    (28339, 23, 18),
+    (28339, 25, 18),
+    (28339, 165, 3),
+    (28339, 289, 5);
 REPLACE INTO `item_basic` VALUES (615, 0, 'Prdnld_Flower', 'prdnld_flower', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_basic` VALUES (27620, 0, 'Prdnld_Mantle', 'prdnld_mantle', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (27620, "PrdnldDMnt", 28, 0, 16924, 0, 0, 0, 32768, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (27620, 1, 4), -- DEF +4
-    (27620, 5, 30), -- MP +30
-    (27620, 12, 6), -- INT +6
-    (27620, 13, 4), -- MND +4
-    (27620, 14, 4), -- CHR +4
-    (27620, 28, 6), -- MAB +6
-    (27620, 30, 6), -- MACC +6
-    (27620, 562, 3), -- M.Crit +3
-    (27620, 563, 5), -- M.Crit Dmg. +5
-    (27620, 369, 1); -- Refresh +1
-
+    (27620, 12, 8),
+    (27620, 117, 14),
+    (27620, 487, 5),
+    (27620, 30, 14),
+    (27620, 369, 2);
 REPLACE INTO `item_basic` VALUES (28410, 0, 'Pradinelda_Belt', 'pradinelda_belt', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (28410, "PrdnldSBlt", 27, 0, 16924, 0, 0, 0, 1024, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (28410, 1, 3), -- DEF +3
-    (28410, 5, 30), -- MP +30
-    (28410, 12, 6), -- INT +6
-    (28410, 13, 4), -- MND +4
-    (28410, 14, 4), -- CHR +4
-    (28410, 28, 6), -- MAB +6
-    (28410, 30, 6), -- MACC +6
-    (28410, 562, 3), -- M.Crit +3
-    (28410, 563, 5), -- M.Crit Dmg. +5
-    (28410, 369, 1); -- Refresh +1
+    (28410, 14, 9),
+    (28410, 13, 7),
+    (28410, 112, 10),
+    (28410, 117, 10),
+    (28410, 369, 2);
 REPLACE INTO `item_basic` VALUES (618, 0, 'Serafina_Spine', 'serafina_spine', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_basic` VALUES (23425, 0, 'Serafina_Crown', 'serafina_crown', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (23425, "SrfnaDCrn", 34, 0, 16924, 339, 0, 0, 16, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23425, 1, 8), -- DEF +8
-    (23425, 5, 30), -- MP +30
-    (23425, 12, 6), -- INT +6
-    (23425, 13, 4), -- MND +4
-    (23425, 14, 4), -- CHR +4
-    (23425, 28, 6), -- MAB +6
-    (23425, 30, 6), -- MACC +6
-    (23425, 562, 3), -- M.Crit +3
-    (23425, 563, 5), -- M.Crit Dmg. +5
-    (23425, 369, 1); -- Refresh +1
-
+    (23425, 13, 10),
+    (23425, 14, 8),
+    (23425, 112, 12),
+    (23425, 374, 5),
+    (23425, 170, 4),
+    (23425, 369, 2);
 REPLACE INTO `item_basic` VALUES (10761, 0, 'Serafina_Ear', 'serafina_ear', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (10761, "serafina_ear", 33, 0, 16924, 0, 0, 0, 6144, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
@@ -4056,17 +3228,12 @@ REPLACE INTO `item_basic` VALUES (621, 0, 'Lazaro_Heart', 'lazaro_heart', 1, 594
 REPLACE INTO `item_basic` VALUES (27797, 0, 'Lazaro_Plate', 'lazaro_plate', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (27797, "LzrCKPlt", 58, 0, 16924, 186, 0, 0, 32, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (27797, 1, 18), -- DEF +18
-    (27797, 5, 45), -- MP +45
-    (27797, 12, 9), -- INT +9
-    (27797, 13, 6), -- MND +6
-    (27797, 14, 6), -- CHR +6
-    (27797, 28, 9), -- MAB +9
-    (27797, 30, 9), -- MACC +9
-    (27797, 562, 4), -- M.Crit +4
-    (27797, 563, 7), -- M.Crit Dmg. +7
-    (27797, 369, 2); -- Refresh +2
-
+    (27797, 12, 10),
+    (27797, 13, 10),
+    (27797, 117, 15),
+    (27797, 487, 5),
+    (27797, 30, 20),
+    (27797, 369, 4);
 REPLACE INTO `item_basic` VALUES (10755, 0, 'Lazaro_Ear', 'lazaro_ear', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (10755, "lazaro_ear", 51, 0, 16924, 0, 0, 0, 6144, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
@@ -4083,72 +3250,48 @@ REPLACE INTO `item_basic` VALUES (624, 0, 'Lorcan_Chip', 'lorcan_chip', 1, 59476
 REPLACE INTO `item_basic` VALUES (28437, 0, 'Lorcan_Belt', 'lorcan_belt', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (28437, "LrcnStBlt", 10, 0, 16924, 0, 0, 0, 1024, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (28437, 1, 1), -- DEF +1
-    (28437, 5, 15), -- MP +15
-    (28437, 12, 3), -- INT +3
-    (28437, 13, 2), -- MND +2
-    (28437, 14, 2), -- CHR +2
-    (28437, 28, 3), -- MAB +3
-    (28437, 30, 3), -- MACC +3
-    (28437, 562, 2), -- M.Crit +2
-    (28437, 563, 3), -- M.Crit Dmg. +3
-    (28437, 369, 1); -- Refresh +1
-
+    (28437, 12, 7),
+    (28437, 13, 7),
+    (28437, 28, 10),
+    (28437, 30, 10),
+    (28437, 170, 4),
+    (28437, 369, 1);
 REPLACE INTO `item_basic` VALUES (23697, 0, 'Lorcan_Boots', 'lorcan_boots', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (23697, "LrcnHdBts", 14, 0, 16924, 339, 0, 0, 256, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23697, 1, 3), -- DEF +3
-    (23697, 5, 15), -- MP +15
-    (23697, 12, 3), -- INT +3
-    (23697, 13, 2), -- MND +2
-    (23697, 14, 2), -- CHR +2
-    (23697, 28, 3), -- MAB +3
-    (23697, 30, 3), -- MACC +3
-    (23697, 562, 2), -- M.Crit +2
-    (23697, 563, 3), -- M.Crit Dmg. +3
-    (23697, 369, 1); -- Refresh +1
+    (23697, 12, 9),
+    (23697, 13, 7),
+    (23697, 28, 19),
+    (23697, 30, 16),
+    (23697, 170, 4),
+    (23697, 369, 2);
 REPLACE INTO `item_basic` VALUES (627, 0, 'Thkl_Fragment', 'thkl_fragment', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_basic` VALUES (28602, 0, 'Thkl_Mantle', 'thkl_mantle', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (28602, "ThklCMnt", 16, 0, 16924, 0, 0, 0, 32768, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (28602, 1, 2), -- DEF +2
-    (28602, 5, 15), -- MP +15
-    (28602, 12, 3), -- INT +3
-    (28602, 13, 2), -- MND +2
-    (28602, 14, 2), -- CHR +2
-    (28602, 28, 3), -- MAB +3
-    (28602, 30, 3), -- MACC +3
-    (28602, 562, 2), -- M.Crit +2
-    (28602, 563, 3), -- M.Crit Dmg. +3
-    (28602, 369, 1); -- Refresh +1
-
+    (28602, 12, 9),
+    (28602, 28, 14),
+    (28602, 30, 14),
+    (28602, 170, 4),
+    (28602, 487, 4);
 REPLACE INTO `item_basic` VALUES (26004, 0, 'Thkl_Collar', 'thkl_collar', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (26004, "ThklBCll", 18, 0, 16924, 0, 0, 0, 512, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (26004, 5, 15), -- MP +15
-    (26004, 12, 3), -- INT +3
-    (26004, 13, 2), -- MND +2
-    (26004, 14, 2), -- CHR +2
-    (26004, 28, 3), -- MAB +3
-    (26004, 30, 3), -- MACC +3
-    (26004, 562, 2), -- M.Crit +2
-    (26004, 563, 3), -- M.Crit Dmg. +3
-    (26004, 369, 1); -- Refresh +1
+    (26004, 12, 9),
+    (26004, 28, 14),
+    (26004, 30, 14),
+    (26004, 487, 4),
+    (26004, 369, 1);
 REPLACE INTO `item_basic` VALUES (630, 0, 'Godfrey_Horn', 'godfrey_horn', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_basic` VALUES (23422, 0, 'Godfrey_Helm', 'godfrey_helm', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (23422, "GdfrWHlm", 50, 0, 16924, 339, 0, 0, 16, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23422, 1, 12), -- DEF +12
-    (23422, 5, 45), -- MP +45
-    (23422, 12, 9), -- INT +9
-    (23422, 13, 6), -- MND +6
-    (23422, 14, 6), -- CHR +6
-    (23422, 28, 9), -- MAB +9
-    (23422, 30, 9), -- MACC +9
-    (23422, 562, 4), -- M.Crit +4
-    (23422, 563, 7), -- M.Crit Dmg. +7
-    (23422, 369, 2); -- Refresh +2
-
+    (23422, 13, 10),
+    (23422, 14, 8),
+    (23422, 112, 13),
+    (23422, 374, 4),
+    (23422, 170, 4),
+    (23422, 369, 2);
 REPLACE INTO `item_basic` VALUES (10756, 0, 'Godfrey_Belt', 'godfrey_belt', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (10756, "godfrey_belt", 37, 0, 16924, 0, 0, 0, 1024, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
@@ -4165,17 +3308,12 @@ REPLACE INTO `item_basic` VALUES (633, 0, 'Patricia_Horn', 'patricia_horn', 1, 5
 REPLACE INTO `item_basic` VALUES (27916, 0, 'Ptrc_Hauberk', 'ptrc_hauberk', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (27916, "PatTPHbk", 65, 0, 16924, 262, 0, 0, 32, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (27916, 1, 25), -- DEF +25
-    (27916, 5, 60), -- MP +60
-    (27916, 12, 12), -- INT +12
-    (27916, 13, 8), -- MND +8
-    (27916, 14, 8), -- CHR +8
-    (27916, 28, 12), -- MAB +12
-    (27916, 30, 12), -- MACC +12
-    (27916, 562, 5), -- M.Crit +5
-    (27916, 563, 10), -- M.Crit Dmg. +10
-    (27916, 369, 3); -- Refresh +3
-
+    (27916, 13, 13),
+    (27916, 14, 11),
+    (27916, 112, 15),
+    (27916, 374, 5),
+    (27916, 170, 5),
+    (27916, 369, 3);
 REPLACE INTO `item_basic` VALUES (10759, 0, 'Patricia_Sash', 'patricia_sash', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (10759, "patricia_sash", 55, 0, 16924, 0, 0, 0, 1024, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
@@ -4192,16 +3330,12 @@ REPLACE INTO `item_basic` VALUES (636, 0, 'Sigrid_Jaw', 'sigrid_jaw', 1, 59476, 
 REPLACE INTO `item_basic` VALUES (23698, 0, 'Sigrid_Sandals', 'sigrid_sandals', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (23698, "SgrdPtSnd", 11, 0, 263200, 339, 0, 0, 256, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23698, 1, 3), -- DEF +3
-    (23698, 9, 3), -- DEX +3
-    (23698, 11, 3), -- AGI +3
-    (23698, 25, 5), -- Accuracy +5
-    (23698, 26, 5), -- Rng. Acc. +5
-    (23698, 23, 6), -- Attack +6
-    (23698, 24, 6), -- Rng. Atk. +6
-    (23698, 68, 5), -- Evasion +5
-    (23698, 165, 2); -- Crit Rate +2
-
+    (23698, 9, 7),
+    (23698, 11, 9),
+    (23698, 24, 21),
+    (23698, 26, 16),
+    (23698, 68, 14),
+    (23698, 73, 4);
 REPLACE INTO `item_basic` VALUES (10763, 0, 'Sigrid_Ring', 'sigrid_ring', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (10763, "SgrdTRng", 14, 0, 6146, 0, 0, 0, 24576, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
@@ -4216,29 +3350,20 @@ REPLACE INTO `item_basic` VALUES (639, 0, 'Bllncr_Mandible', 'bllncr_mandible', 
 REPLACE INTO `item_basic` VALUES (23513, 0, 'Bllncrt_Mitts', 'bllncrt_mitts', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (23513, "BlncrtCMtt", 30, 0, 16924, 72, 0, 0, 64, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23513, 1, 6), -- DEF +6
-    (23513, 5, 30), -- MP +30
-    (23513, 12, 6), -- INT +6
-    (23513, 13, 4), -- MND +4
-    (23513, 14, 4), -- CHR +4
-    (23513, 28, 6), -- MAB +6
-    (23513, 30, 6), -- MACC +6
-    (23513, 562, 3), -- M.Crit +3
-    (23513, 563, 5), -- M.Crit Dmg. +5
-    (23513, 369, 1); -- Refresh +1
-
+    (23513, 12, 8),
+    (23513, 13, 8),
+    (23513, 117, 12),
+    (23513, 487, 4),
+    (23513, 30, 15),
+    (23513, 369, 2);
 REPLACE INTO `item_basic` VALUES (26325, 0, 'Bllncrt_Belt', 'bllncrt_belt', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (26325, "BlncrtSBlt", 6, 0, 263200, 0, 0, 0, 1024, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (26325, 1, 1), -- DEF +1
-    (26325, 9, 3), -- DEX +3
-    (26325, 11, 3), -- AGI +3
-    (26325, 25, 5), -- Accuracy +5
-    (26325, 26, 5), -- Rng. Acc. +5
-    (26325, 23, 6), -- Attack +6
-    (26325, 24, 6), -- Rng. Atk. +6
-    (26325, 68, 5), -- Evasion +5
-    (26325, 165, 2); -- Crit Rate +2
+    (26325, 11, 9),
+    (26325, 24, 20),
+    (26325, 26, 18),
+    (26325, 73, 4),
+    (26325, 68, 10);
 REPLACE INTO `item_basic` VALUES (642, 0, 'Crescentia_Jaw', 'crescentia_jaw', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_basic` VALUES (10487, 0, 'Crscnt_Hauberk', 'crscnt_hauberk', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (10487, "CrscntAHbk", 36, 0, 131, 48, 0, 0, 32, 0, 0, 0);
@@ -4304,56 +3429,40 @@ REPLACE INTO `item_mods` VALUES
 REPLACE INTO `item_basic` VALUES (23699, 0, 'Wilhelmus_Boots', 'wilhelmus_boots', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (23699, "WhlmsCBts", 11, 0, 131, 339, 0, 0, 256, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23699, 1, 3), -- DEF +3
-    (23699, 2, 20), -- HP +20
-    (23699, 8, 3), -- STR +3
-    (23699, 10, 3), -- VIT +3
-    (23699, 23, 6), -- Attack +6
-    (23699, 25, 5), -- Accuracy +5
-    (23699, 421, 2); -- Crit Dmg. +2
+    (23699, 10, 9),
+    (23699, 13, 5),
+    (23699, 1, 18),
+    (23699, 27, 5),
+    (23699, 160, -3),
+    (23699, 73, 4);
 REPLACE INTO `item_basic` VALUES (651, 0, 'Frederik_Scale', 'frederik_scale', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_basic` VALUES (23436, 0, 'Frederik_Helm', 'frederik_helm', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (23436, "FrdrkIDHlm", 39, 0, 16924, 339, 0, 0, 16, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23436, 1, 8), -- DEF +8
-    (23436, 5, 30), -- MP +30
-    (23436, 12, 6), -- INT +6
-    (23436, 13, 4), -- MND +4
-    (23436, 14, 4), -- CHR +4
-    (23436, 28, 6), -- MAB +6
-    (23436, 30, 6), -- MACC +6
-    (23436, 562, 3), -- M.Crit +3
-    (23436, 563, 5), -- M.Crit Dmg. +5
-    (23436, 369, 1); -- Refresh +1
-
+    (23436, 12, 11),
+    (23436, 13, 8),
+    (23436, 28, 20),
+    (23436, 30, 18),
+    (23436, 170, 4),
+    (23436, 369, 2);
 REPLACE INTO `item_basic` VALUES (28594, 0, 'Frederik_Mantle', 'frederik_mantle', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (28594, "FrdrkBMnt", 22, 0, 16924, 0, 0, 0, 32768, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (28594, 1, 4), -- DEF +4
-    (28594, 5, 30), -- MP +30
-    (28594, 12, 6), -- INT +6
-    (28594, 13, 4), -- MND +4
-    (28594, 14, 4), -- CHR +4
-    (28594, 28, 6), -- MAB +6
-    (28594, 30, 6), -- MACC +6
-    (28594, 562, 3), -- M.Crit +3
-    (28594, 563, 5), -- M.Crit Dmg. +5
-    (28594, 369, 1); -- Refresh +1
+    (28594, 13, 10),
+    (28594, 112, 16),
+    (28594, 374, 5),
+    (28594, 170, 4),
+    (28594, 369, 2);
 REPLACE INTO `item_basic` VALUES (654, 0, 'Vlntns_Gland', 'vlntns_gland', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_basic` VALUES (23950, 0, 'Vlntns_Hauberk', 'vlntns_hauberk', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (23950, "VlntnWHbk", 55, 0, 16924, 480, 0, 0, 32, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23950, 1, 18), -- DEF +18
-    (23950, 5, 45), -- MP +45
-    (23950, 12, 9), -- INT +9
-    (23950, 13, 6), -- MND +6
-    (23950, 14, 6), -- CHR +6
-    (23950, 28, 9), -- MAB +9
-    (23950, 30, 9), -- MACC +9
-    (23950, 562, 4), -- M.Crit +4
-    (23950, 563, 7), -- M.Crit Dmg. +7
-    (23950, 369, 2); -- Refresh +2
-
+    (23950, 13, 13),
+    (23950, 14, 10),
+    (23950, 112, 15),
+    (23950, 374, 5),
+    (23950, 170, 5),
+    (23950, 369, 3);
 REPLACE INTO `item_basic` VALUES (10754, 0, 'Valentin_Cape', 'valentin_cape', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (10754, "valentin_cape", 34, 0, 16924, 0, 0, 0, 32768, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
@@ -4370,14 +3479,12 @@ REPLACE INTO `item_basic` VALUES (657, 0, 'Agrippa_Heart', 'agrippa_heart', 1, 5
 REPLACE INTO `item_basic` VALUES (23951, 0, 'Agrippa_Plate', 'agrippa_plate', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (23951, "AgrppADPlt", 46, 0, 131, 480, 0, 0, 32, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23951, 1, 18), -- DEF +18
-    (23951, 2, 70), -- HP +70
-    (23951, 8, 9), -- STR +9
-    (23951, 10, 9), -- VIT +9
-    (23951, 23, 18), -- Attack +18
-    (23951, 25, 15), -- Accuracy +15
-    (23951, 421, 6); -- Crit Dmg. +6
-
+    (23951, 10, 13),
+    (23951, 13, 8),
+    (23951, 1, 26),
+    (23951, 27, 6),
+    (23951, 160, -4),
+    (23951, 73, 5);
 REPLACE INTO `item_basic` VALUES (10757, 0, 'Agrippa_Cape', 'agrippa_cape', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (10757, "agrippa_cape", 47, 0, 16924, 0, 0, 0, 32768, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
@@ -4404,55 +3511,40 @@ REPLACE INTO `item_mods` VALUES
 REPLACE INTO `item_basic` VALUES (23700, 0, 'Wlhlmn_Boots', 'wlhlmn_boots', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (23700, "WhlmMBts", 14, 0, 16924, 339, 0, 0, 256, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23700, 1, 3), -- DEF +3
-    (23700, 5, 15), -- MP +15
-    (23700, 12, 3), -- INT +3
-    (23700, 13, 2), -- MND +2
-    (23700, 14, 2), -- CHR +2
-    (23700, 28, 3), -- MAB +3
-    (23700, 30, 3), -- MACC +3
-    (23700, 562, 2), -- M.Crit +2
-    (23700, 563, 3), -- M.Crit Dmg. +3
-    (23700, 369, 1); -- Refresh +1
+    (23700, 12, 9),
+    (23700, 13, 7),
+    (23700, 28, 18),
+    (23700, 30, 17),
+    (23700, 170, 4),
+    (23700, 369, 2);
 REPLACE INTO `item_basic` VALUES (663, 0, 'Clgr_Mainspring', 'clgr_mainspring', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_basic` VALUES (25419, 0, 'Calogero_Collar', 'calogero_collar', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (25419, "ClgrACll", 22, 0, 16924, 0, 0, 0, 512, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (25419, 5, 30), -- MP +30
-    (25419, 12, 6), -- INT +6
-    (25419, 13, 4), -- MND +4
-    (25419, 14, 4), -- CHR +4
-    (25419, 28, 6), -- MAB +6
-    (25419, 30, 6), -- MACC +6
-    (25419, 562, 3), -- M.Crit +3
-    (25419, 563, 5), -- M.Crit Dmg. +5
-    (25419, 369, 1); -- Refresh +1
-
+    (25419, 12, 8),
+    (25419, 13, 6),
+    (25419, 28, 14),
+    (25419, 30, 12),
+    (25419, 170, 4),
+    (25419, 369, 1);
 REPLACE INTO `item_basic` VALUES (28414, 0, 'Calogero_Belt', 'calogero_belt', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (28414, "ClgrGBlt", 12, 0, 16924, 0, 0, 0, 1024, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (28414, 1, 1), -- DEF +1
-    (28414, 5, 15), -- MP +15
-    (28414, 12, 3), -- INT +3
-    (28414, 13, 2), -- MND +2
-    (28414, 14, 2), -- CHR +2
-    (28414, 28, 3), -- MAB +3
-    (28414, 30, 3), -- MACC +3
-    (28414, 562, 2), -- M.Crit +2
-    (28414, 563, 3), -- M.Crit Dmg. +3
-    (28414, 369, 1); -- Refresh +1
+    (28414, 12, 7),
+    (28414, 28, 12),
+    (28414, 30, 12),
+    (28414, 170, 5),
+    (28414, 369, 1);
 REPLACE INTO `item_basic` VALUES (666, 0, 'Agatha_Core', 'agatha_core', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_basic` VALUES (23952, 0, 'Agatha_Hauberk', 'agatha_hauberk', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (23952, "AgtArcHbk", 63, 0, 10240, 480, 0, 0, 32, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23952, 1, 25), -- DEF +25
-    (23952, 8, 12), -- STR +12
-    (23952, 9, 12), -- DEX +12
-    (23952, 23, 24), -- Attack +24
-    (23952, 25, 24), -- Accuracy +24
-    (23952, 73, 10), -- Store TP +10
-    (23952, 384, 400); -- Haste +4%
-
+    (23952, 8, 13),
+    (23952, 10, 10),
+    (23952, 23, 30),
+    (23952, 25, 23),
+    (23952, 73, 8),
+    (23952, 288, 4);
 REPLACE INTO `item_basic` VALUES (10753, 0, 'Agatha_Sash', 'agatha_sash', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (10753, "agatha_sash", 39, 0, 16924, 0, 0, 0, 1024, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
@@ -4469,14 +3561,12 @@ REPLACE INTO `item_basic` VALUES (669, 0, 'Ptolemais_Core', 'ptolemais_core', 1,
 REPLACE INTO `item_basic` VALUES (23953, 0, 'Ptolemais_Body', 'ptolemais_body', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (23953, "PtlmPBdy", 65, 0, 10240, 480, 0, 0, 32, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23953, 1, 25), -- DEF +25
-    (23953, 8, 12), -- STR +12
-    (23953, 9, 12), -- DEX +12
-    (23953, 23, 24), -- Attack +24
-    (23953, 25, 24), -- Accuracy +24
-    (23953, 73, 10), -- Store TP +10
-    (23953, 384, 400); -- Haste +4%
-
+    (23953, 8, 10),
+    (23953, 9, 10),
+    (23953, 23, 25),
+    (23953, 25, 25),
+    (23953, 165, 4),
+    (23953, 289, 6);
 REPLACE INTO `item_basic` VALUES (10751, 0, 'Ptolemais_Ear', 'ptolemais_ear', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (10751, "ptolemais_ear", 56, 0, 16924, 0, 0, 0, 6144, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
@@ -4506,58 +3596,39 @@ REPLACE INTO `item_mods` VALUES
 REPLACE INTO `item_basic` VALUES (26339, 0, 'Dervish_Belt', 'dervish_belt', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (26339, "DrvshDBlt", 9, 0, 16924, 0, 0, 0, 1024, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (26339, 1, 1), -- DEF +1
-    (26339, 5, 15), -- MP +15
-    (26339, 12, 3), -- INT +3
-    (26339, 13, 2), -- MND +2
-    (26339, 14, 2), -- CHR +2
-    (26339, 28, 3), -- MAB +3
-    (26339, 30, 3), -- MACC +3
-    (26339, 562, 2), -- M.Crit +2
-    (26339, 563, 3), -- M.Crit Dmg. +3
-    (26339, 369, 1); -- Refresh +1
+    (26339, 12, 6),
+    (26339, 13, 6),
+    (26339, 30, 10),
+    (26339, 170, 6),
+    (26339, 117, 10),
+    (26339, 369, 1);
 REPLACE INTO `item_basic` VALUES (675, 0, 'Wenceslas_Edge', 'wenceslas_edge', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_basic` VALUES (28521, 0, 'Wenceslas_Earring', 'wenceslas_earring', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (28521, "WncslsVEar", 26, 0, 16924, 0, 0, 0, 6144, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (28521, 5, 30), -- MP +30
-    (28521, 12, 6), -- INT +6
-    (28521, 13, 4), -- MND +4
-    (28521, 14, 4), -- CHR +4
-    (28521, 28, 6), -- MAB +6
-    (28521, 30, 6), -- MACC +6
-    (28521, 562, 3), -- M.Crit +3
-    (28521, 563, 5), -- M.Crit Dmg. +5
-    (28521, 369, 1); -- Refresh +1
-
+    (28521, 12, 6),
+    (28521, 117, 10),
+    (28521, 487, 3),
+    (28521, 30, 13),
+    (28521, 369, 1);
 REPLACE INTO `item_basic` VALUES (28595, 0, 'Wenceslas_Mantle', 'wenceslas_mantle', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (28595, "WncslsAMnt", 21, 0, 16924, 0, 0, 0, 32768, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (28595, 1, 4), -- DEF +4
-    (28595, 5, 30), -- MP +30
-    (28595, 12, 6), -- INT +6
-    (28595, 13, 4), -- MND +4
-    (28595, 14, 4), -- CHR +4
-    (28595, 28, 6), -- MAB +6
-    (28595, 30, 6), -- MACC +6
-    (28595, 562, 3), -- M.Crit +3
-    (28595, 563, 5), -- M.Crit Dmg. +5
-    (28595, 369, 1); -- Refresh +1
+    (28595, 12, 10),
+    (28595, 28, 16),
+    (28595, 30, 14),
+    (28595, 487, 5),
+    (28595, 369, 1);
 REPLACE INTO `item_basic` VALUES (678, 0, 'Corneline_Steel', 'corneline_steel', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_basic` VALUES (23954, 0, 'Crnln_Hauberk', 'crnln_hauberk', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (23954, "CrnlnHHbk", 58, 0, 16924, 480, 0, 0, 32, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23954, 1, 18), -- DEF +18
-    (23954, 5, 45), -- MP +45
-    (23954, 12, 9), -- INT +9
-    (23954, 13, 6), -- MND +6
-    (23954, 14, 6), -- CHR +6
-    (23954, 28, 9), -- MAB +9
-    (23954, 30, 9), -- MACC +9
-    (23954, 562, 4), -- M.Crit +4
-    (23954, 563, 7), -- M.Crit Dmg. +7
-    (23954, 369, 2); -- Refresh +2
-
+    (23954, 12, 10),
+    (23954, 13, 10),
+    (23954, 117, 15),
+    (23954, 487, 5),
+    (23954, 30, 20),
+    (23954, 369, 3);
 REPLACE INTO `item_basic` VALUES (11659, 0, 'Corneline_Ring', 'corneline_ring', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (11659, "CrnlnPhRng", 36, 0, 16924, 0, 0, 0, 24576, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
@@ -4574,17 +3645,12 @@ REPLACE INTO `item_basic` VALUES (681, 0, 'Emerick_Edge', 'emerick_edge', 1, 594
 REPLACE INTO `item_basic` VALUES (23955, 0, 'Emerick_Plate', 'emerick_plate', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (23955, "EmrckEPlt", 66, 0, 16924, 480, 0, 0, 32, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23955, 1, 25), -- DEF +25
-    (23955, 5, 60), -- MP +60
-    (23955, 12, 12), -- INT +12
-    (23955, 13, 8), -- MND +8
-    (23955, 14, 8), -- CHR +8
-    (23955, 28, 12), -- MAB +12
-    (23955, 30, 12), -- MACC +12
-    (23955, 562, 5), -- M.Crit +5
-    (23955, 563, 10), -- M.Crit Dmg. +10
-    (23955, 369, 3); -- Refresh +3
-
+    (23955, 12, 13),
+    (23955, 13, 10),
+    (23955, 28, 25),
+    (23955, 30, 23),
+    (23955, 170, 5),
+    (23955, 369, 3);
 REPLACE INTO `item_basic` VALUES (11657, 0, 'Emerick_Ring', 'emerick_ring', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (11657, "EmrckDRng", 60, 0, 16924, 0, 0, 0, 24576, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
@@ -4601,16 +3667,12 @@ REPLACE INTO `item_basic` VALUES (684, 0, 'Wilhemina_Wisp', 'wilhemina_wisp', 1,
 REPLACE INTO `item_basic` VALUES (26080, 0, 'Wilhelmina_Earring', 'wilhelmina_earring', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (26080, "WhlmnaEar", 15, 0, 16924, 0, 0, 0, 6144, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (26080, 5, 15), -- MP +15
-    (26080, 12, 3), -- INT +3
-    (26080, 13, 2), -- MND +2
-    (26080, 14, 2), -- CHR +2
-    (26080, 28, 3), -- MAB +3
-    (26080, 30, 3), -- MACC +3
-    (26080, 562, 2), -- M.Crit +2
-    (26080, 563, 3), -- M.Crit Dmg. +3
-    (26080, 369, 1); -- Refresh +1
-
+    (26080, 12, 4),
+    (26080, 13, 6),
+    (26080, 30, 12),
+    (26080, 170, 5),
+    (26080, 112, 6),
+    (26080, 369, 1);
 REPLACE INTO `item_basic` VALUES (11658, 0, 'Wilhemina_Ring', 'wilhemina_ring', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (11658, "WhlmnaSpRng", 39, 0, 10240, 0, 0, 0, 24576, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
@@ -4624,38 +3686,30 @@ REPLACE INTO `item_basic` VALUES (687, 0, 'Sgsmnd_Remnant', 'sgsmnd_remnant', 1,
 REPLACE INTO `item_basic` VALUES (25431, 0, 'Sgsmnd_Collar', 'sgsmnd_collar', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (25431, "SgsmndBCll", 51, 0, 10240, 0, 0, 0, 512, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (25431, 8, 9), -- STR +9
-    (25431, 9, 9), -- DEX +9
-    (25431, 23, 18), -- Attack +18
-    (25431, 25, 18), -- Accuracy +18
-    (25431, 73, 7), -- Store TP +7
-    (25431, 384, 300); -- Haste +3%
-
+    (25431, 8, 9),
+    (25431, 23, 22),
+    (25431, 25, 14),
+    (25431, 73, 4),
+    (25431, 288, 2);
 REPLACE INTO `item_basic` VALUES (23514, 0, 'Sgsmnd_Mitts', 'sgsmnd_mitts', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (23514, "SgsmndHMtt", 11, 0, 16924, 74, 0, 0, 64, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23514, 1, 3), -- DEF +3
-    (23514, 5, 15), -- MP +15
-    (23514, 12, 3), -- INT +3
-    (23514, 13, 2), -- MND +2
-    (23514, 14, 2), -- CHR +2
-    (23514, 28, 3), -- MAB +3
-    (23514, 30, 3), -- MACC +3
-    (23514, 562, 2), -- M.Crit +2
-    (23514, 563, 3), -- M.Crit Dmg. +3
-    (23514, 369, 1); -- Refresh +1
+    (23514, 12, 10),
+    (23514, 13, 8),
+    (23514, 28, 19),
+    (23514, 30, 17),
+    (23514, 170, 4),
+    (23514, 369, 2);
 REPLACE INTO `item_basic` VALUES (690, 0, 'Phnts_Ectoplasm', 'phnts_ectoplasm', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_basic` VALUES (23956, 0, 'Phantasia_Robe', 'phantasia_robe', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (23956, "PhntsaSRbe", 73, 0, 10240, 480, 0, 0, 32, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23956, 1, 25), -- DEF +25
-    (23956, 8, 12), -- STR +12
-    (23956, 9, 12), -- DEX +12
-    (23956, 23, 24), -- Attack +24
-    (23956, 25, 24), -- Accuracy +24
-    (23956, 73, 10), -- Store TP +10
-    (23956, 384, 400); -- Haste +4%
-
+    (23956, 8, 10),
+    (23956, 9, 10),
+    (23956, 23, 25),
+    (23956, 25, 26),
+    (23956, 165, 4),
+    (23956, 289, 6);
 REPLACE INTO `item_basic` VALUES (11661, 0, 'Phantasia_Ring', 'phantasia_ring', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (11661, "PhntsaWRng", 29, 0, 16924, 0, 0, 0, 24576, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
@@ -4672,14 +3726,12 @@ REPLACE INTO `item_basic` VALUES (693, 0, 'Euphemia_Tear', 'euphemia_tear', 1, 5
 REPLACE INTO `item_basic` VALUES (23957, 0, 'Euphemia_Robe', 'euphemia_robe', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (23957, "EphMRobe", 72, 0, 10240, 480, 0, 0, 32, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23957, 1, 25), -- DEF +25
-    (23957, 8, 12), -- STR +12
-    (23957, 9, 12), -- DEX +12
-    (23957, 23, 24), -- Attack +24
-    (23957, 25, 24), -- Accuracy +24
-    (23957, 73, 10), -- Store TP +10
-    (23957, 384, 400); -- Haste +4%
-
+    (23957, 10, 13),
+    (23957, 13, 8),
+    (23957, 1, 25),
+    (23957, 27, 7),
+    (23957, 160, -4),
+    (23957, 73, 5);
 REPLACE INTO `item_basic` VALUES (11662, 0, 'Euphemia_Ring', 'euphemia_ring', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (11662, "EphLmtRng", 33, 0, 16924, 0, 0, 0, 24576, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
@@ -4696,16 +3748,12 @@ REPLACE INTO `item_basic` VALUES (696, 0, 'Bartholomea_Eye', 'bartholomea_eye', 
 REPLACE INTO `item_basic` VALUES (26100, 0, 'Bartholomea_Earring', 'bartholomea_earring', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (26100, "BrthlmaEar", 50, 0, 16924, 0, 0, 0, 6144, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (26100, 5, 45), -- MP +45
-    (26100, 12, 9), -- INT +9
-    (26100, 13, 6), -- MND +6
-    (26100, 14, 6), -- CHR +6
-    (26100, 28, 9), -- MAB +9
-    (26100, 30, 9), -- MACC +9
-    (26100, 562, 4), -- M.Crit +4
-    (26100, 563, 7), -- M.Crit Dmg. +7
-    (26100, 369, 2); -- Refresh +2
-
+    (26100, 12, 4),
+    (26100, 13, 6),
+    (26100, 30, 12),
+    (26100, 170, 5),
+    (26100, 112, 7),
+    (26100, 369, 1);
 REPLACE INTO `item_basic` VALUES (11669, 0, 'Bartholomea_Ring', 'bartholomea_ring', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (11669, "BrthlmaRng", 10, 0, 16924, 0, 0, 0, 24576, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
@@ -4722,44 +3770,30 @@ REPLACE INTO `item_basic` VALUES (699, 0, 'Stanislao_Eye', 'stanislao_eye', 1, 5
 REPLACE INTO `item_basic` VALUES (25526, 0, 'Stnsl_Collar', 'stnsl_collar', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (25526, "StnslaWCll", 52, 0, 16924, 0, 0, 0, 512, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (25526, 5, 45), -- MP +45
-    (25526, 12, 9), -- INT +9
-    (25526, 13, 6), -- MND +6
-    (25526, 14, 6), -- CHR +6
-    (25526, 28, 9), -- MAB +9
-    (25526, 30, 9), -- MACC +9
-    (25526, 562, 4), -- M.Crit +4
-    (25526, 563, 7), -- M.Crit Dmg. +7
-    (25526, 369, 2); -- Refresh +2
-
+    (25526, 12, 7),
+    (25526, 117, 14),
+    (25526, 487, 4),
+    (25526, 30, 12),
+    (25526, 369, 1);
 REPLACE INTO `item_basic` VALUES (23526, 0, 'Stanislao_Mitts', 'stanislao_mitts', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (23526, "StnslaAMtt", 21, 0, 16924, 169, 0, 0, 64, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23526, 1, 6), -- DEF +6
-    (23526, 5, 30), -- MP +30
-    (23526, 12, 6), -- INT +6
-    (23526, 13, 4), -- MND +4
-    (23526, 14, 4), -- CHR +4
-    (23526, 28, 6), -- MAB +6
-    (23526, 30, 6), -- MACC +6
-    (23526, 562, 3), -- M.Crit +3
-    (23526, 563, 5), -- M.Crit Dmg. +5
-    (23526, 369, 1); -- Refresh +1
+    (23526, 12, 10),
+    (23526, 13, 8),
+    (23526, 28, 20),
+    (23526, 30, 17),
+    (23526, 170, 4),
+    (23526, 369, 2);
 REPLACE INTO `item_basic` VALUES (702, 0, 'Prclsn_Gaze', 'prclsn_gaze', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_basic` VALUES (23760, 0, 'Prclsn_Visor', 'prclsn_visor', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (23760, "PrclsSVsr", 53, 0, 16924, 469, 0, 0, 16, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23760, 1, 12), -- DEF +12
-    (23760, 5, 45), -- MP +45
-    (23760, 12, 9), -- INT +9
-    (23760, 13, 6), -- MND +6
-    (23760, 14, 6), -- CHR +6
-    (23760, 28, 9), -- MAB +9
-    (23760, 30, 9), -- MACC +9
-    (23760, 562, 4), -- M.Crit +4
-    (23760, 563, 7), -- M.Crit Dmg. +7
-    (23760, 369, 2); -- Refresh +2
-
+    (23760, 12, 10),
+    (23760, 13, 8),
+    (23760, 28, 20),
+    (23760, 30, 18),
+    (23760, 170, 5),
+    (23760, 369, 2);
 REPLACE INTO `item_basic` VALUES (11674, 0, 'Prclsn_Ring', 'prclsn_ring', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (11674, "PrclsPRng", 63, 0, 10240, 0, 0, 0, 24576, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
@@ -4773,17 +3807,12 @@ REPLACE INTO `item_basic` VALUES (705, 0, 'Arbogast_Eye', 'arbogast_eye', 1, 594
 REPLACE INTO `item_basic` VALUES (23958, 0, 'Arbogast_Robe', 'arbogast_robe', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (23958, "ArbgstSRbe", 52, 0, 16924, 480, 0, 0, 32, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23958, 1, 18), -- DEF +18
-    (23958, 5, 45), -- MP +45
-    (23958, 12, 9), -- INT +9
-    (23958, 13, 6), -- MND +6
-    (23958, 14, 6), -- CHR +6
-    (23958, 28, 9), -- MAB +9
-    (23958, 30, 9), -- MACC +9
-    (23958, 562, 4), -- M.Crit +4
-    (23958, 563, 7), -- M.Crit Dmg. +7
-    (23958, 369, 2); -- Refresh +2
-
+    (23958, 12, 13),
+    (23958, 13, 10),
+    (23958, 28, 26),
+    (23958, 30, 23),
+    (23958, 170, 5),
+    (23958, 369, 3);
 REPLACE INTO `item_basic` VALUES (11656, 0, 'Arbogast_Ring', 'arbogast_ring', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (11656, "ArbgstORng", 57, 0, 16924, 0, 0, 0, 24576, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
@@ -4800,39 +3829,30 @@ REPLACE INTO `item_basic` VALUES (708, 0, 'Svetlana_Talon', 'svetlana_talon', 1,
 REPLACE INTO `item_basic` VALUES (26101, 0, 'Svetlana_Earring', 'svetlana_earring', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (26101, "SvtlnBEar", 6, 0, 263200, 0, 0, 0, 6144, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (26101, 9, 3), -- DEX +3
-    (26101, 11, 3), -- AGI +3
-    (26101, 25, 5), -- Accuracy +5
-    (26101, 26, 5), -- Rng. Acc. +5
-    (26101, 23, 6), -- Attack +6
-    (26101, 24, 6), -- Rng. Atk. +6
-    (26101, 68, 5), -- Evasion +5
-    (26101, 165, 2); -- Crit Rate +2
-
+    (26101, 11, 7),
+    (26101, 24, 14),
+    (26101, 26, 16),
+    (26101, 365, 4),
+    (26101, 165, 2),
+    (26101, 76, 3);
 REPLACE INTO `item_basic` VALUES (23701, 0, 'Svetlana_Boots', 'svetlana_boots', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (23701, "SvtlnSBts", 5, 0, 263200, 339, 0, 0, 256, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23701, 1, 3), -- DEF +3
-    (23701, 9, 3), -- DEX +3
-    (23701, 11, 3), -- AGI +3
-    (23701, 25, 5), -- Accuracy +5
-    (23701, 26, 5), -- Rng. Acc. +5
-    (23701, 23, 6), -- Attack +6
-    (23701, 24, 6), -- Rng. Atk. +6
-    (23701, 68, 5), -- Evasion +5
-    (23701, 165, 2); -- Crit Rate +2
+    (23701, 9, 7),
+    (23701, 11, 9),
+    (23701, 24, 20),
+    (23701, 26, 17),
+    (23701, 68, 14),
+    (23701, 73, 4);
 REPLACE INTO `item_basic` VALUES (711, 0, 'Csmr_Feather', 'csmr_feather', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_basic` VALUES (28596, 0, 'Casimira_Mantle', 'casimira_mantle', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (28596, "CsmraDGMnt", 29, 0, 131, 0, 0, 0, 32768, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (28596, 1, 4), -- DEF +4
-    (28596, 2, 40), -- HP +40
-    (28596, 8, 6), -- STR +6
-    (28596, 10, 6), -- VIT +6
-    (28596, 23, 12), -- Attack +12
-    (28596, 25, 10), -- Accuracy +10
-    (28596, 421, 4); -- Crit Dmg. +4
-
+    (28596, 10, 11),
+    (28596, 1, 24),
+    (28596, 27, 7),
+    (28596, 160, -4),
+    (28596, 170, 3);
 REPLACE INTO `item_basic` VALUES (11663, 0, 'Casimira_Ring', 'casimira_ring', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (11663, "CsmraGRng", 14, 0, 6146, 0, 0, 0, 24576, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
@@ -4847,39 +3867,30 @@ REPLACE INTO `item_basic` VALUES (714, 0, 'Bnvntr_Beak', 'bnvntr_beak', 1, 59476
 REPLACE INTO `item_basic` VALUES (23393, 0, 'Bnvntr_Helm', 'bnvntr_helm', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (23393, "BnvntGHlm", 35, 0, 131, 211, 0, 0, 16, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23393, 1, 8), -- DEF +8
-    (23393, 2, 40), -- HP +40
-    (23393, 8, 6), -- STR +6
-    (23393, 10, 6), -- VIT +6
-    (23393, 23, 12), -- Attack +12
-    (23393, 25, 10), -- Accuracy +10
-    (23393, 421, 4); -- Crit Dmg. +4
-
+    (23393, 10, 10),
+    (23393, 13, 8),
+    (23393, 1, 24),
+    (23393, 27, 7),
+    (23393, 160, -3),
+    (23393, 170, 3);
 REPLACE INTO `item_basic` VALUES (28467, 0, 'Bnvntr_Belt', 'bnvntr_belt', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (28467, "BnvntCBlt", 16, 0, 16924, 0, 0, 0, 1024, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (28467, 1, 1), -- DEF +1
-    (28467, 5, 15), -- MP +15
-    (28467, 12, 3), -- INT +3
-    (28467, 13, 2), -- MND +2
-    (28467, 14, 2), -- CHR +2
-    (28467, 28, 3), -- MAB +3
-    (28467, 30, 3), -- MACC +3
-    (28467, 562, 2), -- M.Crit +2
-    (28467, 563, 3), -- M.Crit Dmg. +3
-    (28467, 369, 1); -- Refresh +1
+    (28467, 14, 8),
+    (28467, 13, 8),
+    (28467, 112, 8),
+    (28467, 117, 10),
+    (28467, 369, 2);
 REPLACE INTO `item_basic` VALUES (717, 0, 'Srphns_Feather', 'srphns_feather', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_basic` VALUES (23959, 0, 'Srphns_Plate', 'srphns_plate', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (23959, "SrphnusSKPlt", 52, 0, 131, 480, 0, 0, 32, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23959, 1, 18), -- DEF +18
-    (23959, 2, 70), -- HP +70
-    (23959, 8, 9), -- STR +9
-    (23959, 10, 9), -- VIT +9
-    (23959, 23, 18), -- Attack +18
-    (23959, 25, 15), -- Accuracy +15
-    (23959, 421, 6); -- Crit Dmg. +6
-
+    (23959, 8, 11),
+    (23959, 9, 10),
+    (23959, 23, 25),
+    (23959, 25, 25),
+    (23959, 165, 4),
+    (23959, 289, 6);
 REPLACE INTO `item_basic` VALUES (11651, 0, 'Seraphinus_Ring', 'seraphinus_ring', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (11651, "SrphnusDRng", 33, 0, 16924, 0, 0, 0, 24576, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
@@ -4907,74 +3918,59 @@ REPLACE INTO `item_mods` VALUES
 REPLACE INTO `item_basic` VALUES (23702, 0, 'Chchstr_Boots', 'chchstr_boots', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (23702, "ChchtrNBts", 9, 0, 131, 339, 0, 0, 256, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23702, 1, 3), -- DEF +3
-    (23702, 2, 20), -- HP +20
-    (23702, 8, 3), -- STR +3
-    (23702, 10, 3), -- VIT +3
-    (23702, 23, 6), -- Attack +6
-    (23702, 25, 5), -- Accuracy +5
-    (23702, 421, 2); -- Crit Dmg. +2
+    (23702, 10, 9),
+    (23702, 13, 5),
+    (23702, 1, 19),
+    (23702, 27, 5),
+    (23702, 160, -3),
+    (23702, 73, 4);
 REPLACE INTO `item_basic` VALUES (723, 0, 'Theodolinda_Gem', 'theodolinda_gem', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_basic` VALUES (23515, 0, 'Theodolinda_Mitts', 'theodolinda_mitts', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (23515, "ThdlndPMtt", 17, 0, 16924, 76, 0, 0, 64, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23515, 1, 3), -- DEF +3
-    (23515, 5, 15), -- MP +15
-    (23515, 12, 3), -- INT +3
-    (23515, 13, 2), -- MND +2
-    (23515, 14, 2), -- CHR +2
-    (23515, 28, 3), -- MAB +3
-    (23515, 30, 3), -- MACC +3
-    (23515, 562, 2), -- M.Crit +2
-    (23515, 563, 3), -- M.Crit Dmg. +3
-    (23515, 369, 1); -- Refresh +1
-
+    (23515, 13, 10),
+    (23515, 14, 8),
+    (23515, 112, 11),
+    (23515, 374, 4),
+    (23515, 170, 4),
+    (23515, 369, 2);
 REPLACE INTO `item_basic` VALUES (26102, 0, 'Theodolinda_Earring', 'theodolinda_earring', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (26102, "ThdlndSEar", 30, 0, 16924, 0, 0, 0, 6144, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (26102, 5, 30), -- MP +30
-    (26102, 12, 6), -- INT +6
-    (26102, 13, 4), -- MND +4
-    (26102, 14, 4), -- CHR +4
-    (26102, 28, 6), -- MAB +6
-    (26102, 30, 6), -- MACC +6
-    (26102, 562, 3), -- M.Crit +3
-    (26102, 563, 5), -- M.Crit Dmg. +5
-    (26102, 369, 1); -- Refresh +1
+    (26102, 13, 6),
+    (26102, 14, 6),
+    (26102, 112, 10),
+    (26102, 374, 3),
+    (26102, 170, 3),
+    (26102, 369, 1);
 REPLACE INTO `item_basic` VALUES (726, 0, 'Blthzr_Banana', 'blthzr_banana', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_basic` VALUES (23411, 0, 'Balthazar_Crown', 'balthazar_crown', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (23411, "BlthzrJCrn", 32, 0, 131, 91, 0, 0, 16, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23411, 1, 8), -- DEF +8
-    (23411, 2, 40), -- HP +40
-    (23411, 8, 6), -- STR +6
-    (23411, 10, 6), -- VIT +6
-    (23411, 23, 12), -- Attack +12
-    (23411, 25, 10), -- Accuracy +10
-    (23411, 421, 4); -- Crit Dmg. +4
-
+    (23411, 10, 10),
+    (23411, 13, 6),
+    (23411, 1, 20),
+    (23411, 27, 5),
+    (23411, 160, -3),
+    (23411, 73, 4);
 REPLACE INTO `item_basic` VALUES (28426, 0, 'Balthazar_Belt', 'balthazar_belt', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (28426, "BlthzrTBlt", 28, 0, 131, 0, 0, 0, 1024, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (28426, 1, 3), -- DEF +3
-    (28426, 2, 40), -- HP +40
-    (28426, 8, 6), -- STR +6
-    (28426, 10, 6), -- VIT +6
-    (28426, 23, 12), -- Attack +12
-    (28426, 25, 10), -- Accuracy +10
-    (28426, 421, 4); -- Crit Dmg. +4
+    (28426, 8, 8),
+    (28426, 23, 20),
+    (28426, 25, 14),
+    (28426, 73, 5),
+    (28426, 288, 2);
 REPLACE INTO `item_basic` VALUES (729, 0, 'Plgs_Insignia', 'plgs_insignia', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_basic` VALUES (23960, 0, 'Pelagius_Robe', 'pelagius_robe', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (23960, "PlgsJKRbe", 56, 0, 131, 480, 0, 0, 32, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23960, 1, 18), -- DEF +18
-    (23960, 2, 70), -- HP +70
-    (23960, 8, 9), -- STR +9
-    (23960, 10, 9), -- VIT +9
-    (23960, 23, 18), -- Attack +18
-    (23960, 25, 15), -- Accuracy +15
-    (23960, 421, 6); -- Crit Dmg. +6
-
+    (23960, 10, 14),
+    (23960, 13, 8),
+    (23960, 1, 25),
+    (23960, 27, 6),
+    (23960, 160, -4),
+    (23960, 73, 5);
 REPLACE INTO `item_basic` VALUES (11672, 0, 'Pelagius_Ring', 'pelagius_ring', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (11672, "PlgsAlpRng", 59, 0, 6146, 0, 0, 0, 24576, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
@@ -4989,45 +3985,30 @@ REPLACE INTO `item_basic` VALUES (732, 0, 'Gldnstrn_Claw', 'gldnstrn_claw', 1, 5
 REPLACE INTO `item_basic` VALUES (23516, 0, 'Gldnstr_Bracers', 'gldnstr_bracers', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (23516, "GldnstrnBrc", 16, 0, 16924, 78, 0, 0, 64, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23516, 1, 3), -- DEF +3
-    (23516, 5, 15), -- MP +15
-    (23516, 12, 3), -- INT +3
-    (23516, 13, 2), -- MND +2
-    (23516, 14, 2), -- CHR +2
-    (23516, 28, 3), -- MAB +3
-    (23516, 30, 3), -- MACC +3
-    (23516, 562, 2), -- M.Crit +2
-    (23516, 563, 3), -- M.Crit Dmg. +3
-    (23516, 369, 1); -- Refresh +1
-
+    (23516, 12, 8),
+    (23516, 13, 8),
+    (23516, 117, 11),
+    (23516, 487, 4),
+    (23516, 30, 16),
+    (23516, 369, 2);
 REPLACE INTO `item_basic` VALUES (28427, 0, 'Gldnstrn_Belt', 'gldnstrn_belt', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (28427, "GldnstrnHBlt", 11, 0, 16924, 0, 0, 0, 1024, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (28427, 1, 1), -- DEF +1
-    (28427, 5, 15), -- MP +15
-    (28427, 12, 3), -- INT +3
-    (28427, 13, 2), -- MND +2
-    (28427, 14, 2), -- CHR +2
-    (28427, 28, 3), -- MAB +3
-    (28427, 30, 3), -- MACC +3
-    (28427, 562, 2), -- M.Crit +2
-    (28427, 563, 3), -- M.Crit Dmg. +3
-    (28427, 369, 1); -- Refresh +1
+    (28427, 13, 8),
+    (28427, 112, 12),
+    (28427, 374, 4),
+    (28427, 30, 8),
+    (28427, 170, 4);
 REPLACE INTO `item_basic` VALUES (735, 0, 'Petronio_Mark', 'petronio_mark', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_basic` VALUES (23412, 0, 'Petronio_Helm', 'petronio_helm', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (23412, "PtrnoPHlm", 35, 0, 16924, 93, 0, 0, 16, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23412, 1, 8), -- DEF +8
-    (23412, 5, 30), -- MP +30
-    (23412, 12, 6), -- INT +6
-    (23412, 13, 4), -- MND +4
-    (23412, 14, 4), -- CHR +4
-    (23412, 28, 6), -- MAB +6
-    (23412, 30, 6), -- MACC +6
-    (23412, 562, 3), -- M.Crit +3
-    (23412, 563, 5), -- M.Crit Dmg. +5
-    (23412, 369, 1); -- Refresh +1
-
+    (23412, 12, 10),
+    (23412, 13, 8),
+    (23412, 28, 20),
+    (23412, 30, 18),
+    (23412, 170, 4),
+    (23412, 369, 2);
 REPLACE INTO `item_basic` VALUES (11671, 0, 'Petronio_Ring', 'petronio_ring', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (11671, "PtrnoDRng", 30, 0, 16924, 0, 0, 0, 24576, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
@@ -5044,17 +4025,12 @@ REPLACE INTO `item_basic` VALUES (738, 0, 'Malaclypse_Fang', 'malaclypse_fang', 
 REPLACE INTO `item_basic` VALUES (23961, 0, 'Mlclyps_Hauberk', 'mlclyps_hauberk', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (23961, "MlclpsSHbk", 59, 0, 16924, 480, 0, 0, 32, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23961, 1, 18), -- DEF +18
-    (23961, 5, 45), -- MP +45
-    (23961, 12, 9), -- INT +9
-    (23961, 13, 6), -- MND +6
-    (23961, 14, 6), -- CHR +6
-    (23961, 28, 9), -- MAB +9
-    (23961, 30, 9), -- MACC +9
-    (23961, 562, 4), -- M.Crit +4
-    (23961, 563, 7), -- M.Crit Dmg. +7
-    (23961, 369, 2); -- Refresh +2
-
+    (23961, 12, 13),
+    (23961, 13, 10),
+    (23961, 28, 25),
+    (23961, 30, 24),
+    (23961, 170, 5),
+    (23961, 369, 3);
 REPLACE INTO `item_basic` VALUES (11668, 0, 'Malaclypse_Ring', 'malaclypse_ring', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (11668, "MlclpsPRng", 41, 0, 16924, 0, 0, 0, 24576, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
@@ -5071,30 +4047,20 @@ REPLACE INTO `item_basic` VALUES (741, 0, 'Apllnrs_Fang', 'apllnrs_fang', 1, 594
 REPLACE INTO `item_basic` VALUES (23969, 0, 'Apllnrs_Plate', 'apllnrs_plate', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (23969, "ApllnrsAPlt", 55, 0, 16924, 480, 0, 0, 32, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23969, 1, 18), -- DEF +18
-    (23969, 5, 45), -- MP +45
-    (23969, 12, 9), -- INT +9
-    (23969, 13, 6), -- MND +6
-    (23969, 14, 6), -- CHR +6
-    (23969, 28, 9), -- MAB +9
-    (23969, 30, 9), -- MACC +9
-    (23969, 562, 4), -- M.Crit +4
-    (23969, 563, 7), -- M.Crit Dmg. +7
-    (23969, 369, 2); -- Refresh +2
-
+    (23969, 12, 10),
+    (23969, 13, 10),
+    (23969, 117, 16),
+    (23969, 487, 5),
+    (23969, 30, 20),
+    (23969, 369, 3);
 REPLACE INTO `item_basic` VALUES (23413, 0, 'Apllnrs_Crown', 'apllnrs_crown', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (23413, "ApllnrsPCrn", 52, 0, 16924, 166, 0, 0, 16, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23413, 1, 12), -- DEF +12
-    (23413, 5, 45), -- MP +45
-    (23413, 12, 9), -- INT +9
-    (23413, 13, 6), -- MND +6
-    (23413, 14, 6), -- CHR +6
-    (23413, 28, 9), -- MAB +9
-    (23413, 30, 9), -- MACC +9
-    (23413, 562, 4), -- M.Crit +4
-    (23413, 563, 7), -- M.Crit Dmg. +7
-    (23413, 369, 2); -- Refresh +2
+    (23413, 12, 12),
+    (23413, 28, 18),
+    (23413, 30, 16),
+    (23413, 487, 5),
+    (23413, 170, 4);
 REPLACE INTO `item_basic` VALUES (744, 0, 'Tibalt_Chip', 'tibalt_chip', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_basic` VALUES (11667, 0, 'Tibalt_Ring', 'tibalt_ring', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (11667, "TbltShRng", 8, 0, 16924, 0, 0, 0, 24576, 0, 0, 0);
@@ -5112,52 +4078,40 @@ REPLACE INTO `item_mods` VALUES
 REPLACE INTO `item_basic` VALUES (23703, 0, 'Tibalt_Sandals', 'tibalt_sandals', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (23703, "TbltPSnd", 14, 0, 131, 339, 0, 0, 256, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23703, 1, 3), -- DEF +3
-    (23703, 2, 20), -- HP +20
-    (23703, 8, 3), -- STR +3
-    (23703, 10, 3), -- VIT +3
-    (23703, 23, 6), -- Attack +6
-    (23703, 25, 5), -- Accuracy +5
-    (23703, 421, 2); -- Crit Dmg. +2
+    (23703, 8, 9),
+    (23703, 10, 7),
+    (23703, 23, 23),
+    (23703, 25, 16),
+    (23703, 73, 5),
+    (23703, 288, 3);
 REPLACE INTO `item_basic` VALUES (747, 0, 'Archibald_Shell', 'archibald_shell', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_basic` VALUES (25527, 0, 'Archbld_Collar', 'archbld_collar', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (25527, "ArchbldFCl", 41, 0, 16924, 0, 0, 0, 512, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (25527, 5, 45), -- MP +45
-    (25527, 12, 9), -- INT +9
-    (25527, 13, 6), -- MND +6
-    (25527, 14, 6), -- CHR +6
-    (25527, 28, 9), -- MAB +9
-    (25527, 30, 9), -- MACC +9
-    (25527, 562, 4), -- M.Crit +4
-    (25527, 563, 7), -- M.Crit Dmg. +7
-    (25527, 369, 2); -- Refresh +2
-
+    (25527, 12, 9),
+    (25527, 28, 16),
+    (25527, 30, 14),
+    (25527, 487, 5),
+    (25527, 170, 3);
 REPLACE INTO `item_basic` VALUES (23704, 0, 'Archibald_Boots', 'archibald_boots', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (23704, "ArchbldRBts", 21, 0, 131, 339, 0, 0, 256, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23704, 1, 6), -- DEF +6
-    (23704, 2, 40), -- HP +40
-    (23704, 8, 6), -- STR +6
-    (23704, 10, 6), -- VIT +6
-    (23704, 23, 12), -- Attack +12
-    (23704, 25, 10), -- Accuracy +10
-    (23704, 421, 4); -- Crit Dmg. +4
+    (23704, 8, 7),
+    (23704, 9, 7),
+    (23704, 23, 18),
+    (23704, 25, 18),
+    (23704, 165, 3),
+    (23704, 289, 5);
 REPLACE INTO `item_basic` VALUES (750, 0, 'Eleanor_Shell', 'eleanor_shell', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_basic` VALUES (23970, 0, 'Elnr_Carapace', 'elnr_carapace', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (23970, "ElnrACrp", 53, 0, 16924, 480, 0, 0, 32, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23970, 1, 18), -- DEF +18
-    (23970, 5, 45), -- MP +45
-    (23970, 12, 9), -- INT +9
-    (23970, 13, 6), -- MND +6
-    (23970, 14, 6), -- CHR +6
-    (23970, 28, 9), -- MAB +9
-    (23970, 30, 9), -- MACC +9
-    (23970, 562, 4), -- M.Crit +4
-    (23970, 563, 7), -- M.Crit Dmg. +7
-    (23970, 369, 2); -- Refresh +2
-
+    (23970, 12, 14),
+    (23970, 13, 10),
+    (23970, 28, 25),
+    (23970, 30, 23),
+    (23970, 170, 5),
+    (23970, 369, 3);
 REPLACE INTO `item_basic` VALUES (11647, 0, 'Eleanor_Ring', 'eleanor_ring', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (11647, "ElnrStnRng", 31, 0, 16924, 0, 0, 0, 24576, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
@@ -5174,17 +4128,12 @@ REPLACE INTO `item_basic` VALUES (753, 0, 'Alxndrs_Shell', 'alxndrs_shell', 1, 5
 REPLACE INTO `item_basic` VALUES (23971, 0, 'Alxndr_Fortress', 'alxndr_fortress', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (23971, "AlxndrsTF", 72, 0, 16924, 480, 0, 0, 32, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23971, 1, 25), -- DEF +25
-    (23971, 5, 60), -- MP +60
-    (23971, 12, 12), -- INT +12
-    (23971, 13, 8), -- MND +8
-    (23971, 14, 8), -- CHR +8
-    (23971, 28, 12), -- MAB +12
-    (23971, 30, 12), -- MACC +12
-    (23971, 562, 5), -- M.Crit +5
-    (23971, 563, 10), -- M.Crit Dmg. +10
-    (23971, 369, 3); -- Refresh +3
-
+    (23971, 13, 13),
+    (23971, 14, 10),
+    (23971, 112, 16),
+    (23971, 374, 5),
+    (23971, 170, 5),
+    (23971, 369, 3);
 REPLACE INTO `item_basic` VALUES (11648, 0, 'Alexandros_Ring', 'alexandros_ring', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (11648, "AlxndrsBRng", 53, 0, 16924, 0, 0, 0, 24576, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
@@ -5201,40 +4150,30 @@ REPLACE INTO `item_basic` VALUES (756, 0, 'Callirhoe_Ring', 'callirhoe_ring', 1,
 REPLACE INTO `item_basic` VALUES (26103, 0, 'Callirhoe_Earring', 'callirhoe_earring', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (26103, "CllrhoeEar", 15, 0, 263200, 0, 0, 0, 6144, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (26103, 9, 3), -- DEX +3
-    (26103, 11, 3), -- AGI +3
-    (26103, 25, 5), -- Accuracy +5
-    (26103, 26, 5), -- Rng. Acc. +5
-    (26103, 23, 6), -- Attack +6
-    (26103, 24, 6), -- Rng. Atk. +6
-    (26103, 68, 5), -- Evasion +5
-    (26103, 165, 2); -- Crit Rate +2
-
+    (26103, 11, 7),
+    (26103, 24, 15),
+    (26103, 26, 16),
+    (26103, 365, 4),
+    (26103, 165, 2),
+    (26103, 76, 3);
 REPLACE INTO `item_basic` VALUES (28428, 0, 'Callirhoe_Sash', 'callirhoe_sash', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (28428, "CllrhoeSsh", 59, 0, 263200, 0, 0, 0, 1024, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (28428, 1, 5), -- DEF +5
-    (28428, 9, 9), -- DEX +9
-    (28428, 11, 9), -- AGI +9
-    (28428, 25, 15), -- Accuracy +15
-    (28428, 26, 15), -- Rng. Acc. +15
-    (28428, 23, 18), -- Attack +18
-    (28428, 24, 18), -- Rng. Atk. +18
-    (28428, 68, 15), -- Evasion +15
-    (28428, 165, 4); -- Crit Rate +4
+    (28428, 9, 7),
+    (28428, 11, 7),
+    (28428, 25, 14),
+    (28428, 68, 12),
+    (28428, 302, 2),
+    (28428, 76, 8);
 REPLACE INTO `item_basic` VALUES (759, 0, 'Chrysnthm_Bead', 'chrysnthm_bead', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_basic` VALUES (25531, 0, 'Chrysnth_Collar', 'chrysnth_collar', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (25531, "ChrsnthmCCl", 64, 0, 263200, 0, 0, 0, 512, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (25531, 9, 12), -- DEX +12
-    (25531, 11, 12), -- AGI +12
-    (25531, 25, 20), -- Accuracy +20
-    (25531, 26, 20), -- Rng. Acc. +20
-    (25531, 23, 24), -- Attack +24
-    (25531, 24, 24), -- Rng. Atk. +24
-    (25531, 68, 20), -- Evasion +20
-    (25531, 165, 5); -- Crit Rate +5
-
+    (25531, 11, 10),
+    (25531, 24, 20),
+    (25531, 26, 18),
+    (25531, 365, 4),
+    (25531, 73, 4);
 REPLACE INTO `item_basic` VALUES (11649, 0, 'Chrysnthm_Ring', 'chrysnthm_ring', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (11649, "ChrsnthmLRng", 22, 0, 16924, 0, 0, 0, 24576, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
@@ -5251,14 +4190,12 @@ REPLACE INTO `item_basic` VALUES (762, 0, 'Srphm_Scale', 'srphm_scale', 1, 59476
 REPLACE INTO `item_basic` VALUES (23972, 0, 'Seraphimia_Robe', 'seraphimia_robe', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (23972, "SrphmSRbe", 72, 0, 10240, 480, 0, 0, 32, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23972, 1, 25), -- DEF +25
-    (23972, 8, 12), -- STR +12
-    (23972, 9, 12), -- DEX +12
-    (23972, 23, 24), -- Attack +24
-    (23972, 25, 24), -- Accuracy +24
-    (23972, 73, 10), -- Store TP +10
-    (23972, 384, 400); -- Haste +4%
-
+    (23972, 10, 13),
+    (23972, 13, 8),
+    (23972, 1, 25),
+    (23972, 27, 6),
+    (23972, 160, -4),
+    (23972, 73, 6);
 REPLACE INTO `item_basic` VALUES (11650, 0, 'Seraphimia_Ring', 'seraphimia_ring', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (11650, "SrphmTmpRng", 19, 0, 16924, 0, 0, 0, 24576, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
@@ -5275,14 +4212,12 @@ REPLACE INTO `item_basic` VALUES (765, 0, 'Sophronia_Scale', 'sophronia_scale', 
 REPLACE INTO `item_basic` VALUES (23414, 0, 'Sophronia_Tiara', 'sophronia_tiara', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (23414, "SphrnaSTar", 74, 0, 10240, 168, 0, 0, 16, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23414, 1, 16), -- DEF +16
-    (23414, 8, 12), -- STR +12
-    (23414, 9, 12), -- DEX +12
-    (23414, 23, 24), -- Attack +24
-    (23414, 25, 24), -- Accuracy +24
-    (23414, 73, 10), -- Store TP +10
-    (23414, 384, 400); -- Haste +4%
-
+    (23414, 10, 10),
+    (23414, 13, 6),
+    (23414, 1, 21),
+    (23414, 27, 5),
+    (23414, 160, -3),
+    (23414, 73, 4);
 REPLACE INTO `item_basic` VALUES (11646, 0, 'Sophronia_Ring', 'sophronia_ring', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (11646, "SphrnaSOvRng", 43, 0, 16924, 0, 0, 0, 24576, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
@@ -5299,14 +4234,12 @@ REPLACE INTO `item_basic` VALUES (768, 0, 'Brnrd_Bloodsack', 'brnrd_bloodsack', 
 REPLACE INTO `item_basic` VALUES (26104, 0, 'Barnard_Earring', 'barnard_earring', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (26104, "BrndCEar", 13, 0, 131, 0, 0, 0, 6144, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (26104, 1, 2), -- DEF +2
-    (26104, 2, 20), -- HP +20
-    (26104, 8, 3), -- STR +3
-    (26104, 10, 3), -- VIT +3
-    (26104, 23, 6), -- Attack +6
-    (26104, 25, 5), -- Accuracy +5
-    (26104, 421, 2); -- Crit Dmg. +2
-
+    (26104, 8, 5),
+    (26104, 9, 5),
+    (26104, 23, 14),
+    (26104, 25, 14),
+    (26104, 289, 3),
+    (26104, 165, 2);
 REPLACE INTO `item_basic` VALUES (15858, 0, 'Barnard_Ring', 'barnard_ring', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (15858, "BrndDrRng", 24, 0, 16924, 0, 0, 0, 24576, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
@@ -5323,41 +4256,31 @@ REPLACE INTO `item_basic` VALUES (771, 0, 'Griselda_Sac', 'griselda_sac', 1, 594
 REPLACE INTO `item_basic` VALUES (25532, 0, 'Griselda_Collar', 'griselda_collar', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (25532, "GrsldaBCll", 27, 0, 16924, 0, 0, 0, 512, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (25532, 5, 30), -- MP +30
-    (25532, 12, 6), -- INT +6
-    (25532, 13, 4), -- MND +4
-    (25532, 14, 4), -- CHR +4
-    (25532, 28, 6), -- MAB +6
-    (25532, 30, 6), -- MACC +6
-    (25532, 562, 3), -- M.Crit +3
-    (25532, 563, 5), -- M.Crit Dmg. +5
-    (25532, 369, 1); -- Refresh +1
-
+    (25532, 13, 8),
+    (25532, 14, 9),
+    (25532, 112, 14),
+    (25532, 374, 4),
+    (25532, 170, 4),
+    (25532, 369, 1);
 REPLACE INTO `item_basic` VALUES (23520, 0, 'Griselda_Mitts', 'griselda_mitts', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (23520, "GrsldaGMtt", 10, 0, 131, 86, 0, 0, 64, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23520, 1, 3), -- DEF +3
-    (23520, 2, 20), -- HP +20
-    (23520, 8, 3), -- STR +3
-    (23520, 10, 3), -- VIT +3
-    (23520, 23, 6), -- Attack +6
-    (23520, 25, 5), -- Accuracy +5
-    (23520, 421, 2); -- Crit Dmg. +2
+    (23520, 8, 10),
+    (23520, 10, 8),
+    (23520, 23, 23),
+    (23520, 25, 17),
+    (23520, 73, 6),
+    (23520, 288, 3);
 REPLACE INTO `item_basic` VALUES (774, 0, 'Placida_Flask', 'placida_flask', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_basic` VALUES (23973, 0, 'Placida_Hauberk', 'placida_hauberk', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (23973, "PlcdaMHbk", 39, 0, 16924, 480, 0, 0, 32, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23973, 1, 12), -- DEF +12
-    (23973, 5, 30), -- MP +30
-    (23973, 12, 6), -- INT +6
-    (23973, 13, 4), -- MND +4
-    (23973, 14, 4), -- CHR +4
-    (23973, 28, 6), -- MAB +6
-    (23973, 30, 6), -- MACC +6
-    (23973, 562, 3), -- M.Crit +3
-    (23973, 563, 5), -- M.Crit Dmg. +5
-    (23973, 369, 1); -- Refresh +1
-
+    (23973, 12, 13),
+    (23973, 13, 10),
+    (23973, 28, 25),
+    (23973, 30, 23),
+    (23973, 170, 6),
+    (23973, 369, 3);
 REPLACE INTO `item_basic` VALUES (11637, 0, 'Placida_Ring', 'placida_ring', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (11637, "PlcdaSpRng", 21, 0, 16924, 0, 0, 0, 24576, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
@@ -5374,14 +4297,12 @@ REPLACE INTO `item_basic` VALUES (777, 0, 'Agstn_Sucker', 'agstn_sucker', 1, 594
 REPLACE INTO `item_basic` VALUES (23974, 0, 'Augustine_Robe', 'augustine_robe', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (23974, "AgstnLDRbe", 55, 0, 131, 480, 0, 0, 32, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23974, 1, 18), -- DEF +18
-    (23974, 2, 70), -- HP +70
-    (23974, 8, 9), -- STR +9
-    (23974, 10, 9), -- VIT +9
-    (23974, 23, 18), -- Attack +18
-    (23974, 25, 15), -- Accuracy +15
-    (23974, 421, 6); -- Crit Dmg. +6
-
+    (23974, 8, 10),
+    (23974, 9, 11),
+    (23974, 23, 25),
+    (23974, 25, 25),
+    (23974, 165, 4),
+    (23974, 289, 6);
 REPLACE INTO `item_basic` VALUES (11639, 0, 'Augustine_Ring', 'augustine_ring', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (11639, "AgstnVtRng", 44, 0, 16924, 0, 0, 0, 24576, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
@@ -5408,51 +4329,41 @@ REPLACE INTO `item_mods` VALUES
 REPLACE INTO `item_basic` VALUES (23705, 0, 'Lavrentiy_Boots', 'lavrentiy_boots', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (23705, "LvrnWBts", 6, 0, 263200, 339, 0, 0, 256, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23705, 1, 3), -- DEF +3
-    (23705, 9, 3), -- DEX +3
-    (23705, 11, 3), -- AGI +3
-    (23705, 25, 5), -- Accuracy +5
-    (23705, 26, 5), -- Rng. Acc. +5
-    (23705, 23, 6), -- Attack +6
-    (23705, 24, 6), -- Rng. Atk. +6
-    (23705, 68, 5), -- Evasion +5
-    (23705, 165, 2); -- Crit Rate +2
+    (23705, 9, 8),
+    (23705, 11, 8),
+    (23705, 25, 16),
+    (23705, 421, 3),
+    (23705, 302, 2),
+    (23705, 76, 3);
 REPLACE INTO `item_basic` VALUES (783, 0, 'Sebestyen_Silk', 'sebestyen_silk', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_basic` VALUES (25533, 0, 'Sbstyn_Collar', 'sbstyn_collar', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (25533, "SbstynWCll", 56, 0, 10240, 0, 0, 0, 512, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (25533, 8, 9), -- STR +9
-    (25533, 9, 9), -- DEX +9
-    (25533, 23, 18), -- Attack +18
-    (25533, 25, 18), -- Accuracy +18
-    (25533, 73, 7), -- Store TP +7
-    (25533, 384, 300); -- Haste +3%
-
+    (25533, 8, 8),
+    (25533, 9, 8),
+    (25533, 25, 18),
+    (25533, 289, 5),
+    (25533, 73, 4),
+    (25533, 421, 3);
 REPLACE INTO `item_basic` VALUES (23528, 0, 'Sebestyen_Mitts', 'sebestyen_mitts', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (23528, "SbstynSMtt", 12, 0, 16924, 211, 0, 0, 64, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23528, 1, 3), -- DEF +3
-    (23528, 5, 15), -- MP +15
-    (23528, 12, 3), -- INT +3
-    (23528, 13, 2), -- MND +2
-    (23528, 14, 2), -- CHR +2
-    (23528, 28, 3), -- MAB +3
-    (23528, 30, 3), -- MACC +3
-    (23528, 562, 2), -- M.Crit +2
-    (23528, 563, 3), -- M.Crit Dmg. +3
-    (23528, 369, 1); -- Refresh +1
+    (23528, 12, 9),
+    (23528, 13, 8),
+    (23528, 117, 11),
+    (23528, 487, 4),
+    (23528, 30, 15),
+    (23528, 369, 2);
 REPLACE INTO `item_basic` VALUES (786, 0, 'Melchior_Core', 'melchior_core', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_basic` VALUES (23975, 0, 'Melchior_Robe', 'melchior_robe', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (23975, "MlchrTRbe", 67, 0, 10240, 480, 0, 0, 32, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23975, 1, 25), -- DEF +25
-    (23975, 8, 12), -- STR +12
-    (23975, 9, 12), -- DEX +12
-    (23975, 23, 24), -- Attack +24
-    (23975, 25, 24), -- Accuracy +24
-    (23975, 73, 10), -- Store TP +10
-    (23975, 384, 400); -- Haste +4%
-
+    (23975, 10, 13),
+    (23975, 13, 8),
+    (23975, 1, 27),
+    (23975, 27, 6),
+    (23975, 160, -4),
+    (23975, 73, 5);
 REPLACE INTO `item_basic` VALUES (11645, 0, 'Melchior_Ring', 'melchior_ring', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (11645, "MlchrERng", 24, 0, 16924, 0, 0, 0, 24576, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
@@ -5469,14 +4380,12 @@ REPLACE INTO `item_basic` VALUES (789, 0, 'Mlpmn_Chrysalis', 'mlpmn_chrysalis', 
 REPLACE INTO `item_basic` VALUES (23976, 0, 'Melpomene_Robe', 'melpomene_robe', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (23976, "MlpmARbe", 62, 0, 10240, 480, 0, 0, 32, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
-    (23976, 1, 25), -- DEF +25
-    (23976, 8, 12), -- STR +12
-    (23976, 9, 12), -- DEX +12
-    (23976, 23, 24), -- Attack +24
-    (23976, 25, 24), -- Accuracy +24
-    (23976, 73, 10), -- Store TP +10
-    (23976, 384, 400); -- Haste +4%
-
+    (23976, 8, 13),
+    (23976, 10, 10),
+    (23976, 23, 31),
+    (23976, 25, 23),
+    (23976, 73, 8),
+    (23976, 288, 4);
 REPLACE INTO `item_basic` VALUES (11664, 0, 'Melpomene_Ring', 'melpomene_ring', 1, 59476, 0, 1, 0);
 REPLACE INTO `item_equipment` VALUES (11664, "MlpmCRng", 49, 0, 16924, 0, 0, 0, 24576, 0, 0, 0);
 REPLACE INTO `item_mods` VALUES
@@ -10297,3 +9206,9 @@ REPLACE INTO `item_mods` VALUES
 -- Pet-specific generated weapon bonuses.
 REPLACE INTO `item_mods_pet` VALUES
     (18545, 384, 200, 0);
+REPLACE INTO `item_mods` VALUES
+    (26000, 10, 10),
+    (26000, 1, 20),
+    (26000, 27, 5),
+    (26000, 160, -3),
+    (26000, 73, 3);
